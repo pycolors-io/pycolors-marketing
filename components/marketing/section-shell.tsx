@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { cn } from "@pycolors/ui";
 
@@ -45,11 +46,13 @@ export function MarketingSectionShell({
   "aria-labelledby": ariaLabelledBy,
   "aria-label": ariaLabel,
 }: MarketingSectionShellProps) {
+  const tSite = useCopy();
+
   return (
     <section
       id={id}
       aria-labelledby={ariaLabelledBy}
-      aria-label={ariaLabel}
+      aria-label={tSite(ariaLabel)}
       className={cn(
         "marketing-section",
         spacingClass[spacing],
@@ -64,7 +67,7 @@ export function MarketingSectionShell({
           divider === "pattern" && "pt-(--site-pattern-height)",
         )}
       >
-        {children}
+        {tSite(children)}
       </div>
     </section>
   );

@@ -1,0 +1,210 @@
+---
+title: Vue d’ensemble
+description: Des modèles UX prêts à la production pour transformer les
+  primitives d'interface utilisateur en véritables expériences produit SaaS.
+lastUpdated: "2026-04-27"
+appliesTo: Guides
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
+import {
+  AlertCircle,
+  CheckCircle,
+  Component,
+  FormInput,
+  Layers3,
+  PanelsTopLeft,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Guides</Badge>
+  <Badge>Production UX</Badge>
+</div>
+
+## Construisez de vrais produits SaaS, pas des démos [#build-real-saas-products-not-demos]
+
+Les guides PyColors expliquent comment se déplacer **primitives UI** au **Comportement réel du produit**.
+
+Ils sont assis entre :
+
+- composants d'interface utilisateur de bas niveau
+- Expérience produit SaaS réelle
+
+Et répondez à une question cruciale :
+
+> Comment transformer les composants en un produit fiable, prévisible et prêt pour la production ?
+
+<Callout title="Pourquoi cela compte">
+  La plupart des bibliothèques d'interface s'arrêtent aux composants. Les vrais
+  produits échouent dans la composition, pas dans les primitives.
+
+</Callout>
+
+## Ce que vous apprendrez [#what-youll-learn]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Composition",
+      description:
+        "Découvrez comment les primitives se combinent pour créer de véritables surfaces de produits, des mises en page et des flux SaaS réutilisables.",
+      icon: Layers3,
+    },
+    {
+      title: "Comportement",
+      description:
+        "Comprendre les états asynchrones, la validation, les interactions, les superpositions et les modèles de rétroaction des utilisateurs.",
+      icon: Sparkles,
+    },
+    {
+      title: "Cohérence",
+      description:
+        "Gardez l'UX, la sémantique, l'espacement et le comportement du produit stables à mesure que le système se développe.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+### Où les guides s'adaptent [#where-guides-fit]
+
+PyColors est structuré en couches.
+
+#### composants UI [#ui-components]
+
+- petites primitives réutilisables
+- token-driven
+- blocs de construction au niveau de la mise en œuvre
+
+#### Guides [#guides]
+
+- Composition des primitives
+- UX et règles de comportement
+- Scénarios du monde réel
+- contraintes de production
+
+#### Starter Pro [#starter-pro]
+
+- Authentification
+- facturation
+- backend
+- livraison
+- Fondation SaaS
+
+<Callout type="info" title="Modèle mental">
+  Les composants vous aident à construire rapidement. Les guides vous aident à
+  construire correctement.
+
+</Callout>
+
+## Quand utiliser les guides [#when-to-use-guides]
+
+Utilisez les guides lorsque :
+
+- Les primitifs se sentent insuffisants par eux-mêmes
+- La cohérence UX devient importante
+- Les données async entrent dans le système
+- Le comportement du produit devient complexe
+- Plusieurs écrans doivent rester alignés
+
+C’est le moment où :
+
+> L'interface utilisateur cesse d'être des écrans et devient un système
+
+### Guides disponibles [#available-guides]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Construire une mise en page SaaS",
+      href: "/docs/guides/building-a-saas-layout",
+      description:
+        "Composez des zones de navigation, d'en-tête et de contenu pour un produit SaaS évolutif.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Vide, chargement et états d'erreur",
+      href: "/docs/guides/empty-loading-error",
+      description:
+        "Manipulez les états de produit asynchrones de manière claire et cohérente.",
+      icon: AlertCircle,
+    },
+    {
+      title: "Formulaires avec validation",
+      href: "/docs/guides/forms-with-validation",
+      description:
+        "Créez des formulaires prévisibles et accessibles avec un comportement de validation clair.",
+      icon: FormInput,
+    },
+  ]}
+/>
+
+### Pourquoi cette couche existe [#why-this-layer-exists]
+
+La plupart des problèmes de produits ne proviennent pas de composants manquants.
+
+Ils viennent de :
+
+- Composition incohérente
+- Modèles d'interaction peu clairs
+- Mauvaise gestion des états asynchrones
+- logique de forme fragile
+- Manque de réflexion au niveau du système
+
+<Callout title="Ce que les guides empêchent">
+  Sans Guides, vous reconstruisez la même logique UX à plusieurs reprises, avec
+  des incohérences dans votre produit.
+
+</Callout>
+
+## Guide de décision [#decision-guide]
+
+<PreferAvoid
+  preferTitle="Use Guides if"
+  avoidTitle="Do not rely only on"
+  prefer={[
+    "vous construisez de vrais flux de produits",
+    "Vous avez besoin d'une UX cohérente sur tous les écrans",
+    "vous gérez des données ou des formulaires asynchrones",
+    "Votre UI se développe au-delà des simples pages",
+  ]}
+  avoid={[
+    "La pensée au niveau des composants",
+    "Décisions uniquement visuelles",
+    "implémentations uniques de l'IU",
+    "Comportement implicite du produit",
+  ]}
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "composants UI",
+      href: "/docs/ui",
+      description:
+        "Explorez les primitives utilisées pour créer des interfaces de produits.",
+      icon: Component,
+    },
+    {
+      title: "Starter Pro",
+      href: "/docs/starter-pro",
+      description:
+        "Passez d'une interface utilisateur à un véritable SaaS avec auth, facturation et backend.",
+      icon: Rocket,
+    },
+  ]}
+/>

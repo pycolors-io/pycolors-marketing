@@ -1,0 +1,378 @@
+---
+title: Vue d’ensemble
+description: Les bases de PyColors UI. Les tokens, les couleurs, la typographie
+  et les règles qui maintiennent la cohérence du système à mesure que les
+  produits se développent.
+lastUpdated: "2026-04-27"
+appliesTo: Design System
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  Layers3,
+  Layers,
+  Palette,
+  PenLine,
+  Sparkles,
+  TriangleAlert,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Système de conception</Badge>
+  <Badge>Fondations</Badge>
+</div>
+
+## Concevoir des produits cohérents avec PyColors [#design-consistent-products-with-pycolors]
+
+PyColors UI n'est pas une collection de composants isolés. C'est un **Système de décisions visuelles** conçus pour assurer la cohérence des interfaces produits au fur et à mesure de leur croissance.
+
+Le système de conception définit les règles derrière:
+
+- composants réutilisables
+- tableaux de bord de produits
+- pages de documentation
+- paramètres et surfaces de facturation
+- sections marketing
+- futurs modèles et starters SaaS
+
+L’objectif est simple : les composants doivent rester petits car la fondation porte la complexité.
+
+<Callout title="Pourquoi cela compte">
+  La plupart des incohérences de produits ne proviennent pas d'un mauvais
+  composant. Cela vient de nombreuses petites décisions locales qui s’éloignent
+  lentement les unes des autres. PyColors empêche cela en déplaçant les
+  décisions visuelles dans des rôles, des tokens et des règles partagés.
+
+</Callout>
+
+## Ce que vous comprendrez [#what-youll-understand]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Couches système",
+      description:
+        "Comprenez comment les tokens, les couleurs, la typographie et les composants fonctionnent ensemble au lieu de rivaliser localement.",
+      icon: Layers,
+    },
+    {
+      title: "Rôles sémantiques",
+      description: (
+        <>
+          Use meaning-driven utilities such as <code>bg-card</code>,{" "}
+          <code>text-muted-foreground</code>, and <code>border-border</code>.
+        </>
+      ),
+      icon: Palette,
+    },
+    {
+      title: "Cohérence du produit",
+      description:
+        "Gardez PyColors lisible, premium et fiable sur les documents, les tableaux de bord et les pages commerciales.",
+      icon: Sparkles,
+    },
+  ]}
+/>
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Commencez par les rôles, pas par les valeurs brutes [#start-with-roles-not-raw-values]
+
+Les composants doivent consommer des rôles sémantiques au lieu de valeurs visuelles codées en dur.
+
+```tsx title="components/product-card.tsx"
+export function ProductCard() {
+  return (
+    <article className="rounded-2xl border border-border bg-card p-6 text-card-foreground">
+      <p className="text-sm text-muted-foreground">
+        Production-shaped SaaS foundation
+      </p>
+      <h2 className="mt-2 text-xl font-semibold tracking-tight">Starter Pro</h2>
+    </article>
+  );
+}
+```
+
+Cela maintient le composant stable lorsque le thème évolue. Le composant n'a pas besoin de connaître la couleur exacte, le rayon ou la valeur de contraste. Il a juste besoin de savoir quel rôle il doit jouer.
+
+| Utilisation             | Éviter                              |
+| ----------------------- | ----------------------------------- |
+| `bg-card`               | valeurs hexadécimales codées en dur |
+| `text-muted-foreground` | valeurs d'opacité uniques           |
+| `border-border`         | Couleurs de frontière locales       |
+| tokens de rayon partagé | Valeurs de coin arbitraires         |
+
+</Step>
+
+<Step>
+### Garder une source de vérité [#keep-one-source-of-truth]
+
+Les décisions visuelles globales doivent être prises une fois, puis réutilisées partout.
+
+Cela comprend :
+
+- rayon
+- ombres
+- Rôles de couleur
+- Hiérarchie typographique
+- focus states
+- densité de surface du produit
+
+```css title="styles/globals.css"
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-border: var(--border);
+}
+```
+
+<Callout type="info" title="Note d ' exécution">
+  Un système de conception devient utile lorsque vous changez un token pour mettre à jour plusieurs surfaces de manière cohérente. C’est la différence entre un thème et une collection de styles locaux.
+
+</Callout>
+
+</Step>
+
+<Step>
+### Construire de petites primitives sur des fondations solides [#build-small-primitives-on-strong-foundations]
+
+Les primitives PyColors restent intentionnellement petites car le système en dessous définit déjà le comportement visuel.
+
+<Tabs items={["Modèle mental", "Exemple"]}>
+  <Tab value="Modèle mental">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="grid gap-4 md:grid-cols-3">
+        <div>
+          <div className="text-sm font-medium text-foreground">Tokens</div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            Définissez la géométrie, l'élévation, la direction d'espacement et les futures échelles visuelles.
+          </div>
+        </div>
+        <div>
+          <div className="text-sm font-medium text-foreground">Rôles</div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            Définir le sens des surfaces, du texte, des frontières, des états et des actions.
+          </div>
+        </div>
+        <div>
+          <div className="text-sm font-medium text-foreground">Composants</div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            Composer des rôles dans des primitives d'interface utilisateur réutilisables et des modèles de produits.
+          </div>
+        </div>
+      </div>
+    </div>
+
+</Tab>
+
+  <Tab value="Exemple">
+
+```tsx title="components/settings-panel.tsx"
+export function SettingsPanel() {
+  return (
+    <section className="rounded-2xl border border-border bg-card p-6">
+      <h2 className="text-lg font-semibold tracking-tight">
+        Workspace settings
+      </h2>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+        Manage product configuration from a consistent surface.
+      </p>
+    </section>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+</Step>
+
+</Steps>
+
+### Couches système [#system-layers]
+
+PyColors est organisé comme un système à plusieurs couches. Chaque couche a une responsabilité claire et ne doit pas remplacer la couche en dessous.
+
+| Couche                                | Responsabilité                | Exemple                                               |
+| ------------------------------------- | ----------------------------- | ----------------------------------------------------- |
+| Tokens                                | Décisions visuelles atomiques | rayon, ombres, échelles futures                       |
+| Couleurs                              | Rôles de couleurs sémantiques | `background`, `card`, `primary`, `muted`              |
+| Typographie                           | Hiérarchie lisible            | en-têtes, corps de texte, étiquettes, métadonnées     |
+| Composants de l'interface utilisateur | primitives réutilisables      | boutons, cartes, entrées, dialogues                   |
+| Schémas de produits                   | Flux composés                 | tableaux de bord, paramètres, facturation, onboarding |
+
+<Callout title="Pourquoi cela compte">
+  Lorsque chaque couche a une responsabilité claire, les composants deviennent
+  plus faciles à raisonner. Vous savez où changer le système au lieu de corriger
+  le symptôme localement.
+
+</Callout>
+
+## Guide de décision [#decision-guide]
+
+Utilisez le système de conception lorsque :
+
+- une décision visuelle apparaît à plus d'un endroit
+- un composant doit prendre en charge le mode clair et sombre
+- Une page doit être cohérente avec le reste du produit.
+- un motif sera réutilisé dans des documents, des entrées ou des pages commerciales
+- la décision affecte la confiance, la lisibilité ou le polissage du produit
+
+Évitez les remplacements locaux lorsque :
+
+- la valeur est purement décorative
+- La même exception existe déjà ailleurs
+- Le changement affaiblit la signification sémantique
+- le contournement rend la thématisation plus difficile
+- le code devient plus difficile à maintenir que la règle du système
+
+<PreferAvoid
+  prefer={[
+    "Les rôles sémantiques sur les valeurs brutes",
+    "tokens pour des décisions visuelles répétées",
+    "petites primitives avec un comportement prévisible",
+    "Règles de couleur et de typographie centralisées",
+    "documentation qui explique l'intention du système",
+  ]}
+  avoid={[
+    "couleurs codées en dur à l'intérieur des composants réutilisables",
+    "Rayon unique et valeurs d'ombre",
+    "échelles typographiques locales par page",
+    "utiliser les couleurs des graphiques comme états d'interface",
+    "dupliquer les décisions visuelles dans les zones de produits",
+  ]}
+/>
+
+## Chemin de lecture [#reading-path]
+
+Suivez cet ordre pour comprendre le système de la fondation à la mise en œuvre.
+
+<DocsLinks
+  variant="steps"
+  tone="platform"
+  items={[
+    {
+      title: "Tokens",
+      href: "/docs/design-system/tokens",
+      description:
+        "Commencez par les décisions atomiques qui alimentent le système visuel.",
+    },
+    {
+      title: "Arrondi",
+      href: "/docs/design-system/tokens/radius",
+      description:
+        "Découvrez comment la géométrie d'angle maintient les surfaces et les contrôles cohérents.",
+    },
+    {
+      title: "Ombres",
+      href: "/docs/design-system/tokens/shadows",
+      description:
+        "Comprendre les règles d'élévation pour une profondeur calme et prévisible.",
+    },
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description:
+        "Utilisez des rôles sémantiques pour les surfaces, le texte, les états et le thème.",
+    },
+    {
+      title: "Typographie",
+      href: "/docs/design-system/typography",
+      description:
+        "Définissez la hiérarchie, le rythme, les étiquettes et la structure du produit lisible.",
+    },
+  ]}
+/>
+
+### Là où cela convient [#where-this-fits]
+
+PyColors est structuré en couches de produits :
+
+| Couche de produit     | Objet                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------- |
+| Système de conception | Règles, tokens, rôles et fondations visuelles                                         |
+| composants UI         | primitives réutilisables construites au-dessus du système                             |
+| Motifs                | Guide de composition pour les surfaces réelles du produit                             |
+| Starter Free          | UX adaptée au produit pour validation                                                 |
+| Starter Pro           | fondations SaaS adaptées à la production avec auth, facturation, backend et livraison |
+
+Le système de conception est la couche la plus profonde de cet empilement. Il protège la cohérence avant que la complexité du produit n'augmente.
+
+<Callout title="Prêt à transformer le système en fondation de lancement ?">
+  Passez des fondations visuelles à la mise en œuvre du produit avec Starter
+  Pro. `/docs/starter-pro`
+
+</Callout>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Est-ce que PyColors UI est seulement une bibliothèque de composants ?">
+    Non. Les composants sont une couche visible. Le système de conception ci-dessous définit les rôles sémantiques, les règles visuelles et le modèle de cohérence qui rendent les composants évolutifs.
+  </Accordion>
+
+<Accordion title="Chaque décision visuelle doit-elle devenir un token ?">
+  Non. Seules les décisions répétées, significatives ou au niveau du système
+  devraient devenir des tokens. Un token est utile lorsqu’il améliore la
+  cohérence, le thème ou la réutilisation.
+</Accordion>
+
+  <Accordion title="Puis-je personnaliser le système ?">
+    Oui. Personnalisez le calque de token et conservez les composants consommant des rôles sémantiques. Cela vous donne de la flexibilité sans perdre de cohérence structurelle.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Tokens",
+      href: "/docs/design-system/tokens",
+      description:
+        "Commencez par les décisions visuelles atomiques derrière PyColors UI.",
+      icon: Layers3,
+    },
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description:
+        "Découvrez comment les couleurs sémantiques maintiennent les surfaces, le texte et les états cohérents.",
+      icon: Palette,
+    },
+    {
+      title: "Typographie",
+      href: "/docs/design-system/typography",
+      description:
+        "Revoir la hiérarchie, les étiquettes, la densité et la copie lisible du produit.",
+      icon: PenLine,
+    },
+    {
+      title: "composants UI",
+      href: "/docs/ui",
+      description:
+        "Passez des fondations aux primitives réutilisables construites avec PyColors UI.",
+      icon: Sparkles,
+    },
+  ]}
+/>

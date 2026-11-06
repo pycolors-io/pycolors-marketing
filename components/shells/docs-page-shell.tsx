@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { cn } from "@pycolors/ui";
 
@@ -7,6 +8,8 @@ type DocsPageShellProps = Readonly<{
 }>;
 
 export function DocsPageShell({ children, full = false }: DocsPageShellProps) {
+  const tSite = useCopy();
+
   return (
     <section
       id="content"
@@ -19,7 +22,7 @@ export function DocsPageShell({ children, full = false }: DocsPageShellProps) {
           full ? "max-w-none" : "max-w-3xl",
         )}
       >
-        {children}
+        {tSite(children)}
       </div>
     </section>
   );

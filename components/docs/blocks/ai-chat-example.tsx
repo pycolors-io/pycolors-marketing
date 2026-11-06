@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { Badge, Button } from "@pycolors/ui";
 import {
@@ -26,7 +27,10 @@ const response =
   "Start with one clear outcome.\n\n1. Describe the person using your product and the task they need to finish.\n2. Build the smallest useful flow, including empty, loading and error states.\n3. Validate it in a real project before adding more features.\n\nThis is a fixed local example, not a generated answer.";
 
 export function AIChatExample() {
+  const tSite = useCopy();
+
   const workSimulation = useWorkSimulation();
+  const localizedResponse = tSite(response);
   const [messages, setMessages] = React.useState<ChatMessage[]>([]);
   const [draft, setDraft] = React.useState("");
   const [status, setStatus] = React.useState<ChatStatus>("idle");
@@ -68,8 +72,9 @@ export function AIChatExample() {
           ? {
               draft: current.draft,
               status: "error",
-              errorMessage:
+              errorMessage: tSite(
                 "Simulated confirmation failure. Your edits are kept; try again.",
+              ),
             }
           : { draft: current.draft, status: "created", confirmed: snapshot };
       });
@@ -80,7 +85,7 @@ export function AIChatExample() {
   const localFile = useLocalChatFile({
     onUseSource: (source) => {
       fileIntent.current = source.id;
-      setDraft(filePrompt);
+      setDraft(tSite(filePrompt));
     },
     onRemoveSource: (id) => {
       if (fileIntent.current === id) fileIntent.current = null;
@@ -132,18 +137,18 @@ export function AIChatExample() {
         setStatus("error");
         return;
       }
-      position = Math.min(position + 32, response.length);
+      position = Math.min(position + 32, localizedResponse.length);
       setMessages((current) => {
         const next = {
           id,
           role: "assistant" as const,
-          text: response.slice(0, position),
+          text: localizedResponse.slice(0, position),
         };
         return current.some((item) => item.id === id)
           ? current.map((item) => (item.id === id ? next : item))
           : [...current, next];
       });
-      if (position === response.length) {
+      if (position === localizedResponse.length) {
         cancel();
         setStatus("idle");
       } else setStatus("streaming");
@@ -153,7 +158,7 @@ export function AIChatExample() {
   return (
     <div className="not-prose space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <Badge variant="outline">Local demo — no AI request</Badge>
+        <Badge variant="outline">{tSite("Local demo — no AI request")}</Badge>
         <div className="flex flex-wrap gap-2">
           <Button
             type="button"
@@ -164,7 +169,7 @@ export function AIChatExample() {
             disabled={status === "submitting" || status === "streaming"}
             onClick={() => setFailNext((value) => !value)}
           >
-            Fail next response
+            {tSite("Fail next response")}
           </Button>
           {agent &&
           agent.status !== "created" &&
@@ -178,7 +183,7 @@ export function AIChatExample() {
               disabled={agent.status === "confirming"}
               onClick={() => setFailConfirmation((value) => !value)}
             >
-              Fail next confirmation
+              {tSite("Fail next confirmation")}
             </Button>
           ) : null}
           <Button
@@ -201,17 +206,58 @@ export function AIChatExample() {
               lastResponse.current = null;
             }}
           >
-            Reset demo
+            {tSite("Reset demo")}
           </Button>
         </div>
       </div>
       <AIChat
+        translate={tSite}
         messages={messages}
         draft={draft}
         status={status}
         onDraftChange={setDraft}
-        attachments={localFile.control}
-        work={workSimulation.work}
+        attachments={{
+          ...localFile.control,
+          policy: {
+            ...localFile.control.policy,
+            formatsLabel: tSite(localFile.control.policy.formatsLabel),
+            readLabel: tSite(localFile.control.policy.readLabel),
+            description: tSite(localFile.control.policy.description),
+          },
+          errorMessage: tSite(localFile.control.errorMessage),
+          announcement: tSite(localFile.control.announcement),
+          items: localFile.control.items.map((item) =>
+            item.status === "error"
+              ? { ...item, errorMessage: tSite(item.errorMessage) }
+              : item,
+          ),
+        }}
+        work={
+          workSimulation.work
+            ? {
+                ...workSimulation.work,
+                title: tSite(workSimulation.work.title),
+                description: tSite(workSimulation.work.description),
+                steps: workSimulation.work.steps.map((step) => ({
+                  ...step,
+                  label: tSite(step.label),
+                  detail: tSite(step.detail),
+                })),
+                errorMessage: tSite(workSimulation.work.errorMessage),
+                actionError: tSite(workSimulation.work.actionError),
+                result: workSimulation.work.result
+                  ? {
+                      ...workSimulation.work.result,
+                      text: tSite(workSimulation.work.result.text),
+                      links: workSimulation.work.result.links?.map((link) => ({
+                        ...link,
+                        label: tSite(link.label),
+                      })),
+                    }
+                  : undefined,
+              }
+            : undefined
+        }
         agentDefinition={
           agent
             ? {
@@ -248,29 +294,39 @@ export function AIChatExample() {
         suggestions={[
           {
             id: "work",
-            label: "Review a task plan (demo)",
-            prompt: workSamplePrompt,
+            label: tSite("Review a task plan (demo)"),
+            prompt: tSite(workSamplePrompt),
           },
-          { id: "agent", label: "Define an agent (demo)", prompt: agentPrompt },
+          {
+            id: "agent",
+            label: tSite("Define an agent (demo)"),
+            prompt: tSite(agentPrompt),
+          },
           {
             id: "plan",
-            label: "Plan a product",
-            prompt: "Help me plan the first useful version of my product.",
+            label: tSite("Plan a product"),
+            prompt: tSite(
+              "Help me plan the first useful version of my product.",
+            ),
           },
           {
             id: "review",
-            label: "Review an interface",
-            prompt: "What should I check before shipping a new interface?",
+            label: tSite("Review an interface"),
+            prompt: tSite(
+              "What should I check before shipping a new interface?",
+            ),
           },
         ]}
-        errorMessage="This is a simulated error. Retry to play the local response."
+        errorMessage={tSite(
+          "This is a simulated error. Retry to play the local response.",
+        )}
         onSubmit={(text) => {
           if (busy.current || !text.trim()) return;
           const id = `demo-${++sequence.current}`;
           lastResponse.current = `${id}-reply`;
           setMessages((current) => [...current, { id, role: "user", text }]);
           setDraft("");
-          if (text.trim() === workSamplePrompt) {
+          if (text.trim() === tSite(workSamplePrompt)) {
             workSimulation.start();
             lastResponse.current = null;
             setStatus("idle");
@@ -279,12 +335,14 @@ export function AIChatExample() {
               {
                 id: `${id}-reply`,
                 role: "assistant",
-                text: "Work simulation only. Review the fictional plan below, then use the simulation controls to supply states. No task is executing.",
+                text: tSite(
+                  "Work simulation only. Review the fictional plan below, then use the simulation controls to supply states. No task is executing.",
+                ),
               },
             ]);
             return;
           }
-          const fileRequest = text.trim() === filePrompt;
+          const fileRequest = text.trim() === tSite(filePrompt);
           const fileSource =
             fileRequest && localFile.source?.id === fileIntent.current
               ? localFile.source
@@ -297,27 +355,36 @@ export function AIChatExample() {
               {
                 id: `${id}-reply`,
                 role: "assistant",
-                text: "Read a supported local file and choose Use as reference before sending this sample request. No definition was created.",
+                text: tSite(
+                  "Read a supported local file and choose Use as reference before sending this sample request. No definition was created.",
+                ),
               },
             ]);
             return;
           }
-          if (text.trim() === agentPrompt || fileSource) {
+          if (text.trim() === tSite(agentPrompt) || fileSource) {
             cancelAgent();
             setAgent({
               draft: {
                 id: `${id}-agent`,
                 revision: 0,
-                name: "Product review assistant",
-                purpose: "Help a product team review a proposed interface.",
-                instructions:
+                name: tSite("Product review assistant"),
+                purpose: tSite(
+                  "Help a product team review a proposed interface.",
+                ),
+                instructions: tSite(
                   "Review clarity, keyboard access and error recovery. Explain tradeoffs. Ask before recommending changes outside the supplied context.",
-                requestedCapabilities: ["Read user-provided product context"],
+                ),
+                requestedCapabilities: [
+                  tSite("Read user-provided product context"),
+                ],
                 sourceReferences: [
                   ...(fileSource ? [fileSource] : []),
                   {
                     id: id,
-                    label: "Explicit sample request in this conversation",
+                    label: tSite(
+                      "Explicit sample request in this conversation",
+                    ),
                   },
                 ],
               },
@@ -330,9 +397,11 @@ export function AIChatExample() {
               {
                 id: `${id}-reply`,
                 role: "assistant",
-                text: fileSource
-                  ? "Sample definition with a locally read source reference. The file was not analyzed by a model and its text is not part of the JSON. Review and confirm explicitly."
-                  : "Simulated draft from the exact sample request. Review the fields below, then confirm explicitly. No agent is running.",
+                text: tSite(
+                  fileSource
+                    ? "Sample definition with a locally read source reference. The file was not analyzed by a model and its text is not part of the JSON. Review and confirm explicitly."
+                    : "Simulated draft from the exact sample request. Review the fields below, then confirm explicitly. No agent is running.",
+                ),
               },
             ]);
           } else begin(lastResponse.current);
@@ -350,13 +419,11 @@ export function AIChatExample() {
         }
         onCopy={(message) => navigator.clipboard.writeText(message.text)}
       />
-      <WorkSimulationControls simulation={workSimulation} />
+      <WorkSimulationControls simulation={workSimulation} translate={tSite} />
       <p className="text-xs leading-5 text-muted-foreground">
-        Responses, agent drafts and Work states are fixed examples. Only the
-        exact agent sample requests open a definition. A file is read only when
-        you choose Read locally; it is not analyzed by a model. Nothing is sent
-        to a provider or stored remotely. Confirmed definitions can be copied or
-        downloaded locally.
+        {tSite(
+          "Responses, agent drafts and Work states are fixed examples. Only the exact agent sample requests open a definition. A file is read only when you choose Read locally; it is not analyzed by a model. Nothing is sent to a provider or stored remotely. Confirmed definitions can be copied or downloaded locally.",
+        )}
       </p>
     </div>
   );

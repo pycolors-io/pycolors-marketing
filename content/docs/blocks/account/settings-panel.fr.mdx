@@ -1,0 +1,261 @@
+---
+title: Panneau des paramètres
+description: Un formulaire de paramètres de compte et d'espace de travail
+  contrôlé avec des champs sectionnés, une présentation de validation, un état
+  de soumission et un retour d'information sur les résultats.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Badge } from "@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { SettingsPanelExample } from "@/components/docs/blocks/settings-panel-example";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Compte &amp; espace de travail</Badge>
+  <Badge>setting-panel</Badge>
+</div>
+
+## Composez des paramètres fiables sans posséder la logique du produit [#compose-trustworthy-settings-without-owning-product-logic]
+
+`SettingsPanel` rend un formulaire sectionné pour le profil de compte et les champs d'identité de l'espace de travail. Il fournit une structure réactive, un câblage de terrain accessible, une limite de soumission native, un état de progression facultatif et un retour d'information explicite sur les résultats.
+
+L'application consommatrice possède chaque valeur, changement de rappel, message de validation, soumission, permission, décision de persistance et résultat. Le Bloc ne contacte pas un service et n’implique pas que la validation de l’interface utilisateur soit une validation du serveur.
+
+<Callout title="Bloc source-copie">
+  Copiez le répertoire canonique complet dans votre application. Il n'y a pas de
+  package Blocks, d'installateur de registre, de CLI ou de canal de mise à jour
+  automatique pour ce bloc aujourd'hui.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+| Contrat                                 | Valeur                                                           |
+| --------------------------------------- | ---------------------------------------------------------------- |
+| Catégorie                               | `Account & workspace`                                            |
+| Catégorie slug                          | `account`                                                        |
+| Bloc limace                             | `settings-panel`                                                 |
+| Source                                  | `apps/marketing/content/blocks/account/settings-panel/`          |
+| Point d'entrée                          | `apps/marketing/content/blocks/account/settings-panel/index.tsx` |
+| Exportation                             | `SettingsPanel`                                                  |
+| Information future Identité du registre | `account-settings-panel`                                         |
+
+L'identité du registre est purement informative. L'installation du Registre n'est pas disponible, et ce Bloc ne crée pas de manifeste, de JSON généré, d'route ou de service de livraison.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/settings-panel/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible ou sélectionnez le code manuellement lorsque l'accès au presse-papiers n'est pas disponible. Il s'agit du fichier canonique complet, pas de l'exemple d'utilisation ou d'une seconde implémentation. Conservez la directive import et client lors de la copie.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <SettingsPanelExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/settings-panel/index.tsx"'
+    >
+      ../../../blocks/account/settings-panel/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `SettingsPanel` grâce à son équipement local existant. Il n'effectue aucune persistance ou demande de réseau. L'onglet Source inclut le fichier canonique complet au moment de la construction, pas une implémentation dupliquée.
+
+Votre copie de application ne reçoit pas de mises à jour automatiques. Suivez l'exemple d'utilisation ci-dessous, connectez votre propre comportement et validez-le dans votre application. Retour à l'accueil [Blocage du catalogue](/blocks) pour choisir un autre modèle.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+1. Copier le texte complet `settings-panel` un répertoire vers un chemin appartenant à l'application, tel que `src/components/blocks/settings-panel/`.
+2. Installer React 18 ou plus récent et le public `@pycolors/ui` paquet.
+3. Charger `@pycolors/tokens/tokens.css` et configurez les utilitaires Tailwind sémantiques utilisés par le Block.
+4. Importation `SettingsPanel` et ses types à partir du point d'entrée local copié.
+
+```tsx title="account-settings.tsx"
+"use client";
+
+import * as React from "react";
+import {
+  SettingsPanel,
+  type SettingsPanelSection,
+} from "./blocks/settings-panel";
+
+export function AccountSettings() {
+  const [displayName, setDisplayName] = React.useState("Alex Morgan");
+  const [workspaceName, setWorkspaceName] = React.useState("Northstar");
+
+  const sections = [
+    {
+      id: "profile",
+      title: "Profile",
+      fields: [
+        {
+          id: "display-name",
+          name: "displayName",
+          label: "Display name",
+          value: displayName,
+          onValueChange: setDisplayName,
+        },
+      ],
+    },
+    {
+      id: "workspace",
+      title: "Workspace",
+      fields: [
+        {
+          id: "workspace-name",
+          name: "workspaceName",
+          label: "Workspace name",
+          value: workspaceName,
+          onValueChange: setWorkspaceName,
+        },
+      ],
+    },
+  ] satisfies readonly SettingsPanelSection[];
+
+  return (
+    <SettingsPanel
+      onSubmit={(event) => {
+        event.preventDefault();
+        // Validate and persist through your application boundary.
+      }}
+      sections={sections}
+      submitLabel="Save settings"
+      title="Account settings"
+    />
+  );
+}
+```
+
+## Types appartenant aux consommateurs [#consumer-owned-types]
+
+```ts title="settings-panel-types.ts"
+type SettingsPanelField = Readonly<{
+  id: string;
+  name: string;
+  label: string;
+  value: string;
+  onValueChange: (value: string) => void;
+  description?: string;
+  error?: string;
+  placeholder?: string;
+  autoComplete?: string;
+  required?: boolean;
+  disabled?: boolean;
+}> &
+  (
+    | Readonly<{
+        kind?: "input";
+        type?: "text" | "email" | "url" | "tel";
+      }>
+    | Readonly<{ kind: "textarea"; rows?: number }>
+  );
+
+type SettingsPanelSection = Readonly<{
+  id: string;
+  title: string;
+  description?: string;
+  fields: readonly SettingsPanelField[];
+}>;
+
+type SettingsPanelFeedback = Readonly<{
+  status: "success" | "error";
+  title: string;
+  description?: string;
+}>;
+```
+
+Utilisez des ID de section et de champ uniques et stables. `name` reste disponible pour la limite de formulaire du consommateur, tandis que le bloc préfixes rendus contrôles ID pour éviter les collisions entre plusieurs panneaux.
+
+## Props [#props]
+
+| Prop              | Type                                | Par défaut | Objet                                                                            |
+| ----------------- | ----------------------------------- | ---------- | -------------------------------------------------------------------------------- |
+| `title`           | `string`                            | requis     | En-tête du panneau accessible.                                                   |
+| `description`     | `string`                            | néant      | Contexte au niveau du panel.                                                     |
+| `sections`        | `readonly SettingsPanelSection[]`   | requis     | Sections réservées aux consommateurs et champs contrôlés.                        |
+| `submitLabel`     | `string`                            | requis     | Nom de l'action de soumission en état de préparation.                            |
+| `submitting`      | `boolean`                           | `false`    | La vérité occupée / handicapée appartenant au consommateur.                      |
+| `submittingLabel` | `string`                            | `Saving…`  | Copie d'action pendant la soumission.                                            |
+| `submitDisabled`  | `boolean`                           | `false`    | Disponibilité de l'action indépendante détenue par les consommateurs.            |
+| `feedback`        | `SettingsPanelFeedback`             | néant      | Réussite ou présentation d'erreur appartenant au consommateur.                   |
+| `onSubmit`        | `FormEventHandler<HTMLFormElement>` | requis     | Limite de la présentation par le consommateur; aucune persistance n'est incluse. |
+| `className`       | `string`                            | néant      | Personnalisation de la composition des racines.                                  |
+
+## Valeurs contrôlées et validation [#controlled-values-and-validation]
+
+Chaque champ reçoit un `value` et `onValueChange`. Le bloc ne stocke jamais une valeur de secours. Les retours de consommateurs déterminent ce qui reste visible.
+
+`description` devient un texte d'aide. Quand `error` est présente, la primitive de champ public l'affiche, marque le contrôle non valide, et associe le message au contrôle. Le consommateur décide quand une erreur existe et ce qu'elle signifie. La forme utilise `noValidate` délibérément pour que la validation du navigateur ne se déguise jamais en limite de validation de l'application consommatrice.
+
+Les types d'entrée pris en charge sont intentionnellement limités au profil ordinaire et à la présentation de l'espace de travail. Les contrôles d'informations d'identification sensibles et les widgets spécifiques au produit sont en dehors de ce bloc.
+
+## Soumission et feedback [#submission-and-feedback]
+
+`onSubmit` reçoit l'événement de formulaire natif. Le consommateur évite les défauts lorsque cela est approprié, valide les valeurs actuelles, appelle sa propre couche de persistance et contrôle tous les accessoires suivants.
+
+```tsx title="controlled-submission.tsx"
+<SettingsPanel
+  {...settingsProps}
+  feedback={
+    saveError
+      ? { status: "error", title: "Settings were not saved" }
+      : saved
+        ? { status: "success", title: "Settings saved" }
+        : undefined
+  }
+  onSubmit={handleSubmit}
+  submitting={isSaving}
+  submittingLabel="Saving account settings…"
+/>
+```
+
+Bien que `submitting` est vrai, la forme expose `aria-busy`, les contrôles modifiables et l'action sont désactivés, et l'étiquette de soumission est visible. La rétroaction de succès utilise une région de statut polie. Le feedback d'erreur utilise une alerte assertive. Aucun des deux états n'exécute de requête, n'en déduit d'autorisations ou ne garantit la persistance.
+
+## Comportement réactif [#responsive-behavior]
+
+- Les grilles racine et de champ du panneau utilisent `min-w-0` pour rester rétractable.
+- Le contexte de section est empilé au-dessus de ses champs sur des fenêtres de visualisation étroites.
+- Les sections deviennent une composition équilibrée à deux colonnes au niveau actuel. `md` point de rupture.
+- Les champs circulent dans une colonne par défaut et deux colonnes à partir de `sm`; les zones de texte couvrent la grille de champs plus large.
+- Feedback et la pile d'action pleine largeur sur des écrans étroits, puis aligner à `sm`.
+- Aucune détection de fenêtre JavaScript n'est utilisée.
+
+## Accessibilité et comportement du clavier [#accessibility-and-keyboard-behavior]
+
+- La racine est une région marquée contenant une forme sémantique.
+- Chaque section de paramètres a un en-tête associé par programme.
+- Les entrées et les zones de texte utilisent des étiquettes réelles et un comportement natif focus/keyboard.
+- Les descriptions et les erreurs sont associées par les primitives de champ public.
+- L'action de sauvegarde est un bouton de soumission natif avec un traitement de focus visible.
+- `submitting` expose la sémantique occupée et désactivée.
+- La rétroaction de succès/erreur a un texte visible et une urgence de région vivante appropriée, plutôt que de compter uniquement sur la couleur.
+
+Des tests sémantiques, d'interaction et de hache ciblés vérifient ces comportements. Ce n'est pas une demande de certification WCAG complète.
+
+## Personnalisation [#customization]
+
+Après la copie, modifiez le contenu de la section, les champs, les proportions réactives, la copie d'action et la densité visuelle pour le produit consommateur. Conservez les identifiants stables, les étiquettes, les descriptions, les associations d'état invalides, la visibilité de la focus, la sémantique de la forme native et la propriété du consommateur lors de la personnalisation.
+
+Composez des surfaces de produits distinctes pour les changements de mot de passe, les contrôles de sécurité, la facturation, les adhésions, les invitations ou les actions destructrices. Ils nécessitent des limites de confiance, de permission et de confirmation différentes.
+
+## Exclusions délibérées [#deliberate-exclusions]
+
+Ce bloc n'inclut pas la gestion des mots de passe, les sessions, les fournisseurs d'identité, les informations d'identification, la facturation, les abonnements, les paiements, les invitations, l'administration d'équipe, les rôles, l'application des autorisations, l'authentification, l'autorisation, les appels backend / API, la persistance, les actions serveur, les modèles de base de données, le routage, les portes de mise à niveau ou la logique métier spécifique au produit.
+
+Il ne dépend pas de Next.js, Starter Free, Starter Pro, des importations de paquets privés/profonds, d'une bibliothèque de formulaires ou d'une autre dépendance d'exécution. Starter Free n'a informé que la composition générale; cela reste une preuve, pas une source d'autorité.
+
+## Propriété, mises à jour et restauration [#ownership-updates-and-rollback]
+
+Après la copie, le consommateur est propriétaire de la source, de l'intégration, des valeurs, de la validation, de la soumission, de la persistance, des autorisations, du contenu et de la maintenance future. Il n'y a pas de chemin de mise à jour automatique ou de synchronisation. Comparez délibérément les révisions canoniques futures et n'adoptez que les modifications qui correspondent à l'application.
+
+La restauration est la suppression ou la réversion de la copie `settings-panel` répertoire et son intégration locale. Aucune version de paquet, état de Registre, état de bloc à distance, données de compte ou données d'espace de travail n'est impliqué.

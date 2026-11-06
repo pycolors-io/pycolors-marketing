@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 
 const uiRoot = resolve(
   dirname(fileURLToPath(import.meta.url)),
-  "../../app/(site)/ui",
+  "../../app/[locale]/(site)/ui",
 );
 
 function readPage(path: string) {

@@ -1,0 +1,393 @@
+---
+title: Vide, chargement et états d'erreur
+description: Concevoir des états asynchrones clairs, cohérents et prêts à la
+  production avec les primitives PyColors UI.
+lastUpdated: "2026-04-27"
+appliesTo: Guides
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  EmptyState,
+  Inbox,
+  Skeleton,
+  Rows3,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@pycolors/ui";
+import {
+  AlertTriangle,
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  FormInput,
+  LayoutTemplate,
+  LoaderCircle,
+  SearchX,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Guides</Badge>
+  <Badge>états Async</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Les produits modernes passent une grande partie de leur vie en dehors du chemin du bonheur.
+
+Charges de données. Les listes sont vides. Les demandes échouent. Les actions peuvent être retardées, rejetées, rejugées ou bloquées par des autorisations.
+
+La façon dont votre produit gère ces moments affecte directement :
+
+- Performance perçue
+- Confiance des utilisateurs
+- clarté du produit
+- qualité globale du produit
+
+Ce guide explique comment concevoir **chargement**, **vide**et **erreur** avec PyColors UI primitives.
+
+<Callout title="Pourquoi cela compte">
+  Les utilisateurs ne se contentent pas de juger de l’état de réussite. Ils
+  jugent également si le produit se sent stable lorsque les données sont
+  manquantes, lentes ou indisponibles.
+
+</Callout>
+
+## Ce que vous allez concevoir [#what-youll-design]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "États de chargement",
+      description:
+        "Conservez la disposition attendue pendant que les données sont encore en cours de chargement.",
+      icon: LoaderCircle,
+    },
+    {
+      title: "États vides",
+      description:
+        "Expliquer les résultats vides valides et guider l'utilisateur vers l'action suivante.",
+      icon: SearchX,
+    },
+    {
+      title: "États d'erreur",
+      description:
+        "Communiquer les échecs calmement, clairement et avec un chemin de récupération exploitable.",
+      icon: CircleAlert,
+      tone: "danger",
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> Le squelette est une forme. EmptyState est une explication. L’alerte est un problème.
+
+Chaque état asynchrone a un travail:
+
+| État       | Composante   | Signification                                                    |
+| ---------- | ------------ | ---------------------------------------------------------------- |
+| Chargement | `Skeleton`   | Les données sont attendues bientôt                               |
+| Vide       | `EmptyState` | La demande a fonctionné, mais il n'y a rien à montrer            |
+| Erreur     | `Alert`      | Quelque chose a échoué et l'utilisateur a besoin de commentaires |
+
+<Callout type="info" title="Règle du système">
+  Ne floutez pas les états asynchrones. Un produit se sent plus clair lorsque
+  chaque état communique une situation spécifique.
+
+</Callout>
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Utiliser Skeleton pour le chargement [#use-skeleton-for-loading]
+
+Utilisation `Skeleton` lorsque les données sont chargées et que la disposition finale est déjà connue.
+
+Le squelette doit préserver la forme et réduire le décalage de mise en page. Cela ne devrait pas expliquer l’État.
+
+<Tabs items={["Carte", "Tableau"]}>
+  <Tab value="Carte">
+
+```tsx title="components/project-card-skeleton.tsx"
+import { Card, CardContent, Skeleton } from "@pycolors/ui";
+
+export function ProjectCardSkeleton() {
+  return (
+    <Card className="rounded-2xl border-border/60">
+      <CardContent className="space-y-3 p-6">
+        <Skeleton className="h-5 w-1/3" />
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-24 w-full" />
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+</Tab>
+
+  <Tab value="Tableau">
+
+```tsx title="components/project-table-skeleton.tsx"
+import { Skeleton, Table, TableBody, TableCell, TableRow } from "@pycolors/ui";
+
+export function ProjectTableSkeleton() {
+  return (
+    <Table>
+      <TableBody>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <TableRow key={index}>
+            <TableCell>
+              <Skeleton className="h-4 w-32" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-24" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-4 w-16" />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+</Step>
+
+<Step>
+### Utiliser EmptyState pour les résultats vides valides [#use-emptystate-for-valid-empty-results]
+
+Utilisation `EmptyState` lorsque la demande a réussi mais qu'il n'y a rien à afficher pour l'instant.
+
+Un état vide devrait répondre à deux questions :
+
+- Pourquoi est-ce vide ?
+- Que peut faire l'utilisateur ensuite ?
+
+```tsx title="components/projects-empty-state.tsx"
+import { Button, EmptyState } from "@pycolors/ui";
+
+export function ProjectsEmptyState() {
+  return (
+    <EmptyState
+      title="No projects yet"
+      description="Create your first project to start organizing your workspace."
+      action={<Button>Create project</Button>}
+    />
+  );
+}
+```
+
+Ce n'est pas un échec. C’est un véritable état de produit.
+
+</Step>
+
+<Step>
+### Utiliser l'alerte pour les erreurs [#use-alert-for-errors]
+
+Utilisation `Alert` lorsqu'une requête ou une action échoue et que l'utilisateur doit comprendre ce qui s'est passé.
+
+```tsx title="components/projects-error-state.tsx"
+import { Alert, AlertDescription, AlertTitle, Button } from "@pycolors/ui";
+
+export function ProjectsErrorState() {
+  return (
+    <Alert variant="destructive">
+      <AlertTitle>Projects could not be loaded</AlertTitle>
+      <AlertDescription>Check your connection and try again.</AlertDescription>
+      <div className="mt-4">
+        <Button variant="outline">Retry</Button>
+      </div>
+    </Alert>
+  );
+}
+```
+
+La copie d'erreur doit être calme, spécifique et exploitable.
+
+</Step>
+
+</Steps>
+
+## Exemples [#examples]
+
+<Tabs items={["Chargement", "Vide", "Erreur"]}>
+  <Tab value="Chargement">
+    <Card className="max-w-xl rounded-2xl border-border/60 bg-card/70">
+      <CardContent className="space-y-3 p-6">
+        <Skeleton className="h-5 w-1/3" />
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-24 w-full" />
+      </CardContent>
+    </Card>
+
+</Tab>
+
+<Tab value="Vide">
+  <div className="max-w-xl rounded-2xl border border-border/60 bg-card p-6">
+    <EmptyState
+      title="Pas encore de projets"
+      description="Créez votre premier projet pour commencer."
+      action={<Button>Create project</Button>}
+    />
+  </div>
+
+</Tab>
+
+  <Tab value="Erreur">
+    <div className="max-w-xl">
+      <Alert variant="destructive">
+        <AlertTitle>Quelque chose ne va pas</AlertTitle>
+        <AlertDescription>
+          Nous n'avons pas pu charger vos projets. Veuillez réessayer.
+        </AlertDescription>
+      </Alert>
+    </div>
+
+</Tab>
+
+</Tabs>
+
+## Guide de décision [#decision-guide]
+
+Utilisation `Skeleton` lorsque:
+
+- Les données sont en cours de chargement
+- La mise en page est prévisible
+- Le contenu est attendu prochainement
+- vous voulez éviter le décalage de mise en page
+
+Utilisation `EmptyState` lorsque:
+
+- La demande a réussi
+- Le résultat est valide
+- Il n'y a rien à afficher
+- L’utilisateur a besoin d’une prochaine étape
+
+Utilisation `Alert` lorsque:
+
+- Une demande a échoué
+- Une action a échoué
+- L'utilisateur ne peut pas continuer
+- le produit doit expliquer un problème de blocage
+
+<PreferAvoid
+  prefer={[
+    "Squelette lorsque la disposition est connue",
+    "EmptyState lorsque le résultat est valide mais vide",
+    "Alerter quand l'utilisateur doit comprendre un échec",
+    "Comportement asynchrone cohérent dans toutes les zones de produits",
+    "Messagerie claire avec un rôle par état",
+  ]}
+  avoid={[
+    "Squelette combiné avec copie explicative",
+    "EmptyState utilisé pour les erreurs réelles",
+    "spinners globaux remplaçant les mises en page stables",
+    "toasts pour bloquer les échecs de page",
+    "mélange de plusieurs états asynchrones à la fois",
+  ]}
+/>
+
+### Liste de contrôle [#action-checklist]
+
+Avant d'expédier des états async, confirmez que :
+
+- les états de chargement préservent la mise en page lorsque cela est possible
+- Les états vides expliquent pourquoi rien n'est montré
+- Les états vides offrent une action suivante utile le cas échéant.
+- L'erreur explique ce qui s'est passé
+- les défaillances de blocage sont visibles en ligne, non seulement dans un toast
+- Les actions de réessai sont disponibles lorsque la récupération est possible
+- copie reste calme, spécifique et humain
+
+<Callout title="Prêt à utiliser ces états dans des flux de produits réels ?">
+  Starter Pro vous offre des fondations SaaS adaptées à la production où les états
+  asynchrones sont importants : auth, facturation, routes protégés,
+  paramètres et tableaux de bord de produits. `/docs/starter-pro`
+
+</Callout>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Dois-je utiliser un spinner au lieu de Skeleton?">
+    Utilisez une toupie lorsque la mise en page est inconnue ou que l'opération est courte et isolée. Utilisez Skeleton lorsque la forme du contenu est déjà connue.
+  </Accordion>
+
+<Accordion title="Un état vide est-il une erreur ?">
+  Non. Un état vide signifie que la requête a réussi mais n'a renvoyé aucun
+  contenu utilisable. Le traiter comme une erreur rend le produit inutilement
+  négatif.
+</Accordion>
+
+  <Accordion title="Faut-il afficher les erreurs de blocage comme des toasts ?">
+    Habituellement non. Les toasts sont temporaires. Le blocage des défaillances doit rester visible en ligne afin que les utilisateurs puissent lire, comprendre et récupérer.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Squelette",
+      href: "/docs/ui/skeleton",
+      description:
+        "Utilisez des espaces réservés visuels pour charger les états qui préservent la mise en page.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "EmptyState",
+      href: "/docs/ui/empty-state",
+      description:
+        "Concevoir des états vides valides avec des messages clairs et les actions suivantes.",
+      icon: SearchX,
+    },
+    {
+      title: "Alerte",
+      href: "/docs/ui/alert",
+      description:
+        "Communiquer les problèmes de blocage et les commentaires importants sur les produits.",
+      icon: AlertTriangle,
+    },
+    {
+      title: "Formulaires avec validation",
+      href: "/docs/guides/forms-with-validation",
+      description:
+        "Appliquez la même clarté aux erreurs de validation, de chargement et de soumission des formulaires.",
+      icon: FormInput,
+    },
+  ]}
+/>

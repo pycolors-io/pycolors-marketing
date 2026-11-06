@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import type { ReactNode } from "react";
 import { Card, cn } from "@pycolors/ui";
 import { MarketingSectionShell } from "../section-shell";
@@ -13,6 +14,8 @@ export function SaasShowcase({
   actions?: ReactNode;
   footer?: ReactNode;
 }) {
+  const tSite = useCopy();
+
   return (
     <MarketingSectionShell
       spacing="compact"
@@ -24,8 +27,11 @@ export function SaasShowcase({
           id="project-readiness-title"
           className="mb-3 text-xs font-normal leading-5 text-muted-foreground"
         >
-          Built with{" "}
-          <span className="font-semibold text-foreground">PyColors UI</span>
+          {tSite("Built with")}
+          {tSite(" ")}
+          <span className="font-semibold text-foreground">
+            {tSite("PyColors UI")}
+          </span>
         </h2>
         <Card
           data-showcase-preview
@@ -38,16 +44,17 @@ export function SaasShowcase({
           className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
         >
           <p className="max-w-xl text-xs leading-5 text-muted-foreground">
-            Synthetic demo data. Interactions stay local; nothing is saved and
-            no backend is connected.
+            {tSite(
+              "Synthetic demo data. Interactions stay local; nothing is saved and no backend is connected.",
+            )}
           </p>
           {actions ? (
             <div data-showcase-actions className="shrink-0">
-              {actions}
+              {tSite(actions)}
             </div>
           ) : null}
         </div>
-        {footer ? <div data-showcase-footer>{footer}</div> : null}
+        {footer ? <div data-showcase-footer>{tSite(footer)}</div> : null}
       </div>
     </MarketingSectionShell>
   );

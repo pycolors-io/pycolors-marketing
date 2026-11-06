@@ -1,0 +1,483 @@
+---
+title: Liste de vérification pour la production (PRO)
+description: Validez l'authentification, la facturation, le backend, la
+  livraison, l'environnement et la préparation au lancement avant d'expédier
+  Starter Pro aux utilisateurs réels.
+lastUpdated: "2026-10-30"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+import {
+  CheckCircle,
+  CreditCard,
+  Database,
+  Download,
+  KeyRound,
+  LockKeyhole,
+  Rocket,
+  Server,
+  ShieldCheck,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Production</Badge>
+</div>
+
+## Valider la fondation avant le lancement [#validate-the-foundation-before-launch]
+
+Utilisez le [Guide de couverture automatique](/docs/starter-pro/release-readiness) pour vérifier ce qui est vérifié avec des données synthétiques. Exécuter `pnpm ops:diagnose`, vérifier `/api/readiness`, connectez le [signaux opérationnels](/docs/starter-pro/operations) à votre surveillance et répéter une restauration vérifiée avant de conserver les données client. Configurez vos propres quotas si votre offre a besoin de plafonds; les valeurs par défaut ne sont pas plafonnées et la facturation reste personnelle.
+
+Starter Pro vous donne la base adaptées à la production.
+
+Cette liste de contrôle vous aide à valider cette base avant d’exposer le produit à de vrais utilisateurs, à de vrais paiements et à de vraies données client.
+
+Un SaaS prêt pour le lancement ne devrait pas seulement "construire avec succès".
+
+Il devrait valider :
+
+- Authentification
+- facturation
+- Répétition backend
+- Routes protégées
+- livraison sécurisée
+- variables d'environnement
+- Comportement de déploiement
+- chemins de récupération
+- acheteur confiance
+
+<DocsUpgradeCTA
+  title="C’est prêt quand les systèmes sont d’accord."
+  description="Auth identifie l'utilisateur. La facturation confirme le client. Le backend protège les données. La livraison complète l'achat."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Setup guide"
+/>
+
+<Callout title="Règle de production">
+  Ne lancez pas car l'interface semble terminée. Lancer lorsque les systèmes
+  critiques se comportent correctement.
+
+</Callout>
+
+## Ce que couvre cette checklist [#what-this-checklist-covers]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Res",
+      description:
+        "Sessions, fournisseurs, réinitialisation des flux, vérification et routes protégées.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Facturation",
+      description:
+        "Checkout, portail, webhooks, factures, abonnements et accès.",
+      icon: CreditCard,
+    },
+    {
+      title: "Backend",
+      description:
+        "Base de données, propriété, migrations, règles de serveur et données de produit.",
+      icon: Server,
+    },
+  ]}
+/>
+
+### Modèle de préparation au lancement [#launch-readiness-model]
+
+> La préparation de la production n'est pas un contrôle. C’est l’alignement de l’identité, du paiement, des données, de l’accès et de la livraison.
+
+| Couche        | Question de production                                                                  |
+| ------------- | --------------------------------------------------------------------------------------- |
+| Res           | Les utilisateurs réels peuvent-ils se connecter en toute sécurité et récupérer l'accès? |
+| Facturation   | Les vrais clients peuvent-ils payer et avoir un état synchronisé?                       |
+| Backend       | Les données produits peuvent-elles persister avec les règles de propriété et d'accès ?  |
+| Livraison     | L'accès payant peut-il être effectué en toute sécurité après l'achat?                   |
+| Environnement | Les secrets de production sont-ils complets et séparés du local/test ?                  |
+| Déploiement   | La production se comporte-t-elle comme le flux validé local ?                           |
+
+<Callout type="info" title="Principe Go-Live">
+  Une liste de contrôle de production devrait vérifier le comportement, pas
+  seulement la configuration.
+
+</Callout>
+
+## Liste récapitulative [#checklist]
+
+<Steps>
+  <Step>
+    ### Valider les variables d'environnement [#validate-environment-variables]
+
+    Vérifiez que les environnements locaux, de prévisualisation et de production sont séparés.
+
+```bash title=".env.production"
+NEXT_PUBLIC_APP_URL=
+DATABASE_URL=
+AUTH_SECRET=
+
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_STARTER_PRO_ONE_TIME=
+
+RESEND_API_KEY=
+AUTH_EMAIL_FROM=
+```
+
+    Les secrets de production ne doivent pas réutiliser les valeurs de test locales à moins que le système ne soit intentionnellement encore en mode test.
+
+</Step>
+
+  <Step>
+    ### Valider l'authentification [#validate-authentication]
+
+    Testez le cycle de vie complet de l'auth :
+
+    - identifiants de connexion
+    - OAuth se connecter
+    - enregistrement
+    - e-mail vérification
+    - mot de passe oublié
+    - réinitialiser le mot de passe
+    - changement de mot de passe
+    - route protégée redirige
+    - navigation de session-conscient
+    - Comportement du compte connecté
+
+</Step>
+
+  <Step>
+    ### Valider la facturation [#validate-billing]
+
+    Testez le cycle de vie complet de Stripe :
+
+    - Création de session de paiement
+    - Paiement réussi
+    - Paiement annulé
+    - session du portail de facturation
+    - vérification de signature webhook
+    - abonnement créé événement
+    - Abonnement événement mis à jour
+    - Abonnement annulé
+    - facture paiement réussi événement
+    - facture paiement événement échoué
+
+</Step>
+
+  <Step>
+    ### Valider le backend et l'accès [#validate-backend-and-access]
+
+    Confirmez que les données du produit ne sont pas seulement affichées, mais protégées correctement :
+
+    - Migrations exécutées
+    - Le client de base de données est généré
+    - Les données de données d’exemple ne fonctionnent que là où elles sont attendues
+    - travail de contrôle de propriété
+    - Les données protégées nécessitent une session
+    - Les fonctionnalités payantes nécessitent un état de facturation valide
+    - Les règles côté serveur correspondent à l'état de l'interface utilisateur
+
+</Step>
+
+  <Step>
+    ### Valider une livraison sécurisée [#validate-secure-delivery]
+
+    Si votre produit inclut des téléchargements payants ou l'exécution, testez :
+
+    - confirmation de paiement
+    - mappage achat-accès
+    - stockage de biens privés
+    - télécharger token creation
+    - Expiration du token
+    - comportement d'accès non autorisé
+    - Récupération de session interrompue
+
+</Step>
+
+  <Step>
+    ### Valider le déploiement de la production [#validate-production-deployment]
+
+    Construire et déployer intentionnellement.
+
+```bash title="terminal"
+pnpm build
+pnpm start
+```
+
+    Puis validez l'URL de production :
+
+    - `/login`
+    - `/register`
+    - `/dashboard`
+    - `/billing`
+    - `/settings`
+    - Flux d'accès payants
+    - webhook endpoint
+
+</Step>
+
+</Steps>
+
+### Autre checklist [#auth-checklist]
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: "Requis",
+      title: "Comportement auth requis",
+      icon: LockKeyhole,
+      description:
+        "Confirmez que l'authentification fonctionne de bout en bout pour les utilisateurs réels avant le lancement.",
+      items: [
+        "Les utilisateurs peuvent s'inscrire",
+        "Les utilisateurs peuvent se connecter",
+        "Les utilisateurs peuvent se déconnecter",
+        "Les sessions persistent correctement",
+        "Les routes protégées redirigent les utilisateurs anonymes",
+        "Les utilisateurs authentifiés n'ont pas besoin de pages d'authentification inutiles",
+      ],
+    },
+    {
+      eyebrow: "Sécurité",
+      title: "Contrôles de sécurité",
+      icon: ShieldCheck,
+      description:
+        "Validez la récupération, le fournisseur et le comportement d'erreur avant que le produit n'atteigne les utilisateurs réels.",
+      items: [
+        "mot de passe oublié ne révèle pas si un e-mail existe",
+        "reset tokens expirent",
+        "La déconnexion du fournisseur ne peut pas bloquer les utilisateurs",
+        "La validation côté serveur existe pour les actions auth",
+        "Les messages d'erreur sont utiles mais pas trop spécifiques",
+      ],
+    },
+    {
+      eyebrow: "UX",
+      title: "Autres contrôles UX",
+      icon: KeyRound,
+      description:
+        "Auth devrait se sentir calme, prévisible et clair à travers le chargement, l'erreur et les états de succès.",
+      items: [
+        "Les états de chargement sont visibles",
+        "les formulaires désactivent l'envoi pendant le traitement",
+        "les erreurs sont au niveau du terrain lorsque cela est possible",
+        "Les erreurs d'authentification globales sont claires et calmes",
+        "Le succès explique la prochaine étape",
+      ],
+    },
+  ]}
+/>
+
+### Liste de contrôle de facturation [#billing-checklist]
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: "Checkout",
+      title: "Checkout checks",
+      icon: CreditCard,
+      description:
+        "Validez les points d'entrée de paiement et la création de session Stripe avant utilisation en production.",
+      items: [
+        "Les sessions de paiement sont créées sur le serveur",
+        "L'URL de succès fonctionne",
+        "Annuler l'URL fonctionne",
+        "La association des comptes aux clients Stripe est correcte",
+        "test et les prix de production ne sont pas mélangés",
+      ],
+    },
+    {
+      eyebrow: "Webhooks",
+      title: "Vérifications Webhook",
+      icon: ShieldCheck,
+      description:
+        "L'état du Webhook doit être vérifié, idempotent et reflété correctement dans votre application.",
+      items: [
+        "Les signatures webhook sont vérifiées",
+        "Les événements sont traités idempotently",
+        "abonnement create/update/delete events sync correctement",
+        "facture paiement événements mise à jour état de facturation",
+        "Les paiements échoués montrent un état clair du produit",
+      ],
+    },
+    {
+      eyebrow: "Accès",
+      title: "Vérifications d'accès à la facturation",
+      icon: CheckCircle,
+      description:
+        "L'accès payant devrait dépendre de l'état de facturation du backend synchronisé, et pas seulement de l'interface client.",
+      items: [
+        "Les fonctionnalités payantes nécessitent un accès actif",
+        "Les abonnements annulés suppriment l'accès lorsque cela est approprié",
+        "l'état passé-due est traité clairement",
+        "La page de facturation reflète l'état du backend synchronisé",
+        "l'accès au portail est uniquement disponible pour le client correct",
+      ],
+    },
+  ]}
+/>
+
+### Liste de contrôle backend [#backend-checklist]
+
+| Vérifier                                                  | Pourquoi c'est important                        |
+| --------------------------------------------------------- | ----------------------------------------------- |
+| Les migrations se déroulent proprement                    | Empêche le déploiement de la production cassée  |
+| Le client Prisma est généré                               | Assure l'accès à la base de données typée       |
+| Les modèles sont présents                                 | Supporte les sessions et les comptes            |
+| Les modèles de facturation sont présents                  | Prend en charge les abonnements et les factures |
+| Les contrôles de propriété existent                       | Protège les données utilisateur                 |
+| Les vérifications de plan sont vérifiables par le serveur | Empêche le contrôle d'accès client uniquement   |
+| Les événements Webhook sont suivis                        | Réduit le risque de traitement en double        |
+| Les données spécifiques à l'environnement sont séparées   | Évite le mélange test et production             |
+
+<Callout title="Principe de backend">
+  Si une règle affecte l'argent, l'identité ou les données privées, elle ne
+  devrait pas se limiter au frontend.
+
+</Callout>
+
+### Liste de contrôle de livraison [#delivery-checklist]
+
+Utilisez cette option si la livraison Starter Pro ou un autre flux de produits numériques payant est actif.
+
+| Vérifier                               | Comportement requis                                        |
+| -------------------------------------- | ---------------------------------------------------------- |
+| Le paiement est confirmé par webhook   | L'accès n'est pas accordé à partir de la redirection seule |
+| Le téléchargement de l'actif est privé | Pas d'URL de fichier public permanent                      |
+| Le token de livraison existe           | L'accès peut être contrôlé                                 |
+| Le token expire                        | Les liens partagés ont une valeur limitée                  |
+| L'accès non autorisé est refusé        | Les non-acheteurs ne peuvent pas télécharger               |
+| Le chemin du token expiré est géré     | L'acheteur a un chemin de récupération                     |
+| La copie de confirmation est claire    | L'acheteur sait ce qui se passe ensuite                    |
+
+## Go / no-go decision [#go--no-go-decision]
+
+<PreferAvoid
+  preferTitle="Ready to launch when"
+  avoidTitle="Do not launch if"
+  prefer={[
+    "Les flux d'authentification passent de bout en bout",
+    "webhooks de facturation synchronisent l'état correctement",
+    "les routes protégées imposent l'accès correctement",
+    "Les migrations de base de données sont stables",
+    "La livraison est sécurisée et testée",
+  ]}
+  avoid={[
+    "checkout fonctionne mais les webhooks ne sont pas testés",
+    "l'accès est accordé à partir de l'état client uniquement",
+    "les flux de réinitialisation de mot de passe ou de vérification sont rompus",
+    "Les secrets de production sont incomplets",
+    "Les fichiers payants sont exposés publiquement",
+  ]}
+/>
+
+## Erreurs courantes [#common-mistakes]
+
+<Accordions type="single">
+  <Accordion title="Le lancement après le paiement fonctionne, mais avant que les webhooks ne soient validés">
+    Le checkout ne suffit pas. Webhooks synchronise l'état de facturation auquel votre application doit faire confiance pour les décisions d'abonnement et d'accès.
+  </Accordion>
+
+<Accordion title="Utilisation de l'état côté client pour les contrôles d'accès sensibles">
+  L'état côté client peut guider l'interface utilisateur, mais les vérifications
+  d'accès sensibles doivent être vérifiables par le serveur.
+</Accordion>
+
+<Accordion title="Mixage de Stripe test et configuration live">
+  Les clés de test et les clés réelles, les produits, les prix et les secrets de
+  webhook sont séparés. Validez le bon environnement avant de mettre en ligne.
+</Accordion>
+
+  <Accordion title="Traiter la livraison comme une réflexion après coup">
+    Si les utilisateurs achètent un produit numérique, la satisfaction fait partie de l’expérience produit. Le checkout n’est que la moitié du trajet.
+  </Accordion>
+</Accordions>
+
+### Séquence finale de pré-lancement [#final-pre-launch-sequence]
+
+Avant le lancement, parcourez cette dernière séquence :
+
+1. Déployer vers Preview
+2. exécuter auth flows
+3. lancer Stripe test checkout
+4. vérifier les événements webhook
+5. confirmer les mises à jour de la base de données
+6. Confirmer l'état d'accès payant
+7. Tester les routes protégées
+8. accès de livraison de test
+9. examiner les variables d'environnement de production
+10. déployer la production
+11. Faire un test final de fumée
+
+<Callout title="Lancement en toute confiance">
+  Un lancement fort n'est pas seulement une interface utilisateur propre. C'est
+  un produit où l'identité, les revenus, les données et l'accès se comportent
+  correctement ensemble.
+
+</Callout>
+
+<DocsUpgradeCTA
+  title="Lancer lorsque les systèmes critiques sont d'accord."
+  description="Starter Pro vous donne les bases, mais la préparation de la production vient de la validation de l'authentification, de la facturation, du backend, de la livraison et du déploiement ensemble."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Système d'authentification",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Passez en revue l'authentification, les sessions, les fournisseurs et le cycle de vie du compte.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Système de facturation",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Validez le paiement, le portail, les webhooks, les factures et l'état de l'abonnement.",
+      icon: CreditCard,
+    },
+    {
+      title: "fondations",
+      href: "/docs/starter-pro/backend",
+      description:
+        "Validez la base de données, la propriété, les règles d'accès et les limites côté serveur.",
+      icon: Database,
+    },
+    {
+      title: "Livraison sécurisée",
+      href: "/docs/starter-pro/delivery",
+      description:
+        "Validez l'accès post-achat, les tokens, le stockage privé et l'exécution.",
+      icon: Download,
+    },
+  ]}
+/>

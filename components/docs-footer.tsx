@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowRight, ArrowUpRight, GitBranch } from "lucide-react";
 
 import { Container } from "@/components/container";
@@ -9,6 +10,7 @@ import { FooterAppearance } from "./footer-appearance";
 import { FooterNavigation } from "./footer-navigation";
 import { Logo } from "./logo";
 import styles from "./footer.module.css";
+import { LanguageSwitcher } from "./layout/language-switcher";
 
 const GROUPS = [
   {
@@ -72,28 +74,35 @@ const REPOSITORIES = [
 ] as const;
 
 export function DocsFooter() {
+  const tSite = useCopy();
+
   return (
-    <FooterNavigation className={styles.footer} label="PyColors Docs footer">
+    <FooterNavigation
+      className={styles.footer}
+      label={tSite("PyColors Docs footer")}
+    >
       <Container>
         <div className={styles.directory}>
           <div className={styles.brand}>
             <div>
               <Logo variant="docs" />
               <p className={styles.brandDescription}>
-                Reference, examples, and guides for building with PyColors.
+                {tSite(
+                  "Reference, examples, and guides for building with PyColors.",
+                )}
               </p>
               <Link href="/" className={styles.directoryLink}>
-                Back to PyColors
+                {tSite("Back to PyColors")}
                 <ArrowRight className="ml-1.5 size-3" aria-hidden="true" />
               </Link>
             </div>
             <nav
-              aria-label="Docs repositories on GitHub"
+              aria-label={tSite("Docs repositories on GitHub")}
               className={styles.repositories}
             >
               <p className={styles.repositoryHeading}>
                 <GitBranch className="size-3.5" aria-hidden="true" />
-                On GitHub
+                {tSite("On GitHub")}
               </p>
               <ul>
                 {REPOSITORIES.map((repo) => (
@@ -102,9 +111,12 @@ export function DocsFooter() {
                       href={repo.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${repo.name} on GitHub (opens in a new tab)`}
+                      aria-label={tSite(
+                        "{value0} on GitHub (opens in a new tab)",
+                        { value0: repo.name },
+                      )}
                     >
-                      {repo.label}
+                      {tSite(repo.label)}
                       <ArrowUpRight className="size-3" aria-hidden="true" />
                     </a>
                   </li>
@@ -116,8 +128,13 @@ export function DocsFooter() {
 
           <div className={styles.groups}>
             {GROUPS.map((group) => (
-              <nav key={group.title} aria-label={`Docs footer ${group.title}`}>
-                <h2>{group.title}</h2>
+              <nav
+                key={group.title}
+                aria-label={tSite("Docs footer {value0}", {
+                  value0: group.title,
+                })}
+              >
+                <h2>{tSite(group.title)}</h2>
                 <ul>
                   {group.links.map((link) => (
                     <li key={link.href}>
@@ -134,13 +151,13 @@ export function DocsFooter() {
                             ? "noopener noreferrer"
                             : undefined
                         }
-                        aria-description={
+                        aria-description={tSite(
                           link.href.startsWith("https://")
                             ? "Opens in a new tab"
-                            : undefined
-                        }
+                            : undefined,
+                        )}
                       >
-                        {link.label}
+                        {tSite(link.label)}
                         {link.href.startsWith("https://") && (
                           <ArrowUpRight
                             className="ml-1.5 size-3"
@@ -158,25 +175,39 @@ export function DocsFooter() {
 
         <div className={styles.bottomBar}>
           <div className={styles.legal}>
-            <p>© {new Date().getFullYear()} PyColors</p>
-            <nav aria-label="Docs footer legal information">
-              <Link href="/license">License</Link>
-              <Link href="/terms">Terms</Link>
-              <Link href="/privacy">Privacy</Link>
+            <p>
+              © {tSite(new Date().getFullYear())} {tSite(" PyColors")}
+            </p>
+            <nav aria-label={tSite("Docs footer legal information")}>
+              <Link href="/license">{tSite("License")}</Link>
+              <Link href="/terms">{tSite("Terms")}</Link>
+              <Link href="/privacy">{tSite("Privacy")}</Link>
             </nav>
           </div>
           <div className={styles.utilities}>
             <Link
               href="/changelog"
               className={styles.versions}
-              aria-label={`Release history: UI ${UI_VERSION}, Tokens ${TOKENS_VERSION}`}
+              aria-label={tSite(
+                "Release history: UI {value0}, Tokens {value1}",
+                { value0: UI_VERSION, value1: TOKENS_VERSION },
+              )}
             >
-              <span>UI {UI_VERSION}</span>
+              <span>
+                {tSite("UI ")}
+                {tSite(UI_VERSION)}
+              </span>
               <span aria-hidden="true">·</span>
-              <span>Tokens {TOKENS_VERSION}</span>
+              <span>
+                {tSite("Tokens ")}
+                {tSite(TOKENS_VERSION)}
+              </span>
               <ArrowUpRight className="size-3" aria-hidden="true" />
             </Link>
-            <FooterAppearance />
+            <div className={styles.preferences}>
+              <LanguageSwitcher variant="footer" />
+              <FooterAppearance />
+            </div>
           </div>
         </div>
       </Container>

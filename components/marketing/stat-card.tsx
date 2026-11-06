@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { cn } from "@pycolors/ui";
 
@@ -24,6 +25,8 @@ export function MarketingStatCard({
   tone = "neutral",
   className,
 }: MarketingStatCardProps) {
+  const tSite = useCopy();
+
   return (
     <div
       className={cn(
@@ -32,11 +35,13 @@ export function MarketingStatCard({
         className,
       )}
     >
-      <div className="text-xs text-muted-foreground">{label}</div>
-      <div className="mt-1 text-sm font-semibold text-foreground">{value}</div>
+      <div className="text-xs text-muted-foreground">{tSite(label)}</div>
+      <div className="mt-1 text-sm font-semibold text-foreground">
+        {tSite(value)}
+      </div>
       {description ? (
         <p className="mt-2 text-xs leading-6 text-muted-foreground">
-          {description}
+          {tSite(description)}
         </p>
       ) : null}
     </div>

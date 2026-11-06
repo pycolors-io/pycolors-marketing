@@ -7,7 +7,7 @@ vi.hoisted(() => {
 });
 vi.mock("@/lib/analytics", () => ({ trackMoneyPathEvent: vi.fn() }));
 // Exercise the real client and page together; only external transport is replaced.
-import RecoverOrderPage from "../../app/(site)/orders/recover/page";
+import RecoverOrderPage from "../../app/[locale]/(site)/orders/recover/page";
 
 const marker = "synthetic-private-recovery-marker";
 beforeEach(() => {

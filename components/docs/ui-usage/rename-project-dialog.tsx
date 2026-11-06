@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import {
   Button,
@@ -15,6 +16,8 @@ import {
 } from "@pycolors/ui";
 
 export function RenameProjectDialog() {
+  const tSite = useCopy();
+
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("Website");
@@ -44,25 +47,26 @@ export function RenameProjectDialog() {
   return (
     <div className="space-y-4">
       <p role="status" className="break-words">
-        Project: {name}
+        {tSite("Project: ")}
+        {tSite(name)}
       </p>
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogTrigger asChild>
           <Button type="button" variant="outline">
-            Rename project
+            {tSite("Rename project")}
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Rename project</DialogTitle>
+            <DialogTitle>{tSite("Rename project")}</DialogTitle>
             <DialogDescription>
-              This preview updates local state only.
+              {tSite("This preview updates local state only.")}
             </DialogDescription>
           </DialogHeader>
           <form noValidate onSubmit={handleSubmit} className="mt-4">
             <Input
               ref={inputRef}
-              label="Project name"
+              label={tSite("Project name")}
               name="projectName"
               required
               maxLength={60}
@@ -71,15 +75,15 @@ export function RenameProjectDialog() {
                 setDraft(event.target.value);
                 setError("");
               }}
-              error={error}
+              error={tSite(error)}
             />
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="button" variant="outline">
-                  Cancel
+                  {tSite("Cancel")}
                 </Button>
               </DialogClose>
-              <Button type="submit">Save name</Button>
+              <Button type="submit">{tSite("Save name")}</Button>
             </DialogFooter>
           </form>
         </DialogContent>

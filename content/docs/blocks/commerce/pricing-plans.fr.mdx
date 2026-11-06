@@ -1,0 +1,155 @@
+---
+title: Plans tarifaires
+description: Une comparaison d'offre source-copie avec les prix des
+  consommateurs, les conditions de facturation, les actions et la sélection de
+  période contrôlée facultative.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { PricingPlansExample } from "@/components/docs/blocks/pricing-plans-example";
+
+## Faire des choix d'offre clairs sans posséder la facturation [#make-offer-choices-clear-without-owning-billing]
+
+`PricingPlans` compose les cartes publiques PyColors UI dans une comparaison réactive. Chaque offre affiche son nom, sa description, son prix formaté, ses conditions de facturation, ses caractéristiques et son action appartenant au consommateur. Une sélection native facultative demande un changement de période de facturation sans calculer les prix ou choisir les données pour vous.
+
+Le bloc ne crée jamais une session de paiement, souscrit un client, calcule une remise, interprète la devise, cherche des offres ou impose l'accès. Ce sont des responsabilités d’application, pas un comportement de présentation.
+
+<Callout title="Démonstration fictionnelle">
+  Les offres ci-dessous sont illustratives, pas les prix des produits PyColors.
+  La modification d'une période ou le choix d'un exemple modifie uniquement
+  l'état local React. Aucun achat, demande de contact, création de compte ou
+  demande de réseau n'a lieu.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Commerce**limace `commerce`.
+- Bloquer : `pricing-plans`, exportation `PricingPlans`.
+- Source canonique : `apps/marketing/content/blocks/commerce/pricing-plans/`.
+- Compléter le point d'entrée: `index.tsx`.
+- Informations futures Identité du registre: `commerce-pricing-plans`.
+
+Cette identité ne fournit pas de programme d'installation du Registre. Il n'y a pas de paquet npm Blocks, de CLI, de service de téléchargement ou de canal de mise à jour automatique des sources.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/pricing-plans/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible ou sélectionnez le code manuellement lorsque l'accès au presse-papiers n'est pas disponible. Il s'agit du fichier canonique complet, pas de l'exemple d'utilisation ou d'une seconde implémentation. Conservez la directive import et client lors de la copie.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <PricingPlansExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/pricing-plans/index.tsx"'
+    >
+      ../../../blocks/commerce/pricing-plans/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `PricingPlans` grâce à son dispositif déterministe local existant. Il n'effectue aucune commande ou demande de réseau. L'onglet Source inclut le fichier canonique complet au moment de la construction, pas une implémentation dupliquée.
+
+Votre copie de application ne reçoit pas de mises à jour automatiques. Suivez l'exemple d'utilisation ci-dessous, connectez votre propre comportement et validez-le dans votre application. Retour à l'accueil [Blocage du catalogue](/blocks) pour choisir un autre modèle.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+1. Copier le texte complet `pricing-plans` répertoire dans un chemin appartenant à l'application.
+2. Configurer React, le public `@pycolors/ui` paquet, des tokens et des styles sémantiques à travers le [Guide d'installation](/docs/ui/installation).
+3. Importez le bloc à partir de votre point d'entrée local et fournissez vos propres offres.
+4. Exécutez la charpie de votre application, la vérification de type, les tests et la construction. Revoir les termes de l'offre, le comportement du clavier, le contenu long et les deux thèmes avant d'utiliser des offres réelles.
+
+```tsx title="offer-comparison.tsx"
+"use client";
+
+import { PricingPlans, type PricingPlan } from "./blocks/pricing-plans";
+
+const samplePlans = [
+  {
+    id: "launch",
+    name: "Launch example",
+    description: "A fictional offer, not a PyColors product.",
+    price: "$12",
+    priceSuffix: "/ month",
+    billingNote: "Illustrative price only. No checkout is connected.",
+    features: [{ id: "projects", label: "One sample project" }],
+    action: <a href="/your-offer-details">Read offer details</a>,
+  },
+] satisfies readonly PricingPlan[];
+
+export function OfferComparison() {
+  return (
+    <PricingPlans
+      description="Replace the sample data and link with your own offer."
+      plans={samplePlans}
+      title="Compare offers"
+    />
+  );
+}
+```
+
+L'exemple de lien est une destination appartenant à l'application à remplacer, pas une route PyColors ou une intégration de paiement.
+
+## Les accessoires appartenant aux consommateurs [#consumer-owned-props]
+
+### Comparaison [#comparison]
+
+`title` est nécessaire et étiquette la section avec un `h2`. `description` fournit le texte de soutien facultatif. `plans` est le tableau ordonné des offres à afficher. `className` personnalise la racine à travers le public `cn` utilité.
+
+Avec un vide `plans` tableau, la section affiche `emptyMessage`Il ne rend pas une grille de comparaison vide ou un sélecteur de période de facturation. Un tableau vide n'est pas traité comme un état de chargement ou d'erreur ; l'application doit décider ce qu'un résultat absent signifie.
+
+### Offres [#offers]
+
+Chaque `PricingPlan` Fournir une écurie `id`, `name`, `description`Formaté `price`, `features` et `action`. Les entrées de fonctionnalité ont leur propre stable `id` et visible `label`.
+
+`priceSuffix` peut expliquer une période ou une unité. `billingNote` devrait clarifier le total de la facturation réelle et le moment où ils diffèrent d'un montant principal. Le bloc rend les deux chaînes inchangées: il ne multiplie jamais, prorata, tours, formats monnaie ou dérive des totaux annuels.
+
+`highlight` fournit une formulation visible et une frontière soulignée. Cela ne signifie pas « le plus populaire » ou « recommandé » à moins que la application ne fournisse explicitement cette allégation et puisse la justifier. `footnote` ajoute un contexte appartenant au consommateur en dessous de l'action, tel que les conditions d'éligibilité ou d'annulation.
+
+Conservez les ID d'offre uniques dans la comparaison et les ID de fonctionnalité uniques dans chaque offre. Utilisez des noms, des étiquettes et des valeurs de période non vides. Des instances séparées reçoivent des identifiants de titre et de contrôle indépendants ; la réorganisation des offres préserve leur identité.
+
+### Période contrôlée facultative [#optional-controlled-period]
+
+Approvisionnement `period` avec `label`, `value`, `options` et `onValueChange`. Les options sont non vides, uniques `value` et `label` champs et peuvent être `disabled`. L'ensemble du contrôle peut également être désactivé.
+
+La sélection native demande une valeur prise en charge, activée, différente. Il ne stocke pas une sélection de secours ou de mettre à jour les données de l'offre. L'application consommatrice doit rendre à la fois le `value` et le correspondant `plans`. L'exemple interactif ci-dessus le démontre avec des données mensuelles et annuelles explicites.
+
+Aucune option ne signifie aucun sélecteur. Une valeur contrôlée non valide affiche un espace réservé d'étiquette désactivé au lieu de sélectionner silencieusement la première période. Corrigez la valeur dans le consommateur ; le bloc n'invoque pas de rappel pendant le rendu.
+
+Pour les données d'offre asynchrones, la présentation de la coordination désactivée / de chargement dans le consommateur, de sorte que les anciens prix ne sont jamais présentés comme une nouvelle période sélectionnée. Ce bloc n'est pas un gestionnaire de course de requête ou de récupération de données.
+
+### Actions [#actions]
+
+`action` est un nœud React fourni par le consommateur : un bouton PyColors public, un bouton natif, un lien de cadre ou un contrôle délibérément absent. Le Bloc ne clone pas l'élément, ne modifie pas sa destination, n'intercepte pas son événement, ne force pas une transition de focus ou ne déduit pas si le visiteur peut acheter.
+
+Donnez à chaque action un nom accessible significatif et utilisez `type="button"` pour un bouton de non-soumission à l'intérieur d'une forme environnante. Préserver la sémantique désactivée. Connectez les paiements ou les autorisations uniquement via la limite de serveur validée de l'application consommatrice ; un contrôle d'interface utilisateur désactivé n'est pas une autorisation.
+
+## Comportement réactif et d'accessibilité [#responsive-and-accessibility-behavior]
+
+La comparaison utilise la section sémantique, l'en-tête, la liste et le balisage des articles. Les titres des offres sont `h3` Éléments en dessous de la comparaison `h2`; n'utilisez pas ce bloc comme seul titre de page. Chaque article est associé à son propre titre.
+
+Cartes pile sur des écrans étroits, utilisez deux colonnes de `sm`, et trois de `xl`. La racine et les cartes restent rétractables, offrent des enveloppes de texte et les actions restent dans un pied de page cohérent. Le contenu long nécessite toujours un examen visuel dans votre mise en page.
+
+Le contrôle de période est une sélection native étiquetée avec un clavier natif et un comportement désactivé, pas un onglet personnalisé ou une implémentation radio. Les contrôles des consommateurs gardent leur propre sémantique de focalisation et d’interaction. Aucun mouvement de focus automatique, JavaScript de la fenêtre d'affichage, animation ou annonce de prix en direct-région n'est introduit.
+
+Les tests d'exécution couvrent la sémantique, les renvois contrôlés, les callbacks, les états désactivés, les instances indépendantes et une analyse de hache représentative. Ils ne constituent pas une vérification visuelle du contraste ou une certification d’accessibilité complète.
+
+## Propriété, mises à jour et exclusions [#ownership-updates-and-exclusions]
+
+La copie donne à votre application la propriété de la source et de ses changements futurs. Comparez délibérément les révisions canoniques ultérieures ; aucune version de paquet ne met à jour automatiquement votre copie. La suppression ou la restauration du répertoire copié le ramène.
+
+Ce bloc n'inclut pas le paiement, Stripe, les abonnements, les taxes, la conversion de devises, l'arithmétique des remises, la confirmation d'achat, l'authentification, l'autorisation, les droits, la persistance, le routage, un registre ou une nouvelle dépendance d'exécution. Les offres commerciales existantes de PyColors sont inchangées.
+
+Utilisez le [Tableau de données](/docs/blocks/data/data-table) pour enregistrer la navigation ou [Panneau des paramètres](/docs/blocks/account/settings-panel) pour les formulaires de compte. Besoin d'une base d'application plus large? [Comparer les starters](/starters).

@@ -1,0 +1,670 @@
+---
+title: Separator
+description: Diviseur visuel léger pour regrouper le contenu, séparer les
+  sections et clarifier la hiérarchie de mise en page dans PyColors UI.
+lastUpdated: "2026-05-11"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Separator,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  Columns3,
+  LayoutList,
+  LayoutTemplate,
+  ListTree,
+  Minus,
+  Palette,
+  PanelsTopLeft,
+  PanelTop,
+  Rows3,
+  SplitSquareVertical,
+  Tags,
+  XCircle,
+  CheckCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Séparateur</Badge>
+</div>
+
+### Séparation visuelle sans bruit visuel [#visual-separation-without-visual-noise]
+
+Les **Séparateur** Un composant crée un séparateur fin entre des éléments d'interface connexes.
+
+Utilisez-le pour:
+
+- Séparation des sections de page
+- Regroupement du contenu de la carte
+- diviser les actions de la barre d'outils
+- séparation des lignes de métadonnées
+- créer des cloisons verticales dans des configurations compactes
+- amélioration de la scanabilité sans ajout de conteneurs lourds
+
+Le séparateur est intentionnellement minimal. Il utilise des tokens sémantiques PyColors tels que `bg-border`, il s'adapte donc au mode lumineux, au mode sombre et aux remplacements de thème de produit.
+
+<Callout title="Idée de base">
+  Le séparateur doit clarifier la structure, pas décorer la page.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="separator-import.tsx"
+import { Separator } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez un séparateur horizontal pour diviser les blocs de contenu connexes.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl rounded-2xl border border-border/60 bg-card p-5">
+        <div>
+          <div className="text-sm font-medium text-foreground">
+            Compte
+          </div>
+          <div className="mt-1 text-sm text-muted-foreground">
+            Gérer les paramètres et les préférences du profil.
+          </div>
+        </div>
+
+        <Separator className="my-4" />
+
+        <div>
+          <div className="text-sm font-medium text-foreground">
+            Facturation
+          </div>
+          <div className="mt-1 text-sm text-muted-foreground">
+            Examiner les factures, l'état du plan et les paramètres de paiement.
+          </div>
+        </div>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-separator.tsx"
+import { Separator } from "@pycolors/ui";
+
+export function BasicSeparator() {
+  return (
+    <div className="rounded-2xl border border-border/60 bg-card p-5">
+      <div>
+        <div className="text-sm font-medium text-foreground">Account</div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Manage profile settings and preferences.
+        </div>
+      </div>
+
+      <Separator className="my-4" />
+
+      <div>
+        <div className="text-sm font-medium text-foreground">Billing</div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Review invoices, plan status, and payment settings.
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Comportement par défaut">
+  Le séparateur est décoratif par défaut. Il rend sans sémantique de séparateur,
+  sauf si vous définissez explicitement `decorative={false}`.
+
+</Callout>
+
+## Quand utiliser Séparateur [#when-to-use-separator]
+
+Utilisez Séparateur lorsque l'espacement seul n'est pas suffisant pour communiquer le regroupement.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Sections",
+      description:
+        "Séparez les groupes de contenu connexes à l'intérieur des cartes, des panneaux et des formulaires.",
+      icon: Rows3,
+    },
+    {
+      title: "Barres",
+      description:
+        "Diviser les groupes d'action compacts sans introduire de frontières lourdes.",
+      icon: Columns3,
+    },
+    {
+      title: "Hiérarchie",
+      description:
+        "Rendre les informations denses plus faciles à numériser tout en gardant la mise en page calme.",
+      icon: ListTree,
+    },
+  ]}
+/>
+
+### Orientation [#orientation]
+
+Le séparateur soutient l'orientation horizontale et verticale.
+
+### Horizontal [#horizontal]
+
+Horizontal est l'orientation par défaut.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl rounded-2xl border border-border/60 bg-card p-5">
+        <div className="text-sm font-medium text-foreground">
+          Starter Pro
+        </div>
+        <div className="mt-1 text-sm leading-6 text-muted-foreground">
+          Starter SaaS prêt pour la production avec authentification, facturation et fondations d'applications protégées.
+        </div>
+
+        <Separator className="my-4" />
+
+        <div className="flex flex-wrap gap-2">
+          <Badge variant="outline">Res</Badge>
+          <Badge variant="outline">Stripe</Badge>
+          <Badge variant="outline">Prisma</Badge>
+        </div>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="horizontal-separator.tsx"
+import { Badge, Separator } from "@pycolors/ui";
+
+export function HorizontalSeparator() {
+  return (
+    <div className="rounded-2xl border border-border/60 bg-card p-5">
+      <div className="text-sm font-medium text-foreground">Starter Pro</div>
+      <div className="mt-1 text-sm leading-6 text-muted-foreground">
+        Production-ready SaaS starter with authentication, billing, and
+        protected app foundations.
+      </div>
+
+      <Separator className="my-4" />
+
+      <div className="flex flex-wrap gap-2">
+        <Badge variant="outline">Auth</Badge>
+        <Badge variant="outline">Stripe</Badge>
+        <Badge variant="outline">Prisma</Badge>
+      </div>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Vertical [#vertical]
+
+Utilisez un séparateur vertical à l'intérieur d'une rangée flexible. Donner au parent une hauteur ou une utilisation `self-stretch`.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="flex h-12 items-center rounded-2xl border border-border/60 bg-card px-4">
+        <div className="text-sm font-medium text-foreground">
+          Gratuit
+        </div>
+
+        <Separator orientation="vertical" className="mx-4" />
+
+        <div className="text-sm font-medium text-foreground">
+          Pro
+        </div>
+
+        <Separator orientation="vertical" className="mx-4" />
+
+        <div className="text-sm font-medium text-foreground">
+          Entreprise
+        </div>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="vertical-separator.tsx"
+import { Separator } from "@pycolors/ui";
+
+export function VerticalSeparator() {
+  return (
+    <div className="flex h-12 items-center rounded-2xl border border-border/60 bg-card px-4">
+      <div className="text-sm font-medium text-foreground">Free</div>
+
+      <Separator orientation="vertical" className="mx-4" />
+
+      <div className="text-sm font-medium text-foreground">Pro</div>
+
+      <Separator orientation="vertical" className="mx-4" />
+
+      <div className="text-sm font-medium text-foreground">Enterprise</div>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Règle verticale">
+  Les séparateurs verticaux ont besoin d'une hauteur de disposition.
+  Utilisez-les à l'intérieur des lignes, des barres d'outils, des navs ou des
+  groupes de métadonnées compacts.
+
+</Callout>
+
+## Décoratif vs sémantique [#decorative-vs-semantic]
+
+Par défaut, Separator est décoratif et utilise `role="none"`.
+
+Définir `decorative={false}` lorsque le séparateur communique une limite significative pour les technologies d'assistance.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl rounded-2xl border border-border/60 bg-card p-5">
+        <section>
+          <h3 className="text-sm font-medium text-foreground">
+            Données personnelles
+          </h3>
+          <div className="mt-1 text-sm leading-6 text-muted-foreground">
+            Nom, email et profil de compte.
+          </div>
+        </section>
+
+        <Separator decorative={false} className="my-4" />
+
+        <section>
+          <h3 className="text-sm font-medium text-foreground">
+            Détails de l'espace de travail
+          </h3>
+          <div className="mt-1 text-sm leading-6 text-muted-foreground">
+            Paramètres d'équipe, de rôle et d'organisation.
+          </div>
+        </section>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="semantic-separator.tsx"
+import { Separator } from "@pycolors/ui";
+
+export function SemanticSeparator() {
+  return (
+    <div className="rounded-2xl border border-border/60 bg-card p-5">
+      <section>
+        <h3 className="text-sm font-medium text-foreground">
+          Personal details
+        </h3>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          Name, email, and account profile.
+        </p>
+      </section>
+
+      <Separator decorative={false} className="my-4" />
+
+      <section>
+        <h3 className="text-sm font-medium text-foreground">
+          Workspace details
+        </h3>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          Team, role, and organization settings.
+        </p>
+      </section>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle sémantique">
+  La plupart des séparateurs doivent rester décoratifs. Utilisez des séparateurs
+  sémantiques uniquement lorsque la limite elle-même aide à décrire la
+  structure.
+
+</Callout>
+
+### Carte de paramètres [#settings-card]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl rounded-2xl border border-border/60 bg-card">
+        <div className="p-5">
+          <div className="text-sm font-medium text-foreground">
+            Notifications
+          </div>
+          <div className="mt-1 text-sm text-muted-foreground">
+            Choisissez comment PyColors devrait vous contacter.
+          </div>
+        </div>
+
+        <Separator />
+
+        <div className="grid gap-4 p-5">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <div className="text-sm font-medium text-foreground">
+                Mises à jour des produits
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Recevez des notes de publication et des mises à jour de le panneau latéral de route.
+              </div>
+            </div>
+            <Badge variant="outline">Activé</Badge>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <div className="text-sm font-medium text-foreground">
+                Alertes de sécurité
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Notifications de compte et de facturation importantes.
+              </div>
+            </div>
+            <Badge>Requis</Badge>
+          </div>
+        </div>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="settings-card-separators.tsx"
+import { Badge, Separator } from "@pycolors/ui";
+
+export function SettingsCardSeparators() {
+  return (
+    <div className="rounded-2xl border border-border/60 bg-card">
+      <div className="p-5">
+        <div className="text-sm font-medium text-foreground">Notifications</div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Choose how PyColors should contact you.
+        </div>
+      </div>
+
+      <Separator />
+
+      <div className="grid gap-4 p-5">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <div className="text-sm font-medium text-foreground">
+              Product updates
+            </div>
+            <div className="text-sm text-muted-foreground">
+              Receive release notes and roadmap updates.
+            </div>
+          </div>
+          <Badge variant="outline">Enabled</Badge>
+        </div>
+
+        <Separator />
+
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <div className="text-sm font-medium text-foreground">
+              Security alerts
+            </div>
+            <div className="text-sm text-muted-foreground">
+              Important account and billing notifications.
+            </div>
+          </div>
+          <Badge>Required</Badge>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### métadonnées compactes [#compact-metadata]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="flex h-10 items-center rounded-2xl border border-border/60 bg-card px-4 text-sm text-muted-foreground">
+        <span>v1.10.0</span>
+        <Separator orientation="vertical" className="mx-3" />
+        <span>Paru le 24 avril 2026</span>
+        <Separator orientation="vertical" className="mx-3 hidden sm:block" />
+        <span className="hidden sm:inline">Commercialisation</span>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="metadata-separator.tsx"
+import { Separator } from "@pycolors/ui";
+
+export function MetadataSeparator() {
+  return (
+    <div className="flex h-10 items-center rounded-2xl border border-border/60 bg-card px-4 text-sm text-muted-foreground">
+      <span>v1.10.0</span>
+      <Separator orientation="vertical" className="mx-3" />
+      <span>Released Apr 24, 2026</span>
+      <Separator orientation="vertical" className="mx-3 hidden sm:block" />
+      <span className="hidden sm:inline">Marketing</span>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Commencer par l'espacement [#start-with-spacing]
+
+    Utilisez l'espacement en premier. Ajouter un séparateur uniquement lorsque le regroupement visuel n'est pas encore clair.
+
+</Step>
+
+  <Step>
+    #### Gardez les diviseurs subtils [#keep-dividers-subtle]
+
+    Utilisez des tokens de bordure sémantiques. Évitez les couleurs fortes à moins que le séparateur ne fasse partie d'une surface de marque très spécifique.
+
+</Step>
+
+  <Step>
+    #### Choisissez la bonne orientation [#pick-the-right-orientation]
+
+    Utilisez des séparateurs horizontaux pour le contenu empilé et des séparateurs verticaux pour les rangées compactes.
+
+</Step>
+
+  <Step>
+    #### Évitez de trop fragmenter la page [#avoid-over-fragmenting-the-page]
+
+    Trop de séparateurs rendent l'interface utilisateur lourde et plus difficile à analyser.
+
+</Step>
+
+</Steps>
+
+## Séparateur vs Border vs Card [#separator-vs-border-vs-card]
+
+| Situation                                           | Utilisation                      |
+| --------------------------------------------------- | -------------------------------- |
+| Diviser le contenu à l'intérieur d'une même surface | Séparateur                       |
+| Définir le bord d'une surface                       | Frontière                        |
+| Regrouper le contenu dans un objet distinct         | Carte                            |
+| Diviser les groupes d'action de la barre d'outils   | Séparateur                       |
+| Régions de page distinctes non liées                | Espacement des sections ou carte |
+| Mettre l’accent sur un état critique                | Alerte ou couleur sémantique     |
+
+<Callout title="Règle de décision">
+  Utilisez Séparateur à l'intérieur d'une surface. Utilisez Card lorsque le
+  contenu mérite sa propre surface.
+
+</Callout>
+
+## API [#api]
+
+| Prop          | Type                                   | Par défaut     | Désignation                                       |
+| ------------- | -------------------------------------- | -------------- | ------------------------------------------------- |
+| `orientation` | `"horizontal" \| "vertical"`           | `"horizontal"` | Diviseur direction                                |
+| `decorative`  | `boolean`                              | `true`         | Supprime la sémantique du séparateur lorsque true |
+| `className`   | `string`                               | —              | Autres classes Tailwind                           |
+| `...props`    | `React.HTMLAttributes<HTMLDivElement>` | —              | Attributs div standard                            |
+
+### TypeScript types [#typescript-types]
+
+```ts title="separator-types.ts"
+export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
+  orientation?: "horizontal" | "vertical";
+  decorative?: boolean;
+}
+```
+
+### Accessibilité [#accessibility]
+
+- Séparateurs décoratifs utilisés `role="none"`.
+- Séparateurs sémantiques `role="separator"`.
+- Séparateurs sémantiques comprennent `aria-orientation`.
+- La plupart des séparateurs visuels doivent être décoratifs.
+- Ne pas utiliser Separator en remplacement des rubriques.
+- Ne vous fiez pas uniquement à un diviseur pour expliquer la hiérarchie.
+
+<Callout title="Règle d'accessibilité">
+  Si le séparateur n'ajoute pas de sens pour les utilisateurs de lecteurs
+  d'écran, gardez-le décoratif.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "Séparateurs subtils à l'intérieur des cartes et des panneaux",
+    "séparateurs horizontaux pour sections empilées",
+    "séparateurs verticaux pour lignes compactes",
+    "séparateurs décoratifs par défaut",
+    "espacement avant d'ajouter des lignes supplémentaires",
+  ]}
+  avoid={[
+    "Utiliser des séparateurs comme décoration",
+    "trop de diviseurs dans des configurations denses",
+    "Couleurs fortes pour une séparation neutre",
+    "Séparateurs sémantiques sans valeur structurelle",
+    "remplacer les en-têtes par des lignes de séparation",
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Le séparateur doit-il être sémantique par défaut ?">
+    Non. La plupart des séparateurs sont uniquement visuels. PyColors les garde décoratifs par défaut pour éviter le bruit inutile de lecteur d'écran.
+  </Accordion>
+
+<Accordion title="Pourquoi le séparateur vertical n'apparaît-il parfois pas ?">
+  Les séparateurs verticaux ont besoin de la hauteur de la disposition parente.
+  Utilisez-les à l'intérieur d'une rangée avec une hauteur fixe,
+  `items-stretch`, ou une classe de hauteur explicite.
+</Accordion>
+
+<Accordion title="Dois-je utiliser Séparateur entre chaque élément de la liste?">
+  Habituellement non. Utilisez l'espacement, les arrière-plans de lignes ou les
+  bordures uniquement lorsque la densité nécessite un regroupement plus fort.
+</Accordion>
+
+  <Accordion title="Separator peut-il utiliser des couleurs personnalisées ?">
+    Oui à travers `className`, mais préfèrent les tokens sémantiques comme `bg-border`, `bg-border-subtle`, ou des tokens spécifiques à un thème lorsqu'ils sont disponibles.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Carte",
+      href: "/docs/ui/card",
+      description:
+        "Utilisez Card lorsque le contenu a besoin de sa propre surface et de ses propres limites.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description:
+        "tokens sémantiques pour les bordures, les surfaces et les séparateurs de disposition.",
+      icon: Palette,
+    },
+    {
+      title: "Badge",
+      href: "/docs/ui/badge",
+      description:
+        "Associez des badges avec des séparateurs dans les métadonnées et les lignes d'état compactes.",
+      icon: Tags,
+    },
+    {
+      title: "Modèle de présentation",
+      href: "/docs/patterns/layout",
+      description:
+        "Créez une structure de page plus claire avec des espaces, des surfaces et des séparateurs.",
+      icon: LayoutTemplate,
+    },
+  ]}
+/>

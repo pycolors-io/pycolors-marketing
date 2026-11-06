@@ -1,0 +1,388 @@
+---
+title: Menus, dialogues et panneaux
+description: Choisissez la superposition appropriée (DropdownMenu, Dialog,
+  Sheet) avec des règles UX prêtes pour la production, des paramètres
+  d'accessibilité par défaut et des modèles d'interaction évolutifs.
+lastUpdated: "2026-05-18"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge } from "@pycolors/ui";
+import {
+  CheckCircle,
+  LayoutPanelTop,
+  PanelRight,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+import {
+  OverlayDecisionDemo,
+  SheetFiltersDemo,
+  DialogCreateDemo,
+  DropdownRowActionsDemo,
+} from "../previews/overlays";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Motifs</Badge>
+  <Badge>Revêtements</Badge>
+</div>
+
+## Les superpositions définissent la qualité de l'interaction [#overlays-define-interaction-quality]
+
+Les superpositions ne sont pas seulement des composants de l'interface utilisateur.
+
+Ils définissent la manière dont les utilisateurs interagissent avec :
+
+- workflows
+- mesures prises
+- confirmations
+- navigation
+- état du produit
+- décisions contextuelles
+
+Choisir la mauvaise superposition crée :
+
+- Flux brisés
+- problèmes d'accessibilité
+- Intention de l'utilisateur peu claire
+- Modèles d'interaction incohérents
+- Comportement UX fragile
+
+Choisir le bon fait sentir le produit:
+
+- plus rapide
+- plus sûr
+- plus clair
+- plus intentionnel
+
+<Callout title="Modèle mental">
+  Les superpositions sont des contrats d'interaction, pas des composants
+  visuels.
+
+</Callout>
+
+### Système de recouvrement [#overlay-system]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Dropdown',
+      title: "menu déroulant",
+      icon: LayoutPanelTop,
+      description: (
+        <>
+          <p>
+            Lightweight contextual actions that should remain fast, compact, and close to the trigger.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Row actions</Badge>
+            <Badge variant="plan">Quick actions</Badge>
+            <Badge variant="plan">Compact menus</Badge>
+            <Badge variant="plan">Contextual actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Dialog',
+      title: "boîte dialogue",
+      icon: ShieldCheck,
+      description: (
+        <>
+          <p>
+            Focused blocking interactions that require explicit user attention before continuing.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Create flows</Badge>
+            <Badge variant="plan">Edit forms</Badge>
+            <Badge variant="plan">Confirmations</Badge>
+            <Badge variant="plan">Critical actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Sheet',
+      title: "Sheet",
+      icon: PanelRight,
+      description: (
+        <>
+          <p>
+            Progressive disclosure for filters, mobile navigation, side panels, and secondary workflows.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Filters</Badge>
+            <Badge variant="plan">Mobile navigation</Badge>
+            <Badge variant="plan">Side workflows</Badge>
+            <Badge variant="plan">Progressive disclosure</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Matrice de décision [#decision-matrix]
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: "Micro-interactions",
+      title: "Utiliser DropdownMenu",
+      icon: LayoutPanelTop,
+      description:
+        "Utilisez DropdownMenu pour des actions contextuelles compactes qui doivent rester légères et rapides.",
+      items: [
+        "actions en ligne",
+        "choix contextuels rapides",
+        "menus compacts",
+        "Actions non bloquantes",
+      ],
+    },
+    {
+      eyebrow: "Tâches ciblées",
+      title: "Utiliser la boîte de dialogue",
+      icon: ShieldCheck,
+      tone: "pro",
+      description:
+        "Utilisez la boîte de dialogue lorsque l'utilisateur doit terminer ou annuler intentionnellement une interaction ciblée.",
+      items: [
+        "formulaires",
+        "Créer des flux",
+        "éditer les flux",
+        "Des confirmations destructrices",
+      ],
+    },
+    {
+      eyebrow: "Flux de travail latéraux",
+      title: "Utiliser Sheet",
+      icon: PanelRight,
+      description:
+        "Utilisez Sheet pour les flux de travail secondaires qui doivent rester connectés à la page en cours.",
+      items: [
+        "filtres",
+        "navigation mobile",
+        "Panneaux de configuration",
+        "Flux de travail secondaires",
+      ],
+    },
+  ]}
+/>
+
+### Règle de base [#rule-of-thumb]
+
+- Dropdown aux micro-actions
+- Dialoguer avec la tâche ciblée
+- Flux de travail d’un panneau à l’autre
+
+<OverlayDecisionDemo />
+
+## Règles UX fondamentales [#core-ux-rules]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Gestion des focus",
+      description:
+        "Piéger le focus correctement, restaurer le focus sur le déclencheur et prendre en charge la navigation complète du clavier.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Comportement du défilement",
+      description:
+        "Verrouiller le défilement de l'arrière-plan tout en préservant le défilement de la superposition interne.",
+      icon: Sparkles,
+    },
+    {
+      title: "Clarté de l'interaction",
+      description:
+        "Utilisez des actions explicites, un comportement de fermeture prévisible et des limites de flux de travail intentionnelles.",
+      icon: CheckCircle,
+    },
+  ]}
+/>
+
+### Focus et clavier [#focus-and-keyboard]
+
+- Piège de focus dans la boîte de dialogue et feuille
+- Restaurer le focus sur le déclencheur à la fermeture
+- Support Escape pour fermer en toute sécurité
+- Assurer une navigation complète du clavier
+
+### Comportement du défilement [#scroll-behavior]
+
+- Verrouiller le défilement de la page lorsque la boîte de dialogue ou le panneau latéral est ouvert
+- Autoriser le défilement à l'intérieur de la superposition
+- Évitez les conteneurs de défilement imbriqués
+
+### Couches [#layering]
+
+- Éviter la nidification en profondeur
+- La liste déroulante vers la boîte de dialogue est acceptable lorsqu'elle est intentionnelle
+- Assurez-vous que les superpositions se superposent correctement avec les portails et z-index
+
+### Comportement de fermeture [#closing-behavior]
+
+- Toujours fournir des actions explicites telles que **Annuler** et **Enregistrer**
+- Ne pas fermer automatiquement en cas d'erreur
+- Exiger une confirmation pour les actions destructrices
+
+<Callout type="info" title="Règle de production">
+  La qualité des superpositions affecte directement la confiance du produit. Une
+  faible gestion de la focus et des modèles d'interaction incohérents
+  rendent immédiatement l'interface utilisateur fragile.
+
+</Callout>
+
+## Flux communs [#common-flows]
+
+### Créer un flux vers la boîte de dialogue [#create-flow--dialog]
+
+Utilisez la boîte de dialogue lorsque l'utilisateur commence une tâche ciblée qui doit être terminée ou annulée intentionnellement.
+
+<DialogCreateDemo />
+
+<br />
+
+### Filtres et flux de travail latéral vers Sheet [#filters-and-side-workflow--sheet]
+
+Utilisez Sheet pour la divulgation progressive et les flux de travail secondaires qui doivent rester connectés à la page en cours.
+
+<SheetFiltersDemo />
+
+<br />
+
+### Row actions to Espace client [#row-actions--dropdownmenu]
+
+Utilisez DropdownMenu pour des actions contextuelles qui doivent rester légères et rapides.
+
+<DropdownRowActionsDemo />
+
+## Liste de contrôle d'accessibilité [#accessibility-checklist]
+
+Avant les superpositions d'expédition :
+
+- La boîte de dialogue et le panneau latéral ont un titre visible ou accessible
+- La focus est piégée correctement
+- Le focus revient au déclencheur à la fermeture
+- L'évasion se ferme en toute sécurité
+- Les boutons ont des étiquettes claires
+- Les déclencheurs Icon-only incluent `aria-label`
+- Les éléments déroulants sont accessibles au clavier
+- Les changements d'état de recouvrement sont prévisibles
+
+<Callout title="L’accessibilité est une infrastructure">
+  L'accessibilité n'est pas facultative pour les superpositions. Il définit si
+  l'interaction est utilisable.
+
+</Callout>
+
+## Exemples [#examples]
+
+<Tabs items={["boîte dialogue", "Sheet"]}>
+
+<Tab value="boîte dialogue">
+
+```tsx title="create-dialog.tsx"
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>Create</Button>
+  </DialogTrigger>
+
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Create project</DialogTitle>
+
+      <DialogDescription>Give it a name and status.</DialogDescription>
+    </DialogHeader>
+
+    {/* form */}
+  </DialogContent>
+</Dialog>
+```
+
+</Tab>
+
+<Tab value="Sheet">
+
+```tsx title="filters-sheet.tsx"
+<Sheet>
+  <SheetTrigger asChild>
+    <Button variant="outline">Filters</Button>
+  </SheetTrigger>
+
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Filters</SheetTitle>
+
+      <SheetDescription>
+        Narrow results and apply advanced options.
+      </SheetDescription>
+    </SheetHeader>
+
+    {/* filters */}
+  </SheetContent>
+</Sheet>
+```
+
+</Tab>
+
+</Tabs>
+
+## Guide de décision [#decision-guide]
+
+<PreferAvoid
+  prefer={[
+    "une superposition par interaction",
+    "Intention claire de l'utilisateur",
+    "Gestion des focus accessibles",
+    "Divulgation progressive",
+    "Comportement de fermeture prévisible",
+  ]}
+  avoid={[
+    "empiler plusieurs superpositions",
+    "Utiliser la boîte de dialogue pour la navigation",
+    "utiliser DropdownMenu pour les formulaires",
+    "Des actions implicites destructrices",
+    "brisant la navigation du clavier",
+  ]}
+/>
+
+## Pourquoi cela compte [#why-this-matters]
+
+Les superpositions sont les endroits où la qualité de l'interaction devient visible.
+
+Un système de superposition fort rend le produit se sentir:
+
+- plus rapide
+- plus sûr
+- plus clair
+- plus délibéré
+- plus de production
+
+Un système de superposition faible rend l'ensemble du produit fragile.
+
+<DocsUpgradeCTA
+  title="Construire des superpositions qui se sentent prêts pour la production."
+  description="Les Patterns PyColors aident à standardiser l'accessibilité, la qualité des interactions et le comportement évolutif des produits sur votre surface SaaS."
+  productSlug="starter-pro"
+  buyLabel="Explore Starter Pro"
+  secondaryHref="/docs/patterns"
+  secondaryLabel="Browse Patterns"
+/>

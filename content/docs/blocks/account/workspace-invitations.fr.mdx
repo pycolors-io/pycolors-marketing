@@ -1,0 +1,134 @@
+---
+title: Invitations à l'espace de travail
+description: Une liste d'invitations source-copie avec les destinataires, les
+  rôles, le statut, l'expiration, les autorisations et les actions appartenant
+  au consommateur.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { WorkspaceInvitationsExample } from "@/components/docs/blocks/canonical-examples";
+
+## Présenter des invitations sans posséder la livraison des invitations [#present-invitations-without-owning-invitation-delivery]
+
+`WorkspaceInvitationsPanel` rend une section d'invitation nommée avec le destinataire, le rôle, le statut, les horodatages envoyés/expirés et les actions facultatives. Votre application fournit chaque invitation et possède ce que chaque action est autorisée à faire.
+
+<Callout title="Présentation seulement">
+  Ce bloc ne crée pas d'invitations, n'envoie pas d'e-mail, ne génère ou ne
+  valide pas de tokens, n'accepte pas les adhésions, ne révoque pas l'accès,
+  n'autorise pas les actions ou ne persiste pas. Ces comportements restent
+  derrière les limites de confiance de votre application.
+
+</Callout>
+
+Utilisez les propriétés facultatives `roleLabel`, `statusLabel`, `sentLabel` et `expiresLabel` pour traduire les libellés. L’application fournit les valeurs et dates traduites. Les valeurs par défaut restent en anglais.
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Compte &amp; espace de travail**limace `account`.
+- Bloquer : `workspace-invitations`, exportation `WorkspaceInvitationsPanel`.
+- Source canonique : `apps/marketing/content/blocks/account/workspace-invitations/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+Il n'y a pas de paquet npm Blocks, d'installateur de registre ou de CLI dans ce flux. Le fichier canonique est la source de présentation que vous copiez dans votre application.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/workspace-invitations/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible ou sélectionnez le code manuellement lorsque l'accès au presse-papiers n'est pas disponible.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <WorkspaceInvitationsExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/workspace-invitations/index.tsx"'
+    >
+      ../../../blocks/account/workspace-invitations/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `WorkspaceInvitationsPanel` avec une invitation déterministe fictive et des contrôles locaux inertes. Il n'envoie pas d'e-mail, ne crée pas de token et n'effectue aucune opération de réseau. L'onglet Source inclut le fichier canonique complet au moment de la construction, pas une implémentation dupliquée.
+
+Votre copie de application ne reçoit pas de mises à jour automatiques. Connectez votre propre service d'invitation et d'autorisation, puis validez-le dans votre application. Retour à l'accueil [Blocage du catalogue](/blocks) pour choisir un autre modèle.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+1. Copier le texte complet `workspace-invitations` répertoire dans un chemin appartenant à l'application.
+2. Configurer React, `@pycolors/ui`, les tokens et les styles sémantiques à travers le [Guide d'installation](/docs/ui/installation).
+3. Fournir des données d'invitation validées et des actions appartenant aux consommateurs.
+4. Exécutez lint, type-check, tests et build dans l'application consommatrice.
+
+```tsx title="src/components/workspace-invitations-list.tsx"
+"use client";
+
+import { Button } from "@pycolors/ui";
+import { WorkspaceInvitationsPanel } from "./blocks/workspace-invitations";
+
+export function WorkspaceInvitationsList() {
+  return (
+    <WorkspaceInvitationsPanel
+      id="workspace-invitations"
+      heading="Pending invitations"
+      description="Invitations supplied by the application."
+      invitations={[
+        {
+          id: "invite-1",
+          recipient: "sam@example.com",
+          secondaryText: "Example recipient",
+          role: "Editor",
+          status: "Pending",
+          sentAt: "2026-09-15T09:00:00Z",
+          sentAtLabel: "15 September 2026",
+          expiresAt: "2026-09-22T09:00:00Z",
+          expiresAtLabel: "22 September 2026",
+          actions: (
+            <Button type="button" variant="outline">
+              Revoke invitation
+            </Button>
+          ),
+        },
+      ]}
+    />
+  );
+}
+```
+
+Le bouton d'exemple n'effectue aucune mutation par lui-même. Votre application possède son gestionnaire, son flux de confirmation, sa vérification des autorisations, sa demande réseau et l'actualisation de l'état qui en résulte.
+
+## La vérité reste la vôtre [#invitation-truth-remains-yours]
+
+`id`, `heading` et `invitations` sont nécessaires. Donner à chaque panneau un HTML unique stable `id` et chaque invitation une écurie `id` unique dans cette liste.
+
+`recipient`, `role`, `status`, `sentAt` et `sentAtLabel` sont des valeurs de consommation display-ready. `secondaryText`Les valeurs d'expiration et les actions sont facultatives. Le bloc ne valide pas une adresse, ne mappe pas un rôle aux permissions, ne calcule pas l'état de l'invitation, ne calcule pas l'expiration ou ne décide pas si une action doit être affichée.
+
+Approvisionnement `expiresAt` et `expiresAtLabel` lorsque l'expiration doit être visible. Utilisez des horodatages lisibles par machine pour `dateTime` vos propres étiquettes humaines localisées pour la présentation.
+
+Niveau supérieur `actions` peut exposer un point d'entrée d'invitation appartenant à l'application. Les actions de ligne peuvent exposer les flux de renvoi, de révocation ou d'affichage uniquement lorsque l'utilisateur actuel est réellement autorisé. Omettre les actions indisponibles plutôt que de compter sur un bouton désactivé comme limite de sécurité.
+
+## Des états vides, réactifs et accessibles [#empty-responsive-and-accessible-states]
+
+Avec `invitations={[]}`, le bloc rend `emptyTitle` et facultatif `emptyDescription`. Le chargement, l'échec de la demande et le refus d'autorisation sont des états distincts que l'application consommatrice doit modéliser explicitement.
+
+La section est étiquetée par son titre. Les invitations utilisent une liste sémantique, le rôle et le statut sont du texte visible, et les valeurs envoyées/expirées utilisent la sémantique `<time>` éléments. Les adresses longues, les rôles, les statuts et les contrôles emballent plutôt que de forcer le débordement au niveau de la page.
+
+Le bloc ne déplace jamais le focus, intercepte les touches ou annonce des changements de statut. Les contrôles natifs et les composants grand public conservent leur propre sémantique clavier/focus. Donnez des contrôles de lignes répétés à des noms accessibles distincts lorsque leur contexte serait autrement ambigu.
+
+## Propriété et limites de sécurité [#ownership-and-security-boundaries]
+
+Votre backend possède la création d'invitation, la génération de tokens, la livraison d'e-mails, l'expiration, l'acceptation, la révocation, la mutation d'adhésion, la protection contre les répétitions et les contrôles d'autorisation. L'interface utilisateur n'est pas la preuve qu'une invitation est valide ou que la visionneuse actuelle peut la muter.
+
+Après la copie, examinez les modifications canoniques futures délibérément et préservez les personnalisations locales. Validez le texte long du destinataire, les résultats vides, les états expirés / en attente, les autorisations d'action, les largeurs étroites, les thèmes et le comportement du clavier avant l'utilisation de la production.
+
+Aucune livraison de courrier électronique, gestion des tokens, authentification, implémentation RBAC, base de données / schéma, comportement backend / réseau, Registre ou capacité CLI n'est introduite par ce bloc ou guide.

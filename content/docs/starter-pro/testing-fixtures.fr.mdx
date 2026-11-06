@@ -1,0 +1,454 @@
+---
+title: Jeux de données de test
+description: Validez l'authentification, la facturation, l'intégration et les
+  états SaaS protégés localement avec des jeux de données de test en forme de
+  production.
+lastUpdated: "2026-06-07"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+
+import {
+  AlertTriangle,
+  BadgeCheck,
+  CreditCard,
+  KeyRound,
+  Layers3,
+  LockKeyhole,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  UserRoundCheck,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Jeux de données de test</Badge>
+</div>
+
+## Essais locaux adaptées à la production [#production-shaped-local-testing]
+
+Starter Pro inclut des états de compte ensemencés conçus pour valider un comportement SaaS réaliste pendant le développement.
+
+L’objectif n’est pas seulement de créer des utilisateurs.
+
+Le but est de simuler :
+
+- états d'authentification
+- États d'intégration
+- États de facturation
+- comportement de la route protégée
+- Accès aux produits sous abonnement
+
+<DocsUpgradeCTA
+  title="Valider les états SaaS réalistes localement."
+  description="Testez l'authentification, la facturation, l'intégration et l'accès protégé sans reconstruire manuellement les états de compte."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/local-development"
+  secondaryLabel="Local development"
+/>
+
+<Callout title="Principe de base">
+  Les produits SaaS sérieux nécessitent des états de compte réalistes lors du
+  développement.
+
+</Callout>
+
+## Pourquoi cela existe [#why-this-exists]
+
+La plupart des produits SaaS deviennent difficiles à valider localement parce que les développeurs doivent recréer manuellement des cas de bord de compte à plusieurs reprises.
+
+Starter Pro réduit cette friction en exposant les états de test réutilisables.
+
+```txt title="testing-fixtures-model.txt"
+Seed fixtures
+  ↓
+Account states
+  ↓
+Billing states
+  ↓
+Protected routes
+  ↓
+Realistic product validation
+```
+
+## Pourquoi les états comptables sont importants [#why-account-states-matter]
+
+Les produits Real SaaS se comportent différemment selon :
+
+- cycle de vie de vérification
+- état de facturation
+- État fournisseur
+- État d'intégration
+- Niveau d'accès protégé
+
+Sans montages réalistes, les développeurs ne valident souvent que des chemins heureux.
+
+Cela crée un risque de production caché plus tard.
+
+<Callout type="info" title="Aperçu de la production">
+  Un seul utilisateur satisfait ne suffit pas pour valider un produit SaaS. Les
+  produits réels nécessitent plusieurs états d'identité, de facturation et
+  d'accès.
+
+</Callout>
+
+### Modèle mental [#mental-model]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: "Identity",
+      title: "État d'identité",
+      icon: UserRoundCheck,
+      description: (
+        <>
+          <p>
+            Identity state determines whether a user is verified, OAuth-only, password-based, or ready for normal product access.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Verified</Badge>
+            <Badge variant="plan">Unverified</Badge>
+            <Badge variant="plan">OAuth-only</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Billing",
+      title: "État de facturation",
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Billing state determines whether product areas should be available, restricted, or upgrade-gated.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Free</Badge>
+            <Badge variant="plan">Trialing</Badge>
+            <Badge variant="plan">Plan-aware access</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Access",
+      title: "État d'accès",
+      icon: ShieldCheck,
+      description: (
+        <>
+          <p>
+            Access state validates whether protected routes, settings, billing, and admin surfaces behave correctly.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Protected routes</Badge>
+            <Badge variant="plan">Upgrade redirects</Badge>
+            <Badge variant="plan">Settings</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Aperçu des caractéristiques [#feature-overview]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Test d'authentification",
+      description:
+        "Validez les informations d'identification auth, les flux OAuth, le comportement de vérification et les routes protégées.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Validation de facturation",
+      description:
+        "Valider le comportement des produits sensibles à l'abonnement et l'accès à la facturation.",
+      icon: CreditCard,
+    },
+    {
+      title: "États d'embarquement",
+      description:
+        "Expériences d'intégration vérifiées, non vérifiées et réservées aux fournisseurs.",
+      icon: UserRoundCheck,
+    },
+    {
+      title: "Confiance dans les produits",
+      description:
+        "Réduisez le travail de configuration répétitif et validez plus rapidement le comportement SaaS réaliste.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Activer les montages [#enable-fixtures]
+
+```bash title=".env.local"
+SEED_AUTH_FIXTURES=true
+```
+
+Puis lancez :
+
+```bash title="seed.sh"
+pnpm app:setup
+```
+
+### États de test inclus [#included-testing-states]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "vérifiés",
+      title: "Utilisateur standard",
+      icon: BadgeCheck,
+      description:
+        "Validez le comportement normal des produits authentifiés et les flux de tableau de bord.",
+      items: [
+        "Routes protégées",
+        "navigation tableau de bord",
+        "Paramètres authentifiés",
+        "Utilisation SaaS normale",
+      ],
+    },
+    {
+      eyebrow: "Vérification",
+      title: "Utilisateur non vérifié",
+      icon: Sparkles,
+      tone: "primary",
+      description:
+        "Validez l'intégration consciente de la vérification et le comportement de compte restreint.",
+      items: [
+        "e-mail vérification",
+        "Accès restreint",
+        "invites de vérification",
+        "bord d'embarquement cas",
+      ],
+    },
+    {
+      eyebrow: "OAuth",
+      title: "Utilisateur uniquement fournisseur",
+      icon: LockKeyhole,
+      description:
+        "Validez les comptes liés au fournisseur et le comportement des comptes sans mot de passe.",
+      items: [
+        "Connectez-vous à Google",
+        "Connexion à GitHub",
+        "fournisseur de liaison",
+        "Restrictions OAuth uniquement",
+      ],
+    },
+    {
+      eyebrow: "Facturation",
+      title: "Utilisateur autorisé par abonnement",
+      icon: CreditCard,
+      description:
+        "Valider la navigation de facturation-consciente et l'accès de produit de prime.",
+      items: [
+        "routes premium",
+        "flux de mise à niveau",
+        "accès facturation",
+        "UI plan-conscient",
+      ],
+    },
+  ]}
+/>
+
+## Comptes de départ [#seeded-accounts]
+
+Quand `SEED_AUTH_FIXTURES=true`Starter Pro crée plusieurs comptes de test locaux conçus pour valider un comportement SaaS réaliste.
+
+### Comptes inclus [#included-accounts]
+
+| Compte                   | Mot de passe        | État                             | Cas d'utilisation                                                                                               |
+| ------------------------ | ------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `free@pycolors.io`       | `Password123!`      | Utilisateur gratuit vérifié      | Valider le comportement normal des produits authentifiés sans accès PRO                                         |
+| `unverified@pycolors.io` | `Password123!`      | Utilisateur non vérifié          | Valider la vérification des e-mails et les flux d'intégration restreints                                        |
+| `oauth@pycolors.io`      | Pas de mot de passe | Utilisateur OAuth uniquement     | Valider les comptes liés au fournisseur et les flux add-password                                                |
+| `pro@pycolors.io`        | `Password123!`      | Utilisateur vérifié PRO trialing | Valider l'accès premium, la navigation basée sur la facturation et le comportement des produits sous abonnement |
+
+<Callout type="info" title="Les locaux uniquement">
+  Ces comptes sont des montages de développement destinés uniquement aux
+  environnements de mise en scène locaux et contrôlés. Ne réutilisez jamais ces
+  identifiants dans les systèmes de production.
+
+</Callout>
+
+### Identifiants par défaut [#default-credentials]
+
+```txt title="credentials.txt"
+Password123!
+```
+
+Ces informations d'identification sont destinées uniquement aux environnements de développement locaux.
+
+<Callout type="info" title="Règle de sécurité">
+  Ne réutilisez jamais les identifiants de développement dans des environnements
+  de mise en scène ou de production.
+
+</Callout>
+
+## Flux de validation recommandé [#recommended-validation-flow]
+
+<Steps>
+  <Step>
+    ### Activer l'ensemencement des fixations [#enable-fixture-seeding]
+
+    Définir `SEED_AUTH_FIXTURES=true` dans votre environnement local.
+
+</Step>
+
+  <Step>
+    ### Exécuter la configuration [#run-setup]
+
+```bash
+pnpm app:setup
+```
+
+</Step>
+
+  <Step>
+    ### Valider les états d'authentification [#validate-authentication-states]
+
+    Test vérifié, non vérifié, basé sur un mot de passe et un comportement de compte orienté OAuth.
+
+</Step>
+
+  <Step>
+    ### Valider les états de facturation [#validate-billing-aware-states]
+
+    Confirmez que les surfaces premium, gratuites et améliorées se comportent comme prévu.
+
+</Step>
+
+  <Step>
+    ### Valider le comportement mobile et PWA [#validate-mobile-and-pwa-behavior]
+
+    Confirmez que les mêmes états de compte restent utilisables dans des contextes d’applications mobiles et autonomes.
+
+</Step>
+
+</Steps>
+
+### Erreurs courantes [#common-mistakes]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="danger"
+  items={[
+    {
+      title: "Tester uniquement les chemins heureux",
+      description:
+        "Ignorer les cas de vérification, de fournisseur uniquement ou de facturation.",
+      icon: AlertTriangle,
+    },
+    {
+      title: "Accès au produit codé en dur",
+      description:
+        "Contourner le comportement d'accès protégé réaliste pendant le développement.",
+      icon: Layers3,
+    },
+    {
+      title: "Fuite de l'appareil",
+      description:
+        "Permettre aux identifiants de développement uniquement locaux d'influencer les environnements de production.",
+      icon: KeyRound,
+    },
+    {
+      title: "Validation sur ordinateur seulement",
+      description:
+        "Sauter le comportement mobile, autonome et PWA pour les états de compte importants.",
+      icon: Smartphone,
+    },
+  ]}
+/>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "Valider plusieurs états de compte",
+    "tester le comportement des produits conscients de la facturation",
+    "garder les luminaires isolés au développement",
+    "test OAuth et flux d'informations d'identification",
+    "Valider le comportement mobile et PWA",
+  ]}
+  avoid={[
+    "accès au produit de codage dur",
+    "Tester un seul état de compte",
+    "Utiliser les identifiants de développement en production",
+    "Raccordement des luminaires à la logique métier",
+    "sauter des états de compte restreint",
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Pourquoi inclure plusieurs états de compte?">
+    Parce que les produits SaaS réels se comportent différemment en fonction de la vérification, de la facturation, de l’état du fournisseur et du cycle de vie de l’intégration.
+  </Accordion>
+
+<Accordion title="Doit-il exister des équipements en production ?">
+  Non. Les luminaires sont destinés uniquement au développement local et aux
+  environnements de mise en scène contrôlés.
+</Accordion>
+
+  <Accordion title="Pourquoi ne pas créer des utilisateurs manuellement ?">
+    La configuration manuelle est plus lente, incohérente et facile à oublier. Les montages rendent les états de base reproductibles dans les environnements locaux.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Authentification",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Comprendre les sessions, les fournisseurs et les routes protégés.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Facturation",
+      href: "/docs/starter-pro/billing",
+      description: "Explorez l'accès aux abonnements et la facturation Stripe.",
+      icon: CreditCard,
+    },
+    {
+      title: "Développement local",
+      href: "/docs/starter-pro/local-development",
+      description: "Créez un environnement SaaS local réaliste.",
+      icon: Layers3,
+    },
+    {
+      title: "Configuration PWA",
+      href: "/docs/starter-pro/pwa-setup",
+      description:
+        "Validez l'installabilité, les zones sécurisées et le comportement mobile autonome.",
+      icon: Smartphone,
+    },
+  ]}
+/>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   APPEARANCE_DEFAULTS,
   type AppearancePreferences,
@@ -73,12 +74,14 @@ function FontFamilyControl({
   font: ThemeFont;
   onChange: (font: ThemeFont["id"]) => void;
 }) {
+  const tSite = useCopy();
+
   const id = React.useId();
 
   return (
     <div className="mt-5">
       <label id={`${id}-label`} htmlFor={id} className="text-sm font-medium">
-        Font family
+        {tSite("Font family")}
       </label>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
@@ -95,10 +98,10 @@ function FontFamilyControl({
               style={{ fontFamily: font.previewFamily }}
               className="flex size-6 shrink-0 items-center justify-center border-r border-border-subtle pr-2 text-base text-muted-foreground"
             >
-              Aa
+              {tSite("Aa")}
             </span>
             <span id={`${id}-value`} className="truncate">
-              {font.label}
+              {tSite(font.label)}
             </span>
             <ChevronDown
               aria-hidden="true"
@@ -107,7 +110,7 @@ function FontFamilyControl({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          aria-label="Font family choices"
+          aria-label={tSite("Font family choices")}
           align="start"
           sideOffset={6}
           collisionPadding={12}
@@ -125,7 +128,7 @@ function FontFamilyControl({
                 key={item.id}
                 value={item.id}
                 textValue={item.label}
-                aria-label={item.label}
+                aria-label={tSite(item.label)}
                 className="min-h-10 cursor-pointer gap-3 rounded-[3px] pr-3 data-[state=checked]:bg-surface-muted data-[state=checked]:font-medium max-sm:min-h-11"
                 style={{ fontFamily: item.previewFamily }}
               >
@@ -133,9 +136,9 @@ function FontFamilyControl({
                   aria-hidden="true"
                   className="w-6 shrink-0 text-base text-muted-foreground"
                 >
-                  Aa
+                  {tSite("Aa")}
                 </span>
-                <span className="truncate">{item.label}</span>
+                <span className="truncate">{tSite(item.label)}</span>
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>
@@ -145,16 +148,20 @@ function FontFamilyControl({
         id={`${id}-help`}
         className="mt-1.5 text-xs leading-4 text-muted-foreground"
       >
-        Preview your typeface. Typography CSS is available with your export.
+        {tSite(
+          "Preview your typeface. Typography CSS is available with your export.",
+        )}
       </p>
     </div>
   );
 }
 
 function PreviewTabs() {
+  const tSite = useCopy();
+
   return (
     <TabsList
-      aria-label="Preview content"
+      aria-label={tSite("Preview content")}
       className="h-10 max-w-full gap-0.5 rounded-[5px] border border-border-subtle bg-background p-0.5"
     >
       {PREVIEW_TABS.map((tab) => (
@@ -163,7 +170,7 @@ function PreviewTabs() {
           value={tab}
           className="min-h-8 rounded-[3px] px-2.5 text-xs capitalize data-[state=active]:bg-surface-muted data-[state=active]:text-foreground data-[state=active]:shadow-none"
         >
-          {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          {tSite(tab.charAt(0).toUpperCase() + tab.slice(1))}
         </TabsTrigger>
       ))}
     </TabsList>
@@ -171,6 +178,8 @@ function PreviewTabs() {
 }
 
 export function ThemeBuilder() {
+  const tSite = useCopy();
+
   const [state, setState] = React.useState(createThemeBuilderState);
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
@@ -234,14 +243,16 @@ export function ThemeBuilder() {
   return (
     <div className="space-y-6">
       <section
-        aria-label="Theme Builder workspace"
+        aria-label={tSite("Theme Builder workspace")}
         className="overflow-hidden rounded-[5px] border border-border-subtle bg-background"
       >
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle px-4 py-3 sm:px-5">
           <div>
-            <h2 className="text-sm font-semibold">Theme workspace</h2>
+            <h2 className="text-sm font-semibold">
+              {tSite("Theme workspace")}
+            </h2>
             <p className="mt-0.5 text-xs text-muted-foreground">
-              Customize, preview, export.
+              {tSite("Customize, preview, export.")}
             </p>
           </div>
           <div className="flex flex-wrap items-start gap-2">
@@ -260,7 +271,7 @@ export function ThemeBuilder() {
               className="site-primary-action rounded-[5px]"
             >
               <a href="#theme-builder-export">
-                Export theme
+                {tSite("Export theme")}
                 <ArrowDown aria-hidden="true" />
               </a>
             </Button>
@@ -278,7 +289,7 @@ export function ThemeBuilder() {
             >
               <span className="inline-flex items-center gap-2">
                 <SlidersHorizontal aria-hidden="true" />
-                Theme settings
+                {tSite("Theme settings")}
               </span>
               <ChevronDown
                 aria-hidden="true"
@@ -302,14 +313,14 @@ export function ThemeBuilder() {
                 id="theme-builder-settings-heading"
                 className="text-sm font-semibold"
               >
-                Customize your theme
+                {tSite("Customize your theme")}
               </h3>
               <Button
                 type="button"
                 variant="ghost"
                 size="icon-sm"
                 className="shrink-0 rounded-[5px]"
-                aria-label="Reset theme"
+                aria-label={tSite("Reset theme")}
                 onClick={() => {
                   setState(resetThemeBuilderState());
                   setAppearance(APPEARANCE_DEFAULTS);
@@ -319,7 +330,9 @@ export function ThemeBuilder() {
               </Button>
             </div>
             <p className="mt-1 mb-5 text-xs leading-5 text-muted-foreground">
-              Start with your brand color. Both modes update as you edit.
+              {tSite(
+                "Start with your brand color. Both modes update as you edit.",
+              )}
             </p>
             <ThemeInputs
               draft={state.draft}
@@ -350,10 +363,11 @@ export function ThemeBuilder() {
                 ariaLive="assertive"
                 className="mt-4"
               >
-                <AlertTitle>Showing the last valid theme</AlertTitle>
+                <AlertTitle>{tSite("Showing the last valid theme")}</AlertTitle>
                 <AlertDescription>
-                  Correct the highlighted fields to update your preview and
-                  exports.
+                  {tSite(
+                    "Correct the highlighted fields to update your preview and exports.",
+                  )}
                 </AlertDescription>
               </Alert>
             ) : null}
@@ -363,8 +377,12 @@ export function ThemeBuilder() {
                 ariaLive="assertive"
                 className="mt-4"
               >
-                <AlertTitle>Theme generation could not complete</AlertTitle>
-                <AlertDescription>{state.generationError}</AlertDescription>
+                <AlertTitle>
+                  {tSite("Theme generation could not complete")}
+                </AlertTitle>
+                <AlertDescription>
+                  {tSite(state.generationError)}
+                </AlertDescription>
               </Alert>
             ) : null}
             <section
@@ -375,7 +393,7 @@ export function ThemeBuilder() {
                 id="theme-builder-presets-heading"
                 className="text-xs font-medium"
               >
-                Or start with a preset
+                {tSite("Or start with a preset")}
               </h3>
               <div className="mt-3 grid grid-cols-2 gap-2">
                 {THEME_BUILDER_PRESETS.map((preset) => {
@@ -388,7 +406,7 @@ export function ThemeBuilder() {
                       key={preset.value}
                       type="button"
                       aria-pressed={selected}
-                      title={preset.label}
+                      title={tSite(preset.label)}
                       onClick={() =>
                         setState((current) =>
                           selectThemeBuilderPreset(current, preset.value),
@@ -415,7 +433,7 @@ export function ThemeBuilder() {
                         ))}
                       </span>
                       <span className="block text-[11px] font-medium leading-4">
-                        {preset.label}
+                        {tSite(preset.label)}
                       </span>
                       {selected ? (
                         <Check
@@ -433,8 +451,9 @@ export function ThemeBuilder() {
                 aria-hidden="true"
                 className="mt-1 size-3 shrink-0"
               />
-              No account. No uploads. Save a configuration file to continue
-              later.
+              {tSite(
+                "No account. No uploads. Save a configuration file to continue later.",
+              )}
             </p>
           </aside>
           <div className="min-w-0 bg-surface-muted/30 p-3 sm:p-4">
@@ -461,7 +480,7 @@ export function ThemeBuilder() {
                     <PreviewTabs />
                   ) : (
                     <span className="text-xs text-muted-foreground">
-                      Preview open in full screen
+                      {tSite("Preview open in full screen")}
                     </span>
                   )}
                   <div className="flex flex-wrap items-center gap-2">
@@ -479,10 +498,10 @@ export function ThemeBuilder() {
                         variant="outline"
                         size="sm"
                         className="rounded-[5px]"
-                        aria-label="Open full screen preview"
+                        aria-label={tSite("Open full screen preview")}
                       >
                         <Maximize2 className="size-3.5" aria-hidden="true" />
-                        <span>Full screen</span>
+                        <span>{tSite("Full screen")}</span>
                       </Button>
                     </DialogTrigger>
                   </div>
@@ -492,7 +511,7 @@ export function ThemeBuilder() {
                   className="overflow-hidden rounded-[5px] border border-border-subtle"
                   style={expanded ? { height: inlineHeight } : undefined}
                 >
-                  {!expanded ? renderPreview() : null}
+                  {tSite(!expanded ? renderPreview() : null)}
                 </div>
                 <DialogContent
                   style={{ top: 0, borderRadius: 0 }}
@@ -501,10 +520,10 @@ export function ThemeBuilder() {
                   <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-border-subtle py-4 pr-16 pl-4 sm:pl-6">
                     <div>
                       <DialogTitle className="text-sm">
-                        Theme preview
+                        {tSite("Theme preview")}
                       </DialogTitle>
                       <DialogDescription className="mt-1 text-xs">
-                        Your colors and typography · Live preview
+                        {tSite("Your colors and typography · Live preview")}
                       </DialogDescription>
                     </div>
                     {expanded ? <PreviewTabs /> : null}
@@ -520,7 +539,7 @@ export function ThemeBuilder() {
                   </div>
                   <div className="min-h-0 flex-1 overflow-auto overscroll-contain bg-surface-muted/30 p-2 sm:p-5">
                     <div className="mx-auto max-w-400 overflow-hidden rounded-[5px] border border-border-subtle">
-                      {expanded ? renderPreview(true) : null}
+                      {tSite(expanded ? renderPreview(true) : null)}
                     </div>
                   </div>
                 </DialogContent>

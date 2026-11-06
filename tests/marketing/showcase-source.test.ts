@@ -15,11 +15,20 @@ const root = resolve(marketing, "components/marketing");
 const entry = "showcase/saas-showcase.tsx";
 const sources = new Set([
   entry,
+  "../../lib/i18n/use-copy.ts",
+  "../../lib/i18n/copy-core.ts",
+  "../../lib/i18n/routing.ts",
   "showcase/showcase-workspace.tsx",
   "showcase/showcase-fixtures.ts",
   "section-shell.tsx",
 ]);
-const external = new Set(["react", "@pycolors/ui", "lucide-react"]);
+const external = new Set([
+  "next-intl",
+  "next-intl/routing",
+  "react",
+  "@pycolors/ui",
+  "lucide-react",
+]);
 
 /** Reuse #419's AST analysis; resolve every local edge against reviewed inputs. */
 function inspectGraph(overrides: Readonly<Record<string, string>> = {}) {
@@ -34,9 +43,14 @@ function inspectGraph(overrides: Readonly<Record<string, string>> = {}) {
     const source = overrides[file] ?? readFileSync(absolute, "utf8");
     for (const specifier of inspectModule(source, file)) {
       if (external.has(specifier)) continue;
-      if (!specifier.startsWith("."))
+      if (!specifier.startsWith(".") && !specifier.startsWith("@/"))
         throw new Error(`Unapproved package: ${specifier}`);
-      const target = relative(root, resolve(dirname(absolute), specifier));
+      const target = relative(
+        root,
+        specifier.startsWith("@/")
+          ? resolve(marketing, specifier.slice(2))
+          : resolve(dirname(absolute), specifier),
+      );
       const resolved = [target, `${target}.ts`, `${target}.tsx`].find(
         (candidate) => sources.has(candidate),
       );

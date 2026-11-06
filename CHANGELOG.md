@@ -1,5 +1,37 @@
 # Changelog
 
+## 1.32.0
+
+Release notes for 6 November 2026 (2026-11-06).
+
+Explore PyColors in English or French, then turn a project idea into a clearer implementation brief.
+
+### Applications updated
+
+- Browse product pages, documentation, articles and interactive Block examples in English or French.
+- Explore Services and describe a custom software project with its audience, priorities and desired outcomes.
+- Preview a structured project proposal and download an editable Word template before discussing the scope.
+
+### Platform and shared capabilities
+
+- Move between languages while keeping the relevant page and navigation context.
+- Use translated guides and Block examples to choose a starting point and adapt it to your application.
+
+### Reliability and maintenance
+
+- Existing English links remain available, with navigation and search in both languages covered by automated checks.
+- Project enquiries support both languages with clearer feedback for missing information.
+
+### For developers and candidates
+
+- Read a guide in your preferred language and compare its example with the interface.
+
+### For companies and recruiters
+
+- Clarify your project audience, priorities and acceptance goals before agreeing on an implementation scope.
+
+[Explore Services](https://pycolors.io/services).
+
 ## 1.31.0
 
 Release notes for 4 November 2026 (2026-11-04).

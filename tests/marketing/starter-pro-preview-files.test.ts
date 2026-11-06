@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 
 const marketing = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const page = readFileSync(
-  resolve(marketing, "app/(site)/starters/pro/page.tsx"),
+  resolve(marketing, "app/[locale]/(site)/starters/pro/page.tsx"),
   "utf8",
 );
 

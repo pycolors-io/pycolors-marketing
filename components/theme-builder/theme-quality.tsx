@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import { Check, ChevronDown, Moon, Sun } from "lucide-react";
 import type {
   ContrastResult,
@@ -21,7 +22,10 @@ const TEXT_LABELS: Partial<Record<SemanticRole, string>> = {
   "surface-inverted-foreground": "Text on inverted surfaces",
 };
 
-function describeCheck(check: ContrastResult) {
+function describeCheck(
+  check: ContrastResult,
+  tSite: ReturnType<typeof useCopy>,
+) {
   switch (check.foregroundRole) {
     case "ring":
       return {
@@ -43,7 +47,7 @@ function describeCheck(check: ContrastResult) {
       };
     default:
       return {
-        title: `${TEXT_LABELS[check.foregroundRole] ?? "Text against its background"}${check.target.usage === "large-text" ? " (large text)" : ""}`,
+        title: `${tSite(TEXT_LABELS[check.foregroundRole] ?? "Text against its background")}${check.target.usage === "large-text" ? tSite(" (large text)") : ""}`,
         guidance:
           "This text may be hard to read. Increase the difference between the text color and its background.",
       };
@@ -54,6 +58,8 @@ function ColorSample({
   check,
   theme,
 }: Readonly<{ check: ContrastResult; theme: SerializedThemeResult }>) {
+  const tSite = useCopy();
+
   const colors = theme.modes[check.mode].semantic;
   const foreground = colors[check.foregroundRole].srgbHex;
   return (
@@ -74,7 +80,7 @@ function ColorSample({
           }
           style={{ color: foreground }}
         >
-          Aa
+          {tSite("Aa")}
         </span>
       )}
     </span>
@@ -99,6 +105,8 @@ function generationWarningLabel(warning: ThemeWarning) {
 export function ThemeQuality({
   theme,
 }: Readonly<{ theme: SerializedThemeResult }>) {
+  const tSite = useCopy();
+
   const failed = theme.contrasts.filter((check) => check.status === "fail");
   const warnings = theme.warnings.filter(
     (warning) => warning.code !== "contrast-below-target",
@@ -109,17 +117,27 @@ export function ThemeQuality({
     <details className="group/readability rounded-[5px] border border-border-subtle bg-background">
       <summary className="flex min-h-20 cursor-pointer list-none flex-wrap items-center gap-4 rounded-[5px] px-4 py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&::-webkit-details-marker]:hidden sm:px-5">
         <span className="min-w-0 flex-1 basis-64">
-          <span className="block text-sm font-medium">Color readability</span>
+          <span className="block text-sm font-medium">
+            {tSite("Color readability")}
+          </span>
           <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-            Checks text, field outlines, and keyboard focus in light and dark
-            mode.
+            {tSite(
+              "Checks text, field outlines, and keyboard focus in light and dark mode.",
+            )}
           </span>
         </span>
         <span className="flex items-center gap-3 text-xs">
           <span className="rounded-full border border-border-subtle px-2.5 py-1 tabular-nums">
-            {failed.length > 0
-              ? `${failed.length} ${failed.length === 1 ? "check needs" : "checks need"} review`
-              : "All checked colors meet their targets"}
+            {tSite(
+              failed.length > 0
+                ? tSite(
+                    failed.length === 1
+                      ? "{value0} check needs review"
+                      : "{value0} checks need review",
+                    { value0: failed.length },
+                  )
+                : "All checked colors meet their targets",
+            )}
           </span>
           <ChevronDown
             aria-hidden="true"
@@ -131,15 +149,19 @@ export function ThemeQuality({
       <div className="border-t border-border-subtle">
         <div className="space-y-2 px-4 py-5 sm:px-5">
           <p className="text-sm font-medium">
-            {passed} of {theme.contrasts.length} checks meet their contrast
-            target.
+            {tSite(passed)} {tSite(" of ")}
+            {tSite(theme.contrasts.length)}{" "}
+            {tSite(" checks meet their contrast target.")}
           </p>
           <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
-            Contrast is how much text or a control stands out from its
-            background.
-            {failed.length > 0
-              ? " The items below may be harder to read or find. Review them before using this theme."
-              : " These color combinations meet their targets. Check them in your complete interface before using this theme."}
+            {tSite(
+              "Contrast is how much text or a control stands out from its background.",
+            )}
+            {tSite(
+              failed.length > 0
+                ? " The items below may be harder to read or find. Review them before using this theme."
+                : " These color combinations meet their targets. Check them in your complete interface before using this theme.",
+            )}
           </p>
         </div>
 
@@ -153,7 +175,9 @@ export function ThemeQuality({
             return (
               <section
                 key={mode}
-                aria-label={`${mode === "light" ? "Light" : "Dark"} mode readability`}
+                aria-label={tSite("{value0} mode readability", {
+                  value0: mode === "light" ? "Light" : "Dark",
+                })}
                 className="min-w-0 px-4 py-5 last:border-t last:border-border-subtle sm:px-5 md:last:border-t-0 md:last:border-l"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
@@ -162,17 +186,20 @@ export function ThemeQuality({
                       aria-hidden="true"
                       className="size-4 text-muted-foreground"
                     />
-                    {mode === "light" ? "Light mode" : "Dark mode"}
+                    {tSite(mode === "light" ? "Light mode" : "Dark mode")}
                   </h3>
                   <p className="text-xs tabular-nums text-muted-foreground">
-                    {checks.length - toReview.length} passed · {toReview.length}{" "}
-                    to review
+                    {tSite(checks.length - toReview.length)}{" "}
+                    {tSite(" passed · ")}
+                    {tSite(toReview.length)}
+                    {tSite(" ")}
+                    {tSite("to review")}
                   </p>
                 </div>
                 {toReview.length > 0 ? (
                   <ul className="mt-4 divide-y divide-border-subtle">
                     {toReview.map((check) => {
-                      const description = describeCheck(check);
+                      const description = describeCheck(check, tSite);
                       return (
                         <li
                           key={`${check.foregroundRole}-${check.backgroundRole}-${check.target.usage}`}
@@ -181,10 +208,10 @@ export function ThemeQuality({
                           <ColorSample check={check} theme={theme} />
                           <div className="min-w-0">
                             <h4 className="text-sm font-medium">
-                              {description.title}
+                              {tSite(description.title)}
                             </h4>
                             <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                              {description.guidance}
+                              {tSite(description.guidance)}
                             </p>
                           </div>
                         </li>
@@ -194,7 +221,7 @@ export function ThemeQuality({
                 ) : (
                   <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
                     <Check aria-hidden="true" className="size-4 shrink-0" />
-                    No contrast issues in the checked colors.
+                    {tSite("No contrast issues in the checked colors.")}
                   </p>
                 )}
               </section>
@@ -204,26 +231,27 @@ export function ThemeQuality({
 
         <div className="space-y-4 border-t border-border-subtle px-4 py-5 sm:px-5">
           <p className="max-w-3xl text-xs leading-5 text-muted-foreground">
-            {failed.length > 0
-              ? "Try another preset to compare. For precise adjustments, edit the CSS variables listed below after export. "
-              : null}
-            This checks generated colors, not every state of your interface.
-            Review actual text, hover, disabled, and keyboard focus states in
-            your app.
+            {tSite(
+              failed.length > 0
+                ? "Try another preset to compare. For precise adjustments, edit the CSS variables listed below after export. "
+                : null,
+            )}
+            {tSite(
+              "This checks generated colors, not every state of your interface. Review actual text, hover, disabled, and keyboard focus states in your app.",
+            )}
           </p>
           <details className="group/technical">
             <summary className="flex w-fit min-h-10 cursor-pointer list-none items-center gap-2 text-xs font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&::-webkit-details-marker]:hidden">
-              Technical details
+              {tSite("Technical details")}
               <ChevronDown
                 aria-hidden="true"
                 className="size-3.5 transition-transform group-open/technical:rotate-180 motion-reduce:transition-none"
               />
             </summary>
             <p className="mb-4 max-w-3xl text-xs leading-5 text-muted-foreground">
-              A higher ratio means more contrast. Each row shows the measured
-              ratio and its target for that use. These results describe the
-              exported colors; they do not certify a complete interface as
-              accessible.
+              {tSite(
+                "A higher ratio means more contrast. Each row shows the measured ratio and its target for that use. These results describe the exported colors; they do not certify a complete interface as accessible.",
+              )}
             </p>
             {failed.length > 0 ? (
               <ul className="divide-y divide-border-subtle">
@@ -234,16 +262,20 @@ export function ThemeQuality({
                   >
                     <div className="min-w-0 space-y-1">
                       <p className="font-medium">
-                        {describeCheck(check).title} ·{" "}
-                        {check.mode === "light" ? "Light" : "Dark"}
+                        {tSite(describeCheck(check, tSite).title)} ·{tSite(" ")}
+                        {tSite(check.mode === "light" ? "Light" : "Dark")}
                       </p>
                       <p className="break-words font-mono text-muted-foreground">
-                        --{check.foregroundRole} / --{check.backgroundRole}
+                        --{tSite(check.foregroundRole)} / --
+                        {tSite(check.backgroundRole)}
                       </p>
                     </div>
                     <p className="shrink-0 tabular-nums text-muted-foreground">
-                      Measured {check.ratio.toFixed(2)}:1 · Target{" "}
-                      {check.target.minimumRatio}:1
+                      {tSite("Measured ")}
+                      {tSite(check.ratio.toFixed(2))}
+                      {tSite(":1 · Target")}
+                      {tSite(" ")}
+                      {tSite(check.target.minimumRatio)}:1
                     </p>
                   </li>
                 ))}
@@ -252,15 +284,23 @@ export function ThemeQuality({
             {warnings.length > 0 ? (
               <div className="mt-4 border-t border-border-subtle pt-4">
                 <h4 className="text-xs font-medium">
-                  Automatic color adjustments
+                  {tSite("Automatic color adjustments")}
                 </h4>
                 <ul className="mt-2 space-y-1 text-xs leading-5 text-muted-foreground">
                   {warnings.map((warning, index) => (
                     <li
                       key={`${warning.code}-${warning.mode}-${warning.role}-${index}`}
                     >
-                      {generationWarningLabel(warning)}
-                      {warning.mode ? ` Applied in ${warning.mode} mode.` : ""}
+                      {tSite(generationWarningLabel(warning))}
+                      {tSite(
+                        warning.mode
+                          ? tSite(" Applied in {value0} mode.", {
+                              value0: tSite(
+                                warning.mode === "light" ? "light" : "dark",
+                              ),
+                            })
+                          : "",
+                      )}
                     </li>
                   ))}
                 </ul>

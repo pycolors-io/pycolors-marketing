@@ -11,7 +11,7 @@ import { axe } from "vitest-axe";
 import BlogPostPage, {
   generateMetadata,
   generateStaticParams,
-} from "../../app/(site)/blog/[slug]/page";
+} from "../../app/[locale]/(site)/blog/[slug]/page";
 import { ArticleToc } from "@/components/blog/article-toc";
 import { ShareArticle } from "@/components/blog/share-article";
 import { AuthorBadge } from "@/components/blog/author-badge";
@@ -85,7 +85,9 @@ afterEach(() => {
 
 async function renderPage() {
   return render(
-    await BlogPostPage({ params: Promise.resolve({ slug: "current" }) }),
+    await BlogPostPage({
+      params: Promise.resolve({ locale: "en" as const, slug: "current" }),
+    }),
   );
 }
 
@@ -160,7 +162,7 @@ describe("blog article reading layout", () => {
       { slug: "older" },
     ]);
     const metadata = await generateMetadata({
-      params: Promise.resolve({ slug: "current" }),
+      params: Promise.resolve({ locale: "en" as const, slug: "current" }),
     });
     expect(metadata.alternates?.canonical).toMatch(/\/blog\/current$/);
     expect(metadata.description).toBe("An original summary.");
@@ -204,10 +206,14 @@ describe("blog article reading layout", () => {
 
   it("retains the missing-article boundary", async () => {
     await expect(
-      BlogPostPage({ params: Promise.resolve({ slug: "missing" }) }),
+      BlogPostPage({
+        params: Promise.resolve({ locale: "en" as const, slug: "missing" }),
+      }),
     ).rejects.toThrow("NEXT_NOT_FOUND");
     expect(
-      await generateMetadata({ params: Promise.resolve({ slug: "missing" }) }),
+      await generateMetadata({
+        params: Promise.resolve({ locale: "en" as const, slug: "missing" }),
+      }),
     ).toEqual({ title: "Post not found" });
   });
 

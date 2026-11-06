@@ -1,0 +1,577 @@
+---
+title: Structure du projet
+description: Comprendre comment Starter Free est organisé afin que vous puissiez
+  l'étendre sans casser son architecture.
+lastUpdated: "2026-10-14"
+appliesTo: Starter Free
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { File, Folder, Files } from "fumadocs-ui/components/files";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Boxes,
+  CheckCircle,
+  CreditCard,
+  FolderTree,
+  Layers,
+  Layers3,
+  LockKeyhole,
+  Puzzle,
+  Route,
+  Table2,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Démarrage</Badge>
+  <Badge>Structure</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Starter Free est structuré pour **clarté et évolution à long terme**.
+
+Ce n'est pas un dossier de démo. C'est un **architecture adaptées à la production** conçu pour vous aider à étendre les fonctionnalités sans transformer les pages en fichiers volumineux et fragiles.
+
+Comprendre la structure tôt vous aide à:
+
+- Étendre les fonctionnalités proprement
+- garder les routes lisibles
+- fil backend progressivement
+- éviter les refactors causés par des responsabilités mixtes
+
+<Callout title="Idée clé">
+  Vous n'apprenez pas seulement où vivent les fichiers. Vous apprenez comment
+  l'architecture produit évolue d'une surface SaaS simulée à un produit réel.
+
+</Callout>
+
+### Modèle mental [#mental-model]
+
+> Les pages définissent les routes. Les composants définissent les caractéristiques. UI définit les primitives.
+
+| Couche         | Responsabilité                                                         |
+| -------------- | ---------------------------------------------------------------------- |
+| `app/`         | Routage, mises en page et points d'entrée des produits                 |
+| `components/`  | Composition des caractéristiques et logique d'interaction              |
+| `@pycolors/ui` | primitives d'interface utilisateur stateless utilisées dans le produit |
+
+<Callout type="info" title="Règle du système">
+  Gardez les pages minces. Lorsque la logique d'interaction se développe,
+  déplacez-la dans un dossier de fonctionnalités.
+
+</Callout>
+
+### Premiers points de personnalisation [#first-customization-points]
+
+Les chemins ici sont relatifs à votre paiement Starter Free. Dans la source monorepo, ce checkout est `apps/starter-free`; n'importez pas les paquets privés de monorepo dans le starter livré indépendamment.
+
+| Fichier                          | Commencez ici pour                                                |
+| -------------------------------- | ----------------------------------------------------------------- |
+| `app/layout.tsx`                 | Nom de l'application, métadonnées de page et document racine      |
+| `app/(app)/layout.tsx`           | En-tête d'application et shell de l'application                   |
+| `app/globals.css`                | Styles et tokens sémantiques pour les deux thèmes                 |
+| `lib/getting-started.ts`         | Le contenu et les liens du guide d'information du tableau de bord |
+| `components/app/app-sidebar.tsx` | Navigation dans les applications de bureau                        |
+
+Gardez le bootstrap d'apparence et le contrôle de thème existant lors du changement de marque. Le guide du tableau de bord ne suit pas l'achèvement ou l'état du projet. Essayez le [Workflow de première session](/docs/starter/getting-started#your-first-session) avant de modifier la fonctionnalité du projet.
+
+### Structure [#structure]
+
+<Files>
+  <Folder name="app" defaultOpen>
+    <File name="layout.tsx" />
+    <File name="globals.css" />
+    <Folder name="(auth)" defaultOpen>
+      <Folder name="login">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="register">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="forgot-password">
+        <File name="page.tsx" />
+      </Folder>
+      <File name="layout.tsx" />
+    </Folder>
+
+    <Folder name="(app)" defaultOpen>
+      <Folder name="admin">
+        <File name="page.tsx" />
+      </Folder>
+
+      <Folder name="billing">
+        <File name="page.tsx" />
+      </Folder>
+
+      <Folder name="dashboard">
+        <File name="page.tsx" />
+      </Folder>
+
+      <Folder name="projects" defaultOpen>
+        <File name="layout.tsx" />
+        <File name="page.tsx" />
+        <Folder name="[id]">
+          <File name="page.tsx" />
+        </Folder>
+      </Folder>
+
+      <Folder name="settings">
+        <File name="page.tsx" />
+      </Folder>
+
+      <File name="layout.tsx" />
+    </Folder>
+
+  </Folder>
+
+  <Folder name="components" defaultOpen>
+    <Folder name="projects" defaultOpen>
+      <File name="project-provider.tsx" />
+      <File name="project-create-dialog.tsx" />
+      <File name="project-table.tsx" />
+      <File name="project-row-actions.tsx" />
+      <File name="project-rename-dialog.tsx" />
+      <File name="project-confirm-delete-dialog.tsx" />
+      <File name="project-types.ts" />
+    </Folder>
+
+    <Folder name="app">
+      <File name="page-shell.tsx" />
+    </Folder>
+
+  </Folder>
+  <Folder name="lib" defaultOpen>
+    <File name="project-storage.ts" />
+    <File name="getting-started.ts" />
+    <File name="theme.ts" />
+  </Folder>
+</Files>
+
+Cette structure est intentionnellement petite. Il sépare la propriété de la route de la composition des fonctionnalités.
+
+### Flux d'architecture [#architecture-flow]
+
+```txt title="architecture-flow.txt"
+App Router pages
+  ↓
+Feature components
+  ↓
+PyColors UI primitives
+```
+
+Une page doit décrire la surface du produit. Les composants de fonctionnalité doivent posséder des interactions. Les primitives UI doivent rester réutilisables et apatrides.
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Route',
+      title: "Couche d'route",
+      icon: Route,
+      description: (
+        <>
+          <p>
+            The route layer defines URLs, page structure, layout composition, and high-level orchestration.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Page structure</Badge>
+            <Badge variant="plan">Layouts</Badge>
+            <Badge variant="plan">Navigation</Badge>
+            <Badge variant="plan">Route composition</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Feature',
+      title: "Feature Layer",
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            The feature layer owns product behavior, local state, dialogs, actions, and future API integration boundaries.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Dialogs</Badge>
+            <Badge variant="plan">Row actions</Badge>
+            <Badge variant="plan">Local state</Badge>
+            <Badge variant="plan">Mock data</Badge>
+            <Badge variant="plan">Server integration</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Primitive',
+      title: "Couche primitive d'interface utilisateur",
+      icon: Boxes,
+      description: (
+        <>
+          <p>
+            UI primitives provide reusable building blocks that stay small, predictable, and composable.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Button</Badge>
+            <Badge variant="plan">Card</Badge>
+            <Badge variant="plan">Table</Badge>
+            <Badge variant="plan">Dialog</Badge>
+            <Badge variant="plan">Sheet</Badge>
+            <Badge variant="plan">Input</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### App directory [#app-directory]
+
+Les `app/` répertoire est la couche de routage. Les `(app)` Le groupe de routes fournit le shell d'application sans ajouter `(app)` à l'URL. Par exemple, `app/(app)/projects/page.tsx` sert `/projects`, et le niché `[id]/page.tsx` sert un ID de projet réel sélectionné dans la liste.
+
+`app/(app)/projects/layout.tsx` monts `ProjectProvider` pour les routes de liste et de détail. Conservez cette limite partagée afin que la navigation ne crée pas un deuxième magasin de projets déconnecté. Le tableau de bord reste un composant serveur ; la page Projets existante et le fournisseur utilisent une limite client pour l'état local.
+
+Il définit:
+
+- auth points d'entrée
+- pages de tableau de bord
+- routes des produits
+- paramètres et surfaces de facturation
+- composition de mise en page de haut niveau
+
+<Files>
+  <Folder name="app" defaultOpen>
+    <Folder name="(auth)" defaultOpen>
+      <Folder name="login">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="register">
+        <File name="page.tsx" />
+      </Folder>
+      <Folder name="forgot-password">
+        <File name="page.tsx" />
+      </Folder>
+    </Folder>
+
+    <Folder name="(app)" defaultOpen>
+      <Folder name="dashboard">
+        <File name="page.tsx" />
+      </Folder>
+
+      <Folder name="projects">
+        <File name="layout.tsx" />
+        <File name="page.tsx" />
+        <Folder name="[id]">
+          <File name="page.tsx" />
+        </Folder>
+      </Folder>
+
+      <Folder name="admin">
+        <File name="page.tsx" />
+      </Folder>
+
+      <Folder name="billing">
+        <File name="page.tsx" />
+      </Folder>
+
+      <Folder name="settings">
+        <File name="page.tsx" />
+      </Folder>
+    </Folder>
+
+  </Folder>
+</Files>
+<br />
+<Callout title="Règle de la page">
+  Une page devrait composer la fonctionnalité. Elle ne doit pas devenir la caractéristique elle-même.
+
+</Callout>
+
+### Répertoire des composants [#components-directory]
+
+Les `components/` Le répertoire contient des blocs de construction au niveau des fonctionnalités.
+
+Par exemple, la fonctionnalité de projets conserve son fournisseur local de navigateur, le rendu de table, les actions de ligne, les boîtes de dialogue et les types d'échantillons ensemble.
+
+<Files>
+  <Folder name="components" defaultOpen>
+    <Folder name="projects" defaultOpen>
+      <File name="project-provider.tsx" />
+      <File name="project-create-dialog.tsx" />
+      <File name="project-table.tsx" />
+      <File name="project-row-actions.tsx" />
+      <File name="project-rename-dialog.tsx" />
+      <File name="project-confirm-delete-dialog.tsx" />
+      <File name="project-types.ts" />
+    </Folder>
+  </Folder>
+</Files>
+
+Un extrait de composition ciblé de la page Projets transmet l'état actuel et les rappels à la table :
+
+```tsx title="Project table composition (inside the existing Projects provider)"
+"use client";
+
+import { ProjectTable } from "@/components/projects/project-table";
+import { useProjects } from "@/components/projects/project-provider";
+
+export function ProjectList() {
+  const { projects, isLoading, renameProject, deleteProject } = useProjects();
+
+  return (
+    <ProjectTable
+      projects={projects}
+      isLoading={isLoading}
+      onRename={renameProject}
+      onDelete={deleteProject}
+    />
+  );
+}
+```
+
+Cet extrait ne remplace pas la page complète. Conserver ses contrôles de création/réinitialisation, avis de stockage, liens de détails, et `PageShell`. Rendre un tel consommateur seulement en dessous de l'existant `ProjectProvider`; `useProjects` sortir de ce contexte. Réutilisez les boîtes de dialogue et les actions de ligne livrées au lieu de les remplacer par des composants réservés.
+
+## Fausse stratégie de données [#mock-data-strategy]
+
+Les exemples de projet sont des données initiales / réinitialisées, pas la seule source de vérité après qu'un utilisateur modifie un projet. Le flux de courant est:
+
+```txt title="local-project-data-flow.txt"
+ProjectProvider
+  -> read saved browser-local projects (or initial samples)
+  -> expose projects, loading, storage notice, and mutation callbacks
+  -> create / rename / delete -> update state and attempt localStorage write
+  -> confirmed Reset demo -> replace local projects with original samples
+```
+
+`components/projects/project-types.ts` Possède le complet `Project` type et `MOCK_PROJECTS`. Réutilisez ce type au lieu de copier une interface réduite. `components/projects/project-provider.tsx` possède l'état de React et les mutations; `lib/project-storage.ts` possède la lecture / écriture des enregistrements de projet stockés.
+
+Changement `MOCK_PROJECTS` ne remplace pas une collection de projets enregistrée valide. Utilisez la confirmation **Réinitialiser démo** action uniquement lorsque vous avez l'intention de rejeter les modifications locales. Les données enregistrées non valides reviennent à des échantillons avec un avis. Lorsque le stockage du navigateur n'est pas disponible, les modifications restent en mémoire pour la visite en cours uniquement. Il ne s'agit pas d'une base de données partagée, d'une authentification ou d'une synchronisation entre appareils.
+
+Plus tard, remplacez cette limite de persistance locale du navigateur par vos propres opérations de projet de validation, d'autorisation et de sauvegarde de base de données côté serveur. Gardez les composants de présentation séparés de cette intégration spécifique au produit.
+
+### Modèle PageShell [#pageshell-pattern]
+
+Les pages SaaS principales utilisent un shell partagé pour une structure de page cohérente.
+
+```tsx title="PageShell composition"
+import { PageShell } from "@/components/app/page-shell";
+
+export function ReportsPreview() {
+  return (
+    <PageShell title="Reports" description="Explore your report layout.">
+      <p>No reports yet.</p>
+    </PageShell>
+  );
+}
+```
+
+Utilisez ce modèle pour conserver :
+
+- Espacement des pages cohérent
+- En-têtes prévisibles
+- actions alignées
+- Métadonnées structurées
+
+Ne le contournez pas à moins que la page ait vraiment besoin d'une mise en page différente.
+
+## Dialog pattern [#dialog-pattern]
+
+Les boîtes de dialogue sont isolées de la page et contrôlées par leur fonction parent.
+
+<Files>
+  <Folder name="components" defaultOpen>
+    <Folder name="projects" defaultOpen>
+      <File name="project-rename-dialog.tsx" />
+      <File name="project-confirm-delete-dialog.tsx" />
+    </Folder>
+  </Folder>
+</Files>
+
+<br />
+Propriété recommandée:
+
+| Préoccupation                       | Propriétaire                       |
+| ----------------------------------- | ---------------------------------- |
+| État ouvert                         | Composant de fonctionnalité parent |
+| Interface utilisateur du formulaire | Composant de boîte de dialogue     |
+| Appel API plus tard                 | Fonctionnalité / couche de service |
+| primitive visuelle                  | `@pycolors/ui` boîte dialogue      |
+
+Cela rend les flux de renommage et de suppression plus faciles à câbler plus tard sans changer la structure de la page.
+
+## Ajouter une nouvelle fonctionnalité [#add-a-new-feature]
+
+Commencez par une route statique dans le shell d'application existant. Ce sont de nouveaux fichiers d'exemple à créer dans votre copie du dépôt, pas des fichiers déjà inclus dans Free. Aucun backend ou modèle d'autorisation n'est introduit par cet exemple.
+
+<Steps>
+  <Step>
+    ### Ajouter l'route [#add-the-route]
+
+```bash title="From the Starter Free checkout"
+mkdir -p 'app/(app)/reports' components/reports
+```
+
+    Utilisez le chemin d'accès au groupe d'routes indiqué pour que la nouvelle page partage la disposition de l'application.
+
+</Step>
+
+  <Step>
+    ### Créer le dossier des fonctionnalités [#create-the-feature-folder]
+
+Enregistrer ce composant dans `components/reports/report-panel.tsx`:
+
+```tsx title="components/reports/report-panel.tsx"
+export function ReportPanel() {
+  return <p>No reports yet. Connect your own report data when ready.</p>;
+}
+```
+
+</Step>
+
+  <Step>
+    ### Composez la page [#compose-the-page]
+
+Sauvegarder la route dans `app/(app)/reports/page.tsx`:
+
+```tsx title="app/(app)/reports/page.tsx"
+import { PageShell } from "@/components/app/page-shell";
+import { ReportPanel } from "@/components/reports/report-panel";
+
+export default function ReportsPage() {
+  return (
+    <PageShell title="Reports" description="Your product reports.">
+      <ReportPanel />
+    </PageShell>
+  );
+}
+```
+
+Ouvrir `/reports` dans le starter de course. Les deux fichiers peuvent rester des composants de serveur ; ajoutez un panneau latéral client uniquement lorsque l'interaction réelle l'exige. Exécutez les contrôles dans les scripts de paquet de votre copie du dépôt avant de vous engager dans votre personnalisation.
+
+</Step>
+
+</Steps>
+
+### Guide de décision [#decision-guide]
+
+Utilisez la structure Starter Free si :
+
+- vous voulez des fichiers de route minces
+- Les fonctionnalités doivent évoluer de manière indépendante
+- Les données simulées deviendront plus tard des données backend.
+- Les dialogues et les actions en ligne doivent rester réutilisables
+- vous voulez un chemin clair de la surface frontale au câblage de production
+
+Évitez de modifier la structure si :
+
+- vous n'avez pas encore exploré la tranche verticale complète
+- le changement ne sauve que quelques lignes aujourd'hui
+- La route commencerait à posséder trop de logique
+- Les primitives de l'interface utilisateur commenceraient à récupérer des données
+- la couche simulée deviendrait dispersée globalement
+
+<PreferAvoid
+  prefer={[
+    "Dossiers basés sur les fonctionnalités",
+    "pages minces",
+    "Données simulées proches de la fonctionnalité",
+    "dialogues isolés et actions en ligne",
+    "Les primitives qui restent apatrides",
+  ]}
+  avoid={[
+    "mettre la logique de fonctionnalité directement dans les pages",
+    "récupération de données dans les primitives de l'interface utilisateur",
+    "placer toutes les données simulées dans un fichier global",
+    "Dupliquer la logique de dialogue à travers les routes",
+    "supprimer la structure avant de la comprendre",
+  ]}
+/>
+
+### Câblage backend plus tard [#backend-wiring-later]
+
+Lorsque vous connectez un backend, la structure reste familière.
+
+| Aujourd'hui                                           | Plus tard                                                              |
+| ----------------------------------------------------- | ---------------------------------------------------------------------- |
+| Fournisseur de projet et stockage local de navigateur | Vos opérations de projet autorisées, soutenues par une base de données |
+| État du dialogue local                                | action serveur ou mutation API                                         |
+| Portail de facturation désactivé                      | Portail de facturation Stripe                                          |
+| écrans Auth simulés                                   | fournisseur d' Auth réel                                               |
+| membres statiques                                     | Membres de l'organisation du backend                                   |
+
+L'objectif est de réutiliser la présentation tout en implémentant une frontière de produit réelle, pas simplement remplacer un appel de base de données pour le stockage local. Starter Pro fournit des fondations connectées configurables, pas une migration automatique des projets Free. Réexamen [Ce qui est inclus](/docs/starter-pro/what-is-included) et les [Guide de mise à niveau](/docs/starter/upgrade) avant de planifier votre intégration.
+
+<Callout title="Mise à niveau lorsque le câblage devient le bloqueur">
+  Starter Free valide la surface du produit. Starter Pro relie la couche métier
+  avec des fondations adaptées à la production, de facturation, de backend et de
+  livraison. `/docs/starter-pro`
+
+</Callout>
+
+### Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Pourquoi garder la logique des fonctionnalités en dehors du répertoire de l'application ?">
+    Les `app/` répertoire devrait rester concentré sur les routes et la composition de la mise en page. Les dossiers de fonctionnalités rendent le comportement plus facile à réutiliser, à tester et à remplacer ultérieurement.
+  </Accordion>
+
+<Accordion title="Les données simulées devraient-elles vivre à l'échelle mondiale?">
+  Habituellement non. Garder les données simulées à proximité de la
+  fonctionnalité facilite leur remplacement par des données backend plus tard
+  sans effectuer de recherche dans des fichiers non liés.
+</Accordion>
+
+  <Accordion title="Puis-je déplacer des fonctionnalités dans un répertoire features/?">
+    Oui. La règle importante est la limite, pas le nom exact du dossier. Gardez les fichiers de routage minces et le comportement des fonctionnalités groupés.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Concept d'authentification",
+      href: "/docs/starter/auth-concept",
+      description:
+        "Comprendre comment l'authentification est modélisée avant le câblage d'un fournisseur réel.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Concept de facturation",
+      href: "/docs/starter/billing-concept",
+      description:
+        "Découvrez comment les surfaces de monétisation sont préparées avant l'intégration de Stripe.",
+      icon: CreditCard,
+    },
+    {
+      title: "Mise à niveau vers Starter Pro",
+      href: "/docs/starter/upgrade",
+      description:
+        "Sachez quand Starter Free cesse d'être suffisant et Starter Pro devient le chemin le plus rapide.",
+      icon: ArrowUpRight,
+      badge: "Pro",
+      tone: "primary",
+    },
+    {
+      title: "Tableau de données",
+      href: "/docs/patterns/data-table",
+      description:
+        "Apprenez le modèle prêt pour la production derrière la table Projets.",
+      icon: Table2,
+    },
+  ]}
+/>

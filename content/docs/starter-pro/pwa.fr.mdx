@@ -1,0 +1,423 @@
+---
+title: Progressive Web App
+description: "Comprenez les fondements PWA-ready inclus dans Starter Pro:
+  manifeste, installabilité, mode autonome, UX de type application mobile,
+  captures d'écran et routage hors ligne."
+lastUpdated: "2026-06-06"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { File, Folder, Files } from "fumadocs-ui/components/files";
+import { Badge } from "@pycolors/ui";
+
+import {
+  Download,
+  Globe,
+  LayoutDashboard,
+  Layers3,
+  MonitorSmartphone,
+  Rocket,
+  ShieldCheck,
+  Smartphone,
+  WifiOff,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Prêt pour PWA</Badge>
+</div>
+
+## Fondations SaaS installables [#installable-saas-foundations]
+
+Starter Pro comprend **Fondations Progressive Web App** conçu pour rendre votre SaaS plus mature, plus mobile et plus proche d'une application réelle.
+
+Ce n'est pas une couche de gimmick.
+
+C'est une couche de qualité produit qui améliore:
+
+- installabilité
+- mode autonome
+- mobile-first UX
+- Maturité perçue du produit
+- navigation app-like
+- Résilience de secours hors ligne
+- Lancement professionnel confiance
+
+<DocsUpgradeCTA
+  title="Faites en sorte que votre SaaS se sente comme un vrai produit."
+  description="Starter Pro comprend des fondations PWA installables, un mode autonome, des surfaces d'application réactives et un routage prêt pour la connexion hors ligne pour les produits SaaS modernes."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
+
+<Callout title="Idée de base">
+  La prise en charge de PWA devrait rendre le produit plus crédible sans
+  introduire de comportement hors ligne dangereux pour l'authentification, la
+  facturation, l'administration ou l'état de l'abonnement.
+
+</Callout>
+
+## Ce que Starter Pro inclut [#what-starter-pro-includes]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Application installable",
+      description:
+        "Le manifeste, les métadonnées d'application, les icônes, les captures d'écran et le mode autonome rendent le starter installable sur les navigateurs et les appareils pris en charge.",
+      icon: Download,
+    },
+    {
+      title: "Mobile app-like UX",
+      description:
+        "Le tableau de bord, la facturation, les paramètres, l'administration et les surfaces du projet sont conçus pour une utilisation réactive et autonome.",
+      icon: Smartphone,
+    },
+    {
+      title: "Fallback prêt hors ligne",
+      description:
+        "Un service worker léger et un route hors ligne offrent un repli résilient sans prétendre que l’ensemble du SaaS est hors ligne en premier.",
+      icon: WifiOff,
+    },
+    {
+      title: "Limites de sécurité de production",
+      description:
+        "Les routes sensibles tels que l'authentification, la facturation, l'administration et les paramètres de compte restent en ligne et vérifiables par le serveur.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Pourquoi cela compte [#why-this-matters]
+
+La plupart des starters SaaS s’arrêtent à la mise en page réactive.
+
+Starter Pro va plus loin en ajoutant les fondations qui font que le produit ressemble à une application sérieuse:
+
+- Un manifeste propre
+- icônes professionnelles PWA
+- icônes masquables
+- installer des captures d'écran
+- mode autonome
+- couleurs de splash screen
+- enregistrement des travailleurs de service
+- routage de secours hors ligne
+- Comportement de la fenêtre sécurisée mobile
+
+<Callout type="info" title="Perception du produit">
+  L'installation et le mode autonome ne sont pas seulement des détails
+  techniques. Ils aident le produit à se sentir plus mature, plus complet et
+  plus digne de confiance.
+
+</Callout>
+
+## architecture PWA [#pwa-architecture]
+
+<Files>
+  <Folder name="app" defaultOpen>
+    <File name="layout.tsx" />
+    <File name="manifest.ts" />
+    <Folder name="offline">
+      <File name="page.tsx" />
+    </Folder>
+  </Folder>
+
+<Folder name="components" defaultOpen>
+  <Folder name="pwa">
+    <File name="pwa-register.tsx" />
+  </Folder>
+</Folder>
+
+<Folder name="lib" defaultOpen>
+  <Folder name="pwa">
+    <File name="pwa-config.ts" />
+  </Folder>
+</Folder>
+
+  <Folder name="public" defaultOpen>
+    <File name="favicon.ico" />
+    <File name="icon.png" />
+    <File name="apple-icon.png" />
+    <File name="sw.js" />
+
+    <Folder name="pwa" defaultOpen>
+      <File name="icon-192.png" />
+      <File name="icon-512.png" />
+      <File name="maskable-icon-512.png" />
+      <File name="dashboard-desktop.png" />
+      <File name="dashboard-mobile.png" />
+    </Folder>
+
+  </Folder>
+</Files>
+<br />
+| Fichier | Responsabilité |
+| --- | --- |
+| `app/manifest.ts` | manifeste PWA, icônes, captures d'écran, installer des métadonnées |
+| `app/layout.tsx` | metadata, viewport, icônes, enregistrement de service worker |
+| `app/offline/page.tsx` | surface de secours hors ligne |
+| `components/pwa/pwa-register.tsx` | enregistrement du travailleur de service côté client |
+| `lib/pwa/pwa-config.ts` | Configuration PWA partagée |
+| `public/sw.js` | travailleur de service léger |
+| `public/pwa/*` | icônes et captures d'écran |
+
+<Callout title="Règle d'architecture">
+  Gardez la couche PWA explicite et facile à auditer. Un produit de démarrage
+  devrait enseigner à l'acheteur comment fonctionne le système, pas le cacher
+  derrière une magie inutile.
+
+</Callout>
+
+## Modèle de système [#system-model]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: "Manifest",
+      title: "Couche manifeste",
+      icon: Layers3,
+      description: (
+        <>
+          <p>
+            The manifest describes how the application appears when installed.
+            It includes app name, display mode, theme colors, icons, screenshots, and app metadata.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">manifest.ts</Badge>
+            <Badge variant="plan">icons</Badge>
+            <Badge variant="plan">screenshots</Badge>
+            <Badge variant="plan">standalone</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Install",
+      title: "Installer la couche",
+      icon: Smartphone,
+      description: (
+        <>
+          <p>
+            Installability makes the SaaS feel closer to a real application.
+            Users can add the app to their device and open it in standalone mode when supported.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">mobile install</Badge>
+            <Badge variant="plan">desktop install</Badge>
+            <Badge variant="plan">app shell</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: "Offline",
+      title: "Couche de secours hors ligne",
+      icon: WifiOff,
+      description: (
+        <>
+          <p>
+            Offline support is intentionally scoped to safe fallback routing.
+            Starter Pro does not cache sensitive SaaS data as truth.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">offline page</Badge>
+            <Badge variant="plan">navigation fallback</Badge>
+            <Badge variant="plan">safe boundaries</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Stratégie recommandée [#recommended-strategy]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Activer",
+      title: "Caractéristiques PWA de qualité produit",
+      icon: Rocket,
+      tone: "platform",
+      description:
+        "Ces fonctionnalités améliorent la qualité des applications sans créer de problèmes de synchronisation ou de sécurité.",
+      items: [
+        "manifeste installable",
+        "mode d'affichage autonome",
+        "icônes professionnelles",
+        "captures d'écran du tableau de bord",
+        "Page de secours hors ligne",
+        "viewport mobile-safe",
+      ],
+    },
+    {
+      eyebrow: "Éviter",
+      title: "Raccourcis hors ligne non sécurisés",
+      icon: ShieldCheck,
+      description:
+        "Starter Pro évite de mettre en cache l'état SaaS sensible en tant que vérité, car la facturation, l'authentification et l'état d'administration doivent rester vérifiables par le serveur.",
+      items: [
+        "État de facturation hors ligne",
+        "cache Auth Truth",
+        "stale admin permissions",
+        "Actions destructrices hors ligne",
+        "Accès par abonnement non vérifié",
+      ],
+    },
+  ]}
+/>
+
+## Frontières en ligne [#online-first-boundaries]
+
+| Zone                    | Approche recommandée                 |
+| ----------------------- | ------------------------------------ |
+| Authentification        | Online-first                         |
+| Facturation             | Online-first                         |
+| Actions administratives | Serveur-validé                       |
+| Paramètres du compte    | Serveur-validé                       |
+| État de l'abonnement    | Source de vérité backend             |
+| Soutien hors ligne      | Base de référence de repli seulement |
+
+<Callout title="Règle de production">
+  Les redirections, l'interface utilisateur mise en cache et les pages hors
+  ligne sont UX. L'état du serveur reste la source de vérité pour
+  l'authentification, la facturation, les autorisations et les abonnements.
+
+</Callout>
+
+## PWA surfaces dans Starter Pro [#pwa-surfaces-in-starter-pro]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Tableau de bord",
+      description:
+        "Le tableau de bord est le candidat de capture d'écran le plus fort car il communique l'espace de travail SaaS complet.",
+      icon: LayoutDashboard,
+    },
+    {
+      title: "Coque pour application mobile",
+      description:
+        "L’utilisation mobile autonome doit être intentionnelle, réactive et semblable à une application sur les surfaces authentifiées de base.",
+      icon: MonitorSmartphone,
+    },
+    {
+      title: "Page hors ligne",
+      description:
+        "Le repli hors ligne devrait préserver la crédibilité du produit au lieu de se sentir comme une page d’erreur de navigateur.",
+      icon: WifiOff,
+    },
+  ]}
+/>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    "utiliser `app/manifest.ts` comme source manifeste",
+    "garder `public/sw.js` léger et auditable",
+    "utiliser de vraies captures d'écran pour installer des surfaces",
+    "garder les routes d'authentification, de facturation et d'administration en ligne en premier",
+    "traiter la PWA comme une amélioration progressive",
+  ]}
+  avoid={[
+    "mise en cache de Stripe ou état de facturation comme vérité",
+    "Faire fonctionner l'authentification hors ligne",
+    "Utilisation de captures d'écran surdimensionnées dans le manifeste",
+    "cacher le comportement du travailleur de service derrière des abstractions peu claires",
+    "réclamer un support hors ligne complet sans logique de synchronisation",
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Starter Pro est-il un SaaS entièrement hors ligne ?">
+    Non. Starter Pro inclut des fondations prêtes pour le hors ligne et un routage de secours. Il ne prétend pas que la facturation, l'authentification, les autorisations ou les données d'administration peuvent fonctionner en toute sécurité hors ligne sans système de synchronisation dédié.
+  </Accordion>
+
+<Accordion title="Pourquoi ne pas mettre en cache le tableau de bord de manière agressive ?">
+  Les tableaux de bord contiennent souvent des données spécifiques à
+  l’utilisateur, sensibles à la facturation ou aux autorisations. La mise en
+  cache de ces surfaces sans une stratégie d'invalidation claire peut montrer
+  des informations périmées ou incorrectes.
+</Accordion>
+
+<Accordion title="Dois-je utiliser next-pwa ou Workbox?">
+  Vous pouvez ajouter une bibliothèque PWA plus avancée plus tard. Starter Pro
+  commence par une base allégée explicite, car il est plus sûr, plus facile à
+  apprendre et mieux adapté aux produits SaaS lourds en auth et en facturation.
+</Accordion>
+
+  <Accordion title="La couche PWA est-elle requise pour que l'application fonctionne ?">
+    Non. L'application devrait fonctionner normalement sans le soutien des travailleurs de service. Le comportement PWA est une amélioration progressive.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Configuration PWA",
+      href: "/docs/starter-pro/pwa-setup",
+      description:
+        "Configurez le manifeste, les icônes, les captures d'écran, l'enregistrement du service worker et le routage hors ligne.",
+      icon: Smartphone,
+    },
+    {
+      title: "Liste de vérification PWA en production",
+      href: "/docs/starter-pro/pwa-production-checklist",
+      description:
+        "Validez l'installabilité, le comportement du service worker, les captures d'écran, Lighthouse, iOS, Android et la préparation à la production.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Variables d'environnement",
+      href: "/docs/starter-pro/environment-variables",
+      description:
+        "Configurez les URL des applications, les domaines de production, l'authentification, le courrier électronique, la base de données et l'infrastructure Stripe.",
+      icon: Globe,
+    },
+    {
+      title: "Déploiement",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Déployez Starter Pro avec HTTPS, des domaines de production, des webhooks Stripe et une infrastructure prête pour le lancement.",
+      icon: Rocket,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Expédiez un SaaS qui ressemble plus à un vrai produit."
+  description="Starter Pro comprend des fondations PWA installables, un mode autonome, des surfaces d'applications prêtes pour le mobile et une gestion hors ligne axée sur la production."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Getting started"
+/>

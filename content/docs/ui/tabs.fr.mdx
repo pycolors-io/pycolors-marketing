@@ -1,0 +1,558 @@
+---
+title: Tabs
+description: Composant de navigation segmenté pour basculer entre les vues associées.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  Accessibility,
+  ArrowRight,
+  CheckCircle,
+  CreditCard,
+  LayoutDashboard,
+  LayoutTemplate,
+  ListFilter,
+  MousePointerClick,
+  PanelsTopLeft,
+  Settings,
+  ShieldCheck,
+  XCircle,
+} from "lucide-react";
+
+import {
+  Tabs as UITabs,
+  TabsList as UITabsList,
+  TabsTrigger as UITabsTrigger,
+  TabsContent as UITabsContent,
+} from "@pycolors/ui";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Onglets</Badge>
+</div>
+
+## Basculer entre les vues associées [#switch-between-related-views]
+
+Les **Onglets** Le composant permet aux utilisateurs de basculer entre les vues associées sans quitter la page.
+
+Utilisez-le pour:
+
+- sections de paramètres
+- Vues tableau de bord
+- sections de facturation
+- panneaux de produits
+- filtres compacts
+- contenu segmenté
+- Vues d'administration associées
+
+Les onglets sont construits sur **Onglets Radix** et stylisé avec des tokens PyColors pour un thème cohérent, des états de focus et un comportement d'interaction.
+
+<Callout title="Idée de base">
+  Les onglets sont pour les vues par les pairs au même niveau hiérarchique. Ils
+  ne doivent pas remplacer la navigation primaire.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="tabs-import.tsx"
+import { Tabs } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez les onglets lorsque plusieurs vues connexes appartiennent au même contexte de page.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <UITabs defaultValue="account" className="w-full max-w-xl">
+      <UITabsList aria-label="Account tabs">
+        <UITabsTrigger value="account">Compte</UITabsTrigger>
+        <UITabsTrigger value="password">Mot de passe</UITabsTrigger>
+      </UITabsList>
+
+      <UITabsContent value="account">
+        <div className="rounded-md border bg-card p-4 text-sm">
+          Contenu des paramètres du compte
+        </div>
+      </UITabsContent>
+
+      <UITabsContent value="password">
+        <div className="rounded-md border bg-card p-4 text-sm">
+          Contenu des paramètres de mot de passe
+        </div>
+      </UITabsContent>
+    </UITabs>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="settings-tabs.tsx"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@pycolors/ui";
+
+export function SettingsTabs() {
+  return (
+    <Tabs defaultValue="account" className="w-full max-w-xl">
+      <TabsList aria-label="Settings tabs">
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="password">Password</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="account">
+        <div className="rounded-md border bg-card p-4 text-sm">
+          Account settings content
+        </div>
+      </TabsContent>
+
+      <TabsContent value="password">
+        <div className="rounded-md border bg-card p-4 text-sm">
+          Password settings content
+        </div>
+      </TabsContent>
+    </Tabs>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Quand utiliser les onglets [#when-to-use-tabs]
+
+Utilisez les onglets lorsque les utilisateurs passent d’une section à l’autre dans le même flux de travail.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Sections des paramètres",
+      description:
+        "Utilisation pour les sections Profil, Facturation, Sécurité, Notifications et Zone de danger.",
+      icon: Settings,
+    },
+    {
+      title: "Vues tableau de bord",
+      description:
+        "Utilisation pour une vue d'ensemble, une activité, des journaux, une utilisation ou des membres dans une page de tableau de bord.",
+      icon: LayoutDashboard,
+    },
+    {
+      title: "Filtres compacts",
+      description:
+        "Utilisez-le pour les petits filtres segmentés lorsque les choix sont peu nombreux et stables.",
+      icon: ListFilter,
+    },
+  ]}
+/>
+
+### Tailles [#sizes]
+
+`TabsList` et `TabsTrigger` Accepter un `size` prop pour adapter la densité.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <div className="flex flex-col gap-4">
+      <UITabs defaultValue="one">
+        <UITabsList size="sm" aria-label="Small tabs">
+          <UITabsTrigger size="sm" value="one">Un</UITabsTrigger>
+          <UITabsTrigger size="sm" value="two">Deux</UITabsTrigger>
+        </UITabsList>
+
+        <UITabsContent value="one">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Contenu des petits onglets
+          </div>
+        </UITabsContent>
+
+        <UITabsContent value="two">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Contenu des petits onglets
+          </div>
+        </UITabsContent>
+      </UITabs>
+
+      <UITabs defaultValue="one">
+        <UITabsList size="md" aria-label="Medium tabs">
+          <UITabsTrigger size="md" value="one">Un</UITabsTrigger>
+          <UITabsTrigger size="md" value="two">Deux</UITabsTrigger>
+        </UITabsList>
+
+        <UITabsContent value="one">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Contenu des onglets moyens
+          </div>
+        </UITabsContent>
+
+        <UITabsContent value="two">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Contenu des onglets moyens
+          </div>
+        </UITabsContent>
+      </UITabs>
+
+      <UITabs defaultValue="one">
+        <UITabsList size="lg" aria-label="Large tabs">
+          <UITabsTrigger size="lg" value="one">Un</UITabsTrigger>
+          <UITabsTrigger size="lg" value="two">Deux</UITabsTrigger>
+        </UITabsList>
+
+        <UITabsContent value="one">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Contenu des grands onglets
+          </div>
+        </UITabsContent>
+
+        <UITabsContent value="two">
+          <div className="rounded-md border bg-card p-4 text-sm">
+            Contenu des grands onglets
+          </div>
+        </UITabsContent>
+      </UITabs>
+    </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="tabs-sizes.tsx"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@pycolors/ui";
+
+export function TabsSizes() {
+  return (
+    <Tabs defaultValue="one">
+      <TabsList size="sm" aria-label="Small tabs">
+        <TabsTrigger size="sm" value="one">
+          One
+        </TabsTrigger>
+        <TabsTrigger size="sm" value="two">
+          Two
+        </TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="one">Small tabs content</TabsContent>
+
+      <TabsContent value="two">Small tabs content</TabsContent>
+    </Tabs>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Tailles disponibles [#available-sizes]
+
+| Taille | Objet                                                   |
+| ------ | ------------------------------------------------------- |
+| `sm`   | Interfaces utilisateur denses, filtres, barres d'outils |
+| `md`   | Densité par défaut                                      |
+| `lg`   | Espacement confortable, onboarding, surfaces marketing  |
+
+<Callout type="info" title="Règle de densité">
+  Utilisation `sm` pour les commandes de produits compacts, `md` pour la plupart
+  des UI de produit, et `lg` uniquement lorsque les onglets ont besoin d'une
+  présence visuelle plus forte.
+
+</Callout>
+
+### Exemples de produits [#product-examples]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Settings',
+      title: "Paramètres des onglets",
+      icon: Settings,
+      description: (
+        <>
+          <p>
+            Use tabs to separate stable configuration areas inside settings surfaces.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="plan">Profile</Badge>
+            <Badge variant="plan">Organization</Badge>
+            <Badge variant="plan">Security</Badge>
+            <Badge variant="plan">Billing</Badge>
+            <Badge variant="plan">Notifications</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Billing',
+      title: "Tabs de facturation",
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Billing surfaces often group related financial and subscription information.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="plan">Plan</Badge>
+            <Badge variant="plan">Invoices</Badge>
+            <Badge variant="plan">Payment method</Badge>
+            <Badge variant="plan">Usage</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Dashboard',
+      title: "Tableau de bord onglets",
+      icon: LayoutDashboard,
+      description: (
+        <>
+          <p>
+            Dashboard tabs help organize operational views without creating route overload.
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge variant="plan">Overview</Badge>
+            <Badge variant="plan">Activity</Badge>
+            <Badge variant="plan">Logs</Badge>
+            <Badge variant="plan">Members</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Utiliser des onglets pour les vues par les pairs [#use-tabs-for-peer-views]
+
+    Chaque onglet doit représenter une vue connexe au même niveau hiérarchique.
+
+</Step>
+
+  <Step>
+    #### Gardez les étiquettes courtes [#keep-labels-short]
+
+    Préférez les étiquettes comme Vue d'ensemble, Activité, Facturation, Sécurité, Journaux, Utilisation.
+
+</Step>
+
+  <Step>
+    #### Limiter le nombre d'onglets [#limit-the-number-of-tabs]
+
+    Deux à cinq onglets fonctionnent généralement mieux. Plus que cela devient souvent la navigation.
+
+</Step>
+
+  <Step>
+    #### Gardez les actions importantes visibles [#keep-important-actions-visible]
+
+    Ne masquez pas les actions critiques dans un onglet si les utilisateurs en ont besoin globalement.
+
+</Step>
+
+  <Step>
+    #### Conserver la structure de contenu [#preserve-content-structure]
+
+    Chaque panneau de tabulation doit avoir une structure de titre ou de section claire lorsque le contenu est complexe.
+
+</Step>
+
+</Steps>
+
+## Tabs vs navigation vs filtres [#tabs-vs-navigation-vs-filters]
+
+| Situation                                                       | Utilisation               |
+| --------------------------------------------------------------- | ------------------------- |
+| Basculer entre les vues des pairs                               | Onglets                   |
+| Déplacer entre les pages ou les principaux domaines de produits | Navigation                |
+| Basculer un petit filtre d'état                                 | Tabs ou contrôle segmenté |
+| Sélectionner une valeur dans un formulaire                      | Groupe de radio           |
+| Masquer ou révéler du contenu facultatif                        | Accordéon                 |
+| Basculer entre des flux de travail non liés                     | Navigation des pages      |
+
+<Callout title="Règle de décision">
+  Si chaque option est une vue associée dans la même page, utilisez les onglets.
+  Si chaque option est une destination, utilisez la navigation.
+
+</Callout>
+
+## API [#api]
+
+#### Composante [#component]
+
+| Composante    | Désignation                                      |
+| ------------- | ------------------------------------------------ |
+| `Tabs`        | Récipient racine                                 |
+| `TabsList`    | Trigger list, soutiens `size`                    |
+| `TabsTrigger` | Déclencheur à onglet individuel, supports `size` |
+| `TabsContent` | Panneau de contenu                               |
+
+#### Props [#props]
+
+| Composante    | Props                                                                |
+| ------------- | -------------------------------------------------------------------- |
+| `Tabs`        | Étend Radix `TabsPrimitive.TabsProps`                                |
+| `TabsList`    | Étend Radix `TabsPrimitive.TabsListProps` + `{ size?: TabsSize }`    |
+| `TabsTrigger` | Étend Radix `TabsPrimitive.TabsTriggerProps` + `{ size?: TabsSize }` |
+| `TabsContent` | Étend Radix `TabsPrimitive.TabsContentProps`                         |
+
+### TypeScript types [#typescript-types]
+
+```ts title="tabs-types.ts"
+export type TabsSize = "sm" | "md" | "lg";
+```
+
+### Accessibilité [#accessibility]
+
+Les onglets sont construits sur les primitives Radix Tabs.
+
+Directives :
+
+- fournir un `aria-label` le `TabsList` ou l'associer à un titre visible
+- Garder chaque `TabsTrigger` claire et textuelle lorsque cela est possible
+- éviter que l'onglet icon-only se déclenche à moins qu'ils n'aient des étiquettes accessibles
+- Gardez la navigation du clavier prévisible
+- s'assurer que le contenu des onglets est significatif lorsqu'il est atteint directement
+- éviter de cacher les actions critiques du produit derrière des onglets inactifs
+
+Radix fournit le support du clavier:
+
+- Les touches fléchées se déplacent entre les déclencheurs
+- Enter ou Space active un déclencheur en fonction du mode d'activation
+- focus management suit la sémantique des tablists
+
+<Callout title="Règle d'accessibilité">
+  Une étiquette de tabulation doit décrire clairement le contenu qu'elle révèle.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "2-5 vues par les pairs",
+    "étiquettes courtes",
+    "`aria-label` sur la liste",
+    "Mise en page de contenu stable lorsque cela est possible",
+    "actions au niveau de la page en dehors des onglets",
+  ]}
+  avoid={[
+    "trop d'onglets",
+    "workflows non liés dans une tablist",
+    "onglets icon-only sans étiquettes",
+    "Masquer les actions critiques dans les onglets",
+    "Utilisation des onglets comme navigation globale",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+Les étiquettes doivent être courtes et familières.
+
+<Tabs items={["Bon", "Éviter"]}>
+  <Tab value="Bon">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Vue d’ensemble</li>
+        <li>Activité</li>
+        <li>Facturation</li>
+        <li>Sécurité</li>
+        <li>Journaux</li>
+      </ul>
+    </div>
+
+</Tab>
+
+  <Tab value="Éviter">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-6 text-muted-foreground">
+        <li>Tout sur votre compte</li>
+        <li>Gérez vos détails de facturation ici</li>
+        <li>Ce qui s'est passé avant</li>
+        <li>Autres trucs de configuration</li>
+      </ul>
+    </div>
+
+</Tab>
+
+</Tabs>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Les onglets doivent-ils mettre à jour l'URL ?">
+    Parfois. Si les utilisateurs ont besoin de partager ou de recharger un onglet spécifique, synchronisez l'état de l'onglet sur la page ou la couche de routage.
+  </Accordion>
+
+<Accordion title="Combien d'onglets sont trop nombreux?">
+  Plus de cinq devient généralement difficile à scanner. Envisagez plutôt la
+  navigation, une barre latérale ou une disposition de paramètres.
+</Accordion>
+
+<Accordion title="Les onglets peuvent-ils contenir des formulaires ?">
+  Oui. Les onglets sont communs dans les pages de paramètres. Conservez la
+  portée de la soumission et de la validation du formulaire clairement pour
+  chaque panneau.
+</Accordion>
+
+  <Accordion title="Les onglets doivent-ils être utilisés pour les filtres ?">
+    Les onglets peuvent fonctionner pour un petit ensemble de filtres stables. Pour les filtres complexes, utilisez une barre d'outils ou un panneau latéral.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description:
+        "Utilisez des boutons pour les actions qui s'apparient avec le contenu à onglets.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Carte",
+      href: "/docs/ui/card",
+      description:
+        "Utilisez des cartes pour structurer le contenu à l'intérieur des panneaux de tabulation.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Construire une mise en page SaaS",
+      href: "/docs/guides/building-a-saas-layout",
+      description:
+        "Placez des onglets à l'intérieur des mises en page et des flux de paramètres réels du produit.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Créez des listes de onglets accessibles avec des étiquettes claires et un comportement de clavier.",
+      icon: Accessibility,
+    },
+  ]}
+/>

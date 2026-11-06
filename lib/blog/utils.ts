@@ -1,3 +1,4 @@
+import type { SiteLocale } from "@/lib/i18n/routing";
 import { blogSource } from "@/lib/source";
 import type { BlogPost } from "@/types/blog";
 
@@ -14,9 +15,9 @@ export function normalizeTaxonomy(value: string) {
   return value.trim().toLowerCase().replace(/\s+/g, "-");
 }
 
-export function getAllPosts(): BlogPost[] {
+export function getAllPosts(locale: SiteLocale = "en"): BlogPost[] {
   return blogSource
-    .getPages()
+    .getPages(locale)
     .map((page): BlogPost | null => {
       const slug = page.slugs.at(-1);
       const title = page.data.title;
@@ -49,34 +50,40 @@ export function getAllPosts(): BlogPost[] {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getPostBySlug(slug: string) {
-  return blogSource.getPage([slug]);
+export function getPostBySlug(slug: string, locale: SiteLocale = "en") {
+  return blogSource.getPage([slug], locale);
 }
 
-export function getPostMetaBySlug(slug: string): BlogPost | null {
-  return getAllPosts().find((post) => post.slug === slug) ?? null;
+export function getPostMetaBySlug(
+  slug: string,
+  locale: SiteLocale = "en",
+): BlogPost | null {
+  return getAllPosts(locale).find((post) => post.slug === slug) ?? null;
 }
 
-export function getFeaturedPosts(limit = 3): BlogPost[] {
-  return getAllPosts()
+export function getFeaturedPosts(
+  limit = 3,
+  locale: SiteLocale = "en",
+): BlogPost[] {
+  return getAllPosts(locale)
     .filter((post) => post.featured)
     .slice(0, limit);
 }
 
-export function getAllCategories(): string[] {
+export function getAllCategories(locale: SiteLocale = "en"): string[] {
   return [
     ...new Set(
-      getAllPosts()
+      getAllPosts(locale)
         .map((post) => post.category.trim())
         .filter(Boolean),
     ),
   ].sort((a, b) => a.localeCompare(b));
 }
 
-export function getAllTags(): string[] {
+export function getAllTags(locale: SiteLocale = "en"): string[] {
   return [
     ...new Set(
-      getAllPosts()
+      getAllPosts(locale)
         .flatMap((post) => post.tags)
         .map((tag) => tag.trim())
         .filter(Boolean),
@@ -84,26 +91,32 @@ export function getAllTags(): string[] {
   ].sort((a, b) => a.localeCompare(b));
 }
 
-export function getPostsByCategory(category: string): BlogPost[] {
+export function getPostsByCategory(
+  category: string,
+  locale: SiteLocale = "en",
+): BlogPost[] {
   const normalizedCategory = normalizeTaxonomy(category);
 
-  return getAllPosts().filter(
+  return getAllPosts(locale).filter(
     (post) => normalizeTaxonomy(post.category) === normalizedCategory,
   );
 }
 
-export function getPostsByTag(tag: string): BlogPost[] {
+export function getPostsByTag(
+  tag: string,
+  locale: SiteLocale = "en",
+): BlogPost[] {
   const normalizedTag = normalizeTaxonomy(tag);
 
-  return getAllPosts().filter((post) =>
+  return getAllPosts(locale).filter((post) =>
     post.tags.some(
       (currentTag) => normalizeTaxonomy(currentTag) === normalizedTag,
     ),
   );
 }
 
-export function getAdjacentPosts(slug: string) {
-  const posts = getAllPosts();
+export function getAdjacentPosts(slug: string, locale: SiteLocale = "en") {
+  const posts = getAllPosts(locale);
   const index = posts.findIndex((post) => post.slug === slug);
 
   return {
@@ -112,8 +125,12 @@ export function getAdjacentPosts(slug: string) {
   };
 }
 
-export function getRelatedPosts(slug: string, limit = 3): BlogPost[] {
-  const posts = getAllPosts();
+export function getRelatedPosts(
+  slug: string,
+  limit = 3,
+  locale: SiteLocale = "en",
+): BlogPost[] {
+  const posts = getAllPosts(locale);
   const current = posts.find((post) => post.slug === slug);
 
   if (!current) return [];
@@ -154,6 +171,6 @@ export function formatDate(date: string, locale = "en-US") {
   }).format(new Date(date));
 }
 
-export function getAllSlugs(): string[] {
-  return getAllPosts().map((post) => post.slug);
+export function getAllSlugs(locale: SiteLocale = "en"): string[] {
+  return getAllPosts(locale).map((post) => post.slug);
 }

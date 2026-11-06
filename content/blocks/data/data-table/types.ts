@@ -35,6 +35,7 @@ export type DataTablePagination = Readonly<{
   navigationLabel?: string;
   previousLabel?: string;
   nextLabel?: string;
+  morePagesLabel?: string;
   summary?: React.ReactNode;
 }>;
 

@@ -1,0 +1,41 @@
+---
+title: Exigences relatives aux visuels commerciaux
+description: Documentez le contrat Google Merchant pour les ressources Starter Pro.
+lastUpdated: "2026-08-21"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+
+## Contrat d'image marchand [#merchant-image-contract]
+
+Le guide d'image Merchant de Starter Pro est délibérément conservateur:
+
+- Les actifs du marchand doivent être au moins `500 × 500 px`
+- `1500 × 1500 px` est la cible canonique préférée lorsque cela est pratique
+- Les actifs 1:1 sont préférés pour les flux de produits
+
+Il n'y a actuellement aucun flux marchand ou `image_link`/
+`additional_image_link` pipeline à auditer dans ce checkout. Le contrat in-repo documente donc les minimums et fournit un validateur appartenant au référentiel pour les actifs déjà présents, tandis que la limite externe du Merchant Center reste en dehors de ce PR.
+
+<Callout title="Limite de validation">
+  Google Merchant Center peut également ingérer des images hébergées en externe.
+  Lorsque ces dimensions ne peuvent pas être vérifiées à partir de preuves de
+  dépôt, Starter Pro documente la limite au lieu de deviner. Seuls les actifs
+  appartenant au référentiel sont validés automatiquement en repo.
+
+</Callout>
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Marchand</Badge>
+</div>
+
+## Ce que cela protège [#what-this-protects]
+
+Ce contrat est destiné à empêcher les futurs téléchargements du marchand de dériver en dessous des dimensions minimales requises avant la date d'application de Google de janvier 2027.
+
+## Ce qui reste externe [#what-remains-external]
+
+Si une intégration Merchant référence des images hébergées en dehors du référentiel, le référentiel peut documenter l’exigence, mais ne peut pas prouver les dimensions des ressources distantes sans preuves externes.

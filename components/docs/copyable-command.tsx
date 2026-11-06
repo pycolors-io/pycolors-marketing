@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -54,6 +55,8 @@ type CopyableCommandProps = Readonly<{
 }>;
 
 export function CopyableCommand({ command, className }: CopyableCommandProps) {
+  const tSite = useCopy();
+
   const [status, setStatus] = React.useState<CopyStatus>(IDLE_STATUS);
 
   async function handleCopy() {
@@ -70,7 +73,7 @@ export function CopyableCommand({ command, className }: CopyableCommandProps) {
     >
       <div className="flex items-center justify-between gap-3 border-b border-border-subtle bg-muted/25 px-4 py-2">
         <span className="font-mono text-xs text-muted-foreground">
-          Terminal
+          {tSite("Terminal")}
         </span>
         <Button
           type="button"
@@ -84,7 +87,7 @@ export function CopyableCommand({ command, className }: CopyableCommandProps) {
           ) : (
             <Copy aria-hidden="true" className="size-4" />
           )}
-          {status.kind === "success" ? "Copied" : "Copy command"}
+          {tSite(status.kind === "success" ? "Copied" : "Copy command")}
         </Button>
       </div>
       <pre
@@ -100,7 +103,7 @@ export function CopyableCommand({ command, className }: CopyableCommandProps) {
           role="status"
           className="border-t border-border px-4 py-2 text-xs text-muted-foreground"
         >
-          {status.message}
+          {tSite(status.message)}
         </p>
       ) : null}
     </div>

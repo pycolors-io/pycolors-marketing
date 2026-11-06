@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 
 export { ResponsiveSidebarExample } from "./responsive-sidebar-example";
@@ -29,6 +30,8 @@ function DemoAction({
   selectedLabel?: string;
   primary?: boolean;
 }>) {
+  const tSite = useCopy();
+
   const [selected, setSelected] = React.useState(false);
 
   return (
@@ -38,123 +41,145 @@ function DemoAction({
       onClick={() => setSelected((value) => !value)}
       type="button"
     >
-      {selected ? selectedLabel : label}
+      {tSite(selected ? selectedLabel : label)}
     </button>
   );
 }
 
 export function BillingOverviewExample() {
+  const tSite = useCopy();
+
   return (
     <div className="not-prose mx-auto max-w-3xl">
       <BillingOverviewPanel
-        billingLabel="Billing"
-        billingValue="Monthly"
-        description="Your plan, renewal date and payment details. Fictional demo data."
-        paymentLabel="Payment method"
-        paymentValue="Visa ending in 4242"
-        planLabel="Plan"
-        planValue="Growth example"
+        billingLabel={tSite("Billing")}
+        billingValue={tSite("Monthly")}
+        description={tSite(
+          "Your plan, renewal date and payment details. Fictional demo data.",
+        )}
+        paymentLabel={tSite("Payment method")}
+        paymentValue={tSite("Visa ending in 4242")}
+        planLabel={tSite("Plan")}
+        planValue={tSite("Growth example")}
         primaryAction={
           <DemoAction
-            label="Manage billing"
+            label={tSite("Manage billing")}
             primary
-            selectedLabel="Billing action selected"
+            selectedLabel={tSite("Billing action selected")}
           />
         }
-        renewalLabel="Renews"
-        renewalValue="October 15"
+        renewalLabel={tSite("Renews")}
+        renewalValue={tSite("October 15")}
         secondaryAction={
-          <DemoAction label="View plans" selectedLabel="Plans selected" />
+          <DemoAction
+            label={tSite("View plans")}
+            selectedLabel={tSite("Plans selected")}
+          />
         }
-        statusLabel="Status"
+        statusLabel={tSite("Status")}
         statusValue={
           <span className="inline-flex items-center gap-1.5 text-xs">
             <span
               aria-hidden="true"
               className="size-1.5 rounded-full bg-success"
             />
-            Active
+            {tSite("Active")}
           </span>
         }
-        title="Billing"
+        title={tSite("Billing")}
       />
     </div>
   );
 }
 
 export function PaymentMethodExample() {
+  const tSite = useCopy();
+
   return (
     <div className="not-prose mx-auto max-w-3xl">
       <PaymentMethodPanel
-        contactLabel="Billing contact"
+        contactLabel={tSite("Billing contact")}
         contactValue="billing@example.com"
-        description="The payment method used for your workspace. Fictional demo data."
-        expiryLabel="Expires"
+        description={tSite(
+          "The payment method used for your workspace. Fictional demo data.",
+        )}
+        expiryLabel={tSite("Expires")}
         expiryValue="10 / 28"
-        methodLabel="Method"
-        methodValue="Visa ending in 4242"
+        methodLabel={tSite("Method")}
+        methodValue={tSite("Visa ending in 4242")}
         primaryAction={
           <DemoAction
-            label="Update payment method"
+            label={tSite("Update payment method")}
             primary
-            selectedLabel="Update selected locally"
+            selectedLabel={tSite("Update selected locally")}
           />
         }
-        status={<span className={statusClassName}>Default</span>}
-        title="Payment method"
+        status={<span className={statusClassName}>{tSite("Default")}</span>}
+        title={tSite("Payment method")}
       />
     </div>
   );
 }
 
 export function InvoiceHistoryExample() {
+  const tSite = useCopy();
+
   return (
     <div className="not-prose mx-auto max-w-4xl">
       <InvoiceHistoryPanel
-        description="A clear record of your workspace billing. Fictional demo invoices."
+        dateLabel={tSite("Date")}
+        amountLabel={tSite("Amount")}
+        statusLabel={tSite("Status")}
+        actionLabel={tSite("Action")}
+        emptyState={tSite("No invoices yet.")}
+        description={tSite(
+          "A clear record of your workspace billing. Fictional demo invoices.",
+        )}
         invoices={[
           {
             id: "invoice-example-1",
-            date: "September 1, 2026",
-            amount: "$49.00",
+            date: tSite("September 1, 2026"),
+            amount: tSite("$49.00"),
             status: (
               <span className="inline-flex items-center gap-1.5 rounded-md border border-success/25 bg-success/5 px-2 py-1 text-xs">
                 <span
                   aria-hidden="true"
                   className="size-1.5 rounded-full bg-success"
                 />
-                Paid
+                {tSite("Paid")}
               </span>
             ),
             action: (
               <DemoAction
-                label="View invoice"
-                selectedLabel="Invoice selected"
+                label={tSite("View invoice")}
+                selectedLabel={tSite("Invoice selected")}
               />
             ),
           },
           {
             id: "invoice-example-2",
-            date: "August 1, 2026",
-            amount: "$49.00",
+            date: tSite("August 1, 2026"),
+            amount: tSite("$49.00"),
             status: (
               <span className="inline-flex items-center gap-1.5 rounded-md border border-success/25 bg-success/5 px-2 py-1 text-xs">
                 <span
                   aria-hidden="true"
                   className="size-1.5 rounded-full bg-success"
                 />
-                Paid
+                {tSite("Paid")}
               </span>
             ),
           },
         ]}
-        title="Invoice history"
+        title={tSite("Invoice history")}
       />
     </div>
   );
 }
 
 export function AuditLogExample() {
+  const tSite = useCopy();
+
   const id = usePreviewId("audit-log-preview");
 
   return (
@@ -162,31 +187,33 @@ export function AuditLogExample() {
       <AuditLogPanel
         actions={
           <DemoAction
-            label="Export view"
-            selectedLabel="Export selected locally"
+            label={tSite("Export view")}
+            selectedLabel={tSite("Export selected locally")}
           />
         }
-        description="Fictional workspace events supplied by the preview consumer."
+        description={tSite(
+          "Fictional workspace events supplied by the preview consumer.",
+        )}
         events={[
           {
             id: "event-1",
             actor: "Alex Morgan",
-            action: "updated",
-            target: "workspace settings",
+            action: tSite("updated"),
+            target: tSite("workspace settings"),
             occurredAt: "2026-09-15T08:30:00Z",
-            occurredAtLabel: "15 September 2026, 08:30 UTC",
-            details: "Changed the workspace display name.",
+            occurredAtLabel: tSite("15 September 2026, 08:30 UTC"),
+            details: tSite("Changed the workspace display name."),
           },
           {
             id: "event-2",
             actor: "Sam Lee",
-            action: "reviewed",
-            target: "billing access",
+            action: tSite("reviewed"),
+            target: tSite("billing access"),
             occurredAt: "2026-09-14T16:10:00Z",
-            occurredAtLabel: "14 September 2026, 16:10 UTC",
+            occurredAtLabel: tSite("14 September 2026, 16:10 UTC"),
           },
         ]}
-        heading="Recent activity"
+        heading={tSite("Recent activity")}
         id={id}
       />
     </div>
@@ -194,36 +221,44 @@ export function AuditLogExample() {
 }
 
 export function WorkspaceInvitationsExample() {
+  const tSite = useCopy();
+
   const id = usePreviewId("workspace-invitations-preview");
 
   return (
     <div className="not-prose">
       <WorkspaceInvitationsPanel
+        roleLabel={tSite("Role")}
+        statusLabel={tSite("Status")}
+        sentLabel={tSite("Sent")}
+        expiresLabel={tSite("Expires")}
         actions={
           <DemoAction
-            label="Invite member"
+            label={tSite("Invite member")}
             primary
-            selectedLabel="Invite action selected"
+            selectedLabel={tSite("Invite action selected")}
           />
         }
-        description="Fictional invitations supplied by the preview consumer."
-        heading="Pending invitations"
+        description={tSite(
+          "Fictional invitations supplied by the preview consumer.",
+        )}
+        heading={tSite("Pending invitations")}
         id={id}
         invitations={[
           {
             id: "invite-1",
             recipient: "sam@example.com",
-            secondaryText: "Example recipient",
-            role: "Editor",
-            status: "Pending",
+            secondaryText: tSite("Example recipient"),
+            role: tSite("Editor"),
+            status: tSite("Pending"),
             sentAt: "2026-09-15T09:00:00Z",
-            sentAtLabel: "15 September 2026",
+            sentAtLabel: tSite("15 September 2026"),
             expiresAt: "2026-09-22T09:00:00Z",
-            expiresAtLabel: "22 September 2026",
+            expiresAtLabel: tSite("22 September 2026"),
             actions: (
               <DemoAction
-                label="Revoke invitation"
-                selectedLabel="Revoke selected locally"
+                label={tSite("Revoke invitation")}
+                selectedLabel={tSite("Revoke selected locally")}
               />
             ),
           },

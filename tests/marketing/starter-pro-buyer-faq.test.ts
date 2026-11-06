@@ -49,7 +49,12 @@ describe("Starter Pro buyer FAQ", () => {
 
         const path = href.startsWith("/docs/")
           ? resolve(marketingRoot, "content/docs", `${href.slice(6)}.mdx`)
-          : resolve(marketingRoot, "app/(site)", href.slice(1), "page.tsx");
+          : resolve(
+              marketingRoot,
+              "app/[locale]/(site)",
+              href.slice(1),
+              "page.tsx",
+            );
 
         expect(existsSync(path), `Missing FAQ destination: ${href}`).toBe(true);
       }
@@ -116,7 +121,7 @@ describe("Starter Pro buyer FAQ", () => {
 
   it("uses the shared content in the existing FAQ section", () => {
     const page = readFileSync(
-      resolve(marketingRoot, "app/(site)/starters/pro/page.tsx"),
+      resolve(marketingRoot, "app/[locale]/(site)/starters/pro/page.tsx"),
       "utf8",
     );
     const section = page.match(

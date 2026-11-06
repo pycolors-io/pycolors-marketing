@@ -8,11 +8,17 @@ import { describe, expect, it } from "vitest";
 import { inspectText } from "../../../../scripts/ui-explorer/contract.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
-const entry = "app/(site)/page.tsx";
+const entry = "app/[locale]/(site)/page.tsx";
 // Reviewed homepage inputs. Existing checkout/consent edges stay outside the
 // theme teaser and retain their own behavioral tests; no backend source is allowed.
 const approved = new Set([
   entry,
+  "lib/i18n/use-copy.ts",
+  "lib/i18n/server-copy.ts",
+  "lib/i18n/copy-core.ts",
+  "lib/i18n/metadata.ts",
+  "lib/i18n/navigation.tsx",
+  "lib/i18n/routing.ts",
   "components/marketing/home.module.css",
   "components/marketing/fibonacci-background.tsx",
   "components/marketing/fibonacci-background.module.css",
@@ -42,11 +48,15 @@ const approved = new Set([
   "lib/products/starter-pro-services.ts",
   "lib/seo/breadcrumb.ts",
   "lib/seo/website.ts",
+  "lib/i18n/routes.ts",
   "lib/version.ts",
   "lib/showcase/product-studio.ts",
 ]);
 const external = new Set([
   "react",
+  "next-intl",
+  "next-intl/server",
+  "next-intl/routing",
   "next",
   "next/link",
   "next/image",
@@ -147,6 +157,7 @@ describe("homepage ownership and source contract", () => {
       "components/pricing/buy-starter-pro-button.tsx",
       "components/pricing/use-product-checkout.ts",
       "components/privacy/consent-gated-gtm.tsx",
+      "lib/i18n/navigation.tsx",
     ]);
   });
 
@@ -196,7 +207,10 @@ describe("homepage ownership and source contract", () => {
       const path = href.split(/[?#]/u)[0]!.replace(/^\//, "");
       const candidates = path.startsWith("docs/")
         ? [`content/${path}.mdx`, `content/${path}/index.mdx`]
-        : [`app/(site)/${path}/page.tsx`, `app/(tools)/${path}/page.tsx`];
+        : [
+            `app/[locale]/(site)/${path}/page.tsx`,
+            `app/(tools)/${path}/page.tsx`,
+          ];
       expect(
         candidates.some((file) => existsSync(resolve(root, file))),
         href,

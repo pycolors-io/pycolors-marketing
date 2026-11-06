@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   ArrowUpRight,
   Check,
@@ -22,6 +23,8 @@ export function PatternPreview({
   kind: PatternKind;
   featured?: boolean;
 }) {
+  const tSite = useCopy();
+
   return (
     <div
       aria-hidden="true"
@@ -32,49 +35,50 @@ export function PatternPreview({
           <div className={styles.mockHeader}>
             <span>
               <LayoutDashboard size={13} />
-              Overview
+              {tSite("Overview")}
             </span>
             {featured ? (
               <span className={styles.mockAction}>
-                New project <ArrowUpRight size={11} />
+                {tSite("New project ")}
+                <ArrowUpRight size={11} />
               </span>
             ) : (
               <span className={styles.mockSubtle}>
-                This month
+                {tSite("This month")}
                 <ChevronDown size={11} />
               </span>
             )}
           </div>
           <div className={styles.metrics}>
             <div>
-              <span>Projects</span>
+              <span>{tSite("Projects")}</span>
               <strong>12</strong>
-              <small>3 in progress</small>
+              <small>{tSite("3 in progress")}</small>
             </div>
             <div>
-              <span>Team members</span>
+              <span>{tSite("Team members")}</span>
               <strong>8</strong>
-              <small>Across 2 teams</small>
+              <small>{tSite("Across 2 teams")}</small>
             </div>
             <div>
-              <span>Tasks complete</span>
+              <span>{tSite("Tasks complete")}</span>
               <strong>86%</strong>
-              <small>On track</small>
+              <small>{tSite("On track")}</small>
             </div>
           </div>
           <div className={styles.mockRow}>
             <span>
               <i className={styles.mockDot} />
-              Website refresh
+              {tSite("Website refresh")}
             </span>
-            <span className={styles.mockPill}>In progress</span>
+            <span className={styles.mockPill}>{tSite("In progress")}</span>
           </div>
           <div className={styles.mockRow}>
             <span>
               <i className={styles.mockDot} />
-              Design system
+              {tSite("Design system")}
             </span>
-            <span className={styles.mockSubtle}>Updated today</span>
+            <span className={styles.mockSubtle}>{tSite("Updated today")}</span>
           </div>
         </>
       ) : null}
@@ -83,34 +87,34 @@ export function PatternPreview({
           <div className={styles.mockHeader}>
             <span>
               <CreditCard size={13} />
-              Subscription
+              {tSite("Subscription")}
             </span>
             <span className={styles.mockPill}>
               <i className={styles.successDot} />
-              Active
+              {tSite("Active")}
             </span>
           </div>
           <div className={styles.planSummary}>
             <div>
-              <span className={styles.mockSubtle}>Current plan</span>
-              <strong>Workspace plan</strong>
+              <span className={styles.mockSubtle}>{tSite("Current plan")}</span>
+              <strong>{tSite("Workspace plan")}</strong>
             </div>
             <span className={styles.mockAction}>
-              Manage plan
+              {tSite("Manage plan")}
               <ArrowUpRight size={11} />
             </span>
           </div>
           <div className={styles.mockRow}>
-            <span>Billing cycle</span>
-            <span>Monthly</span>
+            <span>{tSite("Billing cycle")}</span>
+            <span>{tSite("Monthly")}</span>
           </div>
           <div className={styles.mockRow}>
-            <span>Payment method</span>
-            <span>Visa ···· 4242</span>
+            <span>{tSite("Payment method")}</span>
+            <span>{tSite("Visa ···· 4242")}</span>
           </div>
           <div className={styles.mockRow}>
-            <span>Latest invoice</span>
-            <span className={styles.mockPill}>Paid</span>
+            <span>{tSite("Latest invoice")}</span>
+            <span className={styles.mockPill}>{tSite("Paid")}</span>
           </div>
         </>
       ) : null}
@@ -119,24 +123,24 @@ export function PatternPreview({
           <div className={styles.mockHeader}>
             <span>
               <Settings2 size={13} />
-              Workspace settings
+              {tSite("Workspace settings")}
             </span>
-            <span className={styles.mockSubtle}>General</span>
+            <span className={styles.mockSubtle}>{tSite("General")}</span>
           </div>
           <div className={styles.mockField}>
-            <span>Workspace name</span>
-            <div>Acme Studio</div>
+            <span>{tSite("Workspace name")}</span>
+            <div>{tSite("Acme Studio")}</div>
           </div>
           <div className={styles.mockField}>
-            <span>Contact email</span>
-            <div>team@example.com</div>
+            <span>{tSite("Contact email")}</span>
+            <div>{tSite("team@example.com")}</div>
           </div>
           <div className={styles.mockFooter}>
             <span>
               <Check size={12} />
-              All changes saved
+              {tSite("All changes saved")}
             </span>
-            <span className={styles.mockAction}>Save changes</span>
+            <span className={styles.mockAction}>{tSite("Save changes")}</span>
           </div>
         </>
       ) : null}
@@ -145,9 +149,9 @@ export function PatternPreview({
           <div className={styles.mockHeader}>
             <span>
               <Users size={13} />
-              Members
+              {tSite("Members")}
             </span>
-            <span className={styles.mockAction}>Invite member</span>
+            <span className={styles.mockAction}>{tSite("Invite member")}</span>
           </div>
           {[
             ["AL", "Alex Lee", "Owner"],
@@ -155,13 +159,15 @@ export function PatternPreview({
             ["TS", "Taylor Smith", "Invited"],
           ].map(([initials, name, role]) => (
             <div className={styles.member} key={initials}>
-              <span className={styles.avatar}>{initials}</span>
+              <span className={styles.avatar}>{tSite(initials)}</span>
               <span>
-                {name}
+                {tSite(name)}
                 <small>
-                  {role === "Invited"
-                    ? "Invitation pending"
-                    : "Workspace member"}
+                  {tSite(
+                    role === "Invited"
+                      ? "Invitation pending"
+                      : "Workspace member",
+                  )}
                 </small>
               </span>
               <span
@@ -169,7 +175,7 @@ export function PatternPreview({
                   role === "Invited" ? styles.mockPill : styles.mockSubtle
                 }
               >
-                {role}
+                {tSite(role)}
               </span>
             </div>
           ))}
@@ -179,32 +185,33 @@ export function PatternPreview({
         <div className={styles.shellPreview}>
           <div className={styles.mockSidebar}>
             <strong>
-              <span className={styles.workspaceMark}>A</span>Acme
+              <span className={styles.workspaceMark}>{tSite("A")}</span>
+              {tSite("Acme")}
             </strong>
             <span className={styles.activeNav}>
               <LayoutDashboard size={12} />
-              Overview
+              {tSite("Overview")}
             </span>
             <span>
               <Users size={12} />
-              Members
+              {tSite("Members")}
             </span>
             <span>
               <CreditCard size={12} />
-              Billing
+              {tSite("Billing")}
             </span>
             <span>
               <Settings2 size={12} />
-              Settings
+              {tSite("Settings")}
             </span>
-            <small>Workspace navigation</small>
+            <small>{tSite("Workspace navigation")}</small>
           </div>
           <div className={styles.shellContent}>
             <div className={styles.shellHeader}>
-              Workspace / Overview
+              {tSite("Workspace / Overview")}
               <CircleDot size={12} />
             </div>
-            <strong>Your workspace</strong>
+            <strong>{tSite("Your workspace")}</strong>
             <span className={styles.skeletonLine} />
             <div className={styles.skeletonCards}>
               <span />
@@ -221,35 +228,35 @@ export function PatternPreview({
       {kind === "upgrade" ? (
         <>
           <div className={styles.mockHeader}>
-            <span>Your workspace, with room to grow.</span>
+            <span>{tSite("Your workspace, with room to grow.")}</span>
           </div>
           <div className={styles.planChoices}>
             <div>
-              <span className={styles.mockSubtle}>Current plan</span>
-              <strong>Essential</strong>
+              <span className={styles.mockSubtle}>{tSite("Current plan")}</span>
+              <strong>{tSite("Essential")}</strong>
               <span>
                 <Check size={11} />
-                Core workspace
+                {tSite("Core workspace")}
               </span>
               <span>
                 <Check size={11} />
-                Standard limits
+                {tSite("Standard limits")}
               </span>
-              <span className={styles.currentPlan}>Your plan</span>
+              <span className={styles.currentPlan}>{tSite("Your plan")}</span>
             </div>
             <div className={styles.nextPlan}>
-              <span className={styles.mockSubtle}>Next step</span>
-              <strong>Growth</strong>
+              <span className={styles.mockSubtle}>{tSite("Next step")}</span>
+              <strong>{tSite("Growth")}</strong>
               <span>
                 <Check size={11} />
-                More capacity
+                {tSite("More capacity")}
               </span>
               <span>
                 <Check size={11} />
-                Team controls
+                {tSite("Team controls")}
               </span>
               <span className={styles.mockAction}>
-                Compare plans
+                {tSite("Compare plans")}
                 <ArrowUpRight size={11} />
               </span>
             </div>
@@ -261,14 +268,16 @@ export function PatternPreview({
 }
 
 export function PatternAnatomy() {
+  const tSite = useCopy();
+
   return (
     <figure className={styles.anatomy}>
       <div className={styles.anatomyHeading}>
         <span>
-          <LayoutDashboard size={14} aria-hidden="true" />A screen, with a
-          system.
+          <LayoutDashboard size={14} aria-hidden="true" />
+          {tSite("A screen, with a system.")}
         </span>
-        <span>UI / 01</span>
+        <span>{tSite("UI / 01")}</span>
       </div>
       <div className={styles.anatomyStage}>
         <PatternPreview kind="dashboard" featured />
@@ -277,21 +286,21 @@ export function PatternAnatomy() {
         <ol className={styles.anatomyLegend}>
           <li>
             <span>01</span>
-            <strong>Orient</strong>
-            <small>A clear location</small>
+            <strong>{tSite("Orient")}</strong>
+            <small>{tSite("A clear location")}</small>
           </li>
           <li>
             <span>02</span>
-            <strong>Understand</strong>
-            <small>Useful context</small>
+            <strong>{tSite("Understand")}</strong>
+            <small>{tSite("Useful context")}</small>
           </li>
           <li>
             <span>03</span>
-            <strong>Act</strong>
-            <small>A visible next step</small>
+            <strong>{tSite("Act")}</strong>
+            <small>{tSite("A visible next step")}</small>
           </li>
         </ol>
-        <p>Illustrative layout · Sample data</p>
+        <p>{tSite("Illustrative layout · Sample data")}</p>
       </figcaption>
     </figure>
   );

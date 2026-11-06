@@ -1,0 +1,539 @@
+---
+title: Alert
+description: Surface de rétroaction pour les messages d'état, les résultats de
+  validation et les avis système dans l'interface utilisateur PyColors.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  Accessibility,
+  AlertTriangle,
+  ArrowRight,
+  BellRing,
+  CheckCircle,
+  CircleAlert,
+  Info,
+  Megaphone,
+  Palette,
+  ShieldAlert,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Alerte</Badge>
+</div>
+
+## Rétroaction en ligne pour les états de produits importants [#inline-feedback-for-important-product-states]
+
+Les **Alerte** Le composant communique des informations importantes directement à l'intérieur de l'interface.
+
+Utilisez-le pour:
+
+- Avis neutres
+- résultats de validation
+- Confirmations de succès
+- avertissements
+- Erreurs de blocage
+- messages système
+
+Contrairement aux toasts, les alertes sont **inline et persistant**. Ils restent visibles dans le contexte jusqu'à ce que l'utilisateur comprenne ou résolve l'état.
+
+<Callout title="Idée de base">
+  Les alertes sont pour les messages qui appartiennent à la page. Les toasts
+  sont des commentaires temporaires.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="alert-import.tsx"
+import { Alert } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez une alerte neutre pour les informations non critiques.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+  <Preview>
+    <Alert className="max-w-xl">
+      <AlertTitle>Tête haute</AlertTitle>
+      <AlertDescription>
+        C’est un message neutre. Utilisez-le pour des informations non critiques.
+      </AlertDescription>
+    </Alert>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-alert.tsx"
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+export function BasicAlert() {
+  return (
+    <Alert>
+      <AlertTitle>Heads up</AlertTitle>
+      <AlertDescription>
+        This is a neutral message. Use it for non-critical information.
+      </AlertDescription>
+    </Alert>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Note typographique">
+  Préférez le texte brut à l'intérieur `AlertDescription`. Évitez d'imbriquer
+  des balises de paragraphe supplémentaires lorsque le composant affiche déjà la
+  sémantique du texte.
+
+</Callout>
+
+## Quand utiliser Alert [#when-to-use-alert]
+
+Utilisez Alerte lorsque le message doit rester visible dans son contexte.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Avis de page",
+      description:
+        "Expliquez quelque chose d'important avant que l'utilisateur continue.",
+      icon: Info,
+    },
+    {
+      title: "Résultat de réussite",
+      description:
+        "Confirmez qu'une action importante a été effectuée avec succès.",
+      icon: CheckCircle,
+      tone: "success",
+    },
+    {
+      title: "Erreur de blocage",
+      description:
+        "Expliquez ce qui a échoué et ce que l'utilisateur peut faire ensuite.",
+      icon: ShieldAlert,
+      tone: "danger",
+    },
+  ]}
+/>
+
+### Variantes [#variants]
+
+Les variantes reflètent la signification sémantique du message.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+   <Preview>
+    <div className="grid max-w-xl gap-4">
+      <Alert variant="info">
+        <AlertTitle>Information</AlertTitle>
+        <AlertDescription>
+          Contexte utile pour l’utilisateur.
+        </AlertDescription>
+      </Alert>
+
+      <Alert variant="success">
+        <AlertTitle>Succès</AlertTitle>
+        <AlertDescription>
+          Vos modifications ont été sauvegardées.
+        </AlertDescription>
+      </Alert>
+
+      <Alert variant="warning">
+        <AlertTitle>Avertissement</AlertTitle>
+        <AlertDescription>
+          Quelque chose peut nécessiter de l'attention.
+        </AlertDescription>
+      </Alert>
+
+      <Alert variant="destructive" ariaLive="assertive">
+        <AlertTitle>Erreur</AlertTitle>
+        <AlertDescription>
+          Nous n'avons pas pu sauvegarder vos modifications. Essaie encore.
+        </AlertDescription>
+      </Alert>
+    </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="alert-variants.tsx"
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+export function AlertVariants() {
+  return (
+    <div className="grid gap-4">
+      <Alert variant="info">
+        <AlertTitle>Info</AlertTitle>
+        <AlertDescription>Useful context for the user.</AlertDescription>
+      </Alert>
+
+      <Alert variant="success">
+        <AlertTitle>Success</AlertTitle>
+        <AlertDescription>Your changes were saved.</AlertDescription>
+      </Alert>
+
+      <Alert variant="warning">
+        <AlertTitle>Warning</AlertTitle>
+        <AlertDescription>Something may need attention.</AlertDescription>
+      </Alert>
+
+      <Alert variant="destructive" ariaLive="assertive">
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>
+          We couldn’t save your changes. Try again.
+        </AlertDescription>
+      </Alert>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Variantes disponibles [#available-variants]
+
+| Variante      | Objet                                                              |
+| ------------- | ------------------------------------------------------------------ |
+| `default`     | Information neutre                                                 |
+| `info`        | Information neutre, actuellement alignée avec la valeur par défaut |
+| `success`     | Confirmation ou rétroaction positive                               |
+| `warning`     | Risque ou attention requise                                        |
+| `destructive` | Erreur ou message critique                                         |
+
+<Callout type="info" title="Comportement du token">
+  `default` et `info` partager intentionnellement le même langage visuel dans le
+  jeu de tokens v1 actuel.
+
+</Callout>
+
+### Annonces avec ariaLive [#announcements-with-arialive]
+
+Les `ariaLive` prop contrôle la façon dont les technologies d'assistance annoncent les mises à jour.
+
+| Valeur      | Rôle     | Utilisation pour                                  |
+| ----------- | -------- | ------------------------------------------------- |
+| `polite`    | `status` | Mises à jour non bloquantes                       |
+| `assertive` | `alert`  | Erreurs critiques                                 |
+| `off`       | néant    | Messages statiques qui n'ont pas besoin d'annonce |
+
+Le résultat `role` et `aria-live` sont déterministes : elles sont toujours dérivées de `ariaLive` et avoir préséance sur tout natif `role` ou `aria-live` valeur passée à travers le reste des accessoires du composant.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <div className="grid max-w-xl gap-4">
+      <Alert ariaLive="polite">
+        <AlertTitle>Statut</AlertTitle>
+        <AlertDescription>
+          Enregistré en arrière-plan.
+        </AlertDescription>
+      </Alert>
+
+      <Alert variant="destructive" ariaLive="assertive">
+        <AlertTitle>Critique</AlertTitle>
+        <AlertDescription>
+          Paiement échoué. Veuillez réessayer.
+        </AlertDescription>
+      </Alert>
+
+      <Alert ariaLive="off">
+        <AlertTitle>Silencieux</AlertTitle>
+        <AlertDescription>
+          Pas d'annonce live pour ce message.
+        </AlertDescription>
+      </Alert>
+    </div>
+
+  </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="alert-aria-live.tsx"
+import { Alert, AlertTitle, AlertDescription } from "@pycolors/ui";
+
+export function AlertAriaLive() {
+  return (
+    <div className="grid gap-4">
+      <Alert ariaLive="polite">
+        <AlertTitle>Status</AlertTitle>
+        <AlertDescription>Saved in the background.</AlertDescription>
+      </Alert>
+
+      <Alert variant="destructive" ariaLive="assertive">
+        <AlertTitle>Critical</AlertTitle>
+        <AlertDescription>Payment failed. Please retry.</AlertDescription>
+      </Alert>
+
+      <Alert ariaLive="off">
+        <AlertTitle>Silent</AlertTitle>
+        <AlertDescription>No announcement for this message.</AlertDescription>
+      </Alert>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Règle d'accessibilité">
+  Utilisation `assertive` Seulement pour les erreurs urgentes. L'utilisation
+  excessive d'annonces assertives crée une expérience bruyante pour les
+  utilisateurs de lecteurs d'écran.
+
+</Callout>
+
+### Avec indicateur [#with-indicator]
+
+Utilisation `AlertIndicator` avec `AlertContent` quand une icône aide à renforcer le message.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <Alert variant="warning" className="max-w-xl">
+      <AlertIndicator aria-hidden="true">
+        <AlertTriangle className="size-5" />
+      </AlertIndicator>
+
+      <AlertContent>
+        <AlertTitle>Vérifiez votre saisie</AlertTitle>
+        <AlertDescription>
+          Certains champs peuvent être incomplets. Examen avant de soumettre.
+        </AlertDescription>
+      </AlertContent>
+    </Alert>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="alert-with-indicator.tsx"
+import {
+  Alert,
+  AlertIndicator,
+  AlertContent,
+  AlertTitle,
+  AlertDescription,
+} from "@pycolors/ui";
+import { AlertTriangle } from "lucide-react";
+
+export function AlertWithIndicator() {
+  return (
+    <Alert variant="warning">
+      <AlertIndicator aria-hidden="true">
+        <AlertTriangle className="size-5" />
+      </AlertIndicator>
+
+      <AlertContent>
+        <AlertTitle>Check your input</AlertTitle>
+        <AlertDescription>
+          Some fields might be incomplete. Review before submitting.
+        </AlertDescription>
+      </AlertContent>
+    </Alert>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle d'icône">
+  Si l'icône est décorative, ajoutez `aria-hidden="true"`. Le texte doit avoir
+  le sens.
+
+</Callout>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Utiliser des alertes en ligne pour les états persistants [#use-inline-alerts-for-persistent-states]
+
+    Utilisez Alerte lorsque le message doit rester visible à proximité du contenu pertinent.
+
+</Step>
+
+  <Step>
+    #### Utilisez la variante qui correspond à la signification [#use-the-variant-that-matches-meaning]
+
+    Choisir `success`, `warning`ou `destructive` uniquement lorsque le message porte cette intention sémantique.
+
+</Step>
+
+  <Step>
+    #### Garder la copie spécifique et actionnable [#keep-copy-specific-and-actionable]
+
+    Expliquez ce qui s'est passé et ce que l'utilisateur peut faire ensuite.
+
+</Step>
+
+  <Step>
+    #### N’annoncez que ce qui compte [#announce-only-what-matters]
+
+    Utilisation `polite` pour les mises à jour de statut et `assertive` uniquement pour les défaillances critiques.
+
+</Step>
+
+</Steps>
+
+## Alerte vs Toast [#alert-vs-toast]
+
+| Situation                                      | Utilisation |
+| ---------------------------------------------- | ----------- |
+| Erreur de page de blocage                      | Alerte      |
+| Résultat de validation au niveau du formulaire | Alerte      |
+| Avis persistant important                      | Alerte      |
+| Confirmation de sauvegarde temporaire          | Toast       |
+| Mise à jour d'arrière-plan non bloquante       | Toast       |
+| Annuler ou réessayer après la mutation         | Toast       |
+
+<Callout title="Règle de décision">
+  Si l'utilisateur a besoin du message pour terminer la tâche, utilisez Alerte.
+  Si le message est une confirmation temporaire, utilisez Toast.
+
+</Callout>
+
+## API [#api]
+
+| Prop        | Type                               | Par défaut  | Désignation                         |
+| ----------- | ---------------------------------- | ----------- | ----------------------------------- |
+| `variant`   | `AlertVariant`                     | `"default"` | sémantique visuelle                 |
+| `ariaLive`  | `"off" \| "polite" \| "assertive"` | `"polite"`  | Comportement d'annonce d'assistance |
+| `className` | `string`                           | —           | Classes Tailwind personnalisées     |
+
+Les composants d'alerte étendent les props HTML standard :
+
+```ts title="alert-types.ts"
+React.HTMLAttributes<HTMLDivElement>;
+```
+
+### TypeScript types [#typescript-types]
+
+```ts title="alert-types.ts"
+export type AlertVariant = NonNullable<AlertProps["variant"]>;
+
+export interface AlertProps
+  extends
+    React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof alertVariants> {
+  ariaLive?: "off" | "polite" | "assertive";
+}
+```
+
+### Accessibilité [#accessibility]
+
+- `ariaLive="polite"` renders `role="status"`.
+- `ariaLive="assertive"` renders `role="alert"`.
+- `ariaLive="off"` supprime les annonces de live-region.
+- Le calcul `role` et `aria-live` ne peut pas être remplacé silencieusement par d'autres accessoires; `ariaLive` C’est la seule source de vérité.
+- Ne vous fiez pas uniquement à la couleur pour communiquer du sens.
+- Les indicateurs décoratifs doivent utiliser `aria-hidden="true"`.
+- Gardez la copie d'alerte claire, courte et exploitable.
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "copie courte et exploitable",
+    "placement en ligne à proximité du problème",
+    "Variantes sémantiques pour les états réels",
+    "annonces polies par défaut",
+    "assertif seulement pour les erreurs critiques",
+  ]}
+  avoid={[
+    "Utilisation des alertes pour les notifications temporaires",
+    'copie vague comme "Quelque chose a mal tourné" seul',
+    "couleur seule signification",
+    "annonces assertives pour chaque message",
+    "placer les alertes de blocage loin de la tâche",
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Les messages de réussite doivent-ils utiliser Alert ou Toast?">
+    Utilisez Alerte lorsque la confirmation doit rester visible dans le contexte. Utilisez Toast pour des confirmations de courte durée après des actions non bloquantes.
+  </Accordion>
+
+<Accordion title="Est-ce que chaque alerte destructive doit s’affirmer ?">
+  Non. Utilisation `assertive` uniquement lorsque le message est urgent et que
+  l'utilisateur doit le savoir immédiatement.
+</Accordion>
+
+<Accordion title="Une alerte peut-elle contenir des actions ?">
+  Oui, mais gardez les actions secondaires et concentrées. Si le flux devient
+  complexe, utilisez un formulaire dédié, une section de dialogue ou une section
+  de page.
+</Accordion>
+
+  <Accordion title="Les icônes ne devraient-elles communiquer que du sens ?">
+    Non. Les icônes devraient renforcer le sens. Le texte doit expliquer le message.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description:
+        "tokens sémantiques pour les bordures, les surfaces et les couleurs d'état.",
+      icon: Palette,
+    },
+    {
+      title: "Vide, chargement et états d'erreur",
+      href: "/docs/guides/empty-loading-error",
+      description:
+        "Découvrez quand utiliser Alert pour les échecs de produits asynchrones.",
+      icon: CircleAlert,
+    },
+    {
+      title: "Toast",
+      href: "/docs/ui/toast",
+      description: "Rétroaction temporaire pour les actions non bloquantes.",
+      icon: BellRing,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Créez des commentaires de produits accessibles avec une sémantique claire et des annonces.",
+      icon: Accessibility,
+    },
+  ]}
+/>

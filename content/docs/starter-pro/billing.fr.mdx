@@ -1,0 +1,479 @@
+---
+title: Facturation (PRO)
+description:
+  Configurez Stripe Checkout, les abonnements, les factures et les droits
+  d’accès de votre SaaS avec Starter Pro.
+lastUpdated: "2026-05-18"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+import {
+  CreditCard,
+  Database,
+  Download,
+  FileText,
+  KeyRound,
+  LockKeyhole,
+  RefreshCcw,
+  ShieldCheck,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Facturation</Badge>
+</div>
+
+## Une facturation pour commercialiser votre produit [#billing-that-turns-your-product-into-a-business]
+
+Starter Free fournit **les écrans de tarification et de facturation**.
+
+Starter Pro fournit **les fondations d’une intégration Stripe réelle** :
+
+- Stripe Checkout
+- portail de facturation en libre-service
+- association des comptes aux clients Stripe
+- cycle de vie de l'abonnement
+- synchronisation par webhooks
+- suivi des factures
+- droits d’accès selon l’offre
+
+Ces fondations couvrent le fonctionnement de la facturation au-delà de la page de tarifs.
+
+Elles permettent à votre SaaS d’accepter des paiements et de gérer les accès qui en dépendent.
+
+<DocsUpgradeCTA
+  title="Connectez les tarifs aux paiements."
+  description="Passez des écrans de tarification à une intégration Stripe capable de facturer vos clients et de synchroniser leur abonnement."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Setup guide"
+/>
+
+<Callout title="Principe">
+  La facturation comprend le statut des paiements, le lien entre un compte et
+  son client Stripe, la synchronisation par webhooks et les droits d’accès au
+  produit.
+
+</Callout>
+
+### Les besoins couverts [#what-this-solves]
+
+Intégrer Stripe ne se limite pas à ajouter un bouton de paiement.
+
+Une intégration de facturation SaaS doit couvrir :
+
+- création de sessions de paiement
+- association entre utilisateur et client Stripe
+- gestion du statut des abonnements
+- vérification des webhooks
+- suivi des factures
+- accès au portail de facturation
+- Comportement du produit selon l’offre
+- gestion des échecs de paiement
+- comportement d'annulation
+
+Starter Pro structure ces responsabilités pour vous permettre de les adapter à votre produit sans repartir de zéro.
+
+### Fondations incluses [#included-foundations]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Stripe Checkout",
+      description:
+        "Création des sessions côté serveur et parcours de souscription depuis les tarifs ou la page de facturation.",
+      icon: CreditCard,
+    },
+    {
+      title: "Synchronisation par webhooks",
+      description:
+        "Les événements Stripe mettent à jour l’état de votre application pour maintenir la cohérence des abonnements, des factures et des accès.",
+      icon: RefreshCcw,
+    },
+    {
+      title: "Factures et abonnements",
+      description:
+        "Gestion du cycle de vie des abonnements, suivi des factures et affichage de leur statut dans l’historique de facturation.",
+      icon: FileText,
+    },
+    {
+      title: "Accès selon l’offre",
+      description:
+        "Des contrôles d’accès qui tiennent compte de l’offre souscrite, du statut de l’abonnement et du client Stripe.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+## Cycle de vie de la facturation [#billing-lifecycle]
+
+<Steps>
+  <Step>
+    ### L’utilisateur choisit une offre [#user-starts-upgrade]
+
+    L’utilisateur demande une mise à niveau depuis les tarifs, la facturation ou une fonctionnalité réservée à une offre supérieure.
+
+```txt title="entry-points.txt"
+/pricing
+/billing
+/protected-feature
+```
+
+</Step>
+
+  <Step>
+    ### Le backend crée la session Checkout [#backend-creates-checkout-session]
+
+    Le navigateur demande une session à votre serveur. Celui-ci crée la session Checkout avec les clés Stripe conservées côté serveur.
+
+```ts title="server/billing/create-checkout-session.ts"
+const session = await stripe.checkout.sessions.create({
+  customer: stripeCustomerId,
+  mode: "subscription",
+  line_items: [{ price: priceId, quantity: 1 }],
+  success_url: `${appUrl}/billing?success=true`,
+  cancel_url: `${appUrl}/pricing?canceled=true`,
+});
+```
+
+</Step>
+
+  <Step>
+    ### Stripe confirme le paiement [#stripe-confirms-payment]
+
+    Stripe traite le paiement, crée l’abonnement et gère la facturation du client.
+
+    Une redirection vers la page de confirmation ne suffit pas à prouver que le paiement a réussi.
+
+</Step>
+
+  <Step>
+    ### Le webhook synchronise l’application [#webhook-updates-app-state]
+
+    Les webhooks permettent au serveur de confirmer les événements survenus chez Stripe, puis de mettre à jour la base de données.
+
+```txt title="webhook-events.txt"
+checkout.session.completed
+customer.subscription.created
+customer.subscription.updated
+customer.subscription.deleted
+invoice.payment_succeeded
+invoice.payment_failed
+```
+
+</Step>
+
+  <Step>
+    ### L'application reflète l'état de facturation [#app-reflects-billing-state]
+
+    Les droits d’accès, la page de facturation et l’historique des factures doivent s’appuyer sur l’état synchronisé côté serveur.
+
+</Step>
+
+</Steps>
+
+<Callout title="Règle de production">
+  Les redirections guident l’utilisateur. Les webhooks permettent de confirmer et de synchroniser les événements de facturation.
+
+</Callout>
+
+### Flux de facturation [#billing-flows]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Checkout",
+      title: "Checkout ouvre le parcours de paiement",
+      icon: CreditCard,
+      description:
+        "Checkout permet de réaliser le premier paiement ou de souscrire un abonnement depuis votre produit.",
+      items: [
+        "le bouton de souscription demande une session au serveur",
+        "Stripe Checkout gère le paiement",
+        "les URL de confirmation et d’annulation ramènent l’utilisateur dans l’application",
+        "le webhook confirme le statut réel du paiement",
+      ],
+    },
+    {
+      eyebrow: "Portail",
+      title: "Le portail accompagne les clients existants",
+      icon: KeyRound,
+      description:
+        "Le portail Stripe propose une gestion en libre-service sans vous obliger à reconstruire toute l’interface de facturation.",
+      items: [
+        "mise à jour des moyens de paiement",
+        "accès aux factures",
+        "gestion des abonnements",
+        "annulation de l’abonnement",
+        "changement d’offre",
+      ],
+    },
+    {
+      eyebrow: "Webhooks",
+      title: "Les webhooks synchronisent les événements",
+      icon: RefreshCcw,
+      description:
+        "Les webhooks maintiennent la cohérence entre les événements Stripe et l’état de l’abonnement enregistré dans votre application.",
+      items: [
+        "Gestion des événements Stripe",
+        "État de l'abonnement",
+        "État de la facture",
+        "traitement idempotent des événements",
+      ],
+    },
+    {
+      eyebrow: "Accès",
+      title: "Des droits d’accès selon l’offre",
+      icon: ShieldCheck,
+      description:
+        "Reliez les droits d’accès au statut de l’abonnement pour appliquer les règles de votre produit.",
+      items: [
+        "Restreindre les fonctionnalités selon l’offre",
+        "vérification du statut de l'abonnement",
+        "gestion des impayés et des annulations",
+        "écrans tenant compte du statut de facturation",
+      ],
+    },
+  ]}
+/>
+
+## Starter Free et Starter Pro [#starter-free-vs-starter-pro]
+
+| Capacité                                   | Starter Free         | Starter Pro                |
+| ------------------------------------------ | -------------------- | -------------------------- |
+| Page de tarifs                             | Inclus               | Inclus                     |
+| Interface de facturation                   | Simulée              | Connectée au serveur       |
+| Stripe Checkout                            | Non inclus           | Inclus                     |
+| Portail de facturation                     | Interface uniquement | Inclus                     |
+| Association des comptes aux clients Stripe | Non inclus           | Fondation incluse          |
+| Cycle de vie des abonnements               | Simulée              | Synchronisation réelle     |
+| Webhooks                                   | Non inclus           | Fondation incluse          |
+| Suivi des factures                         | Simulée              | Suivi prévu                |
+| Accès selon l’offre                        | Conceptuel           | Fondation incluse          |
+| Préparation à la monétisation              | Démo uniquement      | Orienté vers la production |
+
+<Callout title="Une distinction simple">
+  Starter Free simule la monétisation. Starter Pro vous donne la couche de
+  facturation nécessaire pour facturer les clients.
+
+</Callout>
+
+## Architecture [#architecture]
+
+### Responsabilités du modèle de données [#data-model-responsibilities]
+
+Votre application doit pouvoir représenter le client Stripe, son abonnement et le statut de ses paiements.
+
+Les principales responsabilités sont les suivantes :
+
+| Zone         | Objet                                                   |
+| ------------ | ------------------------------------------------------- |
+| Client       | Associe les comptes de l’application aux clients Stripe |
+| Produit      | Représente les produits SaaS vendables                  |
+| Prix         | Représente les prix Stripe et les offres commerciales   |
+| Abonnement   | Suivi de l'état actuel de l'abonnement                  |
+| Facture      | Stocke les références de facture et l'état de paiement  |
+| WebhookEvent | Traite les événements Stripe pour plus de fiabilité     |
+
+<Callout type="info" title="Pourquoi cela compte">
+  Stripe traite les paiements. Votre application doit conserver un état
+  synchronisé pour appliquer les droits d’accès et afficher des informations
+  de facturation cohérentes.
+
+</Callout>
+
+### Contrôler l’accès selon l’offre [#plan-gating]
+
+Les informations de facturation permettent d’appliquer les règles d’accès du produit.
+
+Starter Pro fournit les bases pour mettre en œuvre :
+
+- des accès gratuits et payants
+- des fonctionnalités activées selon l’offre
+- vérification du statut de l'abonnement
+- des paramètres tenant compte de la facturation
+- invites de mise à niveau
+- comportement d'annulation
+- des messages en cas d’échec de paiement
+
+```ts title="plan-access.ts"
+export function canAccessProFeature(subscriptionStatus: string) {
+  return subscriptionStatus === "active" || subscriptionStatus === "trialing";
+}
+```
+
+Centralisez les règles de chaque offre et vérifiez-les côté serveur.
+
+### Règles de sécurité [#security-rules]
+
+Utilisez ces règles lors de l'adaptation de la couche de facturation.
+
+<PreferAvoid
+  prefer={[
+    "créer des sessions Stripe sur le serveur",
+    "vérifier la signature des webhooks",
+    "s’appuyer sur les événements Stripe vérifiés pour synchroniser la facturation",
+    "maintenir le statut de l’abonnement à jour",
+    "vérifier l'accès côté serveur pour les fonctionnalités sensibles",
+  ]}
+  avoid={[
+    "Appeler les API secrètes de Stripe depuis le navigateur",
+    "accorder un accès sur la seule base d’une redirection",
+    "ignorer la vérification des webhooks",
+    "disperser les contrôles d’offre dans les composants d’interface",
+    "Utiliser des messages d'erreur de facturation vagues",
+  ]}
+/>
+
+## Choisir votre point de départ [#decision-guide]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Starter Pro",
+      title: "Passer à Starter Pro pour connecter les paiements",
+      href: "/docs/starter-pro/getting-started",
+      icon: CreditCard,
+      tone: "pro",
+      description:
+        "Choisissez Starter Pro lorsque vous devez facturer vos utilisateurs et connecter les paiements aux droits d’accès de votre produit.",
+      items: [
+        "vous souhaitez facturer les utilisateurs",
+        "Stripe Checkout doit fonctionner",
+        "l'état de l'abonnement contrôle l'accès",
+        "historique de facturation",
+        "synchronisation de l’état par webhooks",
+        "validation de la facturation avant le lancement",
+      ],
+      cta: "Start setup →",
+    },
+    {
+      eyebrow: "Starter Free",
+      title: "Rester sur Free pour explorer les parcours",
+      icon: FileText,
+      description:
+        "Choisissez Starter Free pour concevoir et tester les écrans de monétisation avant de connecter un système de paiement réel.",
+      items: [
+        "vous explorez les écrans de tarification",
+        "la facturation reste simulée",
+        "vous n’encaissez pas encore de paiements",
+        "votre produit n'est pas prêt à être monétisé",
+      ],
+    },
+  ]}
+/>
+
+<Callout title="Connectez la facturation au bon moment">
+  Starter Free vous aide à façonner la monétisation. Starter Pro vous donne la
+  couche de facturation nécessaire pour facturer les clients.
+
+</Callout>
+
+### Vérifications de l’intégration [#implementation-checklist]
+
+Avant de traiter la facturation comme étant prête pour le lancement, validez :
+
+- création de sessions de paiement
+- retour après un paiement réussi
+- retour après une annulation
+- association des comptes aux clients Stripe
+- création de session du portail de facturation
+- vérification de signature webhook
+- événement de création d’abonnement
+- événement de modification d’abonnement
+- annulation d’abonnement
+- événement de paiement de facture réussi
+- événement d’échec de paiement d’une facture
+- logique d'accès selon l’offre
+- État de la page de facturation
+- messages d’erreur de facturation destinés à l’utilisateur
+
+<Callout type="info" title="Principe de validation">
+  Ne faites pas confiance à la facturation tant que vous n'avez pas validé le
+  cycle de vie complet : paiement, webhook, synchronisation de la base de
+  données et accès au produit.
+
+</Callout>
+
+## Questions fréquentes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="S’agit-il uniquement d’une page de tarifs ?">
+    Non. Starter Pro comprend les fondations du paiement, du portail, des webhooks, du suivi des abonnements et des factures, ainsi que des droits d’accès selon l’offre.
+  </Accordion>
+
+<Accordion title="Puis-je commencer avec des paiements uniques au lieu d'abonnements?">
+  Oui, en adaptant l’intégration à ce modèle. Conservez une séparation claire
+  entre le client, le paiement et les droits d’accès. Ce choix métier reste
+  distinct des fondations techniques fournies pour Stripe.
+</Accordion>
+
+<Accordion title="Le frontend doit-il décider si un utilisateur y a accès ?">
+  Non. L’interface peut afficher les droits d’accès, mais leur application doit
+  être contrôlée côté serveur à partir de l’état de facturation synchronisé.
+</Accordion>
+
+  <Accordion title="Pourquoi les webhooks sont-ils nécessaires ?">
+    Une redirection ne suffit pas à confirmer un paiement. Les webhooks signalent à votre serveur les paiements, les renouvellements, les annulations et les échecs survenus chez Stripe.
+  </Accordion>
+</Accordions>
+
+<DocsUpgradeCTA
+  title="Reliez vos écrans de tarifs à une facturation réelle."
+  description="Appuyez-vous sur les fondations de Starter Pro pour adapter le paiement, le portail, les webhooks et les droits d’accès à votre SaaS."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Fondations backend",
+      href: "/docs/starter-pro/backend",
+      description:
+        "Comprenez comment l'état de facturation se connecte à votre couche de données et à votre logique côté serveur.",
+      icon: Database,
+    },
+    {
+      title: "Livraison sécurisée",
+      href: "/docs/starter-pro/delivery",
+      description:
+        "Découvrez comment l'accès payant peut débloquer des téléchargements protégés et la livraison post-achat.",
+      icon: Download,
+    },
+    {
+      title: "Système d'authentification",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Découvrez comment les utilisateurs, les sessions et la propriété client se connectent à la facturation.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Liste de contrôle de production",
+      href: "/docs/starter-pro/production-checklist",
+      description:
+        "Validez l'authentification, la facturation, le backend et la livraison avant le lancement.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

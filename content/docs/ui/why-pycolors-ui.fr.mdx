@@ -1,0 +1,396 @@
+---
+title: Pourquoi PyColors UI
+description: La philosophie derrière PyColors UI. Conçu pour les produits qui
+  évoluent, pas pour les démos qui se brisent.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  Boxes,
+  CheckCircle,
+  Code2,
+  Layers3,
+  LayoutDashboard,
+  LayoutTemplate,
+  MousePointerClick,
+  Palette,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Philosophie</Badge>
+</div>
+
+## Conçu pour les produits qui évoluent [#built-for-products-that-evolve]
+
+La plupart des bibliothèques d'interface utilisateur vous aident à expédier le premier écran.
+
+PyColors UI est conçu pour aider votre produit à rester cohérent après le premier écran, la dixième fonctionnalité et le premier vrai client.
+
+Il est construit pour:
+
+- Tableaux de bord SaaS
+- pages de paramètres
+- auth flows
+- interfaces de facturation
+- Panneaux d'administration
+- surfaces de produits à longue durée de vie
+
+Le but n’est pas de vous donner le plus de composants.
+
+L’objectif est de vous donner un système qui reste compréhensible au fur et à mesure que votre produit grandit.
+
+<Callout title="Idée de base">
+  PyColors UI n'est pas une bibliothèque de composants de démonstration. C'est
+  un système de produits pour les constructeurs qui se soucient de la clarté, de
+  la cohérence et du contrôle à long terme.
+
+</Callout>
+
+## Le problème [#the-problem]
+
+La plupart des produits ne se cassent pas au début.
+
+Ils se cassent plus tard.
+
+Au début, tout semble gérable. Ensuite, le produit grandit et l'interface utilisateur commence à dériver:
+
+- couleurs codées en dur
+- Composants dupliqués
+- Espacement incohérent
+- décisions visuelles locales
+- Propriété des composants peu claire
+- différentes pages résolvant le même problème différemment
+- des surfaces de produit qui cessent de se sentir liées
+
+Le problème est rarement React, Tailwind ou l'équipe.
+
+Le problème est l'absence d'un système.
+
+## Ce que PyColors UI fait différemment [#what-pycolors-ui-does-differently]
+
+PyColors UI est intentionnellement opiniâtre. Pas pour vous limiter.
+
+Pour éliminer l'ambiguïté où l'ambiguïté devient coûteuse.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "tokens d'abord",
+      description:
+        "Les composants consomment des rôles sémantiques au lieu d’inventer des décisions visuelles localement.",
+      icon: Palette,
+    },
+    {
+      title: "Les petites primitives",
+      description:
+        "Les composants UI restent prévisibles. Le comportement complexe du produit appartient à Guides et Patterns.",
+      icon: Boxes,
+    },
+    {
+      title: "Vous possédez le code",
+      description:
+        "React et Tailwind. Pas de boîte noire. Pas de magie d'exécution. Pas de verrouillage inutile.",
+      icon: Code2,
+    },
+  ]}
+/>
+
+### Principes [#principles]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: "Tokens",
+      title: "Les tokens définissent le système",
+      icon: Palette,
+      description:
+        "Les couleurs, la typographie, le rayon et les ombres sont exprimés sous forme de décisions réutilisables. Les composants consomment ces rôles au lieu de coder les styles locaux.",
+    },
+    {
+      value: "Primitives",
+      title: "Les composants restent petits",
+      icon: Boxes,
+      description:
+        "Les composants sont des blocs de construction. Ils doivent être simples, prévisibles, accessibles et faciles à composer en véritables surfaces de produits.",
+    },
+    {
+      value: "Patterns",
+      title: "Les modèles gèrent la complexité du produit",
+      icon: LayoutDashboard,
+      description:
+        "Les tableaux, les superpositions, les formulaires, les actions asynchrones et les mises en page SaaS appartiennent au niveau du motif, où le comportement et l'état UX peuvent être documentés clairement.",
+    },
+  ]}
+/>
+
+### tokens d'abord [#tokens-first]
+
+Les tokens de conception sont la base de PyColors UI.
+
+Ils définissent les décisions visuelles réutilisables qui rendent le système cohérent :
+
+- couleurs sémantiques
+- rôles typographiques
+- échelle de rayon
+- échelle d'ombre
+- hiérarchie de surface
+- Contraste lisible
+
+Les composants doivent utiliser des utilitaires tels que:
+
+```tsx title="semantic-usage.tsx"
+<div className="rounded-lg border bg-card text-card-foreground">
+  <p className="text-sm text-muted-foreground">
+    Semantic roles keep surfaces coherent.
+  </p>
+</div>
+```
+
+Pas de valeurs ponctuelles locales.
+
+<Callout title="Pourquoi cela compte">
+  Quand un composant consomme des tokens, le système peut évoluer globalement.
+  Lorsqu'un composant code en dur des valeurs, le système commence à dériver.
+
+</Callout>
+
+### Les composants restent petits [#components-stay-small]
+
+Les composants PyColors UI sont des primitives.
+
+Ils ne sont pas destinés à résoudre chaque scénario de produit par eux-mêmes.
+
+Un bon primitif doit être :
+
+- prévisible
+- composable
+- accessible
+- token-driven
+- facile à comprendre
+- facile à remplacer en cas de besoin
+
+Si un composant commence à avoir besoin de trop d'accessoires spécifiques au produit, le problème appartient probablement à un modèle, pas à la primitive.
+
+Exemples :
+
+| Besoin                             | Meilleure couche |
+| ---------------------------------- | ---------------- |
+| Style de bouton                    | Composant UI     |
+| Flux de validation des formulaires | Guide            |
+| Tableau de données avec filtres    | Motif            |
+| Mutation asynchrone avec undo      | Motif            |
+| Coque de tableau de bord SaaS      | Guide / Starter  |
+
+### Vous possédez le code [#you-own-the-code]
+
+PyColors UI est conçu pour les équipes qui veulent le contrôle.
+
+Il utilise :
+
+- React
+- TypeScript
+- Tailwind CSS
+- tokens sémantiques
+- primitives accessibles
+
+Il évite :
+
+- magie cachée runtime
+- Abstraction inutile
+- décisions de conception opaques
+- au-delà de la pile que vous utilisez déjà
+
+Cela rend le système plus facile à adapter, à auditer et à évoluer.
+
+### La documentation fait partie du produit [#documentation-is-part-of-the-product]
+
+La documentation n’est pas une réflexion après coup.
+
+Cela fait partie du système.
+
+Documents PyColors :
+
+- A quoi sert un composant
+- quand l'utiliser
+- Quand ne pas l'utiliser
+- comment il se comporte dans les surfaces de produits réels
+- comment il se connecte aux règles du système de conception
+
+Cela réduit les connaissances cachées et aide le produit à se sentir plus intentionnel au fil du temps.
+
+<Callout type="info" title="Principe de documentation">
+  Un composant sans guide d'utilisation n'est que la moitié d'un système.
+
+</Callout>
+
+## Conçu pour de vraies surfaces SaaS [#built-for-real-saas-surfaces]
+
+PyColors UI est conçu autour des surfaces dont la plupart des produits SaaS ont réellement besoin :
+
+- tableaux de bord
+- paramètres
+- facturation
+- Authentification
+- Outils d'administration
+- tableaux de données
+- états vides
+- formulaires
+- superpositions
+- flux de compte
+
+C'est pourquoi les docs ne s'arrêtent pas aux composants.
+
+Ils comprennent également:
+
+- Fondements du système de conception
+- Guides
+- Motifs
+- Starter Free
+- Starter Pro
+
+La couche composant n'est qu'une partie du système produit.
+
+### Ce qui n'est pas [#what-this-is-not]
+
+PyColors UI n'est pas :
+
+- un éditeur visuel
+- un constructeur sans code
+- un système glisser-déposer
+- un marché thématique
+- Un cadre d'entreprise monolithique
+- un remplacement pour la pensée produit
+
+Il vous donne la structure pour aller plus vite avec plus de cohérence.
+
+Cela ne supprime pas la nécessité de prendre des décisions sur les produits.
+
+## Les compromis [#tradeoffs]
+
+Tout bon système fait des compromis.
+
+<PreferAvoid
+  preferTitle="You gain"
+  avoidTitle="You accept"
+  prefer={[
+    "Une meilleure cohérence à long terme",
+    "Des décisions de conception plus claires",
+    "entretien plus facile",
+    "moins de dérive d'UI",
+    "meilleure lisibilité du produit",
+  ]}
+  avoid={[
+    "Une structure plus explicite",
+    "Moins d'abstractions magiques",
+    "règles de conception au lieu de style aléatoire",
+    "modèles pour UX complexe au lieu de primitives surdimensionnées",
+    "Propriété des décisions relatives aux produits",
+  ]}
+/>
+
+## Où cela s'inscrit dans PyColors [#where-this-fits-in-pycolors]
+
+PyColors est structuré en couches.
+
+| Couche                | Objet                                           |
+| --------------------- | ----------------------------------------------- |
+| Système de conception | tokens, couleurs, typographie, rayon, ombres    |
+| composants UI         | Petites primitives réutilisables                |
+| Guides                | Composition du produit et règles UX             |
+| Motifs                | Blocs de produits au niveau des fonctionnalités |
+| Starter Free          | Valider les surfaces des produits               |
+| Starter Pro           | Auth fil, facturation, backend et livraison     |
+
+<Callout title="Modèle mental du système">
+  Les tokens définissent le système. Les composants restent petits. Les modèles
+  gèrent la complexité. Les starters connectent tout dans les fondations du
+  produit.
+
+</Callout>
+
+### Lorsque PyColors UI est un bon ajustement [#when-pycolors-ui-is-a-good-fit]
+
+Utilisez PyColors si :
+
+- Vous construisez un produit SaaS
+- Vous vous souciez de la cohérence à long terme
+- vous voulez contrôler votre code
+- vous préférez l'architecture explicite à la magie
+- vous voulez des composants qui s'alignent avec les documents, les guides et les starters
+- vous voulez construire des surfaces de produits, pas des démos isolées
+
+Ne l'utilisez pas si:
+
+- vous voulez un constructeur complet sans code
+- vous voulez un éditeur visuel
+- vous voulez que chaque décision de produit soit prise pour vous
+- vous ne voulez pas posséder la mise en œuvre
+
+### Pourquoi c'est important [#why-it-matters]
+
+L'interface utilisateur n'est pas seulement visuelle.
+
+Elle affecte:
+
+- clarté du produit
+- vitesse de l'équipe
+- confiance des utilisateurs
+- vitesse d'intégration
+- Maintenabilité à long terme
+
+Sans structure, chaque nouvelle fonctionnalité ajoute de la friction.
+
+Avec un système, votre produit peut se développer sans devenir chaotique.
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Système de conception",
+      href: "/docs/design-system",
+      description:
+        "Comprendre les tokens, les couleurs, la typographie, le rayon et les ombres derrière PyColors UI.",
+      icon: Palette,
+    },
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description:
+        "Commencez par la primitive utilisée pour les actions, l'intention et la hiérarchie d'interaction.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Motifs",
+      href: "/docs/patterns",
+      description:
+        "Découvrez comment les primitives deviennent des blocs de niveau produit pour de vraies fonctionnalités SaaS.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Starter Pro",
+      href: "/docs/starter-pro",
+      description:
+        "Passez des fondations de l'interface utilisateur à l'authentification réelle, à la facturation, au backend et à la livraison.",
+      icon: Rocket,
+    },
+  ]}
+/>

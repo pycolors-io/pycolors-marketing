@@ -1,0 +1,504 @@
+---
+title: Fondations backend (PRO)
+description: Structure backend prête à la production, modélisation des données
+  et fondations côté serveur pour de vraies applications SaaS.
+lastUpdated: "2026-05-18"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+import {
+  CreditCard,
+  Database,
+  Download,
+  GitBranch,
+  Layers3,
+  LockKeyhole,
+  Server,
+  ShieldCheck,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Backend</Badge>
+</div>
+
+## Des fondations qui rendent le produit réel [#backend-foundations-that-make-the-product-real]
+
+Starter Free vous donne un **surface SaaS frontale**.
+
+Starter Pro vous donne le **structure backend, modèle de données et fondations côté serveur** nécessaire pour produire un vrai produit.
+
+C'est là que votre application cesse de se comporter comme une démo et commence à se comporter comme un système:
+
+- réelle persistance
+- Les vrais utilisateurs
+- Propriété réelle
+- État de facturation réel
+- Règles réelles côté serveur
+- Comportement réel du produit
+
+<DocsUpgradeCTA
+  title="Le backend est l’endroit où votre produit devient réel."
+  description="Starter Pro vous donne la structure pour connecter les utilisateurs, la facturation, les données et l'accès sans reconstruire la fondation à partir de zéro."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/getting-started"
+  secondaryLabel="Setup guide"
+/>
+
+<Callout title="Idée de base">
+  Un SaaS n’est pas qu’un écran. Ce sont les données, les règles, la propriété,
+  l'accès, l'état de facturation et les limites côté serveur.
+
+</Callout>
+
+### Ce que cela résout [#what-this-solves]
+
+Beaucoup de produits SaaS n’échouent pas parce que l’interface utilisateur est faible.
+
+Ils échouent parce que le backend devient flou :
+
+- La propriété des données est dupliquée
+- auth et facturation ne sont pas connectés proprement
+- règles d'accès fuite dans les composants
+- La logique du produit est dispersée sur plusieurs pages
+- Les décisions de schéma deviennent coûteuses à changer
+- Les données simulées deviennent une logique de production fragile
+
+Starter Pro vous donne une base structurée afin que le travail de backend puisse évoluer avec le produit au lieu de le ralentir.
+
+### Ce qui est inclus [#what-is-included]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Structure prête pour la base de données",
+      description:
+        "Fondements de schéma axés sur Prisma, modélisation de données prête pour la migration et chemin propre des données simulées à la persistance.",
+      icon: Database,
+    },
+    {
+      title: "Modèles côté serveur",
+      description:
+        "Limites côté serveur pour la logique des produits, la logique d'intégration, les contrôles d'accès et la croissance future des API.",
+      icon: Server,
+    },
+    {
+      title: "Logique auth-consciente",
+      description:
+        "Propriété de l'utilisateur, accès aux données protégées, comportement conscient de la session et règles de backend liées à l'identité réelle.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Limites de facturation",
+      description:
+        "Des fondations d'accès aux produits qui peuvent connecter l'état de facturation, l'état de l'abonnement et le comportement lié au plan.",
+      icon: CreditCard,
+    },
+  ]}
+/>
+
+### Couches d'architecture [#architecture-layers]
+
+Les fondations du backend Starter Pro sont organisées autour de responsabilités claires.
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Données",
+      title: "Couche de données",
+      icon: Database,
+      description:
+        "La couche de données définit la persistance, la propriété du schéma et l'accès typé à l'état de l'application.",
+      items: [
+        "Fondements du schéma de Prisma",
+        "Structure prête pour la migration",
+        "accès dactylographié à la base de données",
+        "auth et modèles de facturation",
+        "futurs modèles de domaine",
+      ],
+    },
+    {
+      eyebrow: "application",
+      title: "Couche d'application",
+      icon: Layers3,
+      description:
+        "La couche application possède le comportement du produit, les opérations de domaine, la validation et la logique backend réutilisable.",
+      items: [
+        "Logique du produit côté serveur",
+        "Limites orientées domaine",
+        "Opérations au niveau des fonctionnalités",
+        "points de validation",
+        "helpers backend réutilisable",
+      ],
+    },
+    {
+      eyebrow: "Intégration",
+      title: "Couche d'intégration",
+      icon: GitBranch,
+      description:
+        "La couche d'intégration éloigne les systèmes externes et les services transversaux de l'interface utilisateur du produit.",
+      items: [
+        "auth context",
+        "Contexte de facturation Stripe",
+        "traitement webhook",
+        "Limites des fournisseurs de messagerie",
+        "intégration de livraison sécurisée",
+      ],
+    },
+    {
+      eyebrow: "Accès",
+      title: "Couche d'accès",
+      icon: ShieldCheck,
+      description:
+        "La couche d'accès conserve les données du produit, l'état de facturation et les autorisations utilisateur vérifiables par le serveur.",
+      items: [
+        "Routes protégées",
+        "contrôle de propriété",
+        "accès selon l’offre",
+        "limites d'administrateur et d'utilisateur",
+        "Autorisations vérifiables par le serveur",
+      ],
+    },
+  ]}
+/>
+
+<Callout title="Règle du système">
+  Gardez les règles de produit proches du backend. L'interface utilisateur peut
+  refléter l'accès, mais la logique sensible doit être vérifiable par le
+  serveur.
+
+</Callout>
+
+## Starter Free vs Starter Pro [#starter-free-vs-starter-pro]
+
+| Capacité                   | Starter Free   | Starter Pro                                     |
+| -------------------------- | -------------- | ----------------------------------------------- |
+| Source des données         | Faux           | Base de données prête                           |
+| Persistance                | Non inclus     | Fondation incluse                               |
+| schéma Prisma              | Non inclus     | Fondation incluse                               |
+| Propriété de l'utilisateur | Conceptuel     | Auth-conscient                                  |
+| Accès facturation          | Conceptuel     | Facturation                                     |
+| Données protégées          | Faux           | Orienté serveur                                 |
+| Modèles côté serveur       | Minimum        | Orienté vers la production                      |
+| Limites de domaine         | Frontend-first | Prêt pour le backend                            |
+| Meilleur cas d'utilisation | Valider UX     | Construire des systèmes de produits launchables |
+
+<Callout title="Une distinction simple">
+  Starter Free vous donne la surface. Starter Pro vous donne le système en
+  dessous.
+
+</Callout>
+
+## Architecture [#architecture]
+
+### Responsabilités du modèle de données [#data-model-responsibilities]
+
+Un véritable backend SaaS a besoin de modèles qui représentent la couche métier, pas seulement les données de l’interface utilisateur.
+
+Starter Pro est conçu autour de responsabilités telles que :
+
+| Zone               | Objet                                           |
+| ------------------ | ----------------------------------------------- |
+| Utilisateur        | Identité, profil, propriété, sessions           |
+| Compte             | Connexions fournisseur OAuth                    |
+| Session            | Sessions authentifiées actives                  |
+| Client             | Relation de facturation avec Stripe             |
+| Produit            | Famille de produits ou de régimes vendables     |
+| Prix               | Prix Stripe et plan commercial                  |
+| Abonnement         | Accès, statut, cycle de vie et renouvellements  |
+| Facture            | Historique des paiements et état de facturation |
+| WebhookEvent       | Traitement fiable des événements                |
+| Modèles de domaine | Vos entités de produits réelles                 |
+
+<Callout type="info" title="Pourquoi cela compte">
+  Un backend SaaS n’est pas seulement un CRUD. C’est l’endroit où l’identité,
+  les revenus, la propriété et le comportement des produits se rencontrent.
+
+</Callout>
+
+### Exemple de fonctionnalité [#feature-example]
+
+Une caractéristique comme `Projects` se comporte très différemment en fonction de la couche dorsale en dessous.
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Sans backend",
+      title: "Fonction de type démo",
+      description:
+        "Une fonctionnalité de démonstration est utile pour valider l’UX, mais elle n’impose pas encore la propriété, la persistance ou l’accès.",
+      items: [
+        "État simulé",
+        "Fausse persistance",
+        "Pas de règles de propriété",
+        "Pas d'accès protégé",
+        "Pas de comportement de facturation",
+      ],
+    },
+    {
+      eyebrow: "Avec backend",
+      title: "Fonctionnalité prête pour le produit",
+      icon: Database,
+      tone: "pro",
+      description:
+        "Une fonctionnalité prête pour le produit connecte l'interface utilisateur, la persistance, l'identité, l'accès et le comportement de facturation futur.",
+      items: [
+        "modèle de base de données",
+        "Créer/mettre à jour/supprimer des flux",
+        "Propriété de l'utilisateur",
+        "Accès protégé",
+        "Auth et points d'intégration de facturation",
+      ],
+    },
+  ]}
+/>
+
+C'est la différence entre une fonctionnalité de démonstration et une fonctionnalité réelle.
+
+## Voie de mise en œuvre [#implementation-path]
+
+<Steps>
+  <Step>
+    ### Valider la fondation existante [#validate-the-existing-foundation]
+
+    Avant d'ajouter votre logique de domaine, confirmez que l'authentification, la facturation, la configuration de la base de données et les flux de données d’exemple locales fonctionnent.
+
+</Step>
+
+  <Step>
+    ### Définissez votre premier modèle de domaine [#define-your-first-domain-model]
+
+    Ajoutez l'entité produit qui compte le plus à votre SaaS.
+
+```prisma title="schema.prisma"
+model Project {
+  id        String   @id @default(cuid())
+  name      String
+  ownerId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+```
+
+</Step>
+
+  <Step>
+    ### Ajouter des règles de propriété [#add-ownership-rules]
+
+    Connectez les données produit au modèle utilisateur, client ou organisation authentifié.
+
+```ts title="server/projects/access.ts"
+export function canAccessProject(projectOwnerId: string, userId: string) {
+  return projectOwnerId === userId;
+}
+```
+
+</Step>
+
+  <Step>
+    ### Conserver la logique du produit côté serveur [#keep-product-logic-server-side]
+
+    L'interface utilisateur doit appeler le flux de produit.
+
+    Il ne devrait pas avoir de règles sensibles.
+
+</Step>
+
+  <Step>
+    ### Connecter la facturation si nécessaire [#connect-billing-when-needed]
+
+    Si la fonctionnalité est payante ou dépend du plan, ajoutez des vérifications tenant compte du plan près de la limite du serveur.
+
+</Step>
+
+</Steps>
+
+## Ce que vous évitez de construire vous-même [#what-you-avoid-building-yourself]
+
+Sans Starter Pro, vous devez généralement concevoir et câbler:
+
+- base de données schéma fondations
+- relations auth-to-user
+- association des comptes aux clients Stripe
+- Règles d'accès à l'abonnement
+- comportement de la route protégée
+- webhook état persistance
+- Contrôles de propriété des produits
+- règles d'accès de livraison
+- patterns de séparation de domaine
+
+C’est souvent long, facile à dupliquer et coûteux à refactoriser plus tard.
+
+### Règles du backend [#backend-rules]
+
+Utilisez ces règles lors de l'extension du backend.
+
+<PreferAvoid
+  prefer={[
+    "Limites de domaine claires",
+    "Vérifications de propriété vérifiables par serveur",
+    "Logique d'accès au plan centralisée",
+    "modèles de base de données qui reflètent le comportement des produits",
+    "backend helpers pour les règles répétées",
+  ]}
+  avoid={[
+    "mettre des règles d'accès uniquement dans l'interface utilisateur",
+    "dupliquer les contrôles de propriété entre les composants",
+    "mélange de la logique de facturation dans des fonctionnalités non liées",
+    "traiter les données simulées comme les données de production",
+    "ajouter des modèles de domaine sans règles d'accès",
+  ]}
+/>
+
+## Guide de décision [#decision-guide]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Starter Pro",
+      title: "Utilisez Starter Pro lorsque la persistance devient réelle",
+      href: "/docs/starter-pro/getting-started",
+      icon: Database,
+      tone: "pro",
+      description:
+        "Utilisez Starter Pro lorsque l'état du produit n'est plus suffisant et que le backend fait partie du chemin de lancement.",
+      items: [
+        "Vous avez besoin de données réelles",
+        "Les faux états ne suffisent plus",
+        "Les utilisateurs ont besoin de règles de propriété",
+        "Le statut de facturation affecte l'accès au produit",
+        "La structure du backend devient un bloqueur",
+        "vous voulez moins d'incertitude architecturale avant le lancement",
+      ],
+      cta: "Start setup →",
+    },
+    {
+      eyebrow: "Starter Free",
+      title: "Restez en Free tout en validant UX",
+      icon: Layers3,
+      description:
+        "Restez sur Starter Free lorsque les flux de produits changent encore et que la persistance ralentirait l'apprentissage.",
+      items: [
+        "vous êtes toujours en train de valider UX",
+        "Les flux de produits ne sont pas encore stables",
+        "La persistance n'est pas requise",
+        "Le travail en backend ralentirait l’apprentissage",
+      ],
+    },
+  ]}
+/>
+
+<Callout title="Mise à niveau lorsque la persistance devient réelle">
+  Starter Free vous aide à valider la surface du produit. Starter Pro vous donne
+  la base backend qui rend le produit launchable.
+
+</Callout>
+
+### Liste de contrôle de production [#production-checklist]
+
+Avant de traiter le backend comme prêt au lancement, validez :
+
+- Migrations de base de données
+- Données sur les données d’exemple
+- modèle d'utilisateur
+- modèle de session
+- association des comptes aux clients Stripe
+- État de la souscription
+- Gestion des événements webhook
+- contrôle de propriété
+- Accès aux données protégées
+- logique d'accès selon l’offre
+- Validation côté serveur
+- gestion des erreurs
+- variables d'environnement de déploiement
+
+<Callout type="info" title="Principe de validation">
+  Ne construisez pas de complexité de nouveau produit sur un backend non validé.
+  Confirmez d'abord la fondation.
+
+</Callout>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Starter Pro est-il un produit backend complet ?">
+    Non. Il vous donne les fondations backend nécessaires pour lancer plus rapidement. Vous construisez toujours vos modèles de domaine, vos workflows et vos règles spécifiques aux produits.
+  </Accordion>
+
+<Accordion title="Puis-je changer le schéma ?">
+  Oui. Le schéma est destiné à être étendu. Gardez les limites d'auth, de
+  facturation et de propriété claires lorsque vous ajoutez des modèles
+  spécifiques au produit.
+</Accordion>
+
+<Accordion title="Le contrôle d'accès doit-il être installé sur le frontend ?">
+  Non. Le frontend peut refléter l'état d'accès, mais les vérifications
+  sensibles doivent être effectuées sur le serveur ou dans une logique
+  consciente du backend.
+</Accordion>
+
+  <Accordion title="Comment la facturation se connecte-t-elle à la logique backend ?">
+    L'état de facturation doit être synchronisé à partir de Stripe et stocké dans votre application afin que la logique côté serveur puisse décider de l'accès de manière fiable.
+  </Accordion>
+</Accordions>
+
+<DocsUpgradeCTA
+  title="Connectez les utilisateurs, la facturation, les données et les accès."
+  description="Starter Pro vous donne une base backend plus solide afin que votre premier travail sérieux puisse être la logique du produit, pas la réparation de l'infrastructure."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/pricing"
+  secondaryLabel="View pricing"
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Livraison sécurisée",
+      href: "/docs/starter-pro/delivery",
+      description:
+        "Découvrez comment la propriété du backend et l'état de facturation peuvent débloquer la livraison sécurisée des produits.",
+      icon: Download,
+    },
+    {
+      title: "Système de facturation",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Découvrez comment l'état de l'abonnement et la propriété client se connectent aux règles backend.",
+      icon: CreditCard,
+    },
+    {
+      title: "Système d'authentification",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Comprendre comment les utilisateurs, les sessions et l’identité se connectent aux données du produit.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Liste de contrôle de production",
+      href: "/docs/starter-pro/production-checklist",
+      description:
+        "Validez l'authentification, la facturation, le backend et la livraison avant le lancement.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

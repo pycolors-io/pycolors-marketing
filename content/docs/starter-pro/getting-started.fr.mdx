@@ -1,0 +1,490 @@
+---
+title: Premiers pas
+description: Découvrez comment passer de l'achat à la première exécution locale
+  avec Starter Pro et comprenez le chemin le plus rapide de la configuration au
+  lancement.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge } from "@pycolors/ui";
+import {
+  CreditCard,
+  Database,
+  LockKeyhole,
+  Package,
+  Rocket,
+  Scale,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Configuration</Badge>
+</div>
+
+## De l’achat aux premiers développements [#get-from-purchase-to-product-work-faster]
+
+Consultez la [présentation de Starter Pro](/starters/pro#product-tour) pour découvrir la connexion, les espaces de travail, les réglages d’apparence et la gestion de projets dans l’application. La vidéo en anglais comprend une musique instrumentale, des données d’exemple et une transcription.
+
+Starter Pro est conçu pour raccourcir le chemin entre :
+
+- acheter le produit
+- l'exécuter localement
+- Valider les fondations
+- Personnaliser le produit
+- lancer plus vite votre propre SaaS
+
+Le but n'est pas d'étudier la base de code pendant des jours.
+
+L’objectif est de faire fonctionner la base applicative, de vérifier les systèmes essentiels, puis de commencer à développer votre produit.
+
+<Callout title="Après achat">
+  Téléchargez et décompressez Starter Pro depuis votre email d’accès avant d'exécuter les commandes d'installation ci-dessous. Besoin de recevoir à nouveau cet email ? Utilisez la [récupération d’achat](/orders/recover) pour renvoyer votre lien d'accès.
+
+La page de confirmation indique un paiement confirmé uniquement lorsque celui-ci est terminé et payé. Un statut en attente, incomplet, expiré ou indisponible ne donne pas accès au téléchargement. Si la page ne peut pas confirmer votre paiement, réessayez la vérification ou contactez le support avant d’effectuer un nouveau paiement.
+
+La confirmation du paiement et l’envoi de l’email d’accès sont deux étapes distinctes. Une fois l’email reçu, utilisez le lien qu’il contient pour accéder au téléchargement.
+
+</Callout>
+
+<Callout title="Principe de configuration">
+  Validez d’abord les fondations. Personnalisez-les ensuite. Développez enfin
+  votre produit.
+
+</Callout>
+
+## Vos 30 premières minutes après l’achat [#first-30-minutes-after-purchase]
+
+Ces étapes donnent un ordre de progression. Les durées sont des repères de planification, sans garantie de temps d’installation ni de réception de l’email d’accès. Le téléchargement, la préparation de PostgreSQL et la configuration des fournisseurs peuvent prendre davantage de temps. Un premier essai local ne constitue pas une mise en production.
+
+Avant de commencer, retrouvez l’email utilisé pour le paiement et lisez le README de la version téléchargée, notamment les versions requises de Node.js et de pnpm. Utilisez une base de développement locale et gardez vos fichiers d’environnement privés. L’achat du code ne crée pas votre base de données, votre service d’envoi d’emails, vos applications OAuth ou votre compte Stripe.
+
+1. **0–5 minutes : vérifiez le paiement et l’accès.** Consultez la confirmation de commande, puis la boîte de réception et les courriers indésirables de l’adresse utilisée pour le paiement. Le paiement et l’envoi de l’email d’accès sont distincts. Continuez une fois cet email disponible ; sinon, suivez le [guide de récupération d’achat](/docs/starter-pro/purchase-recovery).
+2. **5–10 minutes : téléchargez et inspectez le ZIP.** Ouvrez le lien d’accès, vérifiez le nom du produit, puis téléchargez et décompressez l’archive. Lisez son README avant d’exécuter les commandes. À ce stade, vous devez disposer du projet et de ses instructions, sans avoir encore configuré votre SaaS. Le [guide de livraison](/docs/starter-pro/delivery) détaille le parcours d’accès.
+3. **10–20 minutes : préparez l’environnement local.** Suivez les [étapes de configuration](#setup-flow) pour installer les dépendances, renseigner les variables d’environnement, préparer PostgreSQL et configurer la base de données. Utilisez uniquement une base locale de développement pour les migrations et les données d’exemple. Consultez le [guide des variables d’environnement](/docs/starter-pro/environment-variables) pour les intégrations à tester. Continuez une fois ces étapes réussies.
+4. **20–25 minutes : vérifiez le premier démarrage.** Lancez l’application selon les instructions de votre version, puis testez un mode de connexion configuré et une page protégée. Le simple affichage d’un écran ne valide ni l’authentification ni les paiements. Appuyez-vous sur le [guide d’authentification](/docs/starter-pro/auth) et les [jeux de données de test](/docs/starter-pro/testing-fixtures). Ne contournez aucune vérification pour respecter une durée indicative.
+5. **25–30 minutes : choisissez une première personnalisation.** Une fois le projet fonctionnel, modifiez un élément d’identité visuelle ou un texte, en préservant les fondations d’authentification et de facturation. Notez les intégrations restant à vérifier. Effectuez séparément les [tests de facturation](/docs/starter-pro/billing-testing) en mode test, puis suivez la [checklist de production](/docs/starter-pro/production-checklist) avant le lancement.
+
+### Le paiement ou l'accès est bloqué [#payment-or-access-is-blocked]
+
+Si le paiement est incertain, contactez [Aide à l'achat](/orders/support) avant de payer à nouveau. La récupération ne complète pas un paiement impayé. Si le paiement est confirmé mais que l'e-mail ou le lien est manquant ou expiré, utilisez [récupération d’achat](/orders/recover) avec le même e-mail de paiement. Une confirmation de récupération ne prouve pas qu'un achat existe ou qu'un e-mail est arrivé dans votre boîte de réception. Suivez le [guide de dépannage de récupération](/docs/starter-pro/purchase-recovery#if-recovery-does-not-work) plutôt que de présenter des demandes à plusieurs reprises.
+
+Si la récupération échoue toujours, le lien affiche un autre produit, ou vous ne pouvez pas accéder à l'e-mail de paiement, utilisez [Aide à l'achat](/orders/support). Incluez l'e-mail de paiement, le nom du produit, la date d'achat approximative et l'erreur que vous voyez. Ne partagez pas les mots de passe, les détails de la carte, les clés API ou les liens de réclamation / téléchargement, y compris dans les captures d'écran. Aucune garantie de temps de réponse de soutien n'est promise.
+
+### La configuration locale est bloquée [#local-setup-is-blocked]
+
+Arrêtez-vous à l’étape qui échoue. Comparez la version téléchargée README, les versions Node.js/pnpm requises, les valeurs d'environnement et la connexion PostgreSQL locale avec [développement local](/docs/starter-pro/local-development). Conservez la commande défaillante et une erreur expurgée pour le diagnostic; ne supprimez pas les données, ne supprimez pas la validation ou ne passez pas aux informations d'identification de production pour dépasser une erreur de configuration.
+
+Si le courrier électronique, OAuth ou la facturation n'est pas configuré, utilisez le guide correspondant et enregistrez le flux comme non vérifié. Continuez à partir du dernier point de contrôle réussi lorsque le prérequis est prêt, même si cela prend plus de 30 minutes.
+
+## Ce que cette page vous aide à faire [#what-this-page-helps-you-do]
+
+À la fin de cette page, vous devez comprendre :
+
+- Ce qu'il faut configurer en premier
+- ce qu'il faut valider avant de modifier en profondeur
+- Comment vous concentrer sur les réglages essentiels
+- Comment passer de l’installation au développement de votre produit
+- quand se concentrer sur l'authentification, la facturation, le backend et le branding
+
+### Le chemin le plus rapide [#the-fastest-serious-path]
+
+Starter Pro vous offre une base applicative prête pour la production avec :
+
+- Authentification
+- facturation
+- Routes protégées
+- paramètres
+- structure du tableau de bord
+- fondations côté serveur
+- chemin de livraison sécurisé
+
+Vous ne partez pas d'une base de code vide.
+
+Vous disposez d’une structure applicative sur laquelle construire votre produit.
+
+<Callout type="info" title="Important">
+  Le chemin le plus rapide n’est pas de tout réécrire.
+
+Le chemin le plus rapide est de valider ce qui existe déjà, puis de remplacer uniquement ce qui appartient à votre produit.
+
+</Callout>
+
+## Étapes de configuration [#setup-flow]
+
+<Steps>
+  <Step>
+    ### Télécharger et décompresser Starter Pro [#download-and-unzip-starter-pro]
+
+    Ouvrez votre email d’accès et téléchargez le ZIP à l’aide du lien fourni. Décompressez l’archive avant d’exécuter les commandes d’installation.
+
+</Step>
+
+  <Step>
+    ### Installer les dépendances [#install-dependencies]
+
+```bash title="terminal"
+cp .env.example .env
+pnpm install --frozen-lockfile
+```
+
+    Utilisez Node 24.x et pnpm 10.32.1 à partir du ZIP extrait. Conservez son répertoire lockfile et patchs.
+
+    Cela vous donne la base applicative locale nécessaire pour exécuter l’application, générer le client de base de données et valider la fondation.
+
+</Step>
+
+  <Step>
+    ### Configurer l'environnement local [#configure-local-environment]
+
+    Commencez par les variables de base.
+
+```bash title=".env"
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+APP_BASE_URL=http://localhost:3000
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/starter_pro
+AUTH_SECRET=
+SEED_AUTH_FIXTURES=false
+SEED_DEV_USER=false
+```
+
+    Ajoutez des variables facultatives uniquement lorsque vous êtes prêt à valider ces systèmes.
+
+Générer un privé `AUTH_SECRET` avec `openssl rand -base64 32`. Prisma et Next.js ont tous deux lu ceci `.env` fichier.
+
+```bash title=".env"
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_PRO_MONTHLY=
+
+AUTH_RESEND_API_KEY=
+AUTH_EMAIL_FROM=
+```
+
+    Ne pas surconfigurer trop tôt.
+
+    Obtenez la base applicative en premier.
+
+</Step>
+
+  <Step>
+    ### Exécuter la configuration de la base de données [#run-database-setup]
+
+```bash title="terminal"
+pnpm db:up
+pnpm exec prisma migrate deploy
+pnpm db:generate
+```
+
+    Démarrez le service Docker PostgreSQL sur le port 5433, appliquez les migrations validées et générez le client de base de données. Pour un espace de travail local peuplé, exécutez explicitement `pnpm db:seed:local`; garder cette base de données synthétique séparée des utilisateurs réels.
+
+    L'exemple de connexion local est documenté dans le `docs/quickstart.md`. Pour un nouveau parcours d'enregistrement, configurez Renvoyer afin que l'utilisateur puisse vérifier son adresse. Voir [développement local](/docs/starter-pro/local-development).
+
+    Cela vous permet de valider plus rapidement l'authentification, les utilisateurs, les surfaces de facturation et les flux de développement local.
+
+</Step>
+
+  <Step>
+    ### Démarrer l'application [#start-the-app]
+
+```bash title="terminal"
+pnpm dev
+```
+
+```txt title="browser"
+http://localhost:3000
+```
+
+    Confirmez que les chargements de l'application et les principaux routes de produits sont accessibles.
+
+</Step>
+
+  <Step>
+    ### Valider les fondations [#validate-foundations]
+
+    Avant de changer la logique du produit, confirmez les couches importantes:
+
+    - Se connecter
+    - enregistrement
+    - Routes protégées
+    - utilisateurs semés
+    - Facturation des surfaces
+    - pages de paramètres
+    - tableau de bord shell
+
+    Cela vous donne l'assurance que la base applicative fonctionne avant de la personnaliser.
+
+</Step>
+
+  <Step>
+    ### Personnaliser l’identité visuelle et les textes [#replace-branding-and-product-copy]
+
+    Une fois la base applicative validée, mettez à jour :
+
+    - Nom du produit
+    - logo
+    - métadonnées
+    - étiquettes de navigation
+    - copie de facturation
+    - Identité de l'expéditeur
+    - Liens marketing
+
+    La marque vient après la validation, pas avant.
+
+</Step>
+
+  <Step>
+    ### Construisez votre couche de produit [#build-your-product-layer]
+
+    Ajoutez maintenant votre produit réel :
+
+    - entités de domaine
+    - workflows
+    - Onboarding
+    - tableaux de bord
+    - Fonctionnalités orientées client
+    - opérations internes
+
+    Gardez l'authentification, la facturation et l'accès protégé intacts pendant que vous construisez votre différenciation.
+
+</Step>
+
+</Steps>
+
+## Priorités de validation [#validation-priorities]
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: "Authentification",
+      title: "Valider auth first",
+      icon: LockKeyhole,
+      description:
+        "Confirmez que la fondation d'authentification se comporte correctement avant la personnalisation du produit.",
+      items: [
+        "Sign in Works localement",
+        "Le flux d'enregistrement est accessible",
+        "routes protégées rediriger correctement",
+        "L'interface utilisateur consciente des sessions se comporte correctement",
+        "Les flux de fournisseur et de mot de passe sont compris",
+      ],
+    },
+    {
+      eyebrow: "Facturation",
+      title: "Valider les flux de facturation",
+      icon: CreditCard,
+      tone: "platform",
+      description:
+        "Comprenez comment fonctionnent les flux de facturation avant d'intégrer la facturation de production réelle.",
+      items: [
+        "La page de facturation s'affiche correctement",
+        "Le flux de paiement est compris",
+        "le flux du portail est compris",
+        "L'état de l'abonnement est clair",
+        "Les responsabilités de webhook sont comprises",
+      ],
+    },
+    {
+      eyebrow: "Backend",
+      title: "Valider la base applicative backend",
+      icon: Database,
+      description:
+        "Confirmez que la structure orientée backend est prête avant la personnalisation du domaine.",
+      items: [
+        "Le client de base de données est généré",
+        "Migrations locales",
+        "Les données seed existent",
+        "Les limites côté serveur sont comprises",
+        "Les ajouts de domaine ont une place claire",
+      ],
+    },
+  ]}
+/>
+
+### Ce qu'il faut éviter [#what-to-avoid]
+
+L’erreur la plus courante est d’essayer de tout redessiner avant que les fondations ne soient validées.
+
+Évitez cet ordre :
+
+1. Réécrire toute l'UI
+2. Renommer tout
+3. Ajoutez des fonctionnalités immédiatement
+4. ignorer auth et la validation de la facturation
+5. découvrir les problèmes d'infrastructure plus tard
+
+Cette voie semble productive, mais elle retarde généralement le lancement.
+
+Une meilleure règle :
+
+> valider d'abord la base, puis personnaliser, puis construire le produit.
+
+## Guide de décision [#decision-guide]
+
+<PreferAvoid
+  preferTitle="Prefer this path"
+  avoidTitle="Avoid this path"
+  prefer={[
+    "Installer les dépendances en premier",
+    "Configurer uniquement les variables d'environnement requises",
+    "valider l'authentification et la facturation avant la refonte",
+    "remplacer l'image de marque après le travail de base",
+    "construire votre produit à l'intérieur de la structure existante",
+  ]}
+  avoid={[
+    "Réécrire l'interface avant de valider la fondation",
+    "Configuration de chaque intégration trop tôt",
+    "supprimer l’authentification ou la facturation avant de les comprendre",
+    "construire des caractéristiques de produit sur une configuration cassée",
+    "Traiter Starter Pro comme un modèle vierge",
+  ]}
+/>
+
+### Chemin le plus rapide vers la valeur [#fastest-path-to-value]
+
+Si votre objectif est la vitesse, concentrez-vous sur cette séquence :
+
+1. Mettre l'application en marche
+2. valider auth
+3. valider la facturation
+4. Valider les routes protégées
+5. remplacer le branding
+6. ajouter votre première entité de domaine
+7. expédier la première tranche verticale
+
+Cela vous donne le meilleur rapport vitesse/confiance.
+
+<Callout title="Configuration à haut effet de levier">
+  Starter Pro paie pour lui-même lorsque vous évitez de reconstruire la
+  fondation et commencez à construire ce qui intéresse réellement les clients.
+
+</Callout>
+
+### Premiers changements de produit [#first-product-changes]
+
+Après l'installation, les meilleurs premiers changements sont généralement:
+
+- remplacer le branding
+- mettre à jour les métadonnées
+- définir votre modèle de domaine principal
+- ajouter votre première entité réelle
+- connecter le premier vrai workflow
+- garder auth et facturation intactes
+
+Exemples :
+
+- projets
+- espaces de travail
+- rapports
+- Générations IA
+- Enregistrements CRM
+- données d'opérations internes
+
+La caractéristique exacte n'a pas d'importance.
+
+Ce qui compte, c’est de construire votre produit à l’intérieur de la structure existante au lieu de le combattre.
+
+Une fois que votre premier projet fonctionne, utilisez [Recettes d'affaires Starter Pro](/docs/starter-pro/recipes) pour adapter les projets, les tâches et les commentaires à un flux de travail concret. Chaque guide conserve le modèle inclus et identifie les règles de domaine à ajouter délibérément.
+
+## Quand l’achat est pertinent [#when-it-becomes-worth-buying]
+
+Starter Pro vaut la peine d'être acheté lorsque votre question change de:
+
+> Puis-je prototyper quelque chose ?
+
+à:
+
+> Comment puis-je lancer ceci sans perdre de temps sur auth, la facturation et la configuration?
+
+Si c'est déjà votre question, la prochaine étape la plus rapide n'est pas plus de recherche de configuration.
+
+Il consiste à passer à Starter Pro et à développer votre produit sur cette base.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Données de base de production",
+      description:
+        "Partez d’une base SaaS structurée pour concentrer votre travail sur les besoins de votre produit.",
+      icon: Rocket,
+    },
+    {
+      title: "Lancer la confiance",
+      description:
+        "Validez l'authentification, la facturation, les routes protégés et la structure du backend plus tôt.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Travail à effet de levier plus élevé",
+      description:
+        "Passez plus de temps sur les clients, la logique des produits, les workflows et la distribution.",
+      icon: CreditCard,
+    },
+  ]}
+/>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Ce qui est inclus",
+      href: "/docs/starter-pro/what-is-included",
+      description:
+        "Passez en revue les systèmes inclus dans Starter Pro avant de personnaliser en profondeur.",
+      icon: Package,
+    },
+    {
+      title: "Pourquoi acheter plutôt que tout développer",
+      href: "/docs/starter-pro/why-buy-instead-of-building",
+      description:
+        "Comprendre pourquoi l'achat de la fondation peut être une décision de lancement à effet de levier plus élevé.",
+      icon: Scale,
+    },
+    {
+      title: "Système d'authentification",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Validez l'authentification, les sessions, les fournisseurs et l'accès protégé.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Système de facturation",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Valider Stripe, les abonnements, les factures, le portail de facturation et les webhooks.",
+      icon: CreditCard,
+    },
+    {
+      title: "Recettes métier",
+      href: "/docs/starter-pro/recipes",
+      description:
+        "Choisissez un suivi client, une file d'attente de support interne ou une liste de contrôle après votre premier projet.",
+      icon: Rocket,
+    },
+    {
+      title: "Personnalisation du produit",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Adaptez la marque, la navigation et l'apparence tout en gardant votre base applicative de mise à niveau.",
+      icon: Package,
+    },
+  ]}
+/>

@@ -166,18 +166,19 @@ export function ChatPanel(props: AIChatProps) {
 
 ## State and action ownership
 
-| Prop                     | Responsibility                                                                                    |
-| ------------------------ | ------------------------------------------------------------------------------------------------- |
-| `messages`               | Ordered user/assistant text with stable unique IDs. Update the same ID while streaming.           |
-| `draft`, `onDraftChange` | Your controlled input. Suggestions prefill without sending.                                       |
-| `status`                 | `idle`, `submitting`, `streaming`, `stopped` or `error`.                                          |
-| `onSubmit(draft)`        | Accept a nonblank request and set busy synchronously. The Block never clears the draft.           |
-| `onStop`                 | Optional transport cancellation. Set stopped only after cancellation settles; reject late chunks. |
-| `onRetry`                | Optional retry of the last failed/stopped request, not the newer draft. No automatic retry.       |
-| `onCopy(message)`        | Promise resolving after a successful clipboard write, rejecting on failure.                       |
-| `errorMessage`           | Safe user-facing error. Never expose raw provider errors or credentials.                          |
-| `disabled`               | Disable input and mutation actions while retaining readable messages.                             |
-| `ref`                    | Native textarea ref for consumer focus management.                                                |
+| Prop                       | Responsibility                                                                                                                |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `messages`                 | Ordered user/assistant text with stable unique IDs. Update the same ID while streaming.                                       |
+| `draft`, `onDraftChange`   | Your controlled input. Suggestions prefill without sending.                                                                   |
+| `status`                   | `idle`, `submitting`, `streaming`, `stopped` or `error`.                                                                      |
+| `onSubmit(draft)`          | Accept a nonblank request and set busy synchronously. The Block never clears the draft.                                       |
+| `onStop`                   | Optional transport cancellation. Set stopped only after cancellation settles; reject late chunks.                             |
+| `onRetry`                  | Optional retry of the last failed/stopped request, not the newer draft. No automatic retry.                                   |
+| `onCopy(message)`          | Promise resolving after a successful clipboard write, rejecting on failure.                                                   |
+| `errorMessage`             | Safe user-facing error. Never expose raw provider errors or credentials.                                                      |
+| `disabled`                 | Disable input and mutation actions while retaining readable messages.                                                         |
+| `translate(text, values?)` | Optional interface-copy adapter. Defaults to English; message text, editable values, IDs and callbacks remain consumer-owned. |
+| `ref`                      | Native textarea ref for consumer focus management.                                                                            |
 
 Pass `onCopy={(message) => navigator.clipboard.writeText(message.text)}` in a client
 component. The UI confirms only completed copies and offers manual selection on
@@ -1182,8 +1183,10 @@ export function useWorkSimulation() {
 
 export function WorkSimulationControls({
   simulation,
+  translate = (value: string) => value,
 }: {
   simulation: ReturnType<typeof useWorkSimulation>;
+  translate?: (value: string) => string;
 }) {
   const work = simulation.work;
   if (!work) return null;
@@ -1191,11 +1194,12 @@ export function WorkSimulationControls({
   return (
     <details className="rounded-lg border border-border px-4 py-3">
       <summary className="cursor-pointer text-sm font-medium">
-        Work simulation controls
+        {translate("Work simulation controls")}
       </summary>
       <p className="mt-3 text-xs leading-5 text-muted-foreground">
-        These buttons supply fictional states manually. They do not execute
-        work, call a model or write a file.
+        {translate(
+          "These buttons supply fictional states manually. They do not execute work, call a model or write a file.",
+        )}
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <Button
@@ -1205,7 +1209,7 @@ export function WorkSimulationControls({
           disabled={blocked || work.status !== "planned"}
           onClick={simulation.requestApproval}
         >
-          Simulate approval request
+          {translate("Simulate approval request")}
         </Button>
         <Button
           type="button"
@@ -1218,7 +1222,7 @@ export function WorkSimulationControls({
           }
           onClick={simulation.advance}
         >
-          Advance one step
+          {translate("Advance one step")}
         </Button>
         <Button
           type="button"
@@ -1231,7 +1235,7 @@ export function WorkSimulationControls({
           }
           onClick={simulation.complete}
         >
-          Supply sample result
+          {translate("Supply sample result")}
         </Button>
         <Button
           type="button"
@@ -1240,7 +1244,7 @@ export function WorkSimulationControls({
           disabled={blocked || work.status !== "running"}
           onClick={simulation.fail}
         >
-          Simulate failure
+          {translate("Simulate failure")}
         </Button>
         <Button
           type="button"
@@ -1254,7 +1258,7 @@ export function WorkSimulationControls({
           }
           onClick={simulation.unknown}
         >
-          Simulate unknown status
+          {translate("Simulate unknown status")}
         </Button>
         <Button
           type="button"
@@ -1263,7 +1267,7 @@ export function WorkSimulationControls({
           disabled={work.pendingAction !== "cancel"}
           onClick={simulation.confirmCancellation}
         >
-          Confirm simulated cancellation
+          {translate("Confirm simulated cancellation")}
         </Button>
       </div>
     </details>

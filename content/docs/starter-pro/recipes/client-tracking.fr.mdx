@@ -1,0 +1,123 @@
+---
+title: Suivi des clients
+description: Utilisez des projets pour les engagements des clients, des tâches
+  pour les suivis et des commentaires pour les notes de livraison internes.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  ClipboardCheck,
+  LifeBuoy,
+  SlidersHorizontal,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Suivre un engagement [#track-an-engagement]
+
+Utilisez un espace de travail interne pour coordonner la livraison d’un client. L'exemple commence par **Northstar - lancement de site web**, une description de la portée et un propriétaire interne. Il utilise le module Projets inclus et ne nécessite aucun nouveau schéma.
+
+| Votre vocabulaire      | Modèle existant                                                 | Exemple                                             |
+| ---------------------- | --------------------------------------------------------------- | --------------------------------------------------- |
+| Engagement des clients | Nom et description du projet                                    | Northstar - lancement de site web                   |
+| Propriétaire interne   | Composition responsable du projet                               | Un membre de votre espace de travail                |
+| Suivi                  | Titre de la tâche, description, cessionnaire et date d'échéance | Confirmer la copie de lancement                     |
+| Bon de livraison       | Commentaire de la tâche                                         | Copie revue; deux changements de libellé demeurent. |
+
+## Essayez le workflow [#try-the-workflow]
+
+<Steps>
+  <Step>
+    ### Créer l’engagement [#create-the-engagement]
+
+    Ouvrir **Projets pour créer un projet**, entrez le nom et la portée, choisissez un membre responsable et enregistrez. Ouvrez sa page de détails.
+
+</Step>
+  <Step>
+    ### Planifier les suivis [#plan-the-follow-ups]
+
+    Ajouter **Confirmer la copie de lancement**, **Revoir la livraison** et **Préparer le passation** comme des tâches. Donnez à chacun un membre responsable et une date d'échéance.
+
+</Step>
+  <Step>
+    ### Travailler et vérifier la persistance [#work-and-verify-persistence]
+
+    Déplacer la première tâche de `TODO` au `IN_PROGRESS`, poster la note interne et recharger. Confirmez que son statut, son cessionnaire, sa date et sa discussion persistent.
+
+</Step>
+  <Step>
+    ### Compléter et conserver l’engagement [#complete-and-retain-the-engagement]
+
+    Marquer les suivis terminés `DONE`, puis mettre à jour le statut du projet séparément. Archivez-le pour mettre en pause les modifications de tâche/commentaires ; restaurer avant de modifier à nouveau. La suppression du projet supprime ses tâches et ses commentaires.
+
+</Step>
+
+</Steps>
+
+<Callout title="Les enregistrements internes partagent l'accès à l'espace de travail">
+  Tous les membres actifs de l’espace de travail peuvent voir ces
+  enregistrements et notes clients. Un projet n'isole pas les données d'un
+  client d'un autre. Décidez du modèle client/espace de travail et des
+  autorisations serveur avant d'inviter des clients externes ou de créer un
+  portail.
+
+</Callout>
+
+## Adapter la présentation [#adapt-the-presentation]
+
+Les expédiés `docs/recipes/client-tracking.md` identifie les points d'entrée source existants et inclut une invite d'assistant portée. Commencez par la page de détail du projet, `config/product.ts` la navigation et la copie de l'interface utilisateur anglais/français. Conservez les codes d'état persistants et les gardes de service d'espace de travail. Utilisez des étiquettes d’engagement spécifiques aux pages si l’application contient également d’autres flux de travail de projet.
+
+## Vérifier avant d'adopter [#check-before-adopting]
+
+- Un MEMBRE peut créer un suivi et poster une note ; l'affectation ne limite pas l'édition à son propriétaire nommé.
+- Le projet, la tâche, le commentaire ou l'ID du cessionnaire d'un autre espace de travail est rejeté.
+- Les changements de chargement et de langue conservent les noms et les notes créés par l'utilisateur.
+- L'archive bloque les écritures de tâches/commentaires jusqu'à ce qu'elles soient restaurées ; ce n'est pas une rétention permanente.
+
+Un répertoire de contacts, l'historique du compte client, l'accès spécifique au client et la facturation par client sont des extensions à concevoir. La base de référence ne les ajoute pas.
+
+## Guides connexes [#related-guides]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Référence du produit studio",
+      icon: BookOpen,
+      href: "/showcase/product-studio",
+      description:
+        "Inspectez le flux de travail de publication construit par PyColors avec de vraies captures d'applications et des données fictives.",
+    },
+    {
+      title: "Fondement de recette d'affaires",
+      icon: BookOpen,
+      href: "/docs/starter-pro/recipes",
+      description:
+        "Passez en revue les règles d'accès partagé, de statut et de date.",
+    },
+    {
+      title: "Demandes d'assistance",
+      icon: LifeBuoy,
+      href: "/docs/starter-pro/recipes/support-requests",
+      description:
+        "Appliquer le travail de tâche à une file d'attente de support interne.",
+    },
+    {
+      title: "Validation interne",
+      href: "/docs/starter-pro/recipes/internal-validation",
+      description:
+        "Coordonner les tâches d'examen et les notes de résultats sur la même base.",
+      icon: ClipboardCheck,
+    },
+    {
+      title: "Personnalisation du produit",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Localisez les étiquettes d’engagement et adaptez la navigation de votre produit.",
+      icon: SlidersHorizontal,
+    },
+  ]}
+/>

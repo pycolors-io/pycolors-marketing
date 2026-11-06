@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   APPEARANCE_DEFAULTS,
   type AppearancePreferences,
@@ -37,6 +38,8 @@ export function ThemeConfigurationControls({
   appearance?: AppearancePreferences;
   onRestore: (configuration: RestoredThemeConfiguration) => void;
 }>) {
+  const tSite = useCopy();
+
   const input = React.useRef<HTMLInputElement>(null);
   const operation = React.useRef(0);
   const currentEditor = React.useRef({ state, font, appearance });
@@ -134,7 +137,7 @@ export function ThemeConfigurationControls({
   return (
     <div
       role="group"
-      aria-label="Theme configuration"
+      aria-label={tSite("Theme configuration")}
       className="flex min-w-0 flex-col gap-2"
     >
       <div className="flex flex-wrap gap-2">
@@ -142,7 +145,7 @@ export function ThemeConfigurationControls({
           ref={input}
           type="file"
           accept=".json,application/json"
-          aria-label="Open theme configuration file"
+          aria-label={tSite("Open theme configuration file")}
           hidden
           onChange={openConfiguration}
         />
@@ -155,7 +158,7 @@ export function ThemeConfigurationControls({
           onClick={() => input.current?.click()}
         >
           <FolderOpen aria-hidden="true" />
-          {reading ? "Opening…" : "Open configuration"}
+          {tSite(reading ? "Opening…" : "Open configuration")}
         </Button>
         <Button
           type="button"
@@ -169,7 +172,7 @@ export function ThemeConfigurationControls({
           onClick={saveConfiguration}
         >
           <Save aria-hidden="true" />
-          Save configuration
+          {tSite("Save configuration")}
         </Button>
       </div>
       {hasErrors ? (
@@ -177,7 +180,9 @@ export function ThemeConfigurationControls({
           id="theme-configuration-invalid"
           className="max-w-sm text-xs text-muted-foreground"
         >
-          Finish the highlighted fields before saving a configuration.
+          {tSite(
+            "Finish the highlighted fields before saving a configuration.",
+          )}
         </p>
       ) : null}
       <ToastProvider>
@@ -191,7 +196,7 @@ export function ThemeConfigurationControls({
           className="rounded-[5px]"
         >
           <ToastDescription className="min-w-0 text-sm leading-6">
-            {notice.message}
+            {tSite(notice.message)}
           </ToastDescription>
           <ToastClose asChild>
             <Button
@@ -199,14 +204,14 @@ export function ThemeConfigurationControls({
               variant="ghost"
               size="icon"
               className="shrink-0"
-              aria-label="Dismiss configuration notification"
+              aria-label={tSite("Dismiss configuration notification")}
             >
               <X aria-hidden="true" />
             </Button>
           </ToastClose>
         </Toast>
         <ToastViewport
-          label="Theme configuration notifications"
+          label={tSite("Theme configuration notifications")}
           className="fixed right-4 bottom-4 z-50 m-0 flex w-96 max-w-[calc(100vw-2rem)] list-none flex-col gap-2 p-0 outline-none"
         />
       </ToastProvider>

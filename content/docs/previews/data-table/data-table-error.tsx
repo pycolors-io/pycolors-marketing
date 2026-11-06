@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   Table,
   TableBody,
@@ -6,18 +7,20 @@ import {
   Alert,
   AlertTitle,
   AlertDescription,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 export function DataTableError() {
+  const tSite = useCopy();
+
   return (
     <Table>
       <TableBody>
         <TableRow>
           <TableCell colSpan={4}>
             <Alert variant="destructive">
-              <AlertTitle>Failed to load data</AlertTitle>
+              <AlertTitle>{tSite("Failed to load data")}</AlertTitle>
               <AlertDescription>
-                Please try again later.
+                {tSite("Please try again later.")}
               </AlertDescription>
             </Alert>
           </TableCell>

@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   SCALE_STEPS,
   SEMANTIC_ROLES,
@@ -49,6 +50,8 @@ export function ThemePalette({
   selection: ThemePaletteSelection;
   onSelect: (selection: ThemePaletteSelection) => void;
 }>) {
+  const tSite = useCopy();
+
   const selected =
     selection.type === "semantic"
       ? theme.semantic[selection.role]
@@ -63,21 +66,22 @@ export function ThemePalette({
 
   return (
     <section
-      aria-label="Theme palette"
+      aria-label={tSite("Theme palette")}
       className={`${styles.preview} min-w-0 bg-background text-foreground`}
     >
       <header className="border-b border-border-subtle p-5 sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-lg font-semibold tracking-tight">
-            Your color palette
+            {tSite("Your color palette")}
           </h2>
           <span className="rounded-full border border-border-subtle px-2.5 py-1 text-xs">
-            {mode === "light" ? "Light" : "Dark"} mode
+            {tSite(mode === "light" ? "Light" : "Dark")} {tSite(" mode")}
           </span>
         </div>
         <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-          Explore your accent and neutral shades. Select a color to inspect or
-          copy it.
+          {tSite(
+            "Explore your accent and neutral shades. Select a color to inspect or copy it.",
+          )}
         </p>
       </header>
 
@@ -85,9 +89,10 @@ export function ThemePalette({
         {(["accent", "neutral"] as const).map((family) => (
           <fieldset key={family} className="min-w-0">
             <legend className="mb-3 text-sm font-medium">
-              {family === "accent" ? "Accent" : "Neutral"}{" "}
+              {tSite(family === "accent" ? "Accent" : "Neutral")}
+              {tSite(" ")}
               <span className="ml-2 text-xs font-normal text-muted-foreground">
-                12 generated shades
+                {tSite("12 generated shades")}
               </span>
             </legend>
             <div className={styles.paletteScale}>
@@ -101,7 +106,11 @@ export function ThemePalette({
                   <button
                     key={step}
                     type="button"
-                    aria-label={`${family === "accent" ? "Accent" : "Neutral"} shade ${step}, ${color.srgbHex}`}
+                    aria-label={tSite("{value0} shade {value1}, {value2}", {
+                      value0: family === "accent" ? "Accent" : "Neutral",
+                      value1: step,
+                      value2: color.srgbHex,
+                    })}
                     aria-pressed={active}
                     onClick={() => onSelect({ type: "scale", family, step })}
                     className="group min-w-0 rounded-[5px] text-center outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -115,7 +124,7 @@ export function ThemePalette({
                       style={{ backgroundColor: color.srgbHex }}
                     />
                     <span className="mt-2 block text-xs tabular-nums text-muted-foreground">
-                      {step}
+                      {tSite(step)}
                     </span>
                   </button>
                 );
@@ -125,7 +134,7 @@ export function ThemePalette({
         ))}
 
         <section
-          aria-label="Selected color"
+          aria-label={tSite("Selected color")}
           className="rounded-[5px] border border-border-subtle p-4"
         >
           <div className="flex items-center gap-3">
@@ -136,10 +145,11 @@ export function ThemePalette({
             />
             <div className="min-w-0">
               <p className="text-xs text-muted-foreground">
-                Selected color · {mode === "light" ? "Light" : "Dark"}
+                {tSite("Selected color · ")}
+                {tSite(mode === "light" ? "Light" : "Dark")}
               </p>
               <h3 className="mt-1 break-words text-sm font-medium">
-                {selectedLabel}
+                {tSite(selectedLabel)}
               </h3>
             </div>
           </div>
@@ -155,14 +165,16 @@ export function ThemePalette({
                 className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2"
               >
                 <div className="min-w-0 space-y-1">
-                  <p className="text-[11px] text-muted-foreground">{format}</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    {tSite(format)}
+                  </p>
                   <code className="block select-all break-all text-xs leading-5">
                     {value}
                   </code>
                 </div>
                 <CopyButton
                   value={value}
-                  label={`Copy ${format}`}
+                  label={tSite("Copy {value0}", { value0: format })}
                   className="flex-col items-end gap-1"
                   buttonClassName="min-h-10 rounded-[5px]"
                   statusClassName="min-h-4 max-w-56 text-right"
@@ -171,32 +183,37 @@ export function ThemePalette({
             ))}
           </div>
           <p className="mt-3 text-xs leading-5 text-muted-foreground">
-            {matchingRoles.length > 0
-              ? `Used by ${matchingRoles.map((role) => `--${role}`).join(", ")}.`
-              : "A generated shade. It is not assigned to a named color role in this mode."}
+            {tSite(
+              matchingRoles.length > 0
+                ? tSite("Used by {value0}.", {
+                    value0: matchingRoles.map((role) => `--${role}`).join(", "),
+                  })
+                : "A generated shade. It is not assigned to a named color role in this mode.",
+            )}
           </p>
         </section>
 
         <section aria-labelledby="theme-palette-roles-heading">
           <h3 id="theme-palette-roles-heading" className="text-sm font-medium">
-            Colors by purpose
+            {tSite("Colors by purpose")}
           </h3>
           <p className="mt-1 text-xs leading-5 text-muted-foreground">
-            Use these named roles in your app. They come directly from your
-            exported theme.
+            {tSite(
+              "Use these named roles in your app. They come directly from your exported theme.",
+            )}
           </p>
           <div className={`${styles.paletteRoles} mt-4`}>
             {ROLE_GROUPS.map((group) => (
               <fieldset key={group.label} className="min-w-0">
                 <legend className="mb-2 text-xs font-medium">
-                  {group.label}
+                  {tSite(group.label)}
                 </legend>
                 <div className="space-y-1">
                   {group.roles.map((role) => (
                     <button
                       key={role}
                       type="button"
-                      aria-label={`Inspect ${role}`}
+                      aria-label={tSite("Inspect {value0}", { value0: role })}
                       aria-pressed={
                         selection.type === "semantic" && selection.role === role
                       }
@@ -215,7 +232,7 @@ export function ThemePalette({
                           backgroundColor: theme.semantic[role].srgbHex,
                         }}
                       />
-                      <span className="min-w-0 break-words">{role}</span>
+                      <span className="min-w-0 break-words">{tSite(role)}</span>
                     </button>
                   ))}
                 </div>

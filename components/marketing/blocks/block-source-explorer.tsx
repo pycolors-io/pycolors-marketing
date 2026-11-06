@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useId, useRef, useState } from "react";
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Files, Folder } from "fumadocs-ui/components/files";
@@ -54,6 +55,8 @@ function FileTree({
   selectedPath: string;
   onSelect: (path: string) => void;
 }>) {
+  const tSite = useCopy();
+
   return (
     <ul className={styles.tree}>
       {nodes.map((node) => (
@@ -70,13 +73,13 @@ function FileTree({
             <button
               type="button"
               className={styles.file}
-              aria-label={node.file.path}
+              aria-label={tSite(node.file.path)}
               aria-pressed={selectedPath === node.file.path}
               onClick={() => onSelect(node.file.path)}
-              title={node.file.path}
+              title={tSite(node.file.path)}
             >
               <FileCode2 aria-hidden="true" />
-              <span>{node.name}</span>
+              <span>{tSite(node.name)}</span>
             </button>
           )}
         </li>
@@ -89,6 +92,8 @@ export function BlockSourceExplorer({
   source,
   active,
 }: Readonly<{ source: BlockSource; active: boolean }>) {
+  const tSite = useCopy();
+
   const id = useId();
   const [selectedPath, setSelectedPath] = useState(source.files[0].path);
   const [showFiles, setShowFiles] = useState(true);
@@ -153,7 +158,7 @@ export function BlockSourceExplorer({
           onClick={() => setShowFiles((current) => !current)}
         >
           <PanelLeft className="size-4" aria-hidden="true" />
-          Files
+          {tSite("Files")}
         </Button>
 
         <Button
@@ -162,15 +167,17 @@ export function BlockSourceExplorer({
           size="sm"
           className={styles.copy}
           onClick={copyFile}
-          aria-label={feedback === "copied" ? "File copied" : "Copy file"}
-          title={`Copy ${file.path}`}
+          aria-label={tSite(
+            feedback === "copied" ? "File copied" : "Copy file",
+          )}
+          title={tSite("Copy {value0}", { value0: file.path })}
         >
           {feedback === "copied" ? (
             <Check className="size-3.5" aria-hidden="true" />
           ) : (
             <Copy className="size-3.5" aria-hidden="true" />
           )}
-          <span>{feedback === "copied" ? "Copied" : "Copy file"}</span>
+          <span>{tSite(feedback === "copied" ? "Copied" : "Copy file")}</span>
         </Button>
 
         <Button
@@ -181,8 +188,11 @@ export function BlockSourceExplorer({
           onClick={downloadBlock}
           disabled={isDownloading}
           aria-busy={isDownloading}
-          aria-label="Download complete block as ZIP"
-          title={`Download all ${source.files.length} ${multiple ? "files" : "file"}`}
+          aria-label={tSite("Download complete block as ZIP")}
+          title={tSite("Download all {value0} {value1}", {
+            value0: source.files.length,
+            value1: tSite(multiple ? "files" : "file"),
+          })}
         >
           {isDownloading ? (
             <LoaderCircle
@@ -192,30 +202,30 @@ export function BlockSourceExplorer({
           ) : (
             <Download className="size-3.5" aria-hidden="true" />
           )}
-          Download ZIP
+          {tSite("Download ZIP")}
         </Button>
 
         <div
           className={styles.filename}
           data-multiple={multiple}
-          title={fullPath}
+          title={tSite(fullPath)}
         >
           <FileCode2 aria-hidden="true" />
-          <span className={styles.directory}>{source.directory}/</span>
-          <span>{file.path}</span>
+          <span className={styles.directory}>{tSite(source.directory)}/</span>
+          <span>{tSite(file.path)}</span>
         </div>
 
         {multiple ? (
           <div className={styles.mobileSelect}>
             <FileCode2 aria-hidden="true" />
             <select
-              aria-label="Source file"
+              aria-label={tSite("Source file")}
               value={file.path}
               onChange={(event) => selectFile(event.target.value)}
             >
               {source.files.map((item) => (
                 <option key={item.path} value={item.path}>
-                  {item.path}
+                  {tSite(item.path)}
                 </option>
               ))}
             </select>
@@ -227,13 +237,13 @@ export function BlockSourceExplorer({
       <div className={styles.body} data-files-open={showFiles}>
         <nav
           id={`${id}-files`}
-          aria-label="Block source files"
+          aria-label={tSite("Block source files")}
           className={styles.sidebar}
           hidden={!showFiles}
         >
           <div className={styles.sidebarHeading}>
-            <span>Files</span>
-            <span>{source.files.length}</span>
+            <span>{tSite("Files")}</span>
+            <span>{tSite(source.files.length)}</span>
           </div>
           <Files className={styles.files}>
             <FileTree
@@ -247,7 +257,7 @@ export function BlockSourceExplorer({
         <div
           className={styles.code}
           role="region"
-          aria-label={`Source code: ${file.path}`}
+          aria-label={tSite("Source code: {value0}", { value0: file.path })}
           tabIndex={0}
           ref={codeRef}
         >
@@ -267,17 +277,21 @@ export function BlockSourceExplorer({
 
       <div className={styles.statusbar}>
         <p role="status" aria-live="polite">
-          {feedback === "copy-failed"
-            ? "Copy unavailable. Select the code and copy it manually."
-            : feedback === "copied"
-              ? `${file.path} copied.`
-              : feedback === "download-failed"
-                ? "Download could not start. Try again or copy each file."
-                : feedback === "download-requested"
-                  ? "ZIP download requested. Extract the folder into your app."
-                  : "Download the block or copy files, keeping this folder structure."}
+          {tSite(
+            feedback === "copy-failed"
+              ? "Copy unavailable. Select the code and copy it manually."
+              : feedback === "copied"
+                ? tSite("{value0} copied.", { value0: file.path })
+                : feedback === "download-failed"
+                  ? "Download could not start. Try again or copy each file."
+                  : feedback === "download-requested"
+                    ? "ZIP download requested. Extract the folder into your app."
+                    : "Download the block or copy files, keeping this folder structure.",
+          )}
         </p>
-        <span className={styles.language}>{file.language.toUpperCase()}</span>
+        <span className={styles.language}>
+          {tSite(file.language.toUpperCase())}
+        </span>
       </div>
     </div>
   );

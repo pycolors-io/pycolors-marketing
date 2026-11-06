@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import type { ReactNode } from "react";
 import {
   ArrowRight,
@@ -48,37 +49,41 @@ function Window({
   children: ReactNode;
   className?: string;
 }>) {
+  const tSite = useCopy();
+
   return (
     <div className={cn(styles.window, className)}>
       <div className={styles.windowHeader}>
         <span>
-          {icon}
-          {label}
+          {tSite(icon)}
+          {tSite(label)}
         </span>
         <MoreHorizontal />
       </div>
-      {children}
+      {tSite(children)}
     </div>
   );
 }
 
 function DataRows() {
+  const tSite = useCopy();
+
   return (
     <div className={styles.table}>
       <div className={styles.tableHeader}>
-        <span>Project</span>
-        <span>Status</span>
+        <span>{tSite("Project")}</span>
+        <span>{tSite("Status")}</span>
       </div>
       {["Customer portal", "Design system", "Marketing site"].map(
         (name, index) => (
           <div key={name} className={styles.tableRow}>
             <span>
-              <span className={styles.projectMark}>{index + 1}</span>
-              {name}
+              <span className={styles.projectMark}>{tSite(index + 1)}</span>
+              {tSite(name)}
             </span>
             <span className={index === 0 ? styles.statusActive : styles.status}>
               <span />
-              {index === 0 ? "Active" : "Draft"}
+              {tSite(index === 0 ? "Active" : "Draft")}
             </span>
           </div>
         ),
@@ -88,40 +93,42 @@ function DataRows() {
 }
 
 function Dashboard() {
+  const tSite = useCopy();
+
   return (
-    <Window label="Workspace" icon={<LayoutDashboard />}>
+    <Window label={tSite("Workspace")} icon={<LayoutDashboard />}>
       <div className={styles.dashboard}>
         <div className={styles.sidebar}>
           <span className={styles.selected}>
             <LayoutDashboard />
-            Overview
+            {tSite("Overview")}
           </span>
           <span>
             <Folder />
-            Projects
+            {tSite("Projects")}
           </span>
           <span>
             <Settings2 />
-            Settings
+            {tSite("Settings")}
           </span>
           <span className={styles.sidebarAccount}>
             <span />
-            Your team
+            {tSite("Your team")}
           </span>
         </div>
         <div className={styles.dashboardBody}>
           <div className={styles.inline}>
-            <strong>Overview</strong>
+            <strong>{tSite("Overview")}</strong>
             <Plus />
           </div>
           <div className={styles.metrics}>
             <div>
-              <span>Projects</span>
+              <span>{tSite("Projects")}</span>
               <strong>12</strong>
               <i />
             </div>
             <div>
-              <span>Activity</span>
+              <span>{tSite("Activity")}</span>
               <strong>86%</strong>
               <i />
             </div>
@@ -138,40 +145,42 @@ function Dashboard() {
 }
 
 function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
+  const tSite = useCopy();
+
   switch (kind) {
     case "components":
       return (
-        <Window label="@pycolors/ui" icon={<Code2 />}>
+        <Window label={tSite("@pycolors/ui")} icon={<Code2 />}>
           <div className={styles.componentGrid}>
             <div className={styles.componentTile}>
-              <span className={styles.caption}>Action</span>
+              <span className={styles.caption}>{tSite("Action")}</span>
               <span className={styles.primaryButton}>
-                Continue
+                {tSite("Continue")}
                 <ArrowRight />
               </span>
             </div>
             <div className={styles.componentTile}>
-              <span className={styles.caption}>Selection</span>
+              <span className={styles.caption}>{tSite("Selection")}</span>
               <div className={styles.inline}>
                 <span className={styles.checkbox}>
                   <Check />
                 </span>
-                <span>Selected</span>
+                <span>{tSite("Selected")}</span>
                 <span className={styles.toggle} />
               </div>
             </div>
             <div className={styles.componentTile}>
-              <span className={styles.caption}>Input</span>
+              <span className={styles.caption}>{tSite("Input")}</span>
               <span className={styles.field}>
                 <Search />
-                Search…
+                {tSite("Search…")}
               </span>
             </div>
             <div className={styles.componentTile}>
-              <span className={styles.caption}>Status</span>
+              <span className={styles.caption}>{tSite("Status")}</span>
               <span className={styles.statusActive}>
                 <span />
-                Active
+                {tSite("Active")}
               </span>
             </div>
           </div>
@@ -179,7 +188,7 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
       );
     case "tokens":
       return (
-        <Window label="Semantic colors" icon={<Circle />}>
+        <Window label={tSite("Semantic colors")} icon={<Circle />}>
           <div className={styles.paletteBody}>
             <div className={styles.palette}>
               {[12, 24, 40, 60, 80, 100].map((strength) => (
@@ -192,23 +201,23 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
               ))}
             </div>
             <div className={styles.paletteLabels}>
-              <span>Subtle</span>
-              <span>Accent</span>
+              <span>{tSite("Subtle")}</span>
+              <span>{tSite("Accent")}</span>
             </div>
             <div className={styles.themeSamples}>
               <div>
-                <span>Surface</span>
+                <span>{tSite("Surface")}</span>
                 <i />
                 <span className={styles.sampleAction}>
-                  Continue
+                  {tSite("Continue")}
                   <ArrowRight />
                 </span>
               </div>
               <div className={styles.invertedSample}>
-                <span>Contrast</span>
+                <span>{tSite("Contrast")}</span>
                 <i />
                 <span className={styles.sampleAction}>
-                  Continue
+                  {tSite("Continue")}
                   <ArrowRight />
                 </span>
               </div>
@@ -222,13 +231,13 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
           <div className={styles.compositionLayer}>
             <span className={styles.layerLabel}>
               <Box />
-              Primitives
+              {tSite("Primitives")}
             </span>
             <span className={styles.miniButton}>
               <Plus />
-              Button
+              {tSite("Button")}
             </span>
-            <span className={styles.miniChip}>Badge</span>
+            <span className={styles.miniChip}>{tSite("Badge")}</span>
             <span className={styles.miniField} />
           </div>
           <div className={styles.connector}>
@@ -237,7 +246,7 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
           <div className={styles.compositionLayer}>
             <span className={styles.layerLabel}>
               <LayoutDashboard />
-              Blocks
+              {tSite("Blocks")}
             </span>
             <div className={styles.miniLayout}>
               <i />
@@ -258,7 +267,7 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
           >
             <span className={styles.layerLabel}>
               <Folder />
-              Application
+              {tSite("Application")}
             </span>
             <span className={styles.composedScreen}>
               <i />
@@ -272,36 +281,41 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
       );
     case "architecture":
       return (
-        <Window label="Project structure" icon={<FolderOpen />}>
+        <Window label={tSite("Project structure")} icon={<FolderOpen />}>
           <div className={styles.fileTree}>
             <span>
               <FolderOpen />
-              app<span className={styles.fileHint}>App Router</span>
+              {tSite("app")}
+              <span className={styles.fileHint}>{tSite("App Router")}</span>
             </span>
             <div className={styles.fileBranch}>
               <span>
                 <FileCode2 />
-                layout.tsx<span className={styles.fileHint}>Shell</span>
+                {tSite("layout.tsx")}
+                <span className={styles.fileHint}>{tSite("Shell")}</span>
               </span>
               <span>
                 <FileCode2 />
-                page.tsx<span className={styles.fileHint}>Entry</span>
+                {tSite("page.tsx")}
+                <span className={styles.fileHint}>{tSite("Entry")}</span>
               </span>
               <span className={styles.fileSelected}>
                 <Folder />
-                dashboard<span className={styles.fileHint}>Routes</span>
+                {tSite("dashboard")}
+                <span className={styles.fileHint}>{tSite("Routes")}</span>
               </span>
             </div>
             <span>
               <Folder />
-              components<span className={styles.fileHint}>Shared UI</span>
+              {tSite("components")}
+              <span className={styles.fileHint}>{tSite("Shared UI")}</span>
             </span>
           </div>
         </Window>
       );
     case "workflow":
       return (
-        <Window label="Local development" icon={<Terminal />}>
+        <Window label={tSite("Local development")} icon={<Terminal />}>
           <div className={styles.terminalBody}>
             <div>
               <span className={styles.prompt}>$</span>
@@ -315,7 +329,7 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
             </div>
             <span className={styles.terminalHint}>
               <span />
-              localhost:3000
+              {tSite("localhost:3000")}
             </span>
             <div>
               <span className={styles.prompt}>$</span>
@@ -326,7 +340,7 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
               {["Lint", "Types", "Build"].map((label) => (
                 <span key={label}>
                   <Check />
-                  {label}
+                  {tSite(label)}
                 </span>
               ))}
             </div>
@@ -339,27 +353,28 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
           <div className={styles.actionBar}>
             <span className={styles.primaryButton}>
               <Plus />
-              Create project
+              {tSite("Create project")}
             </span>
             <span className={styles.secondaryButton}>
-              Options
+              {tSite("Options")}
               <ChevronDown />
             </span>
           </div>
           <div className={styles.menu}>
-            <span className={styles.caption}>Project actions</span>
+            <span className={styles.caption}>{tSite("Project actions")}</span>
             <span className={styles.menuSelected}>
               <Folder />
-              Open project
+              {tSite("Open project")}
               <ArrowRight />
             </span>
             <span>
               <Settings2 />
-              Project settings
+              {tSite("Project settings")}
             </span>
             <span>
               <Bell />
-              Notifications<span className={styles.shortcut}>N</span>
+              {tSite("Notifications")}
+              <span className={styles.shortcut}>{tSite("N")}</span>
             </span>
           </div>
           <MousePointer2 className={styles.cursor} />
@@ -367,19 +382,19 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
       );
     case "forms":
       return (
-        <Window label="Project settings" icon={<Settings2 />}>
+        <Window label={tSite("Project settings")} icon={<Settings2 />}>
           <div className={styles.formBody}>
-            <span className={styles.fieldLabel}>Project name</span>
+            <span className={styles.fieldLabel}>{tSite("Project name")}</span>
             <span className={cn(styles.field, styles.focusedField)}>
-              Customer portal
+              {tSite("Customer portal")}
               <Check />
             </span>
             <div className={styles.formBottom}>
               <div>
-                <span className={styles.fieldLabel}>Visibility</span>
+                <span className={styles.fieldLabel}>{tSite("Visibility")}</span>
                 <span className={styles.field}>
                   <LockKeyhole />
-                  Private
+                  {tSite("Private")}
                   <ChevronsUpDown />
                 </span>
               </div>
@@ -387,7 +402,7 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
                 <span className={styles.checkbox}>
                   <Check />
                 </span>
-                Notify team
+                {tSite("Notify team")}
               </span>
             </div>
           </div>
@@ -403,18 +418,20 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
             <div />
           </div>
           <Window
-            label="Edit project"
+            label={tSite("Edit project")}
             icon={<Folder />}
             className={styles.dialog}
           >
             <X className={styles.closeIcon} />
             <div className={styles.dialogBody}>
-              <span className={styles.fieldLabel}>Project name</span>
-              <span className={styles.field}>Customer portal</span>
+              <span className={styles.fieldLabel}>{tSite("Project name")}</span>
+              <span className={styles.field}>{tSite("Customer portal")}</span>
               <div className={styles.dialogActions}>
-                <span className={styles.secondaryButton}>Cancel</span>
+                <span className={styles.secondaryButton}>
+                  {tSite("Cancel")}
+                </span>
                 <span className={styles.primaryButton}>
-                  Save
+                  {tSite("Save")}
                   <Check />
                 </span>
               </div>
@@ -424,10 +441,10 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
       );
     case "data":
       return (
-        <Window label="Projects" icon={<Folder />}>
+        <Window label={tSite("Projects")} icon={<Folder />}>
           <DataRows />
           <div className={styles.tableFooter}>
-            <span>3 projects</span>
+            <span>{tSite("3 projects")}</span>
             <span>
               01<span className={styles.muted}> / 04</span>
               <ArrowRight />
@@ -444,21 +461,21 @@ function Scene({ kind }: Readonly<{ kind: MarketingIllustrationKind }>) {
               <Check />
             </span>
             <div>
-              <strong>Changes saved</strong>
-              <span>Project settings updated.</span>
+              <strong>{tSite("Changes saved")}</strong>
+              <span>{tSite("Project settings updated.")}</span>
             </div>
             <X />
           </div>
           <div className={styles.upload}>
             <div className={styles.inline}>
-              <span>Uploading files</span>
-              <span className={styles.muted}>3 of 4</span>
+              <span>{tSite("Uploading files")}</span>
+              <span className={styles.muted}>{tSite("3 of 4")}</span>
             </div>
             <div className={styles.progress}>
               <span />
             </div>
             <span className={styles.caption}>
-              Your workspace stays available.
+              {tSite("Your workspace stays available.")}
             </span>
           </div>
         </div>

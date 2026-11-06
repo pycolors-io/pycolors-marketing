@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import Image from "next/image";
 import { cn } from "@pycolors/ui";
 
@@ -44,6 +45,8 @@ export function NpmBadges({
   size?: "sm" | "md";
   className?: string;
 }) {
+  const tSite = useCopy();
+
   const height = size === "md" ? 22 : 20;
 
   return (
@@ -52,7 +55,7 @@ export function NpmBadges({
         <Image
           key={b.kind}
           src={`https://img.shields.io${b.path(packageName)}`}
-          alt={b.alt(packageName)}
+          alt={tSite(b.alt(packageName))}
           width={b.width}
           height={b.height}
           style={{ width: "auto", height }}

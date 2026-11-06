@@ -4,7 +4,7 @@ import { axe } from "vitest-axe";
 import { renderToStaticMarkup } from "react-dom/server";
 import { isValidElement } from "react";
 
-import CheckoutSuccessPage from "../../app/(site)/checkout/success/page";
+import CheckoutSuccessPage from "../../app/[locale]/(site)/checkout/success/page";
 import { MoneyPathPageEvent } from "@/components/analytics/money-path-event";
 
 vi.mock("@/components/analytics/money-path-event", () => ({

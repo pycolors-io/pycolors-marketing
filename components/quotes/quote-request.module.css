@@ -147,6 +147,14 @@
   font-weight: 400;
   color: var(--muted-foreground);
 }
+.field label .requiredIndicator {
+  margin-inline-start: 4px;
+  color: var(--destructive);
+  font-weight: 500;
+}
+.requiredIndicator::before {
+  content: "*";
+}
 .control {
   width: 100%;
   min-width: 0;
@@ -210,6 +218,73 @@
   font-size: 12px;
   line-height: 1.8;
   color: var(--muted-foreground);
+}
+.details {
+  border-block: 1px solid var(--border-subtle);
+  padding-block: 16px;
+}
+.proposal {
+  border-block: 1px solid var(--border-subtle);
+  padding-block: 20px;
+  margin-top: 24px;
+}
+.proposal h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+.proposal p {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted-foreground);
+}
+.details > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 28px;
+  list-style: none;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.details > summary::-webkit-details-marker {
+  display: none;
+}
+.details > summary:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.optional {
+  margin-left: 6px;
+  color: var(--muted-foreground);
+  font-weight: 400;
+  font-size: 12px;
+}
+.detailsChevron {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+.details[open] .detailsChevron {
+  transform: rotate(180deg);
+}
+.detailsFields {
+  display: grid;
+  gap: 22px;
+  padding-top: 18px;
+}
+.detailTextarea {
+  height: auto;
+  min-height: 92px;
+  resize: vertical;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .detailsChevron {
+    transition: transform 150ms ease;
+  }
 }
 .fieldError {
   font-size: 12px;
@@ -291,7 +366,8 @@
     height: 44px;
     font-size: 16px;
   }
-  .brief {
+  .brief,
+  .detailTextarea {
     height: auto;
   }
   .select svg {

@@ -1,0 +1,68 @@
+---
+title: Propriété et mises à jour
+description: Gardez le contrôle de la source installée, examinez les
+  modifications du registre et du npm séparément et gérez les conflits ou la
+  restauration sans perdre la personnalisation.
+lastUpdated: "2026-09-17"
+appliesTo: Registry
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+
+L'installation du registre modifie la façon dont un bloc atteint votre application, et non qui conserve la copie. Après l'installation, la source sous `src/components/blocks/feedback-empty-state-panel` est votre code d'application. Personnalisez-le délibérément et préservez sa sémantique accessible.
+
+## Deux chemins de mise à jour indépendants [#two-independent-update-paths]
+
+**Source copiée** ne se synchronise pas automatiquement avec PyColors. Un élément de Registre ou un bloc canonique plus récent ne modifie pas votre application tant que vous n’avez pas choisi d’appliquer les modifications. La réinstallation n'est pas une migration ou une fusion personnalisée.
+
+**Dépendances publiques npm** tels que `@pycolors/ui` et `@pycolors/tokens` suivez les versions sélectionnées par votre manifeste de paquet, vos remplacements et votre fichier de verrouillage. La mise à jour de ces paquets ne met pas à jour le bloc copié. Passez en revue la compatibilité des paquets et validez votre application indépendamment des changements de source.
+
+## Réviser une mise à jour sans perdre le travail local [#review-an-update-without-losing-local-work]
+
+Commencez à partir d'un travail sauvegardé et révisable sur une branche dédiée. Enregistrez le fichier source copié et le fichier de verrouillage de dépendance existants avant d'inspecter une nouvelle révision d'élément. Suivez le [Inspection et étapes à sec](/docs/registry/installation#inspect-before-writing) tant pour la base que pour le pilote; la vérification des transports publics demeure nécessaire.
+
+Installez la révision proposée dans une application compatible jetable, comparez sa source avec votre copie actuelle et apportez uniquement les modifications qui correspondent à votre application. Préservez vos routes, vos actions, votre contenu et votre travail d'accessibilité. Les [Documentation du panneau d'état vide](/docs/blocks/feedback/empty-state-panel) est l'alternative de copie manuelle; un aperçu n'est pas une deuxième autorité source.
+
+Utilisez votre diff de contrôle de version pour examiner les modifications de source, de feuille de style, de paquet et de fichier de verrouillage ensemble. Exécutez le formatage, les peluches, les types stricts, les tests, une génération de production et les vérifications du navigateur avant d'accepter la mise à jour.
+
+Le workflow PyColors testé utilise `view`, `add --dry-run`, et l'examen explicite des dossiers. La CLI amont documente également `--diff`, mais ce drapeau n'est pas exercé par la matrice de consommateurs PyColors, donc ce guide ne le présente pas comme un flux de travail de mise à jour ou de fusion PyColors vérifié.
+
+## Répéter les installations et les conflits [#repeat-installs-and-conflicts]
+
+Une course à sec préserve l'arbre de consommation testé, y compris un bloc personnalisé. Une installation répétée peut normaliser les plages de paquets ou réécrire le fichier de verrouillage parce que le pilote réapplique sa base. Suivez le [étape de réconciliation des fichiers verrouillés](/docs/registry/installation#reconcile-and-verify-the-lockfile) et inspecter l'ensemble du diff plutôt que de promettre une non-op.
+
+<Callout title="Le déclin de l'écrasement protège la source, pas tous les fichiers">
+  Dans le flux testé, la diminution de l'invite d'écrasement maintient le bloc
+  édité par le consommateur intact, mais le traitement des dépendances peut
+  toujours modifier le fichier de verrouillage. Révisez et réconciliez-le avant
+  de continuer. Les `--yes` flag n'accorde pas la permission de rejeter vos
+  modifications de source locales.
+
+</Callout>
+
+Le test des luminaires `--overwrite` uniquement dans des projets jetables. Ne l’utilisez pas comme stratégie de mise à jour par défaut dans votre application. Il n'y a pas de résolution automatique des conflits, de service de migration ou de commande de restauration fournie par ce Registre.
+
+## Enregistrer les entrées reproductibles [#record-repeatable-inputs]
+
+Les références GitHub non qualifiées suivent la branche par défaut du miroir. L'adressage GitHub en amont accepte un commit SHA complet de 40 caractères après `#` sur une adresse d'article. Enregistrez le commit miroir public réel qui a été inspecté plutôt que d'utiliser un SHA monorepo ou d'inventer un identifiant de publication.
+
+Épingler l'adresse du pilote **non** Épingler sa dépendance de base. Les références de dépendance GitHub n'héritent pas de la référence du parent, et le manifeste pilote actuel contient une référence de base qualifiée non épinglée. L'installation d'une base pivotée en premier n'empêche pas le pilote de résoudre à nouveau sa propre base.
+
+Un test de chaîne de dépendance publique entièrement épinglé nécessite donc que chaque référence de dépendance soit vérifiée indépendamment à la porte de disponibilité publique appartenant à l'homme. Ce guide ne prétend pas que la porte est complète ou réécrit silencieusement le manifeste pour le faire apparaître épinglé. Conservez les révisions inspectées et le fichier de verrouillage npm avec vos preuves de validation ; la source exacte du Registre seule ne gèle pas la résolution npm.
+
+Voir l'amont [Référence du registre GitHub](https://ui.shadcn.com/docs/registry/github) pour la syntaxe d'adresse. La compatibilité PyColors supportée reste la plus étroite [matrice du consommateur](/docs/registry#tested-compatibility).
+
+## Renverser une installation [#roll-back-an-installation]
+
+Préférez un retour révisé du changement d'installation dédié dans le contrôle de version. Incluez le fichier copié, le manifeste de package d'application, la feuille de style et le fichier de verrouillage comme une seule unité cohérente. Ne restaurez pas un ancien fichier de verrouillage en plus des modifications de dépendances non liées les plus récentes et ne supprimez pas le travail effectué depuis l'installation.
+
+Après le retour, exécutez une installation gelée et la validation normale de l'application à nouveau. Un retour Git n'annule pas l'état de l'application externe, bien que le pilote de Registre lui-même n'ajoute aucune mutation de données de backend ou de production.
+
+## Retirez le pilote ou la base [#remove-the-pilot-or-base]
+
+Pour supprimer uniquement le pilote, retirez d'abord ses importations et ses usages, puis retirez les biens de consommation. `feedback-empty-state-panel` répertoire source après avoir préservé toute personnalisation dont vous avez besoin. Conservez l'interface utilisateur et les dépendances de tokens lorsque d'autres composants de l'application les utilisent encore.
+
+Pour supprimer la base ainsi, examiner tous les consommateurs de `@pycolors/ui`,
+`@pycolors/tokens`et `lucide-react` avant de supprimer les dépendances inutilisées de l'application de consommation. Vérifiez si la feuille de style a encore besoin de l'importation de token et de l'interface utilisateur `@source` directive. Conservez Tailwind et les styles d'application non liés. Mettez délibérément à jour le fichier de verrouillage partagé et validez l’application et les espaces de travail concernés. Supprimer la source copiée ne désinstalle pas les dépendances pour vous.
+
+Retour à la liste [Blocs](/blocks) pour un autre motif ou [Dépannage du registre](/docs/registry/troubleshooting) pour un problème d'installation non résolu.

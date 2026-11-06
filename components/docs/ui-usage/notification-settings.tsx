@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import {
   Button,
@@ -10,6 +11,8 @@ import {
 } from "@pycolors/ui";
 
 export function NotificationSettings() {
+  const tSite = useCopy();
+
   const summaryId = React.useId();
   const emailRef = React.useRef<HTMLInputElement>(null);
   const [email, setEmail] = React.useState("");
@@ -39,8 +42,8 @@ export function NotificationSettings() {
     >
       <Input
         ref={emailRef}
-        label="Notification email"
-        helperText="Use an example address; nothing is sent."
+        label={tSite("Notification email")}
+        helperText={tSite("Use an example address; nothing is sent.")}
         type="email"
         name="email"
         autoComplete="email"
@@ -51,7 +54,7 @@ export function NotificationSettings() {
           setError("");
           setSaved("");
         }}
-        error={error}
+        error={tSite(error)}
       />
       <CheckboxField>
         <Checkbox
@@ -64,12 +67,12 @@ export function NotificationSettings() {
           }}
         />
         <CheckboxLabel htmlFor={summaryId}>
-          Send a weekly workspace summary
+          {tSite("Send a weekly workspace summary")}
         </CheckboxLabel>
       </CheckboxField>
-      <Button type="submit">Save preview settings</Button>
+      <Button type="submit">{tSite("Save preview settings")}</Button>
       <p role="status" className="text-sm text-muted-foreground break-words">
-        {saved}
+        {tSite(saved)}
       </p>
     </form>
   );

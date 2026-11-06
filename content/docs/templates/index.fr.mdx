@@ -1,0 +1,266 @@
+---
+title: Templates
+description: Modèles de produits premium construits avec PyColors UI et PyColors
+  Tokens. Lancez des pages marketing ciblées plus rapidement sans reconstruire
+  la fondation.
+lastUpdated: "2026-10-03"
+appliesTo: Templates
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import { BadgeEuro, LayoutTemplate, Rocket, Sparkles } from "lucide-react";
+
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Templates</Badge>
+  <Badge>Surfaces de produits haut de gamme</Badge>
+</div>
+
+## Lancer la page avant de reconstruire la plateforme [#launch-the-page-before-rebuilding-the-platform]
+
+Les modèles PyColors sont des surfaces de produits ciblées pour les constructeurs qui ont besoin d'expédier une page crédible rapidement.
+
+Ils sont conçus pour :
+
+- AI lance
+- Pages de marketing SaaS
+- Validation du produit
+- livraison d'agence
+- surfaces commerciales polies
+- Expériences de mise sur le marché rapide
+
+Les templates sont intentionnellement plus étroits que les starters.
+
+Un modèle vous aide à lancer la surface publique. Un starter vous aide à construire la base du produit derrière elle.
+
+## Trouvez le bon guide [#find-the-right-guide]
+
+Choisissez le guide pour la tâche que vous devez accomplir. Ces liens mènent à la documentation existante de NA-AI Landing; vous n'avez pas besoin de lire chaque page avant de commencer.
+
+- **Évaluez le modèle :** [Vue d’ensemble](/docs/templates/na-ai-landing) explique son utilisation prévue et sa surface incluse.
+- **Exécutez votre projet téléchargé :** [Configuration](/docs/templates/na-ai-landing/setup) couvre les prérequis, le démarrage local et la première page de travail.
+- **Mettre à jour la page:** [Personnalisation](/docs/templates/na-ai-landing/customization) couvre le contenu, l'image de marque et les actifs.
+- **Trouvez les fichiers à modifier :** [Structure du projet](/docs/templates/na-ai-landing/project-structure) mappe la source du template.
+- **Préparez-vous à publier :** [Déploiement](/docs/templates/na-ai-landing/deployment) couvre le flux de travail de construction et d'hébergement.
+- **Vérifier l'utilisation autorisée :** [Licence](/docs/templates/na-ai-landing/license) contient le guide d'utilisation spécifique au produit.
+
+Vous avez déjà le template ? Débuter avec [Configuration](/docs/templates/na-ai-landing/setup), vérifiez la page inchangée localement, puis passez à [Personnalisation](/docs/templates/na-ai-landing/customization). Conservez le manifeste README et le package du projet téléchargé à côté du guide lors de la vérification des commandes et des exigences de version.
+
+### Choisissez votre point de départ [#choose-your-starting-point]
+
+<DocsUpgradeCTA
+  title="Lancez la page en premier."
+  description="Les modèles vous aident à publier rapidement une surface publique premium sans reconstruire une base marketing à partir de zéro."
+  productSlug="na-ai-landing"
+  buyLabel="Buy NA-AI Landing — 49 €"
+  secondaryHref="/starters"
+  secondaryLabel="Compare starters"
+/>
+
+<Callout title="Idée de base">
+  Les modèles sont le chemin le plus rapide vers une page publique polie. Les
+  starters sont le chemin vers une base de produit SaaS complète.
+
+</Callout>
+
+### Échelle de produit [#product-ladder]
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      eyebrow: "Templates",
+      title: "Lancer l'offre",
+      href: "/templates",
+      icon: LayoutTemplate,
+      description:
+        "Utilisez des modèles lorsque votre goulot d'étranglement présente un produit clairement, collecte des intérêts ou lance une surface de marketing premium.",
+      items: [
+        "landing pages premium",
+        "Commercialisation des premières surfaces",
+        "Référence SEO",
+        "présentation prête pour le lancement",
+        "workflow de publication rapide",
+      ],
+      cta: "Explore Templates →",
+    },
+    {
+      eyebrow: "Starter Free",
+      title: "Valider la surface du produit",
+      href: "/starters/free",
+      icon: Sparkles,
+      description:
+        "Utilisez Starter Free lorsque vous avez besoin d'écrans SaaS, de tableaux de bord, de paramètres, de points d'entrée de facturation et de flux de produits simulés.",
+      items: [
+        "structure du tableau de bord",
+        "paramètres et surfaces de facturation",
+        "Flux d'applications simulées",
+        "validation UX du produit",
+        "itération MVP rapide",
+      ],
+      cta: "Explore Starter Free →",
+    },
+    {
+      eyebrow: "Starter Pro",
+      title: "Câblage de la couche métier",
+      href: "/starters/pro",
+      icon: Rocket,
+      tone: "pro",
+      description:
+        "Utilisez Starter Pro lorsque vous avez besoin d'une authentification réelle, de facturation, d'routes protégés, de bases de données et d'un câblage SaaS prêt pour la production.",
+      items: [
+        "Authentification réelle",
+        "Stripe facturation",
+        "Routes protégées",
+        "Base de données Fondations",
+        "Infrastructure SaaS prête au lancement",
+      ],
+      cta: "Explore Starter Pro →",
+    },
+  ]}
+/>
+
+## Pourquoi les templates existent [#why-templates-exist]
+
+Les modèles sont optimisés pour la couche publique d'un produit.
+
+Cela signifie généralement:
+
+- page d'accueil
+- section héros
+- tarification
+- FAQ
+- Présentation des fonctionnalités
+- sections axées sur la conversion
+- Mises en page réactives
+- Une structure orientée SEO
+
+Ils vous aident à aller plus vite lorsque le goulot d'étranglement est:
+
+- Présentation de l'offre
+- Publication de crédibilité
+- Amélioration de la perception
+- Lancement public
+- test de positionnement
+
+<Callout type="info" title="Règle de décision">
+  Choisissez un modèle lorsque la page est le goulot d'étranglement. Choisissez
+  Starter Pro lorsque la couche métier est le goulot d'étranglement.
+
+</Callout>
+
+### Modèles disponibles [#available-templates]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "NA-AI Landing",
+      href: "/docs/templates/na-ai-landing",
+      icon: Sparkles,
+      description:
+        "Page de destination Premium Next.js pour les produits d'IA, les outils SaaS et les plateformes d'analyse.",
+      badges: ["49 €", "Next.js", "PyColors UI"],
+    },
+    {
+      title: "Plus de modèles à venir",
+      icon: LayoutTemplate,
+      description:
+        "Les futurs modèles suivront la même approche axée sur le produit: ciblée, documentée et alimentée par les fondations PyColors.",
+    },
+  ]}
+/>
+
+## Ce que les modèles incluent [#what-templates-include]
+
+Les modèles se concentrent sur la couche marketing et la surface de lancement.
+
+Les fondations typiques comprennent:
+
+- Mises en page réactives
+- premium hero sections
+- Blocs de positionnement de produits
+- sections de tarification
+- Feature grids
+- Structure du CTA
+- Métadonnées prêtes pour SEO
+- sections d'interface utilisateur réutilisables
+- Intégration de PyColors Tokens
+- Intégration de PyColors UI
+
+Les modèles évitent intentionnellement d'essayer de devenir des produits SaaS complets.
+
+Cette séparation les maintient :
+
+- plus rapide à personnaliser
+- plus facile à comprendre
+- plus facile à publier
+- plus ciblée commercialement
+
+### Comment les modèles s'intègrent dans PyColors [#how-templates-fit-into-pycolors]
+
+| Besoin                                                          | Produit      |
+| --------------------------------------------------------------- | ------------ |
+| Lancer une page marketing                                       | Modèle       |
+| Valider SaaS UX                                                 | Starter Free |
+| Auth filaire, facturation, routes protégées et bases de données | Starter Pro  |
+
+### Chemin recommandé [#recommended-path]
+
+Une progression commune ressemble à ceci:
+
+1. Lancer un modèle publiquement
+2. valider le positionnement et la demande
+3. Déménagement dans Starter Free pour le produit UX
+4. Déménagement dans Starter Pro pour une véritable auth et facturation
+5. Mettre à l'échelle la couche métier
+
+Cela maintient l'évolution du produit alignée avec le goulot d'étranglement réel au lieu de construire prématurément l'infrastructure.
+
+<Callout title="L’objectif est l’effet de levier">
+  Les modèles réduisent le travail de marketing répété afin que vous puissiez
+  vous concentrer sur le positionnement, la clarté du produit et la vitesse de
+  lancement.
+
+</Callout>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "NA-AI Landing",
+      href: "/docs/templates/na-ai-landing",
+      description:
+        "Découvrez ce qui est inclus, comment le modèle est structuré et comment le personnaliser.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Tarifs",
+      href: "/pricing",
+      description: "Comparez NA-AI Landing, Starter Free et Starter Pro.",
+      icon: BadgeEuro,
+    },
+    {
+      title: "Starter Free",
+      href: "/starters/free",
+      description:
+        "Validez les tableaux de bord, les paramètres, les surfaces de facturation et les flux SaaS UX.",
+      icon: Sparkles,
+    },
+    {
+      title: "Starter Pro",
+      href: "/starters/pro",
+      description:
+        "Déplacez-vous dans l'authentification, la facturation, les routes protégées et les fondations backend.",
+      icon: Rocket,
+    },
+  ]}
+/>

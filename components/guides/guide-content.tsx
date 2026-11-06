@@ -1,5 +1,6 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowRight, Lightbulb } from "lucide-react";
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -16,6 +17,8 @@ export function GuideSection({
   description?: string;
   children: ReactNode;
 }>) {
+  const tSite = useCopy();
+
   return (
     <section
       id={id}
@@ -27,16 +30,16 @@ export function GuideSection({
           id={`${id}-title`}
           className="font-brand text-xl font-semibold leading-snug tracking-heading text-foreground sm:text-2xl"
         >
-          {title}
+          {tSite(title)}
         </h2>
         {description ? (
           <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-            {description}
+            {tSite(description)}
           </p>
         ) : null}
       </div>
       <div className="space-y-6 text-[15px] leading-7 text-muted-foreground">
-        {children}
+        {tSite(children)}
       </div>
     </section>
   );
@@ -46,9 +49,13 @@ export function GuideChecklistCard({
   title,
   items,
 }: Readonly<{ title: string; items: string[] }>) {
+  const tSite = useCopy();
+
   return (
     <div className="rounded-[5px] border border-border-subtle bg-background p-5 sm:p-6">
-      <p className="text-sm font-semibold leading-6 text-foreground">{title}</p>
+      <p className="text-sm font-semibold leading-6 text-foreground">
+        {tSite(title)}
+      </p>
       <ul className="mt-4 space-y-2.5 text-sm leading-6 text-muted-foreground">
         {items.map((item) => (
           <li key={item} className="flex items-start gap-3">
@@ -56,7 +63,7 @@ export function GuideChecklistCard({
               aria-hidden="true"
               className="mt-2.5 size-1 shrink-0 rounded-full bg-muted-foreground/60"
             />
-            <span>{item}</span>
+            <span>{tSite(item)}</span>
           </li>
         ))}
       </ul>
@@ -68,6 +75,8 @@ export function GuideCallout({
   children,
   className,
 }: Readonly<{ children: ReactNode; className?: string }>) {
+  const tSite = useCopy();
+
   return (
     <aside
       role="note"
@@ -77,7 +86,7 @@ export function GuideCallout({
         className,
       )}
     >
-      {children}
+      {tSite(children)}
     </aside>
   );
 }
@@ -85,13 +94,15 @@ export function GuideCallout({
 export function GuideCalloutTitle({
   children,
 }: Readonly<{ children: ReactNode }>) {
+  const tSite = useCopy();
+
   return (
     <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground">
       <Lightbulb
         className="size-4 shrink-0 text-muted-foreground"
         aria-hidden="true"
       />
-      {children}
+      {tSite(children)}
     </p>
   );
 }
@@ -99,8 +110,12 @@ export function GuideCalloutTitle({
 export function GuideCalloutDescription({
   children,
 }: Readonly<{ children: ReactNode }>) {
+  const tSite = useCopy();
+
   return (
-    <div className="text-sm leading-7 text-muted-foreground">{children}</div>
+    <div className="text-sm leading-7 text-muted-foreground">
+      {tSite(children)}
+    </div>
   );
 }
 
@@ -113,6 +128,8 @@ export function GuideNextSteps({
   description?: string;
   primary?: { href: string; label: string };
 }>) {
+  const tSite = useCopy();
+
   return (
     <section
       id="next-steps"
@@ -123,29 +140,32 @@ export function GuideNextSteps({
         className={`${styles.nextSteps} rounded-[5px] border border-border-subtle p-6 sm:p-8`}
       >
         <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-          From understanding to implementation
+          {tSite("From understanding to implementation")}
         </p>
         <h2
           id="next-steps-title"
           className="mt-4 font-brand text-xl font-semibold tracking-heading sm:text-2xl"
         >
-          {title}
+          {tSite(title)}
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-          {description ??
-            "Explore the interface in Starter Free. Starter Pro adds auth, billing and database foundations; configure your providers and build the logic specific to your product."}
+          {tSite(
+            description ??
+              "Explore the interface in Starter Free. Starter Pro adds auth, billing and database foundations; configure your providers and build the logic specific to your product.",
+          )}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <Button asChild variant="outline" size="lg" className="rounded-[5px]">
             <Link href={primary?.href ?? "/starters/free"}>
-              {primary?.label ?? "Start with Starter Free"}
+              {tSite(primary?.label ?? "Start with Starter Free")}
             </Link>
           </Button>
           <Link
             href="/starters/pro"
             className={`${styles.textLink} justify-center sm:px-2`}
           >
-            Explore Starter Pro{" "}
+            {tSite("Explore Starter Pro")}
+            {tSite(" ")}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>

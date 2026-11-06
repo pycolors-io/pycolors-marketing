@@ -1,0 +1,228 @@
+---
+title: Personnalisation et mises à niveau
+description: Adapter la configuration centralisée du produit et maintenir une
+  base de référence vérifiable pour les migrations futures.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  CreditCard,
+  GitBranch,
+  ShieldCheck,
+  SlidersHorizontal,
+} from "lucide-react";
+import { CopyableCommand } from "@/components/docs/copyable-command";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Configurez votre produit [#configure-your-product]
+
+`config/product.ts` regroupez vos paramètres de produit. Conservez les informations d'identification dans l'environnement serveur.
+
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={[
+    {
+      title: "Identité et présentation",
+      icon: SlidersHorizontal,
+      description:
+        "Adapter la marque et la navigation à travers les points d’entrée existants.",
+      items: [
+        <span>
+          <code>brand</code>, <code>links</code> and <code>navigation</code>{" "}
+          control names, documentation destinations and menu structure.
+        </span>,
+        <span>
+          <code>modules</code> changes presentation; server authorization
+          remains independent.
+        </span>,
+        <span>
+          <code>email</code> controls accent, contact and Reply-To identity. The
+          sender still needs verification.
+        </span>,
+      ],
+    },
+    {
+      title: "Plans et capacités",
+      icon: CreditCard,
+      description:
+        "Connectez votre propre offre à le paiement et aux limites imposées par le serveur.",
+      items: [
+        <span>
+          <code>billing.trialDays</code> configures the checkout trial.
+        </span>,
+        <span>
+          <code>workspaces.limits</code> caps workspace creation per account.
+        </span>,
+        <span>
+          <code>entitlements</code> sets projects, members and invitations per
+          workspace.
+        </span>,
+      ],
+    },
+  ]}
+/>
+
+<Callout title="Quotas et propriété de la facturation">
+  Les quotas par défaut `null`, signifiant **non plafonné**. Utilisez des
+  entiers non négatifs lorsque votre offre a besoin de limites, puis testez la
+  limite et le chemin de mise à niveau. La facturation reste personnelle; un
+  abonnement appartenant à une organisation nécessite une conception distincte.
+
+</Callout>
+
+Personnaliser fournit la palette, la typographie, la géométrie, l'échelle d'interface et les contrôles de barre latérale dans le navigateur. La langue et le fuseau horaire sont des préférences de compte. Examiner les changements dans les deux thèmes, français / anglais, mises en page étroites et mouvement réduit. Les expédiés `docs/customization.md` explique le logo, l'icône et les points d'entrée e-mail.
+
+## Configurer l'apparence [#configure-appearance]
+
+Utilisez le [Theme Builder](/tools/theme-builder) pour les palettes, polices et échelles de rayon partagées. Ouvrir **Aperçu du tableau de bord** choisir la densité, l'échelle d'interface, la barre latérale, la largeur du contenu, la toile et le mouvement.
+
+1. Choisissez vos couleurs et vos paramètres d'apparence.
+2. Sélectionner **Télécharger Starter Pro config**puis remplacez `config/appearance.ts`.
+3. Redémarrez l'application. Dans un navigateur avec des préférences enregistrées, utilisez Personnaliser pour réinitialiser.
+
+Les choix de navigateur enregistrés ont priorité sur les paramètres par défaut du produit. Le mode de prévisualisation sélectionné devient le mode initial lumière/obscurité; `mode: "system"` dans la configuration pour suivre le périphérique. Les préréglages nommés utilisent les tokens partagés groupés. Les couleurs personnalisées incluent à la fois des cartes de couleurs sémantiques et apparaissent comme **Personnalisé** sur mesure.
+
+Cette exportation nécessite la source Starter Pro avec `lib/appearance-contract.ts`. Pour un projet plus ancien, mettez à niveau d'abord ou utilisez les exportations CSS.
+
+Le ZIP de l'acheteur inclut le contrat de configuration, les instantanés de couleurs et les ressources de police locales. Il ne nécessite pas de package d'espace de travail privé ni de serveur Theme Builder.
+
+## Travailler avec un assistant de codage [#work-with-a-coding-assistant]
+
+<Callout title="Commencez avec les instructions incluses">
+  Dans le projet extrait, lire `AGENTS.md`, alors `docs/ai/README.md` et
+  `docs/ai/conventions.md`. `CLAUDE.md` Les mêmes instructions partagées. Ces
+  fichiers décrivent la source installée, ses limites de serveur et ses
+  commandes de validation. Utilisez votre propre assistant de codage.
+
+</Callout>
+
+<DocsDecisionGrid
+  columns={3}
+  tone="neutral"
+  items={[
+    {
+      title: "Une page protégée",
+      icon: BookOpen,
+      description:
+        "Créez un rapport d'espace de travail en tant que composant serveur à l'aide du service et des traductions existants.",
+      items: ["Recipe: docs/ai/add-page.md"],
+    },
+    {
+      title: "Une ressource commerciale",
+      icon: SlidersHorizontal,
+      description:
+        "Adaptez les jalons de livraison à la persistance existante du projet-tâche, avec une entrée validée et une action serveur.",
+      items: ["Recipe: docs/ai/add-resource.md"],
+    },
+    {
+      title: "Une nouvelle permission",
+      icon: ShieldCheck,
+      description:
+        "Garder une opération propriétaire / administrateur projet-résumé à la frontière du serveur et dans sa transaction d'espace de travail.",
+      items: ["Recipe: docs/ai/add-permission.md"],
+    },
+  ]}
+/>
+
+Adoptez les recettes explicitement dans votre propre projet. Le validateur de l'acheteur-ZIP applique son code à une copie extraite jetable, la compile et exerce des cas autorisés, refusés, révoqués et inter-espaces de travail. Gardez le schéma et les décisions de facturation explicites lorsque votre propre adaptation en a besoin.
+
+Pour un flux de travail complet, choisissez [recette d'entreprise](/docs/starter-pro/recipes): suivi du client, une file d'attente de support interne ou une liste de contrôle d'examen interne. Les guides mappent les projets, les tâches et les commentaires existants à chaque flux de travail, puis séparent les modifications de présentation des champs de domaine et des règles d’accès à la conception.
+
+## Conserver une base de référence de mise à niveau [#keep-an-upgrade-baseline]
+
+Commit la livraison originale dans un dépôt privé avant la personnalisation. Conserver `PYCOLORS_RELEASE.json`, le fichier de verrouillage, les patchs, le changelog, les termes de licence et de commande. Comparez une livraison nouvellement disponible à cette base de référence et fusionnez vos adaptations par révision. L'accès aux versions futures suit l'offre achetée.
+
+## Répéter les migrations [#rehearse-migrations]
+
+<Steps>
+  <Step>
+    ### Réviser la version entrante [#review-the-incoming-release]
+
+    Lisez le journal des modifications, SQL en attente et les modifications d'environnement avant l'installation.
+
+</Step>
+  <Step>
+    ### Préparer une mise en scène restreinte [#prepare-restricted-staging]
+
+    Restaurez une sauvegarde récupérable dans un environnement intermédiaire restreint.
+
+</Step>
+  <Step>
+    ### Installer et inspecter le statut de migration [#install-and-inspect-migration-status]
+
+    <CopyableCommand command="pnpm install --frozen-lockfile" />
+    <CopyableCommand command="pnpm exec prisma migrate status" />
+
+</Step>
+  <Step>
+    ### Appliquer les migrations révisées [#apply-reviewed-migrations]
+
+    <CopyableCommand command="pnpm exec prisma migrate deploy" />
+
+    Gardez les migrations déjà appliquées aux données conservées immuables. La migration projet-travail ajoute des tables de tâches/commentaires et préserve les projets existants.
+
+</Step>
+  <Step>
+    ### Valider la application [#validate-the-application]
+
+    Exécutez des diagnostics, des tests, une construction de production et les parcours utilisateur concernés. Les mises à niveau du registre de session peuvent obliger les utilisateurs à se connecter à nouveau.
+
+</Step>
+  <Step>
+    ### Vérifier les fournisseurs avant le déploiement [#verify-providers-before-rollout]
+
+    Vérifiez l'intégration du fournisseur dans un bac à sable avant de déployer le résultat révisé.
+
+</Step>
+
+</Steps>
+
+<Callout title="Planifier la récupération avant le déploiement">
+  Conservez l'artefact d'application précédent et vérifiez la compatibilité
+  schéma/session avant la restauration. Il n’y a pas de down-migration
+  automatique destructrice. Une restauration de base de données peut perdre des
+  écritures après le point de récupération choisi ; utilisez votre procédure
+  incidente.
+
+</Callout>
+
+## Continuez votre handover [#continue-your-handover]
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Exploitation en production",
+      href: "/docs/starter-pro/operations",
+      description:
+        "Préparez la surveillance, les sauvegardes et une restauration vérifiée.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Accompagnement et assistance",
+      href: "/docs/starter-pro/implementation-support",
+      description: "Définir la portée de l'adaptation et du soutien.",
+      icon: BookOpen,
+    },
+    {
+      title: "Couverture de validation",
+      href: "/docs/starter-pro/release-readiness",
+      description: "Inspectez les contrôles derrière la source livrée.",
+      icon: GitBranch,
+    },
+    {
+      title: "Recettes métier",
+      href: "/docs/starter-pro/recipes",
+      description:
+        "Appliquez le modèle projet/tâche/commentaire partagé à un flux de travail interne complet.",
+      icon: BookOpen,
+    },
+  ]}
+/>

@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { BlogPost } from "@/types/blog";
 
@@ -8,9 +9,14 @@ type ArticlePaginationProps = {
 };
 
 export function ArticlePagination({ previous, next }: ArticlePaginationProps) {
+  const tSite = useCopy();
+
   if (!previous && !next) return null;
   return (
-    <nav aria-label="More articles" className="grid gap-4 sm:grid-cols-2">
+    <nav
+      aria-label={tSite("More articles")}
+      className="grid gap-4 sm:grid-cols-2"
+    >
       {(
         [
           { post: previous, label: "Previous article", Icon: ArrowLeft },
@@ -25,9 +31,11 @@ export function ArticlePagination({ previous, next }: ArticlePaginationProps) {
           >
             <span className="flex items-center gap-2 text-xs text-muted-foreground">
               <Icon className="size-3.5" aria-hidden="true" />
-              {label}
+              {tSite(label)}
             </span>
-            <span className="text-sm font-medium leading-6">{post.title}</span>
+            <span className="text-sm font-medium leading-6">
+              {tSite(post.title)}
+            </span>
           </Link>
         ) : null,
       )}

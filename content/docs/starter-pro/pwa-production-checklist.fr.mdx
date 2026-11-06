@@ -1,0 +1,277 @@
+---
+title: Liste de vérification PWA en production
+description: Validez l'installabilité, le comportement autonome, la
+  configuration du service worker, les captures d'écran, les icônes, le repli
+  hors ligne et la préparation de la production avant l'expédition de Starter
+  Pro.
+lastUpdated: "2026-06-06"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Badge } from "@pycolors/ui";
+
+import {
+  BadgeCheck,
+  Globe,
+  Image,
+  MonitorCheck,
+  Rocket,
+  ShieldCheck,
+  Smartphone,
+  WifiOff,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Liste de contrôle PWA</Badge>
+</div>
+
+## Valider avant la publication [#validate-before-release]
+
+Utilisez cette liste de contrôle avant d'expédier la couche PWA dans Starter Pro.
+
+L’objectif est de valider :
+
+- qualité manifeste
+- qualité d'icône
+- Qualité de capture d'écran
+- Service Worker Comportement
+- routage de secours hors ligne
+- mode autonome
+- UX mobile
+- Comportement HTTPS de production
+
+<DocsUpgradeCTA
+  title="Expédiez la couche PWA en toute confiance."
+  description="Validez l'installabilité, les captures d'écran, le comportement de secours hors ligne et les limites de production sécurisées avant le lancement."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro/pwa-setup"
+  secondaryLabel="Setup guide"
+/>
+
+<Callout title="Principe de publication">
+  Un PWA n'est pas prêt pour la production car un manifeste existe. Il est prêt
+  pour la production lorsque l'installabilité, le repli hors ligne, l'UX mobile
+  et les limites de sécurité ont été validés.
+
+</Callout>
+
+## Liste de contrôle [#core-checklist]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Manifeste",
+      description:
+        "Confirmez que le manifeste est détecté, que les métadonnées de l'application sont correctes et que les surfaces d'installation rendent les actifs professionnels.",
+      icon: BadgeCheck,
+    },
+    {
+      title: "Travailleur des services",
+      description:
+        "Confirmez que le service worker s'enregistre, s'active et ne casse jamais l'application principale lorsqu'elle n'est pas disponible.",
+      icon: MonitorCheck,
+    },
+    {
+      title: "Fallback hors ligne",
+      description:
+        "Confirmez que l'route `/offline` s'affiche correctement lorsque la navigation échoue car l'appareil est hors ligne.",
+      icon: WifiOff,
+    },
+  ]}
+/>
+
+### Portes de dégagement [#release-gates]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Requis",
+      title: "Validation technique",
+      icon: ShieldCheck,
+      tone: "platform",
+      description:
+        "Ces vérifications confirment que la couche PWA est installée, accessible et sûre à expédier.",
+      items: [
+        "manifeste visible dans Chrome DevTools",
+        "service actif",
+        "`/offline` route disponible",
+        "Les icônes chargent correctement",
+        "screenshots charger correctement",
+        "HTTPS activé en production",
+      ],
+    },
+    {
+      eyebrow: "Requis",
+      title: "Validation du produit",
+      icon: Smartphone,
+      description:
+        "Ces vérifications valident que la couche PWA améliore la perception de l'utilisateur au lieu de se sentir inachevée.",
+      items: [
+        "tableau de bord capture d'écran semble premium",
+        "capture d'écran mobile représente l'utilisation de l'application",
+        "page hors ligne correspond au système de conception PyColors",
+        "Le mode autonome reste navigable",
+        "les mises en page mobiles restent utilisables",
+      ],
+    },
+  ]}
+/>
+
+## Liste de contrôle manifeste [#manifest-checklist]
+
+Valider dans Chrome DevTools :
+
+```txt title="chrome-devtools.txt"
+Application
+→ Manifest
+```
+
+Confirmer:
+
+- Le nom de l'application est correct
+- Le nom court est correct
+- `display` est `standalone`
+- La couleur du thème est visible
+- La couleur de fond est visible
+- Les icônes sont détectées
+- Les captures d'écran sont détectées
+- Aucun avertissement d'installation n'apparaît
+
+## Liste de contrôle des actifs [#asset-checklist]
+
+| Actif                   | Résultat attendu             |
+| ----------------------- | ---------------------------- |
+| `icon-192.png`          | 192x192                      |
+| `icon-512.png`          | 512x512                      |
+| `maskable-icon-512.png` | 512x512 avec rembourrage sûr |
+| `apple-icon.png`        | 180x180                      |
+| `dashboard-desktop.png` | 1280x720                     |
+| `dashboard-mobile.png`  | 390x844                      |
+
+<Callout type="info" title="Règle de capture">
+  Utilisez de vraies captures d’écran de tableau de bord ou d’espace de travail.
+  Évitez d'utiliser uniquement les écrans de connexion car ils ne communiquent
+  pas la valeur SaaS complète.
+
+</Callout>
+
+## Liste de contrôle hors ligne [#offline-checklist]
+
+Valider le comportement hors ligne :
+
+```txt title="chrome-devtools.txt"
+Application
+→ Service Workers
+→ Offline
+```
+
+Rechargez ensuite l'app.
+
+Résultat attendu :
+
+- `/offline` renders
+- page garde le style PyColors
+- app ne plante pas
+- L'action reload est présente
+- aucune donnée périmée sensible n'est affichée
+
+## Liste de contrôle mobile [#mobile-checklist]
+
+Valider sur des appareils réels lorsque cela est possible :
+
+- iPhone Safari
+- Chrome Android
+- mode autonome installé
+- tableau de bord
+- Page de facturation mobile
+- Page des paramètres mobiles
+- Page hors ligne mobile
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  preferTitle="Validate"
+  avoidTitle="Do not ship with"
+  prefer={[
+    "construction de production testée avec `pnpm build && pnpm start`",
+    "de vraies captures d'écran dans `public/pwa`",
+    "Service Worker activé dans DevTools",
+    "Fallback offline confirmé",
+    "Comportement d'installation iOS et Android vérifié",
+  ]}
+  avoid={[
+    "Tester uniquement en mode développement",
+    "captures d'écran de placeholder",
+    "images manifestes surdimensionnées",
+    "Hypothèses de facturation hors ligne ou auth",
+    "Comportement du cache du service worker peu clair",
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Le phare devrait-il être parfait avant l'expédition?">
+    Non. Utilisez Lighthouse comme un signal, pas comme la seule porte de publication. La porte clé de la publication est de savoir si l'installabilité, le repli hors ligne, les icônes, les captures d'écran et le HTTPS de production sont corrects.
+  </Accordion>
+
+<Accordion title="Dois-je mettre en cache les routes authentifiées ?">
+  Pas par défaut. Les routes SaaS authentifiées peuvent contenir des données
+  sensibles ou périmées. Commencez par un comportement hors ligne de secours
+  uniquement.
+</Accordion>
+
+  <Accordion title="Que dois-je tester sur iOS ?">
+    Valider Ajouter à l'écran d'accueil, mode autonome, comportement de la barre d'état, ajustement de la fenêtre d'affichage et navigation mobile.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Aperçu de PWA",
+      href: "/docs/starter-pro/pwa",
+      description:
+        "Comprendre la couche de produit compatible PWA dans Starter Pro.",
+      icon: Smartphone,
+    },
+    {
+      title: "Configuration PWA",
+      href: "/docs/starter-pro/pwa-setup",
+      description:
+        "Configurez le manifeste, les icônes, l'enregistrement du service worker et le routage hors ligne.",
+      icon: Rocket,
+    },
+    {
+      title: "Déploiement",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Déployez Starter Pro avec HTTPS, domaines de production et infrastructure de production.",
+      icon: Globe,
+    },
+    {
+      title: "Liste de contrôle de production",
+      href: "/docs/starter-pro/production-checklist",
+      description:
+        "Valider l'authentification, la facturation, le backend, la livraison, l'environnement et la préparation au déploiement.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

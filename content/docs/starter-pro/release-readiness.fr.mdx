@@ -1,0 +1,161 @@
+---
+title: Validation et préparation de la livraison
+description: Inspectez le portail d'emballage, les régressions de facturation et
+  la couverture du navigateur fournie avec Starter Pro.
+lastUpdated: "2026-10-30"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  CreditCard,
+  Database,
+  Download,
+  Layers3,
+  ShieldCheck,
+} from "lucide-react";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Vérifiez la fondation livrée [#check-the-delivered-foundation]
+
+Starter Pro connecte la création de compte, l'intégration de l'espace de travail, les invitations et un premier projet à une application persistante. Sa validation suit ces trajets.
+
+<DocsDecisionGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Paquet acheteur autonome",
+      eyebrow: "Emballage",
+      icon: Download,
+      description:
+        "Le ZIP exporté est vérifié à l'extérieur du monorepo avant que l'emballage ne réussisse.",
+      items: [
+        "Installation congelée, migration de bases de données vides, tests unitaires et construction de production",
+        "Le parcours du navigateur du premier utilisateur à travers les comptes, les espaces de travail et le travail de projet",
+        "Votre acceptation : installez la version livrée avec votre propre environnement",
+      ],
+    },
+    {
+      title: "Facturation réconciliation",
+      eyebrow: "régressions PostgreSQL",
+      icon: CreditCard,
+      description:
+        "Les événements signés utilisent un fournisseur simulé pour vérifier le comportement persistant de l'abonnement et de la facture.",
+      items: [
+        "Événements simultanés, dupliqués et réorganisés",
+        "Échec des paiements, annulations et rediffusions après un échec",
+        "Votre acceptation : valider votre bac à sable Stripe, votre destination webhook et les plans proposés",
+      ],
+    },
+    {
+      title: "Trajets de produits et d'interface",
+      eyebrow: "Couverture du navigateur",
+      icon: Layers3,
+      description:
+        "L'intégration, l'accès à l'espace de travail en direct, la persistance des tâches/commentaires et les flux de compte sont exercés ensemble.",
+      items: [
+        "Anglais/Français, Personnaliser, mobile/bureau, les deux thèmes et l'accessibilité",
+        "Votre acceptation : vérifiez les règles de domaine, les autorisations, le contenu et l'image de marque",
+      ],
+    },
+    {
+      title: "Reprise opérationnelle",
+      eyebrow: "Contrôles environnementaux",
+      icon: Database,
+      description:
+        "Les diagnostics de configuration, l'état de santé/l'état de préparation et un exercice de sauvegarde/restauration utilisent des données synthétiques.",
+      items: [
+        "Votre acceptation : configurer les destinations de surveillance et d’alerte",
+        "Vérifiez les sauvegardes de production accessibles et récupérables auprès de votre opérateur",
+      ],
+    },
+  ]}
+/>
+
+<Callout title="Ce que la couverture automatisée établit">
+  La porte CI requise attend la validation de la source et la suite de
+  navigateurs sélectionnée. Une vérification sélectionnée ignorée ou manquante
+  ne peut pas faire passer la porte. L'interception par le fournisseur maintient
+  ces tests indépendants des e-mails et des paiements en direct. Il n'établit
+  pas de livraison en direct ou une transaction réelle réussie. Votre
+  acceptation de lancement inclut votre propre email et configuration de Stripe.
+
+</Callout>
+
+## Comment fonctionne la porte d'emballage [#how-the-packaging-gate-works]
+
+<Steps>
+  <Step>
+    ### Extraire et installer [#extract-and-install]
+
+    Exportez la source autonome et extrayez-la en dehors du monorepo. Installez le fichier de verrouillage fourni sans dépendre des dépendances de l'espace de travail.
+
+</Step>
+  <Step>
+    ### Migrer et compiler [#migrate-and-compile]
+
+    Appliquez les migrations validées à une base de données vide, exécutez des contrôles unitaires et compilez l'application de production extraite.
+
+</Step>
+  <Step>
+    ### Réaliser un parcours de premier utilisateur [#complete-a-first-user-journey]
+
+    Enregistrement des exercices, vérification, connexion, création d’espace de travail, invitation et travail sur projet. Rechargez pour vérifier la persistance, puis supprimez la base de données temporaire et conservez les preuves de validation locales.
+
+</Step>
+
+</Steps>
+
+## Sachez ce que vous recevez [#know-what-you-receive]
+
+Le ZIP comprend un manifeste autonome, un fichier de verrouillage, des correctifs de dépendance révisés, des migrations Prisma et des guides d'achat. `PYCOLORS_RELEASE.json` enregistre sa version, son commit source et ses hachages de fichiers source. Enregistrez-le avec la livraison d'origine avant de personnaliser l'application. Les modifications intentionnelles modifient naturellement les hachages de fichiers.
+
+Les inclus `docs/quickstart.md`, `docs/customization.md`, `docs/upgrading.md`,
+`docs/operations.md` et `docs/support.md` Rester disponible avec sa source.
+
+<Callout title="Facturation de la propriété et des limites">
+  La facturation des applications appartient à la **compte utilisateur**. La
+  création d'espace de travail et les quotas de ressources sont configurables et
+  **non plafonné par défaut**. La facturation appartenant à l’organisation
+  nécessite sa propre conception de propriété et de migration. La licence
+  source, l'abonnement à votre application et un service de mise en œuvre
+  convenu sont des achats distincts.
+
+</Callout>
+
+## Continuez votre configuration [#continue-your-setup]
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Portée incluse",
+      href: "/docs/starter-pro/what-is-included",
+      description: "Passez en revue les flux de travail source et produit.",
+      icon: BookOpen,
+    },
+    {
+      title: "Facturation acceptée",
+      href: "/docs/starter-pro/billing-testing",
+      description: "Préparez vos contrôles de bac à sable Stripe.",
+      icon: CreditCard,
+    },
+    {
+      title: "Exploitation en production",
+      href: "/docs/starter-pro/operations",
+      description: "Connectez la surveillance et répétez la récupération.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Accompagnement et assistance",
+      href: "/docs/starter-pro/implementation-support",
+      description: "Définir la portée et le passation d'un engagement.",
+      icon: Layers3,
+    },
+  ]}
+/>

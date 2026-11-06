@@ -1,5 +1,7 @@
 "use client";
 
+import { defaultChatTranslate, type ChatTranslate } from "./types";
+
 import * as React from "react";
 import { Alert, Badge, Button } from "@pycolors/ui";
 import type { ChatWorkAction, ChatWorkControl, ChatWorkStatus } from "./types";
@@ -80,10 +82,12 @@ function safeResultHref(href: string) {
 }
 
 export function ChatWork({
+  translate = defaultChatTranslate,
   control,
   disabled,
 }: {
   control: ChatWorkControl;
+  translate?: ChatTranslate;
   disabled: boolean;
 }) {
   const id = React.useId();
@@ -164,7 +168,9 @@ export function ChatWork({
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 flex-1 space-y-2">
           <p className="text-xs font-medium text-muted-foreground">
-            Task progress · Attempt {control.attempt}
+            {translate("Task progress · Attempt {value0}", {
+              value0: control.attempt,
+            })}
           </p>
           <h3
             id={`${id}-title`}
@@ -178,7 +184,9 @@ export function ChatWork({
             </p>
           ) : null}
         </div>
-        <Badge variant="outline">{states[control.status].label}</Badge>
+        <Badge variant="outline">
+          {translate(states[control.status].label)}
+        </Badge>
       </div>
       <p
         ref={summary}
@@ -187,11 +195,13 @@ export function ChatWork({
         aria-atomic="true"
         className="rounded-sm text-sm leading-6 text-muted-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
       >
-        {pending ? requests[pending] : states[control.status].message}
+        {translate(
+          pending ? requests[pending] : states[control.status].message,
+        )}
       </p>
       {control.steps.length ? (
         <ol
-          aria-label="Task steps"
+          aria-label={translate("Task steps")}
           className="divide-y divide-border rounded-lg border border-border px-4"
         >
           {control.steps.map((step, index) => (
@@ -204,13 +214,13 @@ export function ChatWork({
                   {step.label}
                 </p>
                 <span className="text-xs leading-6 text-muted-foreground">
-                  {stepLabels[step.status]}
+                  {translate(stepLabels[step.status])}
                 </span>
               </div>
               {step.detail ? (
                 <details className="mt-2">
                   <summary className="w-fit cursor-pointer text-xs font-medium">
-                    Step {index + 1} details
+                    {translate("Step {value0} details", { value0: index + 1 })}
                   </summary>
                   <p className="mt-2 whitespace-pre-wrap text-xs leading-6 text-muted-foreground [overflow-wrap:anywhere]">
                     {step.detail}
@@ -222,7 +232,7 @@ export function ChatWork({
         </ol>
       ) : (
         <p className="text-sm text-muted-foreground">
-          No step details supplied.
+          {translate("No step details supplied.")}
         </p>
       )}
       {control.errorMessage ? (
@@ -241,8 +251,8 @@ export function ChatWork({
         >
           <p className="text-sm font-medium">
             {control.status === "succeeded"
-              ? "Result supplied by your application"
-              : "Partial result · not final"}
+              ? translate("Result supplied by your application")
+              : translate("Partial result · not final")}
           </p>
           <p className="whitespace-pre-wrap text-sm leading-6 [overflow-wrap:anywhere]">
             {control.result.text}
@@ -267,7 +277,7 @@ export function ChatWork({
                     <span>
                       {link.label}{" "}
                       <span className="text-xs text-muted-foreground">
-                        (Link unavailable)
+                        {translate("(Link unavailable)")}
                       </span>
                     </span>
                   )}
@@ -278,7 +288,7 @@ export function ChatWork({
         </div>
       ) : control.status === "succeeded" ? (
         <p className="text-sm text-muted-foreground">
-          No result was supplied by your application.
+          {translate("No result was supplied by your application.")}
         </p>
       ) : null}
       {error ? (
@@ -287,14 +297,14 @@ export function ChatWork({
           variant="destructive"
           className="[overflow-wrap:anywhere]"
         >
-          {error}
+          {error ? translate(error) : null}
         </Alert>
       ) : null}
       {actions.some(({ callback }) => callback) ? (
         <div
           className="flex flex-wrap gap-2"
           role="group"
-          aria-label="Task actions"
+          aria-label={translate("Task actions")}
         >
           {actions.map(({ action, label, callback }) =>
             callback ? (
@@ -342,7 +352,7 @@ export function ChatWork({
                   }
                 }}
               >
-                {label}
+                {translate(label)}
               </Button>
             ) : null,
           )}

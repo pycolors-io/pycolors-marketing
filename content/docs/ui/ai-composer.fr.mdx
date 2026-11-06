@@ -1,0 +1,105 @@
+---
+title: AI Composer
+description: Une entrée de chat contrôlée avec des actions d'envoi et d'arrêt
+  accessibles, en utilisant l'état et le transport de votre application.
+lastUpdated: "2026-10-12"
+appliesTo: UI
+---
+
+## Une entrée ciblée pour votre chat [#a-focused-input-for-your-chat]
+
+`AIComposer` compose PyColors `Textarea` et `Button`. Votre application est propriétaire du brouillon, demande le cycle de vie, annulation et erreurs. Le composant ne se connecte pas à un modèle, stocke les messages ou télécharge des fichiers.
+
+Cette API additive est introduite par le compositeur Changeset. Jusqu'à ce que cette version soit publiée, utilisez la version de l'espace de travail du référentiel ; elle n'est pas disponible dans `@pycolors/ui@1.5.5`.
+
+Utilisez ordinaire [Textarea](/docs/ui/textarea) et [Bouton](/docs/ui/button) pour les formes générales. Utilisez le compositeur lorsque vous avez besoin de son clavier de chat partagé et de son comportement de soumission/arrêt. Il donne sa propre forme : **ne pas l'imbriquer dans une autre forme**.
+
+## Intégration contrôlée [#controlled-integration]
+
+Cet exemple accepte vos fonctions d'envoi et d'arrêt réelles. Mettre à jour le projet de manière synchrone `onChange`, ensemble `busy` immédiatement lors de l'acceptation d'une soumission, et les échecs de demande de capture dans l'application. Les brouillons restent intacts jusqu'à ce que vous les mettiez à jour délibérément.
+
+```tsx title="chat-input.tsx"
+"use client";
+
+import { useState } from "react";
+import { AIComposer } from "@pycolors/ui";
+
+export function ChatInput({
+  send,
+  stop,
+}: {
+  send: (message: string) => Promise<void>;
+  stop: () => void;
+}) {
+  const [draft, setDraft] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string>();
+
+  async function submit() {
+    if (busy || !draft.trim()) return;
+    setBusy(true);
+    setError(undefined);
+    try {
+      await send(draft);
+    } catch {
+      setError("Your message could not be sent. Your draft is still here.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <AIComposer
+      label="Message"
+      value={draft}
+      onChange={(event) => setDraft(event.target.value)}
+      onSubmit={() => {
+        void submit();
+      }}
+      busy={busy}
+      onStop={stop}
+      error={error}
+      helperText="Enter sends on desktop. Shift+Enter adds a line."
+    />
+  );
+}
+```
+
+`send` devrait régler quand votre demande ou flux se termine, y compris après l'annulation. `stop` demande l'annulation via votre transport; il n'annonce pas l'achèvement ou `busy` par lui-même. L'entrée reste modifiable pendant l'occupation. Évitez d'effacer le brouillon actuel lorsqu'une requête plus ancienne se termine : l'utilisateur est peut-être déjà en train d'écrire son prochain message.
+
+Pour des exemples locaux interactifs, ouvrez **Components to Formulaires pour IA Composer** en [Storybook](/docs/ui/storybook). Ces exemples utilisent explicitement un état local sans modèle.
+
+## Clavier et soumission [#keyboard-and-submission]
+
+- Bureau Entrer soumet ; Maj+Entrer insère une nouvelle ligne. Les combinaisons Alt, Control et Meta restent disponibles pour le navigateur/l'application.
+- IME composition et sa confirmation Entrez jamais soumettre. En attente d'entrée ne répète pas la soumission.
+- Les appareils tactiles (pointeur grossier sans survol) utilisent le bouton d'envoi visible; Entrée reste une nouvelle ligne. Définir `submitOnEnter={false}` d'exiger une soumission explicite sur chaque appareil.
+- Votre `onKeyDown` Il court en premier. Appeler `preventDefault()` pour annuler le raccourci du compositeur.
+- Les brouillons vides ou blancs, `disabled`et `busy` empêcher la soumission. La validation de formulaire natif reste active.
+- Les événements de soumission en double dans le même tour d'événement sont ignorés. Définir `busy` synchroniquement pour couvrir la demande asynchrone complète; idempotency côté serveur reste la responsabilité de votre application.
+- Il n'y a pas de déblai automatique, de mouvement de focus, de redimensionnement, de boutons de fixation ou de commandes de microphone.
+
+## API [#api]
+
+| Prop                                                                           | Type                                      | Par défaut          | Objet                                                   |
+| ------------------------------------------------------------------------------ | ----------------------------------------- | ------------------- | ------------------------------------------------------- |
+| `value`                                                                        | `string`                                  | Requis              | Projet appartenant aux consommateurs                    |
+| `onChange`                                                                     | `ChangeEventHandler<HTMLTextAreaElement>` | Requis              | Mise à jour contrôlée synchrone                         |
+| `onSubmit`                                                                     | `() => void`                              | Requis              | Accepter une soumission; le consommateur lit son projet |
+| `busy`                                                                         | `boolean`                                 | `false`             | Empêcher les envois pendant qu'une demande est active   |
+| `onStop`                                                                       | `() => void`                              | —                   | Afficher l'action d'arrêt en étant occupé               |
+| `submitLabel`                                                                  | `string`                                  | `"Send message"`    | Étiquette d'action localisable                          |
+| `stopLabel`                                                                    | `string`                                  | `"Stop response"`   | Étiquette d'annulation localisable                      |
+| `submitOnEnter`                                                                | `boolean`                                 | `true`              | Activer le raccourci de bureau                          |
+| `ref`                                                                          | `Ref<HTMLTextAreaElement>`                | —                   | Sous-jacent textarea                                    |
+| `label`, `helperText`, `error`, `disabled`, `className`, native textarea props | [Textarea props](/docs/ui/textarea)       | Textarea par défaut | Comportement et style du champ existant                 |
+
+`defaultValue`, `children` et externe `form` L’association est exclue : le projet est contrôlé et le compositeur en possède la forme. `className` et `style` s'applique à la zone de texte. Placez le compositeur dans votre propre récipient à la taille ou décorer toute la surface. L'emballage expose `data-slot="ai-composer"`; la ligne d'action expose `data-slot="ai-composer-actions"`.
+
+## Accessibilité et disposition [#accessibility-and-layout]
+
+Fournir un visible `label`ou un nom accessible avec `aria-label` / `aria-labelledby`. Le texte d'espace réservé n'est pas une étiquette. Les descriptions de champs, les erreurs et les identifiants générés sont hérités de Textarea, y compris plusieurs compositeurs sur une page.
+
+Send et stop sont des boutons natifs avec des noms visibles et au moins 44px de hauteur. Étiquettes enveloppant dans des mises en page étroites. Le texte d'erreur est annoncé via l'alerte de Textarea. Fournir une région d'état au niveau de l'application pour une progression significative de la demande ; le compositeur n'invente pas l'état du réseau.
+
+Utilisation `resize="vertical"` pour la hauteur contrôlée par l'utilisateur, ou une hauteur limitée dans `className`. Il n'y a pas d'animation automatique ou de dimensionnement automatique. Les couleurs et les styles de focus suivent les tokens PyColors dans les thèmes clairs et sombres.

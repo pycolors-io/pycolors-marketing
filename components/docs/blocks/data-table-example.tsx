@@ -1,5 +1,7 @@
 "use client";
 
+import { SiteText } from "@/components/site-text";
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { Badge, Button } from "@pycolors/ui";
 
@@ -65,14 +67,16 @@ const columns = [
   {
     id: "label",
     header: "Record",
-    cell: (record) => <span className="font-medium">{record.label}</span>,
+    cell: (record) => (
+      <span className="font-medium">{<SiteText text={record.label} />}</span>
+    ),
   },
   {
     id: "state",
     header: "State",
     cell: (record) => (
       <Badge variant={record.state === "Available" ? "success" : "muted"}>
-        {record.state}
+        {<SiteText text={record.state} />}
       </Badge>
     ),
   },
@@ -80,12 +84,16 @@ const columns = [
     id: "updated",
     header: "Updated",
     cell: (record) => (
-      <span className="text-muted-foreground">{record.updated}</span>
+      <span className="text-muted-foreground">
+        {<SiteText text={record.updated} />}
+      </span>
     ),
   },
 ] satisfies readonly DataTableColumn<ExampleRecord>[];
 
 export function DataTableExample() {
+  const tSite = useCopy();
+
   const [page, setPage] = React.useState(1);
   const [inspectedRecord, setInspectedRecord] = React.useState<string>();
   const rows = pages[page - 1];
@@ -94,35 +102,48 @@ export function DataTableExample() {
   return (
     <div className="not-prose space-y-3">
       <DataTable
-        caption="Example records"
-        columns={columns}
-        emptyDescription="Add a record to begin."
-        emptyTitle="No records"
+        caption={tSite("Example records")}
+        columns={columns.map((column) => ({
+          ...column,
+          header: tSite(column.header),
+        }))}
+        emptyDescription={tSite("Add a record to begin.")}
+        emptyTitle={tSite("No records")}
         getRowId={(record) => record.id}
         pagination={{
-          navigationLabel: "Example record pages",
+          previousLabel: tSite("Previous page"),
+          nextLabel: tSite("Next page"),
+          morePagesLabel: tSite("More pages"),
+          navigationLabel: tSite("Example record pages"),
           onPageChange: setPage,
           page,
-          summary: `Showing ${firstVisibleRecord}–${firstVisibleRecord + rows.length - 1} of 6`,
+          summary: tSite("Showing {value0}–{value1} of 6", {
+            value0: firstVisibleRecord,
+            value1: firstVisibleRecord + rows.length - 1,
+          }),
           totalPages: pages.length,
         }}
         renderRowActions={(record) => (
           <Button
-            aria-label={`Inspect ${record.label}`}
+            aria-label={tSite("Inspect {value0}", { value0: record.label })}
             onClick={() => setInspectedRecord(record.label)}
             size="sm"
             type="button"
             variant="outline"
           >
-            Inspect
+            {tSite("Inspect")}
           </Button>
         )}
-        rowActionsLabel="Record actions"
+        rowActionsLabel={tSite("Record actions")}
         rows={rows}
       />
 
       <p aria-live="polite" className="min-h-5 text-sm text-muted-foreground">
-        {inspectedRecord ? `Selected ${inspectedRecord}.` : null}
+        {tSite(
+          inspectedRecord
+            ? tSite("Selected {value0}.", { value0: inspectedRecord })
+            : null,
+        )}
       </p>
     </div>
   );
@@ -131,6 +152,8 @@ export function DataTableExample() {
 export function DataTableEmptyExample({
   filtered = false,
 }: Readonly<{ filtered?: boolean }>) {
+  const tSite = useCopy();
+
   const [hasResults, setHasResults] = React.useState(false);
   const resetRef = React.useRef<HTMLButtonElement>(null);
 
@@ -142,27 +165,34 @@ export function DataTableEmptyExample({
   return (
     <div className="not-prose space-y-3">
       <DataTable
-        caption={filtered ? "Filtered sample records" : "New sample workspace"}
-        columns={columns}
+        caption={tSite(
+          filtered ? "Filtered sample records" : "New sample workspace",
+        )}
+        columns={columns.map((column) => ({
+          ...column,
+          header: tSite(column.header),
+        }))}
         emptyAction={
           <Button onClick={showSampleRecords} size="sm" type="button">
-            {filtered ? "Clear sample filter" : "Add sample records"}
+            {tSite(filtered ? "Clear sample filter" : "Add sample records")}
           </Button>
         }
-        emptyDescription={
+        emptyDescription={tSite(
           filtered
             ? "No sample records match this filter."
-            : "Start with sample records to explore this table."
-        }
-        emptyTitle={filtered ? "No matching records" : "No records yet"}
+            : "Start with sample records to explore this table.",
+        )}
+        emptyTitle={tSite(filtered ? "No matching records" : "No records yet")}
         getRowId={(record) => record.id}
         rows={hasResults ? pages[0] : []}
       />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p aria-live="polite" className="text-sm text-muted-foreground">
-          {hasResults
-            ? "Two sample records are displayed. Nothing was saved."
-            : "Interactive example only. No request is sent or data saved."}
+          {tSite(
+            hasResults
+              ? "Two sample records are displayed. Nothing was saved."
+              : "Interactive example only. No request is sent or data saved.",
+          )}
         </p>
         <Button
           onClick={() => setHasResults(false)}
@@ -171,7 +201,7 @@ export function DataTableEmptyExample({
           type="button"
           variant="outline"
         >
-          Reset example
+          {tSite("Reset example")}
         </Button>
       </div>
     </div>
@@ -184,6 +214,8 @@ const sortableColumns = columns.map((column) => ({
 }));
 
 export function DataTableSortingExample() {
+  const tSite = useCopy();
+
   const [sort, setSort] = React.useState<DataTableSort | null>(null);
   const [page, setPage] = React.useState(1);
   const records = pages.flat();
@@ -206,26 +238,48 @@ export function DataTableSortingExample() {
   return (
     <div className="not-prose space-y-3">
       <DataTable
-        caption="Sortable sample records"
-        columns={sortableColumns}
-        emptyTitle="No sample records"
+        caption={tSite("Sortable sample records")}
+        columns={sortableColumns.map((column) => ({
+          ...column,
+          header: tSite(column.header),
+        }))}
+        emptyTitle={tSite("No sample records")}
         getRowId={(record) => record.id}
         pagination={{
-          navigationLabel: "Sorted sample record pages",
+          previousLabel: tSite("Previous page"),
+          nextLabel: tSite("Next page"),
+          morePagesLabel: tSite("More pages"),
+          navigationLabel: tSite("Sorted sample record pages"),
           onPageChange: setPage,
           page,
-          summary: `Page ${page} of ${pages.length}`,
+          summary: tSite("Page {value0} of {value1}", {
+            value0: page,
+            value1: pages.length,
+          }),
           totalPages: pages.length,
         }}
         rows={records.slice((page - 1) * 2, page * 2)}
-        sorting={{ onSortChange: changeSort, value: sort }}
+        sorting={{
+          ascendingLabel: tSite("Sort ascending"),
+          descendingLabel: tSite("Sort descending"),
+          onSortChange: changeSort,
+          value: sort,
+        }}
       />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p aria-live="polite" className="text-sm text-muted-foreground">
-          {sort
-            ? `Ordered by ${sort.columnId === "state" ? "state" : "record"}, ${sort.direction === "asc" ? "ascending" : "descending"}.`
-            : "Original sample order."}{" "}
-          Local example only. No request is sent or data saved.
+          {tSite(
+            sort
+              ? tSite("Ordered by {value0}, {value1}.", {
+                  value0: tSite(sort.columnId === "state" ? "state" : "record"),
+                  value1: tSite(
+                    sort.direction === "asc" ? "ascending" : "descending",
+                  ),
+                })
+              : "Original sample order.",
+          )}
+          {tSite(" ")}
+          {tSite("Local example only. No request is sent or data saved.")}
         </p>
         <Button
           onClick={() => changeSort(null)}
@@ -233,7 +287,7 @@ export function DataTableSortingExample() {
           type="button"
           variant="outline"
         >
-          Reset sort
+          {tSite("Reset sort")}
         </Button>
       </div>
     </div>
@@ -241,6 +295,8 @@ export function DataTableSortingExample() {
 }
 
 export function DataTablePageSizeExample() {
+  const tSite = useCopy();
+
   const [size, setSize] = React.useState(2);
   const [page, setPage] = React.useState(1);
   const [sort, setSort] = React.useState<DataTableSort | null>(null);
@@ -263,11 +319,15 @@ export function DataTablePageSizeExample() {
   return (
     <div className="not-prose space-y-3">
       <DataTable
-        caption="Adjustable sample records"
-        columns={sortableColumns}
-        emptyTitle="No sample records"
+        caption={tSite("Adjustable sample records")}
+        columns={sortableColumns.map((column) => ({
+          ...column,
+          header: tSite(column.header),
+        }))}
+        emptyTitle={tSite("No sample records")}
         getRowId={(record) => record.id}
         pageSize={{
+          label: tSite("Rows per page"),
           onPageSizeChange: (nextSize) => {
             setSize(nextSize);
             setPage(1);
@@ -276,13 +336,18 @@ export function DataTablePageSizeExample() {
           value: size,
         }}
         pagination={{
-          navigationLabel: "Adjustable sample record pages",
+          previousLabel: tSite("Previous page"),
+          nextLabel: tSite("Next page"),
+          morePagesLabel: tSite("More pages"),
+          navigationLabel: tSite("Adjustable sample record pages"),
           onPageChange: setPage,
           page,
           totalPages,
         }}
         rows={visibleRows}
         sorting={{
+          ascendingLabel: tSite("Sort ascending"),
+          descendingLabel: tSite("Sort descending"),
           onSortChange: (nextSort) => {
             setSort(nextSort);
             setPage(1);
@@ -292,8 +357,10 @@ export function DataTablePageSizeExample() {
       />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p aria-live="polite" className="text-sm text-muted-foreground">
-          Showing {start + 1}–{start + visibleRows.length} of {records.length}.
-          Local example only. No request is sent or data saved.
+          {tSite("Showing ")}
+          {tSite(start + 1)}–{tSite(start + visibleRows.length)} {tSite(" of ")}
+          {tSite(records.length)}
+          {tSite(". Local example only. No request is sent or data saved.")}
         </p>
         <Button
           onClick={() => {
@@ -305,7 +372,7 @@ export function DataTablePageSizeExample() {
           type="button"
           variant="outline"
         >
-          Reset table
+          {tSite("Reset table")}
         </Button>
       </div>
     </div>
@@ -313,6 +380,8 @@ export function DataTablePageSizeExample() {
 }
 
 export function DataTableQueryExample() {
+  const tSite = useCopy();
+
   const [search, setSearch] = React.useState("");
   const [stateFilter, setStateFilter] = React.useState("all");
   const [sort, setSort] = React.useState<DataTableSort | null>(null);
@@ -352,12 +421,18 @@ export function DataTableQueryExample() {
   return (
     <div className="not-prose space-y-3">
       <DataTable
-        caption="Searchable sample records"
-        columns={sortableColumns}
-        emptyDescription="Change your search or reset the filters above."
-        emptyTitle="No matching records"
+        caption={tSite("Searchable sample records")}
+        columns={sortableColumns.map((column) => ({
+          ...column,
+          header: tSite(column.header),
+        }))}
+        emptyDescription={tSite(
+          "Change your search or reset the filters above.",
+        )}
+        emptyTitle={tSite("No matching records")}
         getRowId={(record) => record.id}
         pageSize={{
+          label: tSite("Rows per page"),
           value: size,
           options: [2, 3, 6],
           onPageSizeChange: (nextSize) => {
@@ -366,17 +441,20 @@ export function DataTableQueryExample() {
           },
         }}
         pagination={{
-          navigationLabel: "Searchable sample record pages",
+          previousLabel: tSite("Previous page"),
+          nextLabel: tSite("Next page"),
+          morePagesLabel: tSite("More pages"),
+          navigationLabel: tSite("Searchable sample record pages"),
           page: currentPage,
           totalPages,
           onPageChange: setPage,
         }}
         query={{
-          label: "Sample record filters",
+          label: tSite("Sample record filters"),
           search: {
-            label: "Search records",
+            label: tSite("Search records"),
             value: search,
-            placeholder: "Search by record name",
+            placeholder: tSite("Search by record name"),
             inputRef,
             onValueChange: (value) => {
               setSearch(value);
@@ -385,7 +463,7 @@ export function DataTableQueryExample() {
           },
           filters: (
             <label className="flex min-w-0 flex-col gap-1 text-sm">
-              <span className="text-muted-foreground">State</span>
+              <span className="text-muted-foreground">{tSite("State")}</span>
               <span className="relative inline-grid min-w-24 max-w-full">
                 <select
                   className="h-11 w-full min-w-0 appearance-none truncate rounded-[5px] border border-input bg-background py-2 pl-3 pr-9 text-base leading-5 text-foreground shadow-xs outline-none transition-colors hover:border-border focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm motion-reduce:transition-none"
@@ -395,9 +473,9 @@ export function DataTableQueryExample() {
                   }}
                   value={stateFilter}
                 >
-                  <option value="all">All states</option>
-                  <option value="Available">Available</option>
-                  <option value="Paused">Paused</option>
+                  <option value="all">{tSite("All states")}</option>
+                  <option value="Available">{tSite("Available")}</option>
+                  <option value="Paused">{tSite("Paused")}</option>
                 </select>
                 <svg
                   aria-hidden="true"
@@ -417,29 +495,32 @@ export function DataTableQueryExample() {
               </span>
             </label>
           ),
-          reset: { label: "Reset filters", onReset: resetFilters },
+          reset: { label: tSite("Reset filters"), onReset: resetFilters },
           summary: (
             <p aria-live="polite" role="status">
-              Showing {matching.length === 0 ? 0 : start + 1}–
-              {start + visibleRows.length} of {matching.length} matching
-              records.
+              {tSite("Showing ")}
+              {tSite(matching.length === 0 ? 0 : start + 1)}–
+              {tSite(start + visibleRows.length)} {tSite(" of ")}
+              {tSite(matching.length)} {tSite(" matching records.")}
             </p>
           ),
         }}
         renderRowActions={(record) => (
           <Button
-            aria-label={`Inspect ${record.label}`}
+            aria-label={tSite("Inspect {value0}", { value0: record.label })}
             onClick={() => setSelected(record.label)}
             size="sm"
             type="button"
             variant="outline"
           >
-            Inspect
+            {tSite("Inspect")}
           </Button>
         )}
-        rowActionsLabel="Record actions"
+        rowActionsLabel={tSite("Record actions")}
         rows={visibleRows}
         sorting={{
+          ascendingLabel: tSite("Sort ascending"),
+          descendingLabel: tSite("Sort descending"),
           value: sort,
           onSortChange: (nextSort) => {
             setSort(nextSort);
@@ -448,10 +529,16 @@ export function DataTableQueryExample() {
         }}
       />
       <p aria-live="polite" className="min-h-5 text-sm text-muted-foreground">
-        {selected ? `Selected ${selected} locally. Nothing was saved.` : null}
+        {tSite(
+          selected
+            ? tSite("Selected {value0} locally. Nothing was saved.", {
+                value0: selected,
+              })
+            : null,
+        )}
       </p>
       <p className="text-sm text-muted-foreground">
-        Local example only. No request is sent or data saved.
+        {tSite("Local example only. No request is sent or data saved.")}
       </p>
     </div>
   );

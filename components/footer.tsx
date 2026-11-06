@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowUpRight, GitBranch } from "lucide-react";
 
 import { Container } from "@/components/container";
@@ -10,6 +11,7 @@ import { FooterAppearance } from "./footer-appearance";
 import { FooterNavigation } from "./footer-navigation";
 import { Logo } from "./logo";
 import styles from "./footer.module.css";
+import { LanguageSwitcher } from "./layout/language-switcher";
 
 const GROUPS = [
   {
@@ -53,6 +55,7 @@ const GROUPS = [
     title: "Company",
     links: [
       { label: "About PyColors", href: "/about" },
+      { label: "Services", href: "/services" },
       { label: "Purchase support", href: "/orders/support" },
       { label: "Recover purchase", href: "/orders/recover" },
       { label: "Contact", href: "/contact" },
@@ -75,6 +78,8 @@ const REPOSITORIES = [
 ] as const;
 
 export function Footer() {
+  const tSite = useCopy();
+
   return (
     <FooterNavigation className={styles.footer}>
       <Container>
@@ -83,19 +88,22 @@ export function Footer() {
           aria-labelledby="footer-invitation-title"
         >
           <div className={styles.invitationCopy}>
-            <p className={styles.eyebrow}>Build with PyColors</p>
-            <h2 id="footer-invitation-title">Build with a head start.</h2>
+            <p className={styles.eyebrow}>{tSite("Build with PyColors")}</p>
+            <h2 id="footer-invitation-title">
+              {tSite("Build with a head start.")}
+            </h2>
             <p className={styles.description}>
-              Explore the components, templates, and SaaS foundations that fit
-              your project.
+              {tSite(
+                "Explore the components, templates, and SaaS foundations that fit your project.",
+              )}
             </p>
           </div>
           <div className={styles.actions}>
             <MarketingLinkButton>
-              <Link href="/starters/pro">Explore Starter Pro</Link>
+              <Link href="/starters/pro">{tSite("Explore Starter Pro")}</Link>
             </MarketingLinkButton>
             <MarketingLinkButton variant="outline">
-              <Link href="/pricing">Compare products</Link>
+              <Link href="/pricing">{tSite("Compare products")}</Link>
             </MarketingLinkButton>
           </div>
         </section>
@@ -105,17 +113,18 @@ export function Footer() {
             <div>
               <Logo />
               <p className={styles.brandDescription}>
-                Components, templates, and SaaS starters. Built to work
-                together.
+                {tSite(
+                  "Components, templates, and SaaS starters. Built to work together.",
+                )}
               </p>
             </div>
             <nav
-              aria-label="PyColors on GitHub"
+              aria-label={tSite("PyColors on GitHub")}
               className={styles.repositories}
             >
               <p className={styles.repositoryHeading}>
                 <GitBranch className="size-3.5" aria-hidden="true" />
-                On GitHub
+                {tSite("On GitHub")}
               </p>
               <ul>
                 {REPOSITORIES.map((repo) => (
@@ -124,9 +133,12 @@ export function Footer() {
                       href={repo.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${repo.name} on GitHub (opens in a new tab)`}
+                      aria-label={tSite(
+                        "{value0} on GitHub (opens in a new tab)",
+                        { value0: repo.name },
+                      )}
                     >
-                      {repo.label}
+                      {tSite(repo.label)}
                       <ArrowUpRight className="size-3" aria-hidden="true" />
                     </a>
                   </li>
@@ -137,8 +149,11 @@ export function Footer() {
           </div>
           <div className={styles.groups}>
             {GROUPS.map((group) => (
-              <nav key={group.title} aria-label={`Footer ${group.title}`}>
-                <h2>{group.title}</h2>
+              <nav
+                key={group.title}
+                aria-label={tSite("Footer {value0}", { value0: group.title })}
+              >
+                <h2>{tSite(group.title)}</h2>
                 <ul>
                   {group.links.map((link) => (
                     <li key={link.href}>
@@ -155,13 +170,13 @@ export function Footer() {
                             ? "noopener noreferrer"
                             : undefined
                         }
-                        aria-description={
+                        aria-description={tSite(
                           link.href.startsWith("https://")
                             ? "Opens in a new tab"
-                            : undefined
-                        }
+                            : undefined,
+                        )}
                       >
-                        {link.label}
+                        {tSite(link.label)}
                         {link.href.startsWith("https://") && (
                           <ArrowUpRight
                             className="ml-1.5 size-3"
@@ -179,25 +194,39 @@ export function Footer() {
 
         <div className={styles.bottomBar}>
           <div className={styles.legal}>
-            <p>© {new Date().getFullYear()} PyColors</p>
-            <nav aria-label="Footer legal information">
-              <Link href="/license">License</Link>
-              <Link href="/terms">Terms</Link>
-              <Link href="/privacy">Privacy</Link>
+            <p>
+              © {tSite(new Date().getFullYear())} {tSite(" PyColors")}
+            </p>
+            <nav aria-label={tSite("Footer legal information")}>
+              <Link href="/license">{tSite("License")}</Link>
+              <Link href="/terms">{tSite("Terms")}</Link>
+              <Link href="/privacy">{tSite("Privacy")}</Link>
             </nav>
           </div>
           <div className={styles.utilities}>
             <Link
               href="/changelog"
               className={styles.versions}
-              aria-label={`Release history: UI ${UI_VERSION}, Tokens ${TOKENS_VERSION}`}
+              aria-label={tSite(
+                "Release history: UI {value0}, Tokens {value1}",
+                { value0: UI_VERSION, value1: TOKENS_VERSION },
+              )}
             >
-              <span>UI {UI_VERSION}</span>
+              <span>
+                {tSite("UI ")}
+                {tSite(UI_VERSION)}
+              </span>
               <span aria-hidden="true">·</span>
-              <span>Tokens {TOKENS_VERSION}</span>
+              <span>
+                {tSite("Tokens ")}
+                {tSite(TOKENS_VERSION)}
+              </span>
               <ArrowUpRight className="size-3" aria-hidden="true" />
             </Link>
-            <FooterAppearance />
+            <div className={styles.preferences}>
+              <LanguageSwitcher variant="footer" />
+              <FooterAppearance />
+            </div>
           </div>
         </div>
       </Container>

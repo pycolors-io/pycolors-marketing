@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { Card, cn } from "@pycolors/ui";
 
@@ -39,6 +40,8 @@ export function MarketingFeatureCard({
   headingLevel = 3,
   className,
 }: MarketingFeatureCardProps) {
+  const tSite = useCopy();
+
   const Heading = `h${headingLevel}` as const;
 
   return (
@@ -55,26 +58,26 @@ export function MarketingFeatureCard({
             aria-hidden="true"
             className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border-subtle bg-surface text-muted-foreground"
           >
-            {icon}
+            {tSite(icon)}
           </span>
         ) : null}
 
         <div>
           <Heading className="font-brand text-lg font-semibold leading-snug tracking-normal">
-            {title}
+            {tSite(title)}
           </Heading>
 
           {description ? (
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
-              {description}
+              {tSite(description)}
             </p>
           ) : null}
         </div>
 
-        {meta ? <div className="text-sm">{meta}</div> : null}
+        {meta ? <div className="text-sm">{tSite(meta)}</div> : null}
       </div>
 
-      {action ? <div className="mt-6">{action}</div> : null}
+      {action ? <div className="mt-6">{tSite(action)}</div> : null}
     </Card>
   );
 }

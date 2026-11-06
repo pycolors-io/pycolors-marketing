@@ -1,0 +1,403 @@
+---
+title: Premiers pas
+description: Essayez des projets locaux, personnalisez votre application et
+  comprenez quand choisir Starter Pro.
+lastUpdated: "2026-10-14"
+appliesTo: Starter Free
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CheckCircle,
+  CreditCard,
+  FolderTree,
+  LayoutDashboard,
+  LockKeyhole,
+  Rocket,
+  Settings,
+  Terminal,
+  Users,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Démarrage</Badge>
+  <Badge>Gratuit</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Starter Free vous donne un **surface SaaS crédible hors de la boîte**.
+
+Pas un dépôt vide. Pas un modèle lourd backend. Pas un jouet demo.
+
+Il vous donne une interface utilisateur adaptées à la production avec des écrans réels, des états réels et une navigation réelle afin que vous puissiez valider l'orientation de votre produit avant d'investir dans la complexité du backend.
+
+L’objectif est simple :
+
+> exécutez-le en quelques minutes, comprenez-le rapidement et adaptez rapidement votre première surface de produit.
+
+<Callout title="Pourquoi cela compte">
+  La plupart des projets SaaS perdent du temps avant que les utilisateurs ne
+  voient le produit. Starter Free vous aide à rendre le produit visible plus
+  tôt, afin que vous puissiez valider l'UX, la messagerie et les flux avant de
+  câbler la couche métier complète.
+
+</Callout>
+
+## Votre première session [#your-first-session]
+
+Consultez [guide d'installation](/docs/starter/installation), puis ouvrir `http://localhost:3000/dashboard` dans votre starter. Pour explorer sans installer, [ouvrir la démo de Starter Free](https://starter-demo.pycolors.io/dashboard). Des chemins tels que `/projects` ci-dessous appartiennent au starter, pas le site de marketing.
+
+Le guide du tableau de bord présente quatre suggestions, et non une liste de vérification. Suivre un lien ne termine pas une étape ou n'enregistre pas la progression de l'intégration.
+
+1. **Essayez le workflow du projet.** Ouvrir `/projects`, choisissez **Nouveau projet**, entrez un exemple de nom, puis sélectionnez **Créer**. Ouvrez les détails de ce projet à partir de sa ligne, revenez à la liste et renommez-le en utilisant les actions de ligne. Rechargez pour vérifier la persistance du navigateur local avant de supprimer votre exemple jetable.
+2. **Explorez l'interface de l'assistant.** Ouvrir `/assistant` et choisissez une invite d'échantillon. Les [assistant guide](/docs/starter/assistant) explique le chat local, les définitions modifiables et la simulation de tâche. Aucun modèle d'IA n'est connecté ; quitter la page ou recharger efface cette session.
+3. **Faites de l'app la vôtre.** Dans votre propre copie du dépôt, éditez `app/layout.tsx` pour le nom et les métadonnées de l'application, `app/(app)/layout.tsx` pour l'en-tête d'application, et `app/globals.css` pour les styles et les tokens sémantiques. Les [guide de la structure du projet](/docs/starter/project-structure) explique les fichiers et les limites du fournisseur existant; n'introduisez pas de deuxième magasin de projets.
+4. **Évaluer les fondations connectées.** [Découvrir Starter Pro](/starters/pro) et [voir ce qui est inclus](/docs/starter-pro/what-is-included) lorsque vous avez besoin de bases de facturation Auth.js, Prisma/PostgreSQL, et Stripe. Pro est un code source à configurer et à adapter. L'achat ne déverrouille pas la démo gratuite en cours d'exécution ou la migration automatique des projets locaux; votre modèle de données de projet et vos flux de travail restent à mettre en œuvre. Utilisez le [Guide de mise à niveau](/docs/starter/upgrade) pour planifier ce travail.
+
+### Données locales et réinitialisation [#local-data-and-reset]
+
+Les changements de projet utilisent le navigateur de ce `localStorage` quand il est disponible. Il n'y a pas de compte, de base de données partagée, d'autorisation ou de synchronisation entre les navigateurs ou les appareils. Utilisez des exemples de données, pas des informations sensibles. La démo hébergée et un paiement localhost ont un stockage de navigateur séparé.
+
+**Réinitialiser démo** demande confirmation, puis remplace vos projets locaux par les échantillons originaux. Il ne peut pas être défait et ne réinitialise pas le thème. Effacer le stockage du navigateur du starter supprime également les projets enregistrés. Si l'enregistrement n'est pas disponible, la **Avis de stockage local** explique que les modifications sont conservées uniquement pour la visite en cours et seront perdues après le rechargement. Un enregistrement illisible revient à des échantillons avec un avis plutôt que de prouver que vos anciens projets ont été récupérés.
+
+Les mesures du tableau de bord, les tendances, l'activité et les aperçus fermés restent fictifs. Garder le **Données de démonstration illustratives** Notez lors de l'adaptation de ces valeurs; ils ne sont pas la facturation ou l'analyse en direct, et ils ne comptent pas vos projets locaux. Les écrans d'authentification, de facturation, d'administration et de paramètres sont toujours des surfaces de démonstration, pas des services de compte ou de paiement connectés.
+
+### Apparence [#appearance]
+
+Utilisez la commande soleil/lune pour changer le mode lumière et sombre. Les premières visites suivent la préférence du système ; un choix explicite enregistré a la priorité lors du rechargement. La préférence est navigateur/origine-local, pas un paramètre de compte. Avec un stockage non disponible, la commutation fonctionne sur la page en cours, mais peut ne pas survivre à un rechargement.
+
+## Ce que vous apprendrez [#what-youll-learn]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Surface du produit",
+      description:
+        "Comprendre les écrans, les mises en page, les états et les flux inclus dans Starter Free.",
+      icon: LayoutDashboard,
+    },
+    {
+      title: "Validation rapide",
+      description:
+        "Adaptez le starter dans une première tranche verticale sans reconstruire la surface du produit.",
+      icon: Rocket,
+    },
+    {
+      title: "Chemin de mise à niveau",
+      description:
+        "Sachez ce qui est simulé, ce qui est prêt pour la production et quand Starter Pro devient la prochaine étape.",
+      icon: LockKeyhole,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> Starter Free est un contrat UX, pas une implémentation backend complète.
+
+Vous gardez :
+
+- écrans
+- navigation
+- composants
+- États
+- structure du produit
+
+Vous remplacez plus tard :
+
+- Données simulées
+- auth provider
+- logique de facturation
+- Appels API
+- contrats de base de données
+
+<Callout type="info" title="Frontend-first par design">
+  Les projets prennent en charge la création locale du navigateur, les détails,
+  le renommage, la suppression et la réinitialisation. Les figures
+  d'authentification, de facturation, d'administration, de paramètres et de
+  tableau de bord restent des surfaces de démonstration. Vous connectez toujours
+  votre propre backend pour des données de produit partagées et protégées.
+
+</Callout>
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Comprendre ce qui est inclus [#understand-what-is-included]
+
+Starter Free vous donne la surface principale d'un produit SaaS.
+
+| Surface         | Ce qu'il vous donne                                                                                    |
+| --------------- | ------------------------------------------------------------------------------------------------------ |
+| Auth UX         | Connexion, enregistrement, mot de passe oublié, chargement et états prêts pour les erreurs             |
+| Tableau de bord | Guide de démarrage en quatre étapes, navigation et mesures illustratives clairement étiquetées         |
+| Projets         | Browser-local create, details, renommer, supprimer, persistence, et confirmé reset                     |
+| Admin           | Membres de la démo, rôles et surfaces d'invitation; pas de véritable service d'invitation              |
+| Facturation     | Plan illustratif, factures, entrée de portail et surfaces de méthode de paiement; pas de paiement réel |
+| Paramètres      | Profil, organisation, sécurité et structure de la zone de danger                                       |
+
+Ceci est suffisant pour valider une véritable direction du produit avant de câbler les services de production.
+
+</Step>
+
+<Step>
+### Savoir ce qui est intentionnellement simulé [#know-what-is-intentionally-mocked]
+
+Starter Free ne connecte pas ces flux de travail de démonstration aux services de production. La persistance du projet local-navigateur n'est pas un backend ou une limite de contrôle d'accès.
+
+Il ne comprend pas :
+
+- schéma de base de données
+- Routes API
+- Intégration de Stripe
+- gestion des sessions
+- fournisseur de messagerie
+- contrôle d'accès basé sur les rôles
+
+C'est intentionnel.
+
+```txt title="starter-free-boundary.txt"
+Starter Free
+  UI surface
+  browser-local project workflow
+  illustrative business data
+  light/dark appearance
+
+Starter Pro
+  auth wiring
+  billing wiring
+  Prisma/PostgreSQL foundation
+  your own product workflows to implement
+```
+
+L'objectif est d'éviter les frictions du backend avant de savoir que la surface du produit vaut la peine d'être câblée.
+
+</Step>
+
+<Step>
+### Explorez la tranche verticale [#explore-the-vertical-slice]
+
+Suivre [Votre première session](#your-first-session) Avant d'inspecter le reste `/admin`, `/billing`et `/settings` Surfaces de démonstration. Ouvrir les détails du projet à partir d'une ligne existante; `/projects/[id]` décrit le modèle de route, pas une URL littérale à coller. Conservez les états de chargement, de stockage non disponible et de projet manquant lors de l'adaptation du flux de travail.
+
+</Step>
+
+<Step>
+### Adapter une surface de produit [#adapt-one-product-surface]
+
+Commence petit. Renommer une entité principale et ajuster le premier flux de produit.
+
+Bons premiers changements :
+
+- renommer "Projets" à votre entité de domaine
+- adapter les indicateurs clés de performance du tableau de bord sans supprimer leur notice de démonstration
+- changer l'état vide copie
+- ajuster les étiquettes de navigation
+- Ajouter une nouvelle route
+- mettre à jour les tokens de marque
+
+Cela suffit pour créer une démo crédible ou une première surface MVP.
+
+</Step>
+
+</Steps>
+
+## Ce que Starter Free résout [#what-starter-free-solves]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Auth',
+      title: "Auth UX",
+      icon: LockKeyhole,
+      description: (
+        <>
+          <p>
+            Starter Free includes the screens and interaction states needed to model authentication before wiring a provider.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">/login</Badge>
+            <Badge variant="plan">/register</Badge>
+            <Badge variant="plan">/forgot-password</Badge>
+            <Badge variant="plan">Error-ready forms</Badge>
+            <Badge variant="plan">Password visibility toggle</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Product',
+      title: "Surface du produit",
+      icon: LayoutDashboard,
+      description: (
+        <>
+          <p>
+            The starter provides a real app shell, dashboard structure, CRUD surface, dialogs, details pages, and navigation.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Dashboard layout</Badge>
+            <Badge variant="plan">Projects table</Badge>
+            <Badge variant="plan">Row actions</Badge>
+            <Badge variant="plan">Details page</Badge>
+            <Badge variant="plan">UI states</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Business',
+      title: "Surfaces prêtes à l'emploi",
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Starter Free includes mocked billing, admin, members, and settings surfaces so the product already feels commercial.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Billing overview</Badge>
+            <Badge variant="plan">Invoice table</Badge>
+            <Badge variant="plan">Members list</Badge>
+            <Badge variant="plan">Invite workflow</Badge>
+            <Badge variant="plan">Settings tabs</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Ce que vous pouvez expédier rapidement [#what-you-can-ship-quickly]
+
+Après l'installation, vous pouvez produire une première version crédible en changeant :
+
+| Tâche                                           | Résultat                                                                           |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Renommer « Projets »                            | Fait correspondre le starter à votre domaine                                       |
+| Adapter les KPI de tableau de bord illustratifs | Conserve l'histoire de démonstration spécifique sans réclamer de données en direct |
+| Réécrire les états vides                        | Rend l'UX intentionnelle                                                           |
+| Ajuster les étiquettes de navigation            | Rend le produit plus facile à démonter                                             |
+| Changer les tokens de marque                    | Rend l'interface possédée                                                          |
+| Ajouter une route                               | Prouve que la structure peut se développer                                         |
+
+Cela suffit pour :
+
+- Montrer un client
+- Pitch un MVP
+- Valider UX
+- enregistrer une démo de produit
+- Testez le récit de votre produit
+
+## Guide de décision [#decision-guide]
+
+Utilisez Starter Free si :
+
+- vous êtes validé UX
+- vous lancez un produit
+- Vous construisez un MVP frontend-first
+- vous voulez structurer le produit avant le backend
+- Vous avez besoin de quelque chose de crédible
+
+Évaluez Starter Pro lorsque vous avez besoin de bases de facturation Auth.js, Prisma/PostgreSQL et Stripe. Réexamen [Ce qui est inclus](/docs/starter-pro/what-is-included) plutôt que de supposer que chaque écran de démonstration devient une fonctionnalité connectée. Vous configurez toujours les fournisseurs et implémentez votre modèle de données, votre autorisation et vos flux de travail spécifiques au produit.
+
+<PreferAvoid
+  prefer={[
+    "Explorez la tranche verticale complète en premier",
+    "adapter une entité de domaine avant de réécrire la structure",
+    "garder les données simulées tout en validant l'UX",
+    "fil backend uniquement lorsque la direction du produit est claire",
+    "mise à niveau lorsque l'authentification, la facturation et les données deviennent le bloqueur",
+  ]}
+  avoid={[
+    "Traiter Starter Free comme un backend SaaS complet",
+    "Réécrire la structure avant de la comprendre",
+    "mélange de l'interface utilisateur et de la logique métier trop tôt",
+    "retirer les surfaces du produit avant de tester le flux total",
+    "ajouter la complexité du backend avant de valider le produit",
+  ]}
+/>
+
+### Premier chemin d'accès [#first-run-path]
+
+Utilisez le [quatre étapes de la première session](#your-first-session): essayez un projet jetable, explorez l’assistant local, personnalisez votre copie du dépôt, puis évaluez les fondations connectées. Le premier résultat utile est un projet que vous pouvez créer, ouvrir, renommer et recharger dans ce navigateur, et non une métrique fictive ou un compteur d'intégration vérifié.
+
+<Callout title="Mise à niveau lorsque le câblage devient le bloqueur">
+  Starter Free valide la surface du produit. Starter Pro relie la couche métier
+  avec des fondations adaptées à la production, de facturation, de backend et de
+  livraison. `/docs/starter-pro`
+
+</Callout>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Starter Free est-il un backend SaaS complet ?">
+    Non. Les projets fonctionnent localement dans le navigateur, tandis que les surfaces commerciales utilisent des données illustratives. Les comptes partagés, les données protégées et les paiements nécessitent votre propre intégration backend ou des fondations Starter Pro configurées séparément.
+  </Accordion>
+
+<Accordion title="Puis-je l'utiliser pour un vrai MVP?">
+  Oui, en particulier pour les démos, la validation, les MVP front-end et
+  l'exploration de produits. Pour les utilisateurs réels, les paiements réels et
+  les données protégées, passez à Starter Pro ou connectez votre propre backend.
+</Accordion>
+
+  <Accordion title="Devrais-je supprimer les fonctionnalités simulées immédiatement?">
+    Non. Explorez d’abord les flux. Les surfaces simulées enseignent la structure du produit prévu et vous donnent un point de départ plus fort pour votre propre mise en œuvre.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Installation",
+      href: "/docs/starter/installation",
+      description:
+        "Exécutez Starter Free localement et explorez les écrans et les flux réels des applications.",
+      icon: Terminal,
+    },
+    {
+      title: "Structure du projet",
+      href: "/docs/starter/project-structure",
+      description:
+        "Comprendre comment le starter est organisé avant d'étendre les caractéristiques du produit.",
+      icon: FolderTree,
+    },
+    {
+      title: "Concept d'authentification",
+      href: "/docs/starter/auth-concept",
+      description:
+        "Découvrez comment l'authentification est modélisée avant de connecter un fournisseur réel.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Mise à niveau vers Starter Pro",
+      href: "/docs/starter/upgrade",
+      description:
+        "Sachez quand Starter Free cesse d'être suffisant et Starter Pro devient le chemin de lancement le plus rapide.",
+      icon: ArrowUpRight,
+      badge: "Pro",
+      tone: "primary",
+    },
+  ]}
+/>

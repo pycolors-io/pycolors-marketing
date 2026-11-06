@@ -1,0 +1,62 @@
+---
+title: Dépannage
+description: Diagnostiquer la configuration du Registre, l'espace de travail, la
+  dépendance, le style, les conflits et les pannes de transport sans affaiblir
+  la validation ou perdre la source.
+lastUpdated: "2026-09-17"
+appliesTo: Registry
+---
+
+Avant de réessayer, conservez le diff actuel et identifiez l'étape qui a échoué : inspection, exécution à sec, installation de dépendances, application source ou validation d'application. Comparez votre application avec la [Compatibilité testée](/docs/registry#tested-compatibility); ne forcez pas une configuration non prise en charge par l'installateur.
+
+## L'élément public ou l'URL ne peut pas être résolu [#public-item-or-url-cannot-be-resolved]
+
+Les exemples d'adresses publiques dépendent d'une vérification séparée de la disponibilité des miroirs marketing révisés par l'homme. Un test client local réussi ne prouve pas que le manifeste public, les fichiers sources ou la dépendance de base peuvent être récupérés.
+
+Vérifiez l'adresse exacte de l'article qualifié à partir du [guide d'installation](/docs/registry/installation#use-the-approved-public-address). Ne remplacez pas le monorepo privé, une URL de manifeste de source brute, un nom d'élément nu, un `@pycolors` espace de nommage, ou un point de terminaison hébergé supposé. Vérifiez que le miroir public contient les deux éléments et leurs fichiers référencés lors de la révision en cours d'inspection. Une défaillance du réseau en amont ou de la limite de débit n'est pas une raison pour modifier la cible source ou ajouter des informations d'identification.
+
+N'ajoutez pas de token de production pour faire fonctionner un flux de travail public sans informations d'identification. Jusqu'à ce que la livraison publique soit vérifiée, utilisez [manuel source copy](/docs/blocks/feedback/empty-state-panel#copy-source).
+
+## La configuration est incompatible [#configuration-is-incompatible]
+
+Revoir l'existant de l'app `components.json`: `radix-nova`, TypeScript/TSX, Lucide, variables CSS, couleur de base du zinc, pas de préfixe Tailwind, et l'emplacement de feuille de style documenté. Comparez-le avec le [Exemple de configuration](/docs/registry/installation#prepare-the-consuming-app). N'exécutez pas une initialisation forcée ou ne changez pas de bibliothèques primitives juste pour que l'installation continue.
+
+Les tests ont une garde de pré-vol pour les configurations non prises en charge. C'est l'outil de test de dépôt, pas un public `doctor` commande ou une garantie que la CLI amont refuse tout projet non supporté sans écriture. Utilisez l'installation manuelle lorsque la configuration est en dehors de la matrice.
+
+## Les alias échouent ou atterrissent dans le mauvais espace de travail [#aliases-fail-or-source-lands-in-the-wrong-workspace]
+
+L'app `aliases.components` doit pointer vers `@/components`, et sa propre configuration TypeScript et bundler doit résoudre `@` à cette app `src`. Le fichier copié attendu est `src/components/blocks/feedback-empty-state-panel/index.tsx` par rapport à l'app consommatrice.
+
+Pour l'espace de travail testé, exécutez l'interface de ligne de commande `apps/web` et de réconcilier le fichier de verrouillage partagé à partir de la racine de l'espace de travail. Confirmer les dépendances appartiennent à `apps/web`, pas le paquet racine ou un frère non touché. Arrêtez et examinez les modifications inattendues de l'espace de travail avant de relancer la commande. Les alias de paquets partagés et les configurations TypeScript héritées nécessitent une validation distincte.
+
+## Dépendances ou installation gelée échouent [#dependencies-or-frozen-installation-fail]
+
+Confirmez le nœud 24, pnpm 10.32.1, l'interface de ligne de commande shadcn épinglée et les versions exactes des paquets testés. Vérifiez que les dépendances sont résolues à partir de npm public, pas `workspace:`, `file:`ou `link:` des références copiées d'un monorepo.
+
+Un paquet npm non disponible ou une défaillance réseau est une véritable installation défaillante ; ne le remplacez pas par un paquet privé ou emprunté `node_modules` Arbre. Préservez l'erreur et réessayez seulement après avoir identifié la cause.
+
+Après un changement intentionnel de dépendance du Registre, utilisez le [Réconciliation des fichiers verrouillés](/docs/registry/installation#reconcile-and-verify-the-lockfile), examinez le résultat, puis vérifiez une installation gelée. Ne supprimez pas le fichier de verrouillage, ne désactivez pas les installations gelées dans CI ou n'acceptez pas les mises à niveau non liées pour masquer l'erreur.
+
+## Les tokens, les couleurs ou les styles d'état Radix sont manquants [#tokens-colors-or-radix-state-styles-are-missing]
+
+Vérifiez que le framework importe la feuille de style globale et que Tailwind 4/PostCSS fonctionne déjà. La base doit ajouter exactement une importation de token et un package d'interface utilisateur `@source` directive. Ce dernier est relatif à la feuille de style, pas au répertoire de travail du terminal.
+
+La voie zéro-édition attend `src/app/globals.css` ou `src/styles/globals.css` à l'intérieur de l'application, avec cette application `node_modules/@pycolors/ui`. Une profondeur de feuille de style différente est en dehors du flux testé. Comparez la configuration avec [Installation de l'interface utilisateur](/docs/ui/installation); ne copiez pas la source du package de l'interface utilisateur ou les couleurs du code dur pour masquer l'intégration de token manquante.
+
+## Une installation répétée affiche des modifications ou une invite d'écrasement [#a-repeat-install-shows-changes-or-an-overwrite-prompt]
+
+Ne supposez pas qu'une installation répétée est une non-op. Les plages de paquets et le fichier de verrouillage peuvent changer au fur et à mesure que la base est réappliquée. Refuser l'écrasement pour la source personnalisée, inspecter le diff complet et suivre [Propriété et mises à jour](/docs/registry/updates#repeat-installs-and-conflicts). Un écrasement refusé protège le fichier Block, pas nécessairement le fichier lockfile.
+
+## Types, peluches, ou la construction de la production échouent [#types-lint-or-the-production-build-fail]
+
+Vérifiez le chemin d'importation installé, public `@pycolors/ui` les exportations, et vos accessoires appartenant aux consommateurs et vos actions contre [Guide du panneau d'état vide](/docs/blocks/feedback/empty-state-panel). Ne pas importer `@pycolors/ui/src/*`, `@pycolors/ui/dist/*`, ou des modules d'application privés pour faire passer la construction.
+
+Le formatage est une étape de consommation explicite après l'installation. Exécutez le formatage, les peluches, les types stricts, les tests et votre production à partir de la source installée. La matrice valide Next.js avec Webpack et Vite avec sa construction de production; d'autres bundlesers ou combinaisons de versions nécessitent leurs propres preuves. Ne pas affaiblir TypeScript strict, supprimer les tests ou supprimer les échecs de construction.
+
+Enfin, examinez l'accès au clavier, le focus visible, la mise en page mobile et votre comportement d'action réel dans un navigateur. Un test de rendu statique ne peut pas valider l'interaction complète de votre application.
+
+## Partager une reproduction bornée [#share-a-bounded-reproduction]
+
+Enregistrez l'élément et la révision inspectée, les versions Node/pnpm/shadcn, le framework, la position de l'espace de travail, la commande et l'erreur d'échec expurgées, et les chemins ont changé. Indiquez si l'échec se produit avec un artefact local ou l'adresse GitHub publique. Partagez une reproduction minimale sans informations d'identification, source privée, données client ou fichiers d'environnement.
+
+Pour un repli sûr, utilisez [Installation manuelle des blocs](/docs/blocks). Pour l'enlèvement, suivez [rollback et nettoyage](/docs/registry/updates#roll-back-an-installation).

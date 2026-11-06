@@ -16,7 +16,7 @@ const guideText = upgradeGuide.replace(/\s+/gu, " ");
 describe("Starter comparison source contracts", () => {
   it("uses the same comparison on the Starter discovery page", () => {
     const page = readFileSync(
-      resolve(marketingRoot, "app/(site)/starters/page.tsx"),
+      resolve(marketingRoot, "app/[locale]/(site)/starters/page.tsx"),
       "utf8",
     );
     expect(page).toContain("<StarterComparisonTable />");
@@ -48,7 +48,12 @@ describe("Starter comparison source contracts", () => {
 
       const path = href.startsWith("/docs/")
         ? resolve(marketingRoot, "content/docs", `${href.slice(6)}.mdx`)
-        : resolve(marketingRoot, "app/(site)", href.slice(1), "page.tsx");
+        : resolve(
+            marketingRoot,
+            "app/[locale]/(site)",
+            href.slice(1),
+            "page.tsx",
+          );
 
       expect(existsSync(path), `Missing destination: ${href}`).toBe(true);
     }
@@ -56,7 +61,7 @@ describe("Starter comparison source contracts", () => {
 
   it("keeps the page connected to the comparison and purchase CTA", () => {
     const page = readFileSync(
-      resolve(marketingRoot, "app/(site)/starters/pro/page.tsx"),
+      resolve(marketingRoot, "app/[locale]/(site)/starters/pro/page.tsx"),
       "utf8",
     );
 
@@ -183,7 +188,7 @@ describe("Starter comparison source contracts", () => {
 
       const path = href.startsWith("/docs/")
         ? resolve(marketingRoot, "content/docs", href.slice(6))
-        : resolve(marketingRoot, "app/(site)", href.slice(1));
+        : resolve(marketingRoot, "app/[locale]/(site)", href.slice(1));
       const exists = href.startsWith("/docs/")
         ? existsSync(`${path}.mdx`) || existsSync(resolve(path, "index.mdx"))
         : existsSync(resolve(path, "page.tsx"));

@@ -32,7 +32,7 @@ describe("Starter Pro FAQ discovery contracts", () => {
     expect(entries[0]?.lastModified).toBeUndefined();
     const pagePath = resolve(
       marketingRoot,
-      "app/(site)",
+      "app/[locale]/(site)",
       faqRoute.slice(1),
       "page.tsx",
     );
@@ -50,7 +50,7 @@ describe("Starter Pro FAQ discovery contracts", () => {
     for (const href of destinations) {
       const path = href.startsWith("/docs/")
         ? resolve(marketingRoot, "content/docs", href.slice(6))
-        : resolve(marketingRoot, "app/(site)", href.slice(1));
+        : resolve(marketingRoot, "app/[locale]/(site)", href.slice(1));
       const exists = href.startsWith("/docs/")
         ? existsSync(`${path}.mdx`) || existsSync(resolve(path, "index.mdx"))
         : existsSync(resolve(path, "page.tsx"));
@@ -60,7 +60,7 @@ describe("Starter Pro FAQ discovery contracts", () => {
   });
 
   it("keeps a server page and in-memory search boundary", () => {
-    const page = read("app/(site)/starters/pro/faq/page.tsx");
+    const page = read("app/[locale]/(site)/starters/pro/faq/page.tsx");
     const explorer = read("components/starters/starter-pro-faq-explorer.tsx");
     const search = read("lib/products/starter-pro-faq-search.ts");
 

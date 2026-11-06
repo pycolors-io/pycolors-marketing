@@ -4,9 +4,15 @@ import { resolve } from "node:path";
 import { fireEvent, act, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import StarterProPage, { metadata } from "../../app/(site)/starters/pro/page";
+import StarterProPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/starters/pro/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
 import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
@@ -436,7 +442,7 @@ describe("Starter Pro product page", () => {
             resolve("content", `${route.slice(1)}.mdx`),
             resolve("content", route.slice(1), "index.mdx"),
           ]
-        : [resolve("app/(site)", route.slice(1), "page.tsx")];
+        : [resolve("app/[locale]/(site)", route.slice(1), "page.tsx")];
       expect(paths.some(existsSync), href).toBe(true);
     }
   });

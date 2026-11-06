@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   ExternalLink,
   Maximize2,
@@ -105,6 +106,8 @@ export function BlockShowcaseTabs({
   previewHref: string;
   source: BlockSource;
 }>) {
+  const tSite = useCopy();
+
   const id = useId();
   const previewSurfaceRef = useRef<HTMLDivElement>(null);
   const [view, setView] = useState<View>("preview");
@@ -165,7 +168,7 @@ export function BlockShowcaseTabs({
       <style>{simulatedPreviewStyles}</style>
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-subtle p-2 sm:px-3">
         <div
-          aria-label="Block view"
+          aria-label={tSite("Block view")}
           className="inline-flex items-center gap-1"
           role="tablist"
         >
@@ -185,7 +188,7 @@ export function BlockShowcaseTabs({
                 tabIndex={selected ? 0 : -1}
                 type="button"
               >
-                {item === "source" ? "Code" : "Preview"}
+                {tSite(item === "source" ? "Code" : "Preview")}
               </button>
             );
           })}
@@ -193,7 +196,7 @@ export function BlockShowcaseTabs({
 
         {view === "preview" ? (
           <div
-            aria-label="Preview viewport"
+            aria-label={tSite("Preview viewport")}
             className="inline-flex w-full max-w-full flex-wrap items-center justify-between sm:w-auto sm:gap-0.5"
             role="group"
           >
@@ -202,12 +205,16 @@ export function BlockShowcaseTabs({
               const selected = viewport === item.id;
               return (
                 <button
-                  aria-label={`${item.label} preview`}
+                  aria-label={tSite("{value0} preview", {
+                    value0: tSite(item.label),
+                  })}
                   aria-pressed={selected}
                   className={iconButtonClassName}
                   key={item.id}
                   onClick={() => setViewport(item.id)}
-                  title={`${item.label} preview`}
+                  title={tSite("{value0} preview", {
+                    value0: tSite(item.label),
+                  })}
                   type="button"
                 >
                   <Icon aria-hidden="true" className="size-4" />
@@ -219,30 +226,30 @@ export function BlockShowcaseTabs({
               className="mx-1 hidden h-5 w-px bg-border-subtle sm:block"
             />
             <a
-              aria-label="Open preview in new tab"
+              aria-label={tSite("Open preview in new tab")}
               className={iconButtonClassName}
               href={previewHref}
               rel="noopener noreferrer"
               target="_blank"
-              title="Open preview in new tab"
+              title={tSite("Open preview in new tab")}
             >
               <ExternalLink aria-hidden="true" className="size-4" />
             </a>
             <button
-              aria-label="Enter fullscreen"
+              aria-label={tSite("Enter fullscreen")}
               className={`${iconButtonClassName} disabled:opacity-40`}
               disabled={!fullscreenAvailable}
               onClick={enterFullscreen}
-              title="Enter fullscreen"
+              title={tSite("Enter fullscreen")}
               type="button"
             >
               <Maximize2 aria-hidden="true" className="size-4" />
             </button>
             <button
-              aria-label="Reset preview"
+              aria-label={tSite("Reset preview")}
               className={iconButtonClassName}
               onClick={() => setPreviewKey((value) => value + 1)}
-              title="Reset preview"
+              title={tSite("Reset preview")}
               type="button"
             >
               <RotateCcw aria-hidden="true" className="size-4" />
@@ -250,7 +257,8 @@ export function BlockShowcaseTabs({
           </div>
         ) : (
           <span className="px-2 text-xs text-muted-foreground">
-            {source.files.length} {source.files.length === 1 ? "file" : "files"}
+            {tSite(source.files.length)}{" "}
+            {tSite(source.files.length === 1 ? "file" : "files")}
           </span>
         )}
       </div>
@@ -274,7 +282,7 @@ export function BlockShowcaseTabs({
               className={`${previewPaddingClassName} ${simulationClassName}`}
               data-preview-layout={viewport}
             >
-              {preview}
+              {tSite(preview)}
             </div>
           </div>
         </div>
@@ -282,7 +290,7 @@ export function BlockShowcaseTabs({
 
       {fullscreenError ? (
         <p role="status" className="px-4 py-2 text-xs text-muted-foreground">
-          Fullscreen unavailable. Open the preview in a new tab.
+          {tSite("Fullscreen unavailable. Open the preview in a new tab.")}
         </p>
       ) : null}
 

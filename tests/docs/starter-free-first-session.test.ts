@@ -95,7 +95,9 @@ describe("Starter Free first-session documentation", () => {
     expect(firstSession).not.toMatch(/\]\(\/(?:dashboard|projects)(?:[)#/])/);
     expect(content).toContain("](/starters/pro)");
     expect(
-      existsSync(resolve(marketingRoot, "app/(site)/starters/pro/page.tsx")),
+      existsSync(
+        resolve(marketingRoot, "app/[locale]/(site)/starters/pro/page.tsx"),
+      ),
     ).toBe(true);
     expect(structure).toContain(
       "/docs/starter/getting-started#your-first-session",

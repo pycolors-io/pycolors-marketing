@@ -1,0 +1,120 @@
+---
+title: Se connecter
+description: Un panneau de connexion de présentation uniquement avec les
+  informations d'identification appartenant au consommateur, les actions du
+  fournisseur, les erreurs et la navigation.
+lastUpdated: "2026-09-14"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { SignInExample } from "@/components/docs/blocks/auth-examples";
+
+## Présenter un point d'entrée d'authentification crédible [#present-a-credible-authentication-entry-point]
+
+`SignInPanel` donne à une application une composition de connexion bornée tout en conservant un comportement d'authentification entièrement dans l'application consommatrice. Fournissez votre propre formulaire, les contrôles de fournisseur, l'état d'erreur et les liens de pied de page; le bloc ne valide pas les informations d'identification, ne crée pas de sessions ou ne configure pas les fournisseurs.
+
+<Callout title="Présentation seulement">
+  Le bloc rend les contrôles que vous fournissez. Votre application possède la
+  gestion des informations d'identification, Auth.js ou un autre fournisseur
+  d'authentification, l'état de session, les limites de taux, la navigation et
+  chaque demande réseau.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Authentification**limace `auth`.
+- Bloquer : `sign-in`, exportation `SignInPanel`.
+- Source canonique : `apps/marketing/content/blocks/auth/sign-in/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/sign-in/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible.
+
+Si l'accès au presse-papiers n'est pas disponible, sélectionnez le code manuellement.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <SignInExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/sign-in/index.tsx"'
+    >
+      ../../../blocks/auth/sign-in/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `SignInPanel` grâce à un dispositif local déterministe. Il n'effectue aucune authentification ou demande de réseau. L'onglet Source est le fichier canonique complet inclus au moment de la compilation, pas une implémentation dupliquée.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+Conservez le fichier complet sur le chemin d'accès appartenant à l'application ci-dessus. Copier la source n'installe pas les dépendances, ne configure pas l'authentification ou n'ajoute pas de routes pour vous. Connectez la présentation à votre propre limite d'auth, puis validez-la dans votre application.
+
+```tsx title="src/components/sign-in-screen.tsx"
+"use client";
+
+import { SignInPanel } from "./blocks/sign-in";
+
+export function SignInScreen() {
+  return (
+    <SignInPanel
+      description="Use your workspace account to continue."
+      form={
+        <form
+          className="space-y-4"
+          onSubmit={(event) => event.preventDefault()}
+        >
+          <label className="grid gap-2 text-sm">
+            Email
+            <input
+              className="rounded-md border bg-background px-3 py-2"
+              name="email"
+              type="email"
+              autoComplete="email"
+            />
+          </label>
+          <button className="rounded-md border px-4 py-2" type="submit">
+            Continue
+          </button>
+        </form>
+      }
+      footer={<a href="/forgot-password">Forgot your password?</a>}
+    />
+  );
+}
+```
+
+Utilisation `"use client"` uniquement dans un composant consommateur qui possède réellement des gestionnaires interactifs ou un état d'authentification client. Le bloc canonique lui-même reste uniquement présentateur.
+
+## Ce que possède l'application [#what-the-application-owns]
+
+`form` est nécessaire. `title`, `description`, `providers`, `error`, `footer` et `className` sont facultatifs. Les boutons, les liens et les contrôles de formulaire du fournisseur sont rendus tels que fournis, de sorte que leurs rappels, leurs réfs, leurs états désactivés et leur sémantique native restent sous votre contrôle.
+
+La zone d'erreur optionnelle utilise `role="alert"` parce qu'il est destiné à une erreur de consommation déjà connue. Ne placez pas de copie de validation spéculative avant une action échouée. La configuration du fournisseur, les informations d'identification, le MFA, le verrouillage de compte, la limitation de taux et la stratégie de session restent en dehors du bloc.
+
+## Notes réactives et d'accessibilité [#responsive-and-accessibility-notes]
+
+Le panneau est limité à une largeur lisible, utilise des classes de thèmes sémantiques et enveloppe naturellement le contenu grand public. Gardez tous les champs étiquetés par programme, conservez l'accent visible et donnez aux contrôles des fournisseurs des noms clairement accessibles. Passez en revue votre copie d'erreur réelle, les états désactivés, le comportement du gestionnaire de mot de passe et le flux du clavier après l'intégration.
+
+## Propriété et mises à jour [#ownership-and-updates]
+
+Votre application possède la source copiée et ne reçoit pas de mises à jour automatiques. Examinez délibérément les modifications canoniques futures, préservez les personnalisations locales et validez-les dans votre application avant leur adoption.
+
+## Limites et prochaines étapes [#boundaries-and-next-steps]
+
+Aucune configuration Auth.js, configuration OAuth, validation des identifiants, politique de mot de passe, mutation de session, persistance, autorisation, analytique ou secret de production n'est implémenté ici.
+
+Explorez le [Blocage du catalogue](/blocks), comparer les [S'inscrire](/docs/blocks/auth/sign-up) et [Récupération de mot de passe](/docs/blocks/auth/password-recovery) Blocs, ou [Comparer les Starters](/starters) pour une fondation d'application complète.

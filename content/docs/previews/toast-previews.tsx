@@ -1,15 +1,11 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { useCopy } from "@/lib/i18n/use-copy";
+import * as React from "react";
 
-import {
-  Button,
-  Toast,
-  ToastTitle,
-  ToastDescription,
-} from '@pycolors/ui';
+import { Button, Toast, ToastTitle, ToastDescription } from "@pycolors/ui";
 
-type ToastVariant = 'default' | 'success' | 'warning' | 'destructive';
+type ToastVariant = "default" | "success" | "warning" | "destructive";
 
 function useToastController() {
   const [open, setOpen] = React.useState(false);
@@ -18,8 +14,8 @@ function useToastController() {
     title: string;
     description?: string;
   }>({
-    variant: 'default',
-    title: 'Default',
+    variant: "default",
+    title: "Default",
   });
 
   const trigger = React.useCallback((next: typeof payload) => {
@@ -40,6 +36,8 @@ function useToastController() {
  * - In docs, wrap the page with a single provider + fixed viewport (bottom-right).
  */
 export function ToastTriggerPreview() {
+  const tSite = useCopy();
+
   const { open, setOpen, payload, trigger } = useToastController();
 
   return (
@@ -49,13 +47,13 @@ export function ToastTriggerPreview() {
         size="sm"
         onClick={() =>
           trigger({
-            variant: 'success',
-            title: 'Changes saved',
-            description: 'Your settings were updated.',
+            variant: "success",
+            title: "Changes saved",
+            description: "Your settings were updated.",
           })
         }
       >
-        Trigger toast
+        {tSite("Trigger toast")}
       </Button>
 
       <Toast
@@ -65,9 +63,9 @@ export function ToastTriggerPreview() {
         duration={2500}
       >
         <div className="min-w-0">
-          <ToastTitle>{payload.title}</ToastTitle>
+          <ToastTitle>{tSite(payload.title)}</ToastTitle>
           {payload.description ? (
-            <ToastDescription>{payload.description}</ToastDescription>
+            <ToastDescription>{tSite(payload.description)}</ToastDescription>
           ) : null}
         </div>
       </Toast>
@@ -83,6 +81,8 @@ export function ToastTriggerPreview() {
  * - The docs page owns the single ToastViewport so toasts appear bottom-right like a real app.
  */
 export function ToastVariantsPreview() {
+  const tSite = useCopy();
+
   const { open, setOpen, payload, trigger } = useToastController();
 
   return (
@@ -90,11 +90,9 @@ export function ToastVariantsPreview() {
       <Button
         variant="outline"
         size="sm"
-        onClick={() =>
-          trigger({ variant: 'default', title: 'Default' })
-        }
+        onClick={() => trigger({ variant: "default", title: "Default" })}
       >
-        Default
+        {tSite("Default")}
       </Button>
 
       <Button
@@ -102,13 +100,13 @@ export function ToastVariantsPreview() {
         size="sm"
         onClick={() =>
           trigger({
-            variant: 'success',
-            title: 'Success',
-            description: 'Everything looks good.',
+            variant: "success",
+            title: "Success",
+            description: "Everything looks good.",
           })
         }
       >
-        Success
+        {tSite("Success")}
       </Button>
 
       <Button
@@ -116,13 +114,13 @@ export function ToastVariantsPreview() {
         size="sm"
         onClick={() =>
           trigger({
-            variant: 'warning',
-            title: 'Warning',
-            description: 'Check your inputs before continuing.',
+            variant: "warning",
+            title: "Warning",
+            description: "Check your inputs before continuing.",
           })
         }
       >
-        Warning
+        {tSite("Warning")}
       </Button>
 
       <Button
@@ -130,25 +128,25 @@ export function ToastVariantsPreview() {
         size="sm"
         onClick={() =>
           trigger({
-            variant: 'destructive',
-            title: 'Destructive',
-            description: 'Something went wrong.',
+            variant: "destructive",
+            title: "Destructive",
+            description: "Something went wrong.",
           })
         }
       >
-        Destructive
+        {tSite("Destructive")}
       </Button>
 
       <Toast
         open={open}
         onOpenChange={setOpen}
         variant={payload.variant}
-        duration={payload.variant === 'success' ? 2200 : 3000}
+        duration={payload.variant === "success" ? 2200 : 3000}
       >
         <div className="min-w-0">
-          <ToastTitle>{payload.title}</ToastTitle>
+          <ToastTitle>{tSite(payload.title)}</ToastTitle>
           {payload.description ? (
-            <ToastDescription>{payload.description}</ToastDescription>
+            <ToastDescription>{tSite(payload.description)}</ToastDescription>
           ) : null}
         </div>
       </Toast>

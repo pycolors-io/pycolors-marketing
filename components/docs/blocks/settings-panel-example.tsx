@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 
 import {
@@ -9,9 +10,11 @@ import {
 } from "@/content/blocks/account/settings-panel";
 
 export function SettingsPanelExample() {
+  const tSite = useCopy();
+
   const [displayName, setDisplayName] = React.useState("Alex Morgan");
   const [profileNote, setProfileNote] = React.useState(
-    "Product designer working across shared systems.",
+    tSite("Product designer working across shared systems."),
   );
   const [workspaceName, setWorkspaceName] = React.useState("Northstar");
   const [displayNameError, setDisplayNameError] = React.useState<string>();
@@ -20,15 +23,19 @@ export function SettingsPanelExample() {
   const sections = [
     {
       id: "profile",
-      title: "Profile",
-      description: "Choose the details collaborators see in shared work.",
+      title: tSite("Profile"),
+      description: tSite(
+        "Choose the details collaborators see in shared work.",
+      ),
       fields: [
         {
           id: "display-name",
           name: "displayName",
-          label: "Display name",
+          label: tSite("Display name"),
           value: displayName,
-          description: "Use the name people recognize when working with you.",
+          description: tSite(
+            "Use the name people recognize when working with you.",
+          ),
           error: displayNameError,
           autoComplete: "name",
           required: true,
@@ -42,9 +49,11 @@ export function SettingsPanelExample() {
           id: "profile-note",
           kind: "textarea",
           name: "profileNote",
-          label: "Profile note",
+          label: tSite("Profile note"),
           value: profileNote,
-          description: "A short, public-facing description of your role.",
+          description: tSite(
+            "A short, public-facing description of your role.",
+          ),
           rows: 3,
           onValueChange: setProfileNote,
         },
@@ -52,15 +61,19 @@ export function SettingsPanelExample() {
     },
     {
       id: "workspace",
-      title: "Workspace",
-      description: "Keep the shared workspace identity clear and current.",
+      title: tSite("Workspace"),
+      description: tSite(
+        "Keep the shared workspace identity clear and current.",
+      ),
       fields: [
         {
           id: "workspace-name",
           name: "workspaceName",
-          label: "Workspace name",
+          label: tSite("Workspace name"),
           value: workspaceName,
-          description: "Shown in navigation and shared workspace surfaces.",
+          description: tSite(
+            "Shown in navigation and shared workspace surfaces.",
+          ),
           onValueChange: setWorkspaceName,
         },
       ],
@@ -71,11 +84,11 @@ export function SettingsPanelExample() {
     event.preventDefault();
 
     if (!displayName.trim()) {
-      setDisplayNameError("Enter a display name.");
+      setDisplayNameError(tSite("Enter a display name."));
       setFeedback({
         status: "error",
-        title: "Review the highlighted field",
-        description: "Nothing has been submitted.",
+        title: tSite("Review the highlighted field"),
+        description: tSite("Nothing has been submitted."),
       });
       return;
     }
@@ -83,20 +96,24 @@ export function SettingsPanelExample() {
     setDisplayNameError(undefined);
     setFeedback({
       status: "success",
-      title: "Settings ready to save",
-      description: "Connect this callback to your own persistence layer.",
+      title: tSite("Settings ready to save"),
+      description: tSite(
+        "Connect this callback to your own persistence layer.",
+      ),
     });
   }
 
   return (
     <div className="not-prose">
       <SettingsPanel
-        description="Update the profile and workspace details your product displays."
+        description={tSite(
+          "Update the profile and workspace details your product displays.",
+        )}
         feedback={feedback}
         onSubmit={handleSubmit}
         sections={sections}
-        submitLabel="Save settings"
-        title="Account settings"
+        submitLabel={tSite("Save settings")}
+        title={tSite("Account settings")}
       />
     </div>
   );

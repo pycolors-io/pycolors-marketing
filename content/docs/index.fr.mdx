@@ -1,0 +1,184 @@
+---
+title: Documentation PyColors
+description: Construire avec PyColors. Installez la bibliothèque d'interface
+  utilisateur, composez votre premier écran ou configurez un starter avec des
+  guides pratiques pour chaque étape.
+full: true
+hero: true
+lastUpdated: "2026-10-08"
+appliesTo: PyColors
+---
+
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Blocks,
+  Box,
+  CreditCard,
+  Layers3,
+  LayoutTemplate,
+  LockKeyhole,
+  Palette,
+  Rocket,
+  ShieldCheck,
+} from "lucide-react";
+import {
+  DocsHome,
+  DocsHomeHero,
+  DocsHomeSection,
+  DocsHomeHelp,
+} from "@/components/docs/docs-home";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<DocsHome>
+  <DocsHomeHero>
+    <Tabs items={["Installer l'IU", "Premier élément"]}>
+      <Tab value="Installer l'IU">
+
+```bash title="Terminal"
+pnpm add @pycolors/ui @pycolors/tokens
+```
+
+Commencez dans une application React avec Tailwind CSS v4. Alors [connecter les styles](/docs/ui/installation#add-design-tokens).
+
+</Tab>
+      <Tab value="Premier élément">
+
+```tsx title="app/page.tsx"
+import { Button } from "@pycolors/ui";
+
+export default function Page() {
+  return <Button>Save changes</Button>;
+}
+```
+
+Chargez le token CSS avant le rendu. Suivez le [Guide d'installation complet](/docs/ui/installation).
+
+</Tab>
+
+</Tabs>
+
+  </DocsHomeHero>
+
+<DocsHomeSection
+  id="build-your-interface"
+  title="Créez votre interface"
+  description="Commencez par un composant. Rassemblez des écrans avec des motifs et des tokens partagés."
+>
+  <DocsLinks
+    variant="grid"
+    tone="neutral"
+    className="xl:grid-cols-3"
+    items={[
+      {
+        title: "bibliothèque UI",
+        href: "/docs/ui",
+        description:
+          "Composants React accessibles, références API et exemples de travail.",
+        icon: Box,
+      },
+      {
+        title: "Blocs",
+        href: "/docs/blocks",
+        description:
+          "Sections composées pour les formulaires, les tableaux de bord et les flux de produits quotidiens.",
+        icon: Blocks,
+      },
+      {
+        title: "Système de conception",
+        href: "/docs/design-system",
+        description:
+          "Couleurs, typographie et tokens sémantiques qui maintiennent votre interface utilisateur cohérente.",
+        icon: Palette,
+      },
+    ]}
+  />
+</DocsHomeSection>
+
+<DocsHomeSection
+  id="start-with-an-application"
+  title="Commencer avec une application"
+  description="Choisissez votre fondation et suivez son guide d'installation."
+>
+  <DocsLinks
+    variant="grid"
+    tone="neutral"
+    className="xl:grid-cols-3"
+    items={[
+      {
+        title: "Starter Free",
+        href: "/docs/starter/installation",
+        description:
+          "Exécutez un frontend SaaS complet avec des données de démonstration et des flux de produits simulés.",
+        icon: Layers3,
+        eyebrow: "Explorer un frontend",
+      },
+      {
+        title: "Starter Pro",
+        href: "/docs/starter-pro/getting-started",
+        description:
+          "Configurez votre starter acheté avec l'authentification, une base de données et la facturation.",
+        icon: Rocket,
+        eyebrow: "Connectez votre backend",
+      },
+      {
+        title: "NA-AI Landing",
+        href: "/docs/templates/na-ai-landing/setup",
+        description:
+          "Exécutez votre modèle acheté et personnalisez son contenu pour votre lancement.",
+        icon: LayoutTemplate,
+        eyebrow: "Lancer une landing page",
+      },
+    ]}
+  />
+</DocsHomeSection>
+
+<DocsHomeSection
+  id="connect-and-launch"
+  title="Se connecter et lancer"
+  description="Configurez des services réels dans Starter Pro, puis vérifiez les flux que vos clients utiliseront."
+>
+  <div className="grid gap-3 sm:grid-cols-2">
+    <DocsLinks
+      variant="list"
+      tone="neutral"
+      className="my-0"
+      items={[
+        {
+          title: "Authentification",
+          href: "/docs/starter-pro/auth",
+          description: "Connexion, sessions et routes protégés.",
+          icon: LockKeyhole,
+        },
+        {
+          title: "Facturation",
+          href: "/docs/starter-pro/billing",
+          description: "Stripe checkout, webhooks et abonnements.",
+          icon: CreditCard,
+        },
+      ]}
+    />
+    <DocsLinks
+      variant="list"
+      tone="neutral"
+      className="my-0"
+      items={[
+        {
+          title: "Liste de contrôle de production",
+          href: "/docs/starter-pro/production-checklist",
+          description:
+            "Contrôles de configuration, de sécurité et de livraison.",
+          icon: ShieldCheck,
+        },
+        {
+          title: "Déploiement",
+          href: "/docs/starter-pro/deployment",
+          description: "Préparez et déployez votre application Starter Pro.",
+          icon: Rocket,
+        },
+      ]}
+    />
+  </div>
+</DocsHomeSection>
+
+  <DocsHomeHelp />
+</DocsHome>

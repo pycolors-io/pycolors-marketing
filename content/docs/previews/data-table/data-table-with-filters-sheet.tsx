@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   Button,
   Sheet,
@@ -7,8 +8,8 @@ import {
   SheetTitle,
   SheetDescription,
   Pagination,
-} from '@pycolors/ui';
-import { Eye } from 'lucide-react';
+} from "@pycolors/ui";
+import { Eye } from "lucide-react";
 
 import {
   Table,
@@ -17,21 +18,23 @@ import {
   TableRow,
   TableHead,
   TableCell,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 export function DataTableWithFiltersSheet() {
+  const tSite = useCopy();
+
   return (
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline">Filters</Button>
+          <Button variant="outline">{tSite("Filters")}</Button>
         </SheetTrigger>
 
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>Filters</SheetTitle>
+            <SheetTitle>{tSite("Filters")}</SheetTitle>
             <SheetDescription>
-              Narrow results by status, plan, date range, etc.
+              {tSite("Narrow results by status, plan, date range, etc.")}
             </SheetDescription>
           </SheetHeader>
 
@@ -43,20 +46,20 @@ export function DataTableWithFiltersSheet() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead>{tSite("Name")}</TableHead>
+            <TableHead>{tSite("Status")}</TableHead>
+            <TableHead className="text-right">{tSite("Actions")}</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           <TableRow>
-            <TableCell>Acme</TableCell>
-            <TableCell>Active</TableCell>
+            <TableCell>{tSite("Acme")}</TableCell>
+            <TableCell>{tSite("Active")}</TableCell>
             <TableCell className="text-right">
               <Button size="sm" variant="ghost">
                 <Eye className="mr-2 h-4 w-4" aria-hidden="true" />
-                View
+                {tSite("View")}
               </Button>
             </TableCell>
           </TableRow>

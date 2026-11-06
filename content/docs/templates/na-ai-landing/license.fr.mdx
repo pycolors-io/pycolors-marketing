@@ -1,0 +1,266 @@
+---
+title: Licence
+description: Comprendre la portée de l'utilisation commerciale, les limites de
+  redistribution et les limites de soutien pour NA-AI Landing.
+lastUpdated: "2026-10-06"
+appliesTo: NA-AI Landing
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Badge } from "@pycolors/ui";
+import {
+  ArrowRight,
+  Briefcase,
+  FileText,
+  Scale,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">NA-AI Landing</Badge>
+  <Badge>Licence</Badge>
+</div>
+
+## Utilisation commerciale pour des projets réels [#commercial-usage-for-real-projects]
+
+Un seul achat NA-AI permet un nombre illimité de produits personnels, commerciaux et clients sous la licence commerciale standard PyColors. Vous pouvez personnaliser et déployer le modèle ; vous ne pouvez pas redistribuer le modèle lui-même.
+
+Le modèle est conçu pour:
+
+- projets personnels
+- produits commerciaux
+- Pages de marketing SaaS
+- Lancements de produits AI
+- livraison d'agence
+- travail client
+- validation de démarrage
+
+<DocsUpgradeCTA
+  title="Utilisez le modèle pour expédier les produits, pas revendre la source."
+  description="NA-AI Landing est autorisé à construire et à lancer des projets réels tout en protégeant le code source contre la redistribution en tant que produit concurrent."
+  productSlug="na-ai-landing"
+  buyLabel="Get NA-AI Landing — €49"
+  secondaryHref="/license"
+  secondaryLabel="PyColors license"
+/>
+
+<Callout title="Idée de base">
+  Vous pouvez utiliser le modèle pour construire et expédier des projets. Vous
+  ne pouvez pas revendre, redistribuer ou publier le code source en tant que
+  modèle concurrent.
+
+</Callout>
+
+### Fondations de licence [#license-foundations]
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Usage commercial",
+      icon: Briefcase,
+      description:
+        "Construisez des sites commerciaux illimités et des projets clients sous la licence commerciale standard incluse.",
+    },
+    {
+      title: "Redistribution protégée",
+      icon: ShieldCheck,
+      description:
+        "Le code source ne peut pas être redistribué, revendu, sous-licencié ou publié en tant que modèle concurrent.",
+    },
+    {
+      title: "Accès source",
+      icon: FileText,
+      description:
+        "Le package ZIP livré inclut le code source et la documentation nécessaires pour personnaliser et déployer le modèle.",
+    },
+    {
+      title: "Utilisation à long terme du projet",
+      icon: Sparkles,
+      description:
+        "Le modèle est destiné à aider les constructeurs à lancer et à faire évoluer des produits réels plus rapidement.",
+    },
+  ]}
+/>
+
+## Portée de la licence [#license-scope]
+
+La licence commerciale standard incluse permet des produits finis illimités sans restrictions par siège. Il ne s’agit pas d’une licence de projet unique.
+
+- Vous pouvez construire et déployer des projets personnels, commerciaux et clients.
+- Les employés, entrepreneurs, pigistes et collaborateurs peuvent accéder au modèle tout en travaillant sur le même projet final.
+- Cette collaboration n'accorde pas d'accès autonome pour les projets non liés.
+- Les clients peuvent utiliser le projet final déployé. Extraire, redistribuer, revendre ou réutiliser le modèle pour des projets non liés nécessite leur propre licence et reste soumis à ses restrictions.
+- Ne publiez pas le paquet source, ne le vendez pas en tant que modèle ou kit de développement, et n'utilisez pas sa source, ses actifs ou sa documentation pour former des modèles d'IA ou des générateurs de code.
+
+Garder le `LICENSE` fichier livré avec votre achat et tout contrat de commande écrit spécifique. Un résumé ultérieur du site Web ne réduit pas automatiquement les droits accordés lors d'un achat antérieur. Les droits obligatoires des consommateurs restent applicables.
+
+<Callout type="info" title="Votre projet et la source du modèle">
+  Vous conservez vos droits sur le code, le contenu et la marque d'origine que
+  vous créez. Le modèle sous-jacent et ses composants tiers conservent leurs
+  licences respectives.
+
+</Callout>
+
+## Autorisé vs non autorisé [#allowed-vs-not-allowed]
+
+<PreferAvoid
+  preferTitle="Generally allowed"
+  avoidTitle="Not allowed"
+  prefer={[
+    "Utilisation dans un projet personnel",
+    "Utilisation dans un projet commercial",
+    "utilisation pour le travail de client",
+    "personnaliser le design et le contenu",
+    "Déployer le site Web fini",
+    "Connectez votre propre backend ou vos services",
+  ]}
+  avoid={[
+    "revendre le template",
+    "redistribuer le code source",
+    "Partager le zip publiquement",
+    "le publier en tant que modèle concurrent",
+    "sous-licences du code source",
+    "Supprimer les restrictions de licence",
+  ]}
+/>
+
+## Ce que la licence n'inclut pas [#what-the-license-does-not-include]
+
+NA-AI Landing ne comprend pas:
+
+- Mise en œuvre backend
+- Authentification
+- Base de données Fondations
+- Stripe facturation
+- Intégration CMS
+- infrastructure de messagerie
+- travail d'implémentation personnalisé
+- Configuration de service tiers garantie
+
+Si vous avez besoin:
+
+- Authentification
+- facturation
+- Routes protégées
+- Bases SaaS prêtes à l'emploi
+
+Réviser Starter Pro.
+
+<Callout title="Limite du produit">
+  NA-AI Landing est la couche marketing frontale. Ce n'est pas une application
+  SaaS complète.
+
+</Callout>
+
+### Mises à jour et support [#updates-and-support]
+
+L'achat comprend la version livrée. Les futures mises à jour, corrections et fonctionnalités des modèles peuvent être fournies à la discrétion de PyColors, à moins que votre offre écrite ne comprenne des droits supplémentaires. Cela n'exclut pas les obligations obligatoires de conformité ou de mise à jour de sécurité.
+
+Il n'y a pas de calendrier de publication garanti ni de délai de réponse. Pour un accès manquant ou un problème de facturation, utilisez [Aide à l'achat](/orders/support). Pour le retrait, les remboursements et les garanties du consommateur, voir le [Conditions d'utilisation](/terms#terms-delivery-refunds).
+
+### Portée de l ' appui [#support-scope]
+
+Le soutien à l'effort raisonnable se concentre sur:
+
+- accès package
+- Questions d'installation
+- clarification de l'installation
+- clarification de la documentation
+- Problèmes de code source
+
+Le support n'inclut généralement pas:
+
+- construire des backends personnalisés
+- Réécrire le design de votre marque
+- Intégration de services tiers pour vous
+- Création de fonctionnalités personnalisées
+- Déboguer une infrastructure non liée
+
+### Politique de version [#versioning-policy]
+
+NA-AI Landing suit Versioning sémantique.
+
+Pour connaître les règles complètes et les attentes en matière de mise à niveau, [Politique de version](/docs/project/versioning-policy).
+
+<Callout title="Principe de versioning">
+  Versioning sémantique permet de garder les mises à jour prévisibles que le
+  modèle évolue.
+
+</Callout>
+
+### Liens juridiques [#legal-links]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Licence PyColors",
+      href: "/license",
+      description:
+        "Passez en revue la portée plus large de la licence PyColors et les conditions d'utilisation.",
+      icon: Scale,
+    },
+    {
+      title: "Conditions",
+      href: "/terms",
+      description:
+        "Examiner les conditions légales régissant l'achat, l'accès et l'utilisation.",
+      icon: FileText,
+    },
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Puis-je utiliser NA-AI Landing pour le travail du client?">
+    Oui. La licence commerciale standard incluse permet des produits finis illimités pour le client. Les clients peuvent utiliser le projet déployé ; l'accès au modèle autonome ou la réutilisation pour des projets non liés nécessite leur propre licence.
+  </Accordion>
+
+<Accordion title="Puis-je revendre le modèle après l'avoir modifié ?">
+  Non. Vous ne pouvez pas revendre, redistribuer, sous-licencier ou publier le
+  code source en tant que modèle concurrent.
+</Accordion>
+
+<Accordion title="Puis-je le connecter à mon backend ?">
+  Oui. Vous pouvez connecter le frontend à votre propre backend, CMS,
+  analytique, fournisseur de formulaire ou flux de paiement.
+</Accordion>
+
+  <Accordion title="Le modèle inclut-il les paiements Stripe?">
+    Non. NA-AI Landing est frontend seulement. Utilisez Starter Pro si vous avez besoin des fondations de facturation.
+  </Accordion>
+</Accordions>
+
+## Exemples pratiques d'utilisation [#practical-usage-examples]
+
+Exemples autorisés par la licence commerciale standard :
+
+- Lancement de votre site marketing SaaS
+- Création d'une landing page de démarrage
+- l'expédition d'un site client
+- Adapter les visuels et le branding
+- Intégration d'API et d'analytics
+- Déploiement public du site final
+
+Exemples qui ne sont généralement pas autorisés :
+
+- vendre le code source du modèle
+- republier le paquet ZIP
+- Diffuser la source publiquement
+- transformer la source en une entreprise de modèles concurrente
+
+<Callout title="Expédiez le projet, pas la source en tant que produit.">
+  La licence est conçue pour vous aider à créer de vrais produits tout en
+  protégeant le modèle de la redistribution.
+
+</Callout>

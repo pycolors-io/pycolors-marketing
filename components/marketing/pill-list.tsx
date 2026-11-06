@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { cn } from "@pycolors/ui";
 
@@ -31,16 +32,18 @@ export function MarketingPillList({
   className,
   "aria-label": ariaLabel,
 }: MarketingPillListProps) {
+  const tSite = useCopy();
+
   return (
     <ul
-      aria-label={ariaLabel}
+      aria-label={tSite(ariaLabel)}
       className={cn(
         "flex flex-wrap gap-2",
         align === "center" ? "justify-center" : "justify-start",
         className,
       )}
     >
-      {children}
+      {tSite(children)}
     </ul>
   );
 }
@@ -55,6 +58,8 @@ export function MarketingPill({
   icon,
   className,
 }: MarketingPillProps) {
+  const tSite = useCopy();
+
   return (
     <li
       className={cn(
@@ -65,10 +70,10 @@ export function MarketingPill({
     >
       {icon ? (
         <span aria-hidden="true" className="inline-flex shrink-0">
-          {icon}
+          {tSite(icon)}
         </span>
       ) : null}
-      {children}
+      {tSite(children)}
     </li>
   );
 }

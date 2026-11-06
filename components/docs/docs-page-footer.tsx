@@ -1,7 +1,8 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import {
   ArrowLeft,
   ArrowRight,
@@ -38,6 +39,8 @@ export function DocsPageFooter({
   showFeedback = false,
   className,
 }: DocsPageFooterProps) {
+  const tSite = useCopy();
+
   const [feedback, setFeedback] = React.useState<"up" | "down" | null>(null);
 
   return (
@@ -49,15 +52,18 @@ export function DocsPageFooter({
     >
       {previous || next ? (
         <p className="mb-4 text-xs font-medium text-muted-foreground">
-          Continue reading
+          {tSite("Continue reading")}
         </p>
       ) : null}
-      <nav aria-label="Docs pagination" className="grid gap-3 md:grid-cols-2">
+      <nav
+        aria-label={tSite("Docs pagination")}
+        className="grid gap-3 md:grid-cols-2"
+      >
         {previous ? (
           <DocsFooterNavCard
             href={previous.url}
-            label="Previous"
-            title={previous.title}
+            label={tSite("Previous")}
+            title={tSite(previous.title)}
             direction="previous"
           />
         ) : (
@@ -67,8 +73,8 @@ export function DocsPageFooter({
         {next ? (
           <DocsFooterNavCard
             href={next.url}
-            label="Next"
-            title={next.title}
+            label={tSite("Next")}
+            title={tSite(next.title)}
             direction="next"
           />
         ) : null}
@@ -87,15 +93,15 @@ export function DocsPageFooter({
                 className="h-3.5 w-3.5 text-primary"
                 aria-hidden="true"
               />
-              Continue building
+              {tSite("Continue building")}
             </div>
 
             <p className="mt-2 text-base font-semibold leading-6 tracking-tight text-foreground">
-              {ctaTitle}
+              {tSite(ctaTitle)}
             </p>
 
             <p className="mt-1 text-sm leading-6 text-muted-foreground">
-              {ctaDescription}
+              {tSite(ctaDescription)}
             </p>
           </div>
 
@@ -112,7 +118,7 @@ export function DocsPageFooter({
               "focus-visible:ring-offset-background lg:w-auto",
             )}
           >
-            {ctaLabel}
+            {tSite(ctaLabel)}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
@@ -128,19 +134,19 @@ export function DocsPageFooter({
             )}
           >
             <span className="text-xs font-medium text-muted-foreground">
-              Was this helpful?
+              {tSite("Was this helpful?")}
             </span>
 
             <FeedbackButton
               active={feedback === "up"}
-              label="Yes"
+              label={tSite("Yes")}
               onClick={() => setFeedback("up")}
               icon={ThumbsUp}
             />
 
             <FeedbackButton
               active={feedback === "down"}
-              label="No"
+              label={tSite("No")}
               onClick={() => setFeedback("down")}
               icon={ThumbsDown}
             />
@@ -164,6 +170,8 @@ function DocsFooterNavCard({
   title,
   direction,
 }: DocsFooterNavCardProps) {
+  const tSite = useCopy();
+
   const isNext = direction === "next";
 
   return (
@@ -186,14 +194,14 @@ function DocsFooterNavCard({
         {!isNext ? (
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
         ) : null}
-        {label}
+        {tSite(label)}
         {isNext ? (
           <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
         ) : null}
       </div>
 
       <div className="mt-2 text-sm font-medium leading-6 text-foreground">
-        {title}
+        {tSite(title)}
       </div>
     </Link>
   );
@@ -212,6 +220,8 @@ function FeedbackButton({
   onClick,
   icon: Icon,
 }: FeedbackButtonProps) {
+  const tSite = useCopy();
+
   return (
     <button
       type="button"
@@ -226,7 +236,7 @@ function FeedbackButton({
       )}
     >
       <Icon className="h-3.5 w-3.5" />
-      <span className="sr-only sm:not-sr-only">{label}</span>
+      <span className="sr-only sm:not-sr-only">{tSite(label)}</span>
     </button>
   );
 }

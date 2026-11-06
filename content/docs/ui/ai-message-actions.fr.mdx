@@ -1,0 +1,88 @@
+---
+title: AI Message Actions
+description: Actions de copie explicites avec rétroaction d'erreur en attente,
+  réussie et récupérable.
+lastUpdated: "2026-10-16"
+appliesTo: UI
+publishedAt: "2026-10-16"
+icon: Copy
+---
+
+import { AIMessageActionsExample } from "@/components/docs/ui-usage/ai-conversation-examples";
+import { MessageSquare, MessagesSquare } from "lucide-react";
+import { Callout } from "fumadocs-ui/components/callout";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Donner des actions de copie rétroaction honnête [#give-copy-actions-honest-feedback]
+
+`AIMessageActions` invoque votre `onCopy` callback avec un instantané de `value`. Il ne signale le succès que lorsque le rappel est résolu. Rejet ou une erreur synchrone affiche le texte de récupération et permet une autre tentative. Le composant n'accède jamais au presse-papiers par lui-même.
+
+<Callout title="Disponibilité du forfait">
+  Cette API est introduite par les primitives de conversation minor Changeset.
+  Utilisez l'espace de travail du référentiel jusqu'à la publication ;
+  l'interface utilisateur 1.6.1 et les versions antérieures ne l'exportent pas.
+
+</Callout>
+
+## Aperçu [#preview]
+
+<AIMessageActionsExample />
+
+L'exemple s'exécute ici dans la documentation. Le lien Explorer apparaît lorsque cette histoire est disponible dans le catalogue publié ; sinon, utilisez cet aperçu en ligne.
+
+```tsx
+"use client";
+
+import { AIMessageActions } from "@pycolors/ui";
+
+export function CopyResponse({ text }: { text: string }) {
+  return (
+    <AIMessageActions
+      value={text}
+      copyAriaLabel="Copy assistant response"
+      onCopy={(snapshot) => navigator.clipboard.writeText(snapshot)}
+    />
+  );
+}
+```
+
+L'accès au presse-papiers peut nécessiter un contexte sécurisé et une autorisation de l'utilisateur. Gardez le message d'origine sélectionnable lorsque la copie échoue. Retourner ou attendre la promesse réelle de `onCopy`; un callback fire-and-forget ne peut pas signaler un échec avec précision.
+
+## API [#api]
+
+| Prop                                   | Par défaut                         | Objet                                                             |
+| -------------------------------------- | ---------------------------------- | ----------------------------------------------------------------- |
+| `value: string`                        | Requis                             | Texte instantané fourni à la fonction de rappel de copie          |
+| `onCopy(value): void \| Promise<void>` | Requis                             | Action d'application, remplace le gestionnaire de copie div natif |
+| `disabled`                             | `false`                            | Désactiver l'action pendant les états contrôlés par l'application |
+| `copyLabel`                            | `Copy`                             | Étiquette de bouton visible                                       |
+| `copyAriaLabel`                        | `Copy message`                     | Nom de l'action accessible                                        |
+| `pendingLabel`                         | `Copying…`                         | Texte en attente d'état                                           |
+| `successLabel`                         | `Copied.`                          | Texte du statut résolu                                            |
+| `errorLabel`                           | Manuel-copie texte de récupération | Texte d'état rejeté                                               |
+| `children`                             | —                                  | Actions d'application supplémentaires dans la ligne               |
+| Les div props, `className`, `ref`      | —                                  | Attributs HTMLDivElement externes, styles et réf                  |
+
+Le slot est `ai-message-actions`. Le bouton natif prend en charge l'activation du clavier et est désactivé lorsqu'il est vide, désactivé par le consommateur ou en attente. Les clics répétés ne peuvent pas lancer des copies en attente. A `role="status"` région annonce un retour concis. Les étiquettes peuvent être localisées indépendamment.
+
+Changement `value` efface les commentaires et invalide les règlements périmés. Le démontage invalide également les commentaires en attente ; aucune opération n'annule votre promesse de presse-papiers. Utilisez des touches de message stables et désactivez la copie pendant le streaming si votre produit ne doit exporter que des messages complets.
+
+## Guides connexes [#related-guides]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Message AI",
+      icon: MessageSquare,
+      href: "/docs/ui/ai-message",
+      description: "Placez l'action à côté de son texte source visible.",
+    },
+    {
+      title: "AI Conversation",
+      icon: MessagesSquare,
+      href: "/docs/ui/ai-conversation",
+      description: "Voir une composition complète de la liste de messages.",
+    },
+  ]}
+/>

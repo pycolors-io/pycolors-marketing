@@ -7,15 +7,17 @@ export function createDocsMetadata({
   description,
   url,
   image,
+  locale = "en",
 }: Readonly<{
   title: string;
   description?: string;
   url: string;
   image: string;
+  locale?: "en" | "fr";
 }>): Metadata {
   const socialTitle = title.includes(SITE_NAME)
     ? title
-    : `${title} · Docs · ${SITE_NAME}`;
+    : `${title} · ${locale === "fr" ? "Documentation" : "Docs"} · ${SITE_NAME}`;
 
   return {
     title: { absolute: socialTitle },

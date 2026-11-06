@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { LoaderCircle } from "lucide-react";
 
 import { cn } from "@pycolors/ui";
@@ -12,6 +13,7 @@ import { CheckoutFailureNotice } from "./checkout-failure-notice";
 
 type BuyProductButtonProps = {
   productSlug: string;
+  locale?: "en" | "fr";
   className?: string;
   fullWidth?: boolean;
   size?: "default" | "sm" | "lg" | "icon";
@@ -26,6 +28,7 @@ type BuyProductButtonProps = {
 export function BuyProductButton({
   productSlug,
   className,
+  locale = "en",
   fullWidth = true,
   size = "lg",
   variant = "default",
@@ -35,6 +38,8 @@ export function BuyProductButton({
   showTrustText = false,
   customerEmail,
 }: Readonly<BuyProductButtonProps>) {
+  const tSite = useCopy();
+
   const productName =
     productSlug in PRODUCT_DISPLAY
       ? PRODUCT_DISPLAY[productSlug as keyof typeof PRODUCT_DISPLAY].name
@@ -86,7 +91,7 @@ export function BuyProductButton({
               aria-hidden="true"
             />
 
-            {loadingLabel}
+            {tSite(loadingLabel)}
           </>
         ) : (
           label
@@ -94,10 +99,10 @@ export function BuyProductButton({
       </Button>
 
       {showTrustText ? (
-        <p className="text-xs text-muted-foreground">{trustText}</p>
+        <p className="text-xs text-muted-foreground">{tSite(trustText)}</p>
       ) : null}
 
-      {hasError ? <CheckoutFailureNotice /> : null}
+      {hasError ? <CheckoutFailureNotice locale={locale} /> : null}
     </div>
   );
 }

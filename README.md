@@ -207,3 +207,122 @@ Website → https://pycolors.io \
 Docs → https://pycolors.io/docs \
 UI → https://github.com/pycolors-io/pycolors-ui \
 Tokens → https://github.com/pycolors-io/pycolors-tokens
+
+## English and French site
+
+Marketing, documentation and blog articles share the same component layouts in
+English and French. English URLs remain stable; French URLs use `/fr`.
+Commercial aliases include `/fr/tarifs` and `/fr/demande-de-devis`; legal aliases
+are `/fr/licence`, `/fr/conditions` and `/fr/confidentialite`.
+
+`lib/i18n/routing.ts` defines routing and localized links. Use its `Link` and
+navigation helpers instead of assembling locale prefixes. The shared language
+menu is available in the header and both footers, with keyboard navigation and
+the active language indicated. Native locale links keep the current page, query
+and anchor; the footer's smooth-scroll handler leaves them untouched. There is no browser/IP redirect or
+language cookie: links select the language explicitly.
+
+Every public page has a self canonical, reciprocal `en`/`fr` alternates and an
+English `x-default`. The sitemap lists both versions. Checkout and purchase-access
+pages retain their noindex rules and API contracts. Product prices, identifiers,
+commands and code examples remain unchanged by translation.
+
+The shared document initializes appearance through `public/site-appearance.js`
+before the first paint, including localized 404s. Keep its `theme` storage key,
+class-based light/dark modes and palette key aligned with `RootProvider`.
+The provider retains theme state and system-preference updates; its inline
+bootstrap is inert so client remounts do not render executable scripts.
+
+### Updating copy
+
+- Server and client components share `useCopy`; async components use `getCopy`.
+  Translate presentation text at its render boundary. Keep identifiers, customer
+  data and code out of this API.
+- Translate server-owned labels before passing them into interactive client
+  components, as in `Breadcrumb` and the guide table of contents. The client
+  catalogue contains the client import graph, not arbitrary strings passed by
+  Server Components. Preserve IDs, values and callback arguments when translating
+  the presentation models of local examples.
+- `messages/en.json` records normalized English source copy; `messages/fr.json`
+  contains the corresponding French copy. Keys come from `messageKey` in
+  `lib/i18n/copy-core.ts`. Preserve `{value0}` placeholders exactly and pass their
+  values separately. Messages are plain text, never HTML.
+- Keep English MDX files and add French siblings as `name.fr.mdx`. Fumadocs owns
+  localized navigation and search, without an English content fallback. Preserve
+  code fences, imports, identifiers and component structure. Explicit `[#id]`
+  headings keep existing deep links valid across languages. Navigation metadata
+  uses `meta.fr.json` with the same page order and icons.
+- Review translations in context, especially commercial and legal copy. A
+  translation must not change the offer, rights, prices or provider behavior.
+- Run `pnpm --filter pycolors-marketing i18n:client` after changing a client
+  component's copy or imports. It derives the serialized client message subset;
+  the complete catalogue stays on the server. English client components use
+  their existing source strings without serializing the English catalogue.
+
+Run Marketing lint, types, tests and a production build. `i18n:check` is included
+in the existing test command and rejects missing messages, changed placeholders
+and a stale client catalogue. It also checks field hints and requires placeholders
+for interpolated copy. Regression tests cover shared layouts, translated FAQ
+search, MDX/code preservation, documentation tabs, locale links and the root palette script.
+Check desktop/mobile rendering and the browser console before public delivery.
+
+The Next.js `skipProxyUrlNormalize` flag preserves the incoming URL for locale
+rewrites. Without it, Next.js 16 loopback normalization can turn an internal
+English rewrite into a second HTTP request and a redirect back to the same public
+URL under `next start`. The public-demo browser suite checks production EN/FR
+responses, canonical aliases with queries and client navigation. The default
+English URL remains unprefixed; no locale detection or redirect rule is removed.
+
+## Custom project services
+
+`/services` and `/fr/services` describe custom software engagements, possible
+use cases, deliverables and the delivery process. Examples of future adaptations
+are scoped possibilities; Product studio remains a clearly identified PyColors
+reference implementation. Existing Starter Pro setup/adaptation prices stay in
+`lib/products/starter-pro-services.ts`.
+
+`lib/products/project-services.ts` adds the `custom-product` enquiry option,
+quoted after scoping, without adding a fixed-price product to checkout. Its CTA
+preselects the same stable service ID in the quote form. The API validator and
+private enquiry email template support all three service IDs; older enquiries
+remain valid. Deploy the compatible API/email change before exposing the new
+Marketing entry point. No migration is required. Tests mock email delivery.
+
+The service use cases focus on client portals, internal tools, document
+automation and custom SaaS applications. Sport is one possible sector alongside
+agencies, service firms and training teams. Websites and template adaptations
+can complement a scoped product.
+
+The Services introduction uses a real Product studio capture, explicitly labelled
+as a PyColors reference with fictional data. Direct collaboration, written scope
+and handover terms explain the engagement. Component, Starter Pro and reference
+links provide inspectable examples; process steps identify concrete outputs.
+There are no customer claims, promised delivery times or competitor comparisons.
+Custom development remains scoped separately from the two Starter Pro engagements.
+Services copy names PyColors and addresses the visitor directly, without a plural
+agency voice, to reflect an independent practice accurately.
+
+### Proposal preview and editable document
+
+`/request-a-quote/template` and `/fr/demande-de-devis/modele` now display the
+proposal as a web page. These URLs previously downloaded Markdown; their links
+now open the preview. The page provides a Word download (`/word` under either
+localized URL) and native browser printing / Save as PDF. Pages and downloads
+remain `noindex`. They are blank templates, not accepted customer proposals.
+
+The primary commercial action is “Describe your project”. The proposal preview
+is a secondary explanation of what PyColors prepares after reviewing the brief;
+visitors do not need to complete a proposal themselves. Word and print actions
+remain secondary tools inside the document header. Printing retains the blank
+template notice; the Word content is unchanged.
+
+`lib/quotes/proposal-template.ts` remains the single content source for both
+languages. A restricted parser feeds the preview and a native OOXML generator
+using the existing `fflate` dependency. Word text, headings, lists and tables
+are editable; there are no macros, uploaded assets or external document services.
+Downloads use fixed ZIP timestamps and cannot contain request-provided content.
+
+The proposal includes custom software alongside the two existing engagements.
+Scope, licence requirements, third-party costs and any follow-up are agreed in
+the written proposal. Regenerate both Word downloads and visually inspect all
+pages in a Word-compatible renderer when changing their content or layout.

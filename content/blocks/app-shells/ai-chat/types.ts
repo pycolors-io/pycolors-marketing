@@ -1,3 +1,19 @@
+export type ChatTranslate = (
+  text: string,
+  values?: Readonly<Record<string, string | number>>,
+) => string;
+
+export function defaultChatTranslate(
+  text: string,
+  values?: Readonly<Record<string, string | number>>,
+) {
+  return values
+    ? text.replace(/\{(value\d+)\}/g, (match, name: string) =>
+        Object.hasOwn(values, name) ? String(values[name]) : match,
+      )
+    : text;
+}
+
 export type ChatStatus =
   "idle" | "submitting" | "streaming" | "stopped" | "error";
 
@@ -15,6 +31,8 @@ export interface ChatSuggestion {
 
 /** Source-copy API. Requests, IDs, draft and persistence belong to the consumer. */
 export interface AIChatProps {
+  /** Localize interface copy. Message text, editable values, IDs and callbacks stay consumer-owned. */
+  translate?: ChatTranslate;
   messages: readonly ChatMessage[];
   draft: string;
   status: ChatStatus;

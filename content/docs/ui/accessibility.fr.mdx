@@ -1,0 +1,339 @@
+---
+title: Accessibilité
+description: Vérifications d'accessibilité requises pour la composition des
+  primitives d'interface utilisateur PyColors dans les formulaires, les
+  superpositions, les commentaires, les vues de données et la navigation.
+lastUpdated: "2026-08-04"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  BellRing,
+  CheckSquare,
+  CircleAlert,
+  FormInput,
+  ListOrdered,
+  MousePointerClick,
+  PanelRight,
+  PanelTop,
+  Table2,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Accessibilité</Badge>
+</div>
+
+## L’accessibilité fait partie de la composition [#accessibility-belongs-to-the-composition]
+
+L'interface utilisateur de PyColors fournit des éléments sémantiques, des styles de focus visibles et un comportement Radix où la primitive peut les posséder. Votre application possède toujours des noms accessibles, des descriptions, la validation, la structure de la page, l'ordre de focus et le temps de rétroaction.
+
+Utilisez cette page comme liste de contrôle préalable. Utilisez les pages de composants liées pour des API et des exemples complets.
+
+<Callout title="Limite API publique">
+  Importer toutes les primitives de `@pycolors/ui`. Ne documentez pas ou ne
+  dépendez pas `@pycolors/ui/src/*`, `@pycolors/ui/dist/*`, ou des chemins
+  réservés à l'espace de travail.
+
+</Callout>
+
+## Requis avant l'expédition [#required-before-shipping]
+
+Ces contrôles sont des portes de sortie pour chaque surface de produit composée.
+
+### Sémantique et noms [#semantics-and-names]
+
+- [ ] Utilisez a `Button` pour une action et un lien pour la navigation.
+- [ ] Donnez à chaque contrôle interactif un nom accessible. Préférez le texte visible; utilisez `aria-label` uniquement lorsqu'une étiquette visible n'est pas pratique.
+- [ ] Connectez les étiquettes de formulaire, les descriptions et les erreurs à leurs contrôles.
+- [ ] Conservez l'ordre d'en-tête, les listes, les repères et la structure de table.
+- [ ] Marquer les icônes décoratives avec `aria-hidden="true"`; ne laissez pas une icône ou une couleur porter la seule signification.
+
+### Clavier et focus [#keyboard-and-focus]
+
+- [ ] Atteignez chaque action avec Tab et Shift+Tab dans un ordre logique.
+- [ ] Activez les boutons et les cases à cocher avec les touches du clavier attendues.
+- [ ] Gardez un indicateur de focus visible; ne retirez pas l'anneau de focus PyColors.
+- [ ] Ne créez pas de pièges à clavier. Les superpositions modales sont l'exception intentionnelle lorsqu'elles sont ouvertes et doivent fournir une sortie de travail.
+- [ ] Restaurer la focus de manière prévisible après la fermeture d'une superposition ou la suppression du contenu.
+
+### État et feedback [#state-and-feedback]
+
+- [ ] Exposez les états désactivés, requis, invalides, chargés, sélectionnés, étendus et actuels par programme là où ils s'appliquent.
+- [ ] Placez les erreurs de validation à côté du champ affecté et annoncez les erreurs qui apparaissent après une tentative de soumission.
+- [ ] Utilisez du texte et un traitement visuel pour les erreurs, les avertissements et les états de réussite.
+- [ ] Continuez à bloquer les commentaires dans le contexte de la tâche ; utilisez un toast uniquement pour les mises à jour non bloquantes.
+
+### Contrôles visuels et réactifs [#visual-and-responsive-checks]
+
+- [ ] Vérifiez le texte, les contrôles et les indicateurs de focus dans les thèmes clairs et sombres.
+- [ ] Vérifiez la surface à 200% de zoom et à une largeur mobile étroite.
+- [ ] Confirmez les cibles tactiles, l'ordre de lecture et la récupération des erreurs restent utilisables sans dépendre du survol.
+
+## Portes spécifiques aux composants [#component-specific-gates]
+
+### Bouton [#button]
+
+Voir la [Référence du bouton](/docs/ui/button).
+
+- Utilisez un nom court et accessible. Les boutons Icon-Only nécessitent un `aria-label`, et leur icône décorative nécessite `aria-hidden="true"`.
+- Gardez les actions comme des boutons. Utilisation `Button asChild` avec un lien réel lorsque l'utilisateur navigue vers un autre emplacement.
+- Utilisez le natif `disabled` pour une action non disponible. Si la raison est importante, expliquez-la dans un texte proche et connectez ce texte avec `aria-describedby`.
+- Pendant le travail asynchrone, empêchez la soumission en double et mettez à jour le texte visible tel que "Enregistrer...". Ajouter `aria-busy="true"` lorsque l'action est encore en cours de traitement.
+
+### Entrées [#input]
+
+Voir la [Référence des entrées](/docs/ui/input).
+
+- Chaque entrée a besoin d'une `label` ou un nom accessible équivalent. Le texte d'espace réservé n'est jamais l'étiquette.
+- Utilisation `required` pour un champ obligatoire. Le composant expose à la fois l'état requis natif et accessible.
+- Utilisez le `error` prop pour la validation au niveau du terrain. Il fixe `aria-invalid`, connecte `aria-errormessage`, et affiche une erreur annoncée.
+- Utilisation `helperText` pour les instructions, pas pour une erreur que l'utilisateur doit corriger. Fourni par les consommateurs `aria-describedby` valeurs sont préservées.
+
+```tsx title="required-email.tsx"
+import { Input } from "@pycolors/ui";
+
+export function RequiredEmail() {
+  return (
+    <Input
+      id="email"
+      name="email"
+      type="email"
+      label="Email"
+      required
+      error="Enter a valid email address."
+    />
+  );
+}
+```
+
+### Case à cocher [#checkbox]
+
+Voir la [Case à cocher de référence](/docs/ui/checkbox).
+
+- Se connecter `CheckboxLabel` au `Checkbox` avec matching `htmlFor` et `id`.
+- Donnez une description des choix conséquents. Connectez-vous avec `aria-describedby`; `CheckboxDescription` Cela ne crée pas automatiquement cette relation.
+- Pour le consentement requis, définissez `required` et `aria-invalid` lorsqu'invalide. Rendre une erreur de texte à proximité avec `role="alert"` et connectez son id à la case à cocher.
+- Expliquez les choix désactivés lorsque les utilisateurs ont besoin de savoir ce qui les rend disponibles.
+
+```tsx title="required-consent.tsx"
+import {
+  Checkbox,
+  CheckboxContent,
+  CheckboxDescription,
+  CheckboxField,
+  CheckboxLabel,
+} from "@pycolors/ui";
+
+export function RequiredConsent() {
+  const hasError = true;
+
+  return (
+    <CheckboxField>
+      <Checkbox
+        id="terms"
+        required
+        aria-invalid={hasError}
+        aria-describedby={
+          hasError ? "terms-description terms-error" : "terms-description"
+        }
+      />
+      <CheckboxContent>
+        <CheckboxLabel htmlFor="terms">Accept the terms</CheckboxLabel>
+        <CheckboxDescription id="terms-description">
+          Required to create the workspace.
+        </CheckboxDescription>
+        {hasError ? (
+          <p id="terms-error" role="alert" className="text-sm text-destructive">
+            Accept the terms to continue.
+          </p>
+        ) : null}
+      </CheckboxContent>
+    </CheckboxField>
+  );
+}
+```
+
+### Boîte de dialogue et feuille [#dialog-and-sheet]
+
+Voir la [Référence du dialogue](/docs/ui/dialog) et [Référence de le panneau latéral](/docs/ui/sheet).
+
+- Donnez au déclencheur un nom clairement accessible.
+- Render `DialogTitle` ou `SheetTitle` pour le nom accessible. Ajoutez une description lorsque la tâche ou la conséquence doit être expliquée.
+- Mettez l'accent initial sur le premier contrôle significatif. Pour une confirmation destructive, préférez une action sûre plutôt que le bouton destructeur.
+- Échapper au renvoi, au confinement de la focus et au retour de la focus. Si le déclencheur se démonte, déplacez le focus sur un contrôle de survie logique.
+- Gardez la page derrière une superposition modale indisponible pendant qu'elle est ouverte. Ne désactivez pas le comportement modal sans un examen d'interaction équivalent.
+- Conservez les erreurs de soumission dans la superposition et ne la fermez pas jusqu'à ce que l'utilisateur puisse comprendre le résultat.
+
+### Onglets [#tabs]
+
+Voir la [Référence des onglets](/docs/ui/tabs).
+
+- Donner `TabsList` an `aria-label` ou l'associer à un titre visible.
+- Gardez les étiquettes de déclenchement concises et faites en sorte que chaque étiquette décrive le panneau associé.
+- Préserver la relation Radix entre chaque déclencheur et son `TabsContent`.
+- Vérifiez le mouvement flèche-clé, le comportement Home/End, la visibilité de la focus et le comportement d'activation choisi. L'activation automatique n'est appropriée que lorsque la commutation des panneaux est immédiate; utilisez l'activation manuelle pour un travail qui a un coût notable.
+- Utilisez des liens au lieu d'onglets pour la navigation principale ou des routes séparés.
+
+### Tableau [#table]
+
+Voir la [Tableau de référence](/docs/ui/table).
+
+- Donnez à la table une légende ou un titre à proximité lorsque son but n'est pas évident.
+- Utilisation `TableHeader`, `TableBody`et `TableHead`. En-têtes de colonne par défaut à `scope="col"`; passer `scope="row"` pour les headers.
+- Conservez les actions de ligne comme des liens réels ou des boutons avec des noms accessibles. Ne faites pas d'une ligne entière la seule cible de clic ambiguë.
+- Annoncer l'état de chargement lorsqu'il change. `TableLoading` par défaut à une région en direct polie et accepte `ariaLive="assertive"` uniquement pour les mises à jour urgentes.
+- Conserver les états vides et d'erreur compréhensibles en dehors des lignes de données brutes.
+
+### Pagination [#pagination]
+
+Voir la [Référence de pagination](/docs/ui/pagination).
+
+- Étiquetez le `Pagination` navigation pour sa collection, par exemple `aria-label="Members pages"`.
+- Rendre les contrôles de page à l'intérieur `PaginationContent` et `PaginationItem`.
+- Marquer la page actuelle avec `PaginationLink isActive`; il fixe `aria-current="page"`.
+- Utiliser le natif `disabled` sur les contrôles précédents et suivants non disponibles.
+- Gardez la page modifiable au clavier et annoncez les résultats mis à jour via le résumé des résultats environnants lorsque la page change de manière asynchrone.
+
+### Alerte et toast [#alert-and-toast]
+
+Voir la [Référence de l'alerte](/docs/ui/alert) et [Toast de référence](/docs/ui/toast).
+
+- Utilisation `Alert` pour une rétroaction persistante qui affecte la tâche en cours. Utilisation `Toast` pour une confirmation courte et non bloquante ou une mise à jour récupérable.
+- `Alert` annonce poliment par défaut. Utilisation `ariaLive="off"` pour un contenu statique qui n'a pas besoin d'une annonce et `ariaLive="assertive"` Seulement pour une erreur urgente.
+- L'urgence du toast suit sa variante: les confirmations de routine annoncent poliment; les variantes d'avertissement et destructrices sont plus interruptives.
+- Rendre un `ToastViewport` par `ToastProvider` portée. Donner `ToastClose` un nom visible ou accessible lorsqu'il est présent.
+- Ne jamais mettre une erreur de blocage, étape de récupération requise ou instruction critique seulement dans un toast.
+
+## Limites des composants serveur et client [#server-and-client-component-boundaries]
+
+Le comportement d'accessibilité doit survivre à la limite React Server Component.
+
+- `Alert`, `Button`, `Pagination`et `Table` peut effectuer un rendu dans un composant serveur lorsque sa composition est statique.
+- `Input`, `Checkbox`, `Dialog`, `Sheet`, `Tabs`et `Toast` fournir leur propre frontière de client où leur mise en œuvre a besoin d'un.
+- Un composant serveur peut rendre un composant client de package. Ajouter `"use client"` à votre wrapper d'application uniquement lorsque ce wrapper possède un état, des effets, des API de navigateur ou des gestionnaires d'événements.
+- Ne pas passer de gestionnaires d'événements à partir d'un composant serveur. Déplacez la plus petite composition interactive dans un composant client et conservez le chargement des données côté serveur.
+
+Voir [Exemples de composition](/docs/ui/usage-patterns) pour des exemples complets de serveur/client et [Composition](/docs/ui/composition) pour la propriété de surface du produit.
+
+## Vérification manuelle [#manual-verification]
+
+Exécutez ces contrôles sur la surface modifiée sans ajouter d'outillage :
+
+1. Utilisez uniquement le clavier. Tab avant et arrière, activez les contrôles avec Entrée ou Espace, et confirmez que le focus reste visible et ordonné.
+2. Ouvrez chaque boîte de dialogue et feuille. Confirmez la focus initiale, le blocage de l'arrière-plan, l'échappement, le contrôle étroit visible et le retour de la focus.
+3. Déplacez-vous dans les onglets avec les touches fléchées et Accueil / Fin. Confirmez que le panneau actif correspond au déclencheur sélectionné.
+4. Soumettre chaque formulaire vide et invalide. Confirmer l'état requis, le texte d'erreur, le placement du focus et les annonces sont compréhensibles.
+5. Déclenchez le chargement, le succès, l'avertissement et le retour d'erreur. Confirmez que les messages persistants restent dans leur contexte et que les toasts restent non bloquants.
+6. Inspectez les tables et la pagination avec la navigation au clavier. Confirmez les en-têtes, la page actuelle, les contrôles désactivés et les commentaires de résultats mis à jour.
+7. Passez en revue les thèmes clairs et sombres, le zoom à 200%, une fenêtre de visualisation étroite et une préférence de mouvement réduit. Confirmer le sens ne dépend jamais de la couleur seule.
+
+<Callout title="Résultat de l'examen manuel">
+  Enregistrez ce que vous avez vérifié dans la pull request. Un composant basé
+  sur Radix n'est pas une preuve que la composition complète de l'application a
+  été vérifiée.
+
+</Callout>
+
+## Améliorations recommandées [#recommended-improvements]
+
+Ces pratiques améliorent la confiance, mais ne sont pas des portes de sortie pour ce changement de documentation :
+
+- flux représentatifs de test avec plus d'un navigateur et lecteur d'écran;
+- ajouter des contrôles d'accessibilité automatisés aux flux de produits lourds en comportement;
+- inclure des descriptions de choix avec des conséquences, tout en gardant des étiquettes simples concises;
+- la localisation des tests, le contenu long, le mouvement réduit et les paramètres à contraste élevé;
+- documente le comportement d'interaction réutilisable en tant que modèle lorsque plusieurs surfaces le répètent.
+
+## Erreurs courantes [#common-mistakes]
+
+- Importation de chemins de source privée ou de paquets générés.
+- Supprimer les styles de focus visibles parce que la conception du pointeur semble plus propre.
+- Utiliser une icône, un espace réservé ou une couleur comme seul signal d'étiquette ou d'état.
+- Affichage d'une erreur de validation sans la connecter au contrôle affecté.
+- Clôture d'une superposition après une soumission échouée.
+- Utilisation des onglets comme navigation d'route.
+- Rendre les lignes de la table cliquables sans action claire sur le clavier.
+- Utiliser un toast pour une erreur de blocage ou l'étape suivante requise.
+
+## Références des composants [#component-references]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description:
+        "Actions accessibles, étiquettes à icône seule, états désactivés et rétroaction asynchrone.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Entrées",
+      href: "/docs/ui/input",
+      description:
+        "Étiquettes, descriptions, état requis, erreurs de validation et texte d'aide.",
+      icon: FormInput,
+    },
+    {
+      title: "Case à cocher",
+      href: "/docs/ui/checkbox",
+      description:
+        "Consentement, descriptions, état requis et erreurs au niveau du champ.",
+      icon: CheckSquare,
+    },
+    {
+      title: "boîte dialogue",
+      href: "/docs/ui/dialog",
+      description:
+        "Noms modaux, descriptions, confinement de la focus, renvoi et retour de la focus.",
+      icon: PanelTop,
+    },
+    {
+      title: "Sheet",
+      href: "/docs/ui/sheet",
+      description:
+        "Mettez de côté les workflows avec des titres, des descriptions et un comportement de focus accessibles.",
+      icon: PanelRight,
+    },
+    {
+      title: "Onglets",
+      href: "/docs/ui/tabs",
+      description:
+        "Étiquettes de tablature, relations de déclenchement, mouvement du clavier et mode d'activation.",
+      icon: ListOrdered,
+    },
+    {
+      title: "Tableau",
+      href: "/docs/ui/table",
+      description:
+        "Légendes, en-têtes, actions de ligne, annonces de chargement et états vides.",
+      icon: Table2,
+    },
+    {
+      title: "Pagination",
+      href: "/docs/ui/pagination",
+      description:
+        "Étiquettes de navigation, état actuel de la page, contrôles désactivés et mises à jour des résultats.",
+      icon: ListOrdered,
+    },
+    {
+      title: "Alerte",
+      href: "/docs/ui/alert",
+      description:
+        "Rétroaction persistante, urgence de la région en direct, états destructeurs et copie claire.",
+      icon: CircleAlert,
+    },
+    {
+      title: "Toast",
+      href: "/docs/ui/toast",
+      description:
+        "Rétroaction non bloquante, configuration du fournisseur, placement de la fenêtre d'affichage et fermeture des étiquettes.",
+      icon: BellRing,
+    },
+  ]}
+/>

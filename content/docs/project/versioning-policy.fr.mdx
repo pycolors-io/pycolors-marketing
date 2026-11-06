@@ -1,0 +1,267 @@
+---
+title: Politique de version
+description: Règles de Versioning sémantique utilisées dans les packages
+  PyColors, les starters, les templates et les produits de l'écosystème.
+lastUpdated: "2026-06-06"
+appliesTo: Project
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  GitCommitHorizontal,
+  Map,
+  PackageCheck,
+  RefreshCcw,
+  ShieldCheck,
+  Sparkles,
+  TriangleAlert,
+  Wrench,
+} from "lucide-react";
+
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Référence</Badge>
+  <Badge>Politique de version</Badge>
+</div>
+
+## Pourquoi le versioning est important [#why-versioning-matters]
+
+PyColors utilise le Versioning sémantique pour rendre les mises à jour prévisibles, sûres et faciles à comprendre.
+
+Un numéro de version doit communiquer immédiatement :
+
+- Le niveau de changement
+- risque de mise à niveau
+- Compatibilité Attentes
+- les besoins migratoires
+
+Cette politique vise à réduire l’incertitude dans l’ensemble de l’écosystème.
+
+<Callout title="Principe de base">
+  Les développeurs devraient être en mesure de comprendre l'impact de la mise à
+  niveau avant de lire le journal des modifications.
+
+</Callout>
+
+## Référence du versioning sémantique [#semantic-versioning-baseline]
+
+Les packages PyColors, les starters, les templates et les outils partagés suivent Semantic Versioning.
+
+```txt title="semver.txt"
+MAJOR.MINOR.PATCH
+```
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Patch",
+      description:
+        "Corrections, polissage, mises à jour de la documentation, maintenance sécurisée des dépendances et petites améliorations de l'expérience utilisateur sans modifications majeures.",
+      icon: Wrench,
+    },
+    {
+      title: "Mineur",
+      description:
+        "Nouvelles fonctionnalités, API, modèles, flux de travail ou composants qui restent rétrocompatibles.",
+      icon: Sparkles,
+    },
+    {
+      title: "Majeur",
+      description:
+        "Briser les changements nécessitant une migration, des mises à jour d'architecture ou des modifications d'API incompatibles.",
+      icon: TriangleAlert,
+    },
+  ]}
+/>
+
+## Règles de type de publication [#release-type-rules]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Patch',
+      title: "publication des correctifs",
+      icon: Wrench,
+      description: (
+        <>
+          <p>
+            Patch releases improve stability, polish, and maintainability without changing expected integrations or workflows.
+          </p>
+
+          <ul className="mt-4 list-disc space-y-2 pl-5">
+            <li>bug fixes</li>
+            <li>documentation improvements</li>
+            <li>small UI polish</li>
+            <li>dependency-safe maintenance</li>
+            <li>performance optimizations</li>
+          </ul>
+
+          <div className="mt-4 bord arrondi md bg-muted/30 p-3 text-sm">
+            Example: <code>1.0.4 → 1.0.5</code>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Minor',
+      title: "publication mineure",
+      icon: Sparkles,
+      description: (
+        <>
+          <p>
+            Minor releases add new capabilities while preserving compatibility with existing integrations.
+          </p>
+
+          <ul className="mt-4 list-disc space-y-2 pl-5">
+            <li>new components</li>
+            <li>new exports</li>
+            <li>new starter features</li>
+            <li>additional APIs</li>
+            <li>new documentation sections</li>
+          </ul>
+
+          <div className="mt-4 bord arrondi md bg-muted/30 p-3 text-sm">
+            Example: <code>1.2.0 → 1.3.0</code>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Major',
+      title: "publication majeure",
+      icon: TriangleAlert,
+      description: (
+        <>
+          <p>
+            Major releases communicate incompatible changes that may require migration or code updates.
+          </p>
+
+          <ul className="mt-4 list-disc space-y-2 pl-5">
+            <li>removed exports</li>
+            <li>breaking API changes</li>
+            <li>migration-required updates</li>
+            <li>incompatible design system changes</li>
+            <li>architecture-level modifications</li>
+          </ul>
+
+          <div className="mt-4 bord arrondi md bg-muted/30 p-3 text-sm">
+            Example: <code>1.x.x → 2.0.0</code>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Interprétation pratique [#practical-interpretation]
+
+En pratique, le type de version répond à une question :
+
+> L'utilisateur peut-il effectuer une mise à niveau en toute sécurité sans migration ?
+
+| Situation                                       | Type de publication |
+| ----------------------------------------------- | ------------------- |
+| Réparer les bugs ou polir                       | Patch               |
+| Ajout de fonctionnalités rétrocompatibles       | Mineur              |
+| Exiger la migration ou changer la compatibilité | Majeur              |
+
+<Callout type="info" title="Importante distinction">
+  Une grande quantité de travail ne signifie pas automatiquement une publication
+  majeure. Le facteur déterminant est l'impact de la compatibilité.
+
+</Callout>
+
+## Ce qui n’est pas une publication majeure [#what-is-not-a-major-release]
+
+Les modifications suivantes restent généralement des versions patch ou mineures :
+
+- Visuel polonais
+- documentation restructuration
+- Refactors internes
+- amélioration des performances
+- nouvelles API optionnelles
+- nouvelles sections de démarrage
+- Améliorations du système de conception additive
+
+Une version ne devient majeure que lorsque les attentes en matière de compatibilité changent.
+
+## Objectifs de version [#versioning-goals]
+
+Cette politique est conçue pour fournir :
+
+- Mises à jour prévisibles
+- attentes de compatibilité transparentes
+- Consommation de colis stable
+- frontières migratoires claires
+- adoption à long terme plus sûre
+- Confiance plus forte des développeurs
+
+<Callout title="Principe de confiance">
+  Le versioning stable fait partie de l’expérience produit, pas seulement un
+  détail technique.
+
+</Callout>
+
+### Relation avec les rejets de l'écosystème [#relationship-with-ecosystem-releases]
+
+Versioning sémantique s'applique aux versions de paquets techniques.
+
+L'écosystème plus large de PyColors communique les progrès séparément par :
+
+- Libérations hebdomadaires
+- changelog mises à jour
+- Progression de le panneau latéral de route
+- annonces d'écosystèmes
+
+Cette séparation permet de garder la vérité technique précise tout en facilitant la progression du produit.
+
+## Source de vérité [#source-of-truth]
+
+| Surface        | Objet                            |
+| -------------- | -------------------------------- |
+| GitHub         | Détails de la version technique  |
+| `CHANGELOG.md` | Changements au niveau du package |
+| `/changelog`   | Progrès des écosystèmes          |
+| `/roadmap`     | Direction à venir                |
+
+## Related [#related]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Politique de publication",
+      href: "/docs/project/release-policy",
+      description:
+        "Comprendre comment PyColors envoie les mises à jour à travers l'écosystème.",
+      icon: RefreshCcw,
+    },
+    {
+      title: "Historique des versions",
+      href: "/changelog",
+      description: "Suivez les progrès de l'écosystème et relâchez la cadence.",
+      icon: GitCommitHorizontal,
+    },
+    {
+      title: "Sheet de route",
+      href: "/roadmap",
+      description: "Découvrez ce qui est prévu sur la plateforme.",
+      icon: Map,
+    },
+    {
+      title: "UI docs",
+      href: "/docs/ui",
+      description:
+        "Explorez le système de conception et les composants PyColors.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

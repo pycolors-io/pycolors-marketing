@@ -128,7 +128,10 @@ export const implementationExample = {
   ],
 } as const;
 
-export function createExampleHandover() {
+export function createExampleHandover(
+  translate: (value: string) => string = (value) => value,
+  localizePath: (value: string) => string = (value) => value,
+) {
   const example = implementationExample;
   return [
     "# PyColors · example implementation handover",
@@ -137,7 +140,7 @@ export function createExampleHandover() {
     "",
     "SAMPLE ONLY — no customer delivery or completed acceptance is asserted. All result fields below are NOT RUN and must be completed for the agreed environment.",
     "",
-    `Project: ${example.project}`,
+    `${translate("Project")}: ${translate(example.project)}`,
     "Delivery date: [record the agreed delivery date]",
     "Delivered revision: [record the exact release/commit]",
     "Target environment: [record the agreed preview URL]",
@@ -147,10 +150,10 @@ export function createExampleHandover() {
     "## 1. Agreed scope",
     "",
     ...example.scopes.flatMap(({ service, scope, boundary }) => [
-      `### ${service.title} · ${service.priceLabel}`,
+      `### ${translate(service.title)} · ${translate(service.priceLabel)}`,
       service.example.title,
       "",
-      ...scope.map((item) => `- ${item}`),
+      ...scope.map((item) => `- ${translate(item)}`),
       "",
       boundary,
       "",
@@ -164,9 +167,9 @@ export function createExampleHandover() {
     "Record configuration locations and ownership. Keep secret values, session cookies and customer data out of this document.",
     "",
     ...example.environment.flatMap((row) => [
-      `### ${row.area}`,
-      `Configuration: ${row.configuration}`,
-      `Evidence expected: ${row.evidence}`,
+      `### ${translate(row.area)}`,
+      `${translate("Configuration")}: ${translate(row.configuration)}`,
+      `${translate("Evidence expected")}: ${translate(row.evidence)}`,
       "Environment / owner / evidence location: [complete at handover]",
       "Status: NOT RUN — complete at acceptance",
       "",
@@ -176,9 +179,9 @@ export function createExampleHandover() {
     "Keep the expected and observed outcome together. Record blockers and retest results rather than marking an unverified journey complete.",
     "",
     ...example.acceptance.flatMap((row) => [
-      `### ${row.journey}`,
-      `Expected: ${row.expected}`,
-      `Evidence to attach: ${row.evidence}`,
+      `### ${translate(row.journey)}`,
+      `${translate("Expected")}: ${translate(row.expected)}`,
+      `${translate("Evidence to attach")}: ${translate(row.evidence)}`,
       "Environment / date / tester: [complete]",
       "Actual result: [complete]",
       "Result: NOT RUN",
@@ -188,7 +191,7 @@ export function createExampleHandover() {
     "## 4. Team handover",
     "",
     ...example.handover.flatMap((row) => [
-      `### ${row.title}`,
+      `### ${translate(row.title)}`,
       row.detail,
       "Record / owner / location: [complete]",
       "",
@@ -202,5 +205,13 @@ export function createExampleHandover() {
     "- Project brief: https://pycolors.io/request-a-quote",
     "- Support boundaries: https://pycolors.io/docs/starter-pro/implementation-support",
     "",
-  ].join("\n");
+  ]
+    .map((line) => {
+      const link = line.match(/^(- )([^:]+): (https:\/\/pycolors.io)(\/.*)$/);
+      if (link)
+        return `${link[1]}${translate(link[2]!)}: ${link[3]}${localizePath(link[4]!)}`;
+      const heading = line.match(/^(#{1,6} )(.+)$/);
+      return heading ? heading[1] + translate(heading[2]!) : translate(line);
+    })
+    .join("\n");
 }

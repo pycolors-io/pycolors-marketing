@@ -1,0 +1,237 @@
+---
+title: Navigation latérale responsive
+description: Un shell d'application source-copie avec une navigation persistante
+  sur le bureau et un panneau latéral mobile accessible.
+lastUpdated: "2026-10-08"
+appliesTo: Blocks
+---
+
+import { Badge } from "@pycolors/ui";
+import { Callout } from "fumadocs-ui/components/callout";
+import { File, Files, Folder } from "fumadocs-ui/components/files";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { ResponsiveSidebarExample } from "@/components/docs/blocks/canonical-examples";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Coquilles d ' application</Badge>
+  <Badge>responsive-sidebar</Badge>
+</div>
+
+## Un cadre réutilisable pour la navigation applicative [#a-reusable-frame-for-application-navigation]
+
+`ResponsiveSidebar` donne à une application React un shell borné : navigation persistante sur le `md` point d'arrêt, un panneau latéral mobile du côté gauche, une région d'en-tête et d'action et un repère de contenu principal. La marque, les routes, l'état actif, les étiquettes, les icônes, les badges, le pied de page, les actions et le contenu de la page restent la propriété du consommateur.
+
+Il n'inclut pas l'authentification, l'identité de l'utilisateur, la facturation, les données du tableau de bord, les appels backend ou la navigation spécifique au produit.
+
+<Callout title="Bloc source-copie">
+  Copiez le répertoire canonique complet dans votre application. Il n'y a pas de
+  package Blocks, d'installateur de registre, de CLI ou de canal de mise à jour
+  automatique pour ce bloc aujourd'hui.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+| Contrat                                 | Valeur                                                         |
+| --------------------------------------- | -------------------------------------------------------------- |
+| Catégorie                               | `Application shells`                                           |
+| Catégorie slug                          | `app-shells`                                                   |
+| Bloc limace                             | `responsive-sidebar`                                           |
+| Source                                  | `apps/marketing/content/blocks/app-shells/responsive-sidebar/` |
+| Exportation                             | `ResponsiveSidebar`                                            |
+| Information future Identité du registre | `app-shells-responsive-sidebar`                                |
+
+L'identité du registre est réservée aux futurs travaux de distribution. Ce n'est pas une méthode d'installation disponible et ce bloc ne crée pas de métadonnées de Registre ou de JSON généré.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/responsive-sidebar/` dans votre application. Copiez les trois fichiers ci-dessous, en conservant leurs importations relatives et leurs directives client. Dans l’onglet Source, choisissez un fichier et utilisez son bouton de copie, ou sélectionnez le code manuellement lorsque l’accès au presse-papiers n’est pas disponible.
+
+Pour récupérer les trois fichiers à la fois, ouvrez **Code à télécharger ZIP** dans les [Blocage du catalogue](/blocks#category-app-shells). Extrayez l'archive et déplacez son `src/components/blocks/responsive-sidebar/` dossier dans votre application.
+
+### Structure du fichier [#file-structure]
+
+<Files>
+  <Folder name="src/components/blocks/responsive-sidebar" defaultOpen>
+    <File name="index.tsx" />
+    <File name="sidebar-navigation.tsx" />
+    <File name="types.ts" />
+  </Folder>
+</Files>
+
+| Fichier                  | Responsabilité                                                              |
+| ------------------------ | --------------------------------------------------------------------------- |
+| `index.tsx`              | Mise en page des applications, mobile et exports publics.                   |
+| `sidebar-navigation.tsx` | Navigation partagée sur ordinateur et mobile, marque et pied de page.       |
+| `types.ts`               | Éléments de navigation, adaptateur de routeur et accessoires de composants. |
+
+Importation `ResponsiveSidebar` et ses types à partir du répertoire `index.tsx` point d'entrée. Personnalisez la navigation sans modifier la disposition environnante.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <ResponsiveSidebarExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <Tabs items={["index.tsx", "sidebar-navigation.tsx", "types.ts"]}>
+      <Tab value="index.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/responsive-sidebar/index.tsx"'
+        >
+          ../../../blocks/app-shells/responsive-sidebar/index.tsx
+        </include>
+
+</Tab>
+      <Tab value="sidebar-navigation.tsx">
+        <include
+          lang="tsx"
+          meta='title="src/components/blocks/responsive-sidebar/sidebar-navigation.tsx"'
+        >
+          ../../../blocks/app-shells/responsive-sidebar/sidebar-navigation.tsx
+        </include>
+
+</Tab>
+      <Tab value="types.ts">
+        <include
+          lang="ts"
+          meta='title="src/components/blocks/responsive-sidebar/types.ts"'
+        >
+          ../../../blocks/app-shells/responsive-sidebar/types.ts
+        </include>
+
+</Tab>
+
+</Tabs>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `ResponsiveSidebar` avec la navigation et le contenu fictifs des consommateurs. Ses liens restent à l'intérieur du document d'aperçu et aucun réseau ou comportement de service de produit n'est ajouté. L'onglet Source inclut les fichiers canoniques complets au moment de la construction, pas une implémentation dupliquée.
+
+Votre copie de application ne reçoit pas de mises à jour automatiques. Suivez l'exemple d'utilisation ci-dessous, connectez votre propre comportement et validez-le dans votre application. Retour à l'accueil [Blocage du catalogue](/blocks) pour choisir un autre modèle.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+1. Copier le texte complet `responsive-sidebar` un répertoire vers un chemin appartenant à l'application, tel que `src/components/blocks/responsive-sidebar/`.
+2. Installer React 18 ou plus récent et le public `@pycolors/ui` paquet.
+3. Charger le public `@pycolors/tokens/tokens.css` contrat et configure les utilitaires Tailwind sémantiques existants utilisés par votre application.
+4. Importez le bloc à partir de son point d'entrée local copié.
+
+```tsx title="app-shell.tsx"
+"use client";
+
+import { ResponsiveSidebar } from "./components/blocks/responsive-sidebar";
+
+const items = [
+  { id: "overview", label: "Overview", href: "/overview" },
+  { id: "projects", label: "Projects", href: "/projects", badge: "4" },
+] as const;
+
+export function AppShell({ children }: { children: React.ReactNode }) {
+  return (
+    <ResponsiveSidebar
+      activeItemId="overview"
+      brand={<strong>Acme</strong>}
+      headerActions={<button type="button">Create project</button>}
+      headerTitle={<h1>Overview</h1>}
+      items={items}
+      mobileDescription="Choose a workspace destination."
+      mobileTitle="Workspace navigation"
+      navigationLabel="Primary workspace navigation"
+      sidebarFooter={<small>Acme workspace</small>}
+    >
+      {children}
+    </ResponsiveSidebar>
+  );
+}
+```
+
+Les icônes sont des nœuds React appartenant au consommateur en option. Le bloc traite le contenu des icônes comme décoratif et conserve l'étiquette de l'élément visible comme nom accessible du lien.
+
+## Props [#props]
+
+La prévisualisation inclut les vues locales Vue d'ensemble, Projets et Équipe, la navigation groupée, une identité d'espace de travail et un pied de page membre. « Ajouter un projet de démonstration » ajoute une ligne fictive uniquement dans la prévisualisation. Aucun projet n'est enregistré ou envoyé à un backend. Les liens de guidage d'intégration sont des liens de navigation ordinaires. Utilisez le contrôle Réinitialiser de l'aperçu pour revenir à l'état initial.
+
+Lorsque vous intégrez le shell dans une page existante, passez `contentAs="div"` pour éviter d'imbriquer les principaux repères. La valeur par défaut reste `contentAs="main"` pour un shell d'application complet. Le lien de saut cible toujours l'élément de contenu focalisable. La feuille mobile a un titre et une description accessibles visuellement cachés de sorte que la marque de l'espace de travail apparaît une fois. Les étiquettes de navigation et les liens de navigation à écran étroit et le déclencheur de menu ont une hauteur d'au moins 44 pixels.
+
+| Prop                 | Type                                   | Par défaut                  | Objet                                                                               |
+| -------------------- | -------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------- |
+| `brand`              | `ReactNode`                            | requis                      | Identité de marque ou d'espace de travail.                                          |
+| `navigationLabel`    | `string`                               | requis                      | Étiquette accessible partagée par la navigation desktop et mobile.                  |
+| `mobileTitle`        | `string`                               | requis                      | Titre de feuille accessible.                                                        |
+| `mobileDescription`  | `string`                               | `Navigate the application.` | Description de le panneau latéral accessible.                                       |
+| `mobileTriggerLabel` | `string`                               | `Open navigation`           | Nom accessible pour le déclencheur mobile icône uniquement.                         |
+| `items`              | `readonly ResponsiveSidebarNavItem[]`  | requis                      | Principaux éléments de navigation non groupés.                                      |
+| `groups`             | `readonly ResponsiveSidebarNavGroup[]` | `[]`                        | Groupes de navigation facultatifs étiquetés.                                        |
+| `activeItemId`       | `string`                               | néant                       | ID d'élément stable qui reçoit `aria-current="page"`.                               |
+| `renderLink`         | `(props) => ReactNode`                 | ancre native                | Raccord adaptateur de routeur.                                                      |
+| `sidebarFooter`      | `ReactNode`                            | néant                       | Contenu facultatif du pied de page du consommateur.                                 |
+| `headerTitle`        | `ReactNode`                            | néant                       | Titre ou contexte.                                                                  |
+| `headerActions`      | `ReactNode`                            | néant                       | Actions des consommateurs pour l'en-tête.                                           |
+| `contentAs`          | `"main" \| "div"`                      | `main`                      | Élément de contenu; utilisation `div` à l'intérieur d'un repère principal existant. |
+| `contentId`          | `string`                               | `main-content`              | ID de repère principal et cible de saut de lien.                                    |
+| `skipToContentLabel` | `string`                               | `Skip to content`           | Texte visible sur le focus.                                                         |
+| `className`          | `string`                               | néant                       | Personnalisation de la mise en page racine.                                         |
+| `children`           | `ReactNode`                            | requis                      | Contenu principal de l'application.                                                 |
+
+Les identifiants des éléments de navigation doivent être uniques et stables `items` et chaque groupe. Le bloc ne dérive jamais un comportement actif des étiquettes ou des URL.
+
+## Comportement réactif [#responsive-behavior]
+
+- Ci-dessous `md`, la barre latérale persistante est masquée et le déclencheur d'en-tête étiqueté ouvre un panneau latéral de gauche.
+- La feuille est limitée à la largeur de la fenêtre d'affichage et répète la même marque de consommateur, la navigation, les groupes, l'état actif et le pied de page facultatif.
+- La navigation par ancre native ferme le panneau latéral. Un routeur personnalisé doit invoquer le `onNavigate` rappel après l'activation.
+- À `md` et au-dessus, la `w-64` la barre latérale est collante, viewport-height, et indépendamment scrollable tandis que l'en-tête et le contenu principal restent flexibles avec `min-w-0`.
+- La visibilité réactive utilise les utilitaires CSS plutôt que le JavaScript viewport.
+
+## Adaptation du routeur [#router-adaptation]
+
+Le moteur de rendu par défaut utilise des ancres natives. Adapter un routeur client via `renderLink`; préserver les classes fournies, la sémantique active, les enfants et le rappel de proximité mobile.
+
+```tsx title="router-adapter.tsx"
+<ResponsiveSidebar
+  {...shellProps}
+  renderLink={({ active, children, className, item, onNavigate }) => (
+    <RouterLink
+      aria-current={active ? "page" : undefined}
+      className={className}
+      href={item.href}
+      onClick={onNavigate}
+    >
+      {children}
+    </RouterLink>
+  )}
+>
+  {children}
+</ResponsiveSidebar>
+```
+
+`RouterLink` est un espace réservé pour le composant routeur du consommateur ; le bloc canonique n'importe pas Next.js ou une autre bibliothèque de routage.
+
+## Accessibilité et comportement du clavier [#accessibility-and-keyboard-behavior]
+
+- Un lien de saut visible à la focus cible le focusable unique `main` Un point de repère.
+- La navigation sur les ordinateurs de bureau et les appareils mobiles expose l'étiquette de consommateur requise.
+- Le lien natif actif utilise `aria-current="page"`.
+- Le déclencheur mobile est une étiquette `Button` avec un style de focus visible.
+- Le public `@pycolors/ui` La feuille fournit le confinement de la focus, l'échappement et le rejet de l'interaction extérieure, un bouton de fermeture étiqueté et la restauration de la focus sur le déclencheur.
+- `SheetTitle` et `SheetDescription` Fournissez le nom et la description du dialogue mobile.
+- La navigation reste la navigation native de lien ; il n'y a pas de focus roving personnalisé ou de modèle flèche-clé.
+
+Les consommateurs doivent garder les étiquettes des articles visibles, préserver `aria-current` dans un moteur de rendu personnalisé, fournir une navigation significative et des étiquettes Sheet, et éviter de placer une seconde `main` Point de repère à l'intérieur `children`. Ces garanties sont vérifiées par des tests ciblés d'interaction et de hache; elles ne sont pas une demande de certification WCAG complète.
+
+## Stylisme et personnalisation [#styling-and-customization]
+
+Le bloc utilise des utilitaires d'arrière-plan sémantique, de premier plan, de sourdine, de bordure, d'accent et d'anneau soutenus par le contrat de tokens publics. Il hérite des valeurs de token clair ou foncé du consommateur et n'introduit aucune couleur, police, fournisseur de thème, CSS global ou copies primitives locales de l'interface utilisateur.
+
+Après la copie, le consommateur est propriétaire de la personnalisation et de la maintenance future. Comparez délibérément les modifications canoniques futures et appliquez uniquement les mises à jour qui correspondent à l'application. La restauration est la suppression ou la réversion du répertoire copié et de son intégration locale ; aucune version de paquet ou état de bloc distant n'est impliqué.
+
+## Non-buts explicites [#explicit-non-goals]
+
+Ce bloc ne fournit pas d'état utilisateur/de session, d'autorisations, de facturation, de mesures, de récupération de données, d'actions serveur, de navigation de produit, de tableau de bord complet, de package, d'élément de Registre, de JSON de Registre généré, d'interface de ligne de commande, de mises à jour automatiques, de version ou de déploiement. Starter Free a informé la composition mais n'est pas importé et n'est pas l'autorité source.

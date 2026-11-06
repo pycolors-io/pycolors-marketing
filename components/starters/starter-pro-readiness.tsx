@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import {
   ArrowUpRight,
   BookOpen,
@@ -67,6 +68,8 @@ const foundations = [
 ] as const;
 
 export function StarterProReadiness() {
+  const tSite = useCopy();
+
   return (
     <MarketingSectionShell
       id="readiness"
@@ -78,9 +81,11 @@ export function StarterProReadiness() {
       <MarketingSectionHeader
         titleId="starter-pro-readiness-heading"
         align="left"
-        eyebrow="From source to handover"
-        title="More of the product journey, already connected."
-        description="Inspect the workflows, the checks behind them and the responsibilities you keep when launching your own SaaS."
+        eyebrow={tSite("From source to handover")}
+        title={tSite("More of the product journey, already connected.")}
+        description={tSite(
+          "Inspect the workflows, the checks behind them and the responsibilities you keep when launching your own SaaS.",
+        )}
       />
       <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle sm:grid-cols-2 xl:grid-cols-3">
         {foundations.map(
@@ -92,20 +97,20 @@ export function StarterProReadiness() {
               <div className="flex items-center justify-between gap-4 text-muted-foreground">
                 <Icon className="size-5" aria-hidden="true" />
                 <span className="font-mono text-[10px]" aria-hidden="true">
-                  0{index + 1}
+                  0{tSite(index + 1)}
                 </span>
               </div>
               <h3 className="mt-6 text-base font-semibold tracking-tight">
-                {title}
+                {tSite(title)}
               </h3>
               <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
-                {description}
+                {tSite(description)}
               </p>
               <Link
                 href={href}
                 className="mt-5 inline-flex min-h-11 items-center gap-2 text-xs font-medium hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
               >
-                {link}
+                {tSite(link)}
                 <ArrowUpRight
                   className="size-3.5 shrink-0"
                   aria-hidden="true"
@@ -116,15 +121,17 @@ export function StarterProReadiness() {
         )}
       </div>
       <p className="mt-4 max-w-3xl text-xs leading-6 text-muted-foreground">
-        Automated acceptance uses synthetic data and intercepted providers. Your
-        launch checks include real email delivery, your Stripe sandbox, backups
-        and the monitoring destination you configure.
+        {tSite(
+          "Automated acceptance uses synthetic data and intercepted providers. Your launch checks include real email delivery, your Stripe sandbox, backups and the monitoring destination you configure.",
+        )}
       </p>
     </MarketingSectionShell>
   );
 }
 
 export function StarterProImplementation() {
+  const tSite = useCopy();
+
   return (
     <MarketingSectionShell
       id="implementation"
@@ -135,9 +142,12 @@ export function StarterProImplementation() {
       <MarketingSectionHeader
         titleId="starter-pro-implementation-heading"
         align="left"
-        eyebrow="Optional services · Written quote"
-        title="An assisted start, scoped to your product."
-        description={`The complete source licence is ${PRODUCT_DISPLAY["starter-pro"].priceLabel}. Choose an engagement when you want help with setup or a specific business workflow.`}
+        eyebrow={tSite("Optional services · Written quote")}
+        title={tSite("An assisted start, scoped to your product.")}
+        description={tSite(
+          "The complete source licence is {value0}. Choose an engagement when you want help with setup or a specific business workflow.",
+          { value0: PRODUCT_DISPLAY["starter-pro"].priceLabel },
+        )}
       />
       <div className="grid gap-4 lg:grid-cols-2">
         {Object.values(STARTER_PRO_SERVICES).map((service) => (
@@ -150,16 +160,16 @@ export function StarterProImplementation() {
               id={`${service.id}-heading`}
               className="text-lg font-semibold tracking-tight"
             >
-              {service.title}
+              {tSite(service.title)}
             </h3>
             <p className="mt-4 font-brand text-3xl font-semibold tracking-tight">
-              {service.priceLabel}
+              {tSite(service.priceLabel)}
             </p>
             <p className="mt-2 text-xs text-muted-foreground">
-              Starting service fee · Written scope
+              {tSite("Starting service fee · Written scope")}
             </p>
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
-              {service.description}
+              {tSite(service.description)}
             </p>
             <ul className="my-6 space-y-3 border-y border-border-subtle py-5">
               {service.features.map((feature) => (
@@ -168,44 +178,45 @@ export function StarterProImplementation() {
                     className="mt-1 size-4 shrink-0 text-primary"
                     aria-hidden="true"
                   />
-                  {feature}
+                  {tSite(feature)}
                 </li>
               ))}
             </ul>
             <div className="mb-5">
-              <h4 className="text-xs font-medium">What you receive</h4>
+              <h4 className="text-xs font-medium">
+                {tSite("What you receive")}
+              </h4>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                {service.deliverable}
+                {tSite(service.deliverable)}
               </p>
               <Link
                 href={service.example.href}
                 className="mt-2 inline-flex min-h-11 items-center gap-2 text-xs font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
               >
-                View example delivery
+                {tSite("View example delivery")}
                 <ArrowUpRight className="size-3.5" aria-hidden="true" />
               </Link>
             </div>
             <p className="mb-6 flex-1 text-xs leading-6 text-muted-foreground">
-              {service.scope}
+              {tSite(service.scope)}
             </p>
             <SiteButton variant="outline" asChild className="w-full">
-              <Link href={service.href}>{service.action}</Link>
+              <Link href={service.href}>{tSite(service.action)}</Link>
             </SiteButton>
           </article>
         ))}
       </div>
       <div className="mt-5 flex flex-col gap-3 text-xs leading-6 text-muted-foreground sm:flex-row sm:items-start sm:justify-between">
         <p className="max-w-3xl">
-          Starting service fees. The source licence and provider costs are
-          itemized separately in your quote. Deliverables, acceptance checks,
-          total price and follow-up support are agreed in writing before work
-          begins.
+          {tSite(
+            "Starting service fees. The source licence and provider costs are itemized separately in your quote. Deliverables, acceptance checks, total price and follow-up support are agreed in writing before work begins.",
+          )}
         </p>
         <Link
           href="/docs/starter-pro/implementation-support"
           className="inline-flex min-h-11 shrink-0 items-center gap-2 font-medium text-foreground hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
         >
-          Review scope and handover
+          {tSite("Review scope and handover")}
           <ArrowUpRight className="size-3.5" aria-hidden="true" />
         </Link>
       </div>

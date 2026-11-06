@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@pycolors/ui";
 
@@ -13,11 +14,13 @@ type DocsBreadcrumbProps = Readonly<{
 }>;
 
 export function DocsBreadcrumb({ items, className }: DocsBreadcrumbProps) {
+  const tSite = useCopy();
+
   if (items.length === 0) return null;
 
   return (
     <nav
-      aria-label="Breadcrumb"
+      aria-label={tSite("Breadcrumb")}
       className={cn(
         "flex flex-wrap items-center text-sm text-muted-foreground",
         className,
@@ -46,7 +49,7 @@ export function DocsBreadcrumb({ items, className }: DocsBreadcrumbProps) {
                   index === 0 ? "pl-0 pr-1.5" : "px-1.5",
                 )}
               >
-                {item.label}
+                {tSite(item.label)}
               </Link>
             ) : (
               <span
@@ -57,7 +60,7 @@ export function DocsBreadcrumb({ items, className }: DocsBreadcrumbProps) {
                 )}
                 aria-current={isLast ? "page" : undefined}
               >
-                {item.label}
+                {tSite(item.label)}
               </span>
             )}
           </div>

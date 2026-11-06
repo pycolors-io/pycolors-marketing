@@ -1,0 +1,689 @@
+---
+title: Textarea
+description: Entrée de texte multiligne pour les formulaires de produit, les
+  commentaires, les notes et le contenu généré par l'utilisateur plus long dans
+  l'interface utilisateur PyColors.
+lastUpdated: "2026-05-11"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Textarea,
+} from "@pycolors/ui";
+import {
+  AlignLeft,
+  ArrowRight,
+  CheckCircle,
+  ClipboardCheck,
+  FileText,
+  FormInput,
+  MessageSquareText,
+  MousePointerClick,
+  PanelsTopLeft,
+  PencilLine,
+  Rows3,
+  TextCursorInput,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Textarea</Badge>
+</div>
+
+### Entrée multi-lignes pour une intention utilisateur plus longue [#multi-line-input-for-longer-user-intent]
+
+Les **Textarea** Le composant capture un texte plus long qu'une entrée standard.
+
+Utilisez-le pour:
+
+- messages de rétroaction
+- Demandes d'assistance
+- descriptions de produits
+- notes
+- invites
+- commentaires
+- Champs de formulaire plus longs
+
+Textarea suit le même modèle de champ `Input`: étiquette, texte d'aide, état de l'erreur, identifiant généré et descriptions accessibles.
+
+<Callout title="Idée de base">
+  Utilisez Textarea lorsque l'utilisateur a besoin d'espace pour exprimer une
+  intention, un contexte ou une explication.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="textarea-import.tsx"
+import { Textarea } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez une étiquette pour rendre le champ clair et accessible.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl">
+        <Textarea
+          label="Message"
+          placeholder="Tell us what you are building..."
+        />
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-textarea.tsx"
+import { Textarea } from "@pycolors/ui";
+
+export function BasicTextarea() {
+  return (
+    <Textarea label="Message" placeholder="Tell us what you are building..." />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle des étiquettes">
+  Préférez une étiquette visible. Utilisez le texte d'espace réservé pour les
+  exemples, pas comme la seule description de champ.
+
+</Callout>
+
+## Quand utiliser Textarea [#when-to-use-textarea]
+
+Utilisez Textarea lorsqu'une ligne ne suffit pas pour la tâche.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Feedback",
+      description:
+        "Capturez les commentaires des utilisateurs, les détails du support et les demandes de produits.",
+      icon: MessageSquareText,
+    },
+    {
+      title: "Descriptions",
+      description:
+        "Laissez les utilisateurs décrire des projets, des produits, des espaces de travail ou des modèles.",
+      icon: FileText,
+    },
+    {
+      title: "Notes",
+      description:
+        "Stockez les notes internes, le contexte d'intégration ou consultez les commentaires.",
+      icon: PencilLine,
+    },
+  ]}
+/>
+
+### Texte de l'aide [#helper-text]
+
+Utilisez le texte d'aide pour expliquer quel type de réponse est attendue.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl">
+        <Textarea
+          label="Description du projet"
+          helperText="Describe the product, target users, and current constraints."
+          placeholder="A SaaS starter for founders who want to ship faster..."
+        />
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="textarea-helper-text.tsx"
+import { Textarea } from "@pycolors/ui";
+
+export function TextareaHelperText() {
+  return (
+    <Textarea
+      label="Project description"
+      helperText="Describe the product, target users, and current constraints."
+      placeholder="A SaaS starter for founders who want to ship faster..."
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Règle de texte d'aide">
+  Le texte d'aide devrait réduire l'incertitude. Restez bref, concret et
+  connecté à la tâche.
+
+</Callout>
+
+### État de l'erreur [#error-state]
+
+Utilisez le `error` prop pour les erreurs de validation. Il définit automatiquement `aria-invalid`, `aria-errormessage`, et le style d'erreur. Le texte de l'erreur `role="alert"`, il est donc annoncé immédiatement lorsqu'il apparaît - y compris lorsque le champ est déjà ciblé. Un produit fourni par le consommateur `aria-describedby` est composé avec les ids helper/error du champ plutôt que remplacé.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl">
+        <Textarea
+          label="Notes de lancement"
+          placeholder="Summarize the release..."
+          error="Launch notes must contain at least 20 characters."
+        />
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="textarea-error.tsx"
+import { Textarea } from "@pycolors/ui";
+
+export function TextareaError() {
+  return (
+    <Textarea
+      label="Launch notes"
+      placeholder="Summarize the release..."
+      error="Launch notes must contain at least 20 characters."
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle de validation">
+  Le texte d'erreur doit expliquer ce qui a échoué et comment le corriger.
+  Évitez les messages vagues comme « Valeur invalide ».
+
+</Callout>
+
+### Champs obligatoires [#required-fields]
+
+Utilisation `required` pour les champs obligatoires. L'étiquette affiche un astérisque destructeur et la zone de texte reçoit `aria-required`.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl">
+        <Textarea
+          required
+          label="Demande d'assistance"
+          helperText="Include the page, expected behavior, and what happened."
+          placeholder="I expected..."
+        />
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="textarea-required.tsx"
+import { Textarea } from "@pycolors/ui";
+
+export function TextareaRequired() {
+  return (
+    <Textarea
+      required
+      label="Support request"
+      helperText="Include the page, expected behavior, and what happened."
+      placeholder="I expected..."
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Tailles [#sizes]
+
+Textarea prend en charge trois tailles de système de conception : `sm`, `md`et `lg`.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="grid w-full max-w-xl gap-4">
+        <Textarea
+          size="sm"
+          label="Petit"
+          placeholder="Compact notes..."
+        />
+
+        <Textarea
+          size="md"
+          label="Moyenne"
+          placeholder="Default textarea..."
+        />
+
+        <Textarea
+          size="lg"
+          label="Grande"
+          placeholder="Longer product description..."
+        />
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="textarea-sizes.tsx"
+import { Textarea } from "@pycolors/ui";
+
+export function TextareaSizes() {
+  return (
+    <div className="grid gap-4">
+      <Textarea size="sm" label="Small" placeholder="Compact notes..." />
+
+      <Textarea size="md" label="Medium" placeholder="Default textarea..." />
+
+      <Textarea
+        size="lg"
+        label="Large"
+        placeholder="Longer product description..."
+      />
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Guide des tailles [#size-guidance]
+
+| Taille | Idéal pour                                              |
+| ------ | ------------------------------------------------------- |
+| `sm`   | Notes compactes, tables d'administration, formes denses |
+| `md`   | Formulaires et pages de paramètres par défaut           |
+| `lg`   | Longues descriptions, invites, messages de soutien      |
+
+### Redimensionner le comportement [#resize-behavior]
+
+Les `resize` prop contrôle comment les utilisateurs peuvent redimensionner le champ.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="grid w-full max-w-xl gap-4">
+        <Textarea
+          label="Redimensionnement vertical"
+          resize="vertical"
+          placeholder="Default behavior..."
+        />
+
+        <Textarea
+          label="Pas de redimensionnement"
+          resize="none"
+          placeholder="Fixed textarea..."
+        />
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="textarea-resize.tsx"
+import { Textarea } from "@pycolors/ui";
+
+export function TextareaResize() {
+  return (
+    <div className="grid gap-4">
+      <Textarea
+        label="Vertical resize"
+        resize="vertical"
+        placeholder="Default behavior..."
+      />
+
+      <Textarea
+        label="No resize"
+        resize="none"
+        placeholder="Fixed textarea..."
+      />
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Options de redimensionnement disponibles [#available-resize-options]
+
+| Redimensionner | Comportement                                               |
+| -------------- | ---------------------------------------------------------- |
+| `vertical`     | L'utilisateur peut redimensionner la hauteur               |
+| `none`         | Taille fixe                                                |
+| `horizontal`   | L'utilisateur peut redimensionner la largeur               |
+| `both`         | L'utilisateur peut redimensionner la largeur et la hauteur |
+
+<Callout title="Règle de redimensionnement">
+  Préférez `vertical` pour la plupart des formes de produits. Évitez le
+  redimensionnement horizontal dans les mises en page contraintes.
+
+</Callout>
+
+### Formulaire de commentaires [#feedback-form]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl rounded-2xl border border-border/60 bg-card p-5">
+        <div className="mb-4">
+          <div className="text-sm font-medium text-foreground">
+            Envoyer des commentaires
+          </div>
+          <div className="mt-1 text-sm text-muted-foreground">
+            Dites-nous ce qui rendrait PyColors plus utile.
+          </div>
+        </div>
+
+        <Textarea
+          label="Feedback"
+          helperText="Share the problem, context, and expected improvement."
+          placeholder="I would like..."
+        />
+
+        <div className="mt-4 flex justify-end">
+          <Button>Envoyer des commentaires</Button>
+        </div>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="feedback-form.tsx"
+import { Button, Textarea } from "@pycolors/ui";
+
+export function FeedbackForm() {
+  return (
+    <div className="rounded-2xl border border-border/60 bg-card p-5">
+      <div className="mb-4">
+        <div className="text-sm font-medium text-foreground">Send feedback</div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          Tell us what would make PyColors more useful.
+        </div>
+      </div>
+
+      <Textarea
+        label="Feedback"
+        helperText="Share the problem, context, and expected improvement."
+        placeholder="I would like..."
+      />
+
+      <div className="mt-4 flex justify-end">
+        <Button>Send feedback</Button>
+      </div>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Champ d'invite [#prompt-field]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="w-full max-w-xl rounded-2xl border border-border/60 bg-card p-5">
+        <Textarea
+          size="lg"
+          resize="vertical"
+          label="AI prompt"
+          helperText="Be specific about the audience, output format, and constraints."
+          placeholder="Generate a premium SaaS landing page section for..."
+        />
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="prompt-textarea.tsx"
+import { Textarea } from "@pycolors/ui";
+
+export function PromptTextarea() {
+  return (
+    <div className="rounded-2xl border border-border/60 bg-card p-5">
+      <Textarea
+        size="lg"
+        resize="vertical"
+        label="AI prompt"
+        helperText="Be specific about the audience, output format, and constraints."
+        placeholder="Generate a premium SaaS landing page section for..."
+      />
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Utiliser Textarea pour des réponses plus longues [#use-textarea-for-longer-answers]
+
+    Utilisez Input pour les valeurs courtes. Utilisez Textarea lorsque l'utilisateur doit fournir du contexte, des explications ou du contenu multiligne.
+
+</Step>
+
+  <Step>
+    #### Gardez les étiquettes explicites [#keep-labels-explicit]
+
+    L'étiquette doit décrire le contenu attendu de l'utilisateur, pas l'élément d'interface utilisateur lui-même.
+
+</Step>
+
+  <Step>
+    #### Ajouter du texte d'aide pour les champs complexes [#add-helper-text-for-complex-fields]
+
+    Utilisez le texte d'aide lorsque le champ a besoin d'exemples, de contraintes ou de conseils de mise en forme.
+
+</Step>
+
+  <Step>
+    #### Valider avec des erreurs actionnables [#validate-with-actionable-errors]
+
+    Les messages d'erreur doivent expliquer ce qu'il faut changer, pas seulement que la valeur est invalide.
+
+</Step>
+
+  <Step>
+    #### Choisissez redimensionner intentionnellement [#choose-resize-intentionally]
+
+    Utilisez le redimensionnement vertical pour un contenu flexible. N'utilisez pas de redimensionnement pour les surfaces contrôlées comme les feuilles et les cartes compactes.
+
+</Step>
+
+</Steps>
+
+## Textarea vs Input [#textarea-vs-input]
+
+| Situation              | Utilisation |
+| ---------------------- | ----------- |
+| Nom, email, URL, slug  | Entrées     |
+| Recherche de requête   | Entrées     |
+| Titre abrégé           | Entrées     |
+| Message de rétroaction | Textarea    |
+| Description du produit | Textarea    |
+| Notes ou commentaires  | Textarea    |
+| AI prompt              | Textarea    |
+
+<Callout title="Règle de décision">
+  Si la réponse attendue peut tenir naturellement sur une ligne, utilisez
+  Entrée. Si l'utilisateur a besoin d'expliquer quelque chose, utilisez
+  Textarea.
+
+</Callout>
+
+## API [#api]
+
+| Prop         | Type                                                | Par défaut   | Désignation                                           |
+| ------------ | --------------------------------------------------- | ------------ | ----------------------------------------------------- |
+| `label`      | `string`                                            | —            | Étiquette accessible affichée au-dessus du texte      |
+| `helperText` | `string`                                            | —            | Texte de soutien affiché lorsqu'il n'y a pas d'erreur |
+| `error`      | `string`                                            | —            | Texte d'erreur et style de validation                 |
+| `size`       | `"sm" \| "md" \| "lg"`                              | `"md"`       | Dimensions du système de conception                   |
+| `resize`     | `"none" \| "vertical" \| horizontal" \| "both"`     | `"vertical"` | Comportement de redimensionnement natif               |
+| `className`  | `string`                                            | —            | Autres classes Tailwind                               |
+| `...props`   | `React.TextareaHTMLAttributes<HTMLTextAreaElement>` | —            | Attributs natifs de textarea                          |
+
+### TypeScript types [#typescript-types]
+
+```ts title="textarea-types.ts"
+export type TextareaSize = "sm" | "md" | "lg";
+export type TextareaResize = "none" | "vertical" | "horizontal" | "both";
+
+export interface TextareaProps
+  extends
+    Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "size">,
+    VariantProps<typeof textareaVariants> {
+  label?: string;
+  helperText?: string;
+  error?: string;
+  size?: TextareaSize;
+  resize?: TextareaResize;
+}
+```
+
+### Accessibilité [#accessibility]
+
+- `label` est connecté à la zone de texte avec `htmlFor`.
+- Un id stable est généré avec `React.useId` lorsqu'aucun identifiant n'est fourni.
+- `helperText` est connecté avec `aria-describedby`.
+- `error` est connecté avec `aria-errormessage`.
+- `error` sets `aria-invalid`.
+- `error` Le texte a `role="alert"` et est annoncé en direct, même si le domaine est déjà ciblé.
+- `required` sets `aria-required`.
+- Ne comptez pas sur le texte de l'espace réservé comme seule description accessible.
+
+<Callout title="Règle d'accessibilité">
+  Chaque zone de texte doit avoir une étiquette claire. Le texte d'aide et le
+  texte d'erreur devraient clarifier la tâche, pas remplacer l'étiquette.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "Étiquettes visibles",
+    "texte d'aide clair pour les entrées complexes",
+    "Erreurs spécifiques et exploitables",
+    "redimensionnement vertical pour un contenu plus long",
+    "textarea pour les champs explicitation-heavy",
+  ]}
+  avoid={[
+    "Étiquettes réservées aux espaces réservés",
+    "des erreurs vagues comme “Valeur invalide”",
+    "redimensionnement horizontal dans les mises en page réactives",
+    "utiliser textarea pour de courtes valeurs d'une ligne",
+    "Demander trop de texte sans guide",
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Textarea doit-il utiliser une étiquette visible ?">
+    Oui. Une étiquette visible améliore la convivialité et l’accessibilité. Le texte de l'espace réservé ne doit fournir que des exemples ou des conseils.
+  </Accordion>
+
+<Accordion title="Dois-je utiliser Textarea pour les titres ?">
+  Habituellement non. Utilisez la saisie pour les titres courts, les noms, les
+  limaces, les courriels et les URL.
+</Accordion>
+
+<Accordion title="Est-ce que Textarea peut être utilisé dans Sheet ou Dialog ?">
+  Oui. Cela fonctionne bien pour les commentaires, les notes et les formulaires
+  de rétroaction. Utilisation `resize="none"` si le redimensionnement briserait
+  la mise en page de superposition.
+</Accordion>
+
+  <Accordion title="Le texte d'aide doit-il rester visible en cas d'erreur ?">
+    Dans ce composant, le texte d'erreur remplace le texte d'aide pour garder le retour de champ concentré. Inscrire des exigences permanentes sur l'étiquette ou sur la copie qui l'entoure si elles doivent rester visibles.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Entrées",
+      href: "/docs/ui/input",
+      description:
+        "Utilisez Input pour les valeurs courtes d'une ligne telles que les noms, les URL et les requêtes de recherche.",
+      icon: FormInput,
+    },
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description:
+        "Associez Textarea à des actions de soumission, d'enregistrement ou de rétroaction claires.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Sheet",
+      href: "/docs/ui/sheet",
+      description:
+        "Utilisez Textarea à l'intérieur des panneaux latéraux pour les notes, les filtres et l'édition contextuelle.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Guide des formulaires",
+      href: "/docs/guides/forms",
+      description:
+        "Apprenez à composer des étiquettes, du texte d'aide, de la validation et des actions.",
+      icon: ClipboardCheck,
+    },
+  ]}
+/>

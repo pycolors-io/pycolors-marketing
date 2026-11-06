@@ -1,0 +1,176 @@
+---
+title: Démonstration de l’assistant
+description: Explorez l'interface de l'assistant gratuit, comprenez ses états de
+  démonstration locaux et connectez votre propre application.
+lastUpdated: "2026-10-16"
+appliesTo: Starter Free
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  FileJson,
+  FolderTree,
+  MessageSquare,
+  Workflow,
+} from "lucide-react";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Commencez par l'interface [#start-with-the-interface]
+
+Dans votre Starter en cours d'exécution `/assistant` ou choisissez **Assistant** dans la navigation desktop ou mobile. Le tableau de bord est get-started guide liens là aussi. Cette route appartient au démarrage, pas au site Web de marketing.
+
+La page apporte la gratuité [AI Chat Bloquer](/docs/blocks/app-shells/ai-chat) dans le shell d'application existant : un compositeur, des suggestions, une conversation lisible, une édition de définition d'agent local, des références de fichiers et des exemples d'état de tâche.
+
+<Callout title="Simulation locale - aucun modèle connecté">
+  Les réponses et les résultats des tâches sont des exemples fixes. Utilisez des
+  exemples de texte et des fichiers non sensibles. Cet assistant n'envoie pas de
+  demandes à un fournisseur d'IA ni ne stocke la session. Quitter la page ou
+  recharger efface les messages, brouillons et références.
+
+</Callout>
+
+La disponibilité de la source dans le monorepo n'implique pas qu'un ancien starter téléchargé ou une démo déployée contienne déjà cette route. Vérifiez votre copie livrée.
+
+## Ce que vous pouvez explorer [#what-you-can-explore]
+
+<DocsFeatureGrid
+  columns={3}
+  items={[
+    {
+      title: "Conversation et récupération",
+      description:
+        "Préremplir une suggestion, envoyer un message, arrêter une réponse d'échantillon et réessayer sans perdre vos modifications.",
+      icon: MessageSquare,
+    },
+    {
+      title: "Définitions locales",
+      description:
+        "Modifiez et confirmez une définition d'agent, joignez une référence lue localement et exportez les champs approuvés en tant que JSON.",
+      icon: FileJson,
+    },
+    {
+      title: "État de travail simulé",
+      description:
+        "Examinez un plan fictif et avancez son approbation, ses progrès et ses résultats avec des contrôles explicites.",
+      icon: Workflow,
+    },
+  ]}
+/>
+
+## Essayez-le en quelques minutes [#try-it-in-a-few-minutes]
+
+<Steps>
+
+<Step>
+
+### Démarrer une conversation [#start-a-conversation]
+
+Sélectionnez une suggestion pour préremplir le compositeur, puis choisissez **Envoyer**. Une réponse d'échantillon fixe apparaît progressivement. Choisir **Arrêter**, alors **Réessayer** pour le rejouer. Ouvrir **Récupération des essais** pour échouer la réponse suivante et vérifier que vos modifications restent.
+
+</Step>
+
+<Step>
+
+### Revoir et exporter une définition [#review-and-export-a-definition]
+
+Choisir **Définir un agent**, envoyez l'exemple de demande et modifiez les champs. Confirmez la définition avant de copier ou de télécharger son JSON versionné. Seuls les champs approuvés et les références de source visibles sont exportés. **Récupération des essais** Vous permet également d'échouer à la prochaine confirmation de définition.
+
+</Step>
+
+<Step>
+
+### Essayez une référence locale et un plan de tâches [#try-a-local-reference-and-a-task-plan]
+
+Choisir **Ajouter une référence** et sélectionnez un fichier texte pris en charge. La sélection seule ne la lit pas : choisissez **Lire localement**, alors **Utiliser comme référence** et envoyez la demande préremplie. Vérifiez le nom du fichier avant de confirmer la définition.
+
+Choisir **Réviser un plan de travail**Envoyez-le et développez-le **Contrôles de simulation de travail**. Utilisez les contrôles pour fournir des états fictifs d'approbation, de progrès et de résultat. Aucune tâche ne s'exécute en arrière-plan.
+
+</Step>
+
+<Step>
+
+### Commencez frais [#start-fresh]
+
+Choisir **Nouveau chat** pour effacer la session et annuler les rappels locaux en attente. Quitter la page ou recharger efface également les messages, les brouillons et les références. Les fichiers déjà téléchargés sur votre ordinateur sont conservés.
+
+</Step>
+
+</Steps>
+
+Le compositeur prend en charge l'utilisation du clavier et les contrôles Send/Stop explicites. Les suggestions ne démarrent jamais une tâche ou ne confirment pas une définition. La confirmation d'une définition n'exécute pas d'agent, n'accorde pas d'accès ou ne crée pas de ressource distante.
+
+### Limites de fichiers locales [#local-file-limits]
+
+Choisir **Ajouter une référence**, puis sélectionnez un UTF-8 `.txt` ou `.md` fichier, au plus **512 Kio**. Les documents PDF, Office, les images, les URL, le contenu audio et binaire ne sont pas pris en charge. La page affiche au plus 2 000 caractères Unicode et divulgue la troncature. Les échecs de lecture gardent l'action de récupération visible ; la suppression d'une référence invalide sa lecture en attente.
+
+**Utiliser comme référence** remplit une demande d'échantillon. L'envoi crée un exemple de définition modifiable avec le nom de fichier sélectionné comme provenance. Il n'y a pas d'analyse sémantique, d'indexation ou de RAG. Le JSON exclut le contenu et l'extrait du fichier; le nom de fichier visible peut être exporté, alors vérifiez-le avant de confirmer.
+
+L'assistant n'ajoute aucune analyse d'invite, de nom de fichier ou de contenu de fichier. Les analyses de site de démarrage existantes sont séparées. Reset ne supprime pas les fichiers déjà enregistrés sur votre ordinateur et n'est pas un effacement de mémoire sécurisée.
+
+## Adaptez votre copie [#adapt-your-copy]
+
+La source est délibérément livrée à l'intérieur du starter:
+
+| Fichier                                         | Responsabilité                                                      |
+| ----------------------------------------------- | ------------------------------------------------------------------- |
+| `app/(app)/assistant/page.tsx`                  | Guide sur la page, le contexte et l'intégration du serveur          |
+| `components/assistant/assistant-playground.tsx` | Conversation locale et définition du consommateur                   |
+| `components/assistant/chat/`                    | Bloc d'interface utilisateur source-copie complète                  |
+| `components/assistant/use-local-chat-file.ts`   | Validation, lecture et nettoyage de fichiers locaux                 |
+| `components/assistant/work-simulation.tsx`      | Exemple explicite de transitions de travail                         |
+| `components/assistant/source-provenance.json`   | Sommes de contrôle pour les révisions canoniques et les instantanés |
+
+Il n'y a pas d'importation d'exécution à partir du marketing. Gardez le complet `chat/` répertoires lorsqu'on les copie ailleurs. Le README local explique la provenance et les mises à jour délibérées ; la source copiée ne reçoit pas de corrections automatiques.
+
+### Remplacer l'échantillon de consommateurs [#replace-the-sample-consumer]
+
+Consultez [Contrat de bloc contrôlé et recette d'intégration](/docs/blocks/app-shells/ai-chat). Votre application fournit des messages, brouillon, statut, soumettre, arrêter, réessayer et copier des rappels. Conservez les contrôles optionnels de fichier, de définition et de travail liés au comportement réellement pris en charge. Supprimez les contrôles de simulation lors du remplacement de la démo.
+
+Votre serveur possède les informations d'identification du fournisseur, l'autorisation, la validation, les limites de taux et les coûts. Votre application possède la persistance, la gestion des sorties de modèle et l'exécution des tâches. Gardez les informations d'identification hors des props du navigateur et des définitions exportées. L'arrêt côté client doit être connecté à l'annulation du transport et ne prouve pas que la facturation en amont a cessé. Validez le succès, les erreurs, les réponses périmées et les annulations avant de connecter les données réelles des clients.
+
+Exécutez les tests du starter, les peluches, les contrôles de type et la construction après l'avoir adapté. Consultez la navigation au clavier, les longs contenus, les écrans étroits et les thèmes clairs et sombres. L'exemple ne certifie pas un fournisseur, un déploiement de production ou une configuration de lecteur d'écran.
+
+## Gratuit maintenant, un chemin Pro délibéré plus tard [#free-now-a-deliberate-pro-path-later]
+
+L'interface utilisateur de l'assistant, l'accessibilité, les erreurs / récupération et l'exportation de la définition locale sont incluses dans Free. Vous pouvez connecter votre propre backend sans acheter Pro.
+
+[Fondations incluses pour Starter Pro](/docs/starter-pro/what-is-included) couvrir l'authentification, la base de données et la facturation configurables. Acheter Pro ne connecte pas un modèle, ne débloque pas la démo gratuite ou ne migre pas ses données. Suivez le [Free-to-Pro guide](/docs/starter/upgrade) pour une réutilisation délibérée des sources. Les compositions d'assistants premium restent une décision future, pas une offre disponible.
+
+## Guides connexes [#related-guides]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Premiers pas",
+      href: "/docs/starter/getting-started",
+      description:
+        "Explorez le flux de première session et le shell d'application du starter.",
+      icon: BookOpen,
+    },
+    {
+      title: "AI Chat Bloquer",
+      href: "/docs/blocks/app-shells/ai-chat",
+      description:
+        "Lisez la source complète, le contrat contrôlé et la recette d'intégration.",
+      icon: MessageSquare,
+    },
+    {
+      title: "AIComposer",
+      href: "/docs/ui/ai-composer",
+      description:
+        "Comprendre l'API du compositeur et ses états d'interaction.",
+      icon: FileJson,
+    },
+    {
+      title: "Structure du projet",
+      href: "/docs/starter/project-structure",
+      description:
+        "Trouvez le bon endroit pour votre application et votre code backend.",
+      icon: FolderTree,
+    },
+  ]}
+/>

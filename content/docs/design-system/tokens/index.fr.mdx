@@ -1,0 +1,393 @@
+---
+title: Vue d’ensemble
+description: Des tokens de conception atomique qui définissent les fondations
+  visuelles de PyColors UI.
+lastUpdated: "2026-08-25"
+appliesTo: Design System - Tokens
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  Blocks,
+  CheckCircle,
+  CircleDot,
+  Layers3,
+  Layers,
+  Ruler,
+  Palette,
+  Sparkles,
+  Type,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Système de conception</Badge>
+  <Badge>Tokens</Badge>
+</div>
+
+## La base de chaque interface [#the-foundation-of-every-interface]
+
+Les tokens de conception sont les **Une seule source de vérité** pour le langage visuel de PyColors UI.
+
+Ils encodent les petites décisions que chaque composant peut consommer :
+
+- rayon
+- dénivelé
+- Rôles de couleur
+- rôles typographiques
+- futures règles de mouvement, d'espacement et de superposition
+
+Les tokens ne sont pas des composants. Ce ne sont pas des valeurs CSS aléatoires. Ils sont **décisions de conception exprimées en variables réutilisables**.
+
+<Callout title="Pourquoi cela compte">
+  Sans tokens, chaque composant commence lentement à prendre ses propres
+  décisions visuelles. Cela crée une dérive, rend les refactors risqués et
+  affaiblit le sentiment de prime du produit au fil du temps.
+
+</Callout>
+
+### Ce que les tokens contrôlent [#what-tokens-control]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Géométrie",
+      description:
+        "Les tokens Radius conservent les boutons, les cartes, les entrées et les superpositions visuellement liés.",
+      icon: Ruler,
+    },
+    {
+      title: "Élévation",
+      description:
+        "Les tokens d'ombre définissent la profondeur calme et prévisible des cartes, des menus et des modaux.",
+      icon: Layers3,
+    },
+    {
+      title: "Intention du système",
+      description:
+        "Les tokens rendent l'intention de conception explicite afin que le produit puisse évoluer sans dérive visuelle.",
+      icon: Sparkles,
+    },
+  ]}
+/>
+
+## Jumeler les surfaces avec leurs tokens de premier plan [#pair-surfaces-with-their-foreground-tokens]
+
+Utilisation `primary` avec `primary-foreground`et `destructive` avec `destructive-foreground`. Leurs premiers plans utilisent du texte sombre en mode sombre parce que ces surfaces sémantiques deviennent plus claires; le texte blanc codé en dur ne conserve pas de contraste lisible. Le mode lumière `muted-foreground` supporte également le texte sur la surface en sourdine. Les palettes personnalisées, l'opacité et les arrière-plans superposés nécessitent toujours des contrôles de contraste dans leur contexte réel.
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Commencez par les décisions de conception [#start-from-design-decisions]
+
+Un token existe lorsqu'une décision visuelle doit être partagée par le système.
+
+Au lieu de demander à chaque composant de décider de son propre rayon, ombre ou traitement de surface, PyColors définit ces décisions une fois.
+
+```text title="system-flow.txt"
+Design decisions
+  ↓
+Tokens
+  ↓
+Tailwind utilities
+  ↓
+UI components
+  ↓
+Product surfaces
+```
+
+Ce flux maintient les composants petits pendant que le système reste expressif.
+
+</Step>
+
+<Step>
+### Définir les tokens de manière centralisée [#define-tokens-centrally]
+
+Les tokens sont définis comme des variables CSS et mappés dans des utilitaires.
+
+```css title="tokens.css"
+:root {
+  --radius: 0.625rem;
+}
+
+@theme inline {
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+```
+
+La valeur brute reste dans la couche de token. Les composants consomment l'utilité.
+
+```tsx title="components/product-card.tsx"
+export function ProductCard() {
+  return (
+    <article className="rounded-lg border bg-card p-6 shadow-sm">
+      <h2 className="text-lg font-semibold tracking-tight">Product surface</h2>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+        This surface consumes tokens indirectly through utilities.
+      </p>
+    </article>
+  );
+}
+```
+
+</Step>
+
+<Step>
+### Étendre uniquement lorsque le système en a besoin [#extend-only-when-the-system-needs-it]
+
+Toutes les valeurs visuelles n’ont pas besoin de devenir un token le premier jour.
+
+Un nouveau token devrait exister lorsqu'il :
+
+- apparaît à plusieurs endroits
+- exprime une décision de produit réutilisable
+- améliore le thème ou la cohérence
+- réduit le style local dupliqué
+- Rendre les changements futurs plus sûrs
+
+<Callout type="info" title="Règle du système">
+  Identifiez les décisions de conception répétées, pas les préférences visuelles
+  uniques.
+
+</Callout>
+
+</Step>
+
+</Steps>
+
+## Catégories de tokens [#token-categories]
+
+PyColors commence intentionnellement avec une petite surface de token. Cela permet de garder le système compréhensible et évite l'étalement des tokens trop tôt.
+
+| Catégorie   | Objet                                                                  | Situation actuelle |
+| ----------- | ---------------------------------------------------------------------- | ------------------ |
+| Arrondi     | Géométrie d'angle pour les commandes, les cartes et les superpositions | Actif              |
+| Ombres      | Élévation pour surfaces et couches flottantes                          | Actif              |
+| Couleurs    | Rôles sémantiques de surface, de texte, d'état et de graphique         | Actif              |
+| Typographie | Rôles de police, hiérarchie, étiquettes et densité                     | Actif              |
+| Espacement  | Rythme et densité de mise en page du produit                           | Futurs             |
+| Motion      | Transitions, assouplissement et interaction                            | Futurs             |
+| Z-index     | Règles de superposition pour les superpositions et la navigation       | Futurs             |
+
+<Callout title="Pourquoi la surface est intentionnellement petite">
+  Un système de tokens plus petit est plus facile à comprendre, à documenter et
+  à maintenir. PyColors ajoute des tokens quand ils clarifient le système, pas
+  quand ils créent du vocabulaire supplémentaire.
+
+</Callout>
+
+## Guide de décision [#decision-guide]
+
+Utilisez un token lorsque :
+
+- la valeur apparaît sur plusieurs composants
+- Le changer à l'échelle mondiale serait utile
+- la valeur porte la signification du produit
+- il améliore la cohérence à travers le mode clair et sombre
+- il empêche les équipes d’inventer des alternatives locales
+
+Évitez de créer un token lorsque :
+
+- la valeur est purement décorative
+- Il n'apparaît qu'une seule fois
+- Le nom serait vague
+- le token duplique un rôle existant
+- Cela rend le système plus difficile à comprendre
+
+<PreferAvoid
+  prefer={[
+    "tokens pour des décisions visuelles répétées",
+    "les noms sémantiques qui décrivent l'intention",
+    "Valeurs centralisées exposées par les utilitaires",
+    "petites échelles faciles à retenir",
+    "documentation qui explique quand utiliser chaque token",
+  ]}
+  avoid={[
+    "tokeniser chaque valeur unique",
+    "Les noms qui ne décrivent que l'apparence",
+    "Dupliquer les rôles sémantiques existants",
+    "valeurs de token de hardcoding à l'intérieur des composants",
+    "ajouter des balances avant que le produit n'en ait besoin",
+  ]}
+/>
+
+### Flux de tokens [#token-flow]
+
+<Tabs items={["Modèle", "Composante"]}>
+  <Tab value="Modèle">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="grid gap-4 md:grid-cols-4">
+        <div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-xs font-medium text-primary">
+            1
+          </div>
+          <div className="mt-3 text-sm font-medium text-foreground">
+            Décision
+          </div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            Le système a besoin d'une sensation de coin cohérente.
+          </div>
+        </div>
+
+        <div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-xs font-medium text-primary">
+            2
+          </div>
+          <div className="mt-3 text-sm font-medium text-foreground">
+            Token
+          </div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            `--radius-lg` définit la géométrie partagée.
+          </div>
+        </div>
+
+        <div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-xs font-medium text-primary">
+            3
+          </div>
+          <div className="mt-3 text-sm font-medium text-foreground">
+            Utilité
+          </div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            `rounded-lg` expose le token aux composants.
+          </div>
+        </div>
+
+        <div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-xs font-medium text-primary">
+            4
+          </div>
+          <div className="mt-3 text-sm font-medium text-foreground">
+            Surface
+          </div>
+          <div className="mt-2 text-sm leading-6 text-muted-foreground">
+            Les cartes, les dialogues et les panneaux sont liés.
+          </div>
+        </div>
+      </div>
+    </div>
+
+</Tab>
+
+  <Tab value="Composante">
+
+```tsx title="components/settings-card.tsx"
+export function SettingsCard() {
+  return (
+    <section className="rounded-lg border border-border bg-card p-6 shadow-sm">
+      <div className="flex items-center gap-2">
+        <CircleDot className="h-4 w-4 text-primary" />
+        <h2 className="text-sm font-medium text-foreground">
+          Workspace settings
+        </h2>
+      </div>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+        The component consumes tokens through semantic utilities.
+      </p>
+    </section>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Commencez ici [#start-here]
+
+<DocsLinks
+  variant="compact"
+  tone="platform"
+  items={[
+    {
+      title: "Arrondi",
+      href: "/docs/design-system/tokens/radius",
+      description:
+        "Comprendre la géométrie de coin utilisée à travers les contrôles, les cartes et les superpositions.",
+      icon: Ruler,
+    },
+    {
+      title: "Ombres",
+      href: "/docs/design-system/tokens/shadows",
+      description:
+        "Découvrez comment l'élévation crée une profondeur calme et prévisible sur toutes les surfaces.",
+      icon: Layers3,
+    },
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Les tokens sont-ils les mêmes que les utilitaires Tailwind?">
+    Non. Les tokens définissent la valeur et l'intention. Les utilitaires exposent ces tokens aux composants. Un composant doit consommer l'utilitaire, pas hardcode la valeur brute.
+  </Accordion>
+
+<Accordion title="Chaque valeur de conception devrait-elle devenir un token?">
+  Non. Les tokens doivent représenter des décisions répétées du système.
+  Tokeniser chaque valeur trop tôt crée de la complexité sans améliorer la
+  cohérence.
+</Accordion>
+
+  <Accordion title="Puis-je personnaliser les valeurs de token ?">
+    Oui. L’objectif est de maintenir les rôles publics stables tout en permettant aux valeurs sous-jacentes de changer. Cela vous donne la flexibilité du thème sans réécrire les composants.
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description:
+        "Découvrez comment les rôles de couleur sémantiques étendent la même logique de token à travers les surfaces, le texte et les états.",
+      icon: Palette,
+    },
+    {
+      title: "Theme Builder",
+      href: "/tools/theme-builder",
+      description:
+        "Générer des remplacements CSS sémantiques à placer après l'importation de la feuille de style de token publique.",
+      icon: ArrowRight,
+    },
+    {
+      title: "Typographie",
+      href: "/docs/design-system/typography",
+      description:
+        "Revoir la hiérarchie, les rôles de police, les étiquettes et la structure du produit lisible.",
+      icon: Type,
+    },
+    {
+      title: "composants UI",
+      href: "/docs/ui",
+      description:
+        "Passez des fondations aux primitives réutilisables construites sur le système de tokens.",
+      icon: Blocks,
+    },
+    {
+      title: "Pourquoi PyColors UI",
+      href: "/docs/ui/why-pycolors-ui",
+      description:
+        "Comprendre la philosophie et les compromis derrière le système de composants.",
+      icon: Sparkles,
+    },
+  ]}
+/>

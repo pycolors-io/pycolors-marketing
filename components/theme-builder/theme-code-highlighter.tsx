@@ -1,5 +1,6 @@
 "use client";
 
+import { SiteText } from "@/components/site-text";
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 
 import type {
@@ -133,7 +134,7 @@ function renderPrettyCode(nodes: readonly PrettyCodeNode[]): ReactNode {
         className={className}
         style={style}
       >
-        {renderPrettyCode(node.children)}
+        {<SiteText text={renderPrettyCode(node.children)} />}
       </span>
     );
   });

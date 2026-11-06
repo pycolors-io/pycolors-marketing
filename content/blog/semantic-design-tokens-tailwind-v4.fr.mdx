@@ -1,0 +1,367 @@
+---
+title: "Comment construire des tokens de conception sémantique avec Tailwind CSS v4"
+description: "Migrez une petite carte de paramètres Next.js de couleurs codées
+  en dur vers des tokens sémantiques, reproduisez un échec de contraste en mode
+  sombre et vérifiez le correctif."
+author: Patrice Parny
+date: "2026-09-25"
+category: Next.js
+tags:
+  - Tailwind CSS
+  - Next.js
+  - Design Tokens
+  - UI Libraries
+featured: false
+readingTime: 12 min de lecture
+cover: /seo/blog/og-blog-saas.png
+cta:
+  label: Try the Theme Builder
+  href: /tools/theme-builder
+  variant: theme-builder
+---
+
+Déplacez les décisions de couleur répétées dans les rôles nommés, gardez chaque surface associée à son premier plan et testez le résultat rendu dans les deux thèmes. Avec Tailwind CSS v4 et PyColors, le paquet de tokens fournit déjà le pont entre ces rôles et les utilitaires tels que `bg-primary` et `text-primary-foreground`.
+
+Ce dernier appariement compte. Cette procédure permet de créer une petite carte de paramètres de projet, de la migrer, puis de la quitter délibérément. `text-white` sur le bouton principal. La version légère semble bien. La version sombre expose l'erreur. La suppression de cette surcharge restaure le premier plan choisi pour la surface sombre.
+
+Tout ce qui suit fonctionne dans un client Next.js indépendant utilisant des paquets npm publics. L'exemple stocke un nom dans l'état React et affiche une confirmation locale ; il n'a pas de serveur, de compte ou d'intégration de persistance. Les captures d'écran montrent cette expérience, pas un produit déployé.
+
+## Commencez par une décision qui se répète [#start-with-one-decision-that-repeats]
+
+Les **avant** La carte a un titre, une entrée nommée, un message d'état et une action d'enregistrement. Son bouton possède les deux palettes de thèmes:
+
+```tsx title="app/page.tsx — before, abbreviated"
+<button className="bg-[#065f46] text-white dark:bg-[#6ee7b7] dark:text-[#052e16]">
+  Save changes
+</button>
+```
+
+L'entrée répète ces verts pour la focus. La carte et le champ répètent chacun une surface claire et sombre. C’est gérable pour un écran, mais changer de marque signifie trouver tous les endroits qui ont pris la même décision.
+
+`#065f46` est une valeur de couleur concrète. `primary` est un rôle : la surface utilisée pour l'action primaire. `primary-foreground` C'est le texte qui se trouve sur cette surface. Le rôle reste stable lorsque sa valeur change entre les thèmes.
+
+| Décision dans cet exemple                 | Rôle consommé par l'interface    |
+| ----------------------------------------- | -------------------------------- |
+| Surface de page et texte                  | `background` / `foreground`      |
+| Configuration de la carte et de son texte | `card` / `card-foreground`       |
+| Enregistrer l'action et son label         | `primary` / `primary-foreground` |
+| Plan et focus des entrées                 | `input` / `ring`                 |
+| État d ' avancement                       | `muted-foreground`               |
+
+Ce sont des rôles existants, pas un nouveau système de nommage. Voir la [token aperçu](/docs/design-system/tokens) pour le contrat plus large.
+
+## Reproduire l’expérience en dehors d’un espace de travail [#reproduce-the-experiment-outside-a-workspace]
+
+Créez un répertoire vide en dehors de n'importe quel monorepo. Utiliser Node **24.18.1** et PNPM **10.32.1** pour correspondre à l'environnement testé. Enregistrez les six fichiers suivants aux chemins indiqués; créez le `app` répertoire d'abord.
+
+Les dépendances directes sont épinglées aux versions réellement installées pour cette expérience : **UI 1.5.4**, **tokens 1.2.3**, **Next.js 16.1.1**, **React/React DOM 19.2.0**et **Module externe Tailwind/PostCSS 4.3.3**. Il s'agit d'une base de test reproductible, et non d'une recommandation de conserver indéfiniment une application de production sur ces versions. Une nouvelle installation résout les dépendances transitives ; conservez le fichier de verrouillage généré pour les exécutions suivantes.
+
+Les manifestations publiques exposent les [Point d'entrée root de l'interface utilisateur](https://registry.npmjs.org/@pycolors/ui/1.5.4) et les [token stylesheet](https://registry.npmjs.org/@pycolors/tokens/1.2.3). L'interface utilisateur déclare React et React DOM `>=18`; son facultatif `lucide-react` peer est également épinglé ci-dessous. Next.js 16.1.1 accepte cette paire React et nécessite Node `>=20.9.0`.
+
+```json title="package.json"
+{
+  "name": "semantic-token-lab",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pycolors/tokens": "1.2.3",
+    "@pycolors/ui": "1.5.4",
+    "lucide-react": "1.47.0",
+    "next": "16.1.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "24.12.0",
+    "@types/react": "19.2.2",
+    "postcss": "8.5.28",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
+  }
+}
+```
+
+```js title="postcss.config.mjs"
+export default {
+  plugins: { "@tailwindcss/postcss": {} },
+};
+```
+
+Ceci utilise le [Intégration officielle de Tailwind v4 Next.js](https://tailwindcss.com/docs/installation/framework-guides/nextjs): le plugin PostCSS traite l'import CSS.
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
+}
+```
+
+Next.js génère `next-env.d.ts` lorsque vous exécutez l'application. La mise en page racine importe la feuille de style une fois et fournit les éléments requis. [HTML et éléments de corps](https://nextjs.org/docs/app/api-reference/file-conventions/layout).
+
+```tsx title="app/layout.tsx"
+import type { ReactNode } from "react";
+import "./globals.css";
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+### Conservez le pont de tokens existant [#keep-the-existing-token-bridge]
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@pycolors/tokens/tokens.css";
+
+@source '../node_modules/@pycolors/ui/dist';
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --primary: #065f46;
+  --primary-foreground: #ffffff;
+  --ring: #065f46;
+}
+
+.dark {
+  --primary: #6ee7b7;
+  --primary-foreground: #052e16;
+  --ring: #6ee7b7;
+}
+```
+
+Les fournitures de feuille de style de token public `:root` par défaut, `.dark` valeurs, et une `@theme inline` pont. Par exemple, il mappe `--color-primary` au `var(--primary)`. Tailwind [option de thème en ligne](https://tailwindcss.com/docs/theme#referencing-other-variables) rend l'utilitaire utiliser la valeur référencée. Nous outrepassons les rôles existants; nous ne copions pas le pont ou n'en créons pas un autre.
+
+Dans l'artefact inspecté Tokens 1.2.3, ces déclarations de rôle sont non stratifiées. Le matching `:root` et `.dark` Les substitutions ci-dessus suivent les importations à la même spécificité, de sorte que les déclarations ultérieures gagnent pour ces sélecteurs. «Mettre cela en dernier» n'est pas un correctif général en cascade: l'introduction de couches, de sélecteurs plus spécifiques ou de variables de portée différente peut changer le résultat.
+
+Deux mécanismes distincts sont nécessaires ici :
+
+- `@source` analyse explicitement la distribution de l'interface utilisateur installée. Tailwind [ne scanne pas `node_modules` par défaut](https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources). Ce chemin est relatif à `app/globals.css`; ajustez-le si votre feuille de style vit ailleurs.
+- `@custom-variant dark` fait de la carte d'avant `dark:*` Les utilitaires suivent la même chose `.dark` comme les variables sémantiques. Ce qui suit Tailwind [sélecteur manuel en mode sombre](https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually).
+
+L'interrupteur d'emballage est délibérément local à l'expérience. Il ne persiste pas une préférence de thème ou implémente la détection de thème système. Pour l'intégration à l'échelle de l'application, utilisez le canonique [Guide de thème de l'UI](/docs/ui/theming).
+
+### Exécutez les trois versions sur le même écran [#run-all-three-versions-on-the-same-screen]
+
+Cette page client a besoin de gestionnaires d'état et de clic, d'où le fichier Next.js. [`use client` limite](https://nextjs.org/docs/app/api-reference/directives/use-client). La mise en page racine reste un composant serveur. React [`useState`](https://react.dev/reference/react/useState) Il porte le même nom et la même confirmation pour les trois versions.
+
+```tsx title="app/page.tsx"
+"use client";
+
+import { useState } from "react";
+import { Button, Card, Input } from "@pycolors/ui";
+
+type Version = "before" | "broken" | "after";
+
+export default function Page() {
+  const [dark, setDark] = useState(false);
+  const [version, setVersion] = useState<Version>("before");
+  const [name, setName] = useState("Field notes");
+  const [saved, setSaved] = useState(false);
+  const updateName = (value: string) => {
+    setName(value);
+    setSaved(false);
+  };
+  const disabled = !name.trim();
+  const status = saved ? "Saved locally." : "No server request is sent.";
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <main className="min-h-screen bg-background p-4 text-foreground">
+        <div className="mx-auto max-w-md space-y-6">
+          <h1 className="text-2xl font-semibold">Semantic token lab</h1>
+          <div
+            className="flex flex-wrap gap-2"
+            role="group"
+            aria-label="Experiment controls"
+          >
+            <Button
+              variant="outline"
+              aria-pressed={dark}
+              onClick={() => setDark(!dark)}
+            >
+              Dark mode
+            </Button>
+            {(["before", "broken", "after"] as const).map((item) => (
+              <Button
+                key={item}
+                variant="outline"
+                aria-pressed={version === item}
+                onClick={() => setVersion(item)}
+              >
+                {item}
+              </Button>
+            ))}
+          </div>
+
+          {version === "before" ? (
+            <section className="space-y-4 rounded-lg border border-[#e2e8f0] bg-[#ffffff] p-4 text-[#0f172a] dark:border-[#334155] dark:bg-[#0f172a] dark:text-[#f8fafc]">
+              <h2 className="text-lg font-semibold">Project settings</h2>
+              <label
+                className="block text-sm font-medium"
+                htmlFor="project-name"
+              >
+                Project name
+              </label>
+              <input
+                id="project-name"
+                value={name}
+                onChange={(event) => updateName(event.target.value)}
+                className="w-full rounded-md border border-[#94a3b8] bg-[#ffffff] px-3 py-2 text-[#0f172a] outline-none focus-visible:ring-2 focus-visible:ring-[#065f46] dark:bg-[#0f172a] dark:text-[#f8fafc] dark:focus-visible:ring-[#6ee7b7]"
+              />
+              <button
+                id="save"
+                disabled={disabled}
+                onClick={() => setSaved(true)}
+                className="rounded-md bg-[#065f46] px-4 py-2 text-sm text-white outline-none hover:bg-[#064e3b] focus-visible:ring-2 focus-visible:ring-[#065f46] focus-visible:ring-offset-2 disabled:opacity-50 dark:bg-[#6ee7b7] dark:text-[#052e16] dark:hover:bg-[#34d399] dark:focus-visible:ring-[#6ee7b7] dark:focus-visible:ring-offset-[#0f172a]"
+              >
+                Save changes
+              </button>
+              <p role="status" className="text-sm">
+                {status}
+              </p>
+            </section>
+          ) : (
+            <Card className="space-y-4 p-4">
+              <h2 className="text-lg font-semibold">Project settings</h2>
+              <Input
+                id="project-name"
+                label="Project name"
+                value={name}
+                onChange={(event) => updateName(event.target.value)}
+                style={{ minWidth: 0 }}
+              />
+              <Button
+                id="save"
+                disabled={disabled}
+                onClick={() => setSaved(true)}
+                className={version === "broken" ? "text-white" : undefined}
+              >
+                Save changes
+              </Button>
+              <p role="status" className="text-sm text-muted-foreground">
+                {status}
+              </p>
+            </Card>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+}
+```
+
+Les **après** branch modifie la composition et la propriété des couleurs, tout en conservant le champ nommé, la protection des noms vides et le comportement de sauvegarde local. `Card`, `Input`et `Button` proviennent du point d'entrée du paquet public. Les utilitaires de mise en page restent locaux. L'entrée `minWidth: 0` permet à son champ natif de rétrécir dans l'aperçu étroit.
+
+Installez, construisez et exécutez :
+
+```bash
+pnpm install --registry https://registry.npmjs.org
+pnpm build
+pnpm typecheck
+pnpm start --hostname 127.0.0.1 --port 3616
+```
+
+Ouvrir `http://127.0.0.1:3616`. Sélectionner **avant**, **cassé**ou **après** et bascule **Mode sombre**. Modifiez le champ avec le clavier, désactivez-le pour désactiver l'enregistrement et entrez un nom pour l'activer à nouveau. Le rechargement réinitialise l'état local.
+
+## Diagnostiquer l'échec dans le bouton rendu [#diagnose-the-failure-in-the-rendered-button]
+
+Sélectionner **cassé** et permettre **Mode sombre**. La surface devient menthe, mais l'étiquette reste blanche :
+
+![Broken dark-mode settings card: white Save changes text on a light mint button.](/images/blog/semantic-design-tokens-tailwind-v4/broken-dark.png)
+
+_Capture réelle du consommateur, 480 × 400 pixels CSS. intentionnellement retenu `text-white` rend l'étiquette difficile à distinguer de la surface du bouton._
+
+L'erreur est ce contournement d'appelant :
+
+```tsx title="app/page.tsx — controlled failure"
+<Button className="text-white">Save changes</Button>
+```
+
+L'inspection du bouton UI 1.5.4 installé et du DOM rendu a montré la cause exacte : la variante par défaut du composant fournit `bg-primary text-primary-foreground`, mais sa fusion de classe permet à l'utilitaire texte-couleur de l'appelant de remplacer `text-primary-foreground`. En **cassé**Le DOM contient `text-white` et ne contient plus `text-primary-foreground`.
+
+Les variables CSS sont correctes. Réorganiser leurs déclarations ne peut pas réparer un utilitaire qui ne les référence plus. Supprimez le remplacement de la couleur du texte :
+
+```tsx title="app/page.tsx — corrected action"
+<Button>Save changes</Button>
+```
+
+Sélectionner **après** dans l'exemple complet pour appliquer cette correction:
+
+![Corrected dark-mode settings card: dark green Save changes text on the same light mint button.](/images/blog/semantic-design-tokens-tailwind-v4/fixed-dark.png)
+
+_Même consommateur, même viewport, même thème et même contenu. Le bouton consomme maintenant la correspondance `primary-foreground` rôle._
+
+Dans DevTools, vérifiez `#save` Une fois la transition de couleur terminée. Il s'agissait des couleurs calculées et des rapports de contraste relatifs de luminosité résultants pour le bouton activé et non décalé:
+
+| État            | Texte     | Surface   | Contraste mesuré |
+| --------------- | --------- | --------- | ---------------- |
+| Brisé, léger    | `#ffffff` | `#065f46` | 7.68:1           |
+| Brisé, sombre   | `#ffffff` | `#6ee7b7` | 1.52:1           |
+| Corrigé, léger  | `#ffffff` | `#065f46` | 7.68:1           |
+| Corrigé, sombre | `#052e16` | `#6ee7b7` | 9.78:1           |
+
+Ces mesures décrivent cette paire dans cet état. Ils ne certifient pas l'interface entière, son indicateur de focus, les couleurs de survol ou les contrôles désactivés. Opacité, arrière-plans et palettes personnalisées nécessitent leurs propres contrôles.
+
+## Vérifiez le comportement ainsi que les couleurs [#check-behavior-as-well-as-colors]
+
+Le consommateur isolé a passé une construction de production et une vérification stricte de TypeScript. La vérification du navigateur a couvert le rendu clair et sombre, la focus visible du clavier sur le bouton d'entrée et d'enregistrement, l'entrée d'activation, la mise à jour de l'état local et la désactivation du bouton après l'effacement du champ. La prévisualisation étroite a également été vérifiée pour le dépassement de niveau de page.
+
+Répétez les contrôles lors de l'adaptation :
+
+1. Basculer entre **avant** et **après** dans chaque thème. Confirmez que l'édition du nom et la confirmation locale se comportent toujours de la même manière.
+2. Tab dans le champ nommé, puis le bouton d'enregistrement. Regardez l'indicateur de focus réel par rapport à la surface actuelle; a `ring` La seule classe n’est pas la preuve qu’elle est visible.
+3. Effacez le champ, y compris l'entrée en blanc uniquement. Confirmez que l'enregistrement est désactivé ; tapez un nom et activez Enregistrer avec Entrée.
+4. Inspectez le bouton activé au repos et en vol stationnaire. Son traitement en vol stationnaire modifie l'opacité de surface, alors ne réutilisez pas le nombre de contraste au repos aveuglément.
+5. Basculer **cassé** en mode sombre, confirmez le premier plan blanc, puis sélectionnez **après** et confirmez les retours de premier plan correspondants.
+6. Vérifiez vos propres petits et grands viewports. Les étiquettes longues, les traductions et les contrôles supplémentaires nécessitent un autre pass de mise en page.
+
+## Garder l'abstraction proportionnelle [#keep-the-abstraction-proportionate]
+
+Les rôles sémantiques centralisent une décision; ils ne décident pas si la palette est bonne. Un token peut toujours contenir une valeur inappropriée, et un appelant peut toujours remplacer la paire prévue, comme le démontre cette expérience.
+
+Les tokens ne suppriment pas non plus tous les `dark:` utilité. Un traitement d’illustration, d’ombre ou de mise en page spécifique à un thème peut légitimement rester conditionnel. Une couleur décorative utilisée une fois n’a pas nécessairement besoin d’un nouveau rôle. Commencez par des décisions partagées sur des surfaces et des contrôles réels, puis développez-les lorsqu’un autre usage concret en a besoin.
+
+## Essayez votre propre couleur de marque [#try-your-own-brand-color]
+
+Utilisez la même boucle avec votre palette : choisissez une surface principale, inspectez son premier plan apparié dans les deux modes, puis vérifiez les états de focus et d'interaction dans votre application.
+
+[Essayez le Theme Builder](/tools/theme-builder) pour entrer une couleur de marque, inspecter les aperçus clairs et sombres et copier les remplacements CSS générés. Placez ces remplacements après l’importation de feuille de style de token public à l’aide de la cascade prise en charge décrite ci-dessus, puis relancez les contrôles. Le constructeur aide à explorer les valeurs ; votre interface de rendu est l'endroit où le résultat doit être vérifié.

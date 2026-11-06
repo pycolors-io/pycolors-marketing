@@ -1,5 +1,7 @@
 "use client";
-import Link from "next/link";
+
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, List } from "lucide-react";
 import styles from "./guide-article.module.css";
@@ -8,6 +10,8 @@ export type TocItem = { id: string; label: string };
 
 /** Native section links with a progressively enhanced reading position. */
 export function OnThisPageInline({ items }: Readonly<{ items: TocItem[] }>) {
+  const tSite = useCopy();
+
   const [activeId, setActiveId] = useState(items[0]?.id);
   const mobileDetails = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
@@ -63,7 +67,7 @@ export function OnThisPageInline({ items }: Readonly<{ items: TocItem[] }>) {
               if (mobileDetails.current) mobileDetails.current.open = false;
             }}
           >
-            {item.label}
+            {tSite(item.label)}
           </Link>
         </li>
       ))}
@@ -73,14 +77,15 @@ export function OnThisPageInline({ items }: Readonly<{ items: TocItem[] }>) {
     <>
       <div className="hidden lg:block">
         <p className="mb-4 flex items-center gap-2 text-xs font-medium">
-          <List className="size-3.5 text-muted-foreground" aria-hidden="true" />{" "}
-          On this page
+          <List className="size-3.5 text-muted-foreground" aria-hidden="true" />
+          {tSite(" ")}
+          {tSite("On this page")}
         </p>
         <nav
-          aria-label="On this page"
+          aria-label={tSite("On this page")}
           className="max-h-[calc(100dvh-10rem)] overflow-y-auto overscroll-contain border-l border-border-subtle pr-2"
         >
-          {links}
+          {tSite(links)}
         </nav>
       </div>
       <details
@@ -88,18 +93,20 @@ export function OnThisPageInline({ items }: Readonly<{ items: TocItem[] }>) {
         className={`${styles.mobileToc} rounded-[5px] border border-border-subtle lg:hidden`}
       >
         <summary className="flex min-h-12 cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
-          <List className="size-4 text-muted-foreground" aria-hidden="true" />{" "}
-          On this page{" "}
+          <List className="size-4 text-muted-foreground" aria-hidden="true" />
+          {tSite(" ")}
+          {tSite("On this page")}
+          {tSite(" ")}
           <ChevronDown
             className="ml-auto size-4 text-muted-foreground"
             aria-hidden="true"
           />
         </summary>
         <nav
-          aria-label="On this page"
+          aria-label={tSite("On this page")}
           className="max-h-[60dvh] overflow-y-auto border-t border-border-subtle p-2"
         >
-          {links}
+          {tSite(links)}
         </nav>
       </details>
     </>

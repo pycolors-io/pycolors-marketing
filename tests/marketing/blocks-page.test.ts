@@ -10,7 +10,7 @@ import { BLOCK_CATEGORIES, BLOCKS_CATALOG } from "../../lib/blocks/catalog";
 const marketingRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (path: string) =>
   readFileSync(resolve(marketingRoot, path), "utf8");
-const page = read("app/(site)/blocks/page.tsx");
+const page = read("app/[locale]/(site)/blocks/page.tsx");
 const catalogPreview = read(
   "components/marketing/blocks/block-catalog-preview.tsx",
 );
@@ -22,7 +22,7 @@ const standalonePreview = read(
   "components/marketing/blocks/block-standalone-preview.tsx",
 );
 const standalonePage = read(
-  "app/(preview)/blocks/[category]/[block]/preview/page.tsx",
+  "app/[locale]/(preview)/blocks/[category]/[block]/preview/page.tsx",
 );
 const sourceLoader = read("lib/blocks/source.server.ts");
 
@@ -60,7 +60,7 @@ describe("Blocks discovery", () => {
     expect(page).toContain("BLOCK_CATEGORIES.map");
     expect(page).toContain("BLOCKS_CATALOG.filter");
     expect(page).toContain("BlockCatalogPreview");
-    expect(page).toContain('aria-label="Block categories"');
+    expect(page).toContain('aria-label={tSite("Block categories")}');
   });
 
   it("keeps Preview interactive with safe local demo state", () => {
@@ -93,27 +93,33 @@ describe("Blocks discovery", () => {
     expect(showcaseTabs).toContain('width: "100%"');
     expect(showcaseTabs).toContain('width: "768px"');
     expect(showcaseTabs).toContain('width: "390px"');
-    expect(showcaseTabs).toContain('aria-label="Preview viewport"');
+    expect(showcaseTabs).toContain('aria-label={tSite("Preview viewport")}');
     expect(showcaseTabs).toContain("aria-pressed={selected}");
-    expect(showcaseTabs).toContain('aria-label="Open preview in new tab"');
+    expect(showcaseTabs).toContain(
+      'aria-label={tSite("Open preview in new tab")}',
+    );
     expect(showcaseTabs).toContain('rel="noopener noreferrer"');
     expect(showcaseTabs).toContain('target="_blank"');
-    expect(showcaseTabs).toContain('aria-label="Enter fullscreen"');
+    expect(showcaseTabs).toContain('aria-label={tSite("Enter fullscreen")}');
     expect(showcaseTabs).toContain("requestFullscreen");
-    expect(showcaseTabs).toContain('aria-label="Reset preview"');
+    expect(showcaseTabs).toContain('aria-label={tSite("Reset preview")}');
     expect(showcaseTabs).toContain("setPreviewKey");
     expect(showcaseTabs).toContain("data-viewport={viewport}");
     expect(showcaseTabs).toContain("style={{ width: viewportWidth }}");
   });
 
   it("maps every catalog identity to the standalone preview route", () => {
-    expect(page).toContain("previewHref={`/blocks/${block.id}/preview`}");
+    expect(page).toContain(
+      "previewHref={tSite.href(`/blocks/${block.id}/preview`)}",
+    );
     expect(standalonePage).toContain("generateStaticParams");
     expect(standalonePage).toContain("BLOCKS_CATALOG.map");
     expect(standalonePage).toContain("entry.id === `${category}/${block}`");
     expect(standalonePage).toContain("<BlockCatalogPreview blockId={block} />");
     expect(standalonePage).toContain("robots: { index: false, follow: false }");
-    expect(standalonePreview).toContain('aria-label="Preview actions"');
+    expect(standalonePreview).toContain(
+      'aria-label={tSite("Preview actions")}',
+    );
     expect(standalonePreview).toContain("requestFullscreen");
     expect(standalonePreview).toContain("document.exitFullscreen");
     expect(standalonePreview).toContain(

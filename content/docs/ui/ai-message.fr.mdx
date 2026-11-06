@@ -1,0 +1,82 @@
+---
+title: AI Message
+description: Un élément de conversation sémantique avec un haut-parleur visible,
+  du contenu grand public et des actions optionnelles.
+lastUpdated: "2026-10-16"
+appliesTo: UI
+publishedAt: "2026-10-16"
+icon: MessageSquare
+---
+
+import { AIMessageExample } from "@/components/docs/ui-usage/ai-conversation-examples";
+import { Copy, MessagesSquare } from "lucide-react";
+import { Callout } from "fumadocs-ui/components/callout";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Faites en sorte que chaque intervenant soit clair [#make-each-speaker-clear]
+
+`AIMessage` Rend une sémantique `li`, visible `author` étiquette, contenu d'emballage et facultatif `actions`. Utilisez-le à l'intérieur [AIConversation](/docs/ui/ai-conversation) Ou une liste native. Il ne déduit pas les rôles, génère des réponses ou interprète le texte du message.
+
+<Callout title="Disponibilité du forfait">
+  Cette API additive appartient à la conversation primitives minor Changeset.
+  Utilisez l'espace de travail du référentiel jusqu'à la publication ;
+  l'interface utilisateur 1.6.1 et les versions antérieures ne l'exportent pas.
+
+</Callout>
+
+## Aperçu [#preview]
+
+<AIMessageExample />
+
+L'exemple s'exécute ici dans la documentation. Le lien Explorer apparaît lorsque cette histoire est disponible dans le catalogue publié ; sinon, utilisez cet aperçu en ligne.
+
+```tsx
+import { AIMessage } from "@pycolors/ui";
+
+export function Example() {
+  return (
+    <ol>
+      <AIMessage author="You">What should I build first?</AIMessage>
+      <AIMessage author="Assistant">
+        Start with one useful flow, including recovery from errors.
+      </AIMessage>
+    </ol>
+  );
+}
+```
+
+## API et sémantique [#api-and-semantics]
+
+| Prop                            | Objet                                                             |
+| ------------------------------- | ----------------------------------------------------------------- |
+| `author: string`                | Nom du locuteur visible requis; fournir des étiquettes localisées |
+| `children: ReactNode`           | Corps du message fourni par l'application                         |
+| `actions: ReactNode`            | Actions optionnelles sous le corps, telles que AIMessageActions   |
+| Li props indigènes, `className` | Attributs et remplacements de style d'appelant                    |
+| `ref`                           | HTMLLIElement                                                     |
+
+Emplacements: `ai-message` et `ai-message-content`. Les espaces blancs et les sauts de ligne sont préservés; longs enveloppements de texte. Les chaînes sont rendues comme du texte. Si vous fournissez un moteur de rendu Markdown ou des enfants React riches, votre application possède leur sécurité, leur comportement de lien et leur sémantique accessible. Ne rendez pas cet élément de liste directement dans un `div`.
+
+L'auteur est un texte visible plutôt qu'un rôle déduit de la couleur. Les corps de message ne sont pas des régions vivantes. Annoncer l'état de la demande séparément pour éviter de lire chaque token de streaming.
+
+## Composer avec d'autres primitives [#compose-with-other-primitives]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "AI Conversation",
+      icon: MessagesSquare,
+      href: "/docs/ui/ai-conversation",
+      description:
+        "Fournissez la fenêtre de défilement étiquetée et la liste de messages.",
+    },
+    {
+      title: "Actions de message AI",
+      icon: Copy,
+      href: "/docs/ui/ai-message-actions",
+      description:
+        "Ajoutez des commentaires de copie et de récupération appartenant à l'application.",
+    },
+  ]}
+/>

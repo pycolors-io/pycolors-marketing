@@ -1,0 +1,130 @@
+---
+title: Panneau d'état vide
+description: Une section vide de copie de source avec des actions de premier
+  usage et sans résultats appartenant au consommateur.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { EmptyStatePanelExample } from "@/components/docs/blocks/empty-state-panel-example";
+
+## Rendre une section vide utile [#make-an-empty-section-useful]
+
+`EmptyStatePanel` compose le public `EmptyState` primitive dans une section nommée avec un titre, un contenu explicatif et des actions optionnelles primaires et secondaires. Utilisez-le pour la première utilisation ou une recherche réussie sans correspondance. Votre application décide quelle situation s'applique et ce qu'il faut offrir ensuite.
+
+<Callout title="Démonstration locale fictive">
+  L'aperçu ne révèle qu'un exemple de projet fictif ou réinitialise l'état local
+  de React. Il ne crée pas d'enregistrements, ne filtre pas un jeu de données
+  réel, ne contacte pas un backend ou ne vérifie pas les autorisations. Le lien
+  de configuration de l'interface utilisateur est la navigation dans la
+  documentation ordinaire.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Feedback &amp; états**limace `feedback`.
+- Bloquer : `empty-state-panel`, exportation `EmptyStatePanel`.
+- Source canonique : `apps/marketing/content/blocks/feedback/empty-state-panel/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+Il n'y a pas de paquet npm Blocks, d'installateur de registre, de CLI ou de canal de mise à jour automatique des sources. Ce bloc est indépendant de Next.js et des services backend.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/empty-state-panel/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible ou sélectionnez le code manuellement lorsque l'accès au presse-papiers n'est pas disponible. Le code est inclus à partir de la source canonique au moment de la construction, non dupliqué dans le guide ou copié à partir de la démo interactive.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <EmptyStatePanelExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/empty-state-panel/index.tsx"'
+    >
+      ../../../blocks/feedback/empty-state-panel/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `EmptyStatePanel` grâce à son équipement local existant. Il n'effectue aucune création d'enregistrement, filtrage ou demande réseau. L'onglet Source inclut le fichier canonique complet au moment de la construction, pas une implémentation dupliquée.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+Collez la source complète dans la destination ci-dessus. Garder le public `@pycolors/ui` les importations et la configuration du token à partir du guide d'installation de l'interface utilisateur. Importez votre copie locale à partir du composant consommateur ; aucun programme d'installation de Blocs ou dépendance supplémentaire n'est requis. Votre application possède la source copiée et ne reçoit pas de mises à jour automatiques ; validez-la dans votre application après chaque modification adoptée.
+
+## Utilisez votre propre contenu et vos propres actions [#use-your-own-content-and-actions]
+
+```tsx title="projects-empty.tsx"
+import { Button } from "@pycolors/ui";
+import { EmptyStatePanel } from "./blocks/empty-state-panel";
+
+export function ProjectsEmpty() {
+  return (
+    <EmptyStatePanel
+      id="workspace-projects-empty"
+      heading="Projects"
+      title="Start your first project"
+      description="Create a project to organize your next launch."
+      primaryAction={
+        <Button asChild>
+          <a href="/projects/new">Create project</a>
+        </Button>
+      }
+      secondaryAction={
+        <Button asChild variant="outline">
+          <a href="/project-guide">Read the project guide</a>
+        </Button>
+      }
+    />
+  );
+}
+```
+
+Remplacez ces destinations appartenant à l'application par des routes réels dans votre produit ; ce ne sont pas des points de terminaison PyColors. Pour aucun résultat correspondant, fournissez différents `title` et `description` Texte et a `type="button"` action connectée à votre propre état de filtre. Le bloc n'efface pas les filtres et ne récupère pas les résultats lui-même.
+
+Le fichier canonique n'a pas besoin de directive client ou de crochet d'état. Un consommateur utilisant des callbacks doit les fournir à l'intérieur de sa propre limite client appropriée ; ne passez pas les gestionnaires d'événements ordinaires d'un composant serveur à travers cette limite. Dans Next.js, mettez le code consommateur interactif dans un fichier marqué `"use client"`. La démonstration de la documentation est un composant client car il possède un état d'échantillon local.
+
+## Props et responsabilité [#props-and-responsibility]
+
+`id`, `heading` et `title` sont nécessaires. Fournir un HTML stable et non vide `id` qui est unique sur toute la page, y compris les `${id}-heading` ID. Il n'y a pas d'ID aléatoire ou de compteur global. Les instances distinctes ont besoin d'identifiants distincts ; gardez l'ID d'une instance stable lorsque son texte change.
+
+`heading` Etiquette la section avec un `h2`. Les rendus primitifs réutilisés `title` en tant que `h3`; placez le Bloc en dessous de votre page `h1`Pas comme le titre de la page. `description` est un texte de support facultatif. `icon` est décoratif et caché de la technologie d'assistance; communiquer des informations significatives dans le titre ou la description visible plutôt que de compter sur une illustration ou une couleur.
+
+`primaryAction` et `secondaryAction` sont des nœuds React facultatifs. Vous pouvez en fournir un, les deux ou aucun des deux. Les actions manquantes, nulles, fausses et vides ne créent pas de groupe d'action. Le bloc rend les nœuds consommateurs inchangés : les références, les destinations de liens, les rappels, la sémantique désactivée et les types de boutons restent les vôtres. Les composants opaques qui ne rendent rien sont toujours des contenus appartenant au consommateur.
+
+Utilisez des noms d'action significatifs et `type="button"` pour les boutons de non-soumission à l'intérieur des formulaires. Omettre les actions quand il n'y a pas d'étape suivante utile. Expliquez pourquoi un contrôle est désactivé lorsque cette information aide les utilisateurs. Un bouton désactivé n'est pas une autorisation ; appliquez les autorisations à la limite validée de votre serveur.
+
+`className` personnalise la racine à travers le public `cn` l'utilité, avec des classes de consommateurs prenant la priorité. Les tokens sémantiques prennent en charge les deux thèmes. La disposition empile les actions sur des écrans étroits et les enveloppe horizontalement de `sm`. Les étiquettes et les descriptions longues s'enroulent, mais passez en revue vos contrôles et votre contenu réels à des largeurs étroites; les contrôles à hauteur fixe peuvent nécessiter un style de consommation.
+
+## Avis et focus [#announcements-and-focus]
+
+`ariaLive` par défaut à **"désactivé"**, annulant le défaut poli du primitif. Une section statique vide ne doit pas s'annoncer non sollicitée. Le Bloc ne crée pas de région vivante externe supplémentaire.
+
+Pour une mise à jour dynamique significative, optez pour `ariaLive="polite"` délibérément. `"assertive"` délègue la sémantique d'alerte de la primitive et devrait être réservée aux informations urgentes, pas aux résultats de recherche vides ordinaires. N'imbriquez pas un panneau d'annonce dans une autre région vivante. Pour les mises à jour de résultats complexes, l'application peut garder ce panneau éteint et posséder un message d'état distinct et concis.
+
+Le Bloc ne déplace jamais la focus ou intercepte les événements du clavier. Les contrôles natifs gardent leur comportement au clavier. Lorsqu’une action remplace la section vide, votre application possède la cible de focus suivante. La démo concentre explicitement ses résultats après avoir révélé l'échantillon ; ce comportement appartient à la seule démo.
+
+## Valider et conserver votre copie [#validate-and-maintain-your-copy]
+
+Exécutez la charpie, la vérification de type, les tests et la construction de production de votre application après la copie. Examinez les cas de première utilisation, de non-résultats, de non-action et d'action désactivée, les instances multiples, le texte long, les mises en page mobiles et de bureau, les thèmes clairs et sombres, le focus sur le clavier et l'interaction source-copie.
+
+Les tests d'exécution de référentiels couvrent les en-têtes sémantiques, les ID, les contrôles natifs, les callbacks, les refs, les actions désactivées, les rendus, l'opt-in d'annonce et la démo réelle. Les contrôles de la hache représentative ne certifient pas le contraste visuel, le rendu réactif, les annonces de lecteur d'écran ou l'accessibilité complète.
+
+Votre application possède sa source copiée et ses modifications futures. Votre copie ne reçoit pas de mises à jour automatiques. Passez en revue chaque révision canonique ultérieure et validez-la dans votre application avant de l'adopter ; aucune synchronisation ne se produit. Un retour local du fichier copié le renvoie sans modifier les données client.
+
+## Limites et prochaines étapes [#boundaries-and-next-steps]
+
+Ce bloc ne déduit pas le chargement, l'erreur, les autorisations ou le nombre de résultats, et n'implémente pas la création d'enregistrements, le filtrage, le routage, la persistance, l'authentification, les paiements ou l'analyse. Il n'y a pas de nouvelle dépendance ou de changement d'API d'interface utilisateur publique. Les séparés [Tableau de données](/docs/blocks/data/data-table) conserve sa propre API d'action vide pour les résultats tabulaires.
+
+Explorez le [Blocage du catalogue](/blocks) pour d'autres compositions, ou [Comparer les Starters](/starters) pour une base d'application plus large.

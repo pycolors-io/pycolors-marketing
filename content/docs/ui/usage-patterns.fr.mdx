@@ -1,0 +1,452 @@
+---
+title: Exemples de composition
+description: Des moyens pratiques d'importer, de composer et d'expédier des
+  primitives PyColors UI dans des interfaces SaaS réelles sans modifier l'API
+  publique.
+lastUpdated: "2026-09-18"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs as DocsTabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { NotificationSettings } from "@/components/docs/ui-usage/notification-settings";
+import { RenameProjectDialog } from "@/components/docs/ui-usage/rename-project-dialog";
+import { MembersTable } from "@/components/docs/ui-usage/members-table";
+import { SaveToastExample } from "@/components/docs/ui-usage/save-toast-example";
+import { Badge } from "@pycolors/ui";
+import {
+  Accessibility,
+  Bell,
+  CheckSquare,
+  Layers3,
+  PanelsTopLeft,
+  Table2,
+} from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Utilisations</Badge>
+</div>
+
+## Utiliser les primitives comme blocs de construction de produits [#use-primitives-as-product-building-blocks]
+
+Les primitives PyColors UI sont intentionnellement petites. Ils vous donnent des pièces accessibles et basées sur des tokens pour les interfaces SaaS, mais votre application possède l’état du produit, la récupération des données, le routage, la validation et les règles métier.
+
+Utilisez cette page lorsque vous savez quels composants vous avez besoin et que vous voulez les composer dans un écran réel sans lire la source du paquet.
+
+<Callout title="Idée de base">
+  Importer des primitives publiques depuis `@pycolors/ui`, conservez la logique
+  du produit dans votre application et composez le comportement de la page, de
+  la fonctionnalité ou du calque de motif.
+
+</Callout>
+
+## Essayez de copier les exemples [#try-and-copy-the-examples]
+
+Complete [Installation de l'interface utilisateur](/docs/ui/installation) tout d'abord, y compris le scan du paquet Tailwind et le token CSS. Chaque **Source** onglet ci-dessous comprend le fichier complet utilisé par son **Aperçu**. Copiez le fichier dans votre application; utilisez le bouton de copie de bloc de code ou sélectionnez le code manuellement.
+
+La boîte de dialogue et Pagination utilisent l'option `lucide-react` Pair pour leurs icônes. Installez-le si votre application ne le fournit pas déjà :
+
+```bash
+pnpm add lucide-react
+```
+
+Les quatre exemples interactifs gardent l'état en mémoire. La mise à jour les réinitialise ; aucune donnée n'est envoyée, stockée à distance ou utilisée pour modifier un compte. Le formulaire affiche la validation, la boîte de dialogue engage ou annule une modification, le tableau change de pages et le toast ne s'ouvre qu'après une action.
+
+Par exemple, enregistrez la source de formulaire comme `components/notification-settings.tsx` et le rendre à partir d'une page Next.js :
+
+```tsx title="app/page.tsx"
+import { NotificationSettings } from "../components/notification-settings";
+
+export default function SettingsPage() {
+  return <NotificationSettings />;
+}
+```
+
+La page peut rester un composant de serveur. Chaque exemple interactif déclare ses propres limites client et importe uniquement React et le public `@pycolors/ui` point d'entrée. Connectez la persistance de votre application et la validation côté serveur séparément.
+
+## Règles d'utilisation requises [#required-usage-rules]
+
+Ces règles font partie du contrat d'utilisation pris en charge.
+
+- Importation à partir du point d'entrée du paquet public: `@pycolors/ui`.
+- Conserver `@pycolors/ui` primitives app-agnostic. Ne mettez pas d'auth, de facturation, de routage ou de décisions spécifiques au produit dans des composants d'interface utilisateur partagés.
+- Préserver la sémantique native : boutons pour les actions, liens pour la navigation, étiquettes pour les contrôles de formulaire et balisage de table pour les données tabulaires.
+- Ajoutez une limite client uniquement lorsque votre application utilise le comportement du navigateur, l'état local, les gestionnaires d'événements ou la composition interactive Radix.
+- Utilisez les documents de composants existants pour les accessoires et les variantes exacts avant d'inventer un emballage local.
+- Gardez les responsabilités d'accessibilité visibles lorsque vous composez des superpositions, des formulaires, des commentaires et des vues de données denses.
+
+## Valeurs par défaut recommandées [#recommended-defaults]
+
+Ces valeurs par défaut ne sont pas des exigences strictes, mais elles maintiennent les surfaces du produit cohérentes.
+
+- Débuter avec `Button`, `Input`, `Card`, `Alert`et `Table` avant d'ajouter des abstractions locales.
+- Utilisation `Dialog` pour des décisions ciblées et des formes courtes.
+- Utilisation `Sheet` pour les workflows latéraux qui devraient garder le contexte de la page visible.
+- Utilisation `Tabs` pour la commutation entre les panneaux connexes, pas pour la navigation primaire.
+- Utilisation `Toast` pour un feedback non bloquant après les actions.
+- Utilisation `Alert` pour la rétroaction inline persistante qui affecte la tâche en cours.
+- Utilisation `Pagination` lorsque l'utilisateur a besoin d'une position de page stable et d'un enregistrement prévisible.
+
+## Importation à partir du point d'entrée public [#import-from-the-public-entry-point]
+
+```tsx title="public-imports.tsx"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Checkbox,
+  CheckboxField,
+  CheckboxLabel,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Input,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Toast,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@pycolors/ui";
+```
+
+Ne pas importer de `@pycolors/ui/src/*` ou `@pycolors/ui/dist/*`. Ces chemins sont des détails internes et ne font pas partie du contrat public.
+
+## Utilisation des composants serveur et client [#server-and-client-component-usage]
+
+De nombreuses primitives PyColors peuvent être composées dans une page rendue par le serveur lorsque vous passez du contenu statique et aucun gestionnaire d'événements. Dès que votre fichier possède un état, des effets ou des gestionnaires d'événements, déplacez cette composition vers un petit composant client.
+
+```tsx title="server-safe-summary-card.tsx"
+import { Alert, AlertDescription, AlertTitle, Button } from "@pycolors/ui";
+
+export function BillingSummary() {
+  return (
+    <section className="space-y-4">
+      <Alert>
+        <AlertTitle>Plan active</AlertTitle>
+        <AlertDescription>
+          Your workspace is covered until the next renewal.
+        </AlertDescription>
+      </Alert>
+
+      <Button asChild>
+        <a href="/settings/billing">Manage billing</a>
+      </Button>
+    </section>
+  );
+}
+```
+
+Utilisez une limite client pour la composition pilotée par les événements.
+
+<DocsTabs items={["Aperçu", "Source"]}>
+  <Tab value="Preview">
+    <Preview>
+      <RenameProjectDialog />
+    </Preview>
+
+</Tab>
+  <Tab value="Source">
+    <include lang="tsx" meta='title="components/rename-project-dialog.tsx"'>
+      ../../../components/docs/ui-usage/rename-project-dialog.tsx
+    </include>
+
+</Tab>
+</DocsTabs>
+
+Essayez de renommer le projet, de soumettre un nom vide et d'annuler une modification. Escape supprime la boîte de dialogue et renvoie le focus à son déclencheur. L'enregistrement modifie uniquement le nom local affiché.
+
+<Callout type="info" title="Règle de limite client">
+  Faites du plus petit composant interactif un composant client. Gardez les
+  pages environnantes et le chargement des données côté serveur lorsque cela est
+  possible.
+
+</Callout>
+
+## Formulaires et paramètres [#forms-and-settings]
+
+Utilisez des formulaires lorsque l'utilisateur modifie l'état du produit. Gardez les étiquettes, les descriptions et les messages de validation à proximité du contrôle qu'ils expliquent.
+
+<DocsTabs items={["Aperçu", "Source"]}>
+  <Tab value="Preview">
+    <Preview>
+      <NotificationSettings />
+    </Preview>
+
+</Tab>
+  <Tab value="Source">
+    <include lang="tsx" meta='title="components/notification-settings.tsx"'>
+      ../../../components/docs/ui-usage/notification-settings.tsx
+    </include>
+
+</Tab>
+</DocsTabs>
+
+Soumettre un e-mail vide ou non valide pour voir une erreur de champ connecté, puis entrer `builder@example.com` et basculez le résumé hebdomadaire. L'enregistrement met à jour le message d'état sans naviguer ni faire une demande réseau.
+
+Attentes en matière d'accessibilité :
+
+- Chaque contrôle de formulaire nécessite une étiquette visible ou un nom accessible équivalent.
+- Les erreurs de validation doivent être du texte, pas seulement de la couleur.
+- Les contrôles désactivés doivent toujours indiquer pourquoi l'action n'est pas disponible lorsque cette raison est importante pour le flux de travail.
+
+## Revêtements [#overlays]
+
+Choisissez les superpositions en fonction du travail.
+
+| Besoin                                                                | Primitif       |
+| --------------------------------------------------------------------- | -------------- |
+| Confirmer ou terminer une tâche ciblée                                | `Dialog`       |
+| Travaillez dans un panneau latéral sans perdre le contexte de la page | `Sheet`        |
+| Choisissez une action de ligne ou de menu compacte                    | `DropdownMenu` |
+
+```tsx title="filters-sheet.tsx"
+"use client";
+
+import {
+  Button,
+  Checkbox,
+  CheckboxField,
+  CheckboxLabel,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@pycolors/ui";
+
+export function FiltersSheet() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Filters</Button>
+      </SheetTrigger>
+
+      <SheetContent side="right">
+        <SheetHeader>
+          <SheetTitle>Filter customers</SheetTitle>
+          <SheetDescription>
+            Narrow the table without leaving the current view.
+          </SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6 space-y-3">
+          <CheckboxField>
+            <Checkbox id="trialing" />
+            <CheckboxLabel htmlFor="trialing">Trialing</CheckboxLabel>
+          </CheckboxField>
+          <CheckboxField>
+            <Checkbox id="past-due" />
+            <CheckboxLabel htmlFor="past-due">Past due</CheckboxLabel>
+          </CheckboxField>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+```
+
+Incluez les attentes en matière d’accessibilité :
+
+- Le déclencheur doit avoir un texte clair ou une étiquette accessible.
+- Les titres de dialogue et de feuille doivent décrire la tâche.
+- Le comportement d'évasion et de retour de la focus doit rester intact.
+- Ne placez pas de longs flux de travail en plusieurs étapes dans un modal lorsqu’une page serait plus claire.
+
+## Sections de produits avec onglets [#product-sections-with-tabs]
+
+Utilisation `Tabs` pour basculer entre les panneaux connexes à l'intérieur de la même page.
+
+```tsx title="settings-tabs.tsx"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@pycolors/ui";
+
+export function SettingsTabs() {
+  return (
+    <Tabs defaultValue="profile">
+      <TabsList aria-label="Settings sections">
+        <TabsTrigger value="profile">Profile</TabsTrigger>
+        <TabsTrigger value="billing">Billing</TabsTrigger>
+        <TabsTrigger value="security">Security</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="profile">Profile form</TabsContent>
+      <TabsContent value="billing">Billing controls</TabsContent>
+      <TabsContent value="security">Security settings</TabsContent>
+    </Tabs>
+  );
+}
+```
+
+Utilisez des liens de navigation au lieu d'onglets lorsque la destination est une autre route, une page bookmarkable ou une architecture d'informations primaires.
+
+## Tables et pagination [#tables-and-pagination]
+
+Utilisation `Table` pour des enregistrements comparables. Ajouter `Pagination` lorsque le jeu de résultats est divisé en pages stables.
+
+<DocsTabs items={["Aperçu", "Source"]}>
+  <Tab value="Preview">
+    <Preview>
+      <MembersTable />
+    </Preview>
+
+</Tab>
+  <Tab value="Source">
+    <include lang="tsx" meta='title="components/members-table.tsx"'>
+      ../../../components/docs/ui-usage/members-table.tsx
+    </include>
+
+</Tab>
+</DocsTabs>
+
+Déplacez-vous à travers les trois pages. Précédent et Suivant sont désactivés aux limites ; la page en cours est annoncée et marquée avec `aria-current="page"`. Ces boutons paginent des enregistrements d'exemple locaux. Utilisation `PaginationLink asChild` avec des liens réels lorsque votre application possède des routes paginés.
+
+Attentes en matière d'accessibilité :
+
+- Gardez les en-têtes de colonne significatifs.
+- Utilisez des légendes ou des en-têtes à proximité lorsque le but de la table n'est pas évident.
+- Gardez les contrôles de pagination utilisables au clavier et étiquetés pour la collection qu'ils contrôlent.
+
+## Motifs de rétroaction [#feedback-patterns]
+
+Utilisez la rétroaction en ligne lorsque le message affecte la surface actuelle. Utilisez les commentaires de toast lorsque le message confirme une action terminée sans bloquer l'utilisateur.
+
+```tsx title="inline-feedback.tsx"
+import { Alert, AlertDescription, AlertTitle } from "@pycolors/ui";
+
+export function PaymentIssueAlert() {
+  return (
+    <Alert variant="destructive">
+      <AlertTitle>Payment failed</AlertTitle>
+      <AlertDescription>
+        Update your payment method to keep the workspace active.
+      </AlertDescription>
+    </Alert>
+  );
+}
+```
+
+<DocsTabs items={["Aperçu", "Source"]}>
+  <Tab value="Preview">
+    <Preview>
+      <SaveToastExample />
+    </Preview>
+
+</Tab>
+  <Tab value="Source">
+    <include lang="tsx" meta='title="components/save-toast-example.tsx"'>
+      ../../../components/docs/ui-usage/save-toast-example.tsx
+    </include>
+
+</Tab>
+</DocsTabs>
+
+Activez le bouton pour simuler un enregistrement réussi, rejetez la notification et déclenchez-la à nouveau. Relâcher le focus sur le trigger. Il se ferme également après cinq secondes lorsqu'il n'est pas mis en pause par l'interaction. Dans votre application, ouvrez le toast après le succès de la mutation. Conservez le blocage des échecs dans les commentaires en ligne persistants. Cet exemple autonome possède un fournisseur et une fenêtre d'affichage; réutilisez votre fournisseur existant lors de son intégration.
+
+## Erreurs courantes [#common-mistakes]
+
+<PreferAvoid
+  preferTitle="Prefer"
+  avoidTitle="Avoid"
+  prefer={[
+    "Importation de primitives publiques à partir de `@pycolors/ui`",
+    "utiliser `Button asChild` quand un lien doit ressembler à un bouton",
+    "garder l'état, les mutations et le routage dans le code de l'application",
+    "Utilisation de `Alert` pour la rétroaction de tâches persistantes",
+    "Utilisation de `Toast` pour la confirmation d'action non bloquante",
+    "utiliser `Table` uniquement pour des enregistrements structurés et comparables",
+  ]}
+  avoid={[
+    "à partir de `@pycolors/ui/src/*` ou `@pycolors/ui/dist/*`",
+    "en utilisant un `div` cliquable au lieu d'un bouton ou d'un lien réel",
+    "mettre les règles de facturation, d'authentification ou de produit dans les primitives de l'interface utilisateur",
+    "en utilisant un toast pour une erreur de blocage, l'utilisateur doit corriger maintenant",
+    "Utilisation des onglets pour la navigation sur les routes primaires",
+    "cacher les étiquettes ou la validation derrière la couleur seule",
+  ]}
+/>
+
+## Docs associés [#related-docs]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Composition",
+      href: "/docs/ui/composition",
+      description:
+        "Découvrez comment les petites primitives deviennent des surfaces de produits maintenables.",
+      icon: Layers3,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Passez en revue les attentes en termes de sémantique, de focus, de clavier et de feedback.",
+      icon: Accessibility,
+    },
+    {
+      title: "Formulaires",
+      href: "/docs/ui/input",
+      description:
+        "Commencez par la documentation des entrées et des cases à cocher pour l'utilisation au niveau du formulaire.",
+      icon: CheckSquare,
+    },
+    {
+      title: "Revêtements",
+      href: "/docs/patterns/overlays",
+      description:
+        "Choisissez entre Dialog, Sheet et DropdownMenu pour de vrais workflows.",
+      icon: PanelsTopLeft,
+    },
+    {
+      title: "Tableaux de données",
+      href: "/docs/patterns/data-table",
+      description:
+        "Passez des tables primitives au filtrage et à l'état prêts pour le produit.",
+      icon: Table2,
+    },
+    {
+      title: "Actions asynchrones",
+      href: "/docs/patterns/async-actions",
+      description:
+        "Concevoir le chargement, réessayer, annuler et griller des commentaires pour les mutations.",
+      icon: Bell,
+    },
+  ]}
+/>
+
+<Callout title="Prochaine étape">
+  Commencez par les documents des composants pour les props exacts, puis
+  utilisez Patterns lorsque l'interaction a besoin d'un état, d'un comportement
+  asynchrone ou de décisions de produits répétées.
+
+</Callout>

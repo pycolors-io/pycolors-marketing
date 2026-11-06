@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 
 const siteRoot = resolve(
   dirname(fileURLToPath(import.meta.url)),
-  "../../app/(site)",
+  "../../app/[locale]/(site)",
 );
 
 function readPage(path: string) {

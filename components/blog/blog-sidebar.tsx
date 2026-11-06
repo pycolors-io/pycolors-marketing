@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { Badge } from "@pycolors/ui";
 
@@ -17,6 +18,8 @@ const linkClass =
 
 /** Topic navigation stays usable without client JavaScript. */
 export function BlogSidebar({ categories, tags, posts }: BlogSidebarProps) {
+  const tSite = useCopy();
+
   const uniqueTags = tags.filter(
     (tag, index) =>
       tags.findIndex(
@@ -27,11 +30,11 @@ export function BlogSidebar({ categories, tags, posts }: BlogSidebarProps) {
   return (
     <aside
       className="min-w-0 lg:sticky lg:top-24"
-      aria-label="Explore the blog"
+      aria-label={tSite("Explore the blog")}
     >
-      <nav aria-label="Blog topics">
+      <nav aria-label={tSite("Blog topics")}>
         <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-          Browse by topic
+          {tSite("Browse by topic")}
         </p>
         <ul className="grid gap-1 sm:grid-cols-2 lg:grid-cols-1">
           <li>
@@ -40,12 +43,15 @@ export function BlogSidebar({ categories, tags, posts }: BlogSidebarProps) {
               aria-current="page"
               className={`${linkClass} bg-surface-muted/60 font-medium text-foreground`}
             >
-              <span>All articles</span>{" "}
+              <span>{tSite("All articles")}</span>
+              {tSite(" ")}
               <span
                 className="font-mono text-[11px]"
-                aria-label={`${posts.length} articles`}
+                aria-label={tSite("{value0} articles", {
+                  value0: posts.length,
+                })}
               >
-                {String(posts.length).padStart(2, "0")}
+                {tSite(String(posts.length).padStart(2, "0"))}
               </span>
             </Link>
           </li>
@@ -61,12 +67,16 @@ export function BlogSidebar({ categories, tags, posts }: BlogSidebarProps) {
                   href={`/blog/categories/${normalizeTaxonomy(category)}`}
                   className={linkClass}
                 >
-                  <span>{category}</span>{" "}
+                  <span>{tSite(category)}</span>
+                  {tSite(" ")}
                   <span
                     className="font-mono text-[11px]"
-                    aria-label={`${count} ${count === 1 ? "article" : "articles"}`}
+                    aria-label={tSite("{value0} {value1}", {
+                      value0: count,
+                      value1: count === 1 ? "article" : "articles",
+                    })}
                   >
-                    {String(count).padStart(2, "0")}
+                    {tSite(String(count).padStart(2, "0"))}
                   </span>
                 </Link>
               </li>
@@ -80,14 +90,14 @@ export function BlogSidebar({ categories, tags, posts }: BlogSidebarProps) {
           className={`${styles.tagDisclosure} mt-5 border-t border-border-subtle pt-3`}
         >
           <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-[5px] text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
-            Explore tags
+            {tSite("Explore tags")}
             <ChevronDown
               className="size-4 text-muted-foreground"
               aria-hidden="true"
             />
           </summary>
           <nav
-            aria-label="Blog tags"
+            aria-label={tSite("Blog tags")}
             className="mt-2 flex flex-wrap gap-x-2 pb-3"
           >
             {uniqueTags.slice(0, 12).map((tag) => (
@@ -101,7 +111,7 @@ export function BlogSidebar({ categories, tags, posts }: BlogSidebarProps) {
                   size="sm"
                   className="h-auto min-h-7 max-w-full rounded-[5px] border-border-subtle bg-background px-2.5 py-1 leading-5 text-muted-foreground transition-colors duration-150 group-hover:border-border group-hover:bg-surface-muted/60 group-hover:text-foreground group-focus-visible:border-border group-focus-visible:text-foreground"
                 >
-                  <span className="wrap-anywhere">{tag}</span>
+                  <span className="wrap-anywhere">{tSite(tag)}</span>
                 </Badge>
               </Link>
             ))}
@@ -110,17 +120,23 @@ export function BlogSidebar({ categories, tags, posts }: BlogSidebarProps) {
       ) : null}
 
       <div className="mt-5 border-t border-border-subtle pt-5">
-        <p className="text-sm font-medium">Looking for a walkthrough?</p>
+        <p className="text-sm font-medium">
+          {tSite("Looking for a walkthrough?")}
+        </p>
         <p className="mt-2 text-xs leading-6 text-muted-foreground">
-          Follow a product guide, or jump into the implementation docs.
+          {tSite(
+            "Follow a product guide, or jump into the implementation docs.",
+          )}
         </p>
         <div className="mt-2">
           <Link href="/guides" className={`${linkClass} px-0`}>
-            Practical guides{" "}
+            {tSite("Practical guides")}
+            {tSite(" ")}
             <ArrowUpRight className="size-3.5" aria-hidden="true" />
           </Link>
           <Link href="/docs" className={`${linkClass} px-0`}>
-            Documentation{" "}
+            {tSite("Documentation")}
+            {tSite(" ")}
             <ArrowUpRight className="size-3.5" aria-hidden="true" />
           </Link>
         </div>

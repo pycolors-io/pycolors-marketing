@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   Button,
   Dialog,
@@ -7,29 +8,31 @@ import {
   DialogTitle,
   DialogDescription,
   Input,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 export function DialogCreateDemo() {
+  const tSite = useCopy();
+
   return (
     <div className="mt-6">
       <Dialog>
         <DialogTrigger asChild>
-          <Button>Create project</Button>
+          <Button>{tSite("Create project")}</Button>
         </DialogTrigger>
 
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create project</DialogTitle>
+            <DialogTitle>{tSite("Create project")}</DialogTitle>
             <DialogDescription>
-              Short, focused flow. Keep it predictable.
+              {tSite("Short, focused flow. Keep it predictable.")}
             </DialogDescription>
           </DialogHeader>
 
           <div className="mt-4 space-y-4">
-            <Input label="Name" placeholder="Acme" />
+            <Input label={tSite("Name")} placeholder={tSite("Acme")} />
             <div className="flex justify-end gap-2">
-              <Button variant="outline">Cancel</Button>
-              <Button>Create</Button>
+              <Button variant="outline">{tSite("Cancel")}</Button>
+              <Button>{tSite("Create")}</Button>
             </div>
           </div>
         </DialogContent>

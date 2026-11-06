@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { Badge, cn } from "@pycolors/ui";
 
@@ -36,6 +37,8 @@ export function MarketingSectionHeader({
   titleId,
   className,
 }: MarketingSectionHeaderProps) {
+  const tSite = useCopy();
+
   const isCentered = align === "center";
 
   return (
@@ -54,7 +57,7 @@ export function MarketingSectionHeader({
             variant="outline"
             className="max-w-full rounded-md px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em]"
           >
-            {eyebrow}
+            {tSite(eyebrow)}
           </Badge>
         ) : null}
 
@@ -62,7 +65,7 @@ export function MarketingSectionHeader({
           id={titleId}
           className="text-balance font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl"
         >
-          {title}
+          {tSite(title)}
         </h2>
 
         {description ? (
@@ -72,7 +75,7 @@ export function MarketingSectionHeader({
               isCentered && "mx-auto",
             )}
           >
-            {description}
+            {tSite(description)}
           </p>
         ) : null}
       </div>
@@ -81,7 +84,7 @@ export function MarketingSectionHeader({
         <div
           className={cn(isCentered ? "mt-6 flex justify-center" : "shrink-0")}
         >
-          {action}
+          {tSite(action)}
         </div>
       ) : null}
     </div>

@@ -1,0 +1,504 @@
+---
+title: Variables d'environnement
+description: Configurez Starter Pro en toute sécurité avec des variables
+  d'environnement prêtes pour la production pour l'authentification, la
+  facturation, l'accès à la base de données, la livraison de courriels et
+  l'infrastructure de déploiement.
+lastUpdated: "2026-05-29"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+
+import {
+  CreditCard,
+  Database,
+  Globe,
+  KeyRound,
+  LockKeyhole,
+  Mail,
+  Rocket,
+  Server,
+  ShieldCheck,
+  Sparkles,
+  Webhook,
+} from "lucide-react";
+
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Variables d'environnement</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Starter Pro utilise des variables d'environnement pour séparer les problèmes d'infrastructure, d'authentification, de facturation, de livraison des e-mails et de déploiement en toute sécurité.
+
+Ceci garde :
+
+- secrets en dehors du dépôt
+- Environnements prévisibles
+- Déploiement portable
+- infrastructure de facturation sécurisée
+- Authentification Production-Safe
+
+<Callout title="Principe de base">
+  Les variables d'environnement définissent les limites de l'infrastructure
+  entre votre base de code et les systèmes de production.
+
+</Callout>
+
+## Esprit de production [#production-mindset]
+
+Starter Pro est conçu autour des exigences réelles de déploiement SaaS.
+
+Cela signifie que les variables d'environnement devraient prendre en charge:
+
+- développement local
+- Mise en scène des déploiements
+- infrastructure de production
+- Stripe facturation
+- Fournisseurs OAuth
+- Authentification sécurisée
+- isolation de la base de données
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Sécurisé par défaut",
+      description:
+        "Les secrets d'infrastructure sensibles restent côté serveur et n'atteignent jamais le navigateur.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Déploiement prêt",
+      description:
+        "Les variables sont structurées pour les pipelines Vercel, CI, la mise en scène et les environnements de production.",
+      icon: Rocket,
+    },
+    {
+      title: "Séparation des infrastructures",
+      description:
+        "Les systèmes de base de données, d'authentification, de facturation et de messagerie restent isolés et configurables.",
+      icon: Server,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Public',
+      title: "Variables publiques",
+      icon: Globe,
+      description: (
+        <>
+          <p>
+            Public variables are exposed to the browser and should only contain safe frontend values.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">NEXT_PUBLIC_APP_URL</Badge>
+            <Badge variant="plan">Public URLs</Badge>
+            <Badge variant="plan">Frontend-safe</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Server',
+      title: "Variables de serveur",
+      icon: LockKeyhole,
+      description: (
+        <>
+          <p>
+            Server-side variables power authentication, Stripe, databases, and backend infrastructure.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">AUTH_SECRET</Badge>
+            <Badge variant="plan">DATABASE_URL</Badge>
+            <Badge variant="plan">Stripe secrets</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Billing',
+      title: "Infrastructure de facturation",
+      icon: CreditCard,
+      description: (
+        <>
+          <p>
+            Billing variables connect Stripe Checkout, subscriptions, invoices, and webhook synchronization.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">STRIPE_SECRET_KEY</Badge>
+            <Badge variant="plan">Webhook secrets</Badge>
+            <Badge variant="plan">Price IDs</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Email',
+      title: "Livraison par email",
+      icon: Mail,
+      description: (
+        <>
+          <p>
+            Email providers handle verification, password reset flows, and transactional delivery.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Resend</Badge>
+            <Badge variant="plan">Verification</Badge>
+            <Badge variant="plan">Password reset</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+### Variables d'application [#application-variables]
+
+Ces variables définissent la structure de l'URL de l'application.
+
+```text title=".env.local"
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+APP_BASE_URL=http://localhost:3000
+```
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Frontend",
+      title: "NEXT_PUBLIC_APP_URL",
+      icon: Globe,
+      description:
+        "URL publique exposée au navigateur pour les redirections, la navigation et les références frontales.",
+      items: [
+        "coffre-fort pour frontend",
+        "utilisé côté client",
+        "domaine de production",
+      ],
+    },
+    {
+      eyebrow: "Serveur",
+      title: "APP_BASE_URL",
+      icon: Server,
+      tone: "primary",
+      description:
+        "URL d'application côté serveur utilisée en interne pour les flux backend et l'infrastructure protégée.",
+      items: [
+        "Utilisation serveur uniquement",
+        "auth redirige",
+        "Références internes",
+      ],
+    },
+  ]}
+/>
+
+## Configuration de la base de données [#database-configuration]
+
+Starter Pro utilise PostgreSQL avec Prisma.
+
+```text title=".env.local"
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/starter_pro
+```
+
+Pratiques de production recommandées :
+
+- Hébergement PostgreSQL géré
+- sauvegardes automatisées
+- séparation de mise en scène et de production
+- connexion pooling
+- Accès restreint à la base de données
+
+<Callout type="info" title="Règle de production">
+  Ne partagez jamais les informations d'identification de la base de données de
+  production dans des environnements locaux ou des référentiels publics.
+
+</Callout>
+
+## Variables d'authentification [#authentication-variables]
+
+Starter Pro utilise Auth.js pour l'authentification.
+
+```text title=".env.local"
+AUTH_SECRET=
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
+AUTH_TRUST_HOST=true
+```
+
+### Requis [#required]
+
+| Variable      | Objet                                                |
+| ------------- | ---------------------------------------------------- |
+| `AUTH_SECRET` | Signer des sessions et des tokens d'authentification |
+
+### Fournisseurs optionnels [#optional-providers]
+
+| Variable             | Objet                            |
+| -------------------- | -------------------------------- |
+| `AUTH_GOOGLE_ID`     | ID client Google OAuth           |
+| `AUTH_GOOGLE_SECRET` | Le secret du client Google OAuth |
+| `AUTH_GITHUB_ID`     | ID client GitHub OAuth           |
+| `AUTH_GITHUB_SECRET` | GitHub OAuth client secret       |
+
+### Notes [#notes]
+
+- `AUTH_SECRET` Doit être forte en production
+- Les fournisseurs OAuth sont facultatifs
+- Email/mot de passe auth fonctionne sans OAuth
+- Les domaines de production doivent correspondre à la configuration OAuth
+
+## Livraison par email [#email-delivery]
+
+Starter Pro prend en charge les flux d'e-mails transactionnels via Resend.
+
+```text title=".env.local"
+AUTH_RESEND_API_KEY=
+AUTH_EMAIL_FROM="PyColors <noreply@your-domain.com>"
+```
+
+Les flux de courrier électronique comprennent:
+
+- e-mails de vérification
+- mot de passe reset emails
+- livraison auth transactionnelle
+
+<DocsFeatureGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Flux de vérification",
+      description:
+        "La vérification des e-mails permet de sécuriser la propriété et l'intégration des comptes.",
+      icon: Mail,
+    },
+    {
+      title: "Flux de récupération",
+      description:
+        "La réinitialisation du mot de passe et les flux de récupération de compte reposent sur la livraison sécurisée des e-mails.",
+      icon: KeyRound,
+    },
+  ]}
+/>
+
+## Variables de facturation Stripe [#stripe-billing-variables]
+
+Starter Pro inclut des fondations de facturation Stripe prêtes pour la production.
+
+```text title=".env.local"
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_WEBHOOK_SECRET=
+
+STRIPE_PRODUCT_PRO=
+STRIPE_PRICE_PRO_MONTHLY=
+```
+
+### Variables de facturation de base [#core-billing-variables]
+
+| Variable                             | Objet                       |
+| ------------------------------------ | --------------------------- |
+| `STRIPE_SECRET_KEY`                  | Accès Stripe côté serveur   |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Intégration Frontend Stripe |
+| `STRIPE_WEBHOOK_SECRET`              | Validation Webhook          |
+| `STRIPE_PRODUCT_PRO`                 | ID produit Stripe           |
+| `STRIPE_PRICE_PRO_MONTHLY`           | ID de prix Stripe           |
+
+### Règles importantes [#important-rules]
+
+- Les modes test et live sont séparés
+- les produits et les prix doivent correspondre au même mode Stripe
+- La validation du webhook est requise
+- Les webhooks de production doivent utiliser HTTPS
+
+```bash title="stripe-cli.sh"
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+<Callout title="Principe de facturation">
+  La fiabilité de la facturation dépend davantage de la configuration correcte
+  de Stripe que de la mise en œuvre frontale.
+
+</Callout>
+
+## Variables de données d’exemple [#seed-variables]
+
+Starter Pro comprend des équipements de développement local.
+
+```text title=".env.local"
+SEED_AUTH_FIXTURES=true
+SEED_DEV_USER=false
+```
+
+Ces variables permettent :
+
+- Auth Testing local
+- abonnement testing
+- Validation d'route protégée
+- flux de produits sensibles à la facturation
+
+### Configuration de production recommandée [#recommended-production-setup]
+
+<DocsDecisionGrid
+  columns={2}
+  items={[
+    {
+      eyebrow: "Développement",
+      title: "Environnement local",
+      icon: Sparkles,
+      description:
+        "Utilisez les clés Stripe de test, PostgreSQL local et la configuration d'authentification sécurisée pour le développement.",
+      items: [
+        "mode de Stripe de test",
+        "base de données locale",
+        "données d’exemple",
+      ],
+    },
+    {
+      eyebrow: "Production",
+      title: "Environnement de production",
+      icon: ShieldCheck,
+      tone: "primary",
+      description:
+        "Utilisez l'infrastructure Stripe en direct, les secrets sécurisés, les domaines HTTPS et les paramètres de déploiement en production.",
+      items: ["Live Stripe Keys", "Base de données gérée", "Domaines HTTPS"],
+    },
+  ]}
+/>
+
+## Exemple de fichier d'environnement [#example-environment-file]
+
+```text title=".env.example"
+# -----------------------------------------------------------------------------
+# Database
+# -----------------------------------------------------------------------------
+DATABASE_URL=
+
+# -----------------------------------------------------------------------------
+# App
+# -----------------------------------------------------------------------------
+NEXT_PUBLIC_APP_URL=
+APP_BASE_URL=
+
+# -----------------------------------------------------------------------------
+# Auth
+# -----------------------------------------------------------------------------
+AUTH_SECRET=
+
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
+
+AUTH_TRUST_HOST=true
+
+# -----------------------------------------------------------------------------
+# Email
+# -----------------------------------------------------------------------------
+AUTH_RESEND_API_KEY=
+AUTH_EMAIL_FROM=
+
+# -----------------------------------------------------------------------------
+# Stripe
+# -----------------------------------------------------------------------------
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_WEBHOOK_SECRET=
+
+STRIPE_PRODUCT_PRO=
+STRIPE_PRICE_PRO_MONTHLY=
+```
+
+— Erreurs courantes
+
+Évitez ces erreurs de déploiement :
+
+- exposer publiquement des variables secrètes
+- mélange de Stripe test et live IDs
+- oubli de la configuration du webhook
+- commiting `.env.local`
+- Utiliser des secrets d'auth faibles
+- partage des informations d'identification de production
+
+<Callout type="info" title="Règle de sécurité">
+  Les variables d'environnement font partie de votre modèle de sécurité de
+  l'infrastructure, et pas seulement de la configuration des applications.
+
+</Callout>
+
+### Flux de travail recommandé [#recommended-workflow]
+
+1. Configurer des variables locales
+2. Valider les flux d'auth
+3. valider le mode de test Stripe
+4. valider la synchronisation webhook
+5. Configurer les secrets de production
+6. déployer la mise en scène
+7. valider la facturation de production
+8. lancement public
+
+### Modèle mental [#mental-model-1]
+
+> Les variables publiques alimentent le frontend.
+>
+> Les variables serveur alimentent la couche métier.
+
+## Related [#related]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Déploiement",
+      href: "/docs/starter-pro/deployment",
+      description:
+        "Déployez Starter Pro avec une infrastructure et une configuration de facturation prêtes pour la production.",
+      icon: Rocket,
+    },
+    {
+      title: "Authentification",
+      href: "/docs/starter-pro/auth",
+      description:
+        "Comprendre les sessions, OAuth, la vérification et l'accès protégé.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Facturation",
+      href: "/docs/starter-pro/billing",
+      description:
+        "Explorez Stripe Checkout, les abonnements et la synchronisation de facturation.",
+      icon: CreditCard,
+    },
+    {
+      title: "Architecture",
+      href: "/docs/starter-pro/architecture",
+      description:
+        "Revoyez la structure adaptées à la production derrière Starter Pro.",
+      icon: Database,
+    },
+  ]}
+/>

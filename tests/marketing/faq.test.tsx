@@ -6,10 +6,10 @@ import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { MarketingFaq } from "../../components/marketing/faq";
 import { starterProBuyerFaqs } from "../../lib/products/starter-pro-buyer-faq";
-import PricingPage from "../../app/(site)/pricing/page";
-import StarterProPage from "../../app/(site)/starters/pro/page";
-import TemplatePage from "../../app/(site)/templates/na-ai-landing/page";
-import UpgradePage from "../../app/(site)/upgrade/page";
+import PricingPage from "../../app/[locale]/(site)/pricing/page";
+import StarterProPage from "../../app/[locale]/(site)/starters/pro/page";
+import TemplatePage from "../../app/[locale]/(site)/templates/na-ai-landing/page";
+import UpgradePage from "../../app/[locale]/(site)/upgrade/page";
 
 vi.mock("@/lib/api/client", () => ({
   createStarterProCheckout: vi.fn(),

@@ -6,8 +6,6 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
   buildPaginationRange,
   cn,
 } from "@pycolors/ui";
@@ -133,17 +131,36 @@ export function DataTablePaginationControls({
       >
         <PaginationContent className="!m-0 !max-w-none !p-0 [&>li]:!m-0 [&>li]:!p-0 [&>li]:before:hidden">
           <PaginationItem>
-            <PaginationPrevious
+            <PaginationLink
+              aria-label={previousLabel}
+              className="gap-2 px-3"
+              data-slot="pagination-previous"
               disabled={page === 1}
-              label={previousLabel}
               onClick={() => requestPage(page - 1)}
-            />
+              size="sm"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="size-4"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+              <span className="hidden sm:inline">
+                {pagination.previousLabel ?? "Previous"}
+              </span>
+            </PaginationLink>
           </PaginationItem>
 
           {tokens.map((token) =>
             token.type === "ellipsis" ? (
               <PaginationItem key={token.key}>
-                <PaginationEllipsis />
+                <PaginationEllipsis label={pagination.morePagesLabel} />
               </PaginationItem>
             ) : (
               <PaginationItem key={token.value}>
@@ -160,11 +177,30 @@ export function DataTablePaginationControls({
           )}
 
           <PaginationItem>
-            <PaginationNext
+            <PaginationLink
+              aria-label={nextLabel}
+              className="gap-2 px-3"
+              data-slot="pagination-next"
               disabled={page === totalPages}
-              label={nextLabel}
               onClick={() => requestPage(page + 1)}
-            />
+              size="sm"
+            >
+              <span className="hidden sm:inline">
+                {pagination.nextLabel ?? "Next"}
+              </span>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="size-4"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </PaginationLink>
           </PaginationItem>
         </PaginationContent>
       </Pagination>

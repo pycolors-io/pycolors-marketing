@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { useCopy } from "@/lib/i18n/use-copy";
+import * as React from "react";
 
 import {
   Button,
@@ -12,7 +13,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 /**
  * Client-only previews for the Dropdown Menu docs page.
@@ -20,6 +21,8 @@ import {
  */
 
 export function CheckboxMenuPreview() {
+  const tSite = useCopy();
+
   const [enabled, setEnabled] = React.useState(true);
   const [pinned, setPinned] = React.useState(false);
 
@@ -27,7 +30,7 @@ export function CheckboxMenuPreview() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm">
-          Options
+          {tSite("Options")}
         </Button>
       </DropdownMenuTrigger>
 
@@ -36,20 +39,20 @@ export function CheckboxMenuPreview() {
           checked={enabled}
           onCheckedChange={(v) => setEnabled(Boolean(v))}
         >
-          Enabled
+          {tSite("Enabled")}
         </DropdownMenuCheckboxItem>
 
         <DropdownMenuCheckboxItem
           checked={pinned}
           onCheckedChange={(v) => setPinned(Boolean(v))}
         >
-          Pinned
+          {tSite("Pinned")}
         </DropdownMenuCheckboxItem>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuCheckboxItem checked disabled>
-          Disabled option
+          {tSite("Disabled option")}
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -57,38 +60,37 @@ export function CheckboxMenuPreview() {
 }
 
 export function RadioMenuPreview() {
-  const [theme, setTheme] = React.useState('system');
+  const tSite = useCopy();
+
+  const [theme, setTheme] = React.useState("system");
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm">
-          Theme
+          {tSite("Theme")}
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="start">
-        <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+        <DropdownMenuLabel>{tSite("Appearance")}</DropdownMenuLabel>
 
-        <DropdownMenuRadioGroup
-          value={theme}
-          onValueChange={setTheme}
-        >
+        <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
           <DropdownMenuRadioItem value="system">
-            System
+            {tSite("System")}
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="light">
-            Light
+            {tSite("Light")}
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="dark">
-            Dark
+            {tSite("Dark")}
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuRadioItem value="contrast" disabled>
-          High contrast (soon)
+          {tSite("High contrast (soon)")}
         </DropdownMenuRadioItem>
       </DropdownMenuContent>
     </DropdownMenu>

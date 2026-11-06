@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -54,6 +55,8 @@ export function CopyButton({
   buttonClassName,
   statusClassName,
 }: CopyButtonProps) {
+  const tSite = useCopy();
+
   const [status, setStatus] = React.useState<CopyStatus>({
     kind: "idle",
     message: "",
@@ -77,14 +80,14 @@ export function CopyButton({
         className={buttonClassName}
         onClick={handleCopy}
       >
-        {label}
+        {tSite(label)}
       </Button>
       <p
         aria-live="polite"
         role="status"
         className={cn("text-xs text-muted-foreground", statusClassName)}
       >
-        {copiedValue === value ? status.message : ""}
+        {tSite(copiedValue === value ? status.message : "")}
       </p>
     </div>
   );

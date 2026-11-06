@@ -1,4 +1,6 @@
 "use client";
+
+import { useCopy } from "@/lib/i18n/use-copy";
 import type { ComponentProps, ReactNode } from "react";
 import { track } from "@vercel/analytics";
 import { proDemoUrl } from "@/lib/pro-demo-url";
@@ -15,6 +17,8 @@ export function ProDemoLink({
   destination?: string;
   variant?: ComponentProps<typeof SiteButton>["variant"];
 }> = {}) {
+  const tSite = useCopy();
+
   const href = proDemoUrl(destination);
   if (!href) return null;
   const link = (
@@ -33,14 +37,14 @@ export function ProDemoLink({
           : undefined
       }
     >
-      {children}
+      {tSite(children)}
     </a>
   );
   return appearance === "text" ? (
     link
   ) : (
     <SiteButton asChild variant={variant} size="lg">
-      {link}
+      {tSite(link)}
     </SiteButton>
   );
 }

@@ -11,9 +11,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { QuoteRequestForm } from "../../components/quotes/quote-request-form";
 import QuoteRequestPage, {
-  metadata,
-} from "../../app/(site)/request-a-quote/page";
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/request-a-quote/page";
 import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 const id1 = "00000000-0000-4000-8000-000000000001";
 const id2 = "00000000-0000-4000-8000-000000000002";
@@ -64,7 +68,7 @@ const submit = () =>
 describe("Project quote requests", () => {
   it("preselects the service from a known query and retains canonical metadata", async () => {
     const view = await QuoteRequestPage({
-      params: Promise.resolve({}),
+      params: Promise.resolve({ locale: "en" }),
       searchParams: Promise.resolve({ service: "business-adaptation" }),
     });
     render(view);
@@ -73,7 +77,24 @@ describe("Project quote requests", () => {
       "A clear scope for your next product.",
     );
     expect(screen.getByLabelText("Service")).toHaveValue("business-adaptation");
-    expect(metadata.alternates).toEqual({ canonical: "/request-a-quote" });
+    expect(
+      screen.getByRole("heading", {
+        name: "Your quote, prepared by PyColors.",
+      }),
+    ).toBeVisible();
+    const proposal = screen.getByRole("link", {
+      name: "See what a proposal includes",
+    });
+    expect(proposal).toHaveAttribute("href", "/request-a-quote/template");
+    expect(proposal).not.toHaveAttribute("download");
+    expect(metadata.alternates).toMatchObject({
+      canonical: "/request-a-quote",
+      languages: {
+        en: "https://pycolors.io/request-a-quote",
+        fr: "https://pycolors.io/fr/demande-de-devis",
+        "x-default": "https://pycolors.io/request-a-quote",
+      },
+    });
     for (const service of Object.values(STARTER_PRO_SERVICES))
       expect(screen.getByText(service.priceLabel)).toBeVisible();
     expect(fetchMock).not.toHaveBeenCalled();
@@ -81,11 +102,112 @@ describe("Project quote requests", () => {
   it("keeps unknown service values unselected", async () => {
     render(
       await QuoteRequestPage({
-        params: Promise.resolve({}),
+        params: Promise.resolve({ locale: "en" }),
         searchParams: Promise.resolve({ service: "unrecognized" }),
       }),
     );
     expect(screen.getByLabelText("Service")).toHaveValue("");
+  });
+  it("carries a custom project enquiry from its URL into the validated request", async () => {
+    render(
+      await QuoteRequestPage({
+        params: Promise.resolve({ locale: "en" }),
+        searchParams: Promise.resolve({ service: "custom-product" }),
+      }),
+    );
+    expect(screen.getByRole("combobox", { name: "Service" })).toHaveValue(
+      "custom-product",
+    );
+    expect(screen.getByRole("option", { name: "Custom software" })).toHaveValue(
+      "custom-product",
+    );
+    fill();
+    submit();
+    await screen.findByRole("status");
+    expect(
+      JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body)),
+    ).toMatchObject({ service: "custom-product", brief });
+  });
+  it("submits optional implementation details with the brief", async () => {
+    render(<QuoteRequestForm initialService="business-adaptation" />);
+    fill();
+    fireEvent.change(screen.getByLabelText("Product type"), {
+      target: { value: "client-portal" },
+    });
+    fireEvent.change(screen.getByLabelText("Current stage"), {
+      target: { value: "existing" },
+    });
+    fireEvent.change(screen.getByLabelText("Who will use it?"), {
+      target: { value: "Customers and reviewers" },
+    });
+    fireEvent.change(screen.getByLabelText("Priority features and workflows"), {
+      target: { value: "Assigned approvals and project discussions" },
+    });
+    fireEvent.change(
+      screen.getByLabelText("Existing assets and integrations"),
+      {
+        target: {
+          value: "Existing application, brand assets and Stripe sandbox",
+        },
+      },
+    );
+    fireEvent.change(
+      screen.getByLabelText("What would make this delivery successful?"),
+      { target: { value: "A customer can approve a project in the preview." } },
+    );
+    submit();
+    await screen.findByRole("status");
+    const sent = JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body));
+    expect(sent).toMatchObject({
+      locale: "en",
+      projectType: "client-portal",
+      projectStage: "existing",
+      audience: "Customers and reviewers",
+      features: "Assigned approvals and project discussions",
+      assets: "Existing application, brand assets and Stripe sandbox",
+      successCriteria: "A customer can approve a project in the preview.",
+      brief,
+    });
+  });
+  it("opens optional details and focuses a server-rejected field", async () => {
+    fetchMock.mockResolvedValueOnce(
+      Response.json({ fields: ["features"] }, { status: 400 }),
+    );
+    const { container } = render(
+      <QuoteRequestForm initialService="guided-setup" />,
+    );
+    fill();
+    expect(container.querySelector("details")).not.toHaveAttribute("open");
+    submit();
+    await screen.findByText("Review the highlighted fields.");
+    await waitFor(() =>
+      expect(
+        screen.getByLabelText("Priority features and workflows"),
+      ).toHaveFocus(),
+    );
+    expect(container.querySelector("details")).toHaveAttribute("open");
+  });
+  it("rejects an oversized combined UTF-8 brief locally and preserves the form", async () => {
+    render(<QuoteRequestForm initialService="guided-setup" />);
+    fill();
+    fireEvent.change(screen.getByLabelText("What would you like to build?"), {
+      target: { value: "界".repeat(4000) },
+    });
+    fireEvent.change(screen.getByLabelText("Priority features and workflows"), {
+      target: { value: "界".repeat(1000) },
+    });
+    fireEvent.change(
+      screen.getByLabelText("Existing assets and integrations"),
+      { target: { value: "界".repeat(800) } },
+    );
+    submit();
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "Your brief is too long overall.",
+    );
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(screen.getByLabelText("What would you like to build?")).toHaveValue(
+      "界".repeat(4000),
+    );
   });
   it("validates required fields before creating a request", () => {
     render(<QuoteRequestForm initialService="guided-setup" />);

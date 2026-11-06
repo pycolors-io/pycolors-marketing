@@ -1,7 +1,8 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { ChevronUp, ExternalLink, Sparkles, X } from "lucide-react";
 
 import { Badge, cn } from "@pycolors/ui";
@@ -25,6 +26,8 @@ export function TemplateStickyCta({
   demoUrl,
   className,
 }: TemplateStickyCtaProps) {
+  const tSite = useCopy();
+
   const [visible, setVisible] = React.useState(false);
   const [collapsed, setCollapsed] = React.useState(false);
   const toggleButtonRef = React.useRef<HTMLButtonElement>(null);
@@ -55,7 +58,7 @@ export function TemplateStickyCta({
   return (
     <div
       role="region"
-      aria-label={`${name} purchase bar`}
+      aria-label={tSite("{value0} purchase bar", { value0: name })}
       className={cn(
         "pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)] transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none",
         visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0",
@@ -72,10 +75,10 @@ export function TemplateStickyCta({
             variant="outline"
             onClick={handleOpen}
             className="pointer-events-auto rounded-[5px] border-border-subtle bg-background/95 shadow-medium backdrop-blur-xl"
-            aria-label="Open sticky purchase bar"
+            aria-label={tSite("Open sticky purchase bar")}
           >
             <Sparkles className="h-4 w-4" aria-hidden="true" />
-            {name}
+            {tSite(name)}
             <ChevronUp className="h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
@@ -99,28 +102,31 @@ export function TemplateStickyCta({
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="flex w-full flex-wrap items-center gap-2 pr-10 text-sm sm:w-auto sm:pr-0">
-                      <span className="font-medium">{name}</span>
-                      <span className="text-muted-foreground">· {price}</span>
+                      <span className="font-medium">{tSite(name)}</span>
+                      <span className="text-muted-foreground">
+                        · {tSite(price)}
+                      </span>
                     </span>
 
                     <Badge
                       variant="outline"
                       className="site-success-surface rounded-[5px] border-success-border-subtle bg-success-muted text-[11px]"
                     >
-                      Instant access
+                      {tSite("Instant access")}
                     </Badge>
 
                     <Badge
                       variant="outline"
                       className="rounded-[5px] text-[11px]"
                     >
-                      Commercial usage
+                      {tSite("Commercial usage")}
                     </Badge>
                   </div>
 
                   <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                    Production-ready landing page template built for AI and SaaS
-                    launches.
+                    {tSite(
+                      "Production-ready landing page template built for AI and SaaS launches.",
+                    )}
                   </p>
                 </div>
               </div>
@@ -128,7 +134,7 @@ export function TemplateStickyCta({
               <div className="grid w-full grid-cols-2 items-start gap-2 lg:flex lg:w-auto lg:items-center">
                 <BuyProductButton
                   productSlug={productSlug}
-                  label="Buy now"
+                  label={tSite("Buy now")}
                   size="sm"
                   className="shadow-none hover:shadow-none"
                 />
@@ -143,9 +149,9 @@ export function TemplateStickyCta({
                     href={demoUrl}
                     target="_blank"
                     rel="noreferrer noopener"
-                    aria-label="Demo (opens in a new tab)"
+                    aria-label={tSite("Demo (opens in a new tab)")}
                   >
-                    Demo
+                    {tSite("Demo")}
                     <ExternalLink className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
@@ -157,7 +163,7 @@ export function TemplateStickyCta({
                   variant="ghost"
                   onClick={handleClose}
                   className="absolute right-2 top-2 shrink-0 rounded-[5px] text-muted-foreground hover:text-foreground lg:static"
-                  aria-label="Close sticky purchase bar"
+                  aria-label={tSite("Close sticky purchase bar")}
                 >
                   <X className="h-4 w-4" aria-hidden="true" />
                 </Button>

@@ -1,3 +1,4 @@
+import { locales, localizedHref } from "@/lib/i18n/routing";
 import type { MetadataRoute } from "next";
 
 import {
@@ -30,6 +31,7 @@ const STATIC_ROUTES = [
   "/compare/build-vs-buy",
   "/pricing",
   "/request-a-quote",
+  "/services",
   "/upgrade",
   "/starters/free",
   "/demo",
@@ -255,58 +257,81 @@ export default function sitemap(): MetadataRoute.Sitemap {
   /**
    * Static routes
    */
-  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
-    url: `${SITE_URL}${route}`,
-    changeFrequency: getChangeFrequency(route),
-    priority: getPriority(route),
-  }));
+  const alternates = (path: string) => ({
+    languages: {
+      en: `${SITE_URL}${localizedHref(path, "en")}`,
+      fr: `${SITE_URL}${localizedHref(path, "fr")}`,
+      "x-default": `${SITE_URL}${localizedHref(path, "en")}`,
+    },
+  });
+  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.flatMap((route) =>
+    locales.map((locale) => ({
+      url:
+        route === "" && locale === "en"
+          ? SITE_URL
+          : `${SITE_URL}${localizedHref(route || "/", locale)}`,
+      changeFrequency: getChangeFrequency(route),
+      priority: getPriority(route),
+      alternates: alternates(route || "/"),
+    })),
+  );
 
   /**
    * Blog posts
    */
-  const blogPosts: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
-    url: `${SITE_URL}${post.url}`,
-    lastModified: getLastModified(post.date),
-    changeFrequency: "monthly",
-    priority: 0.85,
-  }));
+  const blogPosts: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    getAllPosts(locale).map((post) => ({
+      url: `${SITE_URL}${post.url}`,
+      lastModified: getLastModified(post.date),
+      changeFrequency: "monthly",
+      priority: 0.85,
+      alternates: alternates(post.url),
+    })),
+  );
 
   /**
    * Blog categories
    */
-  const blogCategories: MetadataRoute.Sitemap = getAllCategories().map(
-    (category) => ({
-      url: `${SITE_URL}/blog/categories/${normalizeTaxonomy(category)}`,
+  const blogCategories: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    getAllCategories(locale).map((category) => ({
+      url: `${SITE_URL}${localizedHref(`/blog/categories/${normalizeTaxonomy(category)}`, locale)}`,
       changeFrequency: "monthly",
       priority: 0.7,
-    }),
+      alternates: alternates(`/blog/categories/${normalizeTaxonomy(category)}`),
+    })),
   );
 
   /**
    * Blog tags
    */
-  const blogTags: MetadataRoute.Sitemap = getAllTags().map((tag) => ({
-    url: `${SITE_URL}/blog/tags/${normalizeTaxonomy(tag)}`,
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
+  const blogTags: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    getAllTags(locale).map((tag) => ({
+      url: `${SITE_URL}${localizedHref(`/blog/tags/${normalizeTaxonomy(tag)}`, locale)}`,
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: alternates(`/blog/tags/${normalizeTaxonomy(tag)}`),
+    })),
+  );
 
   /**
    * Documentation pages from Fumadocs.
    */
-  const docsPages: MetadataRoute.Sitemap = source
-    .getPages()
-    .filter(isPublicDocsPage)
-    .map((page) => {
-      const data = page.data as SitemapDocData;
+  const docsPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    source
+      .getPages(locale)
+      .filter(isPublicDocsPage)
+      .map((page) => {
+        const data = page.data as SitemapDocData;
 
-      return {
-        url: `${SITE_URL}${page.url}`,
-        lastModified: getLastModified(data.lastUpdated),
-        changeFrequency: getChangeFrequency(page.url),
-        priority: getPriority(page.url),
-      };
-    });
+        return {
+          url: `${SITE_URL}${page.url}`,
+          lastModified: getLastModified(data.lastUpdated),
+          changeFrequency: getChangeFrequency(page.url),
+          priority: getPriority(localizedHref(page.url, "en")),
+          alternates: alternates(page.url),
+        };
+      }),
+  );
 
   /**
    * Merge + dedupe

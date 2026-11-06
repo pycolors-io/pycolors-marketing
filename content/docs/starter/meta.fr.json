@@ -1,0 +1,14 @@
+{
+  "title": "Starter",
+  "pages": [
+    "index",
+    "getting-started",
+    "assistant",
+    "installation",
+    "project-structure",
+    "auth-concept",
+    "billing-concept",
+    "deployment",
+    "upgrade"
+  ]
+}

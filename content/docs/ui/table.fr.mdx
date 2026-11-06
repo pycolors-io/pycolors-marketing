@@ -1,0 +1,555 @@
+---
+title: Table
+description: Composant de table de données structuré avec chargement et états
+  vides pour l'interface utilisateur PyColors.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+  TableEmpty,
+  TableLoading,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  CheckCircle,
+  ChevronRightSquare,
+  Columns3,
+  Database,
+  FileText,
+  Filter,
+  Inbox,
+  LayoutGrid,
+  LoaderCircle,
+  MenuSquare,
+  Rows3,
+  Table2,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Tableau</Badge>
+</div>
+
+## Données structurées pour les interfaces SaaS [#structured-data-for-saas-interfaces]
+
+Les **Tableau** Le composant affiche des données structurées et comparables.
+
+Utilisez-le pour:
+
+- utilisateurs
+- projets
+- factures
+- Abonnements
+- logs
+- rapports
+- événements audit
+- admin records
+
+Le tableau fournit une base visuelle cohérente pour les données produit denses :
+
+- Structure sémantique de table
+- design-token style
+- Débordement horizontal
+- retour hover ligne
+- état vide intégré
+- état de chargement intégré
+
+<Callout title="Idée de base">
+  Utilisez Table lorsque les utilisateurs ont besoin de comparer des
+  enregistrements structurés entre colonnes. Utilisez des cartes lorsque le
+  contenu est plus éditorial, visuel ou axé sur l'action.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="table-import.tsx"
+import { Table } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Nom</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Rôle</TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        <TableRow>
+          <TableCell>Jane Doe</TableCell>
+          <TableCell>jane — example.com</TableCell>
+          <TableCell>Admin</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>John Smith</TableCell>
+          <TableCell>john — example.com</TableCell>
+          <TableCell>Utilisateur</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="users-table.tsx"
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@pycolors/ui";
+
+export function UsersTable() {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role</TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        <TableRow>
+          <TableCell>Jane Doe</TableCell>
+          <TableCell>jane@example.com</TableCell>
+          <TableCell>Admin</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>John Smith</TableCell>
+          <TableCell>john@example.com</TableCell>
+          <TableCell>User</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Quand utiliser la table [#when-to-use-table]
+
+Utilisez Table lorsque l'interface a besoin de numérisation, de comparaison et de densité opérationnelle.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Enregistrements reproductibles",
+      description:
+        "Utiliser pour les utilisateurs, les projets, les factures, les abonnements, les journaux et les enregistrements d'administration.",
+      icon: Rows3,
+    },
+    {
+      title: "Données comparables",
+      description:
+        "À utiliser lorsque les utilisateurs comparent des valeurs entre des colonnes stables.",
+      icon: Database,
+    },
+    {
+      title: "Vues opérationnelles",
+      description:
+        "Utiliser avec les filtres, la pagination, les actions en ligne et les opérations en bloc.",
+      icon: Filter,
+    },
+  ]}
+/>
+### Légende [#caption]
+
+Utilisation `TableCaption` lorsque la table a besoin d'un résumé concis.
+
+```tsx title="table-caption.tsx"
+<Table>
+  <TableCaption>List of active users</TableCaption>
+  {/* rows */}
+</Table>
+```
+
+Les sous-titres doivent expliquer ce que contient le tableau, et non répéter le titre de la page.
+
+### État vide [#empty-state]
+
+Utilisation `TableEmpty` lorsque la requête a réussi mais qu'aucune ligne n'est disponible.
+
+<Tabs items={["Par défaut", "Personnalisé"]}>
+  <Tab value="Par défaut">
+
+```tsx title="table-empty.tsx"
+<TableBody>
+  <TableEmpty colSpan={3} />
+</TableBody>
+```
+
+</Tab>
+
+  <Tab value="Personnalisé">
+
+```tsx title="table-empty-custom.tsx"
+<TableBody>
+  <TableEmpty
+    colSpan={3}
+    title="No users found"
+    description="Invite your first user to get started."
+  />
+</TableBody>
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle d'état vide">
+  Vide n'est pas une erreur. Expliquez pourquoi la table est vide et ce que
+  l'utilisateur peut faire ensuite.
+
+</Callout>
+
+### État de chargement [#loading-state]
+
+Utilisation `TableLoading` lorsque la structure de la table est connue mais que les données sont toujours en cours de chargement.
+
+```tsx title="table-loading.tsx"
+<TableBody>
+  <TableLoading colSpan={3} />
+</TableBody>
+```
+
+Utilisez le chargement des lignes au lieu de supprimer la table de la page.
+
+Cela préserve la mise en page et réduit le saut visuel.
+
+### Composition du tableau [#table-composition]
+
+Une table de production appartient généralement à une plus grande composition de caractéristiques.
+
+```tsx title="projects-table-section.tsx"
+export function ProjectsTableSection() {
+  return (
+    <section className="space-y-4">
+      <ProjectsToolbar />
+      <Table>
+        <ProjectsTableHeader />
+        <ProjectsTableBody />
+      </Table>
+      <ProjectsPagination />
+    </section>
+  );
+}
+```
+
+La table rend la structure.
+
+La couche de fonctionnalité possède:
+
+- récupération de données
+- filtres
+- tri
+- pagination
+- autorisations
+- mutations
+- actions en ligne
+
+<Callout title="Règle d'architecture">
+  La table ne doit pas posséder la source de données. Continuez à récupérer,
+  filtrer, trier et les mutations dans le calque de fonctionnalités.
+
+</Callout>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Définir les colonnes [#define-the-columns]
+
+    Choisissez des colonnes stables qui aident les utilisateurs à analyser et à comparer les enregistrements.
+
+</Step>
+
+  <Step>
+    #### Ajouter des états de chargement et de vide [#add-loading-and-empty-states]
+
+    Ne laissez pas la zone de la table vide en attendant les données ou lorsqu'il n'y a pas de données.
+
+</Step>
+
+  <Step>
+    #### Gardez les actions de rangée compactes [#keep-row-actions-compact]
+
+    Utilisez un menu déroulant pour les actions secondaires et une boîte de dialogue pour la confirmation destructive.
+
+</Step>
+
+  <Step>
+    #### Ajouter la pagination si nécessaire [#add-pagination-when-needed]
+
+    Utilisez Pagination lorsque le jeu de données est supérieur à une seule page.
+
+</Step>
+
+  <Step>
+    #### Déplacer un comportement complexe dans un motif [#move-complex-behavior-into-a-pattern]
+
+    Utilisez le modèle de tableau de données lorsque vous avez besoin de filtres, d'actions, d'états de pagination, de chargement, de vide et d'erreur ensemble.
+
+</Step>
+
+</Steps>
+
+## Modèle de table vs carte vs table de données [#table-vs-card-vs-data-table-pattern]
+
+| Situation                                           | Utilisation                  |
+| --------------------------------------------------- | ---------------------------- |
+| Données structurées comparables                     | Tableau                      |
+| Éléments visuels ou lourds de contenu               | Carte                        |
+| Petite liste avec une action principale par élément | Carte ou liste personnalisée |
+| Filtres, pagination, actions en ligne, états        | Tableaux de données          |
+| Chronologie ou flux d'activité                      | Liste personnalisée          |
+| Navigation mobile-first                             | Cartes ou liste responsive   |
+
+<Callout type="info" title="Règle de décision">
+  La table est primitive. Data Table Pattern est l'expérience produit complète
+  qui l'entoure.
+
+</Callout>
+
+## API [#api]
+
+#### Composante [#component]
+
+| Composante     | Désignation                                              |
+| -------------- | -------------------------------------------------------- |
+| `Table`        | Enveloppeur avec traitement de bordure et de débordement |
+| `TableHeader`  | Section d'en-tête du tableau                             |
+| `TableBody`    | Partie du corps du tableau                               |
+| `TableRow`     | Ligne de table avec hover feedback                       |
+| `TableHead`    | Cellule de tête                                          |
+| `TableCell`    | Cellule de données                                       |
+| `TableCaption` | Légende facultative                                      |
+| `TableEmpty`   | Ligne d'état vide                                        |
+| `TableLoading` | Chargement de la ligne d'état                            |
+
+#### Accessoires TableEmpty [#tableempty-props]
+
+| Prop          | Type     | Par défaut       | Désignation                  |
+| ------------- | -------- | ---------------- | ---------------------------- |
+| `colSpan`     | `number` | —                | Nombre de colonnes à couvrir |
+| `title`       | `string` | copie par défaut | Titre à l'état vide          |
+| `description` | `string` | copie par défaut | État vide description        |
+| `className`   | `string` | —                | Classes personnalisées       |
+
+#### Accessoires de table [#tableloading-props]
+
+| Prop        | Type     | Par défaut       | Désignation                  |
+| ----------- | -------- | ---------------- | ---------------------------- |
+| `colSpan`   | `number` | —                | Nombre de colonnes à couvrir |
+| `label`     | `string` | copie par défaut | Message de chargement        |
+| `className` | `string` | —                | Classes personnalisées       |
+
+Tous les composants de la table de base étendent leurs props d'éléments HTML natifs respectifs.
+
+```ts title="table-props.ts"
+React.HTMLAttributes<HTMLTableElement>;
+React.HTMLAttributes<HTMLTableSectionElement>;
+React.HTMLAttributes<HTMLTableRowElement>;
+React.ThHTMLAttributes<HTMLTableCellElement>;
+React.TdHTMLAttributes<HTMLTableCellElement>;
+React.HTMLAttributes<HTMLTableCaptionElement>;
+```
+
+### Accessibilité [#accessibility]
+
+Les tables doivent préserver la structure sémantique.
+
+Directives :
+
+- utilisation `TableHead` pour les en-têtes de colonne - il vaut par défaut `scope="col"`, ainsi l'association de colonne est correcte sans n'importe quels accessoires supplémentaires
+- pass `scope="row"` explicitement sur a `TableHead` utilisé comme en-tête de ligne
+- inclure une légende lorsque le contexte n'est pas évident
+- éviter d'utiliser des tables pour la mise en page
+- Gardez les cellules lisibles et concises
+- s'assurer que les actions de ligne interactives sont accessibles au clavier
+- éviter de rendre la ligne entière cliquable à moins que l'interaction ne soit claire
+- utiliser des étiquettes visibles pour les actions de ligne icon-only
+
+<Callout title="Règle d'accessibilité">
+  Les tableaux sont pour les données tabulaires. N'utilisez pas de balisage de
+  tableau uniquement pour aligner visuellement le contenu.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "clear column headers",
+    "Nombre raisonnable de colonnes",
+    "états de vide et de chargement",
+    "Menu déroulant pour les actions de ligne",
+    "Pagination pour de plus grands ensembles de données",
+  ]}
+  avoid={[
+    "tables pour le contenu non-tabulaire",
+    "trop de colonnes dans des dispositions étroites",
+    "blank states pendant le chargement",
+    "Dispositions complexes à l'intérieur des cellules",
+    "récupération des données à l'intérieur de la table primitive",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+Les étiquettes de table doivent être courtes et scannables.
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Headers',
+      title: "En-têtes de colonne",
+      icon: Columns3,
+      description: (
+        <>
+          <p>
+            Prefer concise labels such as{' '}
+            <code>Name</code>, <code>Email</code>,{' '}
+            <code>Role</code>, <code>Status</code>,{' '}
+            <code>Amount</code>, <code>Created</code>, and{' '}
+            <code>Actions</code>.
+          </p>
+
+          <p className="mt-3">
+            Headers should stay short, stable, and easy to scan across dense tables.
+          </p>
+        </>
+      ),
+    },
+    {
+      value: 'Empty',
+      title: "État vide",
+      icon: Inbox,
+      description: (
+        <>
+          <p>
+            Explain the state clearly and provide a next step.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            “No users found. Invite your first user to get started.”
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Loading',
+      title: "État de chargement",
+      icon: LoaderCircle,
+      description: (
+        <>
+          <p>
+            Keep loading copy short, neutral, and predictable.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            “Loading data…” or “Loading users…”
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Le composant Table doit-il récupérer des données ?">
+    Non. Table est une primitive de rendu. La récupération, le filtrage, le tri et la pagination doivent résider dans le calque de caractéristiques.
+  </Accordion>
+
+<Accordion title="Quand devrais-je utiliser le modèle de table de données à la place?">
+  Utilisez le modèle de table de données lorsque la table a besoin de filtres,
+  de chargement, de vide, d'erreur, de pagination, d'actions de ligne et de
+  comportement spécifique au produit.
+</Accordion>
+
+<Accordion title="Une ligne peut-elle être cliquable ?">
+  Oui, mais rendez l'interaction claire et le clavier accessible. Évitez de
+  cacher plusieurs actions derrière un seul clic ambigu.
+</Accordion>
+
+  <Accordion title="Combien de colonnes une table doit-elle avoir ?">
+    Gardez le nombre raisonnable. Si le tableau devient trop large ou trop difficile à analyser, déplacez les détails secondaires dans un panneau latéral, une boîte de dialogue ou une page de détails.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Tableaux de données",
+      href: "/docs/patterns/data-table",
+      description:
+        "Créez des tables SaaS complètes avec des filtres, des paginations, des états et des actions de lignes.",
+      icon: Table2,
+    },
+    {
+      title: "Menu déroulant",
+      href: "/docs/ui/dropdown-menu",
+      description:
+        "Utilisez le menu déroulant pour les actions de ligne compactes.",
+      icon: MenuSquare,
+    },
+    {
+      title: "Pagination",
+      href: "/docs/ui/pagination",
+      description:
+        "Naviguez dans des ensembles de données plus volumineux avec un état de page contrôlé.",
+      icon: ChevronRightSquare,
+    },
+    {
+      title: "Vide, chargement et états d'erreur",
+      href: "/docs/guides/empty-loading-error",
+      description:
+        "Gérer les états de table asynchrones de manière claire et cohérente.",
+      icon: LoaderCircle,
+    },
+  ]}
+/>

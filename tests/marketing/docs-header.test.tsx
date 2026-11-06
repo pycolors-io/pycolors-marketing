@@ -157,7 +157,14 @@ describe("Shared navigation in documentation", () => {
       [...primary.children].map(
         (item) => item.querySelector("button")?.textContent ?? item.textContent,
       ),
-    ).toEqual(["Products", "Docs", "Resources", "Demos", "Pricing"]);
+    ).toEqual([
+      "Products",
+      "Services",
+      "Docs",
+      "Resources",
+      "Demos",
+      "Pricing",
+    ]);
     expect(
       within(primary).getByRole("link", { name: "Demos" }),
     ).toHaveAttribute("href", "/demo");

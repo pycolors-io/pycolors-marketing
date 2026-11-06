@@ -1,0 +1,126 @@
+---
+title: Principes
+description: "Les règles du produit derrière les décisions de conception
+  PyColors : rôles sémantiques, primitives composables, accessibilité, retenue
+  et une source de vérité."
+lastUpdated: "2026-09-18"
+publishedAt: "2026-09-18"
+appliesTo: Design System
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accessibility, Layers3, Palette, Sparkles } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+PyColors utilise un petit ensemble de principes pour garder les surfaces des produits cohérentes à mesure que la base de code et le catalogue de produits se développent. Ce sont des règles de décision, pas des préférences décoratives : utilisez-les lors de la révision d’un composant, de la composition d’une page ou pour décider si une exception visuelle appartient au système partagé.
+
+## 1. Le sens avant les valeurs [#1-meaning-before-values]
+
+Choisissez un rôle sémantique avant de choisir une valeur brute. L'interface utilisateur réutilisable doit exprimer une intention telle que `background`, `card`, `muted-foreground`, `border`ou `primary` au lieu d'intégrer une couleur qui ne fonctionne que dans un seul contexte.
+
+Cela maintient les thèmes clairs et sombres alignés et rend les changements à l'échelle du système possibles sans réécrire les consommateurs.
+
+## 2. Une décision, un propriétaire [#2-one-decision-one-owner]
+
+Les décisions visuelles répétées appartiennent à la couche d'autorité la plus basse qui peut les posséder.
+
+| Décision                                     | Propriétaire        |
+| -------------------------------------------- | ------------------- |
+| Valeur visuelle partagée                     | token de conception |
+| Surface sémantique ou signification du texte | Rôle de couleur     |
+| Interaction réutilisable                     | UI primitive        |
+| Comportement du produit multi-composants     | Guide ou modèle     |
+| Fondation de produit                         | Démarrage           |
+
+<Callout title="Question de réexamen">
+  Si la même décision doit être répétée à deux endroits, demandez d'abord si le
+  système manque d'un propriétaire pour cela.
+
+</Callout>
+
+## 3. Les composants restent composables [#3-components-stay-composable]
+
+Une primitive devrait bien résoudre un problème d'interaction ou de présentation réutilisable. L'état spécifique au produit, l'orchestration, la persistance et les règles métier ne doivent pas s'accumuler dans l'API primitive.
+
+Préférez la composition à l'ajout d'accessoires qui encodent le flux de travail d'une application.
+
+## 4. L’accessibilité fait partie du contrat [#4-accessibility-is-part-of-the-contract]
+
+Le comportement du clavier, la visibilité de la focus, les étiquettes, la structure sémantique, le contraste et les attentes en matière de technologie d'assistance sont des exigences du produit. Ils ne sont pas facultatifs polish ajouté après examen visuel.
+
+Les consommateurs possèdent encore l’accessibilité de la composition autour d’une primitive. Un composant correctement implémenté ne peut pas réparer les étiquettes manquantes, la copie ambiguë ou un flux d'application inaccessible.
+
+## 5. La retenue crée de la cohérence [#5-restraint-creates-consistency]
+
+N'ajoutez pas un nouveau token, une nouvelle variante, un nouveau composant ou une nouvelle abstraction uniquement parce que c'est possible. Ajoutez-en un lorsqu'un concept pris en charge existant ne peut pas exprimer un besoin de produit répété et significatif.
+
+Préférez un système plus petit avec des responsabilités claires plutôt que des moyens parallèles pour exprimer la même décision.
+
+## 6. Les valeurs par défaut doivent être adaptées à la production [#6-defaults-should-be-production-shaped]
+
+Le chemin par défaut devrait encourager la hiérarchie lisible, le style de thème sûr, l'interaction prévisible et la composition maintenable. Les exemples doivent démontrer les API publiques prises en charge plutôt que les internes de dépôt ou les raccourcis de démonstration uniquement.
+
+Des trappes d'évacuation peuvent exister, mais elles ne devraient pas devenir la voie d'intégration normale.
+
+## 7. La documentation fait partie de l'interface [#7-documentation-is-part-of-the-interface]
+
+Un contrat de composant public comprend plus de types TypeScript. Les développeurs doivent savoir à quoi sert la primitive, comment la composer, ses responsabilités en matière d’accessibilité et quelle couche possède la complexité adjacente.
+
+Lorsque le comportement ou une API publique change, sa documentation doit changer avec elle.
+
+## Appliquer les principes [#applying-the-principles]
+
+Avant d'introduire un changement de système de conception, demandez :
+
+- Est-ce un besoin sémantique ou une préférence visuelle ponctuelle ?
+- Un token, un rôle, un primitif, un guide ou un modèle existant le possède-t-il déjà?
+- La décision fonctionnera-t-elle à la fois sur des thèmes clairs et sombres?
+- Conserve-t-il le clavier, le focus, le contraste et le comportement sémantique ?
+- L'API publique est-elle plus petite après la composition ?
+- Un consommateur peut-il comprendre le chemin pris en charge à partir de la documentation?
+- La décision aurait-elle encore du sens sur plus d'une surface de produit PyColors ?
+
+Si la réponse expose une règle partagée manquante, améliorez la couche système appropriée au lieu de patcher une page individuelle.
+
+## Limites [#boundaries]
+
+Ces principes n’exigent pas que chaque valeur devienne un token, chaque composition devienne un composant ou chaque flux de travail de produit entre dans la composition. `@pycolors/ui`. Les choix locaux sont valables quand ils sont véritablement locaux et ne créent pas un système concurrent.
+
+Ils ne remplacent pas non plus les contrats détaillés pour les tokens, les couleurs, la typographie, le thème, l'accessibilité ou les API de composants.
+
+## Poursuivre [#continue]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Tokens",
+      href: "/docs/design-system/tokens",
+      icon: Layers3,
+      description:
+        "Voyez comment les décisions visuelles répétées deviennent des fondations partagées.",
+    },
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      icon: Palette,
+      description:
+        "Utilisez des rôles sémantiques pour les surfaces, le texte, les bordures et les états.",
+    },
+    {
+      title: "UI Accessibilité",
+      href: "/docs/ui/accessibility",
+      icon: Accessibility,
+      description:
+        "Appliquer les responsabilités d'accessibilité lors de la composition de primitives publiques.",
+    },
+    {
+      title: "Pourquoi PyColors UI",
+      href: "/docs/ui/why-pycolors-ui",
+      icon: Sparkles,
+      description:
+        "Relier les règles du système de conception à la philosophie de la composante publique.",
+    },
+  ]}
+/>

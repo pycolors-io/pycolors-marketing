@@ -1,0 +1,127 @@
+---
+title: Recettes métier
+description: Adaptez les projets, les tâches et les commentaires au suivi des
+  clients, aux demandes d'assistance et à la validation interne dans une base de
+  code Starter Pro.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import {
+  ClipboardCheck,
+  LifeBuoy,
+  Rocket,
+  ShieldCheck,
+  SlidersHorizontal,
+  Terminal,
+  Users,
+} from "lucide-react";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Choisissez un flux de travail [#choose-a-workflow]
+
+Construire sur le même espace de travail, projet, tâche et base de discussion. Chaque guide commence par un flux de travail que vous pouvez essayer dans l'application incluse, puis identifie les modifications de présentation et les extensions de domaine à examiner.
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      title: "Suivi des clients",
+      icon: Users,
+      description:
+        "Suivez un engagement, assignez des suivis et conservez des notes de livraison internes.",
+      href: "/docs/starter-pro/recipes/client-tracking",
+      cta: "Open client tracking",
+    },
+    {
+      title: "Demandes d'assistance",
+      icon: LifeBuoy,
+      description:
+        "Organisez une file d'attente interne, enquêtez sur les demandes et enregistrez les résolutions.",
+      href: "/docs/starter-pro/recipes/support-requests",
+      cta: "Open support requests",
+    },
+    {
+      title: "Validation interne",
+      icon: ClipboardCheck,
+      description:
+        "Coordonner les tâches de révision, les dates cibles et les notes de résultat avant le passation.",
+      href: "/docs/starter-pro/recipes/internal-validation",
+      cta: "Open internal validation",
+    },
+  ]}
+/>
+
+<Callout title="Une fondation, trois adaptations guidées">
+  Il s'agit d'utilisations documentées du module Projets existant. Ils
+  n'installent pas de produits distincts ou n'ajoutent pas de portail client, de
+  billetterie par e-mail ou de moteur d'approbation formel. Les étapes de base
+  n'ont pas besoin de schéma ou de fournisseur supplémentaire.
+
+</Callout>
+
+## Réutiliser le modèle de travail [#reuse-the-working-model]
+
+| Fondation         | Comportement inclus                                                             | Limites d'adaptation                                         |
+| ----------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| Projets           | Nom, description, statut, membre responsable et état des archives               | Une demande d’engagement, de file d’attente ou de révision   |
+| Tâches            | Titre, description, statut, membre responsable et date d'échéance du calendrier | Une étape de suivi, de demande de support ou de révision     |
+| Observations      | Discussion de tâche en texte clair avec l'auteur et le temps de création        | Notes internes et contexte de travail                        |
+| Espace de travail | L'adhésion en direct et les opérations serveur scoped                           | La limite d'accès reste l'espace de travail                  |
+| Activité          | Événements d'acteur/ressources pour les changements de travail                  | Historique opérationnel, pas un dossier de décision immuable |
+
+Utilisation des projets et des tâches `TODO`, `IN_PROGRESS` et `DONE`. Leurs états sont indépendants; l'achèvement des tâches ne termine pas automatiquement un projet. Un cessionnaire identifie un membre responsable de l'espace de travail et ne restreint pas qui peut modifier. Une date d'échéance est un objectif de calendrier, pas un rappel ou une minuterie SLA.
+
+## Conserver les règles d'accès par défaut [#keep-the-default-access-rules]
+
+PROPRIÉTAIRE, ADMIN et MEMBRE peuvent créer/modifier le travail de projet et poster des commentaires. Un MEMBRE peut supprimer ses propres commentaires ; OWNER et ADMIN peuvent supprimer des tâches et modérer les commentaires des autres. Tous les membres actifs de l'espace de travail peuvent lire les projets et les discussions de l'espace de travail. L'adhésion révoquée perd l'accès.
+
+Utilisez un espace de travail d'équipe interne pour les étapes. Un projet n'est pas une limite d'accès spécifique au client, et l'attribution d'un réviseur ne crée pas d'autorisation d'approbation. Les projets archivés bloquent les écritures de tâches/commentaires jusqu'à ce qu'elles soient restaurées ; les archives ne rendent pas les enregistrements immuables.
+
+## Trouvez les guides dans votre source [#find-the-guides-in-your-source]
+
+Le ZIP de l'acheteur comprend `docs/recipes/README.md` et trois guides détaillés : `client-tracking.md`, `support-requests.md` et `internal-validation.md` dans ce même répertoire. Ils incluent des mappages de modèles, des exemples d'enregistrements, des points d'entrée sources, des vérifications d'acceptation et des invites d'assistants de codage scoped.
+
+Débuter avec [installation](/docs/starter-pro/getting-started), puis garder le [personnalisation et mise à niveau de base](/docs/starter-pro/customization-and-upgrades). Les étiquettes d'interface prennent en charge le français et l'anglais; les noms et commentaires créés par l'utilisateur restent des données utilisateur. Utilisez des informations fictives lorsque vous essayez la démo publique.
+
+## Vérifiez votre adaptation [#verify-your-adaptation]
+
+Confirmez la persistance après le rechargement, les modifications et les restrictions de modération MEMBRE, le rejet de l'ID de l'espace de travail, l'accès révoqué et le rejet de la tâche archivée. Passez en revue la nouvelle interface utilisateur en français / anglais, l'apparence claire / sombre, la navigation au clavier et une fenêtre de visualisation étroite. Ajoutez des tests pour tout nouveau comportement de domaine.
+
+## Poursuivre la mise en œuvre [#continue-the-implementation]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Installer Starter Pro",
+      href: "/docs/starter-pro/getting-started",
+      description:
+        "Préparez votre source, votre environnement et votre premier espace de travail.",
+      icon: Rocket,
+    },
+    {
+      title: "Personnaliser et étendre",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Utilisez la configuration existante et les recettes d'extension protégées.",
+      icon: SlidersHorizontal,
+    },
+    {
+      title: "Testez l'espace de travail localement",
+      href: "/docs/starter-pro/local-development",
+      description:
+        "Essayez les procédures pas à pas avec des données d'échantillons isolées et votre propre configuration locale.",
+      icon: Terminal,
+    },
+    {
+      title: "Couverture de validation",
+      href: "/docs/starter-pro/release-readiness",
+      description:
+        "Comprendre le package existant et les contrôles de flux de travail métier.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

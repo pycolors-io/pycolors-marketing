@@ -1,0 +1,68 @@
+import { defineI18n } from "fumadocs-core/i18n";
+import { defineI18nUI } from "fumadocs-ui/i18n";
+
+export const docsI18n = defineI18n({
+  defaultLanguage: "en",
+  languages: ["en", "fr"],
+  hideLocale: "default-locale",
+  fallbackLanguage: null,
+});
+
+export const docsUI = defineI18nUI(docsI18n, {
+  en: { displayName: "English" },
+  fr: {
+    displayName: "Français",
+    "Search(search trigger)": "Rechercher",
+    "Search(search dialog)": "Rechercher",
+    "Open Search(search trigger)(aria-label)": "Ouvrir la recherche",
+    "Close Search(search dialog)(aria-label)": "Fermer la recherche",
+    "No results found(search dialog)": "Aucun résultat",
+    "On this page(table of contents)": "Sur cette page",
+    "Table of Contents(inline table of contents)": "Sommaire",
+    "No Headings(table of contents)": "Aucune section",
+    "Next Page(pagination)": "Page suivante",
+    "Previous Page(pagination)": "Page précédente",
+    "Last updated on(page footer)": "Dernière mise à jour",
+    "Copy Text(code block)(aria-label)": "Copier le code",
+    "Copied Text(code block)(aria-label)": "Code copié",
+    "Copy Anchor Link(heading anchor)(aria-label)":
+      "Copier le lien de cette section",
+    "Copy Link(accordion)(aria-label)": "Copier le lien",
+    "Edit on GitHub(edit page)": "Modifier sur GitHub",
+    "Open Sidebar(sidebar)(aria-label)": "Ouvrir la navigation",
+    "Close Sidebar(sidebar)(aria-label)": "Fermer la navigation",
+    "Close Sidebar(aria-label)": "Fermer la navigation",
+    "Collapse Sidebar(sidebar)(aria-label)": "Réduire la navigation",
+    "Hide Sidebar(sidebar)": "Masquer la navigation",
+    "Show Sidebar(sidebar)": "Afficher la navigation",
+    "Toggle Menu(mobile menu)(aria-label)": "Ouvrir ou fermer le menu",
+    "Choose a language(language switcher)": "Choisir une langue",
+    "Choose a language(language switcher)(aria-label)": "Choisir une langue",
+    "Toggle Theme(theme switcher)(aria-label)": "Changer de thème",
+    "Light(theme switcher)(aria-label)": "Clair",
+    "Dark(theme switcher)(aria-label)": "Sombre",
+    "System(theme switcher)(aria-label)": "Système",
+    "Close Banner(banner)(aria-label)": "Fermer le bandeau",
+    "Layout Tab(layout tab trigger)": "Section de la documentation",
+    "Back to Home(404 page)": "Retour à l’accueil",
+    "Page Not Found(404 page)": "Page introuvable",
+    "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.(404 page)":
+      "Cette page a peut-être été déplacée ou supprimée, ou elle est temporairement indisponible.",
+    "Prop(type table)": "Propriété",
+    "Type(type table)": "Type",
+    "Default(type table)": "Valeur par défaut",
+    "Parameters(type table)": "Paramètres",
+    "Returns(type table)": "Retour",
+    "Open(page actions)": "Ouvrir",
+    "Copy Markdown(page actions)": "Copier en Markdown",
+    "View as Markdown(page actions)": "Voir en Markdown",
+    "Ask AI(AI chat button)": "Interroger l’IA",
+    "Open in ChatGPT(page actions)": "Ouvrir dans ChatGPT",
+    "Open in Claude(page actions)": "Ouvrir dans Claude",
+    "Open in Cursor(page actions)": "Ouvrir dans Cursor",
+    "Open in GitHub(page actions)": "Ouvrir dans GitHub",
+    "Open in Scira AI(page actions)": "Ouvrir dans Scira AI",
+    "Read {url}, I want to ask questions about it.(page actions)":
+      "Lis {url}, je souhaite poser des questions sur cette page.",
+  },
+});

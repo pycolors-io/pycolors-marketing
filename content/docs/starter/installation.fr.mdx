@@ -1,0 +1,388 @@
+---
+title: Installation
+description: Gratuit localement en quelques minutes et explorez toute la surface SaaS.
+full: false
+hero: false
+lastUpdated: "2026-04-27"
+appliesTo: Starter Free
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CreditCard,
+  CheckCircle,
+  Code2,
+  FolderTree,
+  LockKeyhole,
+  MonitorPlay,
+  Rocket,
+  Terminal,
+  Wrench,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Démarrage</Badge>
+  <Badge>Gratuit</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Starter Free est conçu pour vous faire passer de zéro à une surface SaaS utilisable en quelques minutes.
+
+À la fin de ce guide, vous aurez un environnement produit local fonctionnant avec:
+
+- auth écrans
+- tableau de bord
+- projets
+- admin
+- facturation
+- paramètres
+
+Pas de base de données. Pas de touches Stripe. Pas de secrets.
+
+Starter Free est intentionnellement simulé afin que vous puissiez évaluer la surface du produit avant de câbler les services backend.
+
+<Callout title="Qu'est-ce que Starter Free">
+  Starter Free vous aide à valider rapidement l'orientation du produit avec une
+  surface d'interface utilisateur adaptées à la production, sans avoir besoin
+  d'auth, de facturation ou de configuration de la base de données.
+
+</Callout>
+
+## Ce que vous allez faire [#what-youll-do]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Exécuter le starter",
+      description:
+        "Clonez le dépôt, installez les dépendances et démarrez le serveur de développement.",
+      icon: Terminal,
+    },
+    {
+      title: "Valider les routes",
+      description:
+        "Vérifiez les routes des produits de base et confirmez les charges de surface SaaS correctement.",
+      icon: MonitorPlay,
+    },
+    {
+      title: "Commencer l'édition",
+      description:
+        "Renommez l'entité principale, mettez à jour la copie du tableau de bord et adaptez les données simulées à votre produit.",
+      icon: Code2,
+    },
+  ]}
+/>
+
+## Préalables [#prerequisites]
+
+Assurez-vous que votre environnement comprend :
+
+- Node.js 18 ou plus récent
+- pnpm
+- Git
+
+Recommandé : utilisez la dernière version de Node.js LTS.
+
+<Tabs items={["Vérifier les versions", "Installer pnpm"]}>
+  <Tab value="Vérifier les versions">
+
+```bash title="terminal"
+node -v
+pnpm -v
+git --version
+```
+
+</Tab>
+
+  <Tab value="Installer pnpm">
+
+```bash title="terminal"
+npm install -g pnpm
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Gestionnaire de paquets">
+  Starter Free est conçu autour de pnpm. L'utilisation de npm ou de laine peut
+  créer des incohérences de fichier de verrouillage et de dépendance.
+
+</Callout>
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Cloner le dépôt [#clone-the-repository]
+
+Clonez le starter et allez dans le répertoire du projet.
+
+```bash title="terminal"
+git clone https://github.com/pycolors-io/pycolors-starter-free.git
+cd pycolors-starter-free
+```
+
+</Step>
+
+<Step>
+### Installer les dépendances [#install-dependencies]
+
+Installez la base de référence locale.
+
+```bash title="terminal"
+pnpm install
+```
+
+Ceci installe la pile de démarrage :
+
+| Zone de dépendance | Inclus             |
+| ------------------ | ------------------ |
+| Cadre              | Next.js App Router |
+| Styling            | Tailwind CSS v4    |
+| UI                 | PyColors UI        |
+| Langue             | TypeScript         |
+| Qualité            | ESLint             |
+
+</Step>
+
+<Step>
+### Démarrez le serveur de développement [#start-the-development-server]
+
+Exécutez l'application localement.
+
+```bash title="terminal"
+pnpm dev
+```
+
+Puis ouvrir :
+
+```txt title="browser"
+http://localhost:3000
+```
+
+Vous devriez atterrir sur la surface locale du produit Starter Free.
+
+</Step>
+
+<Step>
+### Valider le starter [#validate-the-starter]
+
+Ouvrez les routes principales :
+
+```txt title="routes"
+/
+/login
+/register
+/dashboard
+/projects
+/admin
+/billing
+/settings
+```
+
+Si les routes se chargent correctement et que la navigation fonctionne, l'installation est terminée.
+
+<Callout type="info" title="Comportement attendu">
+  Starter Free est intentionnellement simulé. Vous devriez être en mesure d'explorer les écrans, les mises en page et les flux de produits immédiatement sans configuration backend ou configuration secrète.
+
+</Callout>
+
+</Step>
+
+</Steps>
+
+## Les premières choses à essayer [#first-things-to-try]
+
+Une fois que l'application est en cours d'exécution, faites un petit changement de produit avant de brancher quoi que ce soit.
+
+<Tabs items={["Tableau de bord", "Entité", "Données fictives"]}>
+  <Tab value="Tableau de bord">
+
+Modifiez le titre du tableau de bord.
+
+```txt title="file"
+app/(app)/dashboard/page.tsx
+```
+
+Modifiez le texte d'en-tête et enregistrez. Le rechargement à chaud devrait mettre à jour le navigateur instantanément.
+
+</Tab>
+
+  <Tab value="Entité">
+
+Renommer l'entité principale.
+
+```txt title="search"
+Projects
+```
+
+Le starter est intentionnellement facile à adapter à votre propre modèle de domaine.
+
+</Tab>
+
+  <Tab value="Données fictives">
+
+Mettre à jour les données du produit simulé.
+
+```txt title="file"
+components/projects/project-types.ts
+```
+
+Modifiez les projets fictifs pour mieux correspondre à la direction de votre produit.
+
+</Tab>
+
+</Tabs>
+
+## Ce que vous devriez voir [#what-you-should-see]
+
+À ce stade, vous devriez avoir une surface SaaS locale avec:
+
+- auth écrans
+- tableau de bord
+- CRUD UI
+- surface d'administration
+- surface de facturation
+- structure des paramètres
+- rechargement à chaud
+
+<Callout title="Bon signe">
+  Si l'interface utilisateur se charge correctement et que la navigation
+  fonctionne, votre configuration est suffisamment valide pour commencer
+  l'exploration de produits et l'itération UX.
+
+</Callout>
+
+## Pièges courants [#common-pitfalls]
+
+Starter Free ne nécessite pas :
+
+- URL de la base de données
+- Auth Secrets
+- Touches à rayures
+- informations d'identification du fournisseur de messagerie
+- Configuration de l'API backend
+
+Tout est ridiculisé par le design.
+
+<PreferAvoid
+  prefer={[
+    "Utiliser PNPM de manière cohérente",
+    "Valider les routes avant de les éditer",
+    "changer une surface de produit en premier",
+    "garder des données simulées tout en explorant UX",
+    "fil backend seulement après avoir compris le flux",
+  ]}
+  avoid={[
+    "ajouter la configuration de la base de données avant que l'interface utilisateur ne soit comprise",
+    "utiliser npm et pnpm dans le même projet",
+    "supprimer les flux simulés avant de les explorer",
+    "Réécrire la mise en page avant de valider la structure du produit",
+    "Traiter Starter Free comme un modèle backend complet",
+  ]}
+/>
+
+## Dépannage [#troubleshooting]
+
+<Accordions type="single">
+  <Accordion title="Port déjà utilisé">
+    Exécutez le serveur de développement sur un autre port.
+
+```bash title="terminal"
+pnpm dev --port 3001
+```
+
+  </Accordion>
+
+  <Accordion title="Erreurs de version du nœud">
+    Vérifiez votre version de Node.js.
+
+```bash title="terminal"
+node -v
+```
+
+    Mettre à niveau vers une version LTS actuelle de Node.js, puis réinstaller les dépendances.
+
+  </Accordion>
+
+  <Accordion title="Utilisation de npm ou de fil par erreur">
+    Supprimez npm lockfiles et réinstallez-le avec pnpm.
+
+```bash title="terminal"
+rm -rf node_modules package-lock.json yarn.lock
+pnpm install
+```
+
+  </Accordion>
+
+  <Accordion title="Créer des problèmes après avoir tiré les mises à jour">
+    Effacer l'état local généré et réinstaller les dépendances.
+
+```bash title="terminal"
+rm -rf node_modules .next
+pnpm install
+pnpm dev
+```
+
+  </Accordion>
+</Accordions>
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Structure du projet",
+      href: "/docs/starter/project-structure",
+      description:
+        "Comprendre comment la base de code est organisée avant d'étendre les fonctionnalités du produit.",
+      icon: FolderTree,
+    },
+    {
+      title: "Concept d'authentification",
+      href: "/docs/starter/auth-concept",
+      description:
+        "Découvrez comment l'authentification est modélisée avant de connecter un fournisseur réel.",
+      icon: LockKeyhole,
+    },
+    {
+      title: "Concept de facturation",
+      href: "/docs/starter/billing-concept",
+      description:
+        "Comprendre comment la monétisation est préparée avant l'intégration de Stripe.",
+      icon: CreditCard,
+    },
+    {
+      title: "Mise à niveau vers Starter Pro",
+      href: "/docs/starter/upgrade",
+      description:
+        "Sachez quand Starter Free cesse d'être suffisant et Starter Pro devient le chemin le plus rapide.",
+      icon: ArrowUpRight,
+      badge: "Pro",
+      tone: "primary",
+    },
+  ]}
+/>
+
+<Callout title="Mise à niveau lorsque le câblage devient le bloqueur">
+  Starter Free valide la surface du produit. Starter Pro relie la couche métier
+  avec des fondations adaptées à la production, de facturation, de backend et de
+  livraison. `/docs/starter-pro`
+
+</Callout>

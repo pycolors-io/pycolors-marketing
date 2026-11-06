@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useSyncExternalStore } from "react";
 import {
   resolveSitePalette,
@@ -51,17 +52,23 @@ function setPalette(palette: SitePalette) {
   window.dispatchEvent(new Event(PALETTE_CHANGE_EVENT));
 }
 
-export function FooterPalette() {
+export function FooterPalette({ locale = "en" }: { locale?: "en" | "fr" }) {
+  const tSite = useCopy();
+
   const palette = useSyncExternalStore(subscribe, getPalette, getServerPalette);
 
   return (
-    <div role="group" aria-label="Site palette" className={styles.palette}>
+    <div
+      role="group"
+      aria-label={tSite(locale === "fr" ? "Palette du site" : "Site palette")}
+      className={styles.palette}
+    >
       {OPTIONS.map(({ value, label }) => (
         <button
           key={value}
           type="button"
-          aria-label={label}
-          title={label}
+          aria-label={tSite(label)}
+          title={tSite(label)}
           aria-pressed={palette === value}
           disabled={palette === null}
           onClick={() => setPalette(value)}
@@ -71,7 +78,7 @@ export function FooterPalette() {
             data-palette-swatch={value}
             className={styles.paletteSwatch}
           />
-          <span className={styles.paletteLabel}>{label}</span>
+          <span className={styles.paletteLabel}>{tSite(label)}</span>
         </button>
       ))}
     </div>

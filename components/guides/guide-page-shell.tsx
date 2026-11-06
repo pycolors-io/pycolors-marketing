@@ -1,5 +1,6 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { Badge } from "@pycolors/ui";
 import { Container } from "@/components/container";
@@ -33,6 +34,8 @@ export function GuidePageShell({
   documentation,
   relatedGuides = [],
 }: GuidePageShellProps) {
+  const tSite = useCopy();
+
   const items = breadcrumb?.length
     ? breadcrumb
     : [
@@ -54,57 +57,63 @@ export function GuidePageShell({
               variant="outline"
               className="rounded-[5px] px-2.5 py-1 text-[11px]"
             >
-              {badge}
+              {tSite(badge)}
             </Badge>
             {tags.map((tag) => (
-              <span key={tag}>{tag}</span>
+              <span key={tag}>{tSite(tag)}</span>
             ))}
             <span aria-hidden="true">/</span>
-            <span>{toc.length} sections</span>
+            <span>
+              {tSite(toc.length)} {tSite(" sections")}
+            </span>
           </div>
           <h1
             id="guide-title"
             className="mt-5 max-w-4xl text-balance font-brand text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl"
           >
-            {title}
+            {tSite(title)}
           </h1>
           <p className="mt-5 max-w-3xl text-[15px] leading-7 text-muted-foreground sm:text-base sm:leading-8">
-            {description}
+            {tSite(description)}
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-1">
             <Link href="/guides" className={styles.textLink}>
-              <ArrowLeft className="size-3.5" aria-hidden="true" /> All guides
+              <ArrowLeft className="size-3.5" aria-hidden="true" />{" "}
+              {tSite(" All guides")}
             </Link>
             {documentation ? (
               <Link href={documentation.href} className={styles.textLink}>
-                <BookOpen className="size-3.5" aria-hidden="true" />{" "}
-                {documentation.title}
+                <BookOpen className="size-3.5" aria-hidden="true" />
+                {tSite(" ")}
+                {tSite(documentation.title)}
               </Link>
             ) : null}
           </div>
         </header>
         <div className="grid items-start gap-8 pt-8 lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-12 xl:gap-20">
           <aside className="min-w-0 lg:sticky lg:top-24 lg:col-start-2 lg:row-start-1">
-            <OnThisPageInline items={toc} />
+            <OnThisPageInline
+              items={toc.map((item) => ({ ...item, label: tSite(item.label) }))}
+            />
           </aside>
           <article
             aria-labelledby="guide-title"
             className={`${styles.body} min-w-0 lg:col-start-1 lg:row-start-1`}
           >
-            {children}
+            {tSite(children)}
             {relatedGuides.length ? (
               <section
                 aria-labelledby="related-guides-title"
                 className="border-t border-border-subtle pt-10 sm:pt-12"
               >
                 <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-                  Continue reading
+                  {tSite("Continue reading")}
                 </p>
                 <h2
                   id="related-guides-title"
                   className="mt-3 text-2xl font-semibold tracking-heading"
                 >
-                  Connect the next part of your product.
+                  {tSite("Connect the next part of your product.")}
                 </h2>
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
                   {relatedGuides.map((guide) => (
@@ -114,13 +123,14 @@ export function GuidePageShell({
                       className="group flex flex-col justify-between gap-6 rounded-[5px] border border-border-subtle p-5 transition-colors hover:bg-surface-muted/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
                     >
                       <h3 className="text-base font-medium leading-7">
-                        {guide.title}
+                        {tSite(guide.title)}
                       </h3>
                       <span
                         className="flex items-center justify-between text-xs text-muted-foreground"
                         aria-hidden="true"
                       >
-                        Read guide <ArrowRight className="size-4" />
+                        {tSite("Read guide ")}
+                        <ArrowRight className="size-4" />
                       </span>
                     </Link>
                   ))}

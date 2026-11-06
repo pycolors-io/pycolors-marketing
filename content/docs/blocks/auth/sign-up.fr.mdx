@@ -1,0 +1,125 @@
+---
+title: S'inscrire
+description: Un panneau de création de compte de présentation uniquement avec le
+  formulaire appartenant au consommateur, les fournisseurs, le consentement et
+  les erreurs.
+lastUpdated: "2026-09-14"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { SignUpExample } from "@/components/docs/blocks/auth-examples";
+
+## Création de compte actuel sans posséder de logique d'authentification [#present-account-creation-without-owning-auth-logic]
+
+`SignUpPanel` compose une surface de création de compte ciblée à partir du contenu et des contrôles fournis par votre application. Utilisez-le pour les informations d'identification, les actions du fournisseur, la copie du consentement et les liens de l'étape suivante pendant que votre produit conserve la propriété de la validation, de la création de compte et de l'authentification.
+
+<Callout title="Comportement des consommateurs">
+  Le Bloc ne crée pas d'utilisateur, ne valide pas de mot de passe, n'envoie pas
+  d'e-mail de vérification, ne démarre pas OAuth ou ne persiste pas à donner son
+  consentement. Il ne présente que les nœuds React et copie que vous fournissez.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Authentification**limace `auth`.
+- Bloquer : `sign-up`, exportation `SignUpPanel`.
+- Source canonique : `apps/marketing/content/blocks/auth/sign-up/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/sign-up/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible.
+
+Si l'accès au presse-papiers n'est pas disponible, sélectionnez le code manuellement.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <SignUpExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/sign-up/index.tsx"'
+    >
+      ../../../blocks/auth/sign-up/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `SignUpPanel` grâce à un dispositif local déterministe. Il ne crée aucun compte, ne démarre aucun flux de fournisseur et n'effectue aucune demande réseau. L'onglet Source est le fichier canonique complet inclus au moment de la compilation, pas une implémentation dupliquée.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+Conservez le fichier complet sur le chemin d'accès appartenant à l'application ci-dessus. La copie de la source ne crée pas de routes d'authentification, de configuration de fournisseur, de comptes ou de persistance. Branchez les contrôles fournis à votre propre comportement d'application, puis validez-le dans votre application.
+
+```tsx title="src/components/sign-up-screen.tsx"
+"use client";
+
+import { SignUpPanel } from "./blocks/sign-up";
+
+export function SignUpScreen() {
+  return (
+    <SignUpPanel
+      description="Create the account your workspace will use."
+      form={
+        <form
+          className="space-y-4"
+          onSubmit={(event) => event.preventDefault()}
+        >
+          <label className="grid gap-2 text-sm">
+            Email
+            <input
+              className="rounded-md border bg-background px-3 py-2"
+              name="email"
+              type="email"
+              autoComplete="email"
+            />
+          </label>
+          <button className="rounded-md border px-4 py-2" type="submit">
+            Create account
+          </button>
+        </form>
+      }
+      consent={
+        <span>
+          By continuing, you accept your application's terms and privacy policy.
+        </span>
+      }
+      footer={<a href="/sign-in">Already have an account? Sign in</a>}
+    />
+  );
+}
+```
+
+Utilisation `"use client"` uniquement là où la mise en œuvre de votre consommateur a besoin de gestionnaires ou d'un état d'authentification du client. Le bloc canonique ne contient pas de machine d'état de création de compte.
+
+## Ce que possède l'application [#what-the-application-owns]
+
+`form` est nécessaire. Facultatif `providers`, `error`, `consent`, `footer`, `title`,
+`description` et `className` vous permettent d'adapter la composition sans déplacer les règles de produit dans PyColors.
+
+Les contrôles et les liens du fournisseur conservent leur comportement natif car le bloc rend vos nœuds React inchangés. Gardez les messages de validation véridiques et appliquez les règles de mot de passe, de vérification, de compte en double, de consentement légal et anti-abus dans votre application / backend validée.
+
+## Notes réactives et d'accessibilité [#responsive-and-accessibility-notes]
+
+Gardez chaque champ étiqueté, conservez la sémantique de soumission de formulaire native et rendez le texte de consentement compréhensible avant que l'utilisateur ne soumette. Utilisation du contenu d'erreur `role="alert"`; ne le fournir que lorsqu'une erreur réelle du consommateur nécessite une attention particulière. Passez en revue le focus du clavier, les cibles tactiles, la longue copie légale et les largeurs étroites de votre application.
+
+## Propriété et mises à jour [#ownership-and-updates]
+
+Votre application possède la source copiée et ne reçoit pas de mises à jour automatiques. Examinez les modifications canoniques ultérieures délibérément et validez-les dans votre application avant leur adoption.
+
+## Limites et prochaines étapes [#boundaries-and-next-steps]
+
+Aucune persistance de compte, configuration Auth.js, configuration OAuth, e-mail de vérification, politique de mot de passe, mutation de session, autorisation, analyse, facturation ou service de production n'est implémenté ici.
+
+Explorez le [Blocage du catalogue](/blocks), utiliser [Se connecter](/docs/blocks/auth/sign-in) pour les utilisateurs récurrents, ou [Comparer les Starters](/starters) pour une fondation d'application complète.

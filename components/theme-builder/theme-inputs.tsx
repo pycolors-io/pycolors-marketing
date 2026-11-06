@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import { SIX_DIGIT_HEX_COLOR_PATTERN } from "@pycolors/color-engine";
 import { Input as UiInput } from "@pycolors/ui";
 
@@ -34,6 +35,8 @@ function ColorField({
   pickerFallback,
   onFieldChange,
 }: ColorFieldProps) {
+  const tSite = useCopy();
+
   const inputId = `theme-builder-${field}`;
   const pickerValue = SIX_DIGIT_HEX_COLOR_PATTERN.test(value)
     ? value
@@ -43,12 +46,12 @@ function ColorField({
     <div className="grid min-w-0 max-w-md grid-cols-[minmax(0,1fr)_2.75rem] items-start gap-2">
       <UiInput
         id={inputId}
-        label={label}
+        label={tSite(label)}
         size="md"
         required={required}
         value={value}
-        error={error}
-        helperText={helperText}
+        error={tSite(error)}
+        helperText={tSite(helperText)}
         onChange={(event) => onFieldChange(field, event.target.value)}
         spellCheck={false}
         autoCapitalize="off"
@@ -56,7 +59,8 @@ function ColorField({
 
       <div className="pt-6">
         <label htmlFor={`${inputId}-picker`} className="sr-only">
-          Choose {label.toLowerCase()}
+          {tSite("Choose ")}
+          {tSite(label).toLocaleLowerCase(tSite.locale)}
         </label>
         <input
           id={`${inputId}-picker`}
@@ -76,44 +80,46 @@ export function ThemeInputs({
   errors,
   onFieldChange,
 }: ThemeInputsProps) {
+  const tSite = useCopy();
+
   return (
     <fieldset className="min-w-0 space-y-5">
-      <legend className="sr-only">Theme settings</legend>
+      <legend className="sr-only">{tSite("Theme settings")}</legend>
 
       <ColorField
         field="brandColor"
-        label="Brand color"
+        label={tSite("Brand color")}
         required
         value={draft.brandColor}
-        error={errors.brandColor}
-        helperText="Your primary color · #RRGGBB"
+        error={tSite(errors.brandColor)}
+        helperText={tSite("Your primary color · #RRGGBB")}
         pickerFallback="#6a30d4"
         onFieldChange={onFieldChange}
       />
       <ColorField
         field="neutralColor"
-        label="Neutral color"
+        label={tSite("Neutral color")}
         value={draft.neutralColor}
-        error={errors.neutralColor}
-        helperText="Optional · derives from your brand"
+        error={tSite(errors.neutralColor)}
+        helperText={tSite("Optional · derives from your brand")}
         pickerFallback="#71717a"
         onFieldChange={onFieldChange}
       />
       <ColorField
         field="lightBackgroundColor"
-        label="Light background"
+        label={tSite("Light background")}
         value={draft.lightBackgroundColor}
-        error={errors.lightBackgroundColor}
-        helperText="Light mode only · leave empty for automatic"
+        error={tSite(errors.lightBackgroundColor)}
+        helperText={tSite("Light mode only · leave empty for automatic")}
         pickerFallback="#fafafa"
         onFieldChange={onFieldChange}
       />
       <UiInput
         id="theme-builder-name"
-        label="Theme name"
+        label={tSite("Theme name")}
         value={draft.name}
-        error={errors.name}
-        helperText="Optional · included in your export"
+        error={tSite(errors.name)}
+        helperText={tSite("Optional · included in your export")}
         onChange={(event) => onFieldChange("name", event.target.value)}
         maxLength={64}
         className="max-w-md"

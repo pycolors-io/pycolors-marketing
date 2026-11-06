@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { cn } from "@pycolors/ui";
 
 const destinations = [
@@ -13,9 +14,11 @@ const destinations = [
 export function UiSectionNav({
   active,
 }: Readonly<{ active: (typeof destinations)[number]["id"] }>) {
+  const tSite = useCopy();
+
   return (
     <nav
-      aria-label="PyColors UI navigation"
+      aria-label={tSite("PyColors UI navigation")}
       className="mb-8 flex flex-wrap gap-x-1 gap-y-1 border-b border-border-subtle pb-3"
     >
       {destinations.map((item) => (
@@ -34,7 +37,7 @@ export function UiSectionNav({
               : "text-muted-foreground",
           )}
         >
-          {item.label}
+          {tSite(item.label)}
         </Link>
       ))}
     </nav>

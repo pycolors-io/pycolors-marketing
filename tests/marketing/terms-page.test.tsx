@@ -3,7 +3,13 @@ import { resolve } from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
-import TermsPage, { metadata } from "@/app/(site)/terms/page";
+import TermsPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/terms/page";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 describe("Terms of Service page", () => {
   it("preserves SEO, the revision date and company details", () => {
@@ -31,8 +37,7 @@ describe("Terms of Service page", () => {
       within(company).getByRole("link", { name: "contact@pycolors.com" }),
     ).toHaveAttribute("href", "mailto:contact@pycolors.com");
     const breadcrumb = JSON.parse(
-      container.querySelector('script[type="application/ld+json"]')!
-        .textContent!,
+      document.getElementById("breadcrumb-jsonld")!.textContent!,
     );
     expect(
       breadcrumb.itemListElement.map((item: { item: string }) => item.item),
@@ -180,7 +185,11 @@ describe("Terms of Service page", () => {
       } else if (href.startsWith("/"))
         expect(
           existsSync(
-            resolve("app/(site)", href.slice(1).split("#")[0]!, "page.tsx"),
+            resolve(
+              "app/[locale]/(site)",
+              href.slice(1).split("#")[0]!,
+              "page.tsx",
+            ),
           ),
           href,
         ).toBe(true);

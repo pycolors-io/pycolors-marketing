@@ -1,0 +1,112 @@
+---
+title: Mode de paiement
+description: Un panneau de paiement-méthode de présentation seulement avec la
+  méthode appartenant au consommateur, l'expiration, le contact, le statut et
+  les actions.
+lastUpdated: "2026-09-15"
+appliesTo: Blocks
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Preview } from "@/components/docs/preview";
+import { PaymentMethodExample } from "@/components/docs/blocks/canonical-examples";
+
+## Présenter les détails de paiement sans posséder le comportement de paiement [#present-payment-details-without-owning-payment-behavior]
+
+`PaymentMethodPanel` donne à une application une surface délimitée pour afficher le mode de paiement qu'elle connaît déjà. Utilisez-le pour la méthode, l'expiration, le contact de facturation, le statut et les actions appartenant au consommateur, tandis que votre fournisseur de facturation et votre serveur restent la source de la vérité.
+
+<Callout title="Aucune mutation de paiement à l'intérieur du Bloc">
+  Le Bloc ne stocke jamais les données de la carte, ouvre Stripe, joint ou
+  détache un mode de paiement, valide les détails de facturation ou décide si
+  une mise à jour est autorisée. Ces opérations restent la propriété des
+  applications.
+
+</Callout>
+
+## Identité canonique [#canonical-identity]
+
+- Catégorie : **Commerce**limace `commerce`.
+- Bloquer : `payment-method`, exportation `PaymentMethodPanel`.
+- Source canonique : `apps/marketing/content/blocks/commerce/payment-method/`.
+- Compléter le point d'entrée: `index.tsx`.
+
+## Copier la source [#copy-source]
+
+Configurez le [paquetage public de l'interface utilisateur et tokens](/docs/ui/installation), puis créer `src/components/blocks/payment-method/index.tsx` dans votre application. Utilisez le bouton Copier de l'onglet Source lorsqu'il est disponible. Si l'accès au presse-papiers n'est pas disponible, sélectionnez le code manuellement.
+
+<Tabs groupId="blocks-doc-view" items={["Aperçu", "Source"]}>
+  <Tab value="Aperçu">
+    <Preview className="my-0 overflow-hidden">
+      <PaymentMethodExample />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Source">
+    <include
+      lang="tsx"
+      meta='title="src/components/blocks/payment-method/index.tsx"'
+    >
+      ../../../blocks/commerce/payment-method/index.tsx
+    </include>
+
+</Tab>
+
+</Tabs>
+
+L'onglet Aperçu rend le canonique réel `PaymentMethodPanel` avec des valeurs fictives, expurgées et des contrôles locaux inertes. Il n'effectue aucune opération de fournisseur ou de réseau. L'onglet Source inclut le fichier canonique complet au moment de la construction, pas une implémentation dupliquée.
+
+Votre application possède la source copiée et ne reçoit pas de mises à jour automatiques. Examinez délibérément les modifications futures et validez-les dans votre application avant leur adoption. Retour à l'accueil [Blocage du catalogue](/blocks) Comparer un autre modèle.
+
+## Installer en copiant la source [#install-by-copying-source]
+
+1. Copier le texte complet `payment-method` répertoire dans votre chemin Blocks appartenant à l'application.
+2. Configurez le paquet public PyColors UI et les tokens via le [Guide d'installation](/docs/ui/installation).
+3. Fournissez les informations de paiement, le statut et les actions de votre couche de facturation validée.
+4. Exécutez lint, contrôlez, testez et construisez, puis passez en revue les étiquettes réelles, les valeurs longues, les largeurs étroites, les thèmes et le comportement du clavier.
+
+```tsx title="src/components/payment-method-summary.tsx"
+"use client";
+
+import { PaymentMethodPanel } from "./blocks/payment-method";
+
+export function PaymentMethodSummary() {
+  return (
+    <PaymentMethodPanel
+      title="Payment method"
+      description="Example values supplied by your application."
+      methodLabel="Method"
+      methodValue="Visa ending in 4242"
+      expiryLabel="Expires"
+      expiryValue="10 / 28"
+      contactLabel="Billing contact"
+      contactValue="billing@example.com"
+      status={<span>Default</span>}
+      primaryAction={
+        <button type="button" onClick={() => undefined}>
+          Update payment method
+        </button>
+      }
+    />
+  );
+}
+```
+
+L'exemple d'action n'effectue aucune opération de paiement. Remplacez-le par votre propre flux sauvegardé par le fournisseur uniquement après validation des autorisations et de l'état du compte courant.
+
+## Contrat de consommation [#consumer-owned-contract]
+
+`title`, `methodLabel` et `methodValue` sont nécessaires. Les paires de description, d'expiration et de contact sont facultatives. `status` peut présenter un contexte appartenant au consommateur, tel qu'un badge de méthode par défaut, mais il ne comporte pas de sémantique de facturation en soi.
+
+`primaryAction` et `secondaryAction` sont rendus exactement tels que fournis. Le Bloc ne clone pas les contrôles, n'intercepte pas les événements et ne déduit pas si un utilisateur peut modifier ou supprimer une méthode.
+
+## Notes réactives et d'accessibilité [#responsive-and-accessibility-notes]
+
+Le panneau utilise une étiquette `section`, un balisage de liste de définitions sémantiques et une grille de détails réactive. Gardez les identifiants de carte ou de banque correctement expurgés, fournissez des noms de contrôle significatifs et préservez la focus visible et la sémantique native désactivée dans les actions que vous fournissez.
+
+## Propriété et limites [#ownership-and-boundaries]
+
+Votre application possède des tokens de fournisseur, une gestion sensible aux PCI, des contacts de facturation, le cycle de vie de la méthode de paiement, des autorisations, des mutations, des redirections et des erreurs. Le bloc n'inclut pas les éléments Stripe, SetupIntents, Customer Portal, checkout, webhooks, persistance, authentification, analytics, registre ou comportement CLI.
+
+Explorez le [Blocage du catalogue](/blocks), comparer [Aperçu de la facturation](/docs/blocks/commerce/billing-overview)ou [Comparer les Starters](/starters) pour une fondation d'application complète.

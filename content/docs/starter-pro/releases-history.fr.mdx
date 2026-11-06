@@ -1,0 +1,431 @@
+---
+title: Historique des versions
+description: Versions, révisions de source et impact de mise à niveau pour
+  PyColors Starter Pro.
+lastUpdated: "2026-11-04"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import {
+  Activity,
+  CreditCard,
+  FileText,
+  GitCommitHorizontal,
+  Globe,
+  LayoutTemplate,
+  ListTodo,
+  Lock,
+  Package,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  Users,
+} from "lucide-react";
+
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Starter Pro</Badge>
+  <Badge>Historique des versions</Badge>
+</div>
+
+## Historique des versions de Starter Pro [#starter-pro-release-history]
+
+Examiner les changements et l'impact de la mise à niveau pour **PyColors Starter Pro**. La source `CHANGELOG.md` enregistre les changements de produits; le [changelog](/changelog) couvre l'écosystème plus large de PyColors.
+
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={[
+    {
+      title: "Données de référence publiées",
+      eyebrow: "v1.4.0",
+      icon: Package,
+      description:
+        "Workspace workflows, des guides d'agent de codage testés et une livraison autonome validée.",
+      items: [
+        "Vérifiez le manifeste et le journal des modifications inclus avec votre source livrée.",
+      ],
+    },
+    {
+      title: "Mettre à jour délibérément",
+      eyebrow: "Revoir l’impact",
+      icon: GitCommitHorizontal,
+      description:
+        "Passez en revue les migrations et les modifications d'application fournies avant de mettre à jour un produit personnalisé.",
+      items: [
+        "Répétez la mise à jour dans une mise en scène isolée et conservez une sauvegarde récupérable.",
+      ],
+    },
+  ]}
+/>
+
+## Politique de version [#versioning-policy]
+
+Starter Pro suit [Versioning sémantique](/docs/project/versioning-policy). Lisez les notes de migration pour la version que vous installez et conservez votre livraison d'origine comme référence de comparaison. L'accès à la mise à jour suit vos conditions achetées.
+
+## v1.4.0 - Workspace workflows et validation de livraison [#v140--workspace-workflows-and-delivery-validation]
+
+Notes de publication : **4 novembre 2026**. Ces changements étendent la base de référence 1.3.0. Vérifiez la version et la révision de la source dans le manifeste fourni avec votre livraison; l'accès aux mises à jour suit vos conditions d'achat.
+
+<DocsDecisionGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Intégration de l'espace de travail",
+      icon: Users,
+      description:
+        "Un parcours connecté au premier utilisateur avec des progrès persistants et des enregistrements réels de l'espace de travail.",
+      items: [
+        "Création et changement d'espace de travail, première invitation et premier projet",
+        "Accès aux membres basé sur les rôles, transfert de propriété et départ surveillé de l'espace de travail",
+      ],
+    },
+    {
+      title: "Profils et contrôles de compte",
+      icon: ShieldCheck,
+      description:
+        "Détails de compte modifiables et règles de cycle de vie imposées par le serveur.",
+      items: [
+        "Noms d'affichage validés et avatars PostgreSQL normalisés avec remplacement et suppression",
+        "Sessions révocables et suppression de compte protégées par des contrôles d'abonnement et de propriété de l'espace de travail",
+      ],
+    },
+    {
+      title: "Travail de projet et notifications",
+      icon: ListTodo,
+      description:
+        "Un flux de travail réutilisable de la planification de projet aux tâches et à la discussion.",
+      items: [
+        "Descriptions, statut, membres responsables et archivage réversible du projet",
+        "Tâches, dates d'échéance du calendrier, commentaires paginés et protection des archives",
+        "Boîte de réception des notifications, état non lu, préférences et historique des acteurs/ressources filtrés",
+      ],
+    },
+    {
+      title: "Configuration et présentation",
+      icon: Globe,
+      description:
+        "Des paramètres de produits centraux et une interface bilingue que les acheteurs peuvent adapter.",
+      items: [
+        "Branding, navigation, présentation de l’offre et quotas paramétrables",
+        "Messages en anglais/français, préférences de langue/zone horaire enregistrées et formateurs partagés",
+        "Personnaliser les contrôles palettes, typographie, géométrie, échelle d'interface et barre latérale",
+      ],
+    },
+    {
+      title: "Emballage, facturation et CI",
+      icon: CreditCard,
+      description:
+        "Les contrôles automatisés couvrent le paquet acheteur autonome et les chemins d'échec de facturation.",
+      items: [
+        "Installation ZIP extraite, migrations de base de données vide, construction de production et parcours du premier utilisateur",
+        "Rapprochement Stripe transactionnel avec régressions dupliquées, simultanées, réordonnées et événements échoués",
+        "Couverture CI requise pour certains trajets anglais/français, Personnaliser et navigateur",
+      ],
+    },
+    {
+      title: "Opérations et passation d'acheteur",
+      icon: Activity,
+      description:
+        "Configuration pratique, personnalisation et conseils de récupération fournis avec la source.",
+      items: [
+        "Diagnostics de configuration, sondes de santé/préparation et références d'erreurs structurées",
+        "Vérification/restauration de sauvegarde PostgreSQL jetable et guidage de configuration de l'opérateur",
+        "Installation, mises à niveau, portée de support et mises à jour des captures de workflow",
+      ],
+    },
+  ]}
+/>
+
+### Impact de la mise à niveau [#upgrade-impact]
+
+Les modifications incluent des migrations de bases de données additives pour les espaces de travail, les profils, les sessions, les projets, les notifications et les préférences locales. La migration projet-travail ajoute des tables de tâches et de commentaires tout en préservant les projets existants. Répéter les migrations fournies dans une mise en scène isolée avec une sauvegarde récupérable ; les modifications du registre de session peuvent obliger les utilisateurs à se connecter à nouveau.
+
+<Callout title="Limites de facturation et de validation">
+  La facturation de l'application reste attachée à la **compte utilisateur**.
+  Les quotas de ressources sont configurables et **non plafonné par défaut**.
+  Les régressions de facturation signées utilisent un fournisseur simulé ; les
+  e-mails de production, la configuration Stripe, le routage des alertes et les
+  sauvegardes nécessitent toujours une vérification dans votre propre
+  environnement.
+
+</Callout>
+
+Suivez le [Guide de mise à niveau](/docs/starter-pro/customization-and-upgrades) et [Couverture de validation](/docs/starter-pro/release-readiness) avant d'installer une nouvelle livraison.
+
+## v1.3.0 - Mise à jour des fondations PWA et du shell public [#v130--pwa-foundations--public-shell-update]
+
+Sortie: juin 2026
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "PWA installable",
+      description:
+        "Manifeste, enregistrement du service worker, repli hors ligne et installabilité mobile autonome.",
+      icon: Rocket,
+    },
+    {
+      title: "Architecture de coque publique",
+      description:
+        "Emballage public réutilisable avec des dispositions partagées, un en-tête collant, un pied de page compact et une manipulation sûre.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "UX et metadata polish",
+      description:
+        "Améliorations Responsive UX, améliorations des métadonnées SEO et mises à jour de l'expérience d'intégration / développeur.",
+      icon: Sparkles,
+    },
+  ]}
+/>
+
+### Ajouté [#added]
+
+- Manifeste des applications Web
+- Inscription des travailleurs de service
+- Page de secours hors ligne
+- Mise en cache de navigation hors ligne
+- Support d'installabilité mobile
+- Mode d'affichage autonome
+- Enveloppeur public partagé de shell
+- En-tête responsive collant
+- Mises en page marketing/auth partagées
+- Intégration de pied de page compact
+- Manipulation centralisée de zones sécurisées
+- Nouveaux scripts de base de données locale : `pnpm db:up`, `pnpm db:down`, `pnpm db:reset`, `pnpm db:logs`
+
+### Amélioration [#improved]
+
+- Prise en charge sécurisée des appareils mobiles modernes
+- Gestion Viewport pour iOS et Android
+- Dispositions des paramètres adaptatifs
+- Comptes connectés UX
+- Cartes d'activité de sécurité
+- Changer-mot-de-passe
+- Manipulation, empilement et espacement des débordements
+- Configuration centralisée des métadonnées
+- Métadonnées d'application et directives robots
+- Métadonnées, icônes et configuration de la fenêtre d'affichage PWA
+- Organisation README et documentation d'intégration
+- Ajout du guide de test PWA
+
+### Notes sur les migrations [#migration-notes]
+
+Aucune migration requise.
+
+Cette version introduit les fondations PWA prêtes à la production et l'architecture de coque publique tout en gardant les fondations Starter Pro existantes rétrocompatibles.
+
+### Notes [#notes]
+
+Conçu pour les développeurs qui expédient des produits SaaS prêts pour la production avec les fondations Next.js, TypeScript, Tailwind CSS, Prisma, Auth.js, Stripe et PWA modernes.
+
+---
+
+## v1.2.0 - Mise à jour des systèmes de produits et des modèles SaaS [#v120--product-systems--saas-patterns-update]
+
+Sortie: juin 2026
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Présentation des fonctionnalités",
+      description:
+        "Un modèle de produit pour présenter l'extensibilité et l'évolution évolutive du SaaS.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Accès selon l’offre",
+      description:
+        "Un modèle de monétisation pour les limites premium et l'UX de facturation.",
+      icon: Lock,
+    },
+    {
+      title: "Produit polish",
+      description:
+        "Amélioration du tableau de bord, de la facturation, des projets, de l'administration, des paramètres et des surfaces de navigation.",
+      icon: Sparkles,
+    },
+  ]}
+/>
+
+### Ajouté [#added-1]
+
+- `FeatureShowcase` modèle de produit
+- `UpgradeGate` modèle de monétisation
+- `/docs/patterns/feature-showcase`
+- `/docs/patterns/upgrade-gate`
+- Page d'index Patterns améliorée
+- Exemple de tarification en tant que surface commerciale Starter Pro
+
+### Amélioration [#improved-1]
+
+- Positionnement du tableau de bord et crédibilité SaaS
+- Badges d'état de facturation, surfaces de facturation et positionnement du portail
+- Tableau des projets, boîtes de dialogue, actions de ligne et page de détail
+- Membres d'administration et flux de travail d'invitations
+- Configuration du compte et des surfaces de sécurité
+- Pied de page latéral, navigation mobile et menu utilisateur
+- Page d'accueil de Starter Pro et premier positionnement produit
+
+### Notes sur les migrations [#migration-notes-1]
+
+Aucune migration requise.
+
+Cette version ajoute de nouveaux modèles de produits et améliore les surfaces existantes tout en gardant la fondation Starter Pro rétrocompatible.
+
+<Callout type="info" title="Principe du produit">
+  La v1.2.0 se concentre sur le fait que Starter Pro se sente comme une
+  fondation SaaS sérieuse, pas comme un modèle générique.
+
+</Callout>
+
+---
+
+<span id="v110--initial-commercial-release" aria-hidden="true" />
+
+## v1.0.3 - Sortie commerciale initiale [#v103--initial-commercial-release]
+
+Sortie: juin 2026
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Authentification",
+      description:
+        "Auth, OAuth, vérification, réinitialisation du mot de passe et routes protégés.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Facturation",
+      description:
+        "Stripe Checkout, le portail de facturation, les abonnements, les factures et l'accès aux plans.",
+      icon: CreditCard,
+    },
+    {
+      title: "App shell",
+      description:
+        "Tableau de bord, projets, administration, facturation, paramètres, tarification et navigation authentifiée.",
+      icon: Rocket,
+    },
+  ]}
+/>
+
+### Ajouté [#added-2]
+
+- Authentification par e-mail et mot de passe
+- Google et Github OAuth
+- Vérification des e-mails et réinitialisation du mot de passe
+- Gestion des comptes connectés
+- Stripe Checkout et portail de facturation
+- Gestion du cycle de vie des abonnements
+- Fondation d'accès selon l’offre
+- Modèles Prisma pour les utilisateurs, auth, facturation et abonnements
+- Configuration locale de PostgreSQL basée sur Docker
+- Script de données d’exemple pour le développement local
+- Surfaces d'application adaptées à la production
+
+### Notes sur les migrations [#migration-notes-2]
+
+Aucune migration requise.
+
+Cette version a établi la première base commerciale de Starter Pro.
+
+### Notes [#notes-1]
+
+Cette version est la base de référence pour les développeurs qui veulent commencer à partir d'une structure SaaS sérieuse au lieu de reconstruire l'authentification, la facturation et l'architecture des applications à partir de zéro.
+
+---
+
+## v1.0.0 - Fondement interne [#v100--internal-foundation]
+
+Libéré : Interne
+
+### Notes [#notes-2]
+
+- Architecture initiale de Starter Pro
+- Dérivé de Starter Free
+- Expériences d'authentification et de facturation précoces
+- Direction initiale du tableau de bord et du shell de l'application
+- Intégration initiale du système de conception
+
+Cette version devrait être traitée comme une base de référence interne, et non comme une fondation commerciale publique.
+
+---
+
+## Attentes en matière de migration [#migration-expectations]
+
+Les versions mineures et patch visent à préserver la compatibilité. Une fonctionnalité additive peut toujours nécessiter une migration de base de données; suivez les notes pour votre livraison exacte. Passez en revue les changements de schéma, d'environnement et de session avant le déploiement et vérifiez si l'artefact d'application précédent peut toujours s'exécuter par rapport au schéma migré.
+
+Les [Guide de personnalisation et de mise à niveau](/docs/starter-pro/customization-and-upgrades) explique la mise en scène, la validation et la récupération. Conservez le produit livré `PYCOLORS_RELEASE.json` lorsqu'il est présent pour identifier sa révision source.
+
+## Pages connexes [#related-pages]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Global changelog",
+      href: "/changelog",
+      description:
+        "Lisez les versions PyColors à l'échelle de l'écosystème sur l'interface utilisateur, les starters, les modèles, les documents et les outils.",
+      icon: GitCommitHorizontal,
+    },
+    {
+      title: "Politique de version",
+      href: "/docs/project/versioning-policy",
+      description:
+        "Lisez les attentes en matière de version et de compatibilité à travers l'écosystème.",
+      icon: Package,
+    },
+    {
+      title: "Couverture de validation",
+      href: "/docs/starter-pro/release-readiness",
+      description:
+        "Passez en revue le paquet acheteur, la facturation et les vérifications du navigateur.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Personnalisation et mises à niveau",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description: "Adaptez votre produit et répétez la prochaine migration.",
+      icon: LayoutTemplate,
+    },
+    {
+      title: "Exploitation en production",
+      href: "/docs/starter-pro/operations",
+      description:
+        "Préparer le diagnostic, la surveillance et la récupération.",
+      icon: Activity,
+    },
+    {
+      title: "Accompagnement et assistance",
+      href: "/docs/starter-pro/implementation-support",
+      description: "Revoir les limites du soutien et un passation convenu.",
+      icon: FileText,
+    },
+  ]}
+/>
+
+<DocsUpgradeCTA
+  title="Construire sur une base SaaS conçue pour évoluer."
+  description="Starter Pro combine l'authentification, la facturation, le backend, l'UX produit et les modèles SaaS réutilisables dans une base prête pour la production."
+  productSlug="starter-pro"
+  buyLabel="Get Starter Pro"
+  secondaryHref="/docs/starter-pro"
+  secondaryLabel="Explore Starter Pro"
+/>

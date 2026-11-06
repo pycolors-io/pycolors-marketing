@@ -1,5 +1,7 @@
 "use client";
 
+import { defaultChatTranslate, type ChatTranslate } from "./types";
+
 import * as React from "react";
 import { Alert, Badge, Button } from "@pycolors/ui";
 import type { ChatAttachment, ChatAttachmentsControl } from "./types";
@@ -16,11 +18,13 @@ function sizeLabel(bytes: number) {
 }
 
 export function ChatAttachments({
+  translate = defaultChatTranslate,
   control,
   disabled,
   onPrefill,
 }: {
   control: ChatAttachmentsControl;
+  translate?: ChatTranslate;
   disabled: boolean;
   onPrefill: () => void;
 }) {
@@ -53,15 +57,20 @@ export function ChatAttachments({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="min-w-0 space-y-1">
           <p id={`${id}-title`} className="text-sm font-medium">
-            Reference file
+            {translate("Reference file")}
           </p>
           <p
             id={`${id}-limits`}
             className="text-xs leading-5 text-muted-foreground"
           >
-            {control.policy.formatsLabel} · {control.policy.maxFiles} file
-            {control.policy.maxFiles === 1 ? "" : "s"} maximum ·{" "}
-            {sizeLabel(control.policy.maxBytes)} per file
+            {control.policy.formatsLabel} ·{" "}
+            {translate(
+              control.policy.maxFiles === 1
+                ? "{value0} file maximum"
+                : "{value0} files maximum",
+              { value0: control.policy.maxFiles },
+            )}{" "}
+            · {sizeLabel(control.policy.maxBytes)} {translate("per file")}
           </p>
         </div>
         <Button
@@ -73,13 +82,13 @@ export function ChatAttachments({
           aria-describedby={`${id}-limits ${id}-privacy${control.errorMessage ? ` ${id}-error` : ""}`}
           onClick={() => input.current?.click()}
         >
-          Attach reference file
+          {translate("Attach reference file")}
         </Button>
         <input
           ref={input}
           type="file"
           tabIndex={-1}
-          aria-label="Choose reference file"
+          aria-label={translate("Choose reference file")}
           className="hidden"
           accept={control.policy.accept}
           multiple={control.policy.maxFiles > 1}
@@ -105,6 +114,7 @@ export function ChatAttachments({
       <div className="space-y-3">
         {control.items.map((item) => (
           <AttachmentRow
+            translate={translate}
             key={item.id}
             item={item}
             disabled={disabled}
@@ -130,6 +140,7 @@ export function ChatAttachments({
 }
 
 function AttachmentRow({
+  translate = defaultChatTranslate,
   item,
   control,
   disabled,
@@ -138,6 +149,7 @@ function AttachmentRow({
 }: {
   item: ChatAttachment;
   control: ChatAttachmentsControl;
+  translate?: ChatTranslate;
   disabled: boolean;
   onRemove: (button: HTMLButtonElement) => void;
   onPrefill: () => void;
@@ -183,7 +195,7 @@ function AttachmentRow({
             {sizeLabel(item.size)}
           </p>
         </div>
-        <Badge variant="outline">{statusLabels[item.status]}</Badge>
+        <Badge variant="outline">{translate(statusLabels[item.status])}</Badge>
       </div>
       <p
         ref={summary}
@@ -193,13 +205,17 @@ function AttachmentRow({
         className="mt-3 text-xs leading-5 text-muted-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
       >
         {item.status === "ready"
-          ? "Reference text is ready for review."
+          ? translate("Reference text is ready for review.")
           : item.status === "selected"
-            ? "Selected only. Read the file when you are ready."
+            ? translate("Selected only. Read the file when you are ready.")
             : item.status === "reading"
-              ? "Reading the reference. You can cancel this operation."
+              ? translate(
+                  "Reading the reference. You can cancel this operation.",
+                )
               : item.status === "cancelled"
-                ? "Reading cancelled. You can retry or remove the file."
+                ? translate(
+                    "Reading cancelled. You can retry or remove the file.",
+                  )
                 : item.status === "error"
                   ? item.errorMessage
                   : ""}
@@ -207,11 +223,12 @@ function AttachmentRow({
       {item.status === "ready" ? (
         <details className="mt-3 rounded-md border border-border p-3">
           <summary className="cursor-pointer text-xs font-medium">
-            Text excerpt{item.truncated ? " · truncated" : ""}
+            {translate("Text excerpt")}
+            {item.truncated ? translate(" · truncated") : ""}
           </summary>
           <pre
             tabIndex={0}
-            aria-label="Reference text excerpt"
+            aria-label={translate("Reference text excerpt")}
             className="mt-3 max-h-52 overflow-auto whitespace-pre-wrap text-xs leading-6 [overflow-wrap:anywhere]"
           >
             {item.excerpt}
@@ -242,7 +259,7 @@ function AttachmentRow({
               act("retry", event.currentTarget, control.onRetry)
             }
           >
-            Retry reading
+            {translate("Retry reading")}
           </Button>
         ) : null}
         {item.status === "reading" ? (
@@ -255,7 +272,7 @@ function AttachmentRow({
               act("cancel", event.currentTarget, control.onCancel)
             }
           >
-            Cancel reading
+            {translate("Cancel reading")}
           </Button>
         ) : null}
         {item.status === "ready" && control.onUse ? (
@@ -269,7 +286,7 @@ function AttachmentRow({
               onPrefill();
             }}
           >
-            Use as reference
+            {translate("Use as reference")}
           </Button>
         ) : null}
         <Button
@@ -277,14 +294,14 @@ function AttachmentRow({
           variant="ghost"
           className="min-h-11"
           disabled={disabled}
-          aria-label={`Remove ${item.name}`}
+          aria-label={translate("Remove {value0}", { value0: item.name })}
           onClick={(event) => {
             if (pending.current === "remove") return;
             pending.current = "remove";
             onRemove(event.currentTarget);
           }}
         >
-          Remove
+          {translate("Remove")}
         </Button>
       </div>
     </div>

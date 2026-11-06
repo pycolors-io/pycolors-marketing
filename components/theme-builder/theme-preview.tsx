@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import {
   APPEARANCE_DEFAULTS,
   type AppearancePreferences,
@@ -204,6 +205,8 @@ export function ThemePreview({
   fontFamily,
   appearance = APPEARANCE_DEFAULTS,
 }: ThemePreviewProps) {
+  const tSite = useCopy();
+
   const id = React.useId();
   const style = React.useMemo(
     () =>
@@ -230,7 +233,7 @@ export function ThemePreview({
   const filteredProjects = projects.filter(
     (project) =>
       project.category === view.projectTab &&
-      `${project.name} ${project.client} ${project.owner} ${project.status}`
+      `${tSite(project.name)} ${project.client} ${project.owner} ${tSite(project.status)}`
         .toLowerCase()
         .includes(query),
   );
@@ -263,29 +266,31 @@ export function ThemePreview({
             aria-hidden="true"
             className="grid size-8 shrink-0 place-items-center rounded-[5px] bg-primary text-sm font-semibold text-primary-foreground"
           >
-            N
+            {tSite("N")}
           </span>
           <div>
-            <p className="text-sm font-semibold tracking-tight">Northstar</p>
+            <p className="text-sm font-semibold tracking-tight">
+              {tSite("Northstar")}
+            </p>
             <p className="mt-0.5 text-[11px] text-muted-foreground">
-              Avery&apos;s workspace
+              {tSite("Avery's workspace")}
             </p>
           </div>
         </div>
         <div className="ml-auto flex items-center gap-3">
           <span className="rounded border border-border/50 px-1.5 py-0.5 text-[10px] text-muted-foreground">
-            Demo data
+            {tSite("Demo data")}
           </span>
           <div
             className="hidden -space-x-1.5 items-center sm:flex"
-            aria-label="Avery Kim, Sam Patel, and Morgan Lee"
+            aria-label={tSite("Avery Kim, Sam Patel, and Morgan Lee")}
           >
             {["AK", "SP", "ML"].map((initials) => (
               <span
                 key={initials}
                 className="grid size-7 place-items-center rounded-full border-2 border-background bg-muted text-[9px] font-medium text-muted-foreground"
               >
-                {initials}
+                {tSite(initials)}
               </span>
             ))}
           </div>
@@ -294,7 +299,7 @@ export function ThemePreview({
             variant="ghost"
             size="icon-sm"
             className="relative rounded-[4px]"
-            aria-label="View notifications"
+            aria-label={tSite("View notifications")}
           >
             <Bell aria-hidden="true" />
             <span
@@ -306,7 +311,7 @@ export function ThemePreview({
       </header>
       <div className={styles.layout}>
         <nav
-          aria-label="Northstar workspace"
+          aria-label={tSite("Northstar workspace")}
           className={styles.navigation}
           data-preview-sidebar-background={
             mode === "light" ? appearance.sidebarLight : appearance.sidebarDark
@@ -318,8 +323,10 @@ export function ThemePreview({
                 key={label}
                 href={`#${id}-${label === "Projects" ? "projects" : "overview"}`}
                 aria-current={active ? "page" : undefined}
-                aria-label={label}
-                title={appearance.sidebar === "collapsed" ? label : undefined}
+                aria-label={tSite(label)}
+                title={tSite(
+                  appearance.sidebar === "collapsed" ? label : undefined,
+                )}
                 className={
                   active
                     ? "flex shrink-0 items-center gap-2 rounded-[4px] bg-primary px-2.5 py-2.5 text-xs font-medium text-primary-foreground"
@@ -327,7 +334,7 @@ export function ThemePreview({
                 }
               >
                 <Icon className="size-3.5" aria-hidden="true" />
-                <span className={styles.navigationLabel}>{label}</span>
+                <span className={styles.navigationLabel}>{tSite(label)}</span>
               </a>
             ))}
           </div>
@@ -336,10 +343,10 @@ export function ThemePreview({
           >
             <div className="flex items-center gap-1.5 text-foreground">
               <Sparkles className="size-3.5 text-primary" aria-hidden="true" />
-              <p className="text-xs font-medium">Pro workspace</p>
+              <p className="text-xs font-medium">{tSite("Pro workspace")}</p>
             </div>
             <p className="mt-3 text-[11px] text-muted-foreground">
-              8 of 12 seats used
+              {tSite("8 of 12 seats used")}
             </p>
             <div
               className="mt-2 h-1 overflow-hidden rounded-full bg-muted"
@@ -348,7 +355,7 @@ export function ThemePreview({
               <div className="h-full w-2/3 rounded-full bg-primary" />
             </div>
             <p className="mt-3 text-[10px] leading-4 text-muted-foreground">
-              Room for your next collaborators.
+              {tSite("Room for your next collaborators.")}
             </p>
           </div>
         </nav>
@@ -359,19 +366,20 @@ export function ThemePreview({
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-[11px] text-muted-foreground">
-                Workspace <span aria-hidden="true">/</span> Overview
+                {tSite("Workspace ")}
+                <span aria-hidden="true">/</span> {tSite(" Overview")}
               </p>
               <h2
                 id={`${id}-heading`}
                 className="mt-2 text-xl font-semibold tracking-tight"
               >
-                Dashboard
+                {tSite("Dashboard")}
               </h2>
               <p
                 id={`${id}-description`}
                 className="mt-1 text-xs leading-5 text-muted-foreground"
               >
-                Your team&apos;s delivery, capacity, and upcoming work.
+                {tSite("Your team's delivery, capacity, and upcoming work.")}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -380,7 +388,7 @@ export function ThemePreview({
                   className="size-3.5 text-muted-foreground"
                   aria-hidden="true"
                 />
-                <span className="sr-only">Activity period</span>
+                <span className="sr-only">{tSite("Activity period")}</span>
                 <select
                   value={view.period}
                   onChange={(event) =>
@@ -391,13 +399,13 @@ export function ThemePreview({
                   }
                   className="min-h-9 max-w-full rounded-[4px] bg-background pr-2 text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 >
-                  <option value="week">Last 7 days</option>
-                  <option value="month">Last 30 days</option>
+                  <option value="week">{tSite("Last 7 days")}</option>
+                  <option value="month">{tSite("Last 30 days")}</option>
                 </select>
               </label>
               <Button type="button" size="sm" className="min-h-9 rounded-[4px]">
                 <Plus aria-hidden="true" />
-                New project
+                {tSite("New project")}
               </Button>
             </div>
           </div>
@@ -439,7 +447,7 @@ export function ThemePreview({
                 <div className="p-3.5">
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-[11px] font-medium text-muted-foreground">
-                      {label}
+                      {tSite(label)}
                     </p>
                     <Icon
                       className="size-3.5 shrink-0 text-muted-foreground"
@@ -447,13 +455,13 @@ export function ThemePreview({
                     />
                   </div>
                   <p className="mt-3 text-2xl font-semibold tracking-tight tabular-nums">
-                    {value}
+                    {tSite(value)}
                   </p>
                   <p className="mt-2 text-[10px] font-medium text-foreground">
-                    {change}
+                    {tSite(change)}
                   </p>
                   <p className="mt-1 text-[10px] leading-4 text-muted-foreground">
-                    {detail}
+                    {tSite(detail)}
                   </p>
                 </div>
               </Card>
@@ -466,9 +474,12 @@ export function ThemePreview({
               <figure className="p-4">
                 <figcaption className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <h3 className="text-sm font-semibold">Delivery activity</h3>
+                    <h3 className="text-sm font-semibold">
+                      {tSite("Delivery activity")}
+                    </h3>
                     <p className="mt-1 text-[11px] text-muted-foreground">
-                      Completed tasks · {period.label.toLowerCase()}
+                      {tSite("Completed tasks · ")}
+                      {tSite(period.label).toLocaleLowerCase(tSite.locale)}
                     </p>
                   </div>
                   <span className="inline-flex items-center gap-1 text-[11px] font-medium text-foreground">
@@ -476,13 +487,23 @@ export function ThemePreview({
                       className="size-3.5 text-primary"
                       aria-hidden="true"
                     />
-                    {growth}%
+                    {tSite(growth)}%
                   </span>
                 </figcaption>
                 <svg
                   viewBox="0 0 560 210"
                   role="img"
-                  aria-label={`Completed tasks: ${period.labels.map((label, index) => `${label} ${period.values[index]}`).join(", ")}. Total ${completed}.`}
+                  aria-label={tSite(
+                    "Completed tasks: {value0}. Total {value1}.",
+                    {
+                      value0: period.labels
+                        .map(
+                          (label, index) => `${label} ${period.values[index]}`,
+                        )
+                        .join(", "),
+                      value1: completed,
+                    },
+                  )}
                   className="mt-4 w-full"
                 >
                   {[0, 1, 2, 3, 4].map((step) => (
@@ -503,7 +524,7 @@ export function ThemePreview({
                         fill="var(--muted-foreground)"
                         fontSize="10"
                       >
-                        {Math.round(chartMax * (1 - step / 4))}
+                        {tSite(Math.round(chartMax * (1 - step / 4)))}
                       </text>
                     </g>
                   ))}
@@ -521,7 +542,12 @@ export function ThemePreview({
                           fill="var(--primary)"
                           opacity={index === period.values.length - 1 ? 1 : 0.7}
                         >
-                          <title>{`${period.labels[index]}: ${value} tasks completed`}</title>
+                          <title>
+                            {tSite("{value0}: {value1} tasks completed", {
+                              value0: period.labels[index],
+                              value1: value,
+                            })}
+                          </title>
                         </rect>
                         <text
                           x={42 + index * slot + slot / 2}
@@ -530,7 +556,7 @@ export function ThemePreview({
                           fill="var(--muted-foreground)"
                           fontSize="10"
                         >
-                          {period.labels[index]}
+                          {tSite(period.labels[index])}
                         </text>
                       </g>
                     );
@@ -542,9 +568,11 @@ export function ThemePreview({
                       aria-hidden="true"
                       className="size-1.5 rounded-full bg-primary"
                     />
-                    Completed tasks
+                    {tSite("Completed tasks")}
                   </span>
-                  <span>{period.previous} in the previous period</span>
+                  <span>
+                    {tSite(period.previous)} {tSite(" in the previous period")}
+                  </span>
                 </div>
               </figure>
             </Card>
@@ -552,14 +580,16 @@ export function ThemePreview({
               className={`rounded-[5px] border-border/50 p-4 shadow-none ${cardSurface}`}
             >
               <div className="flex items-center justify-between gap-2">
-                <h3 className="text-sm font-semibold">Upcoming milestones</h3>
+                <h3 className="text-sm font-semibold">
+                  {tSite("Upcoming milestones")}
+                </h3>
                 <Clock3
                   aria-hidden="true"
                   className="size-3.5 text-muted-foreground"
                 />
               </div>
               <p className="mt-1 text-[11px] text-muted-foreground">
-                What needs your attention next.
+                {tSite("What needs your attention next.")}
               </p>
               <ul className="mt-4 divide-y divide-border/40">
                 {[
@@ -588,7 +618,7 @@ export function ThemePreview({
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <span className="text-[10px] text-muted-foreground">
-                        {milestone.day}
+                        {tSite(milestone.day)}
                       </span>
                       <Badge
                         variant={
@@ -598,14 +628,14 @@ export function ThemePreview({
                         }
                         size="sm"
                       >
-                        {milestone.status}
+                        {tSite(milestone.status)}
                       </Badge>
                     </div>
                     <p className="mt-2 text-xs font-medium">
-                      {milestone.title}
+                      {tSite(milestone.title)}
                     </p>
                     <p className="mt-1 text-[11px] text-muted-foreground">
-                      {milestone.project}
+                      {tSite(milestone.project)}
                     </p>
                   </li>
                 ))}
@@ -618,14 +648,16 @@ export function ThemePreview({
             >
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/40 p-4">
                 <div>
-                  <h3 className="text-sm font-semibold">Delivery board</h3>
+                  <h3 className="text-sm font-semibold">
+                    {tSite("Delivery board")}
+                  </h3>
                   <p className="mt-1 text-[11px] text-muted-foreground">
-                    Recent projects across your workspace.
+                    {tSite("Recent projects across your workspace.")}
                   </p>
                 </div>
                 <Input
-                  aria-label="Filter Northstar projects"
-                  placeholder="Search projects..."
+                  aria-label={tSite("Filter Northstar projects")}
+                  placeholder={tSite("Search projects...")}
                   size="sm"
                   value={view.query}
                   onChange={(event) =>
@@ -650,7 +682,7 @@ export function ThemePreview({
                 <div className="flex flex-wrap items-center justify-between gap-2 px-4 pt-3">
                   <TabsList
                     size="sm"
-                    aria-label="Project status"
+                    aria-label={tSite("Project status")}
                     className="h-8 bg-muted/70 p-0.5"
                   >
                     <TabsTrigger
@@ -658,15 +690,17 @@ export function ThemePreview({
                       size="sm"
                       className="px-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                     >
-                      Active <span className="ml-1 opacity-70">4</span>
+                      {tSite("Active ")}
+                      <span className="ml-1 opacity-70">4</span>
                     </TabsTrigger>
                     <TabsTrigger value="planned" size="sm" className="px-2">
-                      Planned <span className="ml-1 opacity-70">2</span>
+                      {tSite("Planned ")}
+                      <span className="ml-1 opacity-70">2</span>
                     </TabsTrigger>
                   </TabsList>
                   <span className="text-[10px] tabular-nums text-muted-foreground">
-                    {filteredProjects.length} project
-                    {filteredProjects.length === 1 ? "" : "s"}
+                    {tSite(filteredProjects.length)} {tSite(" project")}
+                    {tSite(filteredProjects.length === 1 ? "" : "s")}
                   </span>
                 </div>
                 <TabsContent
@@ -674,18 +708,20 @@ export function ThemePreview({
                   className={`${styles.projectTable} mt-3`}
                 >
                   <Table
-                    aria-label="Northstar projects"
+                    aria-label={tSite("Northstar projects")}
                     id={`${id}-projects`}
                     tabIndex={0}
                     className="outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
                   >
                     <TableHeader className="bg-muted/15">
                       <TableRow className="border-border/40 hover:bg-transparent">
-                        <TableHead>Project</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Owner</TableHead>
-                        <TableHead>Progress</TableHead>
-                        <TableHead className="text-right">Due</TableHead>
+                        <TableHead>{tSite("Project")}</TableHead>
+                        <TableHead>{tSite("Status")}</TableHead>
+                        <TableHead>{tSite("Owner")}</TableHead>
+                        <TableHead>{tSite("Progress")}</TableHead>
+                        <TableHead className="text-right">
+                          {tSite("Due")}
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -700,14 +736,14 @@ export function ThemePreview({
                                 aria-hidden="true"
                                 className="grid size-7 shrink-0 place-items-center rounded-[4px] border border-primary/20 bg-primary/10 text-[9px] font-semibold text-foreground"
                               >
-                                {project.initials}
+                                {tSite(project.initials)}
                               </span>
                               <div>
                                 <p className="whitespace-nowrap text-xs font-medium">
-                                  {project.name}
+                                  {tSite(project.name)}
                                 </p>
                                 <p className="mt-1 whitespace-nowrap text-[10px] text-muted-foreground">
-                                  {project.client}
+                                  {tSite(project.client)}
                                 </p>
                               </div>
                             </div>
@@ -724,7 +760,7 @@ export function ThemePreview({
                               size="sm"
                               className="whitespace-nowrap"
                             >
-                              {project.status}
+                              {tSite(project.status)}
                             </Badge>
                           </TableCell>
                           <TableCell>
@@ -733,24 +769,26 @@ export function ThemePreview({
                                 aria-hidden="true"
                                 className="grid size-5 shrink-0 place-items-center rounded-full bg-muted text-[8px] font-medium"
                               >
-                                {project.avatar}
+                                {tSite(project.avatar)}
                               </span>
-                              {project.owner}
+                              {tSite(project.owner)}
                             </span>
                           </TableCell>
                           <TableCell>
                             <div className="min-w-24">
                               <div className="flex items-center justify-between gap-2 text-[10px]">
                                 <span className="text-muted-foreground">
-                                  {project.tasks}
+                                  {tSite(project.tasks)}
                                 </span>
                                 <span className="tabular-nums">
-                                  {project.progress}%
+                                  {tSite(project.progress)}%
                                 </span>
                               </div>
                               <div
                                 role="progressbar"
-                                aria-label={`${project.name} completion`}
+                                aria-label={tSite("{value0} completion", {
+                                  value0: project.name,
+                                })}
                                 aria-valuenow={project.progress}
                                 aria-valuemin={0}
                                 aria-valuemax={100}
@@ -764,7 +802,7 @@ export function ThemePreview({
                             </div>
                           </TableCell>
                           <TableCell className="whitespace-nowrap text-right text-[11px] text-muted-foreground">
-                            {project.due}
+                            {tSite(project.due)}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -776,10 +814,12 @@ export function ThemePreview({
                               className="mx-auto size-5 text-muted-foreground"
                             />
                             <p className="mt-2 text-sm font-medium">
-                              No matching projects
+                              {tSite("No matching projects")}
                             </p>
                             <p className="mt-1 text-xs text-muted-foreground">
-                              Try a project, client, or teammate name.
+                              {tSite(
+                                "Try a project, client, or teammate name.",
+                              )}
                             </p>
                             <Button
                               type="button"
@@ -790,7 +830,7 @@ export function ThemePreview({
                                 onViewChange({ ...view, query: "" })
                               }
                             >
-                              Clear search
+                              {tSite("Clear search")}
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -800,14 +840,18 @@ export function ThemePreview({
                 </TabsContent>
               </Tabs>
               <div className="border-t border-border/40 px-4 py-3 text-[10px] text-muted-foreground">
-                Preview data · Changes here do not affect your exported theme.
+                {tSite(
+                  "Preview data · Changes here do not affect your exported theme.",
+                )}
               </div>
             </Card>
             <Card
               className={`rounded-[5px] border-border/50 p-4 shadow-none ${cardSurface}`}
             >
               <div className="flex items-center justify-between gap-2">
-                <h3 className="text-sm font-semibold">Live activity</h3>
+                <h3 className="text-sm font-semibold">
+                  {tSite("Live activity")}
+                </h3>
                 <Activity
                   className="size-3.5 text-primary"
                   aria-hidden="true"
@@ -820,27 +864,28 @@ export function ThemePreview({
                       aria-hidden="true"
                       className="grid size-7 shrink-0 place-items-center rounded-full bg-muted text-[9px] font-medium text-muted-foreground"
                     >
-                      {item.initials}
+                      {tSite(item.initials)}
                     </span>
                     <div>
                       <p className="text-[11px] leading-5">
-                        <span className="font-medium">{item.name}</span>{" "}
+                        <span className="font-medium">{tSite(item.name)}</span>
+                        {tSite(" ")}
                         <span className="text-muted-foreground">
-                          {item.action}
+                          {tSite(item.action)}
                         </span>
                       </p>
                       <p className="text-[11px] text-foreground">
-                        {item.project}
+                        {tSite(item.project)}
                       </p>
                       <p className="mt-1 text-[10px] text-muted-foreground">
-                        {item.time}
+                        {tSite(item.time)}
                       </p>
                     </div>
                   </li>
                 ))}
               </ol>
               <div className="mt-5 border-t border-border/40 pt-4 text-[11px] text-muted-foreground">
-                All activity is from this demo workspace.
+                {tSite("All activity is from this demo workspace.")}
               </div>
             </Card>
           </div>
@@ -849,9 +894,10 @@ export function ThemePreview({
           >
             <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 rounded-[5px] px-4 py-3 text-xs font-medium focus-visible:outline-2 focus-visible:outline-ring [&::-webkit-details-marker]:hidden">
               <span>
-                Component states{" "}
+                {tSite("Component states")}
+                {tSite(" ")}
                 <span className="ml-1 font-normal text-muted-foreground">
-                  · Forms, empty states, and focus
+                  {tSite("· Forms, empty states, and focus")}
                 </span>
               </span>
               <ChevronDown
@@ -872,16 +918,18 @@ export function ThemePreview({
                       id={`${id}-interface-states`}
                       className="text-sm font-semibold"
                     >
-                      Form validation
+                      {tSite("Form validation")}
                     </h3>
                     <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
-                      Test field labels, errors, and helper text.
+                      {tSite("Test field labels, errors, and helper text.")}
                     </p>
                     <Input
                       id={`${id}-workspace-url`}
-                      label="Workspace URL"
+                      label={tSite("Workspace URL")}
                       defaultValue="northstar"
-                      error="Use a public hostname before inviting clients."
+                      error={tSite(
+                        "Use a public hostname before inviting clients.",
+                      )}
                       className="mt-3"
                     />
                   </div>
@@ -891,9 +939,11 @@ export function ThemePreview({
                   className={`rounded-[4px] border-border/50 shadow-none ${cardSurface}`}
                 >
                   <div className="p-3.5">
-                    <h3 className="text-sm font-semibold">Empty state</h3>
+                    <h3 className="text-sm font-semibold">
+                      {tSite("Empty state")}
+                    </h3>
                     <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
-                      Test quiet surfaces without losing hierarchy.
+                      {tSite("Test quiet surfaces without losing hierarchy.")}
                     </p>
                     <div className="mt-3 rounded-[4px] border border-dashed border-border/50 bg-muted/15 p-3 text-center">
                       <FolderKanban
@@ -901,10 +951,10 @@ export function ThemePreview({
                         aria-hidden="true"
                       />
                       <p className="mt-2 text-xs font-medium">
-                        No pending reviews
+                        {tSite("No pending reviews")}
                       </p>
                       <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
-                        New client feedback will appear here.
+                        {tSite("New client feedback will appear here.")}
                       </p>
                     </div>
                   </div>
@@ -915,10 +965,10 @@ export function ThemePreview({
                 >
                   <div className="p-3.5">
                     <h3 className="text-sm font-semibold">
-                      Focus-ready action
+                      {tSite("Focus-ready action")}
                     </h3>
                     <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
-                      Test the visible keyboard focus treatment.
+                      {tSite("Test the visible keyboard focus treatment.")}
                     </p>
                     <Button
                       type="button"
@@ -926,7 +976,7 @@ export function ThemePreview({
                       size="sm"
                       className="mt-5 rounded-[4px] ring-2 ring-ring ring-offset-2 ring-offset-background"
                     >
-                      Invite teammate
+                      {tSite("Invite teammate")}
                     </Button>
                   </div>
                 </Card>
@@ -938,10 +988,11 @@ export function ThemePreview({
             ariaLive="off"
             className="mt-4 rounded-[5px] p-3.5"
           >
-            <AlertTitle className="text-xs">Usage update</AlertTitle>
+            <AlertTitle className="text-xs">{tSite("Usage update")}</AlertTitle>
             <AlertDescription className="mt-1 text-[11px] leading-5">
-              86% of this month&apos;s delivery capacity is assigned. Review
-              upcoming work before adding another project.
+              {tSite(
+                "86% of this month's delivery capacity is assigned. Review upcoming work before adding another project.",
+              )}
             </AlertDescription>
           </Alert>
         </div>

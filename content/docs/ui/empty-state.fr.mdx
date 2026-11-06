@@ -1,0 +1,573 @@
+---
+title: EmptyState
+description: primitive UI utilisée pour représenter des états vides valides avec
+  des messages clairs et des actions optionnelles.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  EmptyState,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@pycolors/ui";
+import {
+  ArrowRight,
+  BarChart3,
+  CalendarDays,
+  CheckCircle,
+  CircleAlert,
+  CircleOff,
+  Database,
+  FilterX,
+  FolderPlus,
+  Inbox,
+  LoaderCircle,
+  LayoutDashboard,
+  LayoutTemplate,
+  SearchX,
+  Table2,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>EmptyState</Badge>
+</div>
+
+## Expliquer l'absence valide [#explain-valid-absence]
+
+Les **EmptyState** Un composant représente un état valide où il n'y a pas de données à afficher.
+
+Utilisez-le quand:
+
+- Une liste n'a pas d'éléments
+- Une table n'a pas de résultats
+- un tableau de bord n'a pas encore de données
+- Les filtres ne renvoient rien
+- une fonctionnalité n'a pas été configurée
+- un utilisateur n'a pas créé son premier objet
+
+EmptyState explique ce qui s'est passé et peut guider l'utilisateur vers l'action suivante.
+
+C'est une **pure UI primitive**Il structure le contenu, pas la logique du produit ou de l’entreprise.
+
+<Callout title="Idée de base">
+  Vide n'est pas un échec. EmptyState explique une absence valide et aide
+  l'utilisateur à avancer.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="empty-state-import.tsx"
+import { EmptyState } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez EmptyState lorsque l'application est dans un état valide, mais qu'il n'y a pas encore de contenu.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <EmptyState
+        title="Pas encore de projets"
+        description="Créez votre premier projet pour commencer."
+      />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-empty-state.tsx"
+import { EmptyState } from "@pycolors/ui";
+
+export function BasicEmptyState() {
+  return (
+    <EmptyState
+      title="No projects yet"
+      description="Create your first project to get started."
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Quand utiliser EmptyState [#when-to-use-emptystate]
+
+Utilisez EmptyState lorsque la requête a réussi ou que l'état actuel est valide, mais que le résultat est vide.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "États de première série",
+      description:
+        "À utiliser lorsque l'utilisateur n'a pas encore créé de projets, de membres, d'enregistrements ou de ressources.",
+      icon: FolderPlus,
+    },
+    {
+      title: "Résultats filtrés",
+      description:
+        "Utiliser lorsque les contraintes de filtres, de recherche ou de requête ne renvoient aucune donnée correspondante.",
+      icon: FilterX,
+    },
+    {
+      title: "Surfaces des produits",
+      description:
+        "Utilisez-le dans les tableaux de bord, les tableaux, les cartes, les panneaux et les sections de fonctionnalités.",
+      icon: LayoutDashboard,
+    },
+  ]}
+/>
+
+### Avec action [#with-action]
+
+Utilisez une action quand il y a une prochaine étape claire.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <EmptyState
+        title="Pas encore de projets"
+        description="Les projets vous aident à organiser votre travail."
+        action={<Button>Create project</Button>}
+      />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="empty-state-with-action.tsx"
+import { Button, EmptyState } from "@pycolors/ui";
+
+export function EmptyStateWithAction() {
+  return (
+    <EmptyState
+      title="No projects yet"
+      description="Projects help you organize your work."
+      action={<Button>Create project</Button>}
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle d'action">
+  Une action claire suffit généralement. Les états vides devraient guider les
+  utilisateurs, pas les submerger.
+
+</Callout>
+
+### Avec icône [#with-icon]
+
+Utilisez le `icon` emplacement pour une simple icône décorative ou illustration.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <EmptyState
+        icon={<CalendarDays className="h-6 w-6" aria-hidden="true" />}
+        title="Rien de prévu"
+        description="Créez un événement pour le voir apparaître ici."
+        action={<Button variant="secondary">Create event</Button>}
+      />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="empty-state-with-icon.tsx"
+import { Button, EmptyState } from "@pycolors/ui";
+import { CalendarDays } from "lucide-react";
+
+export function EmptyStateWithIcon() {
+  return (
+    <EmptyState
+      icon={<CalendarDays className="h-6 w-6" aria-hidden="true" />}
+      title="Nothing scheduled"
+      description="Create an event to see it appear here."
+      action={<Button variant="secondary">Create event</Button>}
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Intérieur d'une carte [#inside-a-card]
+
+EmptyState compose naturellement avec des surfaces telles que Card.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Card className="max-w-xl">
+        <CardContent className="p-6">
+          <EmptyState
+            title="Aucune donnée disponible"
+            description="Les mesures apparaîtront une fois les données collectées."
+          />
+        </CardContent>
+      </Card>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="card-empty-state.tsx"
+import { Card, CardContent, EmptyState } from "@pycolors/ui";
+
+export function CardEmptyState() {
+  return (
+    <Card>
+      <CardContent className="p-6">
+        <EmptyState
+          title="No data available"
+          description="Metrics will appear once data is collected."
+        />
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### État vide de la table [#table-empty-state]
+
+Utilisez EmptyState à l'intérieur d'une table lorsqu'une requête réussit mais ne renvoie aucune ligne.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Table>
+        <TableBody>
+          <TableRow className="hover:bg-transparent">
+            <TableCell colSpan={4} className="py-10">
+              <EmptyState
+                title="Aucun résultat"
+                description="Essayez d'ajuster vos filtres."
+                action={
+                  <Button size="sm">
+                    Clear filters
+                  </Button>
+                }
+              />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+  </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="table-empty-state.tsx"
+import {
+  Button,
+  EmptyState,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@pycolors/ui";
+
+export function TableEmptyState() {
+  return (
+    <Table>
+      <TableBody>
+        <TableRow className="hover:bg-transparent">
+          <TableCell colSpan={4} className="py-10">
+            <EmptyState
+              title="No results"
+              description="Try adjusting your filters."
+              action={<Button size="sm">Clear filters</Button>}
+            />
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Confirmez que l'état est valide [#confirm-the-state-is-valid]
+
+    Utilisez EmptyState uniquement lorsque la demande a réussi ou que l'absence est attendue.
+
+</Step>
+
+  <Step>
+    #### Expliquer pourquoi il est vide [#explain-why-it-is-empty]
+
+    Le titre doit nommer l'État. La description devrait expliquer ce que cela signifie.
+
+</Step>
+
+  <Step>
+    #### Proposer l'étape suivante quand cela est utile [#offer-the-next-step-when-useful]
+
+    Ajoutez une action lorsque l'utilisateur peut créer, inviter, réinitialiser des filtres ou configurer quelque chose.
+
+</Step>
+
+  <Step>
+    #### Correspond à la surface environnante [#match-the-surrounding-surface]
+
+    Utilisez EmptyState dans une carte, un tableau ou une section en fonction de la structure de la page.
+
+</Step>
+
+  <Step>
+    #### Gardez la logique du produit à l'extérieur [#keep-product-logic-outside]
+
+    EmptyState ne décide pas de ce qui se passe ensuite. La page ou la fonctionnalité possède ce comportement.
+
+</Step>
+
+</Steps>
+
+## Skeleton vs Alert [#emptystate-vs-skeleton-vs-alert]
+
+| Situation                                           | Utilisation                    |
+| --------------------------------------------------- | ------------------------------ |
+| Les données sont en cours de chargement             | Squelette                      |
+| Demande réussie mais il n'y a pas de données        | EmptyState                     |
+| La demande a échoué                                 | Alerte                         |
+| L'utilisateur doit confirmer une action             | boîte dialogue                 |
+| L'utilisateur a besoin d'un flux de travail latéral | Sheet                          |
+| L'intégration nécessite plusieurs étapes            | Interface d'intégration dédiée |
+
+<Callout type="info" title="Règle de décision">
+  EmptyState explique l'absence valide. Le squelette représente le chargement.
+  L'alerte communique l'échec.
+
+</Callout>
+
+## API [#api]
+
+#### Props [#props]
+
+| Prop          | Type              | Requis | Désignation                                |
+| ------------- | ----------------- | ------ | ------------------------------------------ |
+| `title`       | `string`          | Oui    | Message principal expliquant l'état vide   |
+| `description` | `string`          | Non    | Contexte supplémentaire pour l'état vide   |
+| `action`      | `React.ReactNode` | Non    | Action facultative                         |
+| `icon`        | `React.ReactNode` | Non    | Icône ou illustration décorative en option |
+| `className`   | `string`          | Non    | Autres classes Tailwind                    |
+
+EmptyState accepte aussi le code HTML standard `div` props.
+
+```ts title="empty-state-props.ts"
+React.HTMLAttributes<HTMLDivElement>;
+```
+
+### TypeScript types [#typescript-types]
+
+```ts title="empty-state-types.ts"
+export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
+  title: string;
+  description?: string;
+  action?: React.ReactNode;
+  icon?: React.ReactNode;
+}
+```
+
+### Accessibilité [#accessibility]
+
+EmptyState doit être lisible et compréhensible sans se fier aux icônes.
+
+Directives :
+
+- garder le titre clair et descriptif
+- garder la signification icon-only en dehors de l'icône
+- marquer les icônes décoratives avec `aria-hidden="true"`
+- ne forcez pas la focus lorsqu'un état vide apparaît
+- Les actions doivent être accessibles au clavier
+- n'utilisez pas EmptyState pour annoncer des erreurs
+- use Alerte en cas de défaillances et de problèmes de blocage
+
+<Callout title="Règle d'accessibilité">
+  Les états vides doivent s'expliquer par le texte. Les icônes peuvent soutenir
+  le message, mais elles ne devraient pas porter le seul sens.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "Titre clair et courte description",
+    "une action utile lorsque cela est approprié",
+    "copie différente pour les états de première exécution et filtré-vide",
+    "icônes comme décoration de soutien",
+    "placement cohérent à l'intérieur des surfaces de carte ou de table",
+  ]}
+  avoid={[
+    "Utiliser EmptyState pour les erreurs",
+    "Utilisation de EmptyState alors que les données sont encore en cours de chargement",
+    'Des titres comme "Rien ici"',
+    "Multiples actions concurrentes",
+    "logique métier à l'intérieur du composant",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+La copie à l'état vide doit répondre à deux questions :
+
+1. Pourquoi est-ce vide ?
+2. Que peut faire l'utilisateur ensuite ?
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'First-run',
+      title: "Pas encore de projets",
+      icon: FolderPlus,
+      description: (
+        <>
+          <p>
+            Use first-run empty states when the user has not created any data yet.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Create your first project to organize your work.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Filtered',
+      title: "Aucun résultat",
+      icon: SearchX,
+      description: (
+        <>
+          <p>
+            Explain that filters or search constraints removed the current results.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Try adjusting your filters or clearing the current search.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Configured later',
+      title: "Aucune métrique disponible",
+      icon: BarChart3,
+      description: (
+        <>
+          <p>
+            Use delayed-state messaging when data depends on future activity or integrations.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Metrics will appear once your app starts receiving data.
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Est-ce que EmptyState devrait être utilisé pour les erreurs ?">
+    Non. Utilisez Alerte pour les erreurs. EmptyState est pour une absence valide, pas un échec.
+  </Accordion>
+
+<Accordion title="Est-ce que EmptyState devrait toujours avoir une action ?">
+  Non. Ajoutez une action uniquement lorsqu'il y a une prochaine étape claire,
+  telle que la création d'un élément ou l'effacement des filtres.
+</Accordion>
+
+<Accordion title="EmptyState peut-il être utilisé dans les tables ?">
+  Oui. Placez-le à l'intérieur d'un `TableCell` avec le bon `colSpan`.
+</Accordion>
+
+  <Accordion title="Est-ce que EmptyState doit contenir une logique de produit ?">
+    Non. EmptyState rend la structure. La page ou la fonctionnalité détermine ce que l'action fait.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Squelette",
+      href: "/docs/ui/skeleton",
+      description: "Utilisez Skeleton pendant le chargement des données.",
+      icon: LoaderCircle,
+    },
+    {
+      title: "Alerte",
+      href: "/docs/ui/alert",
+      description:
+        "Utilisez Alerte pour les erreurs, les avertissements et les commentaires importants.",
+      icon: CircleAlert,
+    },
+    {
+      title: "Tableau",
+      href: "/docs/ui/table",
+      description:
+        "Utilisez EmptyState à l'intérieur des lignes de la table lorsqu'aucun enregistrement ne correspond.",
+      icon: Table2,
+    },
+    {
+      title: "Vide, chargement et états d'erreur",
+      href: "/docs/guides/empty-loading-error",
+      description:
+        "Concevoir des états asynchrones de manière cohérente sur toutes les surfaces du produit.",
+      icon: LayoutTemplate,
+    },
+  ]}
+/>

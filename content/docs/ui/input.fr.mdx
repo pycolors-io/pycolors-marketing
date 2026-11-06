@@ -1,0 +1,593 @@
+---
+title: Input
+description: Composant de saisie de texte de base pour l'interface utilisateur
+  PyColors, avec étiquettes, texte d'aide, validation, icônes et accessibilité
+  intégrés.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  Accessibility,
+  ArrowRight,
+  CheckCircle,
+  CircleAlert,
+  ClipboardCheck,
+  FileText,
+  FormInput,
+  KeyRound,
+  SearchIcon,
+  ShieldCheck,
+  SlidersHorizontal,
+  Type,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Entrées</Badge>
+</div>
+
+## Champs de texte fiables pour les formulaires de produits [#reliable-text-fields-for-product-forms]
+
+Les **Entrées** component est un contrôle de formulaire fondamental dans PyColors UI.
+
+Utilisez-le pour:
+
+- Formulaires de connexion
+- champs de recherche
+- formulaires de paramètres
+- détails de facturation
+- champs de profil
+- Filtres d'administration
+- Flux de création de produits
+- Formulaires pilotés par validation
+
+L'entrée est conçue pour être accessible par défaut, sensible au thème et suffisamment flexible pour des champs simples ou des mises en page de formulaire de production.
+
+Il soutient:
+
+- étiquettes
+- Texte d'aide
+- Erreurs de validation
+- Icônes gauche et droite
+- Variantes de taille
+- support clavier et lecteur d'écran
+
+<Callout title="Idée de base">
+  Input collecte les données des utilisateurs. Les règles de validation doivent
+  résider dans votre calque de formulaire ou de schéma, et non dans la primitive
+  visuelle.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="input-import.tsx"
+import { Input, type InputProps, type InputSize } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez Input lorsque le champ est simple et que le contexte environnant fournit déjà une étiquette.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Input placeholder="Type something…" />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-input.tsx"
+import { Input } from "@pycolors/ui";
+
+export function BasicInput() {
+  return <Input placeholder="Type something…" />;
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle des étiquettes">
+  Le texte d'espace réservé n'est pas un remplacement pour une étiquette.
+  Utilisation `label` lorsque le terrain doit être seul.
+
+</Callout>
+
+### Avec étiquette et texte d'aide [#with-label-and-helper-text]
+
+Utilisation `label` et `helperText` pour rendre le champ auto-explicatif.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <Input
+      label="Email"
+      placeholder="you@domain.com"
+      helperText="We’ll never share your email."
+    />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="input-with-label.tsx"
+import { Input } from "@pycolors/ui";
+
+export function InputWithLabel() {
+  return (
+    <Input
+      label="Email"
+      placeholder="you@domain.com"
+      helperText="We’ll never share your email."
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Quand utiliser Input [#when-to-use-input]
+
+Utilisez la saisie lorsque l'utilisateur doit fournir ou modifier de courtes données textuelles.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Formulaires",
+      description:
+        "Utilisation pour les formulaires de compte, de profil, de facturation, d'organisation et de configuration.",
+      icon: FormInput,
+    },
+    {
+      title: "Rechercher",
+      description:
+        "Utilisez avec une icône de premier plan pour la recherche, les filtres et les champs de recherche rapide.",
+      icon: SearchIcon,
+    },
+    {
+      title: "Validation",
+      description: (
+        <>
+          Use <code>error</code> to show field-level validation feedback
+          clearly.
+        </>
+      ),
+      icon: ShieldCheck,
+    },
+  ]}
+/>
+
+### Erreur de validation [#validation-error]
+
+Quand `error` est fourni :
+
+- Les styles d'erreur sont appliqués
+- `aria-invalid` est fixé
+- Le texte de l'erreur est connecté au champ via `aria-describedby` et `aria-errormessage`
+- Le texte de l'erreur a `role="alert"`, il est donc annoncé immédiatement lorsqu'il apparaît - y compris lorsque le champ est déjà concentré, pas seulement sur le prochain événement focus
+- un consommateur fourni `aria-describedby` est composé avec les propres helper/error ids du champ plutôt que remplacé, donc les deux descriptions restent disponibles pour la technologie d'assistance
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+    <Input
+      label="Email"
+      placeholder="you@domain.com"
+      error="Invalid email address"
+    />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="input-error.tsx"
+import { Input } from "@pycolors/ui";
+
+export function InputError() {
+  return (
+    <Input
+      label="Email"
+      placeholder="you@domain.com"
+      error="Invalid email address"
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Règle de validation">
+  Gardez les erreurs courtes et spécifiques. L'utilisateur doit immédiatement
+  comprendre ce qu'il faut réparer.
+
+</Callout>
+
+### Avec icônes [#with-icons]
+
+Utilisez des icônes lorsqu'elles clarifient le but du champ.
+
+### Icône gauche [#left-icon]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Input
+        placeholder="Search…"
+        leftIcon={<SearchIcon className="size-4" aria-hidden="true" />}
+      />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="input-left-icon.tsx"
+import { Input } from "@pycolors/ui";
+import { SearchIcon } from "lucide-react";
+
+export function InputLeftIcon() {
+  return (
+    <Input
+      placeholder="Search…"
+      leftIcon={<SearchIcon className="size-4" aria-hidden="true" />}
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Icône de droite [#right-icon]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Input
+        label="Projet"
+        placeholder="Project name"
+        rightIcon={<FileText className="size-4" aria-hidden="true" />}
+      />
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="input-right-icon.tsx"
+import { Input } from "@pycolors/ui";
+import { FileText } from "lucide-react";
+
+export function InputRightIcon() {
+  return (
+    <Input
+      label="Project"
+      placeholder="Project name"
+      rightIcon={<FileText className="size-4" aria-hidden="true" />}
+    />
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle d'icône">
+  Les icônes devraient soutenir le sens. Ne comptez pas sur une icône comme
+  seule étiquette.
+
+</Callout>
+
+### Tailles [#sizes]
+
+Utilisez la taille pour adapter la densité sur toutes les surfaces du produit.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="flex w-80 flex-col gap-3">
+        <Input size="sm" placeholder="Small" />
+        <Input size="md" placeholder="Medium" />
+        <Input size="lg" placeholder="Large" />
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="input-sizes.tsx"
+import { Input } from "@pycolors/ui";
+
+export function InputSizes() {
+  return (
+    <div className="flex w-80 flex-col gap-3">
+      <Input size="sm" placeholder="Small" />
+      <Input size="md" placeholder="Medium" />
+      <Input size="lg" placeholder="Large" />
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Tailles disponibles [#available-sizes]
+
+| Taille | Objet                                                                       |
+| ------ | --------------------------------------------------------------------------- |
+| `sm`   | Interfaces utilisateur denses, tableaux, filtres, barres d'outils compactes |
+| `md`   | Taille de saisie par défaut                                                 |
+| `lg`   | Onboarding, auth, formes marketing, flux proéminents                        |
+
+<Callout type="info" title="Règle de densité">
+  Utilisation `md` par défaut. Utilisation `sm` pour les surfaces de produits
+  denses et `lg` lorsque la forme a besoin d'une plus grande importance.
+
+</Callout>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Commencez par l'objectif du champ [#start-with-the-field-purpose]
+
+    Utilisez une étiquette claire lorsque le champ doit être isolé. Ne vous fiez pas au texte d'espace réservé.
+
+</Step>
+
+  <Step>
+    #### Ajouter du texte d'aide uniquement lorsqu'il est utile [#add-helper-text-only-when-useful]
+
+    Le texte d'aide devrait réduire l'incertitude, pas expliquer les champs évidents.
+
+</Step>
+
+  <Step>
+    #### Gardez la validation à proximité du champ [#keep-validation-close-to-the-field]
+
+    Les erreurs au niveau du champ doivent apparaître directement en dessous de l'entrée affectée.
+
+</Step>
+
+  <Step>
+    #### Utiliser les icônes avec parcimonie [#use-icons-sparingly]
+
+    Les icônes fonctionnent bien pour la recherche, l'URL, la devise ou les signaux spécifiques au domaine.
+
+</Step>
+
+  <Step>
+    #### Gardez les règles commerciales en dehors de la primitive [#keep-business-rules-outside-the-primitive]
+
+    Utilisez Zod, React Hook Form, la validation du serveur ou votre couche de domaine pour la logique de validation.
+
+</Step>
+
+</Steps>
+
+## Entrée vs Mot de passeInput vs Textarea [#input-vs-passwordinput-vs-textarea]
+
+| Situation                                | Utilisation                                 |
+| ---------------------------------------- | ------------------------------------------- |
+| Valeur de texte court                    | Entrées                                     |
+| Email, nom, slug, URL                    | Entrées                                     |
+| Mot de passe avec révélation             | PasswordInput                               |
+| Contenu long et libre                    | Textarea ou champ personnalisé              |
+| Champ de recherche                       | Entrée avec icône principale                |
+| Entrée numérique ou monétaire            | Entrée avec formatage spécifique au domaine |
+| Choisissez-en un parmi les options fixes | Sélectionnez, RadioGroup ou Tabs selon UX   |
+
+<Callout title="Règle de décision">
+  Utilisez Input pour le texte court. Utilisez PasswordInput pour les secrets.
+  Utilisez un champ plus grand pour le contenu long.
+
+</Callout>
+
+## API [#api]
+
+#### Props [#props]
+
+| Prop         | Type                   | Par défaut | Désignation                             |
+| ------------ | ---------------------- | ---------- | --------------------------------------- |
+| `label`      | `string`               | —          | Étiquette accessible au-dessus du champ |
+| `helperText` | `string`               | —          | Texte d'aide sous le champ              |
+| `error`      | `string`               | —          | Message d'erreur de validation          |
+| `leftIcon`   | `React.ReactNode`      | —          | Icône affichée à gauche                 |
+| `rightIcon`  | `React.ReactNode`      | —          | Icône affichée à droite                 |
+| `size`       | `"sm" \| "md" \| "lg"` | `"md"`     | Densité visuelle                        |
+| `className`  | `string`               | —          | Dépassement du vent arrière             |
+
+L'entrée étend les props d'entrée standard, à l'exclusion de la `size` attribut.
+
+```ts title="input-props.ts"
+React.InputHTMLAttributes<HTMLInputElement>;
+```
+
+### TypeScript types [#typescript-types]
+
+```ts title="input-types.ts"
+export type InputSize = "sm" | "md" | "lg";
+
+export interface InputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size"
+> {
+  label?: string;
+  helperText?: string;
+  error?: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  size?: InputSize;
+}
+```
+
+### Accessibilité [#accessibility]
+
+L'entrée est conçue pour prendre en charge la composition de formulaire accessible.
+
+Directives :
+
+- Utiliser un visible `label` quand le terrain a besoin de contexte
+- Ne vous fiez pas au texte d'espace réservé comme seule étiquette
+- `error` devrait fixer `aria-invalid`
+- helper et le texte d'erreur doivent être connectés via `aria-describedby`
+- texte d'erreur est également annoncé en direct via `role="alert"` Le moment où il apparaît
+- `disabled` réduit le champ et affiche un curseur non autorisé sur le champ lui-même, pas seulement sur l'attribut natif - l'état visuel et l'état fonctionnel correspondent toujours
+- icônes décoratives devraient utiliser `aria-hidden="true"`
+- Gardez les anneaux de focus visibles
+- Utiliser un natif approprié `type` valeurs, telles que `email`, `url`, `tel`ou `search`
+- utilisation `autoComplete` valeurs, le cas échéant
+
+<Callout title="Règle d'accessibilité">
+  Chaque entrée a besoin d'un nom accessible. Une étiquette visible est
+  généralement le choix le plus sûr.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "Étiquettes visibles pour les champs importants",
+    "Texte d'aide court",
+    "Messages de validation spécifiques",
+    "Types d'entrée sémantiques",
+    "Tailles cohérentes dans une forme",
+  ]}
+  avoid={[
+    "Champs réservés",
+    "erreurs vagues comme “Invalide”",
+    "trop d'icônes dans un champ",
+    "mélange aléatoire des tailles d'entrée",
+    "mettre des règles de validation à l'intérieur de la primitive UI",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+Les étiquettes, les espaces réservés, le texte d'aide et les erreurs ont chacun un travail différent.
+
+<Tabs items={["Étiquettes", "Placeholders", "Erreurs"]}>
+  <Tab value="Étiquettes">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Exemples d'étiquettes
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Courriel, nom du projet, entreprise, site Web, courriel de facturation, nom de l'espace de travail.
+      </div>
+    </div>
+
+</Tab>
+
+<Tab value="Placeholders">
+  <div className="rounded-2xl border border-border/60 bg-card p-6">
+    <div className="text-sm font-medium text-foreground">
+      Exemples de placeholder
+    </div>
+    <div className="mt-2 text-sm leading-6 text-muted-foreground">
+      you — domain.com, acme-inc, https://example.com, Recherche de projets...
+    </div>
+  </div>
+
+</Tab>
+
+  <Tab value="Erreurs">
+    <div className="rounded-2xl border border-border/60 bg-card p-6">
+      <div className="text-sm font-medium text-foreground">
+        Exemples d'erreur
+      </div>
+      <div className="mt-2 text-sm leading-6 text-muted-foreground">
+        Entrez une adresse e-mail valide. Le nom du projet doit comporter au moins 3 caractères.
+      </div>
+    </div>
+
+</Tab>
+
+</Tabs>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="L'entrée doit-elle valider les valeurs elle-même ?">
+    Non. L'entrée affiche l'état de validation. Votre formulaire, schéma, serveur ou couche de domaine doit définir ce qui est valide.
+  </Accordion>
+
+<Accordion title="Un texte réservé peut-il remplacer une étiquette ?">
+  Non. Le texte de l'espace réservé disparaît lors de la saisie et ne suffit pas
+  pour la structure de formulaire accessible.
+</Accordion>
+
+<Accordion title="Quand dois-je utiliser le texte d'aide?">
+  Utilisez le texte d'aide lorsqu'il réduit l'incertitude, explique la mise en
+  forme ou clarifie la façon dont la valeur sera utilisée.
+</Accordion>
+
+  <Accordion title="Les icônes peuvent-elles être interactives ?">
+    Si une icône déclenche une action, il devrait s'agir d'un bouton réel avec une étiquette accessible. Pour la visibilité du mot de passe, utilisez PasswordInput.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Formulaires avec validation",
+      href: "/docs/guides/forms-with-validation",
+      description:
+        "Utilisez la saisie avec React Hook Form, Zod et les états de validation clairs.",
+      icon: ClipboardCheck,
+    },
+    {
+      title: "PasswordInput",
+      href: "/docs/ui/password-input",
+      description:
+        "Utilisez pour les champs de mot de passe sécurisés avec le comportement de bascule de révélation.",
+      icon: KeyRound,
+    },
+    {
+      title: "Typographie",
+      href: "/docs/design-system/typography",
+      description:
+        "Étiquettes, texte d'aide et erreurs alignés avec l'échelle de type.",
+      icon: Type,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Créez des contrôles de formulaire accessibles avec des étiquettes, des descriptions et des erreurs.",
+      icon: Accessibility,
+    },
+  ]}
+/>

@@ -1,0 +1,340 @@
+---
+title: Actions asynchrones
+description: Concevez une mutation UX fiable avec des mises à jour optimistes,
+  des niveaux de rétroaction, réessayez et annulez les stratégies.
+lastUpdated: "2026-04-27"
+appliesTo: Patterns
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import { Badge, Card, CardHeader, CardTitle, CardContent } from "@pycolors/ui";
+import {
+  CheckCircle,
+  Bell,
+  FormInput,
+  LoaderCircle,
+  MessageSquareWarning,
+  RefreshCw,
+  RotateCcw,
+  ShieldAlert,
+  XCircle,
+  Zap,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+import {
+  OptimisticToggleDemo,
+  DeleteWithUndoToastDemo,
+  SaveWithToastDemo,
+} from "../previews/async-actions";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Motifs</Badge>
+  <Badge>Actions asynchrones</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Les actions asynchrones sont les endroits où la qualité du produit devient visible.
+
+Contrairement à la récupération de données, les actions **changer la réalité**:
+
+- enregistrer des données
+- supprimer du contenu
+- Déclenchement de la logique commerciale
+- Mise à jour de l'état utilisateur
+
+Ce guide définit comment gérer les mutations d'une manière qui se sent:
+
+- rapide
+- fiable
+- Compréhensible
+- prêt pour la production
+
+<Callout title="Principe clé">
+  Le chargement est une question d'attente. Les actions sont basées sur la
+  confiance.
+
+</Callout>
+
+## Ce que vous allez mettre en œuvre [#what-youll-implement]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Feedback immédiat",
+      description:
+        "Répondez instantanément aux actions des utilisateurs sans bloquer le flux de travail.",
+      icon: Zap,
+    },
+    {
+      title: "Niveau de feedback correct",
+      description:
+        "Choisissez en ligne, toastez ou bloquez les commentaires en fonction des risques de l'utilisateur.",
+      icon: MessageSquareWarning,
+    },
+    {
+      title: "Stratégies de rétablissement",
+      description:
+        "Soutenez les flux de réessai, d'annulation et de récupération résiliente pour une UX plus sûre.",
+      icon: RotateCcw,
+    },
+  ]}
+/>
+
+### Modèle mental [#mental-model]
+
+> Les actions doivent se sentir instantanées Les erreurs doivent se sentir récupérables Rien ne doit se sentir brisé
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Choisir optimiste vs pessimiste [#choose-optimistic-vs-pessimistic]
+
+Toutes les actions ne doivent pas se comporter de la même manière.
+
+#### Utilisez une interface utilisateur optimiste lorsque [#use-optimistic-ui-when]
+
+- bascules (activer / désactiver)
+- Mise en vedette / faveur
+- Mises à jour réversibles
+
+#### Utilisez l'interface pessimiste lorsque [#use-pessimistic-ui-when]
+
+- paiements
+- Des actions destructrices irréversibles
+- Modifications sensibles aux autorisations
+
+<OptimisticToggleDemo />
+
+<Callout type="info" title="Article premier">
+  Si vous pouvez annuler en toute sécurité à optimiste Si vous ne pouvez pas attendre la confirmation du serveur
+
+</Callout>
+
+</Step>
+
+<Step>
+### Appliquer le bon niveau de feedback [#apply-the-right-feedback-tier]
+
+Toutes les actions ne méritent pas le même poids UX.
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Inline',
+      title: "Rétroaction en ligne",
+      icon: FormInput,
+      description: (
+        <>
+          <p>
+            Inline feedback keeps users in flow and close to the affected element.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Button state</Badge>
+            <Badge variant="plan">Inline messages</Badge>
+            <Badge variant="plan">Subtle feedback</Badge>
+            <Badge variant="plan">Low-risk actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Toast',
+      title: "Toast feedback",
+      icon: Bell,
+      description: (
+        <>
+          <p>
+            Toasts communicate short-lived system feedback without interrupting the workflow.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Non-blocking</Badge>
+            <Badge variant="plan">Undo</Badge>
+            <Badge variant="plan">Retry</Badge>
+            <Badge variant="plan">Background actions</Badge>
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Blocking',
+      title: "Blocage du feedback",
+      icon: ShieldAlert,
+      description: (
+        <>
+          <p>
+            Blocking feedback requires explicit confirmation before continuing.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="plan">Confirmation dialog</Badge>
+            <Badge variant="plan">Destructive actions</Badge>
+            <Badge variant="plan">Irreversible changes</Badge>
+            <Badge variant="plan">High-risk flows</Badge>
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+<SaveWithToastDemo />
+
+<br />
+
+</Step>
+
+<Step>
+### Réessayer et annuler les flux [#design-retry-and-undo-flows]
+
+La récupération fait partie de l’UX.
+
+#### Réessayer [#retry]
+
+- doit être explicite
+- doit être en sécurité
+- Doit être idempotent
+
+#### Annuler [#undo]
+
+- fonctionne mieux pour les actions destructrices
+- Nécessite un véritable backend
+- devrait être immédiate
+
+<DeleteWithUndoToastDemo />
+
+<Callout title="Important">
+  Undo n'est pas une astuce UI. Il doit être soutenu par votre logique de backend.
+
+</Callout>
+
+</Step>
+
+</Steps>
+
+## Niveaux de rétroaction [#feedback-tiers]
+
+| Niveau         | Quand utiliser                             |
+| -------------- | ------------------------------------------ |
+| Inline         | attendues, les changements locaux          |
+| Toast          | Confirmation ou échec sans blocage         |
+| boîte dialogue | Des actions destructrices ou irréversibles |
+
+Ne jamais mélanger les rôles.
+
+### Messagerie d'erreur [#error-messaging]
+
+Bons messages d'erreur :
+
+- Expliquer ce qui a échoué
+- Suggérer quoi faire ensuite
+- Restez calme et clair
+
+### Exemples [#examples]
+
+<PreferAvoid
+  preferTitle="Good"
+  avoidTitle="Bad"
+  prefer={[
+    "\"Je n'ai pas pu enregistrer les changements. Vérifiez votre connexion et réessayez. »",
+    "« Le paiement a échoué. Essayez une autre carte. »",
+  ]}
+  avoid={["“Quelque chose a mal tourné”", "« Erreur inconnue »"]}
+/>
+
+<Callout type="info" title="Article premier">
+  Toujours inclure: ce qui a échoué + quoi faire ensuite
+
+</Callout>
+
+## Motifs communs [#common-patterns]
+
+### Enregistrer le flux [#save-flow]
+
+- État de chargement en ligne
+- toast succès ou erreur
+- Réessayer en cas d'échec
+
+### Supprimer le flux [#delete-flow]
+
+- boîte de dialogue de confirmation
+- toast avec undo
+- Réessayez si la restauration échoue
+
+### Basculer le flux [#toggle-flow]
+
+- changement instantané d'interface utilisateur
+- rollback sur erreur
+- toast feedback
+
+## Guide de décision [#decision-guide]
+
+<PreferAvoid
+  prefer={[
+    "retour instantané sur les filateurs",
+    "Effacer les chemins de récupération",
+    "Niveaux de feedback cohérents",
+    "Mises à jour optimistes en toute sécurité",
+  ]}
+  avoid={[
+    "blocage de l'interface utilisateur pour les actions à faible risque",
+    "défaillances silencieuses",
+    "pas de réessayer ou annuler le chemin",
+    "Incohérence des schémas de rétroaction",
+  ]}
+/>
+
+### Pourquoi cela compte [#why-this-matters]
+
+Les actions asynchrones sont l'un des plus grands signaux de confiance dans un produit.
+
+Mauvaise mutation UX conduit à:
+
+- hésitation
+- clics répétés
+- confusion
+- Perte de confiance
+
+Bonne mutation UX se sent:
+
+- rapide
+- prévisible
+- coffre-fort
+
+C'est là que les produits commencent à se sentir **prêt pour la production**.
+
+## Prochaines étapes [#next-steps]
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Formulaires avec validation",
+      href: "/docs/guides/forms-with-validation",
+      description:
+        "Appliquer des modèles asynchrones aux flux d'entrée utilisateur réels.",
+      icon: FormInput,
+    },
+    {
+      title: "états Async",
+      href: "/docs/guides/empty-loading-error",
+      description:
+        "Manipuler les états de chargement, de vide et d'erreur de manière cohérente.",
+      icon: LoaderCircle,
+    },
+  ]}
+/>

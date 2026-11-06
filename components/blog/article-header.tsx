@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import { Badge } from "@pycolors/ui";
 import { AuthorBadge } from "./author-badge";
 import { TagList } from "./tag-list";
@@ -26,6 +27,8 @@ export function ArticleHeader({
   shareUrl,
   category,
 }: ArticleHeaderProps) {
+  const tSite = useCopy();
+
   return (
     <header className="border-b border-border-subtle pb-8 sm:pb-10">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
@@ -38,15 +41,15 @@ export function ArticleHeader({
               variant="outline"
               className="border-border-subtle bg-background px-3 text-[11px]"
             >
-              {category}
+              {tSite(category)}
             </Badge>
           </Link>
         ) : null}
-        <time dateTime={date}>{formatDate(date)}</time>
+        <time dateTime={date}>{tSite(formatDate(date, tSite.locale))}</time>
         {readingTime ? (
           <>
             <span aria-hidden="true">/</span>
-            <span>{readingTime}</span>
+            <span>{tSite(readingTime)}</span>
           </>
         ) : null}
       </div>
@@ -54,17 +57,17 @@ export function ArticleHeader({
         id="article-title"
         className="mt-5 max-w-5xl text-balance font-brand text-3xl font-semibold leading-[1.15] tracking-[-0.035em] sm:text-[40px]"
       >
-        {title}
+        {tSite(title)}
       </h1>
       <p className="mt-5 max-w-[65ch] text-pretty text-[15px] leading-7 text-muted-foreground sm:mt-6 sm:text-lg sm:leading-8">
-        {description}
+        {tSite(description)}
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
         <div className="flex min-w-0 flex-wrap items-center gap-x-6 gap-y-4">
           {author ? <AuthorBadge name={author} /> : null}
           <TagList tags={tags} />
         </div>
-        <ShareArticle title={title} url={shareUrl} />
+        <ShareArticle title={tSite(title)} url={shareUrl} />
       </div>
     </header>
   );

@@ -1,0 +1,681 @@
+---
+title: Sheet
+description: Panneau coulissant construit sur Radix Dialog. Utilisez-le pour les
+  panneaux latéraux, les filtres, la navigation et les actions contextuelles.
+lastUpdated: "2026-04-28"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@pycolors/ui";
+import {
+  Filter,
+  FormInput,
+  Layers3,
+  ListFilter,
+  Menu,
+  MousePointerClick,
+  PanelLeft,
+  PanelTop,
+  PencilLine,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Sheet</Badge>
+</div>
+
+## Flux de travail latéraux sans quitter le contexte [#side-workflows-without-leaving-context]
+
+Les **Sheet** component est un panneau coulissant utilisé pour les workflows latéraux, les filtres, la navigation et l'édition contextuelle.
+
+Utilisez-le pour:
+
+- Filtres avancés
+- navigation mobile
+- panneaux d'édition latéraux
+- panneaux de détail
+- paramètres contextuels
+- flux de travail secondaires qui devraient préserver le contexte de la page
+
+La feuille est construite sur **Boîte de dialogue Radix** et stylisé avec des tokens sémantiques PyColors tels que `bg-card`, `border-border`et `text-foreground`.
+
+<Callout title="Idée de base">
+  Sheet maintient l'utilisateur dans son contexte tout en exposant un flux de
+  travail secondaire plus important.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="sheet-import.tsx"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+Utilisez Sheet pour un panneau latéral qui contient un flux de travail ciblé mais plus important qu’une boîte de dialogue.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Sheet ouverte</Button>
+        </SheetTrigger>
+
+        <SheetContent side="right" className="w-[380px] sm:w-[420px]">
+          <SheetHeader>
+            <SheetTitle>Modifier le profil</SheetTitle>
+            <SheetDescription>{"Mettez à jour les détails de votre compte. Les modifications sont enregistrées lors de la soumission."}</SheetDescription>
+          </SheetHeader>
+
+          <div className="mt-6 grid gap-3">
+            <Input label="Nom" placeholder="Patrice" />
+            <Input label="Email" placeholder="you@domain.com" />
+            <Input label="Entreprise" placeholder="PyColors" autoComplete="organization" />
+          </div>
+
+          <SheetFooter className="mt-6">
+            <SheetClose asChild>
+              <Button variant="secondary">Annuler</Button>
+            </SheetClose>
+            <Button>Enregistrer</Button>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="profile-sheet.tsx"
+"use client";
+
+import {
+  Button,
+  Input,
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@pycolors/ui";
+
+export function ProfileSheet() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Open sheet</Button>
+      </SheetTrigger>
+
+      <SheetContent side="right" className="w-[380px] sm:w-[420px]">
+        <SheetHeader>
+          <SheetTitle>Edit profile</SheetTitle>
+          <SheetDescription>
+            Update your account details. Changes are saved on submit.
+          </SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6 grid gap-3">
+          <Input label="Name" placeholder="Patrice" />
+          <Input label="Email" placeholder="you@domain.com" />
+          <Input
+            label="Company"
+            placeholder="PyColors"
+            autoComplete="organization"
+          />
+        </div>
+
+        <SheetFooter className="mt-6">
+          <SheetClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </SheetClose>
+          <Button>Save</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle de déclenchement">
+  Préférez `SheetTrigger asChild` Ainsi, le déclencheur conserve la sémantique
+  de l'élément que vous passez, comme un bouton réel.
+
+</Callout>
+
+## Quand utiliser Sheet [#when-to-use-sheet]
+
+Utilisez Sheet lorsque l'utilisateur a besoin de plus d'espace qu'un menu, mais doit conserver le contexte de la page.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Filtres",
+      description:
+        "Utilisez pour les filtres avancés sans surcharger la barre d'outils.",
+      icon: ListFilter,
+    },
+    {
+      title: "Édition latérale",
+      description:
+        "Utiliser pour modifier les enregistrements tout en gardant la page parent visible.",
+      icon: PencilLine,
+    },
+    {
+      title: "Navigation mobile",
+      description:
+        "Utilisez un panneau latéral de gauche pour les menus mobiles et la navigation dans les applications.",
+      icon: Menu,
+    },
+  ]}
+/>
+
+### Côtés [#sides]
+
+Les feuilles prennent en charge quatre options de placement à travers le `side` prop.
+
+Utilisez le placement pour correspondre au modèle mental du flux de travail.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <div className="flex flex-wrap gap-2">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Droite</Button>
+          </SheetTrigger>
+          <SheetContent side="right">
+            <SheetHeader>
+              <SheetTitle>Sheet de droite</SheetTitle>
+              <SheetDescription>{"Placement par défaut pour l'édition et les détails."}</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Gauche</Button>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <SheetHeader>
+              <SheetTitle>Sheet gauche</SheetTitle>
+              <SheetDescription>{"Recommandé pour la navigation."}</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">En haut</Button>
+          </SheetTrigger>
+          <SheetContent side="top">
+            <SheetHeader>
+              <SheetTitle>Sheet supérieure</SheetTitle>
+              <SheetDescription>{"Utile pour les contrôles globaux compacts."}</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Bas</Button>
+          </SheetTrigger>
+          <SheetContent side="bottom">
+            <SheetHeader>
+              <SheetTitle>Sheet inférieure</SheetTitle>
+              <SheetDescription>{"Utile pour les actions mobile-first."}</SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="sheet-sides.tsx"
+import {
+  Button,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@pycolors/ui";
+
+export function SheetSides() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Right</Button>
+        </SheetTrigger>
+        <SheetContent side="right">
+          <SheetHeader>
+            <SheetTitle>Right sheet</SheetTitle>
+            <SheetDescription>
+              Default placement for editing and details.
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Left</Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <SheetHeader>
+            <SheetTitle>Left sheet</SheetTitle>
+            <SheetDescription>Recommended for navigation.</SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Orientation en matière de placement [#placement-guidance]
+
+| Côté     | Idéal pour                                               |
+| -------- | -------------------------------------------------------- |
+| `right`  | Montage, détails, panneaux contextuels                   |
+| `left`   | Navigation, menu de l'application, barre latérale mobile |
+| `top`    | Filtres globaux, annonces, commandes compactes           |
+| `bottom` | Action mobile-first, contrôles rapides                   |
+
+<Callout title="Règle de placement">
+  Utilisation `right` pour l'édition, `left` pour la navigation, et `bottom`
+  pour les panneaux d'action mobiles.
+
+</Callout>
+
+### Comportement proche [#close-behavior]
+
+`SheetContent` Comprend un bouton de fermeture. Utilisation `SheetClose` pour des actions de footer explicites.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Preview>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline">Ouvrir</Button>
+        </SheetTrigger>
+
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Confirmer</SheetTitle>
+            <SheetDescription>{"Fermez avec le bouton, le contrôle de fermeture ou Escape."}</SheetDescription>
+          </SheetHeader>
+
+          <div className="mt-6 flex gap-2">
+            <SheetClose asChild>
+              <Button variant="secondary">Annuler</Button>
+            </SheetClose>
+            <SheetClose asChild>
+              <Button>Fait</Button>
+            </SheetClose>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </Preview>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="sheet-close-actions.tsx"
+import {
+  Button,
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@pycolors/ui";
+
+export function SheetCloseActions() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Open</Button>
+      </SheetTrigger>
+
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Confirm</SheetTitle>
+          <SheetDescription>
+            Close with the button, the close control, or Escape.
+          </SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6 flex gap-2">
+          <SheetClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </SheetClose>
+          <SheetClose asChild>
+            <Button>Done</Button>
+          </SheetClose>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Choisissez le bon côté [#choose-the-right-side]
+
+    Choisissez le placement en fonction du flux de travail : à droite pour les détails, à gauche pour la navigation, en bas pour les actions mobiles.
+
+</Step>
+
+  <Step>
+    #### Gardez le contexte de la page visible [#keep-the-page-context-visible]
+
+    Une feuille devrait prolonger la page, pas la remplacer. Évitez de l'utiliser pour les flux qui ont besoin d'une page complète.
+
+</Step>
+
+  <Step>
+    #### Fournir le titre et la description [#provide-title-and-description]
+
+    Utilisation `SheetTitle` et `SheetDescription` afin que les utilisateurs comprennent le but du panel.
+
+</Step>
+
+  <Step>
+    #### Utilisez une action principale [#use-one-primary-action]
+
+    La plupart des feuilles devraient avoir une action principale et une action secondaire de fermeture ou d'annulation.
+
+</Step>
+
+  <Step>
+    #### Manipuler le défilement intentionnellement [#handle-scroll-intentionally]
+
+    Évitez les conteneurs de défilement imbriqués. Préférez une région à défilement clair à l'intérieur de le panneau latéral.
+
+</Step>
+
+</Steps>
+
+## Menu Sheet vs Dialog vs Dropdown [#sheet-vs-dialog-vs-dropdown-menu]
+
+| Situation                                   | Utilisation    |
+| ------------------------------------------- | -------------- |
+| Filtres avancés                             | Sheet          |
+| Panneau d'édition latéral                   | Sheet          |
+| Navigation mobile                           | Sheet          |
+| Enregistrer les détails du panneau          | Sheet          |
+| Courte confirmation destructive             | boîte dialogue |
+| Petite liste d'actions contextuelles        | menu déroulant |
+| Flux de travail complet en plusieurs étapes | Page           |
+
+<Callout type="info" title="Règle de décision">
+  Sheet est pour les flux de travail latéraux. Le dialogue est pour des
+  décisions ciblées. Le menu déroulant est pour les choix compacts.
+
+</Callout>
+
+## API [#api]
+
+#### Composante [#component]
+
+| Composante         | Désignation                                               |
+| ------------------ | --------------------------------------------------------- |
+| `Sheet`            | Récipient racine                                          |
+| `SheetTrigger`     | Élément déclencheur, généralement avec `asChild`          |
+| `SheetClose`       | Fermez le contrôle, généralement en enveloppant un bouton |
+| `SheetContent`     | Surface du panneau coulissant                             |
+| `SheetHeader`      | Titre et description stack helper                         |
+| `SheetFooter`      | Action Row Helper                                         |
+| `SheetTitle`       | Titre de feuille accessible                               |
+| `SheetDescription` | Texte d ' appui                                           |
+
+#### SheetContent props [#sheetcontent-props]
+
+| Prop        | Type                            | Par défaut | Désignation                |
+| ----------- | ------------------------------- | ---------- | -------------------------- |
+| `side`      | `SheetSide`                     | `"right"`  | Placement du panel         |
+| `className` | `string`                        | —          | Autres classes Tailwind    |
+| `...props`  | `DialogPrimitive.Content` props | —          | Radix Dialog Contenu props |
+
+`Sheet`, `SheetTrigger`et `SheetClose` sont des réexportations de primitives Radix Dialog et acceptent leurs props natifs.
+
+### TypeScript types [#typescript-types]
+
+```ts title="sheet-types.ts"
+export type SheetSide = "top" | "bottom" | "left" | "right";
+
+export interface SheetContentProps extends React.ComponentPropsWithoutRef<
+  typeof DialogPrimitive.Content
+> {
+  side?: SheetSide;
+}
+```
+
+### Accessibilité [#accessibility]
+
+Sheet est construit sur les primitives Radix Dialog.
+
+Cela signifie :
+
+- La focus est piégée alors qu’elle est ouverte
+- se concentrer revient au déclencheur à la fermeture
+- Escape ferme le panneau latéral par défaut
+- les lecteurs d'écran reçoivent la sémantique de dialogue
+- `SheetTitle` Fournir le nom accessible
+
+Directives :
+
+- utilisation `SheetTrigger asChild` avec un déclencheur sémantique
+- Inclure une claire `SheetTitle`
+- Inclure un utile `SheetDescription`
+- éviter d'utiliser Sheet pour les confirmations destructives
+- éviter les feuilles imbriquées
+- éviter les longs flux en plusieurs étapes à l'intérieur d'un panneau latéral
+
+<Callout title="Règle d'accessibilité">
+  Une feuille se comporte toujours comme un dialogue. Il a besoin d'un
+  étiquetage clair, d'une gestion ciblée et d'une tâche limitée.
+
+</Callout>
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "bonnes feuilles pour l'édition et les détails",
+    "feuilles de gauche pour la navigation",
+    "Titre et description clairs",
+    "une action de pied de page primaire",
+    "une région intentionnelle de défilement",
+  ]}
+  avoid={[
+    "Des confirmations destructrices qui devraient être des dialogues",
+    "flux de travail pleine page pressés dans un panneau",
+    "feuilles imbriquées",
+    "de multiples actions principales concurrentes",
+    "défilement peu clair avec des conteneurs imbriqués",
+  ]}
+/>
+
+### Directives de copie du produit [#product-copy-guidelines]
+
+La copie de feuille devrait indiquer aux utilisateurs ce que le panneau fait et ce qui se passe ensuite.
+
+<DocsConceptTabs
+  items={[
+    {
+      value: 'Filters',
+      title: "Filtrer les projets",
+      icon: ListFilter,
+      description: (
+        <>
+          <p>
+            Filtering should reduce noise without overwhelming the interface.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Narrow results by status, owner, date, and plan.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Edit',
+      title: "Modifier le profil",
+      icon: PencilLine,
+      description: (
+        <>
+          <p>
+            Side editing keeps the parent surface visible while updating focused data.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Update account details. Changes are saved when you submit.
+          </div>
+        </>
+      ),
+    },
+    {
+      value: 'Navigation',
+      title: "Navigation",
+      icon: PanelLeft,
+      description: (
+        <>
+          <p>
+            Navigation should preserve orientation and reduce context switching.
+          </p>
+
+          <div className="mt-3 arrondi-[5px] border-border-subtil bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
+            Move between product areas without losing your current context.
+          </div>
+        </>
+      ),
+    },
+
+]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Sheet est-il différent de Dialog ?">
+    Sheet est implémenté avec les primitives Dialog, mais le modèle d'interaction est différent. La boîte de dialogue est pour les décisions modales ciblées. Sheet est destiné aux workflows latéraux qui préservent le contexte de la page.
+  </Accordion>
+
+<Accordion title="Les filtres doivent-ils utiliser le panneau latéral ou le menu déroulant?">
+  Utilisez le menu déroulant pour quelques options compactes. Utilisez Sheet
+  lorsque les filtres sont nombreux, groupés ou ont besoin de plus
+  d'explications.
+</Accordion>
+
+<Accordion title="Une feuille peut-elle contenir un formulaire ?">
+  Oui. Les feuilles fonctionnent bien pour l'édition contextuelle et les
+  formulaires de filtre. Pour les formulaires longs ou à plusieurs étapes,
+  utilisez une page dédiée.
+</Accordion>
+
+  <Accordion title="Les actions destructrices devraient-elles utiliser Sheet?">
+    Habituellement non. Utilisez la boîte de dialogue pour les confirmations destructrices, car la décision doit être ciblée et explicite.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description:
+        "Utilisez le bouton comme déclencheur et action de pied de page à l'intérieur des feuilles.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Entrées",
+      href: "/docs/ui/input",
+      description:
+        "Feuilles internes communes pour éditer les formulaires et les filtres.",
+      icon: FormInput,
+    },
+    {
+      title: "boîte dialogue",
+      href: "/docs/ui/dialog",
+      description:
+        "Utilisez la boîte de dialogue pour des confirmations ciblées et des tâches modales courtes.",
+      icon: PanelTop,
+    },
+    {
+      title: "Motif de recouvrements",
+      href: "/docs/patterns/overlays",
+      description:
+        "Choisissez entre Sheet, Boîte de dialogue et Menu déroulant pour les flux de produits.",
+      icon: Layers3,
+    },
+  ]}
+/>

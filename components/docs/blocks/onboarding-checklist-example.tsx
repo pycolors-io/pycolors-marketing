@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import { useId, useState } from "react";
 import { Button } from "@pycolors/ui";
 import { OnboardingChecklist } from "@/content/blocks/account/onboarding-checklist";
@@ -25,22 +26,36 @@ const steps = [
 export function OnboardingChecklistExample({
   headingLevel = 3,
 }: Readonly<{ headingLevel?: 2 | 3 | 4 | 5 | 6 }>) {
+  const tSite = useCopy();
+
   const id = useId();
   const [completed, setCompleted] = useState<string[]>(["workspace"]);
 
   return (
     <div className="mx-auto max-w-3xl space-y-3">
       <OnboardingChecklist
+        completedLabel={tSite("Completed")}
+        incompleteLabel={tSite("To do")}
+        emptyMessage={tSite("No setup steps available.")}
         id={`setup-${id}`}
-        heading="A great workspace starts here"
+        heading={tSite("A great workspace starts here")}
         headingLevel={headingLevel}
-        description="Track the first steps that help your team get started."
+        description={tSite(
+          "Track the first steps that help your team get started.",
+        )}
         steps={steps.map((step) => ({
           ...step,
+          title: tSite(step.title),
+          description: tSite(step.description),
           complete: completed.includes(step.id),
           action: (
             <Button
-              aria-label={`${completed.includes(step.id) ? "Undo" : "Complete"} ${step.title.toLowerCase()}`}
+              aria-label={tSite("{value0} {value1}", {
+                value0: tSite(
+                  completed.includes(step.id) ? "Undo" : "Complete",
+                ),
+                value1: tSite(step.title).toLocaleLowerCase(tSite.locale),
+              })}
               className="h-auto min-h-10 text-xs"
               variant="outline"
               type="button"
@@ -52,14 +67,18 @@ export function OnboardingChecklistExample({
                 )
               }
             >
-              {completed.includes(step.id) ? "Undo" : "Mark as done"}
+              {tSite(completed.includes(step.id) ? "Undo" : "Mark as done")}
             </Button>
           ),
         }))}
       />
       <p className="text-xs leading-6 text-muted-foreground" role="status">
-        Demo only · {completed.length} of {steps.length} steps completed
-        locally. No workspace, project or invitation is created.
+        {tSite("Demo only · ")}
+        {tSite(completed.length)} {tSite(" of ")}
+        {tSite(steps.length)}{" "}
+        {tSite(
+          " steps completed locally. No workspace, project or invitation is created.",
+        )}
       </p>
       <Button
         variant="ghost"
@@ -67,7 +86,7 @@ export function OnboardingChecklistExample({
         type="button"
         onClick={() => setCompleted(["workspace"])}
       >
-        Reset checklist
+        {tSite("Reset checklist")}
       </Button>
     </div>
   );

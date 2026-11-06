@@ -1,3 +1,4 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 import type { ReactNode } from "react";
 import { Card, cn } from "@pycolors/ui";
 import type { MarketingHeadingLevel } from "./tones";
@@ -29,6 +30,8 @@ export function MarketingDetailCard({
   headingLevel = 3,
   className,
 }: MarketingDetailCardProps) {
+  const tSite = useCopy();
+
   const Heading = `h${headingLevel}` as const;
 
   return (
@@ -48,23 +51,23 @@ export function MarketingDetailCard({
                 aria-hidden="true"
                 className="grid size-9 shrink-0 place-items-center rounded-[5px] border border-border-subtle bg-background text-foreground [&_svg]:size-4"
               >
-                {icon}
+                {tSite(icon)}
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
-                {eyebrow}
+                {tSite(eyebrow)}
               </span>
             </div>
             {meta ? (
               <span className="text-[11px] tabular-nums text-muted-foreground">
-                {meta}
+                {tSite(meta)}
               </span>
             ) : null}
           </div>
           <Heading className="text-balance font-brand text-lg font-semibold leading-snug tracking-normal">
-            {title}
+            {tSite(title)}
           </Heading>
           <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {description}
+            {tSite(description)}
           </p>
         </div>
 
@@ -75,12 +78,12 @@ export function MarketingDetailCard({
               styles.preview,
             )}
           >
-            {visual}
+            {tSite(visual)}
           </div>
         ) : null}
 
         {children ? (
-          <div className="px-5 pb-6 sm:px-7 sm:pb-7">{children}</div>
+          <div className="px-5 pb-6 sm:px-7 sm:pb-7">{tSite(children)}</div>
         ) : null}
 
         <div
@@ -89,7 +92,7 @@ export function MarketingDetailCard({
             styles.footer,
           )}
         >
-          {footer}
+          {tSite(footer)}
         </div>
       </article>
     </Card>

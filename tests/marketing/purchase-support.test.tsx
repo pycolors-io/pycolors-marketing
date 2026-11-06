@@ -8,9 +8,9 @@ import {
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
-import PurchaseSupportPage from "../../app/(site)/orders/support/page";
-import ClaimOrderPage from "../../app/(site)/orders/claim/page";
-import CheckoutCancelPage from "../../app/(site)/checkout/cancel/page";
+import PurchaseSupportPage from "../../app/[locale]/(site)/orders/support/page";
+import ClaimOrderPage from "../../app/[locale]/(site)/orders/claim/page";
+import CheckoutCancelPage from "../../app/[locale]/(site)/checkout/cancel/page";
 import { SupportEmail } from "../../components/marketing/support-email";
 
 vi.mock("@/components/analytics/money-path-event", () => ({

@@ -16,13 +16,19 @@ import {
 } from "vitest";
 import { axe } from "vitest-axe";
 
-import StartersPage, { metadata } from "../../app/(site)/starters/page";
+import StartersPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/starters/page";
 import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
 } from "@/lib/products/public-catalog";
 import { navigateToCheckout } from "@/lib/api/checkout-navigation";
 import { trackMoneyPathEvent } from "@/lib/analytics";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.hoisted(() =>
   vi.stubEnv("NEXT_PUBLIC_API_BASE_URL", "https://api.example.com"),

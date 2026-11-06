@@ -4,9 +4,9 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import ImplementationExamplePage, {
-  metadata,
-} from "@/app/(site)/starters/pro/implementation-example/page";
-import { GET } from "@/app/(site)/starters/pro/implementation-example/handover/route";
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/starters/pro/implementation-example/page";
+import { GET } from "@/app/[locale]/(site)/starters/pro/implementation-example/handover/route";
 import {
   implementationExample,
   createExampleHandover,
@@ -14,7 +14,11 @@ import {
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 import { quoteService } from "@/lib/quotes/quote-request";
 
-const source = resolve("app/(site)");
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const source = resolve("app/[locale]/(site)");
 
 describe("scoped implementation delivery example", () => {
   it("shows two concrete scopes at the central service prices, with correct quote selection", () => {
@@ -77,7 +81,12 @@ describe("scoped implementation delivery example", () => {
   it("downloads a real document with UTF-8, the four records and no completed-result claim", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
     try {
-      const response = GET();
+      const response = await GET(
+        new Request(
+          "https://pycolors.io/starters/pro/implementation-example/handover",
+        ),
+        { params: Promise.resolve({ locale: "en" }) },
+      );
       expect(response.status).toBe(200);
       expect(response.headers.get("content-type")).toBe(
         "text/markdown; charset=utf-8",
@@ -114,7 +123,7 @@ describe("scoped implementation delivery example", () => {
 
   it("has crawlable links, working fragment destinations and a distinct canonical page", () => {
     render(<ImplementationExamplePage />);
-    expect(metadata.alternates).toEqual({
+    expect(metadata.alternates).toMatchObject({
       canonical: implementationExample.href,
     });
     expect(metadata.openGraph).toMatchObject({

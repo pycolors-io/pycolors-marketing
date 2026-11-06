@@ -1,0 +1,508 @@
+---
+title: Badge
+description: Petit composant de statut et de métadonnées utilisé pour étiqueter,
+  catégoriser ou mettre en surbrillance des informations dans l'interface
+  utilisateur de PyColors.
+lastUpdated: "2026-05-16"
+appliesTo: UI
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  Accessibility,
+  ArrowRight,
+  CheckCircle,
+  Info,
+  MousePointerClick,
+  Palette,
+  Layers3,
+  Tags,
+  Type,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">UI</Badge>
+  <Badge>Badge</Badge>
+</div>
+
+## Métadonnées compactes pour les interfaces produits [#compact-metadata-for-product-interfaces]
+
+Les **Badge** component est une primitive compacte et non interactive utilisée pour afficher de courtes informations.
+
+Utilisez-le pour:
+
+- état
+- catégorie
+- nombre
+- étiquette du plan
+- métadonnées
+- état du produit
+- Disponibilité des fonctionnalités
+
+Les badges sont légers, sémantiques et alignés avec les tokens du système de conception PyColors.
+
+Ils sont conçus pour **métadonnées**Pas des actions.
+
+<Callout title="Idée de base">
+  Un badge communique l'état ou le contexte. Il ne doit pas remplacer un bouton.
+
+</Callout>
+
+### Importation [#import]
+
+```tsx title="badge-import.tsx"
+import { Badge } from "@pycolors/ui";
+```
+
+### Utilisation de base [#basic-usage]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Badge>Par défaut</Badge>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="basic-badge.tsx"
+import { Badge } from "@pycolors/ui";
+
+export function BasicBadge() {
+  return <Badge>Default</Badge>;
+}
+```
+
+</Tab>
+
+</Tabs>
+
+Les badges héritent de leurs couleurs à partir de tokens sémantiques et s'adaptent au mode clair et sombre.
+
+## Quand utiliser le badge [#when-to-use-badge]
+
+Utilisez Badge lorsque l'étiquette aide l'utilisateur à comprendre le contexte sans ajouter de hiérarchie visuelle lourde.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Métadonnées",
+      description:
+        "Utilisez pour les étiquettes telles que la catégorie, le plan, le type, le rôle ou la version.",
+      icon: Tags,
+    },
+    {
+      title: "Statut",
+      description:
+        "Utilisez pour les étiquettes de petit état telles que actives, payées, draft, expédiées ou synchronisées.",
+      icon: CheckCircle,
+      tone: "success",
+    },
+    {
+      title: "Regroupement",
+      description:
+        "Utilisez pour classer le contenu sans transformer l'étiquette en élément de navigation ou d'action.",
+      icon: Layers3,
+    },
+  ]}
+/>
+
+### Variantes [#variants]
+
+Utilisez des variantes pour transmettre le sens ou le statut.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <div className="flex flex-wrap gap-2">
+      <Badge>Par défaut</Badge>
+      <Badge variant="secondary">Secondaire</Badge>
+      <Badge variant="muted">Muted</Badge>
+      <Badge variant="outline">Contour</Badge>
+      <Badge variant="success">Succès</Badge>
+      <Badge variant="warning">Avertissement</Badge>
+      <Badge variant="destructive">Destructif</Badge>
+      <Badge variant="info">Information</Badge>
+    </div>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="badge-variants.tsx"
+import { Badge } from "@pycolors/ui";
+
+export function BadgeVariants() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Badge>Default</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="muted">Muted</Badge>
+      <Badge variant="outline">Outline</Badge>
+      <Badge variant="success">Success</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="destructive">Destructive</Badge>
+      <Badge variant="info">Info</Badge>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Variantes disponibles [#available-variants]
+
+| Variante      | Objet                                                                  |
+| ------------- | ---------------------------------------------------------------------- |
+| `default`     | Étiquette primaire ou neutre                                           |
+| `secondary`   | Informations complémentaires                                           |
+| `muted`       | Métadonnées de faible importance                                       |
+| `outline`     | Étiquette neutre bordée                                                |
+| `success`     | État positif ou terminé                                                |
+| `warning`     | Précaution ou attention requise                                        |
+| `destructive` | Erreur ou état critique                                                |
+| `info`        | Statut informationnel - sémantique neutre, utilise des tokens de carte |
+
+<Callout type="info" title="Règle de conception">
+  Préférez `muted` et `outline` pour les métadonnées. Réserve des variantes
+  d'état sémantique pour les états de produit réels.
+
+</Callout>
+
+### Tailles [#sizes]
+
+Utilisez la taille pour contrôler la densité et la hiérarchie.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <div className="flex items-center gap-2">
+      <Badge size="sm">Petit</Badge>
+      <Badge size="md">Par défaut</Badge>
+      <Badge size="lg">Grande</Badge>
+    </div>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="badge-sizes.tsx"
+import { Badge } from "@pycolors/ui";
+
+export function BadgeSizes() {
+  return (
+    <div className="flex items-center gap-2">
+      <Badge size="sm">Small</Badge>
+      <Badge size="md">Default</Badge>
+      <Badge size="lg">Large</Badge>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Tailles disponibles [#available-sizes]
+
+| Taille | Objet                                          |
+| ------ | ---------------------------------------------- |
+| `sm`   | Métadonnées denses, tableaux, listes compactes |
+| `md`   | Taille du badge par défaut                     |
+| `lg`   | Métadonnées d'étiquettes ou remarquables       |
+
+<Callout title="Règle de densité">
+  Utilisation `sm` dans les tableaux et les vues de produits denses. Utilisation
+  `md` pour la plupart des surfaces. Utilisation `lg` Avec parcimonie.
+
+</Callout>
+
+### Avec icône de gauche [#with-left-icon]
+
+Les badges peuvent inclure une icône de gauche lorsque l'icône renforce le statut, le type ou la catégorie.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Badge><CheckCircle className="size-3" aria-hidden="true" />Actif</Badge>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="badge-with-left-icon.tsx"
+import { Badge } from "@pycolors/ui";
+import { CheckCircle } from "lucide-react";
+
+export function BadgeWithLeftIcon() {
+  return (
+    <Badge variant="success">
+      <CheckCircle className="size-3" aria-hidden="true" />
+      Active
+    </Badge>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout type="info" title="Règle d'icône">
+  Les icônes devraient renforcer le sens. Le texte doit encore expliquer l'état.
+
+</Callout>
+
+### Avec icône de droite [#with-right-icon]
+
+Utilisez une icône de droite lorsque le badge pointe vers une surface connexe, un contexte externe ou une étape suivante légère.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Badge variant="outline">Documentation<ArrowRight className="size-3" aria-hidden="true" /></Badge>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="badge-with-right-icon.tsx"
+import { Badge } from "@pycolors/ui";
+import { ArrowRight } from "lucide-react";
+
+export function BadgeWithRightIcon() {
+  return (
+    <Badge variant="outline">
+      Docs
+      <ArrowRight className="size-3" aria-hidden="true" />
+    </Badge>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Règle de placement">
+  Utilisez les icônes de gauche pour l'état ou l'identité. Utilisez les bonnes
+  icônes pour la direction, la continuation ou le contexte lié.
+
+</Callout>
+
+### Comme enfant [#as-child]
+
+Utilisation `asChild` quand le badge doit être rendu comme un autre élément sémantique.
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <Badge asChild>
+      <a href="/docs">Documentation</a>
+    </Badge>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="badge-as-child.tsx"
+import { Badge } from "@pycolors/ui";
+
+export function BadgeAsChild() {
+  return (
+    <Badge asChild>
+      <a href="/docs">Docs</a>
+    </Badge>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+<Callout title="Règle d'interaction">
+  Utilisez uniquement des badges interactifs lorsque l'élément sous-jacent est
+  sémantique, comme une ancre ou un bouton. Si cela déclenche une action
+  importante, utilisez le bouton à la place.
+
+</Callout>
+
+### Utilisations [#usage-patterns]
+
+<Steps>
+  <Step>
+    #### Choisissez le message [#choose-the-message]
+
+    Décidez de ce que le badge communique : statut, catégorie, rôle, version, nombre ou plan.
+
+</Step>
+
+  <Step>
+    #### Choisissez l'accent utile le plus bas [#pick-the-lowest-useful-emphasis]
+
+    Débuter avec `muted` ou `outline`. Déplacez-vous vers des variantes sémantiques uniquement lorsque l'état a besoin d'un sens clair.
+
+</Step>
+
+  <Step>
+    #### Gardez l'étiquette courte [#keep-the-label-short]
+
+    Les badges fonctionnent mieux avec des étiquettes courtes : un ou deux mots.
+
+</Step>
+
+  <Step>
+    #### Évitez de transformer les métadonnées en actions [#avoid-turning-metadata-into-actions]
+
+    Un badge ne doit pas devenir une interaction principale. Utilisez le bouton pour les actions.
+
+</Step>
+
+</Steps>
+
+## Badge vs Bouton vs Alerte [#badge-vs-button-vs-alert]
+
+| Situation                                                   | Utilisation |
+| ----------------------------------------------------------- | ----------- |
+| Afficher un petit statut                                    | Badge       |
+| Afficher une étiquette de catégorie ou de plan              | Badge       |
+| Déclencher une action                                       | Bouton      |
+| Afficher des commentaires ou des avertissements persistants | Alerte      |
+| Confirmer l'action temporaire en arrière-plan               | Toast       |
+
+<Callout title="Règle de décision">
+  Le badge communique le contexte. Le bouton déclenche l'intention. Alert
+  explique les commentaires importants.
+
+</Callout>
+
+## API [#api]
+
+| Prop        | Type           | Par défaut  | Désignation             |
+| ----------- | -------------- | ----------- | ----------------------- |
+| `variant`   | `BadgeVariant` | `"default"` | Style visuel            |
+| `size`      | `BadgeSize`    | `"md"`      | Taille du badge         |
+| `asChild`   | `boolean`      | `false`     | Rendu via Radix Slot    |
+| `className` | `string`       | —           | Autres classes Tailwind |
+
+Le Badge étend la portée HTML standard des props :
+
+```ts title="badge-props.ts"
+React.HTMLAttributes<HTMLSpanElement>;
+```
+
+### TypeScript types [#typescript-types]
+
+```ts title="badge-types.ts"
+export type BadgeVariant =
+  | "default"
+  | "secondary"
+  | "muted"
+  | "outline"
+  | "success"
+  | "warning"
+  | "destructive";
+
+export type BadgeSize = "sm" | "md" | "lg";
+```
+
+### Accessibilité [#accessibility]
+
+- Les badges ne sont pas interactifs par défaut.
+- N’utilisez pas un badge comme bouton.
+- Ne vous fiez pas uniquement à la couleur pour transmettre du sens.
+- Les icônes doivent être complémentaires, pas le seul indicateur.
+- Utilisation `aria-hidden="true"` pour les icônes décoratives.
+- Lorsqu’il est interactif, utilisez `asChild` avec un élément sémantique tel que `a` ou `button`.
+- `success` et `warning` Utilisation dédiée `--success-foreground` / `--warning-foreground` tokens de conception (voir `@pycolors/tokens`) réglé pour rencontrer le contraste WCAG AA contre leurs arrière-plans respectifs - ne substituez pas une couleur de texte différente sur ces deux variantes.
+- `info` utilise des tokens de cartes sémantiques existants; le contraste dépend du thème et doit satisfaire aux mêmes exigences d'accessibilité que les autres variantes de Badge.
+
+## Préférez/évitez [#prefer--avoid]
+
+<PreferAvoid
+  prefer={[
+    "étiquettes courtes",
+    "Variantes sémantiques pour le statut réel",
+    "`muted` ou `outline` pour les métadonnées",
+    "Icônes comme contexte de support uniquement",
+    "utilisation cohérente des badges sur les tables et les cartes",
+  ]}
+  avoid={[
+    "Utiliser les badges comme actions principales",
+    "texte de badge en forme de phrase longue",
+    "trop de badges dans un seul panneau",
+    "couleur seule signification",
+    "Inventer localement des couleurs de badges uniques",
+  ]}
+/>
+
+## Questions courantes [#common-questions]
+
+<Accordions type="single">
+  <Accordion title="Un badge peut-il être cliquable ?">
+    Oui, mais seulement lorsqu'il est rendu avec un élément sémantique `asChild`. S'il effectue une action principale, utilisez le bouton à la place.
+  </Accordion>
+
+<Accordion title="Est-ce que chaque statut devrait utiliser un badge de couleur?">
+  Non. Utilisez la couleur sémantique uniquement lorsque l'état a besoin d'être
+  accentué. Pour les métadonnées de faible priorité, préférez `muted` ou
+  `outline`.
+</Accordion>
+
+<Accordion title="Les badges peuvent-ils inclure des icônes ?">
+  Oui. Les icônes peuvent renforcer le sens, mais le texte doit toujours
+  communiquer l'état.
+</Accordion>
+
+<Accordion title="Les icônes doivent-elles apparaître à gauche ou à droite ?">
+  Utilisez les icônes de gauche pour l'état, l'identité ou la catégorie.
+  Utilisez les bonnes icônes pour la direction, la continuation ou le contexte
+  lié.
+</Accordion>
+
+  <Accordion title="Combien de badges une carte doit-elle avoir ?">
+    Utilisez le moins possible. Les badges devraient clarifier l'interface, pas la décorer.
+  </Accordion>
+</Accordions>
+
+## Related [#related]
+
+<DocsLinks
+  variant="list"
+  tone="platform"
+  items={[
+    {
+      title: "Couleurs",
+      href: "/docs/design-system/colors",
+      description: "Rôles de couleurs sémantiques utilisés par les badges.",
+      icon: Palette,
+    },
+    {
+      title: "Typographie",
+      href: "/docs/design-system/typography",
+      description:
+        "Échelle de texte et hiérarchie pour les étiquettes d'interface utilisateur compactes.",
+      icon: Type,
+    },
+    {
+      title: "Bouton",
+      href: "/docs/ui/button",
+      description: "Utilisez des boutons pour les actions, pas des badges.",
+      icon: MousePointerClick,
+    },
+    {
+      title: "Accessibilité",
+      href: "/docs/ui/accessibility",
+      description:
+        "Créez des étiquettes et des indicateurs de statut clairs et accessibles.",
+      icon: Accessibility,
+    },
+  ]}
+/>

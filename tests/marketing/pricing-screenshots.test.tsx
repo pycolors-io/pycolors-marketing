@@ -2,8 +2,14 @@ import * as React from "react";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import PricingPage, { metadata } from "../../app/(site)/pricing/page";
+import PricingPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/pricing/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("@/lib/api/client", () => ({
   createStarterProCheckout: vi.fn(),

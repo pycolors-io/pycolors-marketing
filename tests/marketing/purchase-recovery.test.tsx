@@ -3,10 +3,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
 import RecoverOrderPage, {
-  metadata,
-} from "../../app/(site)/orders/recover/page";
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/orders/recover/page";
 import { recoverCommerceAccess } from "@/lib/api/client";
 import { trackMoneyPathEvent } from "@/lib/analytics";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("@/lib/api/client", () => ({
   recoverCommerceAccess: vi.fn(),

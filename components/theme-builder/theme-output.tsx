@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useCopy } from "@/lib/i18n/use-copy";
+import { Link } from "@/lib/i18n/navigation";
 import {
   APPEARANCE_DEFAULTS,
   APPEARANCE_RADII,
@@ -92,6 +93,8 @@ function CodePanel({
   active,
   colorScheme,
 }: CodePanelProps) {
+  const tSite = useCopy();
+
   const isDark = colorScheme === "dark";
   const surfaceClassName = isDark
     ? "border-white/15 bg-black text-white"
@@ -108,9 +111,9 @@ function CodePanel({
         className={`flex flex-col gap-3 border-b px-4 py-3 sm:flex-row sm:items-center sm:justify-between ${headerClassName}`}
       >
         <div className="space-y-0.5">
-          <p className="text-sm font-medium">{title}</p>
+          <p className="text-sm font-medium">{tSite(title)}</p>
           <p className={`text-xs ${mutedTextClassName}`}>
-            Complete output for light and dark modes.
+            {tSite("Complete output for light and dark modes.")}
           </p>
         </div>
       </div>
@@ -170,6 +173,8 @@ export function ThemeOutput({
   presetId = null,
   previewMode = "light",
 }: ThemeOutputProps) {
+  const tSite = useCopy();
+
   const { resolvedTheme } = useTheme();
   const [activeFormat, setActiveFormat] = useState<ExportTab>("css");
   const [codeVisible, setCodeVisible] = useState(false);
@@ -215,11 +220,12 @@ export function ThemeOutput({
             id="theme-builder-output-heading"
             className="text-lg font-semibold tracking-tight"
           >
-            Export your theme
+            {tSite("Export your theme")}
           </h2>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">
-            Color tokens for both modes, with separate font and radius CSS. Copy
-            or download your files. Nothing is uploaded.
+            {tSite(
+              "Color tokens for both modes, with separate font and radius CSS. Copy or download your files. Nothing is uploaded.",
+            )}
           </p>
         </div>
         {!error ? (
@@ -231,12 +237,12 @@ export function ThemeOutput({
                 mediaType: activeArtifact.mediaType,
                 fileName: `${fileBase}${fileSuffix}${activeArtifact.extension}`,
               }}
-              label={`Download ${activeFormatLabel}`}
+              label={tSite("Download {value0}", { value0: activeFormatLabel })}
             />
             <CopyButton
               key={activeFormat}
               value={activeArtifact.content}
-              label={`Copy ${activeFormatLabel}`}
+              label={tSite("Copy {value0}", { value0: activeFormatLabel })}
               className="justify-start sm:justify-end"
               buttonClassName="rounded-[5px] border-foreground bg-foreground text-background hover:bg-foreground/90 hover:text-background"
             />
@@ -245,8 +251,8 @@ export function ThemeOutput({
       </div>
       {error ? (
         <Alert variant="destructive" ariaLive="assertive" className="m-5">
-          <AlertTitle>Export could not be prepared</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
+          <AlertTitle>{tSite("Export could not be prepared")}</AlertTitle>
+          <AlertDescription>{tSite(error)}</AlertDescription>
         </Alert>
       ) : (
         <div className="space-y-5 p-5 sm:p-6">
@@ -259,35 +265,40 @@ export function ThemeOutput({
           >
             <TabsList
               size="sm"
-              aria-label="Export format"
+              aria-label={tSite("Export format")}
               className="h-auto max-w-full justify-start gap-1 overflow-x-auto"
             >
               <TabsTrigger value="css" size="sm">
-                CSS
+                {tSite("CSS")}
               </TabsTrigger>
               <TabsTrigger value="tailwind-v4" size="sm">
-                Tailwind v4
+                {tSite("Tailwind v4")}
               </TabsTrigger>
               <TabsTrigger value="json" size="sm">
-                JSON
+                {tSite("JSON")}
               </TabsTrigger>
             </TabsList>
             <TabsContent value="css">
               <p className="text-sm leading-6 text-muted-foreground">
-                CSS variables for <code>:root</code> and <code>.dark</code>.
-                Paste after your PyColors token import.
+                {tSite("CSS variables for ")}
+                <code>:root</code> {tSite(" and ")}
+                <code>.dark</code>
+                {tSite(". Paste after your PyColors token import.")}
               </p>
             </TabsContent>
             <TabsContent value="tailwind-v4">
               <p className="text-sm leading-6 text-muted-foreground">
-                Use the existing Tailwind v4 semantic utilities and{" "}
-                <code>@theme inline</code> bridge with your new colors.
+                {tSite("Use the existing Tailwind v4 semantic utilities and")}
+                {tSite(" ")}
+                <code>@theme inline</code>{" "}
+                {tSite(" bridge with your new colors.")}
               </p>
             </TabsContent>
             <TabsContent value="json">
               <p className="text-sm leading-6 text-muted-foreground">
-                Both modes, color scales, semantic roles, contrast checks, and
-                generation notes in one file.
+                {tSite(
+                  "Both modes, color scales, semantic roles, contrast checks, and generation notes in one file.",
+                )}
               </p>
             </TabsContent>
           </Tabs>
@@ -300,7 +311,7 @@ export function ThemeOutput({
               id="theme-builder-integration-checklist-heading"
               className="text-xs font-medium"
             >
-              Integration checklist
+              {tSite("Integration checklist")}
             </h3>
             <ol className="mt-3 grid gap-4 md:grid-cols-3">
               {INTEGRATION_STEPS[activeFormat].map((step, index) => (
@@ -309,9 +320,9 @@ export function ThemeOutput({
                   className="flex gap-3 text-xs leading-5 text-muted-foreground"
                 >
                   <span className="grid size-5 shrink-0 place-items-center rounded-full border border-border-subtle text-[10px] font-medium">
-                    {index + 1}
+                    {tSite(index + 1)}
                   </span>
-                  <span>{step}</span>
+                  <span>{tSite(step)}</span>
                 </li>
               ))}
             </ol>
@@ -327,7 +338,9 @@ export function ThemeOutput({
               onClick={() => setCodeVisible((visible) => !visible)}
             >
               <Code2 aria-hidden="true" />
-              {codeVisible ? "Hide generated code" : "View generated code"}
+              {tSite(
+                codeVisible ? "Hide generated code" : "View generated code",
+              )}
             </Button>
             <div
               id="theme-builder-generated-code"
@@ -335,7 +348,7 @@ export function ThemeOutput({
               className="mt-3"
             >
               <CodePanel
-                title={activeFormatLabel}
+                title={tSite(activeFormatLabel)}
                 content={activeArtifact.content}
                 language={activeFormat === "json" ? "json" : "css"}
                 active={codeVisible}
@@ -354,11 +367,12 @@ export function ThemeOutput({
                   id="theme-builder-typography-heading"
                   className="text-sm font-medium"
                 >
-                  Typography and radius
+                  {tSite("Typography and radius")}
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {font.label} · {APPEARANCE_RADII[appearance.radius]} radius ·
-                  Copy separately from your color tokens.
+                  {tSite(font.label)} ·{" "}
+                  {tSite(APPEARANCE_RADII[appearance.radius])}{" "}
+                  {tSite(" radius · Copy separately from your color tokens.")}
                 </p>
               </div>
               <div className="flex flex-wrap items-start gap-2">
@@ -368,50 +382,52 @@ export function ThemeOutput({
                     mediaType: "text/css",
                     fileName: `${fileBase}.typography.css`,
                   }}
-                  label="Download typography CSS"
+                  label={tSite("Download typography CSS")}
                 />
                 <CopyButton
                   value={typographyCss}
-                  label="Copy typography CSS"
+                  label={tSite("Copy typography CSS")}
                   buttonClassName="rounded-[5px]"
                 />
               </div>
             </div>
             {font.asset ? (
               <p className="mt-3 text-xs leading-5 text-muted-foreground">
-                Save the font in{" "}
-                <code className="break-all">public{font.asset}</code>, then add
-                this CSS after your token imports.{" "}
+                {tSite("Save the font in")}
+                {tSite(" ")}
+                <code className="break-all">public{font.asset}</code>
+                {tSite(", then add this CSS after your token imports.")}
+                {tSite(" ")}
                 <a
                   href={font.asset}
                   download
                   className="font-medium text-foreground underline underline-offset-4"
                 >
-                  Download font
+                  {tSite("Download font")}
                 </a>
                 {font.license ? (
                   <>
-                    {" "}
-                    ·{" "}
+                    {tSite(" ")}·{tSite(" ")}
                     <a
                       href={font.license}
                       download
                       className="font-medium text-foreground underline underline-offset-4"
                     >
-                      Font license
+                      {tSite("Font license")}
                     </a>
                   </>
                 ) : null}
               </p>
             ) : (
               <p className="mt-3 text-xs leading-5 text-muted-foreground">
-                Uses your visitor&apos;s system fonts. No font file is needed.
-                Add this CSS after your token imports.
+                {tSite(
+                  "Uses your visitor's system fonts. No font file is needed. Add this CSS after your token imports.",
+                )}
               </p>
             )}
             <details className="mt-3">
               <summary className="w-fit cursor-pointer rounded text-xs font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
-                View typography CSS
+                {tSite("View typography CSS")}
               </summary>
               <pre
                 tabIndex={0}
@@ -433,24 +449,25 @@ export function ThemeOutput({
                   id="theme-builder-starter-heading"
                   className="text-sm font-medium"
                 >
-                  Use in Starter Pro
+                  {tSite("Use in Starter Pro")}
                 </h3>
                 <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                  Replace <code>config/appearance.ts</code> with this file,
-                  restart your app, then reset Customize to apply the product
-                  defaults. Colors, typography and dashboard settings are
-                  included.
+                  {tSite("Replace ")}
+                  <code>config/appearance.ts</code>{" "}
+                  {tSite(
+                    " with this file, restart your app, then reset Customize to apply the product defaults. Colors, typography and dashboard settings are included.",
+                  )}
                 </p>
               </div>
               <DownloadButton
                 file={starterConfig}
-                label="Download Starter Pro config"
+                label={tSite("Download Starter Pro config")}
               />
             </div>
           </section>
 
           <nav
-            aria-label="Continue with your theme"
+            aria-label={tSite("Continue with your theme")}
             className="flex flex-col gap-x-6 gap-y-1 border-t border-border-subtle pt-4 sm:flex-row sm:flex-wrap"
           >
             {THEME_BUILDER_CTA_LINKS.map((link) => (
@@ -459,7 +476,7 @@ export function ThemeOutput({
                 href={link.href}
                 className="inline-flex min-h-11 items-center gap-2 text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
               >
-                {link.label}
+                {tSite(link.label)}
                 <ArrowRight className="size-3.5" aria-hidden="true" />
               </Link>
             ))}

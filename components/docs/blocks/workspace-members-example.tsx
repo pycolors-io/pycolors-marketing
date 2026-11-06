@@ -1,8 +1,9 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { Button } from "@pycolors/ui";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 
 import {
   WorkspaceMembersPanel,
@@ -33,6 +34,8 @@ const sampleMembers: readonly WorkspaceMember[] = [
 ];
 
 export function WorkspaceMembersExample() {
+  const tSite = useCopy();
+
   const exampleId = React.useId();
   const [empty, setEmpty] = React.useState(false);
   const [showActions, setShowActions] = React.useState(true);
@@ -46,10 +49,12 @@ export function WorkspaceMembersExample() {
             type="button"
             variant="outline"
             disabled={member.id === "casey"}
-            aria-label={`View example details for ${member.name}`}
-            onClick={() => setSelectedName(member.name)}
+            aria-label={tSite("View example details for {value0}", {
+              value0: tSite(member.name),
+            })}
+            onClick={() => setSelectedName(tSite(member.name))}
           >
-            View example details
+            {tSite("View example details")}
           </Button>
         ) : undefined,
       }));
@@ -57,8 +62,9 @@ export function WorkspaceMembersExample() {
   return (
     <div className="w-full min-w-0 space-y-6">
       <p className="text-sm text-muted-foreground">
-        Fictional local example. No invitations, permission changes, requests or
-        emails are sent. Nothing is saved. Actions only select a sample member.
+        {tSite(
+          "Fictional local example. No invitations, permission changes, requests or emails are sent. Nothing is saved. Actions only select a sample member.",
+        )}
       </p>
       <div className="flex flex-wrap items-end gap-4">
         <div className="space-y-2">
@@ -66,7 +72,7 @@ export function WorkspaceMembersExample() {
             className="block text-sm font-medium"
             htmlFor={`${exampleId}-state`}
           >
-            Example state
+            {tSite("Example state")}
           </label>
           <span className="relative inline-grid min-w-24 max-w-full">
             <select
@@ -78,8 +84,8 @@ export function WorkspaceMembersExample() {
               }}
               className="h-11 w-full min-w-0 appearance-none truncate rounded-[5px] border border-input bg-background py-2 pl-3 pr-9 text-base leading-5 text-foreground shadow-xs outline-none transition-colors hover:border-border focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm motion-reduce:transition-none"
             >
-              <option value="populated">Sample members</option>
-              <option value="empty">Empty workspace</option>
+              <option value="populated">{tSite("Sample members")}</option>
+              <option value="empty">{tSite("Empty workspace")}</option>
             </select>
             <svg
               aria-hidden="true"
@@ -112,32 +118,47 @@ export function WorkspaceMembersExample() {
             }}
             className="size-4 accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           />
-          Show example actions
+          {tSite("Show example actions")}
         </label>
       </div>
       <WorkspaceMembersPanel
+        roleLabel={tSite("Role")}
+        statusLabel={tSite("Status")}
         id={`${exampleId}-members`}
-        heading="Example workspace members"
-        description="Names, roles, statuses and actions are supplied by this demo, not inferred by the Block."
-        members={members}
+        heading={tSite("Example workspace members")}
+        description={tSite(
+          "Names, roles, statuses and actions are supplied by this demo, not inferred by the Block.",
+        )}
+        members={members.map((member) => ({
+          ...member,
+          name: tSite(member.name),
+          role: tSite(member.role),
+          status: tSite(member.status),
+        }))}
         actions={
           showActions ? (
             <Button asChild variant="outline">
-              <Link href="/docs/ui/installation">Read UI setup</Link>
+              <Link href="/docs/ui/installation">{tSite("Read UI setup")}</Link>
             </Button>
           ) : undefined
         }
-        emptyTitle="No example members"
-        emptyDescription="Your application chooses what to offer next. This demo has no invitation service."
+        emptyTitle={tSite("No example members")}
+        emptyDescription={tSite(
+          "Your application chooses what to offer next. This demo has no invitation service.",
+        )}
       />
       <p
         role="status"
         aria-live="polite"
         className="text-sm text-muted-foreground"
       >
-        {selectedName
-          ? `Selected example member: ${selectedName}. No data was changed.`
-          : "No example member selected."}
+        {tSite(
+          selectedName
+            ? tSite("Selected example member: {value0}. No data was changed.", {
+                value0: selectedName,
+              })
+            : "No example member selected.",
+        )}
       </p>
     </div>
   );

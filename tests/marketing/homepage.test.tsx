@@ -3,9 +3,16 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { renderToString } from "react-dom/server";
-import HomePage, { metadata } from "../../app/(site)/page";
+import { localizedAlternates } from "@/lib/i18n/routes";
+import HomePage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
 import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
@@ -190,9 +197,14 @@ describe("product homepage", () => {
     render(<HomePage />);
     const production = screen.getByRole("region", { name: headings[2] });
     const implementation = within(production).getByRole("complementary", {
-      name: "Implementation, scoped to your product.",
+      name: "Custom software, built around your business.",
     });
     expect(implementation).toHaveTextContent("written proposal");
+    expect(
+      within(implementation).getByRole("link", {
+        name: "Explore our services",
+      }),
+    ).toHaveAttribute("href", "/services");
     expect(implementation).toHaveTextContent(
       "Source licence and provider costs are separate.",
     );
@@ -227,8 +239,13 @@ describe("product homepage", () => {
       },
       description:
         "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",
-      alternates: { canonical: "https://pycolors.io" },
+      alternates: {
+        canonical: "https://pycolors.io",
+        languages: localizedAlternates("home", "en").languages,
+      },
       openGraph: {
+        locale: "en_US",
+        alternateLocale: "fr_FR",
         title: "React & Next.js UI, Blocks and SaaS Starters · PyColors",
         description:
           "Build React and Next.js products with UI components, reusable blocks, templates and SaaS starters. Explore the public library and choose your starting point.",

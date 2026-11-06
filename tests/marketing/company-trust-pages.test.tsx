@@ -7,18 +7,34 @@ import { describe, expect, it } from "vitest";
 import { axe } from "vitest-axe";
 
 import AboutPage, {
-  metadata as aboutMetadata,
-} from "../../app/(site)/about/page";
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/about/page";
 import OpenSourcePage, {
-  metadata as openSourceMetadata,
-} from "../../app/(site)/open-source/page";
+  generateMetadata as getLocalizedMetadata1,
+} from "../../app/[locale]/(site)/open-source/page";
 import RoadmapPage, {
-  metadata as roadmapMetadata,
-} from "../../app/(site)/roadmap/page";
+  generateMetadata as getLocalizedMetadata2,
+} from "../../app/[locale]/(site)/roadmap/page";
 import ChangelogPage, {
-  metadata as changelogMetadata,
-} from "../../app/(site)/changelog/page";
+  generateMetadata as getLocalizedMetadata3,
+} from "../../app/[locale]/(site)/changelog/page";
 import { PageHero } from "../../components/marketing/page-hero";
+
+const aboutMetadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const openSourceMetadata = await getLocalizedMetadata1({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const roadmapMetadata = await getLocalizedMetadata2({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const changelogMetadata = await getLocalizedMetadata3({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 const pages = [
   ["about", AboutPage, aboutMetadata, "Ship credible SaaS products faster."],
@@ -40,7 +56,7 @@ const pages = [
 describe("company and trust pages", () => {
   for (const [route, Page, metadata, title] of pages) {
     it(`${route} retains its canonical, breadcrumb data, one H1 and a reachable main landmark`, () => {
-      const { container } = render(<Page />);
+      render(<Page />);
       const main = screen.getByRole("main");
       expect(main).toHaveAttribute("id", "content");
       expect(main).toHaveAttribute("tabindex", "-1");
@@ -53,8 +69,7 @@ describe("company and trust pages", () => {
       expect(metadata.alternates?.canonical).toBe(`/${route}`);
       expect(metadata.openGraph?.url).toBe(`/${route}`);
       const breadcrumb = JSON.parse(
-        container.querySelector('script[type="application/ld+json"]')!
-          .textContent!,
+        document.getElementById("breadcrumb-jsonld")!.textContent!,
       );
       expect(
         breadcrumb.itemListElement.map((item: { item: string }) => item.item),
@@ -158,8 +173,8 @@ describe("company and trust pages", () => {
             resolve("content", route.slice(1), "index.mdx"),
           ]
         : route === "/docs"
-          ? [resolve("app/docs/[[...slug]]/page.tsx")]
-          : [resolve("app/(site)", route.slice(1), "page.tsx")];
+          ? [resolve("app/[locale]/docs/[[...slug]]/page.tsx")]
+          : [resolve("app/[locale]/(site)", route.slice(1), "page.tsx")];
       expect(candidates.some(existsSync), href).toBe(true);
     }
   });
@@ -223,7 +238,7 @@ describe("company and trust pages", () => {
               resolve("content", `${href.slice(1)}.mdx`),
               resolve("content", href.slice(1), "index.mdx"),
             ]
-          : [resolve("app/(site)", href.slice(1), "page.tsx")];
+          : [resolve("app/[locale]/(site)", href.slice(1), "page.tsx")];
         expect(candidates.some(existsSync), href).toBe(true);
       }
     }
@@ -237,7 +252,7 @@ describe("company and trust pages", () => {
     expect(totals).toHaveLength(4);
     ["Now", "Next", "Later", "Shipped"].forEach((status, index) => {
       expect(totals[index]).toHaveTextContent(status);
-      expect(totals[index]).toHaveTextContent(String([4, 4, 0, 91][index]));
+      expect(totals[index]).toHaveTextContent(String([4, 4, 0, 92][index]));
       const href = within(totals[index]!)
         .getByRole("link")
         .getAttribute("href")!;
@@ -275,7 +290,7 @@ describe("company and trust pages", () => {
     const historyRows = groups.flatMap((name) =>
       Array.from(screen.getByRole("list", { name }).children),
     );
-    expect(historyRows).toHaveLength(91);
+    expect(historyRows).toHaveLength(92);
     historyRows.forEach((row) =>
       expect(
         within(row as HTMLElement).getByText("Shipped", { exact: true }),
@@ -287,7 +302,7 @@ describe("company and trust pages", () => {
       ).getAllByRole("listitem"),
     );
     const rows = [...activeRows, ...historyRows];
-    expect(rows).toHaveLength(99);
+    expect(rows).toHaveLength(100);
     expect(
       rows
         .map(
@@ -409,6 +424,7 @@ describe("company and trust pages", () => {
 
 // Public data frozen before the #631 composition migration. Update only with an intentional content change.
 const roadmapTitles = [
+  "PyColors Marketing v1.32.0",
   "PyColors Marketing v1.31.0",
   "PyColors Marketing v1.30.0",
   "Starter Pro persistent workspace and isolated demo",
@@ -520,6 +536,12 @@ const pendingRoadmap = [
   ["Documentation-to-product conversion loop", "Now"],
 ] as const;
 const releases = [
+  [
+    "v1.32.0",
+    "2026-11-06",
+    "Explore in your language, shape your project",
+    "/services",
+  ],
   [
     "v1.31.0",
     "2026-11-04",

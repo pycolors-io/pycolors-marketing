@@ -1,5 +1,6 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import {
   Button,
@@ -12,13 +13,15 @@ import {
 } from "@pycolors/ui";
 
 export function SaveToastExample() {
+  const tSite = useCopy();
+
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const [open, setOpen] = React.useState(false);
 
   return (
     <ToastProvider>
       <Button ref={triggerRef} type="button" onClick={() => setOpen(true)}>
-        Simulate successful save
+        {tSite("Simulate successful save")}
       </Button>
       <Toast
         open={open}
@@ -27,9 +30,9 @@ export function SaveToastExample() {
         duration={5000}
       >
         <div className="min-w-0">
-          <ToastTitle>Settings saved</ToastTitle>
+          <ToastTitle>{tSite("Settings saved")}</ToastTitle>
           <ToastDescription>
-            This confirmation is a local preview.
+            {tSite("This confirmation is a local preview.")}
           </ToastDescription>
         </div>
         <ToastClose asChild>
@@ -37,10 +40,10 @@ export function SaveToastExample() {
             type="button"
             size="sm"
             variant="outline"
-            aria-label="Dismiss notification"
+            aria-label={tSite("Dismiss notification")}
             onClick={() => triggerRef.current?.focus()}
           >
-            Dismiss
+            {tSite("Dismiss")}
           </Button>
         </ToastClose>
       </Toast>

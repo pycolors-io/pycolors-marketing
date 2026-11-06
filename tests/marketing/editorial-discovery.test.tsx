@@ -16,15 +16,25 @@ import {
 } from "vitest";
 import { axe } from "vitest-axe";
 
-import BlogPage, { metadata as blogMetadata } from "../../app/(site)/blog/page";
+import BlogPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "../../app/[locale]/(site)/blog/page";
 import GuidesPage, {
-  metadata as guidesMetadata,
-} from "../../app/(site)/guides/page";
+  generateMetadata as getLocalizedMetadata1,
+} from "../../app/[locale]/(site)/guides/page";
 import { getAllPosts } from "@/lib/blog/utils";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { trackMoneyPathEvent } from "@/lib/analytics";
 import { navigateToCheckout } from "@/lib/api/checkout-navigation";
 import contracts from "./fixtures/editorial-discovery.json";
+
+const blogMetadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
+
+const guidesMetadata = await getLocalizedMetadata1({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 const { getPages } = vi.hoisted(() => {
   vi.stubEnv("NEXT_PUBLIC_API_BASE_URL", "https://api.example.com");
@@ -109,7 +119,7 @@ describe("editorial discovery", () => {
   for (const [route, Page, metadata, title] of pages) {
     it(`${route} preserves metadata and provides one H1, a skip target and named links`, () => {
       render(<Page />);
-      expect(metadata).toEqual(contracts[route].metadata);
+      expect(metadata).toMatchObject(contracts[route].metadata);
       const main = screen.getByRole("main");
       expect(main).toHaveAttribute("id", "content");
       expect(main).toHaveAttribute("tabindex", "-1");

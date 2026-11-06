@@ -1,0 +1,112 @@
+---
+title: Premiers pas
+description: Choisissez votre produit PyColors, suivez son guide d’installation
+  et vérifiez le fonctionnement de votre premier écran.
+lastUpdated: "2026-09-18"
+appliesTo: PyColors
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Badge } from "@pycolors/ui";
+import { Code2, LayoutTemplate, Rocket, Sparkles } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">PyColors Docs</Badge>
+  <Badge>Premiers pas</Badge>
+</div>
+
+## Choisissez votre point de départ [#choose-your-starting-point]
+
+Choisissez le produit adapté à votre projet. Chaque guide présente les prérequis, les commandes d’installation et les vérifications à effectuer avant de personnaliser votre application.
+
+<DocsLinks
+  variant="grid"
+  tone="platform"
+  items={[
+    {
+      title: "Ajouter une interface à une application existante",
+      href: "/docs/ui/installation",
+      description:
+        "Installez les composants et les tokens gratuits de PyColors UI dans votre application React, puis affichez votre premier composant.",
+      icon: Code2,
+      eyebrow: "PyColors UI",
+    },
+    {
+      title: "Exécuter une démo SaaS",
+      href: "/docs/starter/installation",
+      description:
+        "Lancez Starter Free en local et explorez le tableau de bord, les paramètres et les parcours de démonstration.",
+      icon: Sparkles,
+      eyebrow: "Starter Free",
+    },
+    {
+      title: "Configurer votre landing page",
+      href: "/docs/templates/na-ai-landing/setup",
+      description:
+        "Téléchargez NA-AI Landing et lancez le template en local avant de personnaliser son contenu.",
+      icon: LayoutTemplate,
+      eyebrow: "NA-AI Landing",
+    },
+    {
+      title: "Configurer votre base SaaS",
+      href: "/docs/starter-pro/getting-started",
+      description:
+        "Après le téléchargement de Starter Pro, configurez l’environnement local, la base de données et l’authentification.",
+      icon: Rocket,
+      eyebrow: "Starter Pro",
+    },
+  ]}
+/>
+
+<Callout title="Un seul produit pour commencer">
+  Il n’est pas nécessaire d’installer tous les produits PyColors. Utilisez
+  PyColors UI dans une application existante, Starter Free pour explorer une
+  interface SaaS, un template pour créer une landing page ou Starter Pro pour
+  disposer également des fondations côté serveur.
+</Callout>
+
+## Avant de commencer [#before-you-begin]
+
+- **PyColors UI :** disposez d’une application React avec Tailwind CSS v4 et une feuille de style globale. Le [guide d’installation](/docs/ui/installation#prerequisites) détaille les prérequis et la configuration CSS.
+- **Starter Free :** installez Git, Node.js et pnpm, puis clonez le dépôt public en suivant le [guide d’installation](/docs/starter/installation). L’authentification, la facturation et les données sont simulées : aucun identifiant de service de production n’est nécessaire pour les explorer.
+- **NA-AI Landing :** téléchargez et décompressez le template acheté, puis suivez le [guide de configuration](/docs/templates/na-ai-landing/setup). Le template de base comprend uniquement le frontend.
+- **Starter Pro :** téléchargez et décompressez le starter acheté, puis suivez les [étapes de configuration locale](/docs/starter-pro/getting-started#setup-flow), qui couvrent l’environnement et la base de données.
+
+Pour un starter ou un template, utilisez les versions de Node.js et du gestionnaire de paquets indiquées dans le projet téléchargé. Exécutez les commandes à la racine de ce projet. Pour PyColors UI, installez le package directement dans l’application qui l’utilisera.
+
+## Vérifiez votre premier résultat [#verify-your-first-result]
+
+Effectuez les vérifications du guide choisi avant de modifier la structure du projet.
+
+### PyColors UI [#pycolors-ui]
+
+Suivez le [guide d’installation](/docs/ui/installation) pour installer les packages, charger les tokens CSS, configurer l’analyse Tailwind et afficher l’exemple de carte.
+
+Votre application doit afficher une carte et un lien correctement stylés. Vérifiez les modes clair et sombre, la visibilité du focus au clavier et la compilation de l’application. Consultez ensuite les [exemples de composition](/docs/ui/usage-patterns) pour construire votre prochain écran, ou le [guide de migration](/docs/ui/migration-guidance) pour remplacer une interface existante.
+
+### Starter Free [#starter-free]
+
+Suivez le [guide d’installation](/docs/starter/installation), démarrez le serveur local, puis ouvrez `/dashboard` et `/projects`. Testez une action sur un projet et consultez les paramètres.
+
+Vous disposez d’une démo SaaS navigable avec des données d’exemple. Continuez avec le [premier parcours](/docs/starter/getting-started#first-run-path), puis adaptez un écran à votre produit. Ces écrans ne créent ni compte réel, ni paiement, ni données persistantes côté serveur.
+
+### NA-AI Landing [#na-ai-landing]
+
+Suivez le [guide de configuration](/docs/templates/na-ai-landing/setup) pour lancer le template téléchargé. Vérifiez la page d’accueil en mode clair et sombre, puis exécutez la commande de compilation de production indiquée.
+
+Vous disposez d’une landing page locale qui compile correctement. Consultez ensuite le [guide de personnalisation](/docs/templates/na-ai-landing/customization) pour adapter l’identité visuelle et le contenu.
+
+### Starter Pro [#starter-pro]
+
+Suivez le guide [Premiers pas](/docs/starter-pro/getting-started) dans l’ordre : décompressez le ZIP, installez les dépendances, configurez l’environnement et la base de données, puis démarrez l’application. Vérifiez la connexion et les routes protégées avant de personnaliser le produit.
+
+Vous disposez d’une base applicative fonctionnelle en local. Avant le lancement, suivez également les guides de configuration et de validation de l’authentification, de la facturation et de la livraison. Une application qui démarre en local ne suffit pas à valider ces systèmes en production.
+
+## Si l’installation ne fonctionne pas [#if-setup-does-not-work]
+
+- **Les composants s’affichent sans style :** vérifiez le [CSS global et le chemin d’analyse du package](/docs/ui/installation#add-design-tokens). Installer le package JavaScript ne suffit pas à générer ses styles Tailwind.
+- **Une dépendance ou une commande échoue :** comparez vos versions de Node.js et de pnpm avec celles indiquées dans le projet téléchargé avant de réinstaller. Consultez ensuite la section de dépannage du guide concerné.
+- **Starter Free ne crée pas de comptes réels ni de paiements :** c’est la limite prévue de ce [starter frontend](/docs/starter/getting-started#know-what-is-intentionally-mocked). Consultez le [guide de mise à niveau](/docs/starter/upgrade) lorsque vous souhaitez connecter un backend.
+
+Une fois ces vérifications terminées, poursuivez avec le guide suivant de votre produit. Revenez à cette page si votre projet nécessite un autre produit PyColors.

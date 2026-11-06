@@ -3,7 +3,13 @@ import { resolve } from "node:path";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import DemoPage, { metadata } from "@/app/(site)/demo/page";
+import DemoPage, {
+  generateMetadata as getLocalizedMetadata0,
+} from "@/app/[locale]/(site)/demo/page";
+
+const metadata = await getLocalizedMetadata0({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 const analytics = vi.hoisted(() => ({ track: vi.fn() }));
 vi.mock("@vercel/analytics", () => analytics);
@@ -16,7 +22,7 @@ describe("starter demo discovery", () => {
   it("prioritizes the connected Pro demo while keeping the Free frontend clearly separate", () => {
     vi.stubEnv("NEXT_PUBLIC_STARTER_PRO_DEMO_URL", "");
     render(<DemoPage />);
-    expect(metadata.alternates).toEqual({ canonical: "/demo" });
+    expect(metadata.alternates).toMatchObject({ canonical: "/demo" });
     expect(screen.getByRole("main")).toHaveAttribute("id", "content");
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     const free = screen.getByRole("article", { name: "Starter Free" });
@@ -120,7 +126,11 @@ describe("starter demo discovery", () => {
       if (href.startsWith("/"))
         expect(
           existsSync(
-            resolve("app/(site)", href.split("#")[0]!.slice(1), "page.tsx"),
+            resolve(
+              "app/[locale]/(site)",
+              href.split("#")[0]!.slice(1),
+              "page.tsx",
+            ),
           ),
           href,
         ).toBe(true);

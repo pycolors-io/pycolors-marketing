@@ -1,0 +1,225 @@
+---
+title: Arrondi
+description: tokens de rayon utilisés pour garder la géométrie d'angle cohérente
+  dans l'interface utilisateur de PyColors.
+lastUpdated: "2026-04-27"
+appliesTo: Design System - Tokens
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
+import {
+  CheckCircle,
+  ListChecks,
+  SlidersHorizontal,
+  Ruler,
+  XCircle,
+} from "lucide-react";
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
+import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
+
+<div className="flex flex-wrap items-center gap-2">
+  <Badge variant="outline">Système de conception</Badge>
+  <Badge>Arrondi</Badge>
+</div>
+
+## Vue d’ensemble [#overview]
+
+Le rayon d'angle est l'un des signaux visuels les plus forts d'un système d'interface utilisateur.
+
+Il influence directement la façon dont votre produit se sent:
+
+- tranchant ou doux
+- dense ou respirant
+- utilitaire ou premium
+- rigide ou amical
+
+PyColors définit un **petite échelle de rayon contrôlée** Ainsi, chaque surface semble cohérente à travers:
+
+- composants
+- tableaux de bord
+- formulaires
+- documentation
+- pages marketing
+
+<Callout title="Pourquoi cela compte">
+  Le rayon incohérent est l’un des moyens les plus rapides de briser la
+  cohérence visuelle. Même de petites différences créent un sentiment subtil de
+  «quelque chose ne va pas».
+
+</Callout>
+
+### Ce que vous allez définir [#what-youll-define]
+
+<DocsFeatureGrid
+  columns={3}
+  tone="platform"
+  items={[
+    {
+      title: "Rayon de base",
+      description:
+        "Une source de vérité unique qui contrôle la sensation globale de l'interface utilisateur.",
+      icon: Ruler,
+    },
+    {
+      title: "Échelle",
+      description:
+        "Un ensemble limité de tailles utilisées sur tous les composants.",
+      icon: SlidersHorizontal,
+    },
+    {
+      title: "Règles d'utilisation",
+      description:
+        "Contraintes claires pour éviter la dérive visuelle dans le temps.",
+      icon: ListChecks,
+    },
+  ]}
+/>
+
+## Étapes [#steps]
+
+<Steps>
+
+<Step>
+### Définir un rayon de base [#define-a-base-radius]
+
+Commencez à partir d'une seule variable.
+
+```css title="tokens.css"
+:root {
+  --radius: 0.625rem;
+}
+```
+
+Ensuite, vous en tirerez toute l’ampleur.
+
+```css title="tokens.css"
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+```
+
+Cela vous permet d'ajuster l'ensemble du produit à partir d'un seul endroit.
+
+</Step>
+
+<Step>
+### La carte des rayons à Tailwind [#map-radius-to-tailwind]
+
+Exposez les tokens via Tailwind pour que les composants restent cohérents.
+
+```ts title="tailwind.config.ts"
+borderRadius: {
+  sm: "var(--radius-sm)",
+  DEFAULT: "var(--radius-md)",
+  md: "var(--radius-md)",
+  lg: "var(--radius-lg)",
+  xl: "var(--radius-xl)",
+}
+```
+
+À partir de là, les composants n'utilisent que des utilitaires sémantiques.
+
+</Step>
+
+<Step>
+### Appliquer de manière cohérente dans les composants [#apply-consistently-in-components]
+
+<Tabs items={["Aperçu", "Code"]}>
+  <Tab value="Aperçu">
+    <div className="grid gap-4 sm:grid-cols-2">
+      <div className="rounded-sm border bg-card p-4 text-sm">arrondi sm</div>
+      <div className="rounded-md border bg-card p-4 text-sm">md-arrondi</div>
+      <div className="rounded-lg border bg-card p-4 text-sm">arrondis</div>
+      <div className="rounded-xl border bg-card p-4 text-sm">arrondi-xl</div>
+    </div>
+
+</Tab>
+
+  <Tab value="Code">
+
+```tsx title="components/radius-example.tsx"
+export function RadiusExample() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <div className="rounded-sm border bg-card p-4 text-sm">Small radius</div>
+
+      <div className="rounded-md border bg-card p-4 text-sm">
+        Default radius
+      </div>
+
+      <div className="rounded-lg border bg-card p-4 text-sm">Large radius</div>
+
+      <div className="rounded-xl border bg-card p-4 text-sm">
+        Extra large radius
+      </div>
+    </div>
+  );
+}
+```
+
+</Tab>
+
+</Tabs>
+
+</Step>
+
+</Steps>
+
+## Échelle de rayon [#radius-scale]
+
+| Token         | Utilisation                                    |
+| ------------- | ---------------------------------------------- |
+| `--radius-sm` | interface utilisateur dense, éléments compacts |
+| `--radius-md` | contrôles par défaut                           |
+| `--radius-lg` | cartes et surfaces                             |
+| `--radius-xl` | modaux et conteneurs exceptionnels             |
+
+## Guide de décision [#decision-guide]
+
+Utilisez ce système si :
+
+- vous voulez une cohérence visuelle à travers de nombreux composants
+- vous créez des tableaux de bord ou des produits SaaS
+- vous voulez des thèmes prévisibles
+- vous voulez que les composants restent réutilisables
+
+Évitez les remplacements locaux si :
+
+- la valeur est utilisée à plusieurs endroits
+- il casse la cohérence avec les composants existants
+- il introduit le bruit visuel
+- il n'appartient pas à un modèle réutilisable
+
+<PreferAvoid
+  prefer={[
+    "utiliser des tokens de rayon sémantique",
+    "Garder une petite échelle contrôlée",
+    "Réutiliser les valeurs entre les composants",
+    "ajuster via la variable de base",
+  ]}
+  avoid={[
+    "rayon aléatoire par composant",
+    "mélange de plusieurs styles visuels",
+    "valeurs de codage dur",
+    "la cohérence de rupture entre les surfaces",
+  ]}
+/>
+
+## Pourquoi c'est important [#why-it-matters]
+
+Le rayon est subtil, mais il façonne la perception instantanément.
+
+- rayon constant au produit se sent intentionnel
+- rayon incohérent au produit se sent non poli
+
+Garder le rayon contrôlé garantit que votre interface utilisateur reste:
+
+- prévisible
+- évolutif
+- visuellement calme

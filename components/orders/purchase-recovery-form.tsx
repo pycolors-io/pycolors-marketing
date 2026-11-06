@@ -1,7 +1,8 @@
 "use client";
 
+import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import {
   ArrowRight,
   BookOpen,
@@ -27,6 +28,8 @@ import { trackMoneyPathEvent } from "@/lib/analytics";
 import styles from "./purchase-recovery.module.css";
 
 export function PurchaseRecoveryForm() {
+  const tSite = useCopy();
+
   const [productSlug, setProductSlug] = React.useState<PublicProductSlug | "">(
     "",
   );
@@ -77,13 +80,15 @@ export function PurchaseRecoveryForm() {
           <span className={styles.formIcon}>
             <RefreshCcw className="size-5" aria-hidden="true" />
           </span>
-          <span className={styles.eyebrow}>Your purchase details</span>
+          <span className={styles.eyebrow}>
+            {tSite("Your purchase details")}
+          </span>
         </div>
         <h2 id="recovery-form-heading">
-          {done ? "Check your email" : "Resend your access link"}
+          {tSite(done ? "Check your email" : "Resend your access link")}
         </h2>
         <p className={styles.description}>
-          Use the email from checkout and the product you purchased.
+          {tSite("Use the email from checkout and the product you purchased.")}
         </p>
 
         <div className={styles.formStage}>
@@ -98,12 +103,11 @@ export function PurchaseRecoveryForm() {
               <span className={styles.confirmationIcon}>
                 <MailCheck className="size-6" aria-hidden="true" />
               </span>
-              <h3>Recovery request received</h3>
+              <h3>{tSite("Recovery request received")}</h3>
               <p>
-                If eligible purchase access is found and the request can be
-                processed, we send a new claim email. This confirmation does not
-                verify a purchase or email delivery. Check your inbox and spam
-                folder.
+                {tSite(
+                  "If eligible purchase access is found and the request can be processed, we send a new claim email. This confirmation does not verify a purchase or email delivery. Check your inbox and spam folder.",
+                )}
               </p>
             </div>
           ) : (
@@ -121,16 +125,18 @@ export function PurchaseRecoveryForm() {
                   disabled={isLoading}
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  label="Purchase email"
-                  helperText="Use the same email address you used during checkout."
-                  placeholder="you@example.com"
+                  label={tSite("Purchase email")}
+                  helperText={tSite(
+                    "Use the same email address you used during checkout.",
+                  )}
+                  placeholder={tSite("you@example.com")}
                   size="lg"
                   leftIcon={<Mail className="size-4" aria-hidden="true" />}
                   className={styles.emailInput}
                 />
 
                 <div className={styles.productField}>
-                  <label htmlFor="recovery-product">Product</label>
+                  <label htmlFor="recovery-product">{tSite("Product")}</label>
                   <div className={styles.selectWrapper}>
                     <select
                       id="recovery-product"
@@ -150,18 +156,20 @@ export function PurchaseRecoveryForm() {
                       className={styles.productSelect}
                     >
                       <option value="" disabled>
-                        Select your product
+                        {tSite("Select your product")}
                       </option>
                       {Object.values(PRODUCT_DISPLAY).map((product) => (
                         <option key={product.slug} value={product.slug}>
-                          {product.name}
+                          {tSite(product.name)}
                         </option>
                       ))}
                     </select>
                     <ChevronDown className="size-4" aria-hidden="true" />
                   </div>
                   <p id="recovery-product-help">
-                    Choose the product whose access you want to recover.
+                    {tSite(
+                      "Choose the product whose access you want to recover.",
+                    )}
                   </p>
                 </div>
 
@@ -171,7 +179,7 @@ export function PurchaseRecoveryForm() {
                   size="lg"
                   className={`site-primary-action ${styles.submitButton}`}
                 >
-                  {isLoading ? "Sending..." : "Resend access link"}
+                  {tSite(isLoading ? "Sending..." : "Resend access link")}
                   {isLoading ? (
                     <LoaderCircle
                       className="size-4 animate-spin motion-reduce:animate-none"
@@ -187,10 +195,11 @@ export function PurchaseRecoveryForm() {
                     aria-hidden="true"
                   />
                   <div>
-                    <p className="font-medium">{error}</p>
+                    <p className="font-medium">{tSite(error)}</p>
                     <p>
-                      Check your connection and try again later. If the error
-                      continues, contact support before making another purchase.
+                      {tSite(
+                        "Check your connection and try again later. If the error continues, contact support before making another purchase.",
+                      )}
                     </p>
                   </div>
                 </div>
@@ -201,16 +210,16 @@ export function PurchaseRecoveryForm() {
       </div>
       <div className={styles.formFooter}>
         <p>
-          Repeated requests may be temporarily limited. If you have tried
-          several times, wait at least 30 minutes before trying again, or
-          contact support.
+          {tSite(
+            "Repeated requests may be temporarily limited. If you have tried several times, wait at least 30 minutes before trying again, or contact support.",
+          )}
         </p>
         <Link
           href="/docs/starter-pro/purchase-recovery"
           className={styles.textLink}
         >
           <BookOpen className="size-4 shrink-0" aria-hidden="true" />
-          Starter Pro purchase recovery guide
+          {tSite("Starter Pro purchase recovery guide")}
           <ArrowRight className="size-3.5 shrink-0" aria-hidden="true" />
         </Link>
       </div>

@@ -1,6 +1,9 @@
+import { useCopy } from "@/lib/i18n/use-copy";
 type AuthorBadgeProps = { readonly name: string };
 
 export function AuthorBadge({ name }: AuthorBadgeProps) {
+  const tSite = useCopy();
+
   const initials = name
     .trim()
     .split(/\s+/)
@@ -14,12 +17,12 @@ export function AuthorBadge({ name }: AuthorBadgeProps) {
         aria-hidden="true"
         className="flex size-10 shrink-0 items-center justify-center rounded-full border border-border-subtle bg-surface-muted/40 text-xs font-medium"
       >
-        {initials}
+        {tSite(initials)}
       </div>
       <div>
-        <p className="text-sm font-medium">{name}</p>
+        <p className="text-sm font-medium">{tSite(name)}</p>
         <p className="mt-0.5 text-xs text-muted-foreground">
-          {name === "Patrice Parny" ? "Founder of PyColors" : "Author"}
+          {tSite(name === "Patrice Parny" ? "Founder of PyColors" : "Author")}
         </p>
       </div>
     </div>
