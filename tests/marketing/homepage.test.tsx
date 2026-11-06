@@ -1,18 +1,20 @@
 import * as React from "react";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { renderToString } from "react-dom/server";
 import HomePage, { metadata } from "../../app/(site)/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
 const headings = [
-  "Built with PyColors UI",
   "Start with what your project needs now.",
   "From the interface to your implementation.",
   "Choose the infrastructure your project needs.",
+  "A working example. A foundation to adapt.",
+  "Your brand. Your interface.",
   "Inspect the project before you commit.",
   "Choose the foundation for your next step.",
 ];
@@ -25,8 +27,17 @@ const destinations = [
   [PRODUCT_DISPLAY["starter-pro"].name, "/starters/pro"],
 ];
 
-describe("showcase-first homepage", () => {
-  it("renders one main and the approved seven-step journey with proof immediately after the hero", () => {
+describe("product homepage", () => {
+  it("hands off to the product tour without embedding a video on the homepage", () => {
+    const { container } = render(<HomePage />);
+    expect(
+      screen.getByRole("link", { name: "Watch the product tour" }),
+    ).toHaveAttribute("href", "/starters/pro#product-tour");
+    expect(container.querySelector("video")).toBeNull();
+    expect(container.querySelector("iframe")).toBeNull();
+  });
+
+  it("prioritizes products and starters before the complementary Theme Builder", () => {
     render(<HomePage />);
     const main = screen.getByRole("main");
     expect(main).toHaveAttribute("id", "content");
@@ -41,14 +52,16 @@ describe("showcase-first homepage", () => {
     const sections = Array.from(main.children).filter(
       (el) => el.tagName === "SECTION",
     );
-    expect(sections).toHaveLength(7);
+    expect(sections).toHaveLength(8);
     expect(sections[1]).toBe(screen.getByRole("region", { name: headings[0] }));
-    expect(screen.getAllByRole("table", { name: "Projects" })).toHaveLength(1);
-    expect(screen.getByRole("region", { name: headings[1] })).toHaveAttribute(
+    expect(screen.queryByRole("table", { name: "Projects" })).toBeNull();
+    expect(sections[4]).toBe(screen.getByRole("region", { name: headings[3] }));
+    expect(sections[5]).toBe(screen.getByRole("region", { name: headings[4] }));
+    expect(screen.getByRole("region", { name: headings[0] })).toHaveAttribute(
       "id",
       "start-with-pycolors",
     );
-    expect(screen.getByRole("region", { name: headings[2] })).toHaveAttribute(
+    expect(screen.getByRole("region", { name: headings[1] })).toHaveAttribute(
       "id",
       "what-you-get",
     );
@@ -90,7 +103,7 @@ describe("showcase-first homepage", () => {
       expect(within(rows[i]!).getByRole("link")).toHaveAttribute("href", href);
     });
     expect(rows[0]).toHaveTextContent(PRODUCT_DISPLAY["na-ai-landing"].name);
-    const closing = screen.getByRole("region", { name: headings[5] });
+    const closing = screen.getByRole("region", { name: headings[6] });
     expect(
       within(closing)
         .getAllByRole("link")
@@ -98,60 +111,32 @@ describe("showcase-first homepage", () => {
     ).toEqual(["#start-with-pycolors", "/starters/pro"]);
   });
 
-  it("preserves the real showcase interactions inside the page", () => {
+  it("offers one clear handoff to the complete Theme Builder without a second editor", () => {
     render(<HomePage />);
-    fireEvent.click(
-      screen.getByRole("button", { name: "Open Team workspace" }),
-    );
+    const section = screen.getByRole("region", { name: headings[4] });
+    expect(within(section).getAllByRole("link")).toHaveLength(1);
     expect(
-      screen.getByRole("region", { name: "Team workspace" }),
-    ).toBeVisible();
-    fireEvent.mouseDown(screen.getByRole("tab", { name: "Archived" }), {
-      button: 0,
-      ctrlKey: false,
-    });
+      within(section).getByRole("link", { name: "Open Theme Builder" }),
+    ).toHaveAttribute("href", "/tools/theme-builder");
     expect(
-      screen.getByRole("heading", { name: "No archived projects" }),
-    ).toBeVisible();
-    fireEvent.click(screen.getByRole("button", { name: "Show all projects" }));
-    expect(screen.getByRole("tab", { name: "All" })).toHaveFocus();
+      screen.getAllByRole("link", { name: "Open Theme Builder" }),
+    ).toHaveLength(1);
+    expect(section).toHaveTextContent("light and dark themes");
+    expect(section).toHaveTextContent("export the CSS tokens");
+    expect(section).toHaveTextContent("Free · No account needed");
+    expect(within(section).queryByRole("button")).toBeNull();
+    expect(within(section).queryByRole("textbox")).toBeNull();
+    expect(within(section).queryByRole("tablist")).toBeNull();
     expect(
-      screen.getByRole("button", { name: "Open Customer portal" }),
-    ).toHaveAttribute("aria-pressed", "true");
+      screen.queryByRole("button", { name: "Open Team workspace" }),
+    ).toBeNull();
+    expect(
+      screen.queryByText("Synthetic demo data.", { exact: false }),
+    ).toBeNull();
   });
 
-  it("opens the Explorer and relevant component examples with precise documentation handoffs", () => {
+  it("retains the documentation, product and trust handoffs", () => {
     render(<HomePage />);
-    const showcase = screen.getByRole("region", { name: headings[0] });
-    expect(
-      within(showcase).getByRole("link", { name: "Open UI Explorer" }),
-    ).toHaveAttribute("href", "https://ui.pycolors.io/");
-    expect(
-      within(showcase).getByRole("link", { name: "Read the docs" }),
-    ).toHaveAttribute("href", "/docs/ui/installation");
-    expect(
-      within(showcase).getByRole("navigation", {
-        name: "Explore the showcase primitives",
-      }),
-    ).toBeVisible();
-    const links = within(
-      screen.getByRole("navigation", {
-        name: "Explore the showcase primitives",
-      }),
-    ).getAllByRole("link");
-    expect(links.map((a) => a.getAttribute("href"))).toEqual([
-      "https://ui.pycolors.io/?path=/story/components-table--rows-and-empty-section",
-      "https://ui.pycolors.io/?path=/story/components-tabs--default",
-      "https://ui.pycolors.io/?path=/story/components-empty-state--with-action",
-    ]);
-    for (const link of [
-      within(showcase).getByRole("link", { name: "Open UI Explorer" }),
-      ...links,
-    ]) {
-      expect(link).toHaveAttribute("target", "_blank");
-      expect(link).toHaveAttribute("rel", "noopener noreferrer");
-      expect(link).toHaveAccessibleDescription("Opens in a new tab");
-    }
     expect(
       screen.getByRole("link", { name: "Read the UI Explorer guide" }),
     ).toHaveAttribute("href", "/docs/ui/storybook");
@@ -179,7 +164,7 @@ describe("showcase-first homepage", () => {
     ]) {
       expect(document.querySelector(`main a[href="${href}"]`)).not.toBeNull();
     }
-    const production = screen.getByRole("region", { name: headings[3] });
+    const production = screen.getByRole("region", { name: headings[2] });
     expect(
       within(production).getByRole("link", {
         name: "Open the Starter Free demo",
@@ -199,6 +184,40 @@ describe("showcase-first homepage", () => {
     expect(
       within(production).getByRole("button", { name: /Buy Starter Pro/ }),
     ).toBeVisible();
+  });
+
+  it("provides a clear project-quote handoff alongside the starters", () => {
+    render(<HomePage />);
+    const production = screen.getByRole("region", { name: headings[2] });
+    const implementation = within(production).getByRole("complementary", {
+      name: "Implementation, scoped to your product.",
+    });
+    expect(implementation).toHaveTextContent("written proposal");
+    expect(implementation).toHaveTextContent(
+      "Source licence and provider costs are separate.",
+    );
+    const process = within(implementation).getByRole("list", {
+      name: "Implementation process",
+    });
+    expect(within(process).getAllByRole("listitem")).toHaveLength(3);
+    for (const service of Object.values(STARTER_PRO_SERVICES)) {
+      const offer = within(implementation).getByRole("region", {
+        name: service.title,
+      });
+      expect(offer).toHaveTextContent(service.priceLabel);
+      expect(offer).toHaveTextContent(service.description);
+      expect(offer).toHaveTextContent(service.deliverable);
+      for (const highlight of service.highlights)
+        expect(offer).toHaveTextContent(highlight);
+      expect(
+        within(offer).getByRole("link", { name: service.action }),
+      ).toHaveAttribute("href", service.href);
+    }
+    expect(
+      within(implementation).getByRole("link", {
+        name: "Review scope & support",
+      }),
+    ).toHaveAttribute("href", "/docs/starter-pro/implementation-support");
   });
 
   it("keeps metadata and breadcrumb identity and meaningful initial server markup", () => {
@@ -228,10 +247,10 @@ describe("showcase-first homepage", () => {
     });
     const html = renderToString(<HomePage />);
     for (const text of [
-      "Customer portal",
-      "Team workspace",
-      "Help center",
-      "Synthetic demo data",
+      "Your brand. Your interface.",
+      "Open Theme Builder",
+      "/tools/theme-builder",
+      "CSS tokens",
       "start-with-pycolors",
       "what-you-get",
     ])

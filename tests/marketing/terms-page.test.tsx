@@ -15,15 +15,18 @@ describe("Terms of Service page", () => {
     expect(screen.getByRole("main")).toHaveAttribute("tabindex", "-1");
     expect(
       screen.getByRole("complementary", { name: "Terms document information" }),
-    ).toHaveTextContent("October 6, 2026");
+    ).toHaveTextContent("November 5, 2026");
     expect(container.querySelector("time")).toHaveAttribute(
       "datetime",
-      "2026-10-06",
+      "2026-11-05",
     );
     const company = screen.getByRole("region", { name: "1. Who we are" });
     expect(company).toHaveTextContent(
       "Py Colors SASU, located at 6 rue d’Armaillé, 75017 Paris, France.",
     );
+    expect(company).toHaveTextContent("918 239 864 RCS Paris");
+    expect(company).toHaveTextContent("SIRET: 918 239 864 00013");
+    expect(company).toHaveTextContent("FR17918239864");
     expect(
       within(company).getByRole("link", { name: "contact@pycolors.com" }),
     ).toHaveAttribute("href", "mailto:contact@pycolors.com");
@@ -122,12 +125,32 @@ describe("Terms of Service page", () => {
       within(
         screen.getByRole("region", { name: "2. Scope of these Terms" }),
       ).getAllByRole("listitem"),
-    ).toHaveLength(7);
+    ).toHaveLength(8);
     expect(
       within(
         screen.getByRole("region", { name: "12. Acceptable use" }),
       ).getAllByRole("listitem"),
     ).toHaveLength(7);
+  });
+
+  it("separates an enquiry from a scoped service agreement and preserves source-licence boundaries", () => {
+    render(<TermsPage />);
+    const pro = screen.getByRole("region", { name: "8. Starter Pro" });
+    expect(pro).toHaveTextContent(
+      "Submitting a project brief does not confirm a booking",
+    );
+    expect(pro).toHaveTextContent(
+      "payment schedule, acceptance checks and included follow-up",
+    );
+    expect(pro).toHaveTextContent(
+      "Changes to the agreed scope require written agreement",
+    );
+    expect(pro).toHaveTextContent(
+      "client requiring source access needs their own Starter Pro licence",
+    );
+    expect(
+      within(pro).getByRole("link", { name: "project brief" }),
+    ).toHaveAttribute("href", "/request-a-quote");
   });
 
   it("keeps contact and related policies reachable without invalid links", () => {

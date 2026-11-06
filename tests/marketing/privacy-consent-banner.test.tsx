@@ -2,7 +2,10 @@ import * as React from "react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import { PrivacyConsentBanner } from "@/components/privacy/privacy-consent-banner";
+import {
+  PrivacyConsentBanner,
+  PrivacyConsentSettings,
+} from "@/components/privacy/privacy-consent-banner";
 import { ConsentGatedGtm } from "@/components/privacy/consent-gated-gtm";
 
 vi.mock("next/script", () => ({
@@ -18,6 +21,7 @@ beforeEach(() => {
 afterEach(() => {
   localStorage.clear();
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
 describe("privacy consent banner", () => {
@@ -39,7 +43,7 @@ describe("privacy consent banner", () => {
     );
     const banner = screen.getByRole("region", { name: "Cookie preferences" });
     expect(pageAction).toHaveFocus();
-    expect(banner).toHaveAccessibleDescription(/Optional analytics/);
+    expect(banner).toHaveAccessibleDescription(/Optional Google tags/);
     expect(within(banner).getAllByRole("button")).toHaveLength(2);
     expect(
       within(banner).getByRole("link", { name: "Privacy" }),
@@ -101,6 +105,54 @@ describe("privacy consent banner", () => {
       ).not.toBeInTheDocument();
     },
   );
+
+  it.each(["accepted", "denied"])(
+    "can reopen a saved %s choice, reject it and return focus",
+    (value) => {
+      localStorage.setItem(consentKey, value);
+      const reload = vi.fn();
+      vi.stubGlobal("location", { reload });
+      render(
+        <>
+          <PrivacyConsentSettings />
+          <ConsentGatedGtm gtmId="GTM-TEST" />
+          <PrivacyConsentBanner />
+        </>,
+      );
+      const manage = screen.getByRole("button", {
+        name: "Manage cookie preferences",
+      });
+      manage.focus();
+      fireEvent.click(manage);
+      const reject = screen.getByRole("button", { name: "Reject optional" });
+      expect(reject).toHaveFocus();
+      fireEvent.click(reject);
+      expect(localStorage.getItem(consentKey)).toBe("denied");
+      expect(
+        screen.queryByTestId("optional-analytics"),
+      ).not.toBeInTheDocument();
+      expect(manage).toHaveFocus();
+      expect(reload).toHaveBeenCalledTimes(value === "accepted" ? 1 : 0);
+    },
+  );
+
+  it("keeps a usable in-page choice when browser storage is unavailable", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new DOMException("Blocked", "SecurityError");
+    });
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("Blocked", "SecurityError");
+    });
+    render(
+      <>
+        <ConsentGatedGtm gtmId="GTM-TEST" />
+        <PrivacyConsentBanner />
+      </>,
+    );
+    expect(screen.queryByTestId("optional-analytics")).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Accept optional" }));
+    expect(screen.getByTestId("optional-analytics")).toBeInTheDocument();
+  });
 
   it("has no automated accessibility violations", async () => {
     const { container } = render(<PrivacyConsentBanner />);

@@ -50,6 +50,7 @@ export const PRIMARY_NAV_ITEMS: (
   { label: "Products", menu: "products" },
   { label: "Docs", href: "/docs" },
   { label: "Resources", menu: "resources" },
+  { label: "Demos", href: "/demo" },
   { label: "Pricing", href: "/pricing" },
 ];
 
@@ -163,6 +164,7 @@ export const PRODUCT_MENU_SECONDARY_ITEMS: PrimaryNavItem[] = [
 ];
 
 export const MOBILE_BROWSE_NAV_ITEMS: PrimaryNavItem[] = [
+  { label: "Demos", href: "/demo" },
   ...PRODUCT_MENU_SECONDARY_ITEMS,
   { label: "UI examples", href: "/ui/examples" },
   { label: "Pricing", href: "/pricing" },

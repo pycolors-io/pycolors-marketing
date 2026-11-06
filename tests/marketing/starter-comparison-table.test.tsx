@@ -36,7 +36,7 @@ describe("Starter Free and Pro comparison", () => {
     }
 
     const rows = within(table).getAllByRole("rowheader");
-    expect(rows).toHaveLength(8);
+    expect(rows).toHaveLength(9);
     for (const row of rows) {
       expect(row).toHaveAttribute("scope", "row");
     }

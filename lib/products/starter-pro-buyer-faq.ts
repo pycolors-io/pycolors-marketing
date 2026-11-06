@@ -2,7 +2,10 @@ import {
   DIGITAL_REFUND_SUMMARY,
   PURCHASE_SUPPORT_SUMMARY,
   STARTER_PRO_USAGE_SUMMARY,
+  STARTER_PRO_UPDATES_SUMMARY,
 } from "./commercial-policy";
+import { PRODUCT_DISPLAY } from "./public-catalog";
+import { STARTER_PRO_SERVICES } from "./starter-pro-services";
 
 interface BuyerFaq {
   readonly question: string;
@@ -16,6 +19,39 @@ interface BuyerFaq {
 // Keep offer, license, support, and delivery policy in their existing sources.
 // These answers explain the next buyer action; they do not define new terms.
 export const starterProBuyerFaqs = [
+  {
+    question: "What validation comes with the source?",
+    answer:
+      "Packaging requires a standalone ZIP install, empty-database migrations, a production build and a first-user browser journey. PostgreSQL and browser suites cover billing reconciliation, workspaces, project tasks, English/French and Customize with synthetic data. Configure and validate your own providers before launch.",
+    links: [
+      {
+        href: "/docs/starter-pro/release-readiness",
+        label: "Inspect validation and launch checks",
+      },
+    ],
+  },
+  {
+    question: "Is billing owned by a workspace or a person?",
+    answer:
+      "Billing belongs to the user account. Multiple workspaces and resource quotas are configurable; quotas are uncapped by default. Organization-owned billing requires a separate extension and ownership design.",
+    links: [
+      {
+        href: "/docs/starter-pro/what-is-included",
+        label: "Review billing and workspace boundaries",
+      },
+    ],
+  },
+  {
+    question: "Can I discuss a tailored implementation?",
+    answer: `Yes. The complete source licence is ${PRODUCT_DISPLAY["starter-pro"].priceLabel}. Guided setup starts at ${STARTER_PRO_SERVICES.setup.priceLabel.replace("From ", "")} and business adaptation at ${STARTER_PRO_SERVICES.adaptation.priceLabel.replace("From ", "")}. These are separate service engagements; the source licence and provider costs are itemized separately. Scope, deliverables, acceptance checks, total price and support period are agreed in writing before work begins.`,
+    links: [
+      {
+        href: "/docs/starter-pro/implementation-support",
+        label: "Review implementation scope",
+      },
+      { href: "/request-a-quote", label: "Discuss your project" },
+    ],
+  },
   {
     question: "What should I prepare before local setup?",
     answer:
@@ -130,8 +166,7 @@ export const starterProBuyerFaqs = [
   },
   {
     question: "Do I get future Starter Pro updates?",
-    answer:
-      "Future Starter Pro updates are included at no additional cost for existing buyers, subject to continued product availability.",
+    answer: STARTER_PRO_UPDATES_SUMMARY,
     links: [{ href: "/changelog", label: "Review release history" }],
   },
   {

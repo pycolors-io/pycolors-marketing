@@ -60,9 +60,9 @@ describe("Theme Builder files", () => {
   it("downloads each exact serializer artifact and a separate typography stylesheet", () => {
     render(<ThemeBuilder />);
     for (const [label, format, fileName, mediaType] of [
-      ["CSS", "css", "pycolors-theme.css", "text/css"],
-      ["Tailwind v4", "tailwind-v4", "pycolors-theme.tailwind.css", "text/css"],
-      ["JSON", "json", "pycolors-theme.tokens.json", "application/json"],
+      ["CSS", "css", "monochrome.css", "text/css"],
+      ["Tailwind v4", "tailwind-v4", "monochrome.tailwind.css", "text/css"],
+      ["JSON", "json", "monochrome.tokens.json", "application/json"],
     ] as const) {
       chooseFormat(label);
       fireEvent.click(
@@ -79,17 +79,18 @@ describe("Theme Builder files", () => {
         mediaType,
       });
     }
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "system-mono" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "Geist Mono" }));
     fireEvent.click(
       screen.getByRole("button", { name: "Download typography CSS" }),
     );
     expect(downloadThemeFile).toHaveBeenLastCalledWith(
       expect.objectContaining({
-        fileName: "pycolors-theme.typography.css",
+        fileName: "monochrome.typography.css",
         mediaType: "text/css",
-        content: expect.stringContaining("--font-sans: ui-monospace"),
+        content: expect.stringContaining('--font-sans: "Geist Mono"'),
       }),
     );
   });
@@ -97,9 +98,12 @@ describe("Theme Builder files", () => {
   it("saves and reopens a theme after a fresh editor mount", async () => {
     const first = render(<ThemeBuilder />);
     fireEvent.click(screen.getByRole("button", { name: "Indigo Ledger" }));
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "plus-jakarta-sans" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
+    fireEvent.click(
+      screen.getByRole("menuitemradio", { name: "Plus Jakarta Sans" }),
+    );
     fireEvent.click(screen.getByRole("radio", { name: "Dark" }));
     const originalPreview = screen
       .getByRole("region", { name: "Dashboard" })
@@ -110,11 +114,11 @@ describe("Theme Builder files", () => {
     first.unmount();
     render(<ThemeBuilder />);
     expect(screen.getByRole("textbox", { name: "Theme name" })).toHaveValue(
-      "PyColors Theme",
+      "Monochrome",
     );
     upload(saved.content);
     await screen.findByText(
-      "Configuration opened. Colors, font, and preview mode restored.",
+      "Configuration opened. Theme and appearance settings restored.",
     );
     expect(screen.getByRole("textbox", { name: "Theme name" })).toHaveValue(
       "Indigo Ledger",
@@ -125,9 +129,9 @@ describe("Theme Builder files", () => {
     expect(screen.getByRole("textbox", { name: "Neutral color" })).toHaveValue(
       "#64748b",
     );
-    expect(screen.getByRole("combobox", { name: "Font family" })).toHaveValue(
-      "plus-jakarta-sans",
-    );
+    expect(
+      screen.getByRole("button", { name: "Font family Plus Jakarta Sans" }),
+    ).toBeVisible();
     expect(
       screen.getByRole("region", { name: "Dashboard" }).getAttribute("style"),
     ).toBe(originalPreview);
@@ -191,7 +195,7 @@ describe("Theme Builder files", () => {
       "configuration could not be downloaded",
     );
     expect(screen.getByRole("textbox", { name: "Theme name" })).toHaveValue(
-      "PyColors Theme",
+      "Monochrome",
     );
   });
 
@@ -228,4 +232,25 @@ describe("Theme Builder files", () => {
       "Newer edit",
     );
   });
+});
+
+it("downloads product defaults with the current custom colors and geometry", () => {
+  render(<ThemeBuilder />);
+  fireEvent.change(screen.getByRole("textbox", { name: /^Brand color/ }), {
+    target: { value: "#0ea5e9" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "XL" }));
+  fireEvent.click(screen.getByRole("radio", { name: "Dark" }));
+  fireEvent.click(
+    screen.getByRole("button", {
+      name: "Download Starter Pro config",
+    }),
+  );
+  const file = vi.mocked(downloadThemeFile).mock.calls.at(-1)![0];
+  expect(file.fileName).toBe("appearance.ts");
+  expect(file.content).toContain('"palette": "custom"');
+  expect(file.content).toContain('"radius": "large"');
+  expect(file.content).toContain('"mode": "dark"');
+  expect(file.content).toContain('"light": {');
+  expect(file.content).toContain('"dark": {');
 });

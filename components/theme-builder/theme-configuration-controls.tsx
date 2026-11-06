@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  APPEARANCE_DEFAULTS,
+  type AppearancePreferences,
+} from "@/lib/appearance-contract";
+
 import * as React from "react";
 import { FolderOpen, Save, X } from "lucide-react";
 import {
@@ -24,15 +29,17 @@ import {
 export function ThemeConfigurationControls({
   state,
   font,
+  appearance = APPEARANCE_DEFAULTS,
   onRestore,
 }: Readonly<{
   state: ThemeBuilderState;
   font: ThemeFont;
+  appearance?: AppearancePreferences;
   onRestore: (configuration: RestoredThemeConfiguration) => void;
 }>) {
   const input = React.useRef<HTMLInputElement>(null);
   const operation = React.useRef(0);
-  const currentEditor = React.useRef({ state, font });
+  const currentEditor = React.useRef({ state, font, appearance });
   const [reading, setReading] = React.useState(false);
   const [notice, setNotice] = React.useState({
     message: "",
@@ -49,8 +56,8 @@ export function ThemeConfigurationControls({
     [],
   );
   React.useEffect(() => {
-    currentEditor.current = { state, font };
-  }, [state, font]);
+    currentEditor.current = { state, font, appearance };
+  }, [state, font, appearance]);
 
   function showNotice(next: { message: string; error: boolean }) {
     setNotice((previous) => ({ ...next, id: previous.id + 1 }));
@@ -59,7 +66,7 @@ export function ThemeConfigurationControls({
 
   function saveConfiguration() {
     try {
-      downloadThemeFile(createThemeConfigurationFile(state, font));
+      downloadThemeFile(createThemeConfigurationFile(state, font, appearance));
       showNotice({
         message:
           "Configuration download requested. Keep the file to reopen your theme.",
@@ -93,7 +100,8 @@ export function ThemeConfigurationControls({
       if (current !== operation.current) return;
       if (
         currentEditor.current.state !== state ||
-        currentEditor.current.font !== font
+        currentEditor.current.font !== font ||
+        currentEditor.current.appearance !== appearance
       ) {
         showNotice({
           message:
@@ -109,7 +117,7 @@ export function ThemeConfigurationControls({
       onRestore(result.value);
       showNotice({
         message:
-          "Configuration opened. Colors, font, and preview mode restored.",
+          "Configuration opened. Theme and appearance settings restored.",
         error: false,
       });
     } catch {

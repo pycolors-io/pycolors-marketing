@@ -1,7 +1,7 @@
 ---
 title: Production checklist (PRO)
 description: Validate auth, billing, backend, delivery, environment, and launch readiness before shipping Starter Pro to real users.
-lastUpdated: "2026-05-18"
+lastUpdated: "2026-10-30"
 appliesTo: Starter Pro
 ---
 
@@ -34,6 +34,13 @@ import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 ## Validate the foundation before launch
 
+Use the [automated coverage guide](/docs/starter-pro/release-readiness) to review
+what is checked with synthetic data. Run `pnpm ops:diagnose`, check
+`/api/readiness`, connect the [operational signals](/docs/starter-pro/operations)
+to your monitoring and rehearse a verified restore before retaining customer data.
+Configure your own quotas if your offer needs caps; defaults are uncapped and
+billing remains personal.
+
 Starter Pro gives you the production-shaped foundation.
 
 This checklist helps you validate that foundation before exposing the product to real users, real payments, and real customer data.
@@ -62,7 +69,8 @@ It should validate:
 />
 
 <Callout title="Production rule">
-  Do not launch because the UI looks finished. Launch when the critical systems behave correctly.
+  Do not launch because the UI looks finished. Launch when the critical systems
+  behave correctly.
 </Callout>
 
 ## What this checklist covers
@@ -72,21 +80,21 @@ It should validate:
   tone="platform"
   items={[
     {
-      title: 'Auth',
+      title: "Auth",
       description:
-        'Sessions, providers, reset flows, verification, and protected routes.',
+        "Sessions, providers, reset flows, verification, and protected routes.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing',
+      title: "Billing",
       description:
-        'Checkout, portal, webhooks, invoices, subscriptions, and access.',
+        "Checkout, portal, webhooks, invoices, subscriptions, and access.",
       icon: CreditCard,
     },
     {
-      title: 'Backend',
+      title: "Backend",
       description:
-        'Database, ownership, migrations, server rules, and product data.',
+        "Database, ownership, migrations, server rules, and product data.",
       icon: Server,
     },
   ]}
@@ -97,14 +105,14 @@ It should validate:
 > Production readiness is not one check.
 > It is the alignment of identity, payment, data, access, and delivery.
 
-| Layer | Production question |
-| --- | --- |
-| Auth | Can real users sign in safely and recover access? |
-| Billing | Can real customers pay and have state synchronized? |
-| Backend | Can product data persist with ownership and access rules? |
-| Delivery | Can paid access be fulfilled securely after purchase? |
-| Environment | Are production secrets complete and separated from local/test? |
-| Deployment | Does the production build behave like the local validated flow? |
+| Layer       | Production question                                             |
+| ----------- | --------------------------------------------------------------- |
+| Auth        | Can real users sign in safely and recover access?               |
+| Billing     | Can real customers pay and have state synchronized?             |
+| Backend     | Can product data persist with ownership and access rules?       |
+| Delivery    | Can paid access be fulfilled securely after purchase?           |
+| Environment | Are production secrets complete and separated from local/test?  |
+| Deployment  | Does the production build behave like the local validated flow? |
 
 <Callout type="info" title="Go-live principle">
   A production checklist should verify behavior, not only configuration.
@@ -137,6 +145,7 @@ AUTH_EMAIL_FROM=
 ```
 
     Production secrets should not reuse local test values unless the system is intentionally still in test mode.
+
   </Step>
 
   <Step>
@@ -154,6 +163,7 @@ AUTH_EMAIL_FROM=
     - protected route redirects
     - session-aware navigation
     - connected account behavior
+
   </Step>
 
   <Step>
@@ -171,6 +181,7 @@ AUTH_EMAIL_FROM=
     - subscription canceled event
     - invoice payment succeeded event
     - invoice payment failed event
+
   </Step>
 
   <Step>
@@ -185,6 +196,7 @@ AUTH_EMAIL_FROM=
     - protected data requires a session
     - paid features require valid billing state
     - server-side rules match UI state
+
   </Step>
 
   <Step>
@@ -199,6 +211,7 @@ AUTH_EMAIL_FROM=
     - token expiration
     - unauthorized access behavior
     - interrupted session recovery
+
   </Step>
 
   <Step>
@@ -220,6 +233,7 @@ pnpm start
     - `/settings`
     - paid access flows
     - webhook endpoint
+
   </Step>
 </Steps>
 
@@ -229,46 +243,46 @@ pnpm start
   columns={3}
   items={[
     {
-      eyebrow: 'Required',
-      title: 'Required auth behavior',
+      eyebrow: "Required",
+      title: "Required auth behavior",
       icon: LockKeyhole,
       description:
-        'Confirm that authentication works end-to-end for real users before launch.',
+        "Confirm that authentication works end-to-end for real users before launch.",
       items: [
-        'users can register',
-        'users can sign in',
-        'users can sign out',
-        'sessions persist correctly',
-        'protected routes redirect anonymous users',
-        'authenticated users do not need unnecessary auth pages',
+        "users can register",
+        "users can sign in",
+        "users can sign out",
+        "sessions persist correctly",
+        "protected routes redirect anonymous users",
+        "authenticated users do not need unnecessary auth pages",
       ],
     },
     {
-      eyebrow: 'Security',
-      title: 'Auth security checks',
+      eyebrow: "Security",
+      title: "Auth security checks",
       icon: ShieldCheck,
       description:
-        'Validate recovery, provider, and error behavior before the product reaches real users.',
+        "Validate recovery, provider, and error behavior before the product reaches real users.",
       items: [
-        'forgot password does not reveal whether an email exists',
-        'reset tokens expire',
-        'provider disconnect cannot lock users out',
-        'server-side validation exists for auth actions',
-        'error messages are useful but not overly specific',
+        "forgot password does not reveal whether an email exists",
+        "reset tokens expire",
+        "provider disconnect cannot lock users out",
+        "server-side validation exists for auth actions",
+        "error messages are useful but not overly specific",
       ],
     },
     {
-      eyebrow: 'UX',
-      title: 'Auth UX checks',
+      eyebrow: "UX",
+      title: "Auth UX checks",
       icon: KeyRound,
       description:
-        'Auth should feel calm, predictable, and clear across loading, error, and success states.',
+        "Auth should feel calm, predictable, and clear across loading, error, and success states.",
       items: [
-        'loading states are visible',
-        'forms disable submit while processing',
-        'errors are field-level when possible',
-        'global auth errors are clear and calm',
-        'success states explain the next step',
+        "loading states are visible",
+        "forms disable submit while processing",
+        "errors are field-level when possible",
+        "global auth errors are clear and calm",
+        "success states explain the next step",
       ],
     },
   ]}
@@ -280,45 +294,45 @@ pnpm start
   columns={3}
   items={[
     {
-      eyebrow: 'Checkout',
-      title: 'Checkout checks',
+      eyebrow: "Checkout",
+      title: "Checkout checks",
       icon: CreditCard,
       description:
-        'Validate payment entry points and Stripe session creation before production use.',
+        "Validate payment entry points and Stripe session creation before production use.",
       items: [
-        'checkout sessions are created on the server',
-        'success URL works',
-        'cancel URL works',
-        'customer mapping is correct',
-        'test and production prices are not mixed',
+        "checkout sessions are created on the server",
+        "success URL works",
+        "cancel URL works",
+        "customer mapping is correct",
+        "test and production prices are not mixed",
       ],
     },
     {
-      eyebrow: 'Webhooks',
-      title: 'Webhook checks',
+      eyebrow: "Webhooks",
+      title: "Webhook checks",
       icon: ShieldCheck,
       description:
-        'Webhook state should be verified, idempotent, and reflected correctly in your app.',
+        "Webhook state should be verified, idempotent, and reflected correctly in your app.",
       items: [
-        'webhook signatures are verified',
-        'events are handled idempotently',
-        'subscription create/update/delete events sync correctly',
-        'invoice payment events update billing state',
-        'failed payments show a clear product state',
+        "webhook signatures are verified",
+        "events are handled idempotently",
+        "subscription create/update/delete events sync correctly",
+        "invoice payment events update billing state",
+        "failed payments show a clear product state",
       ],
     },
     {
-      eyebrow: 'Access',
-      title: 'Billing access checks',
+      eyebrow: "Access",
+      title: "Billing access checks",
       icon: CheckCircle,
       description:
-        'Paid access should depend on synchronized backend billing state, not only client UI.',
+        "Paid access should depend on synchronized backend billing state, not only client UI.",
       items: [
-        'paid features require active access',
-        'canceled subscriptions remove access when appropriate',
-        'past-due state is handled clearly',
-        'billing page reflects synchronized backend state',
-        'portal access is only available to the correct customer',
+        "paid features require active access",
+        "canceled subscriptions remove access when appropriate",
+        "past-due state is handled clearly",
+        "billing page reflects synchronized backend state",
+        "portal access is only available to the correct customer",
       ],
     },
   ]}
@@ -326,34 +340,35 @@ pnpm start
 
 ### Backend checklist
 
-| Check | Why it matters |
-| --- | --- |
-| Migrations run cleanly | Prevents broken production deploys |
-| Prisma client is generated | Ensures typed database access |
-| Auth models are present | Supports sessions and accounts |
-| Billing models are present | Supports subscriptions and invoices |
-| Ownership checks exist | Protects user data |
-| Plan checks are server-verifiable | Prevents client-only access control |
-| Webhook events are tracked | Reduces duplicate processing risk |
-| Environment-specific data is separated | Avoids mixing test and production |
+| Check                                  | Why it matters                      |
+| -------------------------------------- | ----------------------------------- |
+| Migrations run cleanly                 | Prevents broken production deploys  |
+| Prisma client is generated             | Ensures typed database access       |
+| Auth models are present                | Supports sessions and accounts      |
+| Billing models are present             | Supports subscriptions and invoices |
+| Ownership checks exist                 | Protects user data                  |
+| Plan checks are server-verifiable      | Prevents client-only access control |
+| Webhook events are tracked             | Reduces duplicate processing risk   |
+| Environment-specific data is separated | Avoids mixing test and production   |
 
 <Callout title="Backend principle">
-  If a rule affects money, identity, or private data, it should not live only in the frontend.
+  If a rule affects money, identity, or private data, it should not live only in
+  the frontend.
 </Callout>
 
 ### Delivery checklist
 
 Use this if Starter Pro delivery or another paid digital product flow is active.
 
-| Check | Required behavior |
-| --- | --- |
+| Check                           | Required behavior                         |
+| ------------------------------- | ----------------------------------------- |
 | Payment is confirmed by webhook | Access is not granted from redirect alone |
-| Download asset is private | No permanent public file URL |
-| Delivery token exists | Access can be controlled |
-| Token expires | Shared links have limited value |
-| Unauthorized access is rejected | Non-buyers cannot download |
-| Expired token path is handled | Buyer has a recovery path |
-| Confirmation copy is clear | Buyer knows what happens next |
+| Download asset is private       | No permanent public file URL              |
+| Delivery token exists           | Access can be controlled                  |
+| Token expires                   | Shared links have limited value           |
+| Unauthorized access is rejected | Non-buyers cannot download                |
+| Expired token path is handled   | Buyer has a recovery path                 |
+| Confirmation copy is clear      | Buyer knows what happens next             |
 
 ## Go / no-go decision
 
@@ -361,18 +376,18 @@ Use this if Starter Pro delivery or another paid digital product flow is active.
   preferTitle="Ready to launch when"
   avoidTitle="Do not launch if"
   prefer={[
-    'authentication flows pass end-to-end',
-    'billing webhooks synchronize state correctly',
-    'protected routes enforce access properly',
-    'database migrations are stable',
-    'delivery is secure and tested',
+    "authentication flows pass end-to-end",
+    "billing webhooks synchronize state correctly",
+    "protected routes enforce access properly",
+    "database migrations are stable",
+    "delivery is secure and tested",
   ]}
   avoid={[
-    'checkout works but webhooks are untested',
-    'access is granted from client state only',
-    'password reset or verification flows are broken',
-    'production secrets are incomplete',
-    'paid files are publicly exposed',
+    "checkout works but webhooks are untested",
+    "access is granted from client state only",
+    "password reset or verification flows are broken",
+    "production secrets are incomplete",
+    "paid files are publicly exposed",
   ]}
 />
 
@@ -383,13 +398,15 @@ Use this if Starter Pro delivery or another paid digital product flow is active.
     Checkout is not enough. Webhooks synchronize the billing state that your app should trust for subscription and access decisions.
   </Accordion>
 
-  <Accordion title="Using client-side state for sensitive access checks">
-    Client-side state can guide UI, but sensitive access checks should be server-verifiable.
-  </Accordion>
+<Accordion title="Using client-side state for sensitive access checks">
+  Client-side state can guide UI, but sensitive access checks should be
+  server-verifiable.
+</Accordion>
 
-  <Accordion title="Mixing Stripe test and live configuration">
-    Test and live keys, products, prices, and webhook secrets are separate. Validate the correct environment before going live.
-  </Accordion>
+<Accordion title="Mixing Stripe test and live configuration">
+  Test and live keys, products, prices, and webhook secrets are separate.
+  Validate the correct environment before going live.
+</Accordion>
 
   <Accordion title="Treating delivery as an afterthought">
     If users buy a digital product, fulfillment is part of the product experience. Checkout is only half of the journey.
@@ -413,8 +430,8 @@ Before launching, run through this final sequence:
 11. run one final smoke test
 
 <Callout title="Launch with confidence">
-  A strong launch is not just a clean UI.
-  It is a product where identity, revenue, data, and access behave correctly together.
+  A strong launch is not just a clean UI. It is a product where identity,
+  revenue, data, and access behave correctly together.
 </Callout>
 
 <DocsUpgradeCTA
@@ -432,31 +449,31 @@ Before launching, run through this final sequence:
   variant="grid"
   items={[
     {
-      title: 'Authentication system',
-      href: '/docs/starter-pro/auth',
+      title: "Authentication system",
+      href: "/docs/starter-pro/auth",
       description:
-        'Review authentication, sessions, providers, and account lifecycle.',
+        "Review authentication, sessions, providers, and account lifecycle.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing system',
-      href: '/docs/starter-pro/billing',
+      title: "Billing system",
+      href: "/docs/starter-pro/billing",
       description:
-        'Validate Checkout, portal, webhooks, invoices, and subscription state.',
+        "Validate Checkout, portal, webhooks, invoices, and subscription state.",
       icon: CreditCard,
     },
     {
-      title: 'Backend foundations',
-      href: '/docs/starter-pro/backend',
+      title: "Backend foundations",
+      href: "/docs/starter-pro/backend",
       description:
-        'Validate database, ownership, access rules, and server-side boundaries.',
+        "Validate database, ownership, access rules, and server-side boundaries.",
       icon: Database,
     },
     {
-      title: 'Secure delivery',
-      href: '/docs/starter-pro/delivery',
+      title: "Secure delivery",
+      href: "/docs/starter-pro/delivery",
       description:
-        'Validate post-purchase access, tokens, private storage, and fulfillment.',
+        "Validate post-purchase access, tokens, private storage, and fulfillment.",
       icon: Download,
     },
   ]}

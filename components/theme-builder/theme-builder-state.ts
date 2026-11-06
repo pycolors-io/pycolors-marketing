@@ -1,4 +1,9 @@
 import {
+  APPEARANCE_PALETTES,
+  type AppearancePalette,
+} from "@/lib/appearance-contract";
+import { applyPresetTokens } from "./theme-presets";
+import {
   generateTheme,
   validateThemeInput,
   type InputError,
@@ -22,22 +27,16 @@ export type ThemeBuilderFieldErrors = Readonly<
 
 export type ThemeBuilderState = Readonly<{
   draft: ThemeBuilderDraft;
+  presetId: AppearancePalette | null;
   previewMode: ThemeMode;
   generatedTheme: SerializedThemeResult;
   fieldErrors: ThemeBuilderFieldErrors;
   generationError: string | null;
 }>;
 
-/**
- * This violet demo preset is independent of the selected site palette. Its
- * generated neutral and explicit off-white background remain reproducible.
- */
-export const THEME_BUILDER_DEFAULTS: ThemeBuilderDraft = {
-  brandColor: "#6a30d4",
-  name: "PyColors Theme",
-  neutralColor: "",
-  lightBackgroundColor: "#fafafa",
-};
+/** The same initial Monochrome palette as Starter Pro, independent of site appearance. */
+export const THEME_BUILDER_DEFAULTS: ThemeBuilderDraft =
+  APPEARANCE_PALETTES[0].draft;
 
 export const DEFAULT_THEME_BUILDER_MODE: ThemeMode = "light";
 
@@ -75,7 +74,10 @@ type DraftEvaluation =
       generationError: string | null;
     }>;
 
-function evaluateDraft(draft: ThemeBuilderDraft): DraftEvaluation {
+function evaluateDraft(
+  draft: ThemeBuilderDraft,
+  presetId: AppearancePalette | null = null,
+): DraftEvaluation {
   const validated = validateThemeInput(toThemeInput(draft));
   if (!validated.ok) {
     return {
@@ -94,12 +96,20 @@ function evaluateDraft(draft: ThemeBuilderDraft): DraftEvaluation {
     };
   }
 
-  return { ok: true, generatedTheme: generated.value };
+  return {
+    ok: true,
+    generatedTheme: presetId
+      ? applyPresetTokens(generated.value, presetId)
+      : generated.value,
+  };
 }
 
 /** Creates deterministic editor state without browser, URL, or storage input. */
 export function createThemeBuilderState(): ThemeBuilderState {
-  const initialEvaluation = evaluateDraft(THEME_BUILDER_DEFAULTS);
+  const initialEvaluation = evaluateDraft(
+    THEME_BUILDER_DEFAULTS,
+    APPEARANCE_PALETTES[0].value,
+  );
   if (!initialEvaluation.ok) {
     throw new Error(
       "Theme Builder defaults must remain valid according to the engine contract.",
@@ -108,6 +118,7 @@ export function createThemeBuilderState(): ThemeBuilderState {
 
   return {
     draft: THEME_BUILDER_DEFAULTS,
+    presetId: APPEARANCE_PALETTES[0].value,
     previewMode: DEFAULT_THEME_BUILDER_MODE,
     generatedTheme: initialEvaluation.generatedTheme,
     fieldErrors: {},
@@ -125,7 +136,11 @@ export function updateThemeBuilderField(
   value: string,
 ): ThemeBuilderState {
   const draft = { ...state.draft, [field]: value };
-  const evaluation = evaluateDraft(draft);
+  const presetId =
+    field === "name" || field === "lightBackgroundColor"
+      ? state.presetId
+      : null;
+  const evaluation = evaluateDraft(draft, presetId);
 
   if (!evaluation.ok) {
     return {
@@ -139,6 +154,7 @@ export function updateThemeBuilderField(
   return {
     ...state,
     draft,
+    presetId,
     generatedTheme: evaluation.generatedTheme,
     fieldErrors: {},
     generationError: null,
@@ -162,10 +178,11 @@ export function resetThemeBuilderState(): ThemeBuilderState {
 export function restoreThemeBuilderState(
   draft: ThemeBuilderDraft,
   previewMode: ThemeMode,
+  presetId: AppearancePalette | null = null,
 ):
   | Readonly<{ ok: true; state: ThemeBuilderState }>
   | Readonly<{ ok: false; message: string }> {
-  const evaluation = evaluateDraft(draft);
+  const evaluation = evaluateDraft(draft, presetId);
   if (!evaluation.ok) {
     return {
       ok: false,
@@ -178,10 +195,26 @@ export function restoreThemeBuilderState(
     ok: true,
     state: {
       draft,
+      presetId,
       previewMode,
       generatedTheme: evaluation.generatedTheme,
       fieldErrors: {},
       generationError: null,
     },
   };
+}
+
+export function selectThemeBuilderPreset(
+  state: ThemeBuilderState,
+  presetId: AppearancePalette,
+): ThemeBuilderState {
+  const preset = APPEARANCE_PALETTES.find((item) => item.value === presetId);
+  if (!preset) return state;
+  const restored = restoreThemeBuilderState(
+    preset.draft,
+    state.previewMode,
+    presetId,
+  );
+  if (!restored.ok) throw new Error(restored.message);
+  return restored.state;
 }

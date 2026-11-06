@@ -71,7 +71,7 @@ describe("Starter upgrade page", () => {
     });
     expect(within(purchase).getByText(product.priceLabel)).toBeVisible();
     expect(purchase).toHaveTextContent(
-      `Planned regular price ${product.regularPriceLabel}`,
+      "Complete source licence. Implementation services are quoted separately.",
     );
     expect(purchase).toHaveTextContent("One-time payment");
     expect(purchase).toHaveTextContent(
@@ -94,7 +94,7 @@ describe("Starter upgrade page", () => {
       name: "Compare Starter Free and Starter Pro",
     });
     expect(within(table).getAllByRole("columnheader")).toHaveLength(3);
-    expect(within(table).getAllByRole("rowheader")).toHaveLength(8);
+    expect(within(table).getAllByRole("rowheader")).toHaveLength(9);
     expect(table).toHaveTextContent("no real account or session is created");
     expect(table).toHaveTextContent("configure and test your Stripe account");
     expect(table).toHaveAccessibleDescription(

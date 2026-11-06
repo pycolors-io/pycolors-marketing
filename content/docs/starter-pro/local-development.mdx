@@ -1,7 +1,7 @@
 ---
 title: Local Development
 description: Structure a realistic local SaaS environment with authentication, billing, database, and PWA foundations.
-lastUpdated: "2026-06-07"
+lastUpdated: "2026-11-03"
 appliesTo: Starter Pro
 ---
 
@@ -59,7 +59,8 @@ The local environment supports:
 />
 
 <Callout title="Core principle">
-  Local development should validate product infrastructure, not only UI composition.
+  Local development should validate product infrastructure, not only UI
+  composition.
 </Callout>
 
 ## Why this matters
@@ -96,8 +97,8 @@ Production confidence
 ```
 
 <Callout type="info" title="Production insight">
-  A strong local setup is not about convenience only.
-  It is the first release gate for your product infrastructure.
+  A strong local setup is not about convenience only. It is the first release
+  gate for your product infrastructure.
 </Callout>
 
 ### Mental model
@@ -158,7 +159,8 @@ Production confidence
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ### Included infrastructure
@@ -181,8 +183,7 @@ Production confidence
     },
     {
       title: "Database",
-      description:
-        "Prisma-powered PostgreSQL development environment.",
+      description: "Prisma-powered PostgreSQL development environment.",
       icon: Database,
     },
     {
@@ -203,6 +204,7 @@ Production confidence
 ```bash
 pnpm install
 ```
+
   </Step>
 
   <Step>
@@ -211,6 +213,7 @@ pnpm install
 ```bash
 cp .env.example .env.local
 ```
+
   </Step>
 
   <Step>
@@ -219,6 +222,7 @@ cp .env.example .env.local
 ```bash
 pnpm db:up
 ```
+
   </Step>
 
   <Step>
@@ -227,6 +231,7 @@ pnpm db:up
 ```bash
 pnpm app:setup
 ```
+
   </Step>
 
   <Step>
@@ -235,6 +240,7 @@ pnpm app:setup
 ```bash
 pnpm dev
 ```
+
   </Step>
 </Steps>
 
@@ -262,8 +268,7 @@ pnpm dev
       title: "Product validation",
       icon: Rocket,
       tone: "primary",
-      description:
-        "Confirm that Starter Pro behaves like a real SaaS locally.",
+      description: "Confirm that Starter Pro behaves like a real SaaS locally.",
       items: [
         "auth flows work",
         "billing routes render",
@@ -325,6 +330,54 @@ Validate:
   ]}
 />
 
+## Explore the isolated demo
+
+In a demo deployment, `/demo` offers three guided entry points. All three use the
+same private, temporary workspace, so switching journeys keeps the visitor’s
+projects and team changes.
+
+<DocsFeatureGrid
+  columns={3}
+  tone="neutral"
+  items={[
+    {
+      title: "Discover the dashboard",
+      description:
+        "Explore populated charts, create a project and review the resulting workspace activity.",
+      icon: Layers3,
+    },
+    {
+      title: "Collaborate with a team",
+      description:
+        "Invite an @example.invalid teammate, simulate joining and manage member roles using the workspace service.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Preview billing",
+      description:
+        "Review, cancel, confirm and restart a clearly labelled plan preview in Billing, without entering payment details.",
+      icon: CreditCard,
+    },
+  ]}
+/>
+
+<Callout type="info" title="A plan preview, not a payment test">
+  Free → Pro runs locally in the browser and resets on leaving Billing or
+  reloading. It creates no subscription or paid entitlement and changes no demo
+  permissions or quotas. Public demo checkout, portal and webhook endpoints stay
+  blocked on the server. Verify actual Stripe checkout and webhooks in a
+  separate test environment using the [billing
+  guide](/docs/starter-pro/billing).
+</Callout>
+
+The included `DEMO.md` documents dedicated database configuration, simulated
+invitations, visitor expiry and cleanup. Public links depend on a verified demo
+deployment; they are not enabled by these local instructions alone.
+
+The [business recipe walkthroughs](/docs/starter-pro/recipes) give you concrete
+project, task and comment scenarios to try with fictitious data. Keep their
+workspace access, archive and reload checks when adapting the interface.
+
 ## Prefer / avoid
 
 <PreferAvoid
@@ -360,15 +413,13 @@ Validate:
     {
       title: "Deployment",
       href: "/docs/starter-pro/deployment",
-      description:
-        "Deploy Starter Pro with production-ready infrastructure.",
+      description: "Deploy Starter Pro with production-ready infrastructure.",
       icon: Globe,
     },
     {
       title: "Testing fixtures",
       href: "/docs/starter-pro/testing-fixtures",
-      description:
-        "Validate realistic account states and onboarding flows.",
+      description: "Validate realistic account states and onboarding flows.",
       icon: LockKeyhole,
     },
     {
@@ -377,6 +428,20 @@ Validate:
       description:
         "Validate local installability and app-like mobile behavior.",
       icon: Smartphone,
+    },
+    {
+      title: "Business recipe walkthroughs",
+      href: "/docs/starter-pro/recipes",
+      description:
+        "Exercise client tracking, support requests and internal validation with fictitious records.",
+      icon: Layers3,
+    },
+    {
+      title: "Customization and upgrades",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Keep configuration changes and domain adaptations reviewable.",
+      icon: Rocket,
     },
   ]}
 />

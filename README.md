@@ -46,6 +46,33 @@ ecosystem:
 
 ---
 
+## Starter demo entry points
+
+`/demo` is the marketing discovery page for the two starters. The global header,
+mobile navigation and footer link to it. Starter Free keeps its existing
+`https://starter-demo.pycolors.io/` deployment; its screens use mock data and
+client-side interactions.
+
+Marketing defaults to the verified public Pro demo at
+`https://pro-demo.pycolors.io/demo`, hosted by the dedicated `pycolors-pro-demo`
+project. `/demo` leads with Pro, its actual workspace captures and three direct
+journey entry points: Dashboard, Members and the Free → Pro plan preview. Free
+has a separate frontend demo section. Captures follow the site's light/dark mode.
+The Pro `demo-dashboard-indigo-light-2x.png` / `demo-dashboard-indigo-dark-2x.png` captures come from
+the same English, Indigo Ledger workspace in local demo browser QA, with
+fictitious data. They use 2× device pixel ratio (2880 × 2000) and image quality 100. Keep the page, locale, palette and viewport consistent when refreshing the pair.
+
+Override `NEXT_PUBLIC_STARTER_PRO_DEMO_URL` **at build time** to use another
+verified isolated deployment. Missing or empty values use the public PyColors
+demo; invalid non-empty values hide outbound demo links and offer the clearly
+separate product tour. The Starter Free app retains its own opt-in configuration.
+The Marketing build does not need database credentials, auth or cleanup secrets.
+
+Deploy Pro separately in demo mode using the configuration in
+`apps/starter-pro/DEMO.md` in the canonical monorepo. Keep the marketing site and
+normal Starter Pro application out of demo mode. This change does not alter DNS,
+deploy an application or enable payments.
+
 ## Homepage product preview
 
 The interactive workspace follows the hero with a compact “Built with PyColors UI”

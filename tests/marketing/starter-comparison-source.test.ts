@@ -64,7 +64,8 @@ describe("Starter comparison source contracts", () => {
     expect(page).toContain('id="free-vs-pro"');
     expect(page).not.toContain("const comparisonRows =");
     expect(page).toContain("BuyStarterProButton");
-    expect(page).toContain("Try the Starter Free demo");
+    expect(page).toContain("Open the Pro demo");
+    expect(page).toContain("Compare the demos");
     expect(page).toContain("<MarketingFaq");
     expect(page).toContain("items={starterProBuyerFaqs}");
   });

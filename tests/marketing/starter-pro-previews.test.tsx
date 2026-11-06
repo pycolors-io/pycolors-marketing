@@ -6,6 +6,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import StarterProPage, { metadata } from "../../app/(site)/starters/pro/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
 
 vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
@@ -23,25 +24,72 @@ function renderPreviews() {
 }
 
 describe("Starter Pro product page", () => {
+  it("keeps the source offer distinct from a scoped implementation and exposes the readiness guides", () => {
+    render(<StarterProPage />);
+    const readiness = screen.getByRole("region", {
+      name: "More of the product journey, already connected.",
+    });
+    expect(within(readiness).getAllByRole("article")).toHaveLength(6);
+    expect(
+      within(readiness).getByRole("link", {
+        name: "Inspect the packaging gate",
+      }),
+    ).toHaveAttribute("href", "/docs/starter-pro/release-readiness");
+    const service = screen.getByRole("region", {
+      name: "An assisted start, scoped to your product.",
+    });
+    expect(service).toHaveTextContent("Optional services");
+    expect(service).toHaveTextContent(
+      "total price and follow-up support are agreed in writing",
+    );
+    expect(service).toHaveTextContent("itemized separately in your quote");
+    expect(within(service).getAllByRole("article")).toHaveLength(2);
+    for (const offer of Object.values(STARTER_PRO_SERVICES)) {
+      const card = within(service).getByRole("article", { name: offer.title });
+      expect(card).toHaveTextContent(offer.priceLabel);
+      expect(
+        within(card).getByRole("link", { name: offer.action }),
+      ).toHaveAttribute("href", offer.href);
+    }
+    expect(
+      within(service).queryByRole("button", { name: /Buy Starter Pro/u }),
+    ).toBeNull();
+    expect(
+      screen.getByRole("region", { name: "Starter Pro" }),
+    ).toHaveTextContent(PRODUCT_DISPLAY["starter-pro"].priceLabel);
+  });
+
   it("keeps all five previews and their explanations without full-size links", () => {
     const region = renderPreviews();
     const images = within(region).getAllByRole("img", { hidden: true });
     expect(images).toHaveLength(5);
     expect(within(region).queryByRole("tablist")).toBeNull();
     for (const [index, [title, file, annotation]] of [
-      ["Dashboard", "dashboard", "demonstration data, not customer results"],
-      ["Authentication", "auth", "Configure your own provider credentials"],
+      [
+        "Dashboard",
+        "dashboard-pycolors-2x",
+        "demonstration data, not customer results",
+      ],
+      [
+        "Authentication",
+        "auth-indigo-2x",
+        "Configure your own provider credentials",
+      ],
       [
         "Billing",
-        "billing",
+        "billing-emerald-2x",
         "not evidence of a payment or a verified Stripe integration",
       ],
       [
         "Pricing example",
-        "pricing",
+        "pricing-cyan-2x",
         "not the purchase terms for the Starter Pro source package",
       ],
-      ["Offline fallback", "pwa", "does not mean every feature works offline"],
+      [
+        "Project work",
+        "project-work-coral-2x",
+        "Archived projects remain readable",
+      ],
     ].entries()) {
       const image = images[index]!;
       expect(image).toHaveAccessibleName(/Starter Pro/u);
@@ -59,7 +107,7 @@ describe("Starter Pro product page", () => {
       expect(within(note).getByRole("heading", { level: 3 })).toHaveTextContent(
         title!,
       );
-      expect(image.getAttribute("src")).toContain(`${file}-pycolors.png`);
+      expect(image.getAttribute("src")).toContain(`${file}.png`);
       expect(within(note).queryByRole("link")).toBeNull();
       expect(note).not.toHaveAttribute("inert");
       for (const slide of region.querySelectorAll(
@@ -91,7 +139,7 @@ describe("Starter Pro product page", () => {
     fireEvent.click(previous);
     fireEvent.click(previous);
     expect(
-      within(region).getByRole("group", { name: "5 of 5: Offline fallback" }),
+      within(region).getByRole("group", { name: "5 of 5: Project work" }),
     ).toBeVisible();
     expect(
       within(region).getByRole("button", { name: "Play slideshow" }),
@@ -198,7 +246,7 @@ describe("Starter Pro product page", () => {
       "Authentication",
       "Billing",
       "Pricing example",
-      "Offline fallback",
+      "Project work",
       "Dashboard",
     ]) {
       act(() => vi.advanceTimersByTime(5000));
@@ -307,7 +355,11 @@ describe("Starter Pro product page", () => {
     });
     const links = within(navigation).getAllByRole("link");
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
+      "#product-tour",
       "#product-preview",
+      "#built-with-pycolors",
+      "#readiness",
+      "#implementation",
       "#included",
       "#purchase",
       "#free-vs-pro",
@@ -345,7 +397,7 @@ describe("Starter Pro product page", () => {
     });
     expect(offer).toHaveTextContent(PRODUCT_DISPLAY["starter-pro"].priceLabel);
     expect(offer).toHaveTextContent(
-      `Regular price planned at ${PRODUCT_DISPLAY["starter-pro"].regularPriceLabel}`,
+      "Complete source licence. Provider costs and implementation services are separate.",
     );
     expect(offer).toHaveTextContent("One-time payment");
     expect(offer).toHaveTextContent(
@@ -376,7 +428,9 @@ describe("Starter Pro product page", () => {
     for (const link of within(screen.getByRole("main")).getAllByRole("link")) {
       const href = link.getAttribute("href")!;
       if (!href.startsWith("/")) continue;
-      const route = href.split("#")[0]!;
+      const target = new URL(href, "https://pycolors.io");
+      expect(target.origin).toBe("https://pycolors.io");
+      const route = target.pathname;
       const paths = route.startsWith("/docs/")
         ? [
             resolve("content", `${route.slice(1)}.mdx`),

@@ -633,7 +633,7 @@ export default function StarterFreePage() {
                   {starterProPriceLabel}
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  Launch price · One-time payment
+                  One-time source licence
                 </span>
               </p>
               <ul className="my-6 space-y-3">

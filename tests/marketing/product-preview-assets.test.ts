@@ -24,11 +24,16 @@ describe("commercial product capture contracts", () => {
         expect(path.startsWith(`${publicDir}${sep}`)).toBe(true);
         const bytes = readFileSync(path);
         expect(bytes.length).toBeGreaterThan(1000);
-        expect(bytes.length).toBeLessThan(350_000);
+        // Pro now carries 2× source captures; delivery still uses responsive optimization.
+        expect(bytes.length).toBeLessThan(
+          _product === "starter-pro" ? 450_000 : 350_000,
+        );
 
         if (extname(path) === ".png") {
           expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
-          expect(bytes.readUInt32BE(16)).toBeGreaterThan(800);
+          expect(bytes.readUInt32BE(16)).toBeGreaterThan(
+            _product === "starter-pro" ? 2879 : 800,
+          );
           expect(bytes.readUInt32BE(20)).toBeGreaterThan(400);
         } else {
           expect(extname(path)).toBe(".webp");

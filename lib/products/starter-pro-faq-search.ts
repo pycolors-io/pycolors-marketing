@@ -14,6 +14,9 @@ type StarterProFaqQuestion = (typeof starterProBuyerFaqs)[number]["question"];
 // Classify canonical questions without copying answers or commercial terms.
 // Adding or renaming a question requires an explicit topic decision here.
 const topicByQuestion = {
+  "What validation comes with the source?": "setup",
+  "Is billing owned by a workspace or a person?": "scope",
+  "Can I discuss a tailored implementation?": "setup",
   "What should I prepare before local setup?": "setup",
   "How long before I can start?": "setup",
   "What happens after payment?": "purchase",

@@ -14,9 +14,6 @@ import {
   PanelsTopLeft,
   Server,
   Check,
-  Table2,
-  MousePointer2,
-  PanelTop,
 } from "lucide-react";
 import { Badge, cn } from "@pycolors/ui";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -32,14 +29,14 @@ import {
   MarketingCtaPanel,
   MarketingLinkButton,
 } from "@/components/marketing/cta-panel";
-import { SaasShowcase } from "@/components/marketing/showcase/saas-showcase";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 import { UI_VERSION } from "@/lib/version";
-import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import styles from "@/components/marketing/home.module.css";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/lib/seo/website";
+import { ProductStudioReference } from "@/components/marketing/product-studio-reference";
 
 export const metadata: Metadata = {
   title: {
@@ -148,27 +145,6 @@ const startingPoints = [
   },
 ] as const;
 
-const explorerLinks = [
-  {
-    storyId: "components-table--rows-and-empty-section",
-    label: "Data tables",
-    description: "Rows, status & empty states",
-    icon: Table2,
-  },
-  {
-    storyId: "components-tabs--default",
-    label: "Interactive tabs",
-    description: "Panels & keyboard navigation",
-    icon: MousePointer2,
-  },
-  {
-    storyId: "components-empty-state--with-action",
-    label: "Empty states",
-    description: "Empty content with an action",
-    icon: PanelTop,
-  },
-] as const;
-
 const trustLinks = [
   ["Public roadmap", "/roadmap"],
   ["Changelog", "/changelog"],
@@ -182,9 +158,9 @@ const trustLinks = [
 function StarterScope({ pro = false }: { pro?: boolean }) {
   const rows = pro
     ? [
-        ["Interface", "Application foundation"],
-        ["Services", "Auth, database, billing & email"],
-        ["Next step", "Configure, integrate, validate"],
+        ["Interface", "FR/EN, Customize & real workspace data"],
+        ["Services", "Accounts, billing, projects & team workflows"],
+        ["Handover", "Validated ZIP, guides & operational checks"],
       ]
     : [
         ["Interface", "Runnable frontend"],
@@ -253,70 +229,6 @@ export default function HomePage() {
                   <Link href="/starters/free">Explore Starter Free</Link>
                 </MarketingLinkButton>
               </MarketingActionGroup>
-            }
-          />
-
-          <SaasShowcase
-            className={styles.showcase}
-            actions={
-              <MarketingActionGroup className={styles.showcaseActions}>
-                <MarketingLinkButton className={styles.primaryAction}>
-                  <a
-                    href={UI_EXPLORER_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-description="Opens in a new tab"
-                  >
-                    Open UI Explorer
-                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                  </a>
-                </MarketingLinkButton>
-                <Link
-                  href="/docs/ui/installation"
-                  className={styles.showcaseDocsLink}
-                >
-                  Read the docs{" "}
-                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                </Link>
-              </MarketingActionGroup>
-            }
-            footer={
-              <div className={styles.proofCaption}>
-                <div className={styles.proofPackage}>
-                  <p>Explore the building blocks.</p>
-                  <a href="https://www.npmjs.com/package/@pycolors/ui">
-                    <Package className="size-3.5" aria-hidden="true" />
-                    @pycolors/ui <span>v{UI_VERSION}</span>
-                    <ArrowUpRight className="size-3" aria-hidden="true" />
-                  </a>
-                </div>
-                <nav
-                  aria-label="Explore the showcase primitives"
-                  className={styles.proofLinks}
-                >
-                  {explorerLinks.map(
-                    ({ storyId, label, description, icon: Icon }) => (
-                      <a
-                        key={storyId}
-                        href={`${UI_EXPLORER_URL}?path=/story/${storyId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-description="Opens in a new tab"
-                        aria-label={label}
-                      >
-                        <span className={styles.proofLinkTitle}>
-                          <Icon className="size-3.5" aria-hidden="true" />
-                          {label}
-                          <ArrowUpRight className="size-3" aria-hidden="true" />
-                        </span>
-                        <span className={styles.proofLinkDescription}>
-                          {description}
-                        </span>
-                      </a>
-                    ),
-                  )}
-                </nav>
-              </div>
             }
           />
 
@@ -411,7 +323,7 @@ export default function HomePage() {
               titleId="home-foundations-heading"
               eyebrow="Inspect the foundation"
               title="From the interface to your implementation."
-              description="The workspace shows public primitives in context. Inspect their behavior in the UI Explorer; use the documentation for installation, composition and integration."
+              description="Explore public components in the UI Explorer. Use the documentation to install, theme and compose them in your application."
               align="left"
               className={sectionHeaderClass}
             />
@@ -420,7 +332,7 @@ export default function HomePage() {
                 title="Components and states"
                 eyebrow="Public primitives"
                 icon={<Code2 />}
-                description="Review the APIs and keyboard behavior behind the table, filters and empty state."
+                description="Inspect component APIs, interaction states and keyboard behavior in the public UI Explorer."
                 visual={<MarketingCardIllustration kind="components" />}
                 footer={
                   <ul className="divide-y divide-border-subtle">
@@ -456,8 +368,8 @@ export default function HomePage() {
                       </ResourceLink>
                     </li>
                     <li>
-                      <ResourceLink href="/tools/theme-builder">
-                        Open Theme Builder
+                      <ResourceLink href="/docs/design-system/tokens">
+                        Read token documentation
                       </ResourceLink>
                     </li>
                   </ul>
@@ -502,7 +414,7 @@ export default function HomePage() {
               titleId="home-production-heading"
               eyebrow="From evaluation to implementation"
               title="Choose the infrastructure your project needs."
-              description="Starter Free demonstrates application UX with mock data. Starter Pro supplies the documented infrastructure foundation; your project still needs configuration, integration and production checks."
+              description="Explore app UX with Starter Free, then build on persisted workspaces, billing and project workflows with Starter Pro. Inspect the included source, validation and handover. Your launch still needs configuration, integration and production checks."
               align="left"
               className={sectionHeaderClass}
             />
@@ -570,14 +482,14 @@ export default function HomePage() {
                       {starterPro.priceLabel}
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      Launch price
+                      One-time payment
                     </span>
                   </p>
                 </div>
                 <p className="mt-4 text-sm leading-7 text-muted-foreground lg:min-h-21">
-                  Auth.js, Prisma/PostgreSQL, Stripe billing, transactional
-                  email, protected routes and PWA foundations. Review included
-                  scope and setup before buying.
+                  Accounts, team workspaces, Stripe billing and projects with
+                  assigned tasks and discussions. Start with a validated ZIP,
+                  product configuration and a documented path to operations.
                 </p>
                 <StarterScope pro />
                 <div className="mt-7">
@@ -588,6 +500,9 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="mt-7 divide-y divide-pro-border-subtle border-t border-pro-border-subtle pt-2">
+                  <ResourceLink href="/starters/pro#product-tour">
+                    Watch the product tour
+                  </ResourceLink>
                   <ResourceLink href="/docs/starter-pro/what-is-included">
                     Review what is included
                   </ResourceLink>
@@ -600,6 +515,183 @@ export default function HomePage() {
                   <ResourceLink href="/pricing">
                     Compare product pricing
                   </ResourceLink>
+                </div>
+              </div>
+            </div>
+            <aside
+              aria-labelledby="home-implementation-heading"
+              className={styles.implementation}
+            >
+              <div className={styles.implementationHeader}>
+                <div className={styles.implementationCopy}>
+                  <p className={styles.implementationEyebrow}>
+                    Starter Pro · Implementation services
+                  </p>
+                  <h3 id="home-implementation-heading">
+                    Implementation, scoped to your product.
+                  </h3>
+                  <p className={styles.implementationDescription}>
+                    Work with PyColors to configure your foundation or build a
+                    defined business workflow. Start with agreed deliverables
+                    and a written proposal.
+                  </p>
+                </div>
+                <ol
+                  aria-label="Implementation process"
+                  className={styles.implementationProcess}
+                >
+                  {["Scope", "Implementation", "Handover"].map(
+                    (step, index) => (
+                      <li key={step}>
+                        <span aria-hidden="true">0{index + 1}</span>
+                        {step}
+                      </li>
+                    ),
+                  )}
+                </ol>
+              </div>
+              <div className={styles.implementationServices}>
+                {Object.values(STARTER_PRO_SERVICES).map((service, index) => (
+                  <section
+                    key={service.id}
+                    aria-labelledby={`home-service-${service.id}`}
+                    className={styles.implementationService}
+                  >
+                    <div className={styles.implementationServiceHeading}>
+                      <h4 id={`home-service-${service.id}`}>{service.title}</h4>
+                      <span aria-hidden="true">0{index + 1}</span>
+                    </div>
+                    <p className={styles.implementationPrice}>
+                      {service.priceLabel}
+                    </p>
+                    <p className={styles.implementationServiceDescription}>
+                      {service.description}
+                    </p>
+                    <ul
+                      aria-label={`${service.title} includes`}
+                      className={styles.implementationHighlights}
+                    >
+                      {service.highlights.map((highlight) => (
+                        <li key={highlight}>
+                          <Check aria-hidden="true" />
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <dl className={styles.implementationDeliverable}>
+                      <dt>You receive</dt>
+                      <dd>{service.deliverable}</dd>
+                    </dl>
+                    <Link href={service.example.href} className={linkClass}>
+                      View example delivery
+                      <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                    </Link>
+                    <div className={styles.implementationAction}>
+                      <MarketingLinkButton variant="outline" className="w-full">
+                        <Link href={service.href}>{service.action}</Link>
+                      </MarketingLinkButton>
+                    </div>
+                  </section>
+                ))}
+              </div>
+              <div className={styles.implementationFooter}>
+                <p className={styles.implementationScope}>
+                  Starting service fees. Source licence and provider costs are
+                  separate. The quote defines your scope, acceptance checks and
+                  included follow-up.
+                </p>
+                <Link
+                  href="/docs/starter-pro/implementation-support"
+                  className={styles.implementationScopeLink}
+                >
+                  Review scope &amp; support
+                  <ArrowUpRight aria-hidden="true" />
+                </Link>
+              </div>
+            </aside>
+          </MarketingSectionShell>
+
+          <ProductStudioReference />
+
+          <MarketingSectionShell
+            spacing="default"
+            width="full"
+            aria-labelledby="home-theme-builder-heading"
+            className={styles.section}
+          >
+            <div className={styles.themeTeaser}>
+              <div className={styles.themeContent}>
+                <MarketingSectionHeader
+                  titleId="home-theme-builder-heading"
+                  eyebrow="Theme Builder"
+                  title="Your brand. Your interface."
+                  description="Build light and dark themes from your brand color. Preview components and export the CSS tokens."
+                  align="left"
+                  className={cn(sectionHeaderClass, styles.themeHeading)}
+                />
+                <ul
+                  className={styles.themeCapabilities}
+                  aria-label="Theme Builder capabilities"
+                >
+                  <li>Color system</li>
+                  <li>Typography</li>
+                  <li>CSS export</li>
+                </ul>
+                <div className={styles.themeAction}>
+                  <MarketingLinkButton className={styles.primaryAction}>
+                    <Link href="/tools/theme-builder">Open Theme Builder</Link>
+                  </MarketingLinkButton>
+                  <p>Free · No account needed</p>
+                </div>
+              </div>
+              <div className={styles.themeVisual} aria-hidden="true">
+                <div className={styles.themeVisualHeader}>
+                  <span>
+                    <Code2 />
+                    theme.css
+                  </span>
+                  <div className={styles.themeSwatches}>
+                    {[100, 65, 30, 10].map((strength) => (
+                      <i
+                        key={strength}
+                        style={{
+                          background: `color-mix(in oklab, var(--primary) ${strength}%, var(--background))`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.themeSamples}>
+                  {["Light", "Dark"].map((mode) => (
+                    <div
+                      key={mode}
+                      className={cn(
+                        styles.themeSample,
+                        mode === "Dark" ? styles.themeDark : styles.themeLight,
+                      )}
+                    >
+                      <div className={styles.themeMode}>
+                        <span />
+                        {mode}
+                      </div>
+                      <div className={styles.themeSampleBody}>
+                        <span className={styles.themeSpecimen}>Aa</span>
+                        <div className={styles.themeSampleFooter}>
+                          <span>Interface</span>
+                          <span className={styles.themeSampleSwatches}>
+                            <i />
+                            <i />
+                            <i />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.themeTokens}>
+                  <code>--primary</code>
+                  <code>--background</code>
+                  <code>--foreground</code>
                 </div>
               </div>
             </div>

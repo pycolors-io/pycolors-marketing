@@ -1,0 +1,180 @@
+---
+title: Implementation and support
+description: Distinguish the source licence, standard assistance and a separately scoped implementation engagement.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { BookOpen, FileText, Layers3, ShieldCheck } from "lucide-react";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
+
+## Choose your starting point
+
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={[
+    {
+      title: "Source licence",
+      eyebrow: PRODUCT_DISPLAY["starter-pro"].priceLabel,
+      icon: FileText,
+      description:
+        "The displayed Starter Pro price covers the source package and the rights in its licence.",
+      items: [
+        "Your order and supplied terms define update access, support period and service commitments.",
+      ],
+      href: "/license",
+      cta: "Review the licence",
+    },
+    {
+      title: "Scoped implementation",
+      icon: Layers3,
+      description:
+        "Discuss an assisted starting point for a named workflow and target environment.",
+      items: [
+        "Implementation is quoted after scope review and is separate from the source-only checkout.",
+      ],
+      href: "/request-a-quote",
+      cta: "Discuss your project",
+    },
+  ]}
+/>
+
+## Optional implementation services
+
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={Object.values(STARTER_PRO_SERVICES).map((service) => ({
+    title: service.title,
+    eyebrow: service.priceLabel,
+    description: service.description,
+    icon: Layers3,
+    items: [...service.features, service.deliverable, service.scope],
+    href: service.href,
+    cta: service.action,
+  }))}
+/>
+
+These are starting service fees. The source licence and third-party provider
+costs are itemized separately in your quote. Confirm the deliverables, target
+environment, acceptance checks, total price and included follow-up in writing
+before work begins. A quote can exceed the displayed starting price.
+
+## Request a written proposal
+
+Use the [project brief form](/request-a-quote) to describe the workflow, choose
+setup or business adaptation, and share an indicative budget. Company and
+desired timeline are optional. Keep credentials and customer data out of the brief.
+
+The confirmation provides a request reference after the email provider accepts
+the transmission to PyColors. It does not certify inbox delivery or confirm a
+price, booking or delivery date. We review the request before agreeing on a
+written scope. Use the displayed reference when following up with PyColors.
+
+## Standard starter support
+
+Installation guidance and reproducible defects in the supplied starter belong
+to the support scope of your purchased offer. Purchase access and recovery use
+[purchase support](/orders/support). Share your version, minimal steps,
+diagnostic code and a redacted screenshot; keep secrets, session cookies and
+customer data out of support messages.
+
+<Callout title="Your purchased terms remain authoritative">
+  This guide does not replace the terms supplied with your order or reduce
+  rights granted with an existing purchase. Business-specific features, hosting,
+  ongoing operation and upgrades of customized code require an agreed scope. No
+  default SLA, response deadline or 24/7 coverage is promised by this page.
+</Callout>
+
+## Define the engagement
+
+A written engagement can define the following steps with PyColors:
+
+<Steps>
+  <Step>
+    ### Licence and baseline
+
+    Identify the source release and the licensed entity involved.
+
+  </Step>
+  <Step>
+    ### Initial configuration
+
+    Agree on the database, authentication, email and billing setup for your
+    target environment.
+
+  </Step>
+  <Step>
+    ### Targeted adaptation
+
+    Name the workflow, integration or design change and its acceptance criteria.
+
+  </Step>
+  <Step>
+    ### Validation and handover
+
+    Agree on checks, operating notes and ownership of credentials, backups
+    and alerts.
+
+  </Step>
+  <Step>
+    ### Bounded follow-up
+
+    Record the support period, included assistance and escalation route for
+    that engagement.
+
+  </Step>
+</Steps>
+
+## Adapt one shared foundation
+
+Use the included workspaces, projects, assigned tasks, due dates and discussions
+as the first reusable business example. Keep branding and product settings in
+their documented entry points, and build domain-specific workflows on that
+baseline. A specialized workflow or integration belongs in the agreed scope and
+acceptance criteria. Review [included capabilities](/docs/starter-pro/what-is-included)
+before defining your adaptation.
+
+## Inspect an example delivery
+
+The [implementation example](/starters/pro/implementation-example) turns the two
+engagements into concrete briefs: one configured preview environment, or one
+internal client-delivery workflow. It shows the scope, environment record,
+acceptance evidence and team handover contents.
+
+[Download the editable example handover](/starters/pro/implementation-example/handover)
+to review the format. It is an illustrative document: its result fields are marked
+**NOT RUN**, with spaces for the actual revision, environment, tester, outcome
+and evidence. Complete these at acceptance for the agreed scope. Keep credentials
+in your credential manager and record only their ownership and location.
+
+## Prepare for handover
+
+Confirm who operates the application, manages provider accounts and can restore
+the database. Record the delivered revision, acceptance results and outstanding
+operator setup.
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Validation coverage",
+      href: "/docs/starter-pro/release-readiness",
+      description: "Review automated checks and your launch acceptance.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Production operations",
+      href: "/docs/starter-pro/operations",
+      description: "Define monitoring, backups and recovery responsibilities.",
+      icon: BookOpen,
+    },
+  ]}
+/>

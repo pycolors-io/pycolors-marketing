@@ -10,7 +10,7 @@ import { inspectText } from "../../../../scripts/ui-explorer/contract.mjs";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const entry = "app/(site)/page.tsx";
 // Reviewed homepage inputs. Existing checkout/consent edges stay outside the
-// showcase and retain their own behavioral tests; no backend source is allowed.
+// theme teaser and retain their own behavioral tests; no backend source is allowed.
 const approved = new Set([
   entry,
   "components/marketing/home.module.css",
@@ -26,9 +26,8 @@ const approved = new Set([
   "components/marketing/page-hero.tsx",
   "components/marketing/section-header.tsx",
   "components/marketing/section-shell.tsx",
-  "components/marketing/showcase/saas-showcase.tsx",
-  "components/marketing/showcase/showcase-fixtures.ts",
-  "components/marketing/showcase/showcase-workspace.tsx",
+  "components/marketing/product-studio-reference.tsx",
+  "components/marketing/product-studio-capture.tsx",
   "components/marketing/tones.ts",
   "components/pricing/buy-starter-pro-button.tsx",
   "components/pricing/checkout-failure-notice.tsx",
@@ -36,18 +35,21 @@ const approved = new Set([
   "components/privacy/consent-gated-gtm.tsx",
   "components/seo/json-ld.tsx",
   "lib/analytics.ts",
+  "lib/privacy-consent.ts",
   "lib/api/client.ts",
   "lib/api/checkout-navigation.ts",
-  "lib/docs/ui-explorer.ts",
   "lib/products/public-catalog.ts",
+  "lib/products/starter-pro-services.ts",
   "lib/seo/breadcrumb.ts",
   "lib/seo/website.ts",
   "lib/version.ts",
+  "lib/showcase/product-studio.ts",
 ]);
 const external = new Set([
   "react",
   "next",
   "next/link",
+  "next/image",
   "next/navigation",
   "next/script",
   "@pycolors/ui",
@@ -131,8 +133,17 @@ describe("homepage ownership and source contract", () => {
     const clients = [...approved].filter((file) =>
       /^\s*["']use client["']/.test(readFileSync(resolve(root, file), "utf8")),
     );
+    expect(
+      [...approved].some((file) =>
+        file.startsWith("components/theme-builder/"),
+      ),
+    ).toBe(false);
+    expect(
+      [...approved].some((file) =>
+        file.startsWith("components/marketing/showcase/"),
+      ),
+    ).toBe(false);
     expect(clients.sort()).toEqual([
-      "components/marketing/showcase/showcase-workspace.tsx",
       "components/pricing/buy-starter-pro-button.tsx",
       "components/pricing/use-product-checkout.ts",
       "components/privacy/consent-gated-gtm.tsx",
@@ -181,7 +192,8 @@ describe("homepage ownership and source contract", () => {
     expect(links.size).toBeGreaterThan(15);
     for (const href of links) {
       if (!href.startsWith("/")) continue;
-      const path = href.replace(/^\//, "");
+      // Fragment targets are exercised by the destination's navigation tests.
+      const path = href.split(/[?#]/u)[0]!.replace(/^\//, "");
       const candidates = path.startsWith("docs/")
         ? [`content/${path}.mdx`, `content/${path}/index.mdx`]
         : [`app/(site)/${path}/page.tsx`, `app/(tools)/${path}/page.tsx`];

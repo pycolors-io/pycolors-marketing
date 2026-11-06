@@ -1,6 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import {
+  APPEARANCE_DEFAULTS,
+  APPEARANCE_RADII,
+  type AppearancePreferences,
+  type AppearancePalette,
+} from "@/lib/appearance-contract";
+import { createStarterProAppearanceFile } from "./starter-pro-appearance-file";
 import { useState } from "react";
 import { ArrowRight, Code2 } from "lucide-react";
 import { useTheme } from "fumadocs-ui/provider/base";
@@ -38,6 +45,9 @@ import {
 type ThemeOutputProps = Readonly<{
   theme: SerializedThemeResult;
   font?: ThemeFont;
+  appearance?: AppearancePreferences;
+  presetId?: AppearancePalette | null;
+  previewMode?: "light" | "dark";
 }>;
 
 type OutputArtifact = Readonly<{
@@ -156,6 +166,9 @@ function isExportTab(value: string): value is ExportTab {
 export function ThemeOutput({
   theme,
   font = DEFAULT_THEME_FONT,
+  appearance = APPEARANCE_DEFAULTS,
+  presetId = null,
+  previewMode = "light",
 }: ThemeOutputProps) {
   const { resolvedTheme } = useTheme();
   const [activeFormat, setActiveFormat] = useState<ExportTab>("css");
@@ -169,7 +182,19 @@ export function ThemeOutput({
   const codeColorScheme: ThemeCodeColorScheme =
     resolvedTheme === "light" ? "light" : "dark";
   const activeFormatLabel = EXPORT_FORMAT_LABELS[activeFormat];
-  const typographyCss = createTypographyCss(font);
+  const typographyCss =
+    createTypographyCss(font) +
+    `
+:root {
+  --radius: ${APPEARANCE_RADII[appearance.radius]};
+}
+`;
+  const starterConfig = createStarterProAppearanceFile(
+    theme,
+    { ...appearance, font: font.id },
+    presetId,
+    previewMode,
+  );
   const fileBase = theme.input.slug ?? "pycolors-theme";
   const fileSuffix =
     activeFormat === "json"
@@ -193,8 +218,8 @@ export function ThemeOutput({
             Export your theme
           </h2>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">
-            Color tokens for both modes, with separate typography CSS. Copy or
-            download your files. Nothing is uploaded.
+            Color tokens for both modes, with separate font and radius CSS. Copy
+            or download your files. Nothing is uploaded.
           </p>
         </div>
         {!error ? (
@@ -329,10 +354,11 @@ export function ThemeOutput({
                   id="theme-builder-typography-heading"
                   className="text-sm font-medium"
                 >
-                  Typography
+                  Typography and radius
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {font.label} · Copy separately from your color tokens.
+                  {font.label} · {APPEARANCE_RADII[appearance.radius]} radius ·
+                  Copy separately from your color tokens.
                 </p>
               </div>
               <div className="flex flex-wrap items-start gap-2">
@@ -395,6 +421,32 @@ export function ThemeOutput({
                 <code>{typographyCss}</code>
               </pre>
             </details>
+          </section>
+
+          <section
+            aria-labelledby="theme-builder-starter-heading"
+            className="rounded-[4px] border border-border-subtle p-4 sm:p-5"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="max-w-xl">
+                <h3
+                  id="theme-builder-starter-heading"
+                  className="text-sm font-medium"
+                >
+                  Use in Starter Pro
+                </h3>
+                <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                  Replace <code>config/appearance.ts</code> with this file,
+                  restart your app, then reset Customize to apply the product
+                  defaults. Colors, typography and dashboard settings are
+                  included.
+                </p>
+              </div>
+              <DownloadButton
+                file={starterConfig}
+                label="Download Starter Pro config"
+              />
+            </div>
           </section>
 
           <nav

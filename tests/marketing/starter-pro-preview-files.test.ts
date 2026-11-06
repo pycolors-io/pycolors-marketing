@@ -12,34 +12,35 @@ const page = readFileSync(
 );
 
 describe("Starter Pro preview assets", () => {
-  it("uses five existing PNGs, including the refreshed dashboard capture", () => {
+  it("uses five existing PNGs, from the refreshed synthetic workspace", () => {
     const captures = [
       ...page.matchAll(/image: "(\/images\/starters\/pro\/[^"\n]+)"/gu),
     ];
     expect(captures.map(([, path]) => path)).toEqual([
-      "/images/starters/pro/dashboard-pycolors.png",
-      "/images/starters/pro/auth-pycolors.png",
-      "/images/starters/pro/billing-pycolors.png",
-      "/images/starters/pro/pricing-pycolors.png",
-      "/images/starters/pro/pwa-pycolors.png",
+      "/images/starters/pro/dashboard-pycolors-2x.png",
+      "/images/starters/pro/auth-indigo-2x.png",
+      "/images/starters/pro/billing-emerald-2x.png",
+      "/images/starters/pro/pricing-cyan-2x.png",
+      "/images/starters/pro/project-work-coral-2x.png",
     ]);
-    const legacyHeights = [1928, 2752, 5426, 1926];
+    const heights = [2000, 2000, 2000, 2000, 2000];
     captures.forEach(([, path], index) => {
       const bytes = readFileSync(resolve(marketing, `public${path}`));
       expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
-      if (index > 0) {
-        expect(bytes.readUInt32BE(16)).toBe(3456);
-        expect(bytes.readUInt32BE(20)).toBe(legacyHeights[index - 1]);
-      }
+      expect(bytes.readUInt32BE(16)).toBe(2880);
+      expect(bytes.readUInt32BE(20)).toBe(heights[index]);
     });
 
     const light = readFileSync(
-      resolve(marketing, "public/images/starters/pro/dashboard-pycolors.png"),
+      resolve(
+        marketing,
+        "public/images/starters/pro/dashboard-pycolors-2x.png",
+      ),
     );
     const dark = readFileSync(
       resolve(
         marketing,
-        "public/images/starters/pro/dashboard-dark-pycolors.png",
+        "public/images/starters/pro/dashboard-dark-pycolors-2x.png",
       ),
     );
     expect(light.readUInt32BE(16)).toBeGreaterThanOrEqual(1200);

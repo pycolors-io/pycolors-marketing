@@ -237,7 +237,7 @@ describe("company and trust pages", () => {
     expect(totals).toHaveLength(4);
     ["Now", "Next", "Later", "Shipped"].forEach((status, index) => {
       expect(totals[index]).toHaveTextContent(status);
-      expect(totals[index]).toHaveTextContent(String([4, 4, 0, 90][index]));
+      expect(totals[index]).toHaveTextContent(String([4, 4, 0, 91][index]));
       const href = within(totals[index]!)
         .getByRole("link")
         .getAttribute("href")!;
@@ -246,10 +246,10 @@ describe("company and trust pages", () => {
       expect(target).toHaveAttribute("tabindex", "-1");
     });
     const disclosures = [...container.querySelectorAll("details")];
-    expect(disclosures).toHaveLength(12);
+    expect(disclosures).toHaveLength(13);
     expect(disclosures[0]).toHaveAttribute("open");
     expect(disclosures[0]?.querySelector("summary")).toHaveTextContent(
-      "October 2026",
+      "November 2026",
     );
     disclosures
       .slice(1)
@@ -269,12 +269,13 @@ describe("company and trust pages", () => {
       "August 2026",
       "September 2026",
       "October 2026",
+      "November 2026",
       "H1 2026",
     ];
     const historyRows = groups.flatMap((name) =>
       Array.from(screen.getByRole("list", { name }).children),
     );
-    expect(historyRows).toHaveLength(90);
+    expect(historyRows).toHaveLength(91);
     historyRows.forEach((row) =>
       expect(
         within(row as HTMLElement).getByText("Shipped", { exact: true }),
@@ -286,7 +287,7 @@ describe("company and trust pages", () => {
       ).getAllByRole("listitem"),
     );
     const rows = [...activeRows, ...historyRows];
-    expect(rows).toHaveLength(98);
+    expect(rows).toHaveLength(99);
     expect(
       rows
         .map(
@@ -408,6 +409,7 @@ describe("company and trust pages", () => {
 
 // Public data frozen before the #631 composition migration. Update only with an intentional content change.
 const roadmapTitles = [
+  "PyColors Marketing v1.31.0",
   "PyColors Marketing v1.30.0",
   "Starter Pro persistent workspace and isolated demo",
   "Ship v1.0 — UI Core",
@@ -518,6 +520,12 @@ const pendingRoadmap = [
   ["Documentation-to-product conversion loop", "Now"],
 ] as const;
 const releases = [
+  [
+    "v1.31.0",
+    "2026-11-04",
+    "From evaluation to implementation",
+    "/starters/pro",
+  ],
   [
     "v1.30.0",
     "2026-10-30",

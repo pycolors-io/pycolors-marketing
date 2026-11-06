@@ -69,6 +69,7 @@ type Milestone =
   | "Aug 2026"
   | "Sep 2026"
   | "Oct 2026"
+  | "Nov 2026"
   | "H1 2026";
 
 type RoadmapItem = {
@@ -120,6 +121,12 @@ const milestones: Array<{
   title: string;
   subtitle: string;
 }> = [
+  {
+    id: "Nov 2026",
+    title: "November 2026",
+    subtitle:
+      "PyColors Marketing v1.31.0, dated 4 November 2026, connects Starter Pro evaluation, reusable workflow guides and scoped implementation handover.",
+  },
   {
     id: "Release Week",
     title: "Release Week",
@@ -194,6 +201,15 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.31.0",
+    description:
+      "Release notes for 4 November 2026: guided Starter Pro evaluation, a validated standalone buyer package, coding-agent guides, workflow recipes and illustrative implementation deliverables.",
+    status: "Shipped",
+    milestone: "Nov 2026",
+    tags: ["Marketing", "Starter Pro", "Docs"],
+    href: "/changelog",
+  },
   {
     title: "PyColors Marketing v1.30.0",
     description:
@@ -1140,6 +1156,7 @@ function RoadmapCard({
 }
 
 const historyOrder: Milestone[] = [
+  "Nov 2026",
   "Oct 2026",
   "Sep 2026",
   "Aug 2026",

@@ -5,25 +5,63 @@ import Link from "next/link";
 
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
+import {
+  PRIVACY_SETTINGS_EVENT,
+  readPrivacyConsent,
+  storePrivacyConsent,
+  type PrivacyConsent,
+} from "@/lib/privacy-consent";
 
-const CONSENT_KEY = "pycolors_privacy_consent";
-
-type ConsentValue = "accepted" | "denied";
+export function PrivacyConsentSettings() {
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      onClick={() =>
+        globalThis.dispatchEvent(new Event(PRIVACY_SETTINGS_EVENT))
+      }
+    >
+      Manage cookie preferences
+    </Button>
+  );
+}
 
 export function PrivacyConsentBanner() {
   const [mounted, setMounted] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
+  const rejectRef = React.useRef<HTMLButtonElement>(null);
+  const returnFocus = React.useRef<HTMLElement | null>(null);
+  const focusRequested = React.useRef(false);
 
   React.useEffect(() => {
     setMounted(true);
 
-    if (!globalThis.localStorage.getItem(CONSENT_KEY)) {
+    if (!readPrivacyConsent()) {
       setVisible(true);
     }
+    function openPreferences() {
+      returnFocus.current =
+        document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null;
+      focusRequested.current = true;
+      setVisible(true);
+    }
+    globalThis.addEventListener(PRIVACY_SETTINGS_EVENT, openPreferences);
+    return () =>
+      globalThis.removeEventListener(PRIVACY_SETTINGS_EVENT, openPreferences);
   }, []);
 
-  const saveConsent = React.useCallback((value: ConsentValue) => {
-    globalThis.localStorage.setItem(CONSENT_KEY, value);
+  React.useEffect(() => {
+    if (visible && focusRequested.current) {
+      focusRequested.current = false;
+      rejectRef.current?.focus();
+    }
+  }, [visible]);
+
+  const saveConsent = React.useCallback((value: PrivacyConsent) => {
+    const previouslyAccepted = readPrivacyConsent() === "accepted";
+    storePrivacyConsent(value);
 
     globalThis.dispatchEvent(
       new CustomEvent("pycolors:privacy-consent", {
@@ -32,6 +70,12 @@ export function PrivacyConsentBanner() {
     );
 
     setVisible(false);
+    returnFocus.current?.focus();
+    returnFocus.current = null;
+    if (value === "denied" && previouslyAccepted) {
+      // Removing Next's Script component cannot stop tags already executed.
+      globalThis.location.reload();
+    }
   }, []);
 
   if (!mounted || !visible) {
@@ -58,8 +102,9 @@ export function PrivacyConsentBanner() {
         id="privacy-consent-description"
         className="mt-1.5 text-[13px] leading-5 text-muted-foreground"
       >
-        Essential cookies keep PyColors working. Optional analytics help us
-        improve the site and documentation.
+        Essential storage keeps PyColors working. Optional Google tags load only
+        after acceptance. Vercel Web Analytics is separate; see Privacy for
+        details.
       </p>
       <div className="mt-1 flex items-center gap-4 text-xs text-muted-foreground">
         {[
@@ -79,6 +124,7 @@ export function PrivacyConsentBanner() {
         <Button
           type="button"
           variant="outline"
+          ref={rejectRef}
           onClick={() => saveConsent("denied")}
         >
           Reject optional

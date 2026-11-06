@@ -1,47 +1,11 @@
-export type ThemeFont = Readonly<{
-  id: string;
-  label: string;
-  family: string;
-  previewFamily: string;
-  asset?: string;
-  weight?: string;
-  license?: string;
-}>;
+import {
+  APPEARANCE_FONTS,
+  type AppearanceFont,
+} from "@/lib/appearance-contract";
 
-const sansFallback =
-  'ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif';
+export type ThemeFont = AppearanceFont;
 
-export const THEME_FONTS: readonly ThemeFont[] = [
-  {
-    id: "mona-sans",
-    label: "Mona Sans",
-    family: `"Mona Sans", ${sansFallback}`,
-    previewFamily: `"Mona Sans", ${sansFallback}`,
-    asset: "/fonts/Mona-Sans.var.woff2",
-    weight: "200 900",
-  },
-  {
-    id: "plus-jakarta-sans",
-    label: "Plus Jakarta Sans",
-    family: `"Plus Jakarta Sans", ${sansFallback}`,
-    previewFamily: `"PyColors Preview Jakarta", ${sansFallback}`,
-    asset: "/fonts/plus-jakarta-sans/latin.woff2",
-    weight: "200 800",
-    license: "/fonts/plus-jakarta-sans/OFL.txt",
-  },
-  {
-    id: "system-sans",
-    label: "System Sans",
-    family: sansFallback,
-    previewFamily: sansFallback,
-  },
-  {
-    id: "system-mono",
-    label: "System Mono",
-    family: 'ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace',
-    previewFamily: 'ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace',
-  },
-];
+export const THEME_FONTS: readonly ThemeFont[] = APPEARANCE_FONTS;
 
 export const DEFAULT_THEME_FONT = THEME_FONTS[0]!;
 

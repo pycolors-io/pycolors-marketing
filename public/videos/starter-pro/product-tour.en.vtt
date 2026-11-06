@@ -1,0 +1,66 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.700
+[Instrumental music]
+Your SaaS. Ready to make yours.
+A coherent foundation for your next product.
+
+00:00:05.700 --> 00:00:13.400
+A considered experience, from the very first sign-in.
+Email sign-in, with Google and GitHub integration points.
+
+00:00:13.400 --> 00:00:21.100
+Give new users a clear path into your product.
+Registration that feels like part of the same interface.
+
+00:00:21.100 --> 00:00:26.800
+Keep password recovery part of the same coherent experience.
+Recovery emails use your configured email provider.
+
+00:00:26.800 --> 00:00:38.500
+Sign in with an example account and open the application.
+Real session. Isolated example workspace.
+
+00:00:38.500 --> 00:00:46.200
+Open the right workspace, with its projects, people and activity.
+Workspace-scoped data and role-aware actions.
+
+00:00:46.200 --> 00:01:01.900
+Understand project activity and your team at a glance.
+Metrics and chart data come from the selected workspace.
+
+00:01:01.900 --> 00:01:21.600
+Set the palette, typography, theme and sidebar to suit your product.
+Immediate visual changes. Consistent components.
+
+00:01:21.600 --> 00:01:31.300
+Switch between list and grid while keeping the same workflow.
+Descriptions, status, assignees and archiving included.
+
+00:01:31.300 --> 00:01:47.000
+Create a project, describe the goal and assign a responsible teammate.
+Saved to your workspace through the real application.
+
+00:01:47.000 --> 00:02:06.700
+Add a task, set a due date and keep the conversation beside the work.
+Tasks, assignees and comments are persisted in PostgreSQL.
+
+00:02:06.700 --> 00:02:16.400
+Review members, roles and pending invitations in one place.
+Extend the same workspace rules as your product grows.
+
+00:02:16.400 --> 00:02:24.100
+An editable profile and a coherent set of account pages.
+Profile, account, appearance and billing share the same navigation.
+
+00:02:24.100 --> 00:02:33.800
+Docker, PostgreSQL and documented setup commands.
+Use your own credentials and the included local example data.
+
+00:02:33.800 --> 00:02:41.500
+Configuration, diagnostics and guides give your team a clear starting point.
+Extend your product on a foundation you can understand.
+
+00:02:41.500 --> 00:02:51.500
+Explore PyColors Starter Pro.
+pycolors.io/starters/pro

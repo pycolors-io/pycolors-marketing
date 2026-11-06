@@ -96,6 +96,8 @@ describe("sitemap date integrity", () => {
     for (const path of [
       "",
       "/pricing",
+      "/showcase/product-studio",
+      "/starters/pro/implementation-example",
       "/docs",
       "/docs/ui/card",
       "/blog/undated",
@@ -115,6 +117,7 @@ describe("sitemap date integrity", () => {
       { url: "/docs", data: { title: "Documentation" } },
     ]);
     const urls = sitemap().map((entry) => entry.url);
+    expect(urls).toContain("https://pycolors.io/demo");
     expect(new Set(urls).size).toBe(urls.length);
     for (const excluded of [
       "https://pycolors.io/docs/draft",

@@ -1,7 +1,8 @@
 // App-owned URL contract: these apps also ship independently of the monorepo.
 export function proDemoUrl(destination = "/dashboard") {
-  const configured = process.env.NEXT_PUBLIC_STARTER_PRO_DEMO_URL;
-  if (!configured) return null;
+  const configured =
+    process.env.NEXT_PUBLIC_STARTER_PRO_DEMO_URL ||
+    "https://pro-demo.pycolors.io/demo";
   try {
     const url = new URL(configured);
     const local = ["localhost", "127.0.0.1"].includes(url.hostname);

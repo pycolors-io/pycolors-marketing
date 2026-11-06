@@ -1,11 +1,23 @@
 "use client";
+import type { ComponentProps, ReactNode } from "react";
 import { track } from "@vercel/analytics";
 import { proDemoUrl } from "@/lib/pro-demo-url";
+import { SiteButton } from "@/components/site-button";
 
-export function ProDemoLink() {
-  const href = proDemoUrl();
+export function ProDemoLink({
+  children = "Explore demo",
+  appearance = "button",
+  destination = "/dashboard",
+  variant = "outline",
+}: Readonly<{
+  children?: ReactNode;
+  appearance?: "button" | "text";
+  destination?: string;
+  variant?: ComponentProps<typeof SiteButton>["variant"];
+}> = {}) {
+  const href = proDemoUrl(destination);
   if (!href) return null;
-  return (
+  const link = (
     <a
       href={href}
       onClick={() => {
@@ -15,9 +27,20 @@ export function ProDemoLink() {
           /* Optional analytics. */
         }
       }}
-      className="inline-flex min-h-11 items-center rounded-md border border-border px-4 text-sm font-medium transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring"
+      className={
+        appearance === "text"
+          ? "inline-flex min-h-11 items-center gap-2 text-xs font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          : undefined
+      }
     >
-      Explore demo
+      {children}
     </a>
+  );
+  return appearance === "text" ? (
+    link
+  ) : (
+    <SiteButton asChild variant={variant} size="lg">
+      {link}
+    </SiteButton>
   );
 }

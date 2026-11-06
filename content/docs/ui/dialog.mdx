@@ -1,7 +1,7 @@
 ---
 title: Dialog
 description: Modal dialog component built on Radix Dialog. Use it for confirmations, forms, and focused tasks.
-lastUpdated: "2026-04-28"
+lastUpdated: "2026-10-30"
 appliesTo: UI
 ---
 
@@ -65,7 +65,8 @@ Use it for:
 Dialog is built on **Radix Dialog** and styled with PyColors tokens such as `bg-card`, `border-border`, and `text-card-foreground`.
 
 <Callout title="Core idea">
-  Dialog is for focused decisions or tasks. If the flow becomes long, navigational, or multi-step, use a Sheet or a dedicated page.
+  Dialog is for focused decisions or tasks. If the flow becomes long,
+  navigational, or multi-step, use a Sheet or a dedicated page.
 </Callout>
 
 ### Import
@@ -115,6 +116,7 @@ Use Dialog for a focused form or short task that should stay in context.
         </DialogContent>
       </Dialog>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -170,6 +172,17 @@ export function EditProfileDialog() {
   </Tab>
 </Tabs>
 
+### Bounded scrolling
+
+Keep longer review content inside a viewport-bounded surface such as
+`flex max-h-[80dvh] flex-col overflow-hidden`. Give the header and footer
+`shrink-0`, and put `min-h-0 flex-1 overflow-y-auto` on the content region.
+The title and actions then stay visible while the body scrolls.
+
+Give the scrollable region an accessible name and `tabIndex={0}` so keyboard
+users can reach and scroll it. The [long-content example](https://ui.pycolors.io/?path=/story/components-dialog--long-content)
+demonstrates this layout and checks focus, scrolling and reachable actions.
+
 ## When to use Dialog
 
 Use Dialog when the user must complete, confirm, or cancel a focused task.
@@ -179,21 +192,20 @@ Use Dialog when the user must complete, confirm, or cancel a focused task.
   tone="platform"
   items={[
     {
-      title: 'Confirmation',
-      description:
-        'Confirm risky or irreversible actions before they happen.',
+      title: "Confirmation",
+      description: "Confirm risky or irreversible actions before they happen.",
       icon: ClipboardCheck,
     },
     {
-      title: 'Short form',
+      title: "Short form",
       description:
-        'Edit a small piece of data without leaving the current page.',
+        "Edit a small piece of data without leaving the current page.",
       icon: FilePenLine,
     },
     {
-      title: 'Focused task',
+      title: "Focused task",
       description:
-        'Keep the user focused on one bounded action with clear choices.',
+        "Keep the user focused on one bounded action with clear choices.",
       icon: MousePointerClick,
     },
   ]}
@@ -226,6 +238,7 @@ Use Dialog for destructive actions that require explicit user intent.
         </DialogContent>
       </Dialog>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -256,7 +269,8 @@ export function DeleteDialog() {
         <DialogHeader>
           <DialogTitle>Delete project</DialogTitle>
           <DialogDescription>
-            This action can’t be undone. This will permanently delete the project and its data.
+            This action can’t be undone. This will permanently delete the
+            project and its data.
           </DialogDescription>
         </DialogHeader>
 
@@ -276,7 +290,8 @@ export function DeleteDialog() {
 </Tabs>
 
 <Callout title="Destructive flow rule">
-  The destructive action should be explicit, visually distinct, and placed after the safer option.
+  The destructive action should be explicit, visually distinct, and placed after
+  the safer option.
 </Callout>
 
 ### Usage patterns
@@ -286,73 +301,79 @@ export function DeleteDialog() {
     #### Trigger with a semantic element
 
     Use `DialogTrigger asChild` with a `Button` or another semantic trigger.
+
   </Step>
 
   <Step>
     #### Provide clear context
 
     Every dialog should have a `DialogTitle` and a useful `DialogDescription`.
+
   </Step>
 
   <Step>
     #### Keep the content focused
 
     A dialog should usually contain one task, one form, or one decision.
+
   </Step>
 
   <Step>
     #### Place actions in the footer
 
     Keep cancel and confirm actions in `DialogFooter` for predictable placement.
+
   </Step>
 
   <Step>
     #### Close only when the task is complete or canceled
 
     Do not close the dialog automatically if submission fails. Show the error in context.
+
   </Step>
 </Steps>
 
 ## Dialog vs Sheet vs Dropdown Menu
 
-| Situation | Use |
-| --- | --- |
-| Confirm destructive action | Dialog |
-| Short focused form | Dialog |
-| Create or edit a small record | Dialog |
-| Advanced filters | Sheet |
-| Side workflow or details panel | Sheet |
-| Row actions or small contextual menu | DropdownMenu |
-| Long multi-step flow | Page or Sheet |
+| Situation                            | Use           |
+| ------------------------------------ | ------------- |
+| Confirm destructive action           | Dialog        |
+| Short focused form                   | Dialog        |
+| Create or edit a small record        | Dialog        |
+| Advanced filters                     | Sheet         |
+| Side workflow or details panel       | Sheet         |
+| Row actions or small contextual menu | DropdownMenu  |
+| Long multi-step flow                 | Page or Sheet |
 
 <Callout type="info" title="Decision rule">
-  Dialog blocks the page for one focused task. Sheet extends the page for side workflows. DropdownMenu exposes quick actions.
+  Dialog blocks the page for one focused task. Sheet extends the page for side
+  workflows. DropdownMenu exposes quick actions.
 </Callout>
 
 ## API
 
 #### Components
 
-| Component | Description |
-| --- | --- |
-| `Dialog` | Root container |
-| `DialogTrigger` | Trigger element, usually with `asChild` |
-| `DialogContent` | Modal surface, overlay, and close behavior |
-| `DialogHeader` | Title and description stack helper |
-| `DialogFooter` | Action row helper |
-| `DialogTitle` | Accessible dialog title |
-| `DialogDescription` | Supporting text |
-| `DialogClose` | Close control, usually wrapping a Button with `asChild` |
+| Component           | Description                                             |
+| ------------------- | ------------------------------------------------------- |
+| `Dialog`            | Root container                                          |
+| `DialogTrigger`     | Trigger element, usually with `asChild`                 |
+| `DialogContent`     | Modal surface, overlay, and close behavior              |
+| `DialogHeader`      | Title and description stack helper                      |
+| `DialogFooter`      | Action row helper                                       |
+| `DialogTitle`       | Accessible dialog title                                 |
+| `DialogDescription` | Supporting text                                         |
+| `DialogClose`       | Close control, usually wrapping a Button with `asChild` |
 
 #### Props
 
 Dialog components extend their respective Radix Dialog props.
 
 ```ts title="dialog-props.ts"
-React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>
-React.ComponentPropsWithoutRef<typeof DialogPrimitive.Trigger>
-React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
-React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>;
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Trigger>;
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
+React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>;
 ```
 
 ### Accessibility
@@ -367,7 +388,8 @@ React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>
 - Do not use Dialog for long navigational flows.
 
 <Callout title="Accessibility rule">
-  A dialog without a clear title is not a complete dialog. The title gives assistive technology users the context they need.
+  A dialog without a clear title is not a complete dialog. The title gives
+  assistive technology users the context they need.
 </Callout>
 
 ## Prefer / avoid
@@ -443,7 +465,8 @@ Dialog copy should be direct and specific.
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ## Common questions
@@ -453,13 +476,16 @@ Dialog copy should be direct and specific.
     No. Use Dialog for short, focused forms. Use a page or Sheet for long forms, multi-step flows, or workflows that need more space.
   </Accordion>
 
-  <Accordion title="Can Dialog contain a table?">
-    Usually no. Tables often need space, scanning, and row interaction. Use a page or Sheet instead.
-  </Accordion>
+<Accordion title="Can Dialog contain a table?">
+  Usually no. Tables often need space, scanning, and row interaction. Use a page
+  or Sheet instead.
+</Accordion>
 
-  <Accordion title="Should destructive actions always use Dialog?">
-    Use Dialog when the action is risky, irreversible, or needs explicit confirmation. For reversible actions, a toast with Undo can be enough after a safer interaction.
-  </Accordion>
+<Accordion title="Should destructive actions always use Dialog?">
+  Use Dialog when the action is risky, irreversible, or needs explicit
+  confirmation. For reversible actions, a toast with Undo can be enough after a
+  safer interaction.
+</Accordion>
 
   <Accordion title="Can I hide the title visually?">
     You can visually hide a title if the design requires it, but the accessible title still needs to exist.
@@ -475,8 +501,7 @@ Dialog copy should be direct and specific.
     {
       title: "Button",
       href: "/docs/ui/button",
-      description:
-        "Actions used inside dialog triggers and footers.",
+      description: "Actions used inside dialog triggers and footers.",
       icon: MousePointerClick,
     },
     {

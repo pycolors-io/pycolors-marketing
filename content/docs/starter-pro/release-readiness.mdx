@@ -1,0 +1,163 @@
+---
+title: Validation and release readiness
+description: Inspect the packaging gate, billing regressions and browser coverage supplied with Starter Pro.
+lastUpdated: "2026-10-30"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  CreditCard,
+  Database,
+  Download,
+  Layers3,
+  ShieldCheck,
+} from "lucide-react";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Check the delivered foundation
+
+Starter Pro connects account creation, workspace onboarding, invitations and a
+first project to a persisted application. Its validation follows those journeys.
+
+<DocsDecisionGrid
+  columns={2}
+  tone="platform"
+  items={[
+    {
+      title: "Standalone buyer package",
+      eyebrow: "Packaging",
+      icon: Download,
+      description:
+        "The exported ZIP is checked outside the monorepo before packaging succeeds.",
+      items: [
+        "Frozen installation, empty-database migrations, unit tests and production build",
+        "First-user browser journey through accounts, workspaces and project work",
+        "Your acceptance: install the delivered release with your own environment",
+      ],
+    },
+    {
+      title: "Billing reconciliation",
+      eyebrow: "PostgreSQL regressions",
+      icon: CreditCard,
+      description:
+        "Signed events use a simulated provider to check persisted subscription and invoice behavior.",
+      items: [
+        "Simultaneous, duplicate and reordered events",
+        "Failed payments, cancellations and replay after failure",
+        "Your acceptance: validate your Stripe sandbox, webhook destination and offered plans",
+      ],
+    },
+    {
+      title: "Product and interface journeys",
+      eyebrow: "Browser coverage",
+      icon: Layers3,
+      description:
+        "Onboarding, live workspace access, task/comment persistence and account flows are exercised together.",
+      items: [
+        "English/French, Customize, mobile/desktop, both themes and accessibility",
+        "Your acceptance: check domain rules, permissions, content and branding",
+      ],
+    },
+    {
+      title: "Operational recovery",
+      eyebrow: "Environment checks",
+      icon: Database,
+      description:
+        "Configuration diagnostics, health/readiness and a backup/restore drill use synthetic data.",
+      items: [
+        "Your acceptance: configure monitoring and alert destinations",
+        "Verify accessible, recoverable production backups with your operator",
+      ],
+    },
+  ]}
+/>
+
+<Callout title="What automated coverage establishes">
+  The required CI gate waits for source validation and the selected browser
+  suite. A skipped or missing selected check cannot make the gate pass. Provider
+  interception keeps these tests independent of live email and payments. It does
+  not establish live delivery or a successful real transaction. Your launch
+  acceptance includes your own email and Stripe configuration.
+</Callout>
+
+## How the packaging gate works
+
+<Steps>
+  <Step>
+    ### Extract and install
+
+    Export the standalone source and extract it outside the monorepo. Install
+    the supplied lockfile without relying on workspace dependencies.
+
+  </Step>
+  <Step>
+    ### Migrate and compile
+
+    Apply the committed migrations to an empty disposable database, run unit
+    checks and compile the extracted production application.
+
+  </Step>
+  <Step>
+    ### Complete a first-user journey
+
+    Exercise registration, verification, sign-in, workspace creation, invitation
+    and project work. Reload to verify persistence, then remove the temporary
+    database and retain the local validation evidence.
+
+  </Step>
+</Steps>
+
+## Know what you receive
+
+The ZIP includes a standalone manifest, lockfile, reviewed dependency patches,
+Prisma migrations and buyer guides. `PYCOLORS_RELEASE.json` records its version,
+source commit and source-file hashes. Save it with the original delivery before
+customizing the application. Intentional edits naturally change file hashes.
+
+The included `docs/quickstart.md`, `docs/customization.md`, `docs/upgrading.md`,
+`docs/operations.md` and `docs/support.md` remain available with your source.
+
+<Callout title="Billing ownership and limits">
+  Application billing belongs to the **user account**. Workspace creation and
+  resource quotas are configurable and **uncapped by default**.
+  Organization-owned billing requires its own ownership and migration design.
+  The source licence, your application's subscription and an agreed
+  implementation service are distinct purchases.
+</Callout>
+
+## Continue your setup
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Included scope",
+      href: "/docs/starter-pro/what-is-included",
+      description: "Review the source and product workflows.",
+      icon: BookOpen,
+    },
+    {
+      title: "Billing acceptance",
+      href: "/docs/starter-pro/billing-testing",
+      description: "Prepare your Stripe sandbox checks.",
+      icon: CreditCard,
+    },
+    {
+      title: "Production operations",
+      href: "/docs/starter-pro/operations",
+      description: "Connect monitoring and rehearse recovery.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Implementation and support",
+      href: "/docs/starter-pro/implementation-support",
+      description: "Define the scope and handover of an engagement.",
+      icon: Layers3,
+    },
+  ]}
+/>

@@ -1,0 +1,119 @@
+---
+title: Internal validation
+description: Coordinate an internal review checklist using assigned tasks, calendar targets and outcome notes.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { BookOpen, LifeBuoy, SlidersHorizontal, Users } from "lucide-react";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Coordinate a review
+
+Use a project as a review request and tasks as its checklist. The example
+**Website release review** groups copy, accessibility and handover checks in
+the existing application. No additional schema or approval authority is installed.
+
+| Your vocabulary              | Existing model                           | Example                                                 |
+| ---------------------------- | ---------------------------------------- | ------------------------------------------------------- |
+| Request to review            | Project name and description             | Website release review                                  |
+| Review step                  | Task                                     | Review copy, Check accessibility, Prepare release notes |
+| Intended reviewer and target | Responsible membership and task due date | An active teammate and a calendar date                  |
+| Outcome note                 | Task comment                             | Two issues found; recheck after the copy update.        |
+
+## Try the workflow
+
+<Steps>
+  <Step>
+    ### Describe the request
+
+    Create the project and describe its scope and acceptance criteria. Add the
+    three review tasks, assign reviewers and choose target dates.
+
+  </Step>
+  <Step>
+    ### Record review work
+
+    Move a task to `IN_PROGRESS`, add an outcome note and mark it `DONE` when
+    that work is complete. Reload and inspect the corresponding Activity entries.
+
+  </Step>
+  <Step>
+    ### Revisit work when needed
+
+    Return a task to `IN_PROGRESS` and record the requested changes. The baseline
+    enforces no review order, rejection state or release gate.
+
+  </Step>
+  <Step>
+    ### Complete the request separately
+
+    Update the project's own status after the review work is complete. Archive
+    it to pause task/comment edits; restore to continue. Archive is reversible.
+
+  </Step>
+</Steps>
+
+<Callout title="Completion is not approval authority">
+  `DONE` means a task is complete. The default edit permission lets another
+  active MEMBER change it too, even when a different reviewer is assigned.
+  Comments can be removed under the moderation rules, and project deletion
+  removes tasks and comments. These records are not immutable approval
+  decisions.
+</Callout>
+
+## Adapt the presentation
+
+The shipped `docs/recipes/internal-validation.md` includes the entry points and
+a scoped assistant prompt. Use review-specific labels around the existing task
+view and retain its server guards and status codes. Avoid presenting a status
+label or an assignee field as a permission-enforced approval.
+
+## Check before adopting
+
+- An intended reviewer and another active MEMBER can both edit the task.
+- An unrelated workspace and a revoked membership cannot access the request.
+- MEMBER can remove its own note; OWNER/ADMIN can moderate another member's note.
+- Archive blocks task/comment writes until restored; it does not permanently lock a decision.
+
+If a decision must authorize a release, payment or another protected action,
+define the approver, self-approval rules, revision handling, version binding and
+retention. A separate guarded operation and structured decision record may
+require a reviewed schema. Follow the permission extension guide after those
+product decisions are explicit.
+
+## Related guides
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Business recipe foundation",
+      icon: BookOpen,
+      href: "/docs/starter-pro/recipes",
+      description: "Review the shared model and access boundaries.",
+    },
+    {
+      title: "Customization and guarded extensions",
+      icon: SlidersHorizontal,
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description: "Find the delivered resource and permission recipes.",
+    },
+    {
+      title: "Client tracking",
+      href: "/docs/starter-pro/recipes/client-tracking",
+      description:
+        "Coordinate engagement follow-ups using the same project/task model.",
+      icon: Users,
+    },
+    {
+      title: "Support requests",
+      href: "/docs/starter-pro/recipes/support-requests",
+      description:
+        "Reuse assigned work and discussion for an internal support queue.",
+      icon: LifeBuoy,
+    },
+  ]}
+/>

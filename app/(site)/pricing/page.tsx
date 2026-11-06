@@ -5,7 +5,7 @@ import {
 } from "@/lib/products/commercial-policy";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { ArrowDown, ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { Badge, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import {
@@ -24,6 +24,7 @@ import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
 import { PricingComparisonTable } from "@/components/pricing/pricing-comparison-table";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
+import { StarterProImplementation } from "@/components/starters/starter-pro-readiness";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Pricing",
@@ -65,13 +66,10 @@ const INTERNAL = {
   terms: "/terms",
 } as const;
 
-const EXTERNAL = { starterDemo: "https://starter-demo.pycolors.io" } as const;
-
 const PRICING = {
   naAiLanding: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
   starterFree: STARTER_FREE_PRICE_LABEL,
-  starterProLaunch: PRODUCT_DISPLAY["starter-pro"].priceLabel,
-  starterProRegular: PRODUCT_DISPLAY["starter-pro"].regularPriceLabel,
+  starterPro: PRODUCT_DISPLAY["starter-pro"].priceLabel,
 } as const;
 
 const pricingJsonLd = {
@@ -95,22 +93,22 @@ const pricingJsonLd = {
 // Existing public Starter Pro captures; provenance and scope are recorded in the PR.
 const starterProScreenshots = [
   {
-    src: "/images/starters/pro/auth-pycolors.png",
-    width: 3456,
-    height: 1928,
+    src: "/images/starters/pro/auth-indigo-2x.png",
+    width: 2880,
+    height: 2000,
     title: "Sign-in screen",
     alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
     caption:
       "Start with an account entry screen: email and password fields, provider buttons, and a password recovery link.",
   },
   {
-    src: "/images/starters/pro/pwa-pycolors.png",
-    width: 3456,
-    height: 1926,
-    title: "Offline fallback",
-    alt: "Starter Pro offline screen with reload and dashboard links",
+    src: "/images/starters/pro/project-work-coral-2x.png",
+    width: 2880,
+    height: 2000,
+    title: "Project work",
+    alt: "Starter Pro project with assigned tasks, due dates and a discussion",
     caption:
-      "Give users a clear fallback when their connection drops, with a message and navigation back to the application.",
+      "Adapt a persisted workspace workflow with assigned tasks, due dates, comments and archiving.",
   },
 ] as const;
 
@@ -158,18 +156,19 @@ const offers = [
     name: "Starter Pro",
     category: "Build your SaaS business",
     description:
-      "A SaaS foundation with authentication, payments and database integrations to build on.",
-    price: PRICING.starterProLaunch,
-    payment: "One-time payment · Launch price",
+      "Connected accounts, workspaces, billing and project workflows, with automated checks and buyer guides.",
+    price: PRICING.starterPro,
+    payment: "One-time payment · Complete source licence",
     features: [
       "Full Starter Pro source code",
-      "Auth.js credentials and OAuth",
-      "Stripe Checkout and billing portal",
-      "Prisma + PostgreSQL foundations",
-      "Email and installable PWA foundations",
+      "Auth.js, revocable sessions and profile editing",
+      "Stripe billing and tested webhook reconciliation",
+      "Workspaces, project tasks and discussions",
+      "FR/EN, Customize and browser regressions",
+      "Validated ZIP, diagnostics and restore drill",
     ],
     scope:
-      "Configure your services, validate integrations and deploy your app.",
+      "Personal billing; configurable quotas are uncapped by default. Configure providers and operations for your deployment.",
     href: INTERNAL.starterPro,
     link: "Explore Starter Pro",
   },
@@ -243,8 +242,8 @@ const faqs = [
     answer: DIGITAL_REFUND_SUMMARY,
   },
   {
-    question: `Will the Starter Pro price stay at ${PRICING.starterProLaunch}?`,
-    answer: `No. ${PRICING.starterProLaunch} is the current launch price. The regular price is planned at ${PRICING.starterProRegular} as the product matures and more production features are added.`,
+    question: "Does the Starter Pro licence include implementation?",
+    answer: `The ${PRICING.starterPro} one-time purchase covers the complete source licence. Assisted setup and business adaptations are separate engagements, quoted with written deliverables and acceptance criteria.`,
   },
 ] as const;
 
@@ -252,7 +251,7 @@ export default function PricingPage() {
   return (
     <Container className="pb-12 pt-20 sm:pb-16 sm:pt-24">
       <JsonLd id="pricing-products-jsonld" data={pricingJsonLd} />
-      <div className="w-full min-w-0">
+      <main id="content" tabIndex={-1} className="w-full min-w-0">
         <PageHero
           variant="compact"
           maxWidth="4xl"
@@ -270,6 +269,7 @@ export default function PricingPage() {
             ["#pricing-offers", "Products"],
             ["#pricing-comparison", "Compare features"],
             ["#pricing-preview", "Product preview"],
+            ["#implementation", "Services"],
             ["#pricing-faq", "FAQ"],
           ].map(([href, label]) => (
             <a
@@ -344,7 +344,7 @@ export default function PricingPage() {
                 <div className="mt-6">
                   {offer.id === "starter-pro" ? (
                     <BuyStarterProButton
-                      label={`Buy Starter Pro — ${PRICING.starterProLaunch}`}
+                      label={`Buy Starter Pro — ${PRICING.starterPro}`}
                     />
                   ) : offer.id === "na-ai-landing" ? (
                     <BuyProductButton
@@ -394,9 +394,9 @@ export default function PricingPage() {
           </div>
           <div className="mt-5 flex flex-col gap-3 text-xs leading-6 text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <p>
-              Paid products are one-time purchases. Starter Pro is currently{" "}
-              {PRICING.starterProLaunch}; regular price planned at{" "}
-              {PRICING.starterProRegular}.
+              Paid products are one-time purchases. The complete Starter Pro
+              source licence is {PRICING.starterPro}. Implementation services
+              are quoted separately.
             </p>
             <a
               href="#pricing-comparison"
@@ -460,14 +460,7 @@ export default function PricingPage() {
             description="Existing Starter Pro interface captures, shown in the light theme. These previews show included screens, not proof of a live deployment, a completed payment, or a verified integration."
             action={
               <Button asChild variant="outline" className="rounded-md">
-                <a
-                  href={EXTERNAL.starterDemo}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  Try the live demo
-                  <ExternalLink className="size-4" aria-hidden="true" />
-                </a>
+                <Link href="/demo">Explore the demos</Link>
               </Button>
             }
           />
@@ -485,9 +478,10 @@ export default function PricingPage() {
                   <Image
                     src={screenshot.src}
                     alt={screenshot.alt}
+                    quality={100}
                     width={screenshot.width}
                     height={screenshot.height}
-                    sizes="(min-width: 1280px) 564px, (min-width: 768px) 50vw, 100vw"
+                    sizes="(min-width: 1440px) 680px, (min-width: 768px) calc(50vw - 32px), calc(100vw - 32px)"
                     className="h-auto w-full"
                   />
                 </a>
@@ -513,6 +507,7 @@ export default function PricingPage() {
           </div>
         </MarketingSectionShell>
 
+        <StarterProImplementation />
         <MarketingSectionShell
           id="pricing-faq"
           width="full"
@@ -565,7 +560,7 @@ export default function PricingPage() {
           </Link>
           .
         </p>
-      </div>
+      </main>
     </Container>
   );
 }

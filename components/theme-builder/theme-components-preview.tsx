@@ -1,3 +1,8 @@
+import {
+  APPEARANCE_DEFAULTS,
+  type AppearancePreferences,
+} from "@/lib/appearance-contract";
+import { appearancePreviewVariables } from "./theme-appearance-preview";
 import { useId, type ReactNode, type CSSProperties } from "react";
 import { Check, Settings2 } from "lucide-react";
 import {
@@ -47,8 +52,10 @@ export function ThemeComponentsPreview({
   view,
   onViewChange,
   children,
+  appearance = APPEARANCE_DEFAULTS,
 }: Readonly<{
   children?: ReactNode;
+  appearance?: AppearancePreferences;
   theme: ThemeModeResult;
   mode: ThemeMode;
   fontFamily: string;
@@ -58,6 +65,7 @@ export function ThemeComponentsPreview({
   const id = useId();
   const style = {
     ...createThemePreviewVariables(theme),
+    ...appearancePreviewVariables(appearance),
     fontFamily,
     "--font-sans": fontFamily,
   } as CSSProperties;
@@ -67,6 +75,9 @@ export function ThemeComponentsPreview({
     <section
       aria-labelledby={`${id}-heading`}
       data-theme-builder-components={mode}
+      tabIndex={0}
+      data-preview-density={appearance.density}
+      data-preview-motion={appearance.motion}
       style={style}
       className={`${styles.preview} min-w-0 bg-background text-foreground`}
     >

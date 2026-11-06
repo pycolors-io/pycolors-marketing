@@ -1,7 +1,7 @@
 ---
 title: What is included
 description: See what Starter Pro includes, what is already built, and what you still build yourself.
-lastUpdated: "2026-05-18"
+lastUpdated: "2026-11-03"
 appliesTo: Starter Pro
 ---
 
@@ -66,31 +66,57 @@ It is a **production-ready SaaS foundation** built around the layers most paid p
   tone="platform"
   items={[
     {
-      title: 'Authentication',
+      title: "Authentication",
       description:
-        'Real account foundations with credentials, OAuth, email verification, reset flows, sessions, and safer account lifecycle handling.',
+        "Real account foundations with credentials, OAuth, email verification, reset flows, sessions, and safer account lifecycle handling.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing',
+      title: "Billing",
       description:
-        'Stripe Checkout, billing portal, subscriptions, invoices, webhook synchronization, and billing-aware product behavior.',
+        "Stripe Checkout, billing portal, subscriptions, invoices, webhook synchronization, and billing-aware product behavior.",
       icon: CreditCard,
     },
     {
-      title: 'Backend foundation',
+      title: "Backend foundation",
       description:
-        'Prisma-ready structure, database-oriented architecture, server-side patterns, and clear domain boundaries.',
+        "Prisma-ready structure, database-oriented architecture, server-side patterns, and clear domain boundaries.",
       icon: Database,
     },
     {
-      title: 'Secure delivery',
+      title: "Buyer handover",
       description:
-        'Controlled post-purchase access, private asset delivery, token-based download flow, and structured fulfillment.',
+        "Validated standalone ZIP, source revision inventory, setup and customization guides, and a staged upgrade procedure.",
       icon: Download,
     },
   ]}
 />
+
+## Connected product workflows
+
+- **Accounts:** guided onboarding, editable profile/avatar, language/time zone,
+  revocable sessions and ownership-aware account lifecycle.
+- **Teams:** multiple workspaces, live role checks, invitations, notifications
+  and paginated activity with actors and resources.
+- **Project work:** descriptions, status, responsible members, archiving, tasks,
+  calendar due dates and paginated discussions. Archived projects reject changes
+  until restored.
+- **Appearance:** palettes, typography, geometry, interface scale and sidebar
+  controls with browser persistence and matching loading states.
+- **Business recipes:** [client tracking, support requests and internal validation](/docs/starter-pro/recipes),
+  with guided adaptations of the project/task/comment model and explicit domain boundaries.
+- **Operations:** diagnostics, health/readiness, controlled error references,
+  alert hooks and a synthetic PostgreSQL restore drill.
+
+Billing belongs to the **user account**. Workspace/resource quotas are enforced
+on the server when configured and are **uncapped by default**. The source licence
+and your application's subscription are separate. Purchase recovery and ZIP
+delivery are operated by PyColors; the PyColors storefront is not an application
+module supplied in your starter ZIP.
+
+Review [validation evidence](/docs/starter-pro/release-readiness),
+[customization and upgrades](/docs/starter-pro/customization-and-upgrades) and
+[implementation scope](/docs/starter-pro/implementation-support).
 
 ## Detailed scope
 
@@ -98,67 +124,67 @@ It is a **production-ready SaaS foundation** built around the layers most paid p
   columns={2}
   items={[
     {
-      eyebrow: 'Authentication',
-      title: 'Real auth foundations',
+      eyebrow: "Authentication",
+      title: "Real auth foundations",
       icon: LockKeyhole,
       description:
-        'Authentication foundations required before a SaaS product can safely launch.',
+        "Authentication foundations required before a SaaS product can safely launch.",
       items: [
-        'email and password auth',
-        'Google OAuth',
-        'GitHub OAuth',
-        'email verification',
-        'forgot password',
-        'reset password',
-        'password change',
-        'connected accounts patterns',
-        'session-aware flows',
+        "email and password auth",
+        "Google OAuth",
+        "GitHub OAuth",
+        "email verification",
+        "forgot password",
+        "reset password",
+        "password change",
+        "connected accounts patterns",
+        "session-aware flows",
       ],
     },
     {
-      eyebrow: 'Billing',
-      title: 'Revenue foundations',
+      eyebrow: "Billing",
+      title: "Revenue foundations",
       icon: CreditCard,
-      tone: 'platform',
+      tone: "platform",
       description:
-        'Stripe foundations for subscriptions, invoices, and monetization flows.',
+        "Stripe foundations for subscriptions, invoices, and monetization flows.",
       items: [
-        'Stripe Checkout',
-        'billing portal',
-        'subscription lifecycle handling',
-        'invoice-ready flows',
-        'webhook synchronization',
-        'plan-aware product logic',
-        'upgrade-ready monetization surfaces',
+        "Stripe Checkout",
+        "billing portal",
+        "subscription lifecycle handling",
+        "invoice-ready flows",
+        "webhook synchronization",
+        "plan-aware product logic",
+        "upgrade-ready monetization surfaces",
       ],
     },
     {
-      eyebrow: 'Backend',
-      title: 'Backend-ready structure',
+      eyebrow: "Backend",
+      title: "Backend-ready structure",
       icon: Database,
       description:
-        'A backend-oriented structure designed for long-term product evolution.',
+        "A backend-oriented structure designed for long-term product evolution.",
       items: [
-        'Prisma-ready structure',
-        'database-oriented architecture',
-        'server-side integration patterns',
-        'auth-aware logic',
-        'billing-aware logic',
-        'domain separation patterns',
+        "Prisma-ready structure",
+        "database-oriented architecture",
+        "server-side integration patterns",
+        "auth-aware logic",
+        "billing-aware logic",
+        "domain separation patterns",
       ],
     },
     {
-      eyebrow: 'Delivery',
-      title: 'Secure fulfillment flow',
+      eyebrow: "Handover",
+      title: "Standalone source package",
       icon: Download,
       description:
-        'Production-minded delivery and post-purchase access foundations.',
+        "An installable baseline with explicit validation and upgrade guidance.",
       items: [
-        'secure delivery flow',
-        'controlled post-purchase access',
-        'private access patterns',
-        'token-based download flow',
-        'structured fulfillment approach',
+        "standalone manifest, lockfile and reviewed dependency patches",
+        "Prisma schema and committed migrations",
+        "source version, revision and file inventory",
+        "installation, customization and upgrade guides",
+        "operational and support handover notes",
       ],
     },
   ]}
@@ -170,40 +196,40 @@ It is a **production-ready SaaS foundation** built around the layers most paid p
   columns={2}
   items={[
     {
-      eyebrow: 'Included',
-      title: 'Launch foundations',
-      tone: 'platform',
+      eyebrow: "Included",
+      title: "Launch foundations",
+      tone: "platform",
       description:
-        'Starter Pro removes repeated infrastructure work that serious SaaS products usually need before launch.',
+        "Starter Pro removes repeated infrastructure work that serious SaaS products usually need before launch.",
       items: [
-        'auth foundations',
-        'billing foundations',
-        'protected app structure',
-        'backend-ready structure',
-        'delivery path',
-        'serious baseline for launch',
+        "auth foundations",
+        "billing foundations",
+        "protected app structure",
+        "backend-ready structure",
+        "delivery path",
+        "serious baseline for launch",
       ],
     },
     {
-      eyebrow: 'Not included',
-      title: 'Your differentiation',
+      eyebrow: "Not included",
+      title: "Your differentiation",
       description:
-        'You still own the parts that make the product unique and commercially valuable.',
+        "You still own the parts that make the product unique and commercially valuable.",
       items: [
-        'your unique product logic',
-        'your final product strategy',
-        'your niche workflows',
-        'your market differentiation',
-        'your onboarding experience',
-        'your business decisions',
+        "your unique product logic",
+        "your final product strategy",
+        "your niche workflows",
+        "your market differentiation",
+        "your onboarding experience",
+        "your business decisions",
       ],
     },
   ]}
 />
 
 <Callout type="info" title="Healthy separation">
-  Starter Pro removes repeated infrastructure work.
-  It does not replace product judgment.
+  Starter Pro removes repeated infrastructure work. It does not replace product
+  judgment.
 </Callout>
 
 ## What this means in practice
@@ -244,8 +270,9 @@ You are buying a faster path through the layers that are usually:
 <Callout title="The better question">
   The question is not “How much stuff is included?”
 
-  The better question is:
-  “Does this remove the work that would delay launch?”
+The better question is:
+“Does this remove the work that would delay launch?”
+
 </Callout>
 
 ## Decision guide
@@ -254,18 +281,18 @@ You are buying a faster path through the layers that are usually:
   preferTitle="Starter Pro is for"
   avoidTitle="Starter Pro is not for"
   prefer={[
-    'builders ready to wire real authentication',
-    'SaaS products preparing to charge customers',
-    'teams that want fewer launch blockers',
-    'developers looking for a stronger production baseline',
-    'products that need protected access and billing state',
+    "builders ready to wire real authentication",
+    "SaaS products preparing to charge customers",
+    "teams that want fewer launch blockers",
+    "developers looking for a stronger production baseline",
+    "products that need protected access and billing state",
   ]}
   avoid={[
-    'outsourcing your entire product strategy',
-    'replacing your domain model',
-    'deciding your market positioning',
-    'automating customer acquisition',
-    'shipping without adapting the product to your use case',
+    "outsourcing your entire product strategy",
+    "replacing your domain model",
+    "deciding your market positioning",
+    "automating customer acquisition",
+    "shipping without adapting the product to your use case",
   ]}
 />
 
@@ -293,32 +320,46 @@ It is meant to remove the right blockers.
   variant="grid"
   items={[
     {
-      title: 'Getting started',
-      href: '/docs/starter-pro/getting-started',
+      title: "Getting started",
+      href: "/docs/starter-pro/getting-started",
       description:
-        'Learn how to approach Starter Pro and understand the production-ready baseline.',
+        "Learn how to approach Starter Pro and understand the production-ready baseline.",
       icon: Rocket,
     },
     {
-      title: 'Why buy instead of building',
-      href: '/docs/starter-pro/why-buy-instead-of-building',
+      title: "Why buy instead of building",
+      href: "/docs/starter-pro/why-buy-instead-of-building",
       description:
-        'Understand the real cost of rebuilding authentication, billing, and launch foundations.',
+        "Understand the real cost of rebuilding authentication, billing, and launch foundations.",
       icon: Scale,
     },
     {
-      title: 'Authentication system',
-      href: '/docs/starter-pro/auth',
+      title: "Authentication system",
+      href: "/docs/starter-pro/auth",
       description:
-        'Review the authentication foundation included in Starter Pro.',
+        "Review the authentication foundation included in Starter Pro.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing system',
-      href: '/docs/starter-pro/billing',
+      title: "Billing system",
+      href: "/docs/starter-pro/billing",
       description:
-        'Review billing, invoices, subscriptions, customer portal, and webhook foundations.',
+        "Review billing, invoices, subscriptions, customer portal, and webhook foundations.",
       icon: CreditCard,
+    },
+    {
+      title: "Business recipes",
+      href: "/docs/starter-pro/recipes",
+      description:
+        "See how the included project work supports three guided business adaptations.",
+      icon: Package,
+    },
+    {
+      title: "Customization and upgrades",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Review product configuration, extension points and the upgrade workflow.",
+      icon: Rocket,
     },
   ]}
 />

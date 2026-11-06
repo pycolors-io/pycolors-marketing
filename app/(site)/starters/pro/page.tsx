@@ -27,6 +27,7 @@ import {
 import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { starterProBuyerFaqs } from "@/lib/products/starter-pro-buyer-faq";
+import { STARTER_PRO_UPDATES_SUMMARY } from "@/lib/products/commercial-policy";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
@@ -43,15 +44,21 @@ import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingFaq } from "@/components/marketing/faq";
 import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
 import { StarterProCarousel } from "@/components/starters/starter-pro-carousel";
+import { StarterProTour } from "@/components/starters/starter-pro-tour";
 import { StarterProFoundations } from "@/components/starters/starter-pro-foundations";
+import {
+  StarterProReadiness,
+  StarterProImplementation,
+} from "@/components/starters/starter-pro-readiness";
 import { StarterComparisonTable } from "@/components/starters/starter-comparison-table";
 import styles from "@/components/starters/starter-pro.module.css";
 import detailStyles from "@/components/marketing/detail-card.module.css";
+import { ProductStudioReference } from "@/components/marketing/product-studio-reference";
 
 export const metadata: Metadata = {
   title: "Next.js SaaS Starter with Auth & Billing",
   description:
-    "Next.js SaaS starter source code with Auth.js, Stripe billing and Prisma. Configure your providers, build your product and validate before launch.",
+    "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
   alternates: {
     canonical: "/starters/pro",
   },
@@ -59,7 +66,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Next.js SaaS Starter with Auth & Billing — PyColors",
     description:
-      "Next.js SaaS starter source code with Auth.js, Stripe billing and Prisma. Configure your providers, build your product and validate before launch.",
+      "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
     url: "/starters/pro",
     siteName: "PyColors",
     type: "website",
@@ -70,19 +77,18 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Next.js SaaS Starter with Auth & Billing — PyColors",
     description:
-      "Next.js SaaS starter source code with Auth.js, Stripe billing and Prisma. Configure your providers, build your product and validate before launch.",
+      "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
     images: ["/seo/twitter-main.png"],
   },
 };
 
-const launchPrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
-const regularPrice = PRODUCT_DISPLAY["starter-pro"].regularPriceLabel;
+const sourcePrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 
 const starterProJsonLd = generateProductOfferJsonLd({
   product: PRODUCT_DISPLAY["starter-pro"],
   canonicalPath: "/starters/pro",
   description:
-    "Next.js SaaS starter source code with Auth.js, Stripe billing and Prisma. Configure your providers, build your product and validate before launch.",
+    "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
 });
 
 const INTERNAL = {
@@ -108,10 +114,6 @@ const INTERNAL = {
   roadmap: "/roadmap",
   license: "/license",
   terms: "/terms",
-} as const;
-
-const EXTERNAL = {
-  starterDemo: "https://starter-demo.pycolors.io",
 } as const;
 
 const stackItems = [
@@ -162,13 +164,16 @@ const postPurchaseDetails = [
   },
   {
     title: "Updates and access support",
-    description:
-      "Future Starter Pro updates are included at no additional cost for existing buyers, subject to continued product availability. Purchase and access-recovery support is available. No response-time SLA is promised.",
+    description: `${STARTER_PRO_UPDATES_SUMMARY} Installation assistance and reproducible starter bugs follow the support scope and period of your offer. Tailored implementation is quoted separately. No response-time SLA is promised.`,
     icon: ShieldCheck,
     links: [
       {
         href: INTERNAL.changelog,
         label: "Review release history",
+      },
+      {
+        href: "/docs/starter-pro/implementation-support",
+        label: "Review support and implementation scope",
       },
     ],
   },
@@ -268,18 +273,20 @@ const heroScreenshots = [
   {
     title: "Dashboard",
     label: "Dashboard",
-    description: "Navigation, workspace summary and example metric cards.",
-    alt: "Starter Pro dashboard with navigation, workspace cards and demonstration metrics",
-    image: "/images/starters/pro/dashboard-pycolors.png",
+    description: "Saved workspace metrics, a weekly chart and team roles.",
+    alt: "Starter Pro dashboard with saved project counts, weekly chart and workspace team",
+    image: "/images/starters/pro/dashboard-pycolors-2x.png",
+    palette: "PyColors",
     annotation:
-      "The sidebar groups projects, admin, billing and settings. Summary cards give you a dashboard layout to adapt. Displayed revenue, users and activity are demonstration data, not customer results.",
+      "Project counts, weekly creation history and team roles come from a seeded PostgreSQL workspace. These captures use demonstration data, not customer results.",
   },
   {
     title: "Authentication",
     label: "Authentication",
     description: "Email sign-in, provider choices and password recovery.",
     alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
-    image: "/images/starters/pro/auth-pycolors.png",
+    image: "/images/starters/pro/auth-indigo-2x.png",
+    palette: "Indigo Ledger",
     annotation:
       "The right-hand form combines email and password fields, Google and GitHub buttons, password recovery and account creation. Configure your own provider credentials before using these options.",
   },
@@ -287,28 +294,31 @@ const heroScreenshots = [
     title: "Billing",
     label: "Billing",
     description: "Plan summary, invoice area and billing portal actions.",
-    alt: "Starter Pro billing screen showing a demonstration trial plan and an empty invoice table",
-    image: "/images/starters/pro/billing-pycolors.png",
+    alt: "Starter Pro billing screen showing a synthetic subscription, billing status and sample invoices",
+    image: "/images/starters/pro/billing-emerald-2x.png",
+    palette: "Emerald Console",
     annotation:
-      "Plan details, renewal information and an invoice table show the billing layout you can build on. The trial subscription and figures are demonstration fixtures, not evidence of a payment or a verified Stripe integration.",
+      "Personal billing connects subscriptions, invoices and the customer portal. The seeded plan and figures are not evidence of a payment or a verified Stripe integration. Organization-owned billing needs a separate extension.",
   },
   {
     title: "Pricing example",
     label: "Pricing example",
     description: "An example SaaS offer with features and trial actions.",
     alt: "Starter Pro example SaaS pricing page with feature lists and trial buttons",
-    image: "/images/starters/pro/pricing-pycolors.png",
+    image: "/images/starters/pro/pricing-cyan-2x.png",
+    palette: "Arctic Cyan",
     annotation:
-      "The sample page groups an offer, feature lists and trial actions. Its subscription price and trial terms are examples for your own SaaS, not the purchase terms for the Starter Pro source package.",
+      "The SaaS plan catalog uses the configured Stripe price and server-side entitlements. Values shown in this synthetic test workspace are not the purchase terms for the Starter Pro source package. Resource caps are configurable and uncapped by default.",
   },
   {
-    title: "Offline fallback",
-    label: "Offline fallback",
-    description: "A connection message with reload and dashboard actions.",
-    alt: "Starter Pro offline screen with reload and dashboard links",
-    image: "/images/starters/pro/pwa-pycolors.png",
+    title: "Project work",
+    label: "Project work",
+    description: "Assigned tasks, calendar due dates and project discussions.",
+    alt: "Starter Pro project with assigned tasks, due dates and a task discussion",
+    image: "/images/starters/pro/project-work-coral-2x.png",
+    palette: "Coral Signal",
     annotation:
-      "The connection message explains the offline state. Reload and dashboard actions give users a route back to the app. This fallback does not mean every feature works offline.",
+      "Tasks, responsible members and comments persist in the selected workspace. Archived projects remain readable and reject work changes until restored. This is an adaptable business example, not a complete project-management product.",
   },
 ] as const;
 
@@ -331,7 +341,7 @@ const includedGroups = [
       "Google and GitHub OAuth",
       "Email verification",
       "Reset password flow",
-      "Session management",
+      "Server-revocable sessions and guarded account lifecycle",
       "Protected routes",
     ],
   },
@@ -353,7 +363,7 @@ const includedGroups = [
       "Secure Stripe Checkout integration",
       "Stripe billing portal",
       "Invoices and billing history UI",
-      "Webhook synchronization with Prisma",
+      "Transactional webhook reconciliation and safe retries",
       "Subscription lifecycle handling",
       "Plan gating and feature access control",
     ],
@@ -366,7 +376,8 @@ const includedGroups = [
     href: INTERNAL.docsPwa,
     link: "PWA guide",
     items: [
-      "Dashboard, settings, billing and admin UI",
+      "Dashboard, profile, notifications and workspace administration",
+      "English/French, Customize and responsive loading states",
       "Installable PWA with manifest, icons and screenshots",
       "Standalone mode and offline fallback",
     ],
@@ -379,7 +390,7 @@ const includedGroups = [
     href: INTERNAL.docsWhatIsIncluded,
     link: "Included source",
     items: [
-      "Full Next.js App Router source code",
+      "Full Next.js App Router source code and guided onboarding",
       "Strict TypeScript configuration",
       "Tailwind CSS foundation",
     ],
@@ -393,8 +404,9 @@ const includedGroups = [
     link: "Backend guide",
     items: [
       "Prisma schema and PostgreSQL setup",
-      "Zod validation and React Hook Form integration",
-      "Environment configuration foundations",
+      "Workspace roles, invitations, projects, tasks and comments",
+      "Zod-validated actions and centralized product configuration",
+      "Health probes, diagnostic and restore-drill commands",
     ],
   },
   {
@@ -406,7 +418,8 @@ const includedGroups = [
     link: "Delivery guide",
     items: [
       "Access recovery for your Starter Pro purchase",
-      "Starter Pro ZIP delivery via claim email",
+      "Validated standalone ZIP with source revision and file inventory",
+      "Setup, customization, upgrades and support guides",
       "Commercial usage rights",
     ],
   },
@@ -419,7 +432,6 @@ const sectionClass = "scroll-mt-24 border-t border-border-subtle";
 function StarterProPreviews() {
   return (
     <MarketingSectionShell
-      divider="pattern"
       id="product-preview"
       width="full"
       className="scroll-mt-24"
@@ -432,15 +444,16 @@ function StarterProPreviews() {
         title="Inspect the screens you can build on"
         description="Explore the dashboard, account flows and billing interface. Each preview shows the foundation you can adapt to your product."
         action={
-          <a
-            href={EXTERNAL.starterDemo}
-            target="_blank"
-            rel="noreferrer noopener"
-            className={`${textLink} text-xs`}
-          >
-            Try the Starter Free demo
-            <ExternalLink className="size-3.5" aria-hidden="true" />
-          </a>
+          proDemoUrl() ? (
+            <ProDemoLink appearance="text">
+              Open the Pro demo
+              <ExternalLink className="size-3.5" aria-hidden="true" />
+            </ProDemoLink>
+          ) : (
+            <Link href="/demo" className={`${textLink} text-xs`}>
+              Compare the demos
+            </Link>
+          )
         }
       />
       <StarterProCarousel
@@ -457,7 +470,8 @@ function StarterProPreviews() {
                     alt={screenshot.alt}
                     fill
                     priority={index === 0}
-                    sizes="(min-width: 1280px) 860px, (min-width: 1024px) 65vw, 95vw"
+                    quality={100}
+                    sizes="(min-width: 1440px) 1024px, (min-width: 1024px) calc(100vw - 416px), 95vw"
                     className={`${styles.media} object-cover object-top`}
                   />
                 </div>
@@ -466,7 +480,7 @@ function StarterProPreviews() {
                 <div className={`${styles.caption} flex h-full flex-col`}>
                   <p className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
                     <span className="font-mono">0{index + 1} / 05</span>
-                    <span>Interface preview</span>
+                    <span>{screenshot.palette}</span>
                   </p>
                   <h3 className="mt-6 text-xl font-semibold tracking-subheading">
                     {screenshot.title}
@@ -516,7 +530,7 @@ export default function StarterProPage() {
             contentClassName="mx-0 max-w-3xl"
             badges={[{ label: "Starter Pro", variant: "outline" }]}
             title="The foundation for your next SaaS."
-            description="Auth.js, Stripe billing, Prisma and protected routes in one Next.js starter. Configure your providers, build your product logic and validate the integrations before launch."
+            description="Accounts, workspaces, billing and a real project workflow in one Next.js codebase. Start with connected foundations, inspect their checks and adapt the product to your market."
             actions={
               <>
                 <div className="lg:hidden">
@@ -532,8 +546,8 @@ export default function StarterProPage() {
                   size="lg"
                   className="rounded-[5px]"
                 >
-                  <a href="#product-preview">
-                    Explore the product{" "}
+                  <a href="#product-tour">
+                    Watch the product tour{" "}
                     <ArrowDown className="size-4" aria-hidden="true" />
                   </a>
                 </Button>
@@ -573,21 +587,22 @@ export default function StarterProPage() {
               </div>
               <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
                 <span className="font-brand text-5xl font-semibold tracking-tight">
-                  {launchPrice}
+                  {sourcePrice}
                 </span>
                 <span className="text-xs text-muted-foreground">
                   One-time payment
                 </span>
               </p>
               <p className="mt-3 text-xs leading-6 text-muted-foreground">
-                Current launch price. Regular price planned at {regularPrice}.
+                Complete source licence. Provider costs and implementation
+                services are separate.
               </p>
               <ul className="my-6 space-y-3">
                 <StarterProCheckItem>
-                  Auth, billing and database foundations
+                  Accounts, workspaces, billing and project workflows
                 </StarterProCheckItem>
                 <StarterProCheckItem>
-                  Full source, docs and production checklist
+                  Validated ZIP, setup guides and operational checks
                 </StarterProCheckItem>
                 <StarterProCheckItem>
                   ZIP access through your claim email
@@ -597,7 +612,7 @@ export default function StarterProPage() {
               <ProDemoLink />
               {proDemoUrl() ? (
                 <p className="mt-3 text-xs leading-6 text-muted-foreground">
-                  Try persistent projects, a live workspace dashboard and
+                  Try projects, tasks, discussions, a workspace dashboard and
                   simulated member invitations. Each visitor gets a private,
                   temporary workspace.
                 </p>
@@ -645,7 +660,11 @@ export default function StarterProPage() {
           className="mt-3 flex flex-wrap gap-x-6 gap-y-1 border-b border-border-subtle pb-3"
         >
           {[
+            ["#product-tour", "Product tour"],
             ["#product-preview", "Product preview"],
+            ["#built-with-pycolors", "Built with Starter Pro"],
+            ["#readiness", "Validation & workflows"],
+            ["#implementation", "Scoped implementation"],
             ["#included", "What’s included"],
             ["#purchase", "Purchase & delivery"],
             ["#free-vs-pro", "Free vs Pro"],
@@ -662,7 +681,11 @@ export default function StarterProPage() {
           ))}
         </nav>
 
+        <StarterProTour />
         <StarterProPreviews />
+        <ProductStudioReference />
+        <StarterProReadiness />
+        <StarterProImplementation />
 
         <MarketingSectionShell
           id="included"
@@ -1107,7 +1130,7 @@ export default function StarterProPage() {
             </div>
             <div className="flex flex-col gap-3 border-t border-border-subtle px-6 py-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
               <p className="text-sm">
-                {launchPrice} · One-time payment · Full source code
+                {sourcePrice} · One-time payment · Full source code
               </p>
               <p className="text-xs leading-6 text-muted-foreground">
                 Legal scope and usage terms are governed by{" "}

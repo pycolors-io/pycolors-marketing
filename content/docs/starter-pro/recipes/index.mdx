@@ -1,0 +1,143 @@
+---
+title: Business recipes
+description: Adapt projects, tasks and comments to client tracking, support requests and internal validation in one Starter Pro codebase.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import {
+  ClipboardCheck,
+  LifeBuoy,
+  Rocket,
+  ShieldCheck,
+  SlidersHorizontal,
+  Terminal,
+  Users,
+} from "lucide-react";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Choose a workflow
+
+Build on the same workspace, project, task and discussion foundation. Each guide
+starts with a workflow you can try in the included app, then identifies the
+presentation changes and domain extensions to review.
+
+<DocsDecisionGrid
+  columns={3}
+  items={[
+    {
+      title: "Client tracking",
+      icon: Users,
+      description:
+        "Track an engagement, assign follow-ups and keep internal delivery notes.",
+      href: "/docs/starter-pro/recipes/client-tracking",
+      cta: "Open client tracking",
+    },
+    {
+      title: "Support requests",
+      icon: LifeBuoy,
+      description:
+        "Organize an internal queue, investigate requests and record resolutions.",
+      href: "/docs/starter-pro/recipes/support-requests",
+      cta: "Open support requests",
+    },
+    {
+      title: "Internal validation",
+      icon: ClipboardCheck,
+      description:
+        "Coordinate review tasks, target dates and outcome notes before handover.",
+      href: "/docs/starter-pro/recipes/internal-validation",
+      cta: "Open internal validation",
+    },
+  ]}
+/>
+
+<Callout title="One foundation, three guided adaptations">
+  These are documented uses of the existing Projects module. They do not install
+  separate products or add a customer portal, email ticketing or a formal
+  approval engine. The baseline walkthroughs need no additional schema or
+  provider.
+</Callout>
+
+## Reuse the working model
+
+| Foundation       | Included behavior                                                    | Adaptation boundary                                   |
+| ---------------- | -------------------------------------------------------------------- | ----------------------------------------------------- |
+| Projects         | Name, description, status, responsible member and archive state      | An engagement, queue or review request                |
+| Tasks            | Title, description, status, responsible member and calendar due date | A follow-up, support request or review step           |
+| Comments         | Plain-text task discussion with author and creation time             | Internal notes and working context                    |
+| Workspace access | Live membership and scoped server operations                         | The access boundary remains the workspace             |
+| Activity         | Actor/resource events for work changes                               | Operational history, not an immutable decision record |
+
+Projects and tasks use `TODO`, `IN_PROGRESS` and `DONE`. Their states are
+independent; task completion does not complete a project automatically.
+An assignee identifies a responsible workspace membership and does not restrict
+who can edit. A due date is a calendar target, not a reminder or SLA timer.
+
+## Keep the default access rules
+
+OWNER, ADMIN and MEMBER can create/edit project work and post comments. A MEMBER
+can remove its own comments; OWNER and ADMIN can delete tasks and moderate others'
+comments. All active workspace members can read the workspace's projects and
+discussions. Revoked membership loses access.
+
+Use an internal team workspace for the walkthroughs. A project is not a
+customer-specific access boundary, and assigning a reviewer does not create an
+approval permission. Archived projects block task/comment writes until restored;
+archive does not make records immutable.
+
+## Find the guides in your source
+
+The buyer ZIP includes `docs/recipes/README.md` and three detailed guides:
+`client-tracking.md`, `support-requests.md` and `internal-validation.md` in that
+same directory. They include model mappings, example records, source entry
+points, acceptance checks and scoped coding-assistant prompts.
+
+Start with [installation](/docs/starter-pro/getting-started), then keep the
+[customization and upgrade baseline](/docs/starter-pro/customization-and-upgrades).
+Interface labels support French/English; user-authored names and comments remain
+user data. Use fictitious information when trying the public demo.
+
+## Verify your adaptation
+
+Confirm persistence after reload, MEMBER edits and moderation restrictions,
+cross-workspace ID rejection, revoked access and archived-task rejection. Review
+new UI in French/English, light/dark appearance, keyboard navigation and a narrow
+viewport. Add tests for any new domain behavior.
+
+## Continue the implementation
+
+<DocsLinks
+  variant="grid"
+  items={[
+    {
+      title: "Install Starter Pro",
+      href: "/docs/starter-pro/getting-started",
+      description: "Prepare your source, environment and first workspace.",
+      icon: Rocket,
+    },
+    {
+      title: "Customize and extend",
+      href: "/docs/starter-pro/customization-and-upgrades",
+      description:
+        "Use the existing configuration and guarded extension recipes.",
+      icon: SlidersHorizontal,
+    },
+    {
+      title: "Test the workspace locally",
+      href: "/docs/starter-pro/local-development",
+      description:
+        "Try the walkthroughs with isolated sample data and your own local setup.",
+      icon: Terminal,
+    },
+    {
+      title: "Validation coverage",
+      href: "/docs/starter-pro/release-readiness",
+      description:
+        "Understand the existing package and business-workflow checks.",
+      icon: ShieldCheck,
+    },
+  ]}
+/>

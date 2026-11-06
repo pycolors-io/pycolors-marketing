@@ -53,6 +53,7 @@ const GROUPS = [
       { label: "Recover purchase", href: "/orders/recover" },
       { label: "About PyColors", href: "/about" },
       { label: "Contact", href: "/contact" },
+      { label: "Request a quote", href: "/request-a-quote" },
     ],
   },
 ] as const;

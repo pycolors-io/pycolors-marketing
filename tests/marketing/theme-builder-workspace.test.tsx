@@ -139,7 +139,7 @@ describe("Theme Builder workspace", () => {
     );
     fireEvent.click(screen.getByRole("button", { name: "Reset theme" }));
     expect(screen.getByRole("textbox", { name: "Theme name" })).toHaveValue(
-      "PyColors Theme",
+      "Monochrome",
     );
     expect(preview()).toHaveAttribute("data-theme-builder-preview", "light");
     expect(preview().style.getPropertyValue("--primary")).toBe(initial);
@@ -185,10 +185,13 @@ describe("Theme Builder workspace", () => {
   it("previews and copies typography separately, keeps it in full screen, and resets it", async () => {
     render(<ThemeBuilder />);
     const outsideFont = document.documentElement.style.fontFamily;
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "plus-jakarta-sans" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
-    expect(preview().style.fontFamily).toContain("PyColors Preview Jakarta");
+    fireEvent.click(
+      screen.getByRole("menuitemradio", { name: "Plus Jakarta Sans" }),
+    );
+    expect(preview().style.fontFamily).toContain("Plus Jakarta Sans");
     expect(document.documentElement.style.fontFamily).toBe(outsideFont);
     expect(screen.getByRole("link", { name: "Download font" })).toHaveAttribute(
       "href",
@@ -217,14 +220,15 @@ describe("Theme Builder workspace", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Open full screen preview" }),
     );
-    expect(preview().style.fontFamily).toContain("PyColors Preview Jakarta");
+    expect(preview().style.fontFamily).toContain("Plus Jakarta Sans");
     fireEvent.click(screen.getByRole("button", { name: "Close" }));
     await waitFor(() =>
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
     );
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "system-mono" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "System" }));
     expect(
       screen.queryByRole("link", { name: "Download font" }),
     ).not.toBeInTheDocument();
@@ -232,13 +236,13 @@ describe("Theme Builder workspace", () => {
       screen.getByRole("button", { name: "Copy typography CSS" }),
     );
     await waitFor(() => expect(writeText).toHaveBeenCalledTimes(3));
-    expect(writeText.mock.calls[2][0]).toContain("--font-sans: ui-monospace");
+    expect(writeText.mock.calls[2][0]).toContain("--font-sans: ui-sans-serif");
     expect(writeText.mock.calls[2][0]).not.toContain("@font-face");
     fireEvent.click(screen.getByRole("button", { name: "Reset theme" }));
-    expect(screen.getByRole("combobox", { name: "Font family" })).toHaveValue(
-      "mona-sans",
-    );
-    expect(preview().style.fontFamily).toContain("Mona Sans");
+    expect(
+      screen.getByRole("button", { name: "Font family Geist" }),
+    ).toBeVisible();
+    expect(preview().style.fontFamily).toContain("--font-geist-sans");
   });
 
   it("filters demo projects and updates the chart without changing exported tokens", async () => {
@@ -343,5 +347,60 @@ describe("Theme Builder workspace", () => {
     await waitFor(() =>
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
     );
+  });
+});
+
+describe("shared appearance controls", () => {
+  it("scopes geometry and dashboard preferences to the preview, including full screen and reset", async () => {
+    render(<ThemeBuilder />);
+    const outside = document.documentElement.getAttribute("style");
+    fireEvent.click(screen.getByRole("button", { name: "XL" }));
+    expect(preview().style.getPropertyValue("--radius")).toBe("1.5rem");
+    fireEvent.click(
+      screen.getByText("Dashboard preview", { selector: "summary" }),
+    );
+    for (const [label, value] of [
+      ["Interface scale", "125"],
+      ["Density", "comfortable"],
+      ["Sidebar", "icons"],
+      ["Sidebar style", "inset"],
+      ["Content width", "full"],
+      ["Canvas", "plain"],
+      ["Motion", "reduced"],
+      ["Sidebar background", "contrast"],
+    ])
+      fireEvent.change(screen.getByRole("combobox", { name: label }), {
+        target: { value },
+      });
+    expect(preview()).toHaveAttribute("data-preview-sidebar", "icons");
+    expect(preview()).toHaveAttribute("data-preview-density", "comfortable");
+    expect(preview()).toHaveAttribute("data-preview-motion", "reduced");
+    expect(preview().style.getPropertyValue("--preview-scale")).toBe("1.25");
+    expect(document.documentElement.getAttribute("style")).toBe(outside);
+    fireEvent.click(screen.getByRole("radio", { name: "Dark" }));
+    expect(
+      screen.getByRole("combobox", { name: "Sidebar background" }),
+    ).toHaveValue("standard");
+    fireEvent.change(
+      screen.getByRole("combobox", { name: "Sidebar background" }),
+      { target: { value: "black" } },
+    );
+    fireEvent.click(screen.getByRole("radio", { name: "Light" }));
+    expect(
+      screen.getByRole("combobox", { name: "Sidebar background" }),
+    ).toHaveValue("contrast");
+    fireEvent.click(
+      screen.getByRole("button", { name: "Open full screen preview" }),
+    );
+    expect(preview()).toHaveAttribute("data-preview-sidebar", "icons");
+    expect(preview().style.getPropertyValue("--radius")).toBe("1.5rem");
+    fireEvent.click(screen.getByRole("button", { name: "Close" }));
+    await waitFor(() =>
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Reset theme" }));
+    expect(preview()).toHaveAttribute("data-preview-sidebar", "expanded");
+    expect(preview().style.getPropertyValue("--radius")).toBe("0.25rem");
+    expect(preview().style.getPropertyValue("--preview-scale")).toBe("1");
   });
 });

@@ -201,7 +201,9 @@ describe("UI overview", () => {
       expect(copy.querySelector("svg")).not.toBeNull();
       fireEvent.click(copy);
       await waitFor(() => expect(writeText).toHaveBeenCalledWith(source));
-      expect(screen.getByRole("button", { name: "Copied Text" })).toBeVisible();
+      expect(
+        await screen.findByRole("button", { name: "Copied Text" }),
+      ).toBeVisible();
     } finally {
       if (original) Object.defineProperty(navigator, "clipboard", original);
       else Reflect.deleteProperty(navigator, "clipboard");

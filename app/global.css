@@ -4,19 +4,12 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 @import "tw-animate-css";
+@import "./appearance-fonts.css";
+@import "./site-palettes.css";
 
 /* ==========================================================================
    Fonts
    ========================================================================== */
-
-/* Optional Theme Builder preview font. Site fonts are loaded in app/fonts.ts. */
-@font-face {
-  font-family: "Mona Sans";
-  src: url("/fonts/Mona-Sans.var.woff2") format("woff2-variations");
-  font-style: normal;
-  font-weight: 200 900;
-  font-display: swap;
-}
 
 /* ==========================================================================
    Root
@@ -25,11 +18,7 @@
 :root {
   /* Shared outer frame for marketing, blog, Docs, headers and footers. */
   --site-frame-width: 90rem;
-  --site-frame-line: color-mix(
-    in srgb,
-    var(--foreground) 10%,
-    var(--background)
-  );
+  --site-frame-line: var(--border);
   --site-pattern-ink: color-mix(in oklab, var(--foreground) 5%, transparent);
   --site-pattern-wash: color-mix(
     in oklab,
@@ -91,55 +80,50 @@
   --site-radius-dialog: 0.75rem;
 }
 
-/* PyColors keeps the public violet palette. Monochrome has its own neutral
-   surface hierarchy, without changing package tokens or semantic status colors. */
-:root[data-site-palette="monochrome"] {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --popover: oklch(1 0 0);
-  --secondary: oklch(0.97 0 0);
-  --accent: oklch(0.955 0 0);
-  --muted: oklch(0.985 0 0);
-  --muted-foreground: oklch(0.51 0 0);
-  --border: oklch(0.915 0 0);
-  --border-subtle: oklch(0.955 0 0);
-  --border-strong: oklch(0.83 0 0);
-  --input: var(--border-strong);
-  --ring: oklch(0.556 0 0);
-  --surface-inverted: oklch(0.145 0 0);
-  --surface-inverted-foreground: oklch(0.985 0 0);
+/* App-owned brand vocabulary follows the shared semantic palette. */
+:root[data-site-palette] {
+  --brand-primary: var(--primary);
+  --brand-primary-hover: color-mix(
+    in oklab,
+    var(--primary) 90%,
+    var(--background)
+  );
+
+  /* Fumadocs uses the same surfaces, text and focus colors as the site. */
+  --color-fd-background: var(--background);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-muted: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-popover: var(--popover);
+  --color-fd-popover-foreground: var(--popover-foreground);
+  --color-fd-card: var(--card);
+  --color-fd-card-foreground: var(--card-foreground);
+  --color-fd-border: var(--border);
+  --color-fd-primary: var(--primary);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  --color-fd-secondary: var(--secondary);
+  --color-fd-secondary-foreground: var(--secondary-foreground);
+  --color-fd-accent: var(--accent);
+  --color-fd-accent-foreground: var(--accent-foreground);
+  --color-fd-ring: var(--ring);
+
   --shadow-soft: 0 2px 8px oklch(0 0 0 / 4%);
   --shadow-medium: 0 12px 32px oklch(0 0 0 / 6%);
   --shadow-strong: 0 24px 64px oklch(0 0 0 / 10%);
 }
 
-/* Preserve status colors and allow Theme Builder's inline palettes to override. */
-:root[data-site-palette="monochrome"],
-:root[data-site-palette="monochrome"] .dark {
-  --brand-primary: var(--foreground);
-  --brand-primary-hover: color-mix(
-    in oklab,
-    var(--foreground) 90%,
-    var(--background)
-  );
+:root[data-site-palette].dark {
+  --shadow-soft: 0 2px 8px oklch(0 0 0 / 20%);
+  --shadow-medium: 0 12px 32px oklch(0 0 0 / 30%);
+  --shadow-strong: 0 24px 64px oklch(0 0 0 / 40%);
+}
+
+/* Neutralize decorative product tones when the visitor chooses Monochrome. */
+:root[data-site-palette="monochrome"] {
   --brand-platform: var(--foreground);
   --brand-platform-hover: var(--brand-primary-hover);
   --brand-accent: var(--foreground);
   --brand-accent-hover: var(--brand-primary-hover);
-  --primary: var(--brand-primary);
-  --primary-foreground: var(--background);
-  --card-foreground: var(--foreground);
-  --popover-foreground: var(--foreground);
-  --secondary-foreground: var(--foreground);
-  --accent-foreground: var(--foreground);
-  --surface: var(--card);
-  --surface-foreground: var(--foreground);
-  --surface-muted: var(--muted);
-  --surface-elevated: var(--popover);
-
-  /* Marketing tones share fine neutral borders rather than inheriting the
-     much stronger colored outlines designed for the violet palette. */
   --brand-platform-muted: var(--surface-muted);
   --brand-accent-muted: var(--surface-muted);
   --pro-border: var(--border-strong);
@@ -154,26 +138,11 @@
   --accent-surface-muted: var(--surface-muted);
 }
 
-:root[data-site-palette="monochrome"].dark,
-:root[data-site-palette="monochrome"] .dark {
-  --background: #000000;
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --popover: oklch(0.178 0 0);
-  --secondary: oklch(0.205 0 0);
-  --accent: oklch(0.24 0 0);
-  --muted: oklch(0.178 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --border: oklch(0.269 0 0);
-  --border-subtle: oklch(0.205 0 0);
-  --border-strong: oklch(0.371 0 0);
-  --input: var(--border-strong);
-  --ring: oklch(0.708 0 0);
-  --surface-inverted: oklch(0.985 0 0);
-  --surface-inverted-foreground: oklch(0.145 0 0);
-  --shadow-soft: 0 2px 8px oklch(0 0 0 / 20%);
-  --shadow-medium: 0 12px 32px oklch(0 0 0 / 30%);
-  --shadow-strong: 0 24px 64px oklch(0 0 0 / 40%);
+/* Fumadocs' sidebar declares local neutrals; keep it on the shared palette. */
+:root[data-site-palette] #nd-sidebar {
+  --color-fd-muted: var(--muted);
+  --color-fd-secondary: var(--secondary);
+  --color-fd-muted-foreground: var(--muted-foreground);
 }
 
 /* App-only roles: public package tokens and interactive previews stay independent. */
@@ -212,17 +181,6 @@ pre,
 kbd,
 samp {
   font-family: var(--font-mono);
-}
-
-/* Only the monochrome palette overrides site-owned conversion surfaces. */
-:root[data-site-palette="monochrome"] .site-primary-action {
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  --brand-primary-hover: color-mix(
-    in oklab,
-    var(--foreground) 90%,
-    var(--background)
-  );
 }
 
 /* Keep Pro content surfaces neutral while retaining the shared tone vocabulary. */

@@ -21,7 +21,7 @@ const comparisonGroups = [
         feature: "Dashboard & settings",
         template: false,
         free: "Frontend screens",
-        pro: "App foundations",
+        pro: "Persisted workspace data",
       },
       {
         feature: "Billing screens",
@@ -63,7 +63,7 @@ const comparisonGroups = [
         feature: "Sessions & protected routes",
         template: false,
         free: "UI structure only",
-        pro: "Server-side guards",
+        pro: "Revocable sessions & workspace roles",
       },
     ],
   },
@@ -95,10 +95,10 @@ const comparisonGroups = [
         pro: "Resend integration",
       },
       {
-        feature: "Recovery & delivery flows",
+        feature: "Tasks, due dates & discussions",
         template: false,
         free: false,
-        pro: "Integration foundations",
+        pro: "Workspace-scoped persistence",
       },
     ],
   },
@@ -191,7 +191,7 @@ export function PricingComparisonTable() {
                 [
                   "Starter Pro",
                   PRODUCT_DISPLAY["starter-pro"].priceLabel,
-                  "One-time · Launch price",
+                  "One-time",
                 ],
               ].map(([name, price, payment]) => (
                 <th

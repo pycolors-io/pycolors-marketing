@@ -1,0 +1,242 @@
+---
+title: Customization and upgrades
+description: Adapt the centralized product configuration and maintain a reviewable baseline for future migrations.
+lastUpdated: "2026-11-03"
+appliesTo: Starter Pro
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  CreditCard,
+  GitBranch,
+  ShieldCheck,
+  SlidersHorizontal,
+} from "lucide-react";
+import { CopyableCommand } from "@/components/docs/copyable-command";
+import { DocsDecisionGrid } from "@/components/docs/docs-decision-grid";
+import { DocsLinks } from "@/components/docs/docs-links";
+
+## Configure your product
+
+`config/product.ts` groups your product settings. Keep credentials in the
+server environment.
+
+<DocsDecisionGrid
+  columns={2}
+  tone="neutral"
+  items={[
+    {
+      title: "Identity and presentation",
+      icon: SlidersHorizontal,
+      description:
+        "Adapt the brand and navigation through the existing entry points.",
+      items: [
+        <span>
+          <code>brand</code>, <code>links</code> and <code>navigation</code>{" "}
+          control names, documentation destinations and menu structure.
+        </span>,
+        <span>
+          <code>modules</code> changes presentation; server authorization
+          remains independent.
+        </span>,
+        <span>
+          <code>email</code> controls accent, contact and Reply-To identity. The
+          sender still needs verification.
+        </span>,
+      ],
+    },
+    {
+      title: "Plans and capacity",
+      icon: CreditCard,
+      description:
+        "Connect your own offer to checkout and server-enforced limits.",
+      items: [
+        <span>
+          <code>billing.trialDays</code> configures the checkout trial.
+        </span>,
+        <span>
+          <code>workspaces.limits</code> caps workspace creation per account.
+        </span>,
+        <span>
+          <code>entitlements</code> sets projects, members and invitations per
+          workspace.
+        </span>,
+      ],
+    },
+  ]}
+/>
+
+<Callout title="Quotas and billing ownership">
+  Quotas default to `null`, meaning **uncapped**. Use non-negative integers when
+  your offer needs limits, then test the boundary and upgrade path. Billing
+  remains personal; an organization-owned subscription needs a separate design.
+</Callout>
+
+Customize provides palette, typography, geometry, interface scale and sidebar
+controls in the browser. Language and time zone are account preferences. Review
+changes in both themes, French/English, narrow layouts and reduced motion. The
+shipped `docs/customization.md` explains logo, icon and email entry points.
+
+## Configure appearance
+
+Use the [Theme Builder](/tools/theme-builder) for the shared palettes, fonts and
+radius scale. Open **Dashboard preview** to choose density, interface scale,
+sidebar, content width, canvas and motion.
+
+1. Choose your colors and appearance settings.
+2. Select **Download Starter Pro config**, then replace `config/appearance.ts`.
+3. Restart the app. In a browser with saved preferences, use Customize → Reset.
+
+Saved browser choices take precedence over product defaults. The selected preview
+mode becomes the initial light/dark mode; set `mode: "system"` in the config to
+follow the device. Named presets use the bundled shared tokens. Custom colors
+include both semantic color maps and appear as **Custom** in Customize.
+
+This export requires Starter Pro source with `lib/appearance-contract.ts`. For an older
+project, upgrade first or use the CSS exports.
+
+The buyer ZIP includes the configuration contract, color snapshots and local font
+assets. It does not require a private workspace package or a Theme Builder server.
+
+## Work with a coding assistant
+
+<Callout title="Start with the included instructions">
+  In the extracted project, read `AGENTS.md`, then `docs/ai/README.md` and
+  `docs/ai/conventions.md`. `CLAUDE.md` points to the same shared instructions.
+  These files describe the installed source, its server boundaries and its
+  validation commands. Use your own coding assistant.
+</Callout>
+
+<DocsDecisionGrid
+  columns={3}
+  tone="neutral"
+  items={[
+    {
+      title: "A protected page",
+      icon: BookOpen,
+      description:
+        "Build a workspace report as a Server Component using the existing service and translations.",
+      items: ["Recipe: docs/ai/add-page.md"],
+    },
+    {
+      title: "A business resource",
+      icon: SlidersHorizontal,
+      description:
+        "Adapt delivery milestones to existing project-task persistence, with validated input and a server action.",
+      items: ["Recipe: docs/ai/add-resource.md"],
+    },
+    {
+      title: "A new permission",
+      icon: ShieldCheck,
+      description:
+        "Guard an owner/admin project-summary operation at the server boundary and inside its workspace transaction.",
+      items: ["Recipe: docs/ai/add-permission.md"],
+    },
+  ]}
+/>
+
+Adopt the recipes explicitly in your own project. The buyer-ZIP validator applies
+their code to a disposable extracted copy, compiles it and exercises allowed,
+denied, revoked and cross-workspace cases. Keep schema and billing decisions
+explicit when your own adaptation needs them.
+
+For a complete workflow, choose a [business recipe](/docs/starter-pro/recipes):
+client tracking, an internal support queue or an internal review checklist.
+The guides map existing projects, tasks and comments to each workflow, then
+separate presentation changes from domain fields and access rules to design.
+
+## Keep an upgrade baseline
+
+Commit the original delivery into a private repository before customization.
+Retain `PYCOLORS_RELEASE.json`, the lockfile, patches, changelog, licence and order
+terms. Compare a newly available delivery against that baseline and merge your
+adaptations through review. Future-version access follows the purchased offer.
+
+## Rehearse migrations
+
+<Steps>
+  <Step>
+    ### Review the incoming release
+
+    Read the changelog, pending SQL and environment changes before installing.
+
+  </Step>
+  <Step>
+    ### Prepare restricted staging
+
+    Restore a recoverable backup into a restricted staging environment.
+
+  </Step>
+  <Step>
+    ### Install and inspect migration status
+
+    <CopyableCommand command="pnpm install --frozen-lockfile" />
+    <CopyableCommand command="pnpm exec prisma migrate status" />
+
+  </Step>
+  <Step>
+    ### Apply reviewed migrations
+
+    <CopyableCommand command="pnpm exec prisma migrate deploy" />
+
+    Keep migrations already applied to retained data immutable. The project-work
+    migration adds task/comment tables and preserves existing projects.
+
+  </Step>
+  <Step>
+    ### Validate the application
+
+    Run diagnostics, tests, a production build and the affected user journeys.
+    Session-registry upgrades can require users to sign in again.
+
+  </Step>
+  <Step>
+    ### Verify providers before rollout
+
+    Check provider integration in a sandbox before deploying the reviewed result.
+
+  </Step>
+</Steps>
+
+<Callout title="Plan recovery before deployment">
+  Retain the previous application artifact and check schema/session
+  compatibility before rollback. There is no automatic destructive
+  down-migration. A database restore can lose writes after the chosen recovery
+  point; use your incident procedure.
+</Callout>
+
+## Continue your handover
+
+<DocsLinks
+  variant="grid"
+  tone="neutral"
+  items={[
+    {
+      title: "Production operations",
+      href: "/docs/starter-pro/operations",
+      description: "Prepare monitoring, backups and a verified restore.",
+      icon: ShieldCheck,
+    },
+    {
+      title: "Implementation and support",
+      href: "/docs/starter-pro/implementation-support",
+      description: "Define the adaptation and support scope.",
+      icon: BookOpen,
+    },
+    {
+      title: "Validation coverage",
+      href: "/docs/starter-pro/release-readiness",
+      description: "Inspect the checks behind the delivered source.",
+      icon: GitBranch,
+    },
+    {
+      title: "Business recipes",
+      href: "/docs/starter-pro/recipes",
+      description:
+        "Apply the shared project/task/comment model to a complete internal workflow.",
+      icon: BookOpen,
+    },
+  ]}
+/>

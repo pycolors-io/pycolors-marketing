@@ -19,8 +19,10 @@ import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
 import {
   LEGAL_REVISION,
+  LEGAL_COMPANY as COMPANY,
   NA_AI_USAGE_SUMMARY,
   STARTER_PRO_USAGE_SUMMARY,
+  STARTER_PRO_UPDATES_SUMMARY,
   PURCHASE_SUPPORT_SUMMARY,
 } from "@/lib/products/commercial-policy";
 import styles from "@/components/marketing/legal-page.module.css";
@@ -59,8 +61,6 @@ type LicenseSection = {
   readonly description: string;
   readonly items: readonly string[];
 };
-
-const COMPANY = { name: "Py Colors SASU", email: "contact@pycolors.com" };
 
 const sections: LicenseSection[] = [
   {
@@ -139,9 +139,11 @@ const sections: LicenseSection[] = [
     items: [
       "Open-source repositories may receive public updates without any service-level commitment.",
       "Premium template purchases generally include the product version delivered at purchase time, plus any update rights explicitly described on the product page or checkout page.",
-      "Starter Pro may include broader update access, private documentation, or support depending on the purchased offer.",
+      STARTER_PRO_UPDATES_SUMMARY,
+      "No release schedule or access to separate future products is promised. Applying updates to a customized application requires a separate agreement unless included in your purchased offer.",
       "Future updates, premium drops, private releases, or additional products are included only when explicitly stated in the purchased offer.",
       PURCHASE_SUPPORT_SUMMARY,
+      "Guided setup and business adaptation are separately scoped services. The written quote defines the licensed entity, deliverables, target environment, acceptance checks and included follow-up. An implementation service does not grant additional source redistribution rights.",
     ],
   },
 ];
@@ -210,6 +212,10 @@ export default function LicensePage() {
                 <div>
                   <dt>Published by</dt>
                   <dd>{COMPANY.name}</dd>
+                </div>
+                <div>
+                  <dt>Registration</dt>
+                  <dd>{COMPANY.registration}</dd>
                 </div>
               </dl>
               <Link href="/terms" className={`${styles.textLink} mt-5`}>

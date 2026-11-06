@@ -40,14 +40,14 @@ describe("Starter Pro pricing screenshots", () => {
       [
         "Sign-in screen",
         "Starter Pro sign-in screen with email, password, Google and GitHub options",
-        "auth",
+        "auth-indigo-2x",
         "email and password fields",
       ],
       [
-        "Offline fallback",
-        "Starter Pro offline screen with reload and dashboard links",
-        "pwa",
-        "when their connection drops",
+        "Project work",
+        "Starter Pro project with assigned tasks, due dates and a discussion",
+        "project-work-coral-2x",
+        "assigned tasks, due dates, comments and archiving",
       ],
     ]) {
       const image = within(preview).getByRole("img", { name: alt });
@@ -58,10 +58,7 @@ describe("Starter Pro pricing screenshots", () => {
       const link = within(preview).getByRole("link", {
         name: `View ${title!.toLowerCase()} at full size`,
       });
-      expect(link).toHaveAttribute(
-        "href",
-        `/images/starters/pro/${file}-pycolors.png`,
-      );
+      expect(link).toHaveAttribute("href", `/images/starters/pro/${file}.png`);
       expect(link).not.toHaveAttribute("target");
       link.focus();
       expect(link).toHaveFocus();
@@ -74,7 +71,7 @@ describe("Starter Pro pricing screenshots", () => {
       "What’s included in each product",
     );
     expect(preview.nextElementSibling).toHaveAccessibleName(
-      "Your questions, answered.",
+      "An assisted start, scoped to your product.",
     );
     expect(preview).toHaveTextContent(
       "not proof of a live deployment, a completed payment, or a verified integration",
@@ -103,7 +100,7 @@ describe("Starter Pro pricing screenshots", () => {
     ).toEqual([
       `NA-AI Landing${PRODUCT_DISPLAY["na-ai-landing"].priceLabel}One-time`,
       "Starter FreeFreePublic repository",
-      `Starter Pro${PRODUCT_DISPLAY["starter-pro"].priceLabel}One-time · Launch price`,
+      `Starter Pro${PRODUCT_DISPLAY["starter-pro"].priceLabel}One-time`,
     ]);
     for (const [name, values] of [
       [
@@ -116,7 +113,11 @@ describe("Starter Pro pricing screenshots", () => {
       ],
       [
         "Sessions & protected routes",
-        ["Not included", "UI structure only", "Server-side guards"],
+        [
+          "Not included",
+          "UI structure only",
+          "Revocable sessions & workspace roles",
+        ],
       ],
       [
         "Data persistence",
@@ -174,9 +175,9 @@ describe("Starter Pro pricing screenshots", () => {
       expect(link).toHaveAttribute("href", "/starters/pro");
     }
     for (const link of screen.getAllByRole("link", {
-      name: "Try the live demo",
+      name: "Explore the demos",
     })) {
-      expect(link).toHaveAttribute("href", "https://starter-demo.pycolors.io");
+      expect(link).toHaveAttribute("href", "/demo");
     }
     expect(metadata.alternates?.canonical).toBe("/pricing");
   });

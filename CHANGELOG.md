@@ -1,8 +1,36 @@
 # Changelog
 
-## Unreleased
+## 1.31.0
 
-- Add an optional configured Starter Pro demo CTA beside purchase, with explicit testable scope. Public enablement depends on verified demo deployment and matching buyer source delivery.
+Release notes for 4 November 2026 (2026-11-04).
+
+Evaluate the workflow, adapt the source, and plan a handover your team can use.
+
+### Applications updated
+
+- Explore Starter Pro through three guided demo journeys, current light/dark product captures and a short product tour. The plan preview clearly identifies its simulated billing behavior.
+- Starter Pro 1.4.0 connects project tasks, due dates and discussions with practical installation, customization and upgrade guidance.
+- Review the PyColors Product Studio reference case, reusable workflow recipes and a scoped implementation example before discussing an engagement.
+
+### Platform and shared capabilities
+
+- Adapt appearance with aligned Theme Builder and Starter Pro controls, then use tested coding-agent examples to extend the source.
+- The displayed PyColors UI baseline is now 1.7.1; Tokens remains 1.2.3. This Marketing release does not publish or re-version either package.
+
+### Reliability and maintenance
+
+- The buyer ZIP is checked outside the development workspace through a clean installation, database setup, production build and first-user journey.
+- English/French, appearance and workspace journeys have automated browser coverage. Production services still require verification in the buyer's environment.
+
+### For developers and candidates
+
+- Use the documented client-tracking, support-request and internal-review recipes to adapt one reusable application foundation.
+
+### For companies and recruiters
+
+- Inspect the implementation scope, acceptance checklist and downloadable handover example before requesting a written quote. Reference content and sample deliverables are explicitly illustrative.
+
+[Explore Starter Pro](https://pycolors.io/starters/pro).
 
 ## 1.30.0
 

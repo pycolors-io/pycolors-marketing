@@ -97,6 +97,7 @@
 
 .quickstart [role="tabpanel"] > p a {
   color: var(--foreground);
+  text-decoration: underline;
   text-underline-offset: 3px;
 }
 

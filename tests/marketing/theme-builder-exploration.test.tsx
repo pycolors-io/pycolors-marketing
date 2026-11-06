@@ -49,8 +49,15 @@ function selectView(name: string) {
 describe("Theme Builder exploration", () => {
   it("shows engine-owned shades in both modes and copies the selected value", async () => {
     render(<ThemeBuilder />);
+    fireEvent.change(screen.getByRole("textbox", { name: /^Brand color/ }), {
+      target: { value: "#6a30d4" },
+    });
     selectView("Palette");
-    const theme = createThemeBuilderState().generatedTheme;
+    const theme = updateThemeBuilderField(
+      createThemeBuilderState(),
+      "brandColor",
+      "#6a30d4",
+    ).generatedTheme;
     for (const mode of ["light", "dark"] as const) {
       fireEvent.click(
         screen.getByRole("radio", {
@@ -143,9 +150,10 @@ describe("Theme Builder exploration", () => {
       { target: { value: "Aurora Studio" } },
     );
     fireEvent.click(screen.getByRole("checkbox", { name: /Weekly summary/ }));
-    fireEvent.change(screen.getByRole("combobox", { name: "Font family" }), {
-      target: { value: "system-mono" },
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Font family/ }), {
+      key: "ArrowDown",
     });
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "Geist Mono" }));
     fireEvent.click(screen.getByRole("button", { name: "Save demo settings" }));
     expect(
       screen.getByText("Demo settings saved in this preview."),

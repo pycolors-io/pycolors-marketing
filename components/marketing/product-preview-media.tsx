@@ -44,6 +44,7 @@ export function ProductPreviewMedia({
           alt=""
           aria-hidden="true"
           fill
+          quality={product === "starter-pro" ? 100 : 75}
           sizes={sizes}
           priority={priority}
           className="object-contain object-top dark:hidden"
@@ -53,6 +54,7 @@ export function ProductPreviewMedia({
           alt=""
           aria-hidden="true"
           fill
+          quality={product === "starter-pro" ? 100 : 75}
           sizes={sizes}
           className="hidden object-contain object-top dark:block"
         />

@@ -24,7 +24,7 @@ const sections = [
 ] as const;
 
 describe("Privacy Policy page", () => {
-  it("preserves SEO, the original policy revision, and controller details", () => {
+  it("preserves SEO, the revised policy date, and controller details", () => {
     const { container } = render(<PrivacyPage />);
     expect(metadata.alternates?.canonical).toBe("/privacy");
     expect(metadata.openGraph?.url).toBe("/privacy");
@@ -37,18 +37,18 @@ describe("Privacy Policy page", () => {
     const information = screen.getByRole("complementary", {
       name: "Privacy document information",
     });
-    expect(information).toHaveTextContent("May 14, 2026");
+    expect(information).toHaveTextContent("November 5, 2026");
     expect(information.querySelector("time")).toHaveAttribute(
       "datetime",
-      "2026-05-14",
+      "2026-11-05",
     );
     const controller = screen.getByRole("region", { name: "1. Controller" });
     expect(controller).toHaveTextContent(
       "Py Colors SASU, 6 rue d’Armaillé, 75017 Paris, France.",
     );
     expect(
-      within(controller).getByRole("link", { name: "contact@pycolors.io" }),
-    ).toHaveAttribute("href", "mailto:contact@pycolors.io");
+      within(controller).getByRole("link", { name: "contact@pycolors.com" }),
+    ).toHaveAttribute("href", "mailto:contact@pycolors.com");
     const breadcrumb = JSON.parse(
       container.querySelector('script[type="application/ld+json"]')!
         .textContent!,
@@ -119,15 +119,14 @@ describe("Privacy Policy page", () => {
       "Depending on your location, you may have rights such as access, correction, deletion, restriction, objection, portability, and withdrawal of consent where consent is the basis for processing.",
     );
     expect(rights).toHaveTextContent(
-      "You may also have the right to lodge a complaint with a data protection authority.",
+      "You may also have the right to lodge a complaint with a data protection authority",
     );
-    expect(within(rights).getByRole("link")).toHaveAttribute(
-      "href",
-      "mailto:contact@pycolors.io",
-    );
+    expect(
+      within(rights).getByRole("link", { name: "contact@pycolors.com" }),
+    ).toHaveAttribute("href", "mailto:contact@pycolors.com");
   });
 
-  it("provides real topic, contact, and legal destinations without changing consent controls", () => {
+  it("provides real topic, contact, and legal destinations and reopens the existing consent controls", () => {
     const { container } = render(<PrivacyPage />);
     const topics = screen.getByRole("navigation", {
       name: "Find a topic in the privacy policy",
@@ -152,7 +151,34 @@ describe("Privacy Policy page", () => {
         .getAllByRole("link")
         .map((link) => link.getAttribute("href")),
     ).toEqual(["/terms", "/license"]);
-    expect(screen.queryByRole("button")).toBeNull();
+    expect(
+      screen.getByRole("button", { name: "Manage cookie preferences" }),
+    ).toBeVisible();
+  });
+
+  it("describes the actual quote and demo lifecycle without promising exact deletion or control of all analytics", () => {
+    render(<PrivacyPage />);
+    const data = screen.getByRole("region", { name: "3. Data we may collect" });
+    expect(data).toHaveTextContent("Company and desired timeline are optional");
+    expect(data).toHaveTextContent(
+      "temporary generated identity and workspace",
+    );
+    const retention = screen.getByRole("region", { name: "13. Retention" });
+    expect(retention).toHaveTextContent("demo access expires after two hours");
+    expect(retention).toHaveTextContent(
+      "removal is not guaranteed at the exact expiry instant",
+    );
+    expect(retention).toHaveTextContent(
+      "This is not the retention period of your emailed project brief",
+    );
+    expect(
+      screen.getByRole("region", { name: "7. Cookies and analytics" }),
+    ).toHaveTextContent(
+      "Rejecting optional Google tags does not disable this separate integration",
+    );
+    const sharing = screen.getByRole("region", { name: "11. Data sharing" });
+    for (const provider of ["Vercel", "Stripe", "Resend", "Neon"])
+      expect(sharing).toHaveTextContent(provider);
   });
 
   it("has no automated accessibility violations", async () => {

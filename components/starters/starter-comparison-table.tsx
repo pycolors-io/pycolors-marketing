@@ -18,7 +18,7 @@ const comparisonRows = [
   {
     label: "Product interface",
     free: "Dashboard, settings, billing UI, and a local project workflow: create, view details, rename, and delete.",
-    pro: "SaaS app surfaces with auth and billing integration foundations.",
+    pro: "Persisted workspace dashboard, editable profile, notifications, English/French and Customize.",
   },
   {
     label: "Authentication",
@@ -28,17 +28,17 @@ const comparisonRows = [
   {
     label: "Session and access checks",
     free: "UI structure only; add real session checks and authorization.",
-    pro: "Auth.js sessions and server-side guards; extend permissions for your product.",
+    pro: "Server-revocable sessions, workspace roles and ownership-aware account lifecycle; extend permissions for your product.",
   },
   {
     label: "Stripe billing",
     free: "Mock plans and invoices; no Stripe Checkout or customer portal integration.",
-    pro: "Checkout, customer portal, and webhook-backed subscriptions; configure and test your Stripe account.",
+    pro: "Personal Checkout, portal, invoice history and reconciled webhooks; configure and test your Stripe account.",
   },
   {
     label: "Data persistence",
     free: "Projects persist in this browser's localStorage when available; no shared database or cross-device synchronization.",
-    pro: "Prisma + PostgreSQL foundations for auth and billing; wire your own domain data.",
+    pro: "Prisma + PostgreSQL foundations for accounts, workspaces, projects, assigned tasks, due dates and comments; wire your own domain data.",
   },
   {
     label: "Mobile experience",
@@ -49,6 +49,11 @@ const comparisonRows = [
     label: "Source access",
     free: "Clone the public Starter Free repository.",
     pro: "Download the ZIP through your purchase claim email; access recovery is available.",
+  },
+  {
+    label: "Validation and handover",
+    free: "Frontend examples and repository checks.",
+    pro: "Isolated ZIP acceptance, FR/EN browser suites, health probes, restore drill and customization/upgrade guides.",
   },
   {
     label: "Work you still own",

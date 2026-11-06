@@ -27,6 +27,7 @@ const GROUPS = [
   {
     title: "Resources",
     links: [
+      { label: "Demos", href: "/demo" },
       { label: "Documentation", href: "/docs" },
       { label: "UI Explorer", href: UI_EXPLORER_URL },
       { label: "Guides", href: "/guides" },
@@ -55,6 +56,7 @@ const GROUPS = [
       { label: "Purchase support", href: "/orders/support" },
       { label: "Recover purchase", href: "/orders/recover" },
       { label: "Contact", href: "/contact" },
+      { label: "Request a quote", href: "/request-a-quote" },
     ],
   },
 ] as const;

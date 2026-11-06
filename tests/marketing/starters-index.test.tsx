@@ -72,7 +72,7 @@ describe("Starter discovery page", () => {
       within(pro).getByText(PRODUCT_DISPLAY["starter-pro"].priceLabel),
     ).toBeVisible();
     expect(pro).toHaveTextContent(
-      `Regular price planned at ${PRODUCT_DISPLAY["starter-pro"].regularPriceLabel}`,
+      "Complete source licence. Implementation services are quoted separately.",
     );
     expect(pro).toHaveTextContent("One-time payment");
     expect(pro).toHaveTextContent(
@@ -128,13 +128,13 @@ describe("Starter discovery page", () => {
     }
   });
 
-  it("renders the shared eight-capability comparison once with accessible horizontal scrolling", () => {
+  it("renders the shared nine-capability comparison once with accessible horizontal scrolling", () => {
     render(<StartersPage />);
     const tables = screen.getAllByRole("table", {
       name: "Compare Starter Free and Starter Pro",
     });
     expect(tables).toHaveLength(1);
-    expect(within(tables[0]!).getAllByRole("rowheader")).toHaveLength(8);
+    expect(within(tables[0]!).getAllByRole("rowheader")).toHaveLength(9);
     expect(
       screen.getByRole("region", {
         name: "Starter comparison, scroll horizontally for all columns",
