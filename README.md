@@ -265,3 +265,64 @@ and a stale client catalogue. It also checks field hints and requires placeholde
 for interpolated copy. Regression tests cover shared layouts, translated FAQ
 search, MDX/code preservation, documentation tabs, locale links and the root palette script.
 Check desktop/mobile rendering and the browser console before public delivery.
+
+The Next.js `skipProxyUrlNormalize` flag preserves the incoming URL for locale
+rewrites. Without it, Next.js 16 loopback normalization can turn an internal
+English rewrite into a second HTTP request and a redirect back to the same public
+URL under `next start`. The public-demo browser suite checks production EN/FR
+responses, canonical aliases with queries and client navigation. The default
+English URL remains unprefixed; no locale detection or redirect rule is removed.
+
+## Custom project services
+
+`/services` and `/fr/services` describe custom software engagements, possible
+use cases, deliverables and the delivery process. Examples of future adaptations
+are scoped possibilities; Product studio remains a clearly identified PyColors
+reference implementation. Existing Starter Pro setup/adaptation prices stay in
+`lib/products/starter-pro-services.ts`.
+
+`lib/products/project-services.ts` adds the `custom-product` enquiry option,
+quoted after scoping, without adding a fixed-price product to checkout. Its CTA
+preselects the same stable service ID in the quote form. The API validator and
+private enquiry email template support all three service IDs; older enquiries
+remain valid. Deploy the compatible API/email change before exposing the new
+Marketing entry point. No migration is required. Tests mock email delivery.
+
+The service use cases focus on client portals, internal tools, document
+automation and custom SaaS applications. Sport is one possible sector alongside
+agencies, service firms and training teams. Websites and template adaptations
+can complement a scoped product.
+
+The Services introduction uses a real Product studio capture, explicitly labelled
+as a PyColors reference with fictional data. Direct collaboration, written scope
+and handover terms explain the engagement. Component, Starter Pro and reference
+links provide inspectable examples; process steps identify concrete outputs.
+There are no customer claims, promised delivery times or competitor comparisons.
+Custom development remains scoped separately from the two Starter Pro engagements.
+Services copy names PyColors and addresses the visitor directly, without a plural
+agency voice, to reflect an independent practice accurately.
+
+### Proposal preview and editable document
+
+`/request-a-quote/template` and `/fr/demande-de-devis/modele` now display the
+proposal as a web page. These URLs previously downloaded Markdown; their links
+now open the preview. The page provides a Word download (`/word` under either
+localized URL) and native browser printing / Save as PDF. Pages and downloads
+remain `noindex`. They are blank templates, not accepted customer proposals.
+
+The primary commercial action is “Describe your project”. The proposal preview
+is a secondary explanation of what PyColors prepares after reviewing the brief;
+visitors do not need to complete a proposal themselves. Word and print actions
+remain secondary tools inside the document header. Printing retains the blank
+template notice; the Word content is unchanged.
+
+`lib/quotes/proposal-template.ts` remains the single content source for both
+languages. A restricted parser feeds the preview and a native OOXML generator
+using the existing `fflate` dependency. Word text, headings, lists and tables
+are editable; there are no macros, uploaded assets or external document services.
+Downloads use fixed ZIP timestamps and cannot contain request-provided content.
+
+The proposal includes custom software alongside the two existing engagements.
+Scope, licence requirements, third-party costs and any follow-up are agreed in
+the written proposal. Regenerate both Word downloads and visually inspect all
+pages in a Word-compatible renderer when changing their content or layout.
