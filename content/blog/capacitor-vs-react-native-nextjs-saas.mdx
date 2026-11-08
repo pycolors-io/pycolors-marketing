@@ -14,6 +14,9 @@ featured: false
 cover: /seo/blog/og-blog-saas.png
 ---
 
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
 **Keep the web application when it already serves the mobile workflow. Consider
 Capacitor when that web interface remains useful and you need native packaging
 or specific integrations. Choose React Native when the product justifies a
@@ -133,6 +136,10 @@ strategy. Review the [Capacitor configuration contract](https://capacitorjs.com/
 
 ## A small shared client with two presentations [#shared-example]
 
+<div className="docs-prose">
+
+<Callout type="info" title="Original example and simulated HTTP" role="note">
+
 This original example lists fictitious projects. It illustrates a module
 boundary, not a complete mobile application or a Starter Pro API. The example
 endpoint is `GET /api/projects`; the verification uses simulated HTTP responses.
@@ -140,6 +147,12 @@ endpoint is `GET /api/projects`; the verification uses simulated HTTP responses.
 Both platforms share a JSON decoder and a client. Their loading adapters own
 the platform's request context, and their views accept the same validated data.
 No server implementation, private package or credential is included.
+
+</Callout>
+
+<Steps>
+
+<Step>
 
 ### Contract and client
 
@@ -213,7 +226,13 @@ export async function listProjects(
 }
 ```
 
+</Step>
+
+<Step>
+
 ### Separate loading adapters
+
+<Callout type="warning" title="Credential boundaries" role="note">
 
 The browser adapter requests same-origin cookies. The native adapter adds no
 `Authorization` header and implements no login. React Native documents
@@ -224,6 +243,8 @@ an authenticated native session.
 The relative web URL is for a same-origin browser application. An embedded
 Capacitor frontend would need a verified remote-origin adapter and credential
 policy, which are not implemented here.
+
+</Callout>
 
 ```ts title="web/load-projects.ts"
 import { listProjects } from "../shared/client";
@@ -260,6 +281,10 @@ export function loadNativeProjects(signal: AbortSignal) {
   );
 }
 ```
+
+</Step>
+
+<Step>
 
 ### Separate rendering components
 
@@ -313,6 +338,10 @@ The shared part ends before the rendering layer. An HTML list and a native
 layout and accessibility behavior. Adding more shared abstractions is useful
 only when it reduces the maintenance of a real second implementation.
 
+</Step>
+
+<Step>
+
 ### Verification and reproduction
 
 The six source blocks were extracted from both language versions and checked
@@ -325,9 +354,13 @@ in an isolated fixture using Node **24.22.1**, pnpm **10.32.1**, TypeScript
 | Native TypeScript, both articles | Strict source checking with React Native types and `skipLibCheck: true`, matching its standard profile.                                             |
 | 18 Node tests, nine per language | Simulated JSON, HTTP errors, network failures, cancellation and requested adapter options. No real HTTP server or native cookie store is exercised. |
 
+<Callout type="warning" title="Verification limits" role="note">
+
 Full declaration checking exposed three errors in the installed React Native
 packages; the native result does not certify those third-party declarations.
 The TSX views were typechecked, not executed on a device.
+
+</Callout>
 
 To reproduce the compiler checks, use Node 24 and pnpm 10.32.1 in an empty
 folder outside your application workspace. Save the six blocks at their labelled
@@ -350,6 +383,12 @@ pnpm exec tsc --noEmit --strict --noUncheckedIndexedAccess \
   --lib ES2022 --types react-native --customConditions react-native \
   --skipLibCheck true native/Projects.tsx native/load-projects.ts
 ```
+
+</Step>
+
+</Steps>
+
+</div>
 
 ## Treat authentication as a separate design [#authentication]
 

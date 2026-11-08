@@ -14,6 +14,9 @@ featured: false
 cover: /seo/blog/og-blog-saas.png
 ---
 
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
 **Gardez l’application web lorsqu’elle répond déjà au parcours mobile.
 Envisagez Capacitor si son interface reste adaptée et que vous avez besoin
 d’une distribution native ou d’intégrations précises. Choisissez React Native
@@ -142,6 +145,10 @@ stratégie de distribution validée. Vérifiez le
 
 ## Un petit client commun, deux présentations [#shared-example]
 
+<div className="docs-prose">
+
+<Callout type="info" title="Exemple original et HTTP simulé" role="note">
+
 Cet exemple original liste des projets fictifs. Il illustre une frontière entre
 modules ; ce n’est ni une application mobile complète ni l’API Starter Pro.
 Son endpoint d’exemple est `GET /api/projects` et la vérification utilise des
@@ -150,6 +157,12 @@ réponses HTTP simulées.
 Les deux plateformes partagent un décodeur JSON et un client. Leurs adaptateurs
 de chargement définissent le contexte de requête ; les vues reçoivent les mêmes
 données validées. Aucun serveur, package privé ou credential n’est fourni.
+
+</Callout>
+
+<Steps>
+
+<Step>
 
 ### Contrat et client
 
@@ -223,7 +236,13 @@ export async function listProjects(
 }
 ```
 
+</Step>
+
+<Step>
+
 ### Adaptateurs de chargement distincts
+
+<Callout type="warning" title="Gestion des identifiants" role="note">
 
 L’adaptateur navigateur demande les cookies de même origine. L’adaptateur natif
 n’ajoute aucun header `Authorization` et n’implémente aucune connexion. React
@@ -234,6 +253,8 @@ une session native authentifiée.
 L’URL web relative vise le navigateur de même origine ; un frontend Capacitor
 embarqué aurait besoin d’un adaptateur distant et d’une politique de credentials
 et d’origines vérifiés, non implémentés ici.
+
+</Callout>
 
 ```ts title="web/load-projects.ts"
 import { listProjects } from "../shared/client";
@@ -270,6 +291,10 @@ export function loadNativeProjects(signal: AbortSignal) {
   );
 }
 ```
+
+</Step>
+
+<Step>
 
 ### Composants de rendu distincts
 
@@ -324,6 +349,10 @@ page et comportement d’accessibilité. Une abstraction commune supplémentaire
 se justifie lorsqu’elle simplifie la maintenance d’une vraie seconde
 implémentation.
 
+</Step>
+
+<Step>
+
 ### Vérification et reproduction
 
 Les six blocs ont été extraits des deux articles et contrôlés dans une fixture
@@ -336,10 +365,14 @@ isolée : Node **24.22.1**, pnpm **10.32.1**, TypeScript **6.0.3**, React et
 | TypeScript natif, deux articles | Vérification stricte des sources avec les types React Native et `skipLibCheck: true`, conformément au profil standard.                  |
 | 18 tests Node, neuf par langue  | JSON, erreurs HTTP, réseau, annulation et options demandées simulés. Aucun serveur HTTP réel ni stockage natif de cookies n’est exercé. |
 
+<Callout type="warning" title="Limites de la vérification" role="note">
+
 Le contrôle intégral des déclarations a révélé trois erreurs dans les packages
 React Native installés ; le résultat natif ne certifie pas ces déclarations
 tierces. Les vues TSX ont été vérifiées par le compilateur, pas exécutées sur
 appareil.
+
+</Callout>
 
 Pour reproduire la compilation, utilisez Node 24 et pnpm 10.32.1 dans un dossier
 vide hors du workspace applicatif. Enregistrez les six blocs aux chemins indiqués,
@@ -362,6 +395,12 @@ pnpm exec tsc --noEmit --strict --noUncheckedIndexedAccess \
   --lib ES2022 --types react-native --customConditions react-native \
   --skipLibCheck true native/Projects.tsx native/load-projects.ts
 ```
+
+</Step>
+
+</Steps>
+
+</div>
 
 ## Concevoir l’authentification séparément [#authentication]
 
