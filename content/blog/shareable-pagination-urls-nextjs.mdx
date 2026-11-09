@@ -110,7 +110,10 @@ const current = "q=invoice&tag=urgent&tag=review&sort=recent&page=2";
 test("reproduces a naive link that loses the filtered view", () => {
   const broken = `/projects?page=${3}`;
   assert.equal(broken, "/projects?page=3");
-  assert.equal(new URL(broken, "https://example.test").searchParams.has("q"), false);
+  assert.equal(
+    new URL(broken, "https://example.test").searchParams.has("q"),
+    false,
+  );
 });
 
 test("page link preserves search, sorting and repeated tags", () => {
@@ -150,7 +153,10 @@ test("clearing search also clears its old page", () => {
 
 test("special characters round-trip as data", () => {
   const href = hrefForSearch("/projects", "tag=priority&page=2", "R&D / EU");
-  assert.equal(new URL(href, "https://example.test").searchParams.get("q"), "R&D / EU");
+  assert.equal(
+    new URL(href, "https://example.test").searchParams.get("q"),
+    "R&D / EU",
+  );
   assert.equal(href.includes("page="), false);
 });
 
@@ -211,7 +217,13 @@ export function ProjectPageLinks({ page, totalPages }) {
           ) : (
             <PaginationItem key={token.value}>
               <PaginationLink asChild isActive={token.isActive}>
-                <Link href={hrefForPage(pathname, searchParams.toString(), token.value)}>
+                <Link
+                  href={hrefForPage(
+                    pathname,
+                    searchParams.toString(),
+                    token.value,
+                  )}
+                >
                   {token.value}
                 </Link>
               </PaginationLink>
@@ -230,14 +242,14 @@ When the user submits a new search, navigate to `hrefForSearch(pathname, searchP
 
 ## Boundaries before production
 
-| Scenario | Owner and required behavior |
-| --- | --- |
-| The user shares a link | The route parses and validates the query, then loads the matching records. |
-| The user changes filters | The feature chooses whether to reset page; the example resets to one. |
-| The requested page exceeds available data | The server/data layer calculates an effective page or a documented error and keeps URL, rows and totals coherent. |
-| The API returns cursors instead of page numbers | Use opaque cursor navigation; do not fabricate a numbered page contract. |
-| A new result replaces an old request | Prevent stale responses or stale cache keys from showing records for a different query. |
-| The list is empty or loading | Communicate a true empty/loading/error state, not a misleading pagination control. |
+| Scenario                                        | Owner and required behavior                                                                                       |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| The user shares a link                          | The route parses and validates the query, then loads the matching records.                                        |
+| The user changes filters                        | The feature chooses whether to reset page; the example resets to one.                                             |
+| The requested page exceeds available data       | The server/data layer calculates an effective page or a documented error and keeps URL, rows and totals coherent. |
+| The API returns cursors instead of page numbers | Use opaque cursor navigation; do not fabricate a numbered page contract.                                          |
+| A new result replaces an old request            | Prevent stale responses or stale cache keys from showing records for a different query.                           |
+| The list is empty or loading                    | Communicate a true empty/loading/error state, not a misleading pagination control.                                |
 
 The previous [false-empty article](/blog/filtered-table-stale-pagination) covers page-bound normalization. The [Data Table Block docs](/docs/blocks/data/data-table) own the source-copy and controlled data-table contract. Neither the UI primitive nor this URL helper supplies backend authorization, cache invalidation, fetching, pagination totals or accessibility certification.
 
