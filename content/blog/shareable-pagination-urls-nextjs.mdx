@@ -34,7 +34,7 @@ Suppose the current address is:
 /projects?q=invoice&tag=urgent&tag=review&sort=recent&page=2
 ```
 
-A tempting implementation builds the next link with `` `/projects?page=${page + 1}` ``. The resulting `/projects?page=3` silently loses `q`, both `tag` values and `sort`.
+A tempting implementation builds the next link with `"/projects?page=" + (page + 1)`. The resulting `/projects?page=3` silently loses `q`, both `tag` values and `sort`.
 
 The browser did what the link requested. The error was the application's URL construction. A correct link for the same filtered view is:
 
@@ -255,13 +255,13 @@ The previous [false-empty article](/blog/filtered-table-stale-pagination) covers
 
 ## Review checklist
 
-- [ ] Copy a filtered page URL and open it in a fresh tab; confirm search, sorting, tags, effective page and records agree.
-- [ ] Navigate among pages with real anchors. Check browser Back/Forward and refresh.
-- [ ] Preserve repeated keys such as `tag=a&tag=b`, without collapsing them into one value.
-- [ ] Submit or clear a search; verify that the previous page number does not survive unexpectedly.
-- [ ] Test `page=0`, negative, fractional, duplicated and very large values at the **server** boundary too.
-- [ ] Verify page ranges and totals against the same query, including zero results and a shrinking collection.
-- [ ] Test keyboard focus, current-page announcement, small screens and rendered Next.js hydration separately.
+- Copy a filtered page URL and open it in a fresh tab; confirm search, sorting, tags, effective page and records agree.
+- Navigate among pages with real anchors. Check browser Back/Forward and refresh.
+- Preserve repeated keys such as `tag=a&tag=b`, without collapsing them into one value.
+- Submit or clear a search; verify that the previous page number does not survive unexpectedly.
+- Test `page=0`, negative, fractional, duplicated and very large values at the **server** boundary too.
+- Verify page ranges and totals against the same query, including zero results and a shrinking collection.
+- Test keyboard focus, current-page announcement, small screens and rendered Next.js hydration separately.
 
 ## Next step: compose, don't couple
 
