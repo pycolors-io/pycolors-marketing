@@ -1,0 +1,256 @@
+---
+title: Keep Your Next.js Pagination URLs Shareable Without Losing Filters
+description: Build stable page links that preserve search and multi-value filters, reset pagination on a new query, and work with public PyColors UI primitives.
+author: Patrice Parny
+date: "2026-11-09"
+category: Next.js
+tags:
+  - Next.js
+  - Pagination
+  - React
+  - URL State
+featured: false
+readingTime: 8 min read
+cover: /seo/blog/og-blog-saas.png
+cta:
+  label: Explore Data Table
+  href: /docs/blocks/data/data-table
+  variant: blocks
+---
+
+## A page link should preserve the view it points to
+
+A user filters an admin table to `q=invoice`, selects two tags, and opens page two. The next-page control navigates to `/projects?page=3`. The page number changed, but the filters disappeared. Reloading or sharing that URL now describes a different result set.
+
+**Build the next URL from the current query parameters, change only the page key, and reset the page when the search intent changes.** Use real links for page navigation, and let the page or data layer own the effective page, matching total, and records.
+
+This is a URL-ownership problem, not a data-table styling problem. It is also different from [the stale pagination bug](/blog/filtered-table-stale-pagination): that article fixes an invalid page after a collection shrinks; this one keeps the requested view reproducible through navigation, refresh, and a copied link.
+
+## Reproduce the information loss
+
+Suppose the current address is:
+
+```text
+/projects?q=invoice&tag=urgent&tag=review&sort=recent&page=2
+```
+
+A tempting implementation builds the next link with `` `/projects?page=${page + 1}` ``. The resulting `/projects?page=3` silently loses `q`, both `tag` values and `sort`.
+
+The browser did what the link requested. The error was the application's URL construction. A correct link for the same filtered view is:
+
+```text
+/projects?q=invoice&tag=urgent&tag=review&sort=recent&page=3
+```
+
+The native [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) API retains repeated keys through `getAll()` and serializes query values safely. A fresh `URLSearchParams` instance avoids mutating a read-only routing snapshot.
+
+## One small URL helper, no routing dependency
+
+Create `pagination-url.mjs`. It uses only standard JavaScript and follows these explicit application rules: pages are one-based positive safe integers; page one is the canonical default and can omit `page`; a new search resets to page one; other keys, including repeated tags, survive. It intentionally accepts a **trusted, root-relative pathname** from your router rather than arbitrary external URLs.
+
+```js title="pagination-url.mjs"
+function toHref(pathname, params) {
+  if (
+    typeof pathname !== "string" ||
+    !pathname.startsWith("/") ||
+    pathname.startsWith("//") ||
+    /[?#]/.test(pathname)
+  ) {
+    throw new TypeError("Expected a root-relative pathname");
+  }
+
+  const query = params.toString();
+  return pathname + (query ? `?${query}` : "");
+}
+
+export function parsePage(raw) {
+  if (typeof raw !== "string" || !/^[1-9]\d*$/.test(raw)) return 1;
+  const page = Number(raw);
+  return Number.isSafeInteger(page) ? page : 1;
+}
+
+export function hrefForPage(pathname, search, page) {
+  if (!Number.isSafeInteger(page) || page < 1) {
+    throw new RangeError("page must be a positive safe integer");
+  }
+
+  const params = new URLSearchParams(search);
+  params.delete("page"); // Also removes duplicate page keys.
+  if (page !== 1) params.set("page", String(page));
+  return toHref(pathname, params);
+}
+
+export function hrefForSearch(pathname, search, rawQuery) {
+  if (typeof rawQuery !== "string") {
+    throw new TypeError("query must be a string");
+  }
+
+  const params = new URLSearchParams(search);
+  const query = rawQuery.trim();
+  if (query) params.set("q", query);
+  else params.delete("q");
+  params.delete("page"); // A new search starts on page one.
+  return toHref(pathname, params);
+}
+```
+
+This helper does **not** decide which filters your product supports. It preserves keys already in the query string; your server must independently validate allowed sort modes, filter values and requested bounds. Preserving a parameter is not authorization to use it.
+
+## Run the original regression checks
+
+Put this second file beside the helper. The first test records the broken URL; the rest verify the corrected contract, including duplicate tags, invalid page values, search reset and encoding.
+
+```js title="pagination-url.test.mjs"
+import assert from "node:assert/strict";
+import test from "node:test";
+import { hrefForPage, hrefForSearch, parsePage } from "./pagination-url.mjs";
+
+const current = "q=invoice&tag=urgent&tag=review&sort=recent&page=2";
+
+test("reproduces a naive link that loses the filtered view", () => {
+  const broken = `/projects?page=${3}`;
+  assert.equal(broken, "/projects?page=3");
+  assert.equal(new URL(broken, "https://example.test").searchParams.has("q"), false);
+});
+
+test("page link preserves search, sorting and repeated tags", () => {
+  assert.equal(
+    hrefForPage("/projects", current, 3),
+    "/projects?q=invoice&tag=urgent&tag=review&sort=recent&page=3",
+  );
+});
+
+test("page one removes the default page key, not the filters", () => {
+  assert.equal(
+    hrefForPage("/projects", current, 1),
+    "/projects?q=invoice&tag=urgent&tag=review&sort=recent",
+  );
+});
+
+test("duplicate old page keys become a single requested page", () => {
+  const href = hrefForPage("/projects", "page=9&tag=a&page=8&tag=b", 2);
+  const url = new URL(href, "https://example.test");
+  assert.deepEqual(url.searchParams.getAll("page"), ["2"]);
+  assert.deepEqual(url.searchParams.getAll("tag"), ["a", "b"]);
+});
+
+test("search change resets page while preserving other choices", () => {
+  assert.equal(
+    hrefForSearch("/projects", current, " refund "),
+    "/projects?q=refund&tag=urgent&tag=review&sort=recent",
+  );
+});
+
+test("clearing search also clears its old page", () => {
+  assert.equal(
+    hrefForSearch("/projects", "tag=active&q=old&page=7", "  "),
+    "/projects?tag=active",
+  );
+});
+
+test("special characters round-trip as data", () => {
+  const href = hrefForSearch("/projects", "tag=priority&page=2", "R&D / EU");
+  assert.equal(new URL(href, "https://example.test").searchParams.get("q"), "R&D / EU");
+  assert.equal(href.includes("page="), false);
+});
+
+test("invalid page values fall back to one", () => {
+  for (const raw of [null, "0", "-1", "2.5", "01", "1e2", "9007199254740992"]) {
+    assert.equal(parsePage(raw), 1);
+  }
+  assert.equal(parsePage("12"), 12);
+});
+
+test("rejects invalid page requests and external pathnames", () => {
+  for (const page of [0, -1, 1.5, Infinity, "2"]) {
+    assert.throws(() => hrefForPage("/projects", current, page), RangeError);
+  }
+  assert.throws(() => hrefForPage("//evil.test", current, 2), TypeError);
+  assert.throws(() => hrefForSearch("/projects", current, null), TypeError);
+});
+```
+
+```sh
+node --test pagination-url.test.mjs
+```
+
+**Verification boundary (9 November 2026):** the original helper and the nine cases above were executed with Node.js **22.16.0** in an isolated directory, without Next.js, React or any PyColors packages. This verifies the query transformations, not a running SaaS application or router history. The monorepo currently declares Node **24.x**, pnpm **10.32.1**, Next.js **16.4.2** and React **^19.3.1**; these are *declared versions*, not versions used for the isolated Node check.
+
+## Compose real Next.js page links with PyColors UI
+
+The public [PyColors Pagination documentation](/docs/ui/pagination) supports `PaginationLink asChild`, and the corresponding public source renders that child through the existing Button composition. Next.js [Link](https://nextjs.org/docs/app/api-reference/components/link) renders an anchor with client-side routing. The code below demonstrates the wiring in a **Client Component**; it is not a tested full Next.js app.
+
+```jsx title="project-page-links.jsx"
+"use client";
+
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  buildPaginationRange,
+} from "@pycolors/ui";
+import { hrefForPage } from "./pagination-url.mjs";
+
+export function ProjectPageLinks({ page, totalPages }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const tokens = buildPaginationRange({ page, totalPages });
+
+  return (
+    <Pagination aria-label="Project pages">
+      <PaginationContent>
+        {tokens.map((token) =>
+          token.type === "ellipsis" ? (
+            <PaginationItem key={token.key}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={token.value}>
+              <PaginationLink asChild isActive={token.isActive}>
+                <Link href={hrefForPage(pathname, searchParams.toString(), token.value)}>
+                  {token.value}
+                </Link>
+              </PaginationLink>
+            </PaginationItem>
+          ),
+        )}
+      </PaginationContent>
+    </Pagination>
+  );
+}
+```
+
+The page or data owner supplies a **validated effective** `page` and `totalPages` for the current query. The component does not fetch records or infer total pages from a downloaded slice. For statically prerendered routes, follow the [Next.js `useSearchParams` guidance](https://nextjs.org/docs/app/api-reference/functions/use-search-params), including a suitable Suspense boundary when required. Server-rendered pages can instead read their `searchParams` Page prop and build links there; do not duplicate the URL as an unsynchronized local state.
+
+When the user submits a new search, navigate to `hrefForSearch(pathname, searchParams.toString(), submittedQuery)` using your router or a real link. For example, submitting `refund` from page seven should yield a URL without the old `page=7`. This is an explicit *product policy*, not behavior supplied by the Pagination primitive. Browser Back/Forward should then restore the view described by the URL, assuming the route's data loader uses those same parameters.
+
+## Boundaries before production
+
+| Scenario | Owner and required behavior |
+| --- | --- |
+| The user shares a link | The route parses and validates the query, then loads the matching records. |
+| The user changes filters | The feature chooses whether to reset page; the example resets to one. |
+| The requested page exceeds available data | The server/data layer calculates an effective page or a documented error and keeps URL, rows and totals coherent. |
+| The API returns cursors instead of page numbers | Use opaque cursor navigation; do not fabricate a numbered page contract. |
+| A new result replaces an old request | Prevent stale responses or stale cache keys from showing records for a different query. |
+| The list is empty or loading | Communicate a true empty/loading/error state, not a misleading pagination control. |
+
+The previous [false-empty article](/blog/filtered-table-stale-pagination) covers page-bound normalization. The [Data Table Block docs](/docs/blocks/data/data-table) own the source-copy and controlled data-table contract. Neither the UI primitive nor this URL helper supplies backend authorization, cache invalidation, fetching, pagination totals or accessibility certification.
+
+## Review checklist
+
+- [ ] Copy a filtered page URL and open it in a fresh tab; confirm search, sorting, tags, effective page and records agree.
+- [ ] Navigate among pages with real anchors. Check browser Back/Forward and refresh.
+- [ ] Preserve repeated keys such as `tag=a&tag=b`, without collapsing them into one value.
+- [ ] Submit or clear a search; verify that the previous page number does not survive unexpectedly.
+- [ ] Test `page=0`, negative, fractional, duplicated and very large values at the **server** boundary too.
+- [ ] Verify page ranges and totals against the same query, including zero results and a shrinking collection.
+- [ ] Test keyboard focus, current-page announcement, small screens and rendered Next.js hydration separately.
+
+## Next step: compose, don't couple
+
+**Explore Data Table** to see how the public PyColors Block receives consumer-owned query and pagination state. Use the [Pagination primitives](/docs/ui/pagination) for semantic navigation, then keep URL parsing and record ownership in your application's route. A shareable link is reliable only when its filters, page and returned data describe the **same view**.
