@@ -180,7 +180,7 @@ test("rejects invalid page requests and external pathnames", () => {
 node --test pagination-url.test.mjs
 ```
 
-**Verification boundary (9 November 2026):** the original helper and the nine cases above were executed with Node.js **22.16.0** in an isolated directory, without Next.js, React or any PyColors packages. This verifies the query transformations, not a running SaaS application or router history. The monorepo currently declares Node **24.x**, pnpm **10.32.1**, Next.js **16.4.2** and React **^19.3.1**; these are *declared versions*, not versions used for the isolated Node check.
+**Verification boundary (9 November 2026):** the helper and all nine cases above pass with Node.js **24.18.1** in an isolated directory, without Next.js, React or any PyColors packages. Deliberately removing query preservation causes three expected failures; restoring the helper returns nine passes. This verifies the query transformations, not a running SaaS application or router history. The monorepo declares Node **24.x**, pnpm **10.32.1**, Next.js **16.4.2** and React **^19.3.1**; the framework and UI packages are not used by this isolated JavaScript check.
 
 ## Compose real Next.js page links with PyColors UI
 
@@ -238,7 +238,7 @@ export function ProjectPageLinks({ page, totalPages }) {
 
 The page or data owner supplies a **validated effective** `page` and `totalPages` for the current query. The component does not fetch records or infer total pages from a downloaded slice. For statically prerendered routes, follow the [Next.js `useSearchParams` guidance](https://nextjs.org/docs/app/api-reference/functions/use-search-params), including a suitable Suspense boundary when required. Server-rendered pages can instead read their `searchParams` Page prop and build links there; do not duplicate the URL as an unsynchronized local state.
 
-When the user submits a new search, navigate to `hrefForSearch(pathname, searchParams.toString(), submittedQuery)` using your router or a real link. For example, submitting `refund` from page seven should yield a URL without the old `page=7`. This is an explicit *product policy*, not behavior supplied by the Pagination primitive. Browser Back/Forward should then restore the view described by the URL, assuming the route's data loader uses those same parameters.
+When the user submits a new search, navigate to `hrefForSearch(pathname, searchParams.toString(), submittedQuery)` using your router or a real link. For example, submitting `refund` from page seven should yield a URL without the old `page=7`. This is an explicit _product policy_, not behavior supplied by the Pagination primitive. Browser Back/Forward should then restore the view described by the URL, assuming the route's data loader uses those same parameters.
 
 ## Boundaries before production
 
