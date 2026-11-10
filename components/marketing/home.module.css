@@ -78,14 +78,14 @@
   background:
     radial-gradient(
       ellipse at 100% 16%,
-      color-mix(in oklab, var(--home-glow) 14%, transparent),
+      color-mix(in oklab, var(--home-glow) 34%, transparent),
       transparent 60%
     ),
     linear-gradient(
       150deg,
       transparent 23%,
-      color-mix(in oklab, var(--primary) 20%, transparent) 23%,
-      color-mix(in oklab, var(--primary) 8%, transparent) 72%,
+      color-mix(in oklab, var(--primary) 52%, transparent) 23%,
+      color-mix(in oklab, var(--primary) 22%, transparent) 72%,
       transparent 72%
     );
 }
@@ -97,8 +97,8 @@
   background: linear-gradient(
     150deg,
     transparent 24%,
-    color-mix(in oklab, var(--primary) 25%, transparent) 24%,
-    color-mix(in oklab, var(--home-glow) 10%, transparent) 44%,
+    color-mix(in oklab, var(--primary) 48%, transparent) 24%,
+    color-mix(in oklab, var(--home-glow) 30%, transparent) 44%,
     transparent 44%
   );
 }

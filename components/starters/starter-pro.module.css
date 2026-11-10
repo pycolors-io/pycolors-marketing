@@ -130,14 +130,14 @@
   background:
     radial-gradient(
       ellipse at 100% 16%,
-      color-mix(in oklab, var(--starter-pro-glow) 14%, transparent),
+      color-mix(in oklab, var(--starter-pro-glow) 34%, transparent),
       transparent 60%
     ),
     linear-gradient(
       150deg,
       transparent 23%,
-      color-mix(in oklab, var(--primary) 24%, transparent) 23%,
-      color-mix(in oklab, var(--primary) 8%, transparent) 72%,
+      color-mix(in oklab, var(--primary) 52%, transparent) 23%,
+      color-mix(in oklab, var(--primary) 22%, transparent) 72%,
       transparent 72%
     );
 }

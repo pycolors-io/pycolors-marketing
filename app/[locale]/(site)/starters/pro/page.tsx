@@ -34,6 +34,8 @@ import { STARTER_PRO_UPDATES_SUMMARY } from "@/lib/products/commercial-policy";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
+import { ProductLight } from "@/components/marketing/product-light";
+import effects from "@/components/marketing/product-light.module.css";
 import {
   MarketingCheckItem,
   type MarketingCheckItemProps,
@@ -531,10 +533,10 @@ function StarterProHeroPreview() {
 
   return (
     <figure
-      className={styles.heroShowcase}
+      className={`${styles.heroShowcase} ${effects.glassSurface} ${effects.previewEntry}`}
       aria-labelledby="starter-pro-hero-preview-title"
     >
-      <div className={styles.heroChrome}>
+      <div className={`${styles.heroChrome} ${effects.glassChrome}`}>
         <span className="flex items-center gap-2 font-medium">
           <Layers3 className="size-4 text-primary" aria-hidden="true" />
           {tSite("Starter Pro")}
@@ -601,7 +603,7 @@ export default function StarterProPage() {
             <PageHero
               variant="compact"
               align="left"
-              className={styles.heroCopy}
+              className={`${styles.heroCopy} ${effects.copyEntry}`}
               contentClassName={styles.heroContent}
               actionsClassName={styles.heroActions}
               badges={[{ label: "Starter Pro", variant: "outline" }]}
@@ -614,7 +616,7 @@ export default function StarterProPage() {
                   <div className="flex flex-wrap items-center gap-3 sm:col-span-2">
                     <BuyStarterProButton
                       fullWidth={false}
-                      className="w-full sm:w-auto"
+                      className={`${effects.primaryAction} w-full sm:w-auto`}
                     />
                     <ProDemoLink />
                   </div>
@@ -651,7 +653,10 @@ export default function StarterProPage() {
                 </ul>
               }
             />
-            <StarterProHeroPreview />
+            <div className={effects.visual}>
+              <ProductLight idPrefix="starter-pro" />
+              <StarterProHeroPreview />
+            </div>
           </div>
           <section
             aria-labelledby="starter-pro-offer-heading"
@@ -702,7 +707,7 @@ export default function StarterProPage() {
                 </ul>
               </div>
               <div className={styles.offerActions}>
-                <BuyStarterProButton />
+                <BuyStarterProButton className={effects.primaryAction} />
                 <ProDemoLink />
                 {proDemoUrl() ? (
                   <p className="mt-3 text-xs leading-6 text-muted-foreground">
@@ -1489,7 +1494,7 @@ export default function StarterProPage() {
           <div className="shrink-0">
             <BuyStarterProButton
               fullWidth={false}
-              className="w-full lg:w-auto"
+              className={`${effects.primaryAction} w-full lg:w-auto`}
             />
           </div>
         </section>

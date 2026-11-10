@@ -1,0 +1,145 @@
+.illustration {
+  --product-light-accent: var(--brand-accent);
+  --product-light-border: color-mix(
+    in oklab,
+    var(--primary) 20%,
+    var(--border)
+  );
+  position: absolute;
+  z-index: 0;
+  inset: -0.5rem -1.5rem auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+:global(html[data-site-palette="monochrome"]) .illustration {
+  --product-light-accent: var(--primary);
+}
+
+.illustration svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.visual {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding-top: clamp(3.5rem, 8vw, 7rem);
+}
+
+.visual .glassSurface,
+.visual .glassChrome {
+  background-color: var(--background);
+}
+
+@supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
+  .visual .glassSurface,
+  .visual .glassChrome {
+    background-color: color-mix(in srgb, var(--background) 92%, transparent);
+    -webkit-backdrop-filter: blur(16px) saturate(1.12);
+    backdrop-filter: blur(16px) saturate(1.12);
+  }
+}
+
+.primaryAction {
+  position: relative;
+  border-color: color-mix(in oklab, var(--primary) 80%, var(--foreground));
+  background-color: var(--primary);
+  background-image: linear-gradient(
+    130deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 82%, var(--foreground))
+  );
+  color: var(--primary-foreground);
+  box-shadow:
+    inset 0 1px color-mix(in oklab, var(--primary-foreground) 18%, transparent),
+    0 3px 8px color-mix(in oklab, var(--primary) 18%, transparent);
+}
+
+@keyframes copy-enter {
+  from {
+    transform: translateY(8px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes preview-enter {
+  from {
+    transform: translateY(14px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes light-enter {
+  from {
+    opacity: 0.4;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .copyEntry {
+    animation: copy-enter 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .previewEntry {
+    animation: preview-enter 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .illustration svg {
+    animation: light-enter 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .primaryAction {
+    transition:
+      transform 160ms ease,
+      box-shadow 160ms ease;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .primaryAction:not(:disabled):not([aria-disabled="true"]):hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px
+        color-mix(in oklab, var(--primary-foreground) 18%, transparent),
+      0 5px 14px color-mix(in oklab, var(--primary) 26%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copyEntry,
+  .previewEntry,
+  .illustration svg,
+  .primaryAction {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .visual .glassSurface,
+  .visual .glassChrome {
+    background-color: var(--background);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .illustration {
+    display: none;
+  }
+  .primaryAction {
+    background-image: none;
+    box-shadow: none;
+  }
+}

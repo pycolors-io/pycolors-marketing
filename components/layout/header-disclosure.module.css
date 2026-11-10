@@ -54,3 +54,42 @@
     transform: translateY(0);
   }
 }
+
+.header {
+  background-color: var(--background);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.header :global(.site-primary-action) {
+  border-color: color-mix(in oklab, var(--primary) 80%, var(--foreground));
+  background-image: linear-gradient(
+    130deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 82%, var(--foreground))
+  );
+  color: var(--primary-foreground);
+  box-shadow: 0 2px 8px color-mix(in oklab, var(--primary) 18%, transparent);
+}
+
+@supports (backdrop-filter: blur(18px)) or (-webkit-backdrop-filter: blur(18px)) {
+  .header {
+    background-color: color-mix(in srgb, var(--background) 92%, transparent);
+    -webkit-backdrop-filter: blur(18px) saturate(1.12);
+    backdrop-filter: blur(18px) saturate(1.12);
+  }
+  .header .panel {
+    background-color: color-mix(in srgb, var(--background) 94%, transparent);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .header,
+  .header .panel {
+    background-color: var(--background);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

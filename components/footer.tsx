@@ -11,6 +11,7 @@ import { FooterAppearance } from "./footer-appearance";
 import { FooterNavigation } from "./footer-navigation";
 import { Logo } from "./logo";
 import styles from "./footer.module.css";
+import effects from "./marketing/product-light.module.css";
 import { LanguageSwitcher } from "./layout/language-switcher";
 
 const GROUPS = [
@@ -99,7 +100,7 @@ export function Footer() {
             </p>
           </div>
           <div className={styles.actions}>
-            <MarketingLinkButton>
+            <MarketingLinkButton className={effects.primaryAction}>
               <Link href="/starters/pro">{tSite("Explore Starter Pro")}</Link>
             </MarketingLinkButton>
             <MarketingLinkButton variant="outline">

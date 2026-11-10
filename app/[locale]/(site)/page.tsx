@@ -23,7 +23,8 @@ import { Badge, cn } from "@pycolors/ui";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
-import { FibonacciBackground } from "@/components/marketing/fibonacci-background";
+import { ProductLight } from "@/components/marketing/product-light";
+import effects from "@/components/marketing/product-light.module.css";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingDetailCard } from "@/components/marketing/detail-card";
@@ -195,8 +196,13 @@ function HomeProductPreview() {
   const tSite = useCopy();
 
   return (
-    <figure className={styles.heroPreview}>
-      <div className={styles.heroPreviewChrome} aria-hidden="true">
+    <figure
+      className={`${styles.heroPreview} ${effects.glassSurface} ${effects.previewEntry}`}
+    >
+      <div
+        className={`${styles.heroPreviewChrome} ${effects.glassChrome}`}
+        aria-hidden="true"
+      >
         <span>
           <PanelsTopLeft className="size-3.5" />
           {tSite("Starter Pro")}
@@ -249,15 +255,13 @@ export default function HomePage() {
       <Container className={cn(styles.page, "pb-8")}>
         <main id="content" tabIndex={-1} className="w-full min-w-0">
           <section className={styles.hero}>
-            <div className={styles.heroArtwork} aria-hidden="true">
-              <FibonacciBackground />
-            </div>
+            <div className={styles.heroArtwork} aria-hidden="true" />
             <div className={styles.heroGrid}>
               <PageHero
                 variant="compact"
                 maxWidth="4xl"
                 align="left"
-                className={styles.heroCopy}
+                className={`${styles.heroCopy} ${effects.copyEntry}`}
                 contentClassName={styles.heroContent}
                 badges={[
                   {
@@ -287,7 +291,7 @@ export default function HomePage() {
                 extraClassName="mt-6"
                 actions={
                   <MarketingActionGroup align="left" className="w-full">
-                    <MarketingLinkButton className={styles.primaryAction}>
+                    <MarketingLinkButton className={effects.primaryAction}>
                       <a href="#start-with-pycolors">
                         {tSite("Choose your starting point")}
                       </a>
@@ -303,7 +307,10 @@ export default function HomePage() {
                   </MarketingActionGroup>
                 }
               />
-              <HomeProductPreview />
+              <div className={effects.visual}>
+                <ProductLight idPrefix="home" />
+                <HomeProductPreview />
+              </div>
             </div>
           </section>
 
@@ -741,7 +748,7 @@ export default function HomePage() {
                   <li>{tSite("CSS export")}</li>
                 </ul>
                 <div className={styles.themeAction}>
-                  <MarketingLinkButton className={styles.primaryAction}>
+                  <MarketingLinkButton className={effects.primaryAction}>
                     <Link href="/tools/theme-builder">
                       {tSite("Open Theme Builder")}
                     </Link>
@@ -853,7 +860,7 @@ export default function HomePage() {
               )}
               actions={
                 <MarketingActionGroup>
-                  <MarketingLinkButton className={styles.primaryAction}>
+                  <MarketingLinkButton className={effects.primaryAction}>
                     <a href="#start-with-pycolors">
                       {tSite("Choose your starting point")}
                     </a>
