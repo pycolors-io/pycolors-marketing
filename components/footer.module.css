@@ -458,3 +458,69 @@
     column-gap: 6rem;
   }
 }
+
+/* The product invitation is public Marketing only, outside the Docs footer. */
+.publicFooter {
+  --footer-glow: var(--brand-accent);
+  background:
+    radial-gradient(
+        ellipse at 95% 0%,
+        color-mix(in oklab, var(--primary) 10%, transparent),
+        transparent 60%
+      )
+      0 0 / 100% 24rem no-repeat,
+    var(--background);
+}
+
+:global(html[data-site-palette="monochrome"]) .publicFooter {
+  --footer-glow: var(--primary);
+}
+
+.publicFooter .invitation {
+  padding-block: clamp(3rem, 5vw, 5rem);
+}
+
+.publicFooter .invitation::before {
+  display: none;
+  inset: 0 0 0 58%;
+  background: linear-gradient(
+    150deg,
+    transparent 22%,
+    color-mix(in oklab, var(--primary) 10%, transparent) 22%,
+    color-mix(in oklab, var(--footer-glow) 5%, transparent) 74%,
+    transparent 74%
+  );
+  mask-image: none;
+  opacity: 1;
+}
+
+.publicFooter .eyebrow {
+  color: var(--primary);
+}
+
+.publicFooter .invitation h2 {
+  max-width: 20ch;
+  font-size: clamp(2rem, 3.5vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.publicFooter .description {
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+.publicFooter .directory {
+  padding-block: clamp(2.5rem, 4vw, 4rem);
+}
+
+.publicFooter .directoryLink:hover,
+.publicFooter .repositories a:hover {
+  color: var(--primary);
+}
+
+@media (min-width: 64rem) {
+  .publicFooter .invitation::before {
+    display: block;
+  }
+}

@@ -81,7 +81,7 @@ export function Footer() {
   const tSite = useCopy();
 
   return (
-    <FooterNavigation className={styles.footer}>
+    <FooterNavigation className={`${styles.footer} ${styles.publicFooter}`}>
       <Container>
         <section
           className={styles.invitation}

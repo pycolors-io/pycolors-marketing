@@ -3,6 +3,7 @@ import { useCopy } from "@/lib/i18n/use-copy";
 import { localizedAlternates } from "@/lib/i18n/routes";
 import { Link } from "@/lib/i18n/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -189,6 +190,54 @@ function StarterScope({ pro = false }: { pro?: boolean }) {
   );
 }
 
+/** Genuine Web product capture; the caption preserves its synthetic-data scope. */
+function HomeProductPreview() {
+  const tSite = useCopy();
+
+  return (
+    <figure className={styles.heroPreview}>
+      <div className={styles.heroPreviewChrome} aria-hidden="true">
+        <span>
+          <PanelsTopLeft className="size-3.5" />
+          {tSite("Starter Pro")}
+        </span>
+        <span>{tSite("Dashboard")}</span>
+      </div>
+      <div className={styles.heroPreviewImage}>
+        <Image
+          src="/images/starters/pro/dashboard-pycolors-2x.png"
+          alt={tSite(
+            "Starter Pro dashboard with saved project counts, weekly chart and workspace team",
+          )}
+          fill
+          loading="lazy"
+          fetchPriority="high"
+          quality={100}
+          sizes="(min-width: 1440px) 740px, (min-width: 1024px) 53vw, 95vw"
+          className={styles.heroLight}
+        />
+        <Image
+          src="/images/starters/pro/dashboard-dark-pycolors-2x.png"
+          alt={tSite(
+            "Starter Pro dashboard with saved project counts, weekly chart and workspace team",
+          )}
+          fill
+          loading="lazy"
+          fetchPriority="high"
+          quality={100}
+          sizes="(min-width: 1440px) 740px, (min-width: 1024px) 53vw, 95vw"
+          className={styles.heroDark}
+        />
+      </div>
+      <figcaption className={styles.heroPreviewCaption}>
+        {tSite(
+          "Project counts, weekly creation history and team roles come from a seeded PostgreSQL workspace. These captures use demonstration data, not customer results.",
+        )}
+      </figcaption>
+    </figure>
+  );
+}
+
 export default function HomePage() {
   const tSite = useCopy();
 
@@ -197,58 +246,66 @@ export default function HomePage() {
   return (
     <>
       <JsonLd id="home-breadcrumb" data={breadcrumb} />
-      <Container className={cn(styles.page, "pt-24 pb-8")}>
+      <Container className={cn(styles.page, "pb-8")}>
         <main id="content" tabIndex={-1} className="w-full min-w-0">
-          <PageHero
-            variant="compact"
-            maxWidth="4xl"
-            align="center"
-            className={styles.hero}
-            background={<FibonacciBackground />}
-            badges={[
-              {
-                label: `npm · @pycolors/ui v${UI_VERSION}`,
-                icon: <Package className="size-3.5" aria-hidden="true" />,
-              },
-            ]}
-            actionsClassName="mt-7"
-            title={tSite("Ship credible SaaS products faster.")}
-            description={tSite(
-              "UI components, reusable blocks and application starters. One shared design system for your next React and Next.js product.",
-            )}
-            extra={
-              <div className={styles.heroProof}>
-                {[
-                  "Public UI foundation",
-                  "Source you can inspect",
-                  "Free starting point",
-                ].map((label) => (
-                  <span key={label}>
-                    <Check className="size-3.5" aria-hidden="true" />
-                    {tSite(label)}
-                  </span>
-                ))}
-              </div>
-            }
-            extraClassName="mt-6"
-            actions={
-              <MarketingActionGroup align="center" className="w-full">
-                <MarketingLinkButton className={styles.primaryAction}>
-                  <a href="#start-with-pycolors">
-                    {tSite("Choose your starting point")}
-                  </a>
-                </MarketingLinkButton>
-                <MarketingLinkButton
-                  variant="outline"
-                  className="motion-reduce:transition-none"
-                >
-                  <Link href="/starters/free">
-                    {tSite("Explore Starter Free")}
-                  </Link>
-                </MarketingLinkButton>
-              </MarketingActionGroup>
-            }
-          />
+          <section className={styles.hero}>
+            <div className={styles.heroArtwork} aria-hidden="true">
+              <FibonacciBackground />
+            </div>
+            <div className={styles.heroGrid}>
+              <PageHero
+                variant="compact"
+                maxWidth="4xl"
+                align="left"
+                className={styles.heroCopy}
+                contentClassName={styles.heroContent}
+                badges={[
+                  {
+                    label: `npm · @pycolors/ui v${UI_VERSION}`,
+                    icon: <Package className="size-3.5" aria-hidden="true" />,
+                  },
+                ]}
+                actionsClassName={styles.heroActions}
+                title={tSite("Ship credible SaaS products faster.")}
+                description={tSite(
+                  "UI components, reusable blocks and application starters. One shared design system for your next React and Next.js product.",
+                )}
+                extra={
+                  <div className={styles.heroProof}>
+                    {[
+                      "Public UI foundation",
+                      "Source you can inspect",
+                      "Free starting point",
+                    ].map((label) => (
+                      <span key={label}>
+                        <Check className="size-3.5" aria-hidden="true" />
+                        {tSite(label)}
+                      </span>
+                    ))}
+                  </div>
+                }
+                extraClassName="mt-6"
+                actions={
+                  <MarketingActionGroup align="left" className="w-full">
+                    <MarketingLinkButton className={styles.primaryAction}>
+                      <a href="#start-with-pycolors">
+                        {tSite("Choose your starting point")}
+                      </a>
+                    </MarketingLinkButton>
+                    <MarketingLinkButton
+                      variant="outline"
+                      className="motion-reduce:transition-none"
+                    >
+                      <Link href="/starters/free">
+                        {tSite("Explore Starter Free")}
+                      </Link>
+                    </MarketingLinkButton>
+                  </MarketingActionGroup>
+                }
+              />
+              <HomeProductPreview />
+            </div>
+          </section>
 
           <MarketingSectionShell
             id="start-with-pycolors"

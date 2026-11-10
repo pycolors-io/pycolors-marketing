@@ -44,6 +44,26 @@ describe("product homepage", () => {
     expect(container.querySelector("iframe")).toBeNull();
   });
 
+  it("presents genuine light and dark product captures with their demonstration-data boundary", () => {
+    render(<HomePage />);
+    const images = screen.getAllByAltText(
+      "Starter Pro dashboard with saved project counts, weekly chart and workspace team",
+    );
+    expect(images).toHaveLength(2);
+    expect(images[0]!.getAttribute("src")).toContain(
+      "dashboard-pycolors-2x.png",
+    );
+    expect(images[1]!.getAttribute("src")).toContain(
+      "dashboard-dark-pycolors-2x.png",
+    );
+    const preview = images[0]!.closest("figure")!;
+    expect(preview).toContainElement(images[1]!);
+    expect(preview).toHaveTextContent(
+      "Project counts, weekly creation history and team roles come from a seeded PostgreSQL workspace. These captures use demonstration data, not customer results.",
+    );
+    expect(within(preview).queryByRole("button")).toBeNull();
+  });
+
   it("prioritizes products and starters before the complementary Theme Builder", () => {
     render(<HomePage />);
     const main = screen.getByRole("main");

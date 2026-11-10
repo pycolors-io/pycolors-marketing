@@ -1,3 +1,43 @@
+/* Public Marketing chrome; Docs retains its existing shared header layout. */
+.header {
+  border-bottom-color: color-mix(
+    in oklab,
+    var(--primary) 12%,
+    var(--site-frame-line)
+  );
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--primary) 32%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.header .primaryNavigation > a,
+.header .primaryNavigation > div > button {
+  color: color-mix(in oklab, var(--foreground) 80%, var(--background));
+}
+
+.header .primaryNavigation > a:hover,
+.header .primaryNavigation > a[aria-current="page"],
+.header .primaryNavigation > div > button:hover,
+.header .primaryNavigation > div > button[aria-expanded="true"] {
+  color: var(--primary);
+}
+
+.header .panel {
+  border-color: color-mix(in oklab, var(--primary) 14%, var(--border));
+  box-shadow: 0 12px 36px color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .panel:not([hidden]) {
     animation: reveal 100ms ease-out;

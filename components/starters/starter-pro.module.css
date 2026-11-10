@@ -1,6 +1,11 @@
 /* Page-owned presentation: shared marketing shells and palettes stay intact. */
 .productPage {
   --starter-pro-section-space: clamp(3.5rem, 6vw, 5rem);
+  --starter-pro-glow: var(--brand-accent);
+}
+
+:global(html[data-site-palette="monochrome"]) .productPage {
+  --starter-pro-glow: var(--primary);
 }
 
 .productPage :global(.marketing-section) {
@@ -28,9 +33,9 @@
 
 .heroCopy h1 {
   max-width: 12ch;
-  font-size: clamp(2.5rem, 4.4vw, 4rem);
-  line-height: 1.08;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.75rem, 4.8vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
 }
 
 .heroContent {
@@ -124,16 +129,16 @@
   pointer-events: none;
   background:
     radial-gradient(
-      ellipse at 90% 42%,
-      color-mix(in oklab, var(--primary) 17%, transparent),
-      transparent 68%
+      ellipse at 100% 16%,
+      color-mix(in oklab, var(--starter-pro-glow) 14%, transparent),
+      transparent 60%
     ),
     linear-gradient(
-      145deg,
-      transparent 28%,
-      color-mix(in oklab, var(--primary) 7%, transparent) 28%,
-      color-mix(in oklab, var(--primary) 2%, transparent) 78%,
-      transparent 78%
+      150deg,
+      transparent 23%,
+      color-mix(in oklab, var(--primary) 24%, transparent) 23%,
+      color-mix(in oklab, var(--primary) 8%, transparent) 72%,
+      transparent 72%
     );
 }
 
