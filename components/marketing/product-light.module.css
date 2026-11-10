@@ -58,6 +58,11 @@
     0 3px 8px color-mix(in oklab, var(--primary) 18%, transparent);
 }
 
+.primaryAction:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
 @keyframes copy-enter {
   from {
     transform: translateY(8px);

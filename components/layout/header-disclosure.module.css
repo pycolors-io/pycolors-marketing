@@ -72,6 +72,11 @@
   box-shadow: 0 2px 8px color-mix(in oklab, var(--primary) 18%, transparent);
 }
 
+.header :global(.site-primary-action):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
 @supports (backdrop-filter: blur(18px)) or (-webkit-backdrop-filter: blur(18px)) {
   .header {
     background-color: color-mix(in srgb, var(--background) 92%, transparent);
