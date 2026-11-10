@@ -485,7 +485,7 @@ function StarterProPreviews() {
                     src={screenshot.image}
                     alt={tSite(screenshot.alt)}
                     fill
-                    priority={index === 0}
+                    loading="lazy"
                     quality={100}
                     sizes="(min-width: 1440px) 1024px, (min-width: 1024px) calc(100vw - 416px), 95vw"
                     className={`${styles.media} object-cover object-top`}
@@ -525,6 +525,55 @@ function StarterProPreviews() {
   );
 }
 
+function StarterProHeroPreview() {
+  const tSite = useCopy();
+  const dashboard = heroScreenshots[0];
+
+  return (
+    <figure
+      className={styles.heroShowcase}
+      aria-labelledby="starter-pro-hero-preview-title"
+    >
+      <div className={styles.heroChrome}>
+        <span className="flex items-center gap-2 font-medium">
+          <Layers3 className="size-4 text-primary" aria-hidden="true" />
+          {tSite("Starter Pro")}
+        </span>
+        <span id="starter-pro-hero-preview-title">{tSite("Dashboard")}</span>
+      </div>
+      <div className={styles.heroImage}>
+        <Image
+          src={dashboard.image}
+          alt={tSite(dashboard.alt)}
+          fill
+          loading="lazy"
+          fetchPriority="high"
+          quality={100}
+          sizes="(min-width: 1440px) 740px, (min-width: 1024px) 53vw, 95vw"
+          className={`${styles.heroLight} object-contain object-top`}
+        />
+        <Image
+          src="/images/starters/pro/dashboard-dark-pycolors-2x.png"
+          alt={tSite(dashboard.alt)}
+          fill
+          loading="lazy"
+          fetchPriority="high"
+          quality={100}
+          sizes="(min-width: 1440px) 740px, (min-width: 1024px) 53vw, 95vw"
+          className={`${styles.heroDark} object-contain object-top`}
+        />
+      </div>
+      <figcaption className={styles.heroCaption}>
+        <p>{tSite(dashboard.annotation)}</p>
+        <a href="#product-preview" className={`${textLink} text-xs`}>
+          {tSite("Product preview")}
+          <ArrowRight className="size-3.5" aria-hidden="true" />
+        </a>
+      </figcaption>
+    </figure>
+  );
+}
+
 function StarterProCheckItem({ children, className }: MarketingCheckItemProps) {
   const tSite = useCopy();
 
@@ -539,115 +588,135 @@ export default function StarterProPage() {
   const tSite = useCopy();
 
   return (
-    <main id="content" tabIndex={-1} className="bg-background text-foreground">
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`${styles.productPage} bg-background text-foreground`}
+    >
       <JsonLd id="starter-pro-product-jsonld" data={starterProJsonLd} />
-      <Container className="pb-16 pt-24 sm:pt-28">
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16">
-          <PageHero
-            variant="compact"
-            align="left"
-            contentClassName="mx-0 max-w-3xl"
-            badges={[{ label: "Starter Pro", variant: "outline" }]}
-            title={tSite("The foundation for your next SaaS.")}
-            description={tSite(
-              "Accounts, workspaces, billing and a real project workflow in one Next.js codebase. Start with connected foundations, inspect their checks and adapt the product to your market.",
-            )}
-            actions={
-              <>
-                <div className="lg:hidden">
-                  <ProDemoLink />
-                  <BuyStarterProButton
-                    fullWidth={false}
-                    className="w-full sm:w-auto"
-                  />
-                </div>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="rounded-[5px]"
-                >
-                  <a href="#product-tour">
-                    {tSite("Watch the product tour")}
+      <Container className="pb-16">
+        <div className={styles.hero}>
+          <div className={styles.heroArtwork} aria-hidden="true" />
+          <div className={styles.heroGrid}>
+            <PageHero
+              variant="compact"
+              align="left"
+              className={styles.heroCopy}
+              contentClassName={styles.heroContent}
+              actionsClassName={styles.heroActions}
+              badges={[{ label: "Starter Pro", variant: "outline" }]}
+              title={tSite("The foundation for your next SaaS.")}
+              description={tSite(
+                "Accounts, workspaces, billing and a real project workflow in one Next.js codebase. Start with connected foundations, inspect their checks and adapt the product to your market.",
+              )}
+              actions={
+                <>
+                  <div className="flex flex-wrap items-center gap-3 sm:col-span-2">
+                    <BuyStarterProButton
+                      fullWidth={false}
+                      className="w-full sm:w-auto"
+                    />
+                    <ProDemoLink />
+                  </div>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="rounded-[5px]"
+                  >
+                    <a href="#product-tour">
+                      {tSite("Watch the product tour")}
+                      {tSite(" ")}
+                      <ArrowDown className="size-4" aria-hidden="true" />
+                    </a>
+                  </Button>
+                  <Link
+                    href={INTERNAL.docsStarterPro}
+                    className={`${textLink} justify-center sm:px-2`}
+                  >
+                    {tSite("Read the docs")}
                     {tSite(" ")}
-                    <ArrowDown className="size-4" aria-hidden="true" />
-                  </a>
-                </Button>
-                <Link
-                  href={INTERNAL.docsStarterPro}
-                  className={`${textLink} justify-center sm:px-2`}
-                >
-                  {tSite("Read the docs")}
-                  {tSite(" ")}
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </Link>
-              </>
-            }
-            extra={
-              <ul className="flex flex-wrap gap-x-6 gap-y-3">
-                <StarterProCheckItem>
-                  {tSite("Full source code")}
-                </StarterProCheckItem>
-                <StarterProCheckItem>
-                  {tSite("Commercial usage rights")}
-                </StarterProCheckItem>
-              </ul>
-            }
-          />
+                    <ArrowUpRight className="size-4" aria-hidden="true" />
+                  </Link>
+                </>
+              }
+              extra={
+                <ul className="flex flex-wrap gap-x-6 gap-y-3">
+                  <StarterProCheckItem>
+                    {tSite("Full source code")}
+                  </StarterProCheckItem>
+                  <StarterProCheckItem>
+                    {tSite("Commercial usage rights")}
+                  </StarterProCheckItem>
+                </ul>
+              }
+            />
+            <StarterProHeroPreview />
+          </div>
           <section
             aria-labelledby="starter-pro-offer-heading"
-            className={`${styles.stage} overflow-hidden rounded-[5px] border border-border-subtle`}
+            className={styles.offer}
           >
-            <div className="p-6 sm:p-7">
-              <div className="flex items-center justify-between gap-3">
-                <h2
-                  id="starter-pro-offer-heading"
-                  className="text-sm font-semibold"
-                >
-                  {tSite("Starter Pro")}
-                </h2>
-                <span className="text-xs text-muted-foreground">
-                  {tSite("Source code license")}
-                </span>
-              </div>
-              <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                <span className="font-brand text-5xl font-semibold tracking-tight">
-                  {tSite(sourcePrice)}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {tSite("One-time payment")}
-                </span>
-              </p>
-              <p className="mt-3 text-xs leading-6 text-muted-foreground">
-                {tSite(
-                  "Complete source licence. Provider costs and implementation services are separate.",
-                )}
-              </p>
-              <ul className="my-6 space-y-3">
-                <StarterProCheckItem>
-                  {tSite("Accounts, workspaces, billing and project workflows")}
-                </StarterProCheckItem>
-                <StarterProCheckItem>
-                  {tSite("Validated ZIP, setup guides and operational checks")}
-                </StarterProCheckItem>
-                <StarterProCheckItem>
-                  {tSite("ZIP access through your claim email")}
-                </StarterProCheckItem>
-              </ul>
-              <BuyStarterProButton />
-              <ProDemoLink />
-              {proDemoUrl() ? (
+            <div className={styles.offerBody}>
+              <div className={styles.offerIntro}>
+                <div className="flex items-center justify-between gap-3">
+                  <h2
+                    id="starter-pro-offer-heading"
+                    className="text-sm font-semibold"
+                  >
+                    {tSite("Starter Pro")}
+                  </h2>
+                  <span className="text-xs text-muted-foreground">
+                    {tSite("Source code license")}
+                  </span>
+                </div>
+                <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                  <span className="font-brand text-5xl font-semibold tracking-tight">
+                    {tSite(sourcePrice)}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {tSite("One-time payment")}
+                  </span>
+                </p>
                 <p className="mt-3 text-xs leading-6 text-muted-foreground">
                   {tSite(
-                    "Try projects, tasks, discussions, a workspace dashboard and simulated member invitations. Each visitor gets a private, temporary workspace.",
+                    "Complete source licence. Provider costs and implementation services are separate.",
                   )}
                 </p>
-              ) : null}
-              <p className="mt-3 text-xs leading-6 text-muted-foreground">
-                {tSite(
-                  "Access follows payment confirmation and delivery processing.",
-                )}
-              </p>
+              </div>
+              <div className={styles.offerDetails}>
+                <ul className="space-y-3">
+                  <StarterProCheckItem>
+                    {tSite(
+                      "Accounts, workspaces, billing and project workflows",
+                    )}
+                  </StarterProCheckItem>
+                  <StarterProCheckItem>
+                    {tSite(
+                      "Validated ZIP, setup guides and operational checks",
+                    )}
+                  </StarterProCheckItem>
+                  <StarterProCheckItem>
+                    {tSite("ZIP access through your claim email")}
+                  </StarterProCheckItem>
+                </ul>
+              </div>
+              <div className={styles.offerActions}>
+                <BuyStarterProButton />
+                <ProDemoLink />
+                {proDemoUrl() ? (
+                  <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                    {tSite(
+                      "Try projects, tasks, discussions, a workspace dashboard and simulated member invitations. Each visitor gets a private, temporary workspace.",
+                    )}
+                  </p>
+                ) : null}
+                <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                  {tSite(
+                    "Access follows payment confirmation and delivery processing.",
+                  )}
+                </p>
+              </div>
             </div>
             <div className="flex flex-wrap items-center justify-between gap-x-4 border-t border-border-subtle px-6 py-2 sm:px-7">
               <a href="#purchase" className={`${textLink} text-xs`}>
@@ -665,7 +734,9 @@ export default function StarterProPage() {
           </section>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-border-subtle pt-5 sm:flex-row sm:items-center sm:justify-between">
+        <div
+          className={`${styles.stackStrip} flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between`}
+        >
           <MarketingPillList aria-label={tSite("Starter Pro technology stack")}>
             {stackItems.map((item) => (
               <MarketingPill
@@ -687,7 +758,7 @@ export default function StarterProPage() {
         </div>
         <nav
           aria-label={tSite("Starter Pro sections")}
-          className="mt-3 flex flex-wrap gap-x-6 gap-y-1 border-b border-border-subtle pb-3"
+          className={styles.sectionNav}
         >
           {[
             ["#product-tour", "Product tour"],

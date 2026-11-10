@@ -30,6 +30,35 @@ function renderPreviews() {
 }
 
 describe("Starter Pro product page", () => {
+  it("introduces the real dashboard captures with their demonstration-data context and preview destination", () => {
+    render(<StarterProPage />);
+    const hero = screen.getByRole("figure", { name: "Dashboard" });
+    const images = within(hero).getAllByRole("img", { hidden: true });
+    expect(images).toHaveLength(2);
+    for (const [index, file] of [
+      "dashboard-pycolors-2x.png",
+      "dashboard-dark-pycolors-2x.png",
+    ].entries()) {
+      expect(images[index]?.getAttribute("src")).toContain(file);
+      expect(images[index]).toHaveAccessibleName(
+        /Starter Pro dashboard.*workspace team/u,
+      );
+    }
+    expect(hero).toHaveTextContent("seeded PostgreSQL workspace");
+    expect(hero).toHaveTextContent(
+      "These captures use demonstration data, not customer results.",
+    );
+    const destination = within(hero).getByRole("link", {
+      name: "Product preview",
+    });
+    expect(destination).toHaveAttribute("href", "#product-preview");
+    expect(document.getElementById("product-preview")).toBe(
+      screen.getByRole("region", {
+        name: "Inspect the screens you can build on",
+      }),
+    );
+  });
+
   it("keeps the source offer distinct from a scoped implementation and exposes the readiness guides", () => {
     render(<StarterProPage />);
     const readiness = screen.getByRole("region", {

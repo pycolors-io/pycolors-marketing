@@ -1,3 +1,284 @@
+/* Page-owned presentation: shared marketing shells and palettes stay intact. */
+.productPage {
+  --starter-pro-section-space: clamp(3.5rem, 6vw, 5rem);
+}
+
+.productPage :global(.marketing-section) {
+  padding-block: var(--starter-pro-section-space);
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(6rem, 8vw, 8rem) clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.heroGrid {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.heroCopy,
+.heroContent {
+  min-width: 0;
+}
+
+.heroCopy h1 {
+  max-width: 12ch;
+  font-size: clamp(2.5rem, 4.4vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.heroContent {
+  margin-inline: 0;
+  max-width: 38rem;
+}
+
+.heroContent > p {
+  max-width: 51ch;
+  line-height: 1.8;
+}
+
+.heroActions {
+  gap: 0.75rem;
+}
+
+.heroShowcase {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+  box-shadow:
+    0 1px 3px color-mix(in oklab, var(--foreground) 4%, transparent),
+    0 20px 56px color-mix(in oklab, var(--primary) 9%, transparent);
+}
+
+.heroChrome {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: color-mix(in oklab, var(--foreground) 2%, var(--background));
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+}
+
+.heroChrome > :first-child {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.heroImage {
+  position: relative;
+  aspect-ratio: 36 / 25;
+  background: var(--muted);
+}
+
+.heroImage img {
+  object-fit: contain;
+}
+
+.heroLight {
+  display: block;
+}
+
+.heroDark {
+  display: none;
+}
+
+:global(html.dark) .heroLight {
+  display: none;
+}
+
+:global(html.dark) .heroDark {
+  display: block;
+}
+
+.heroCaption {
+  padding: 0.875rem 1rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+/* Confine the static wash to the product side, away from reading content. */
+.heroArtwork {
+  position: absolute;
+  display: none;
+  z-index: -1;
+  inset: 42% 0 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 90% 42%,
+      color-mix(in oklab, var(--primary) 17%, transparent),
+      transparent 68%
+    ),
+    linear-gradient(
+      145deg,
+      transparent 28%,
+      color-mix(in oklab, var(--primary) 7%, transparent) 28%,
+      color-mix(in oklab, var(--primary) 2%, transparent) 78%,
+      transparent 78%
+    );
+}
+
+.offer {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: linear-gradient(
+    120deg,
+    var(--background) 40%,
+    color-mix(in oklab, var(--primary) 3%, var(--background))
+  );
+}
+
+.offerBody {
+  display: grid;
+  min-width: 0;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.offerIntro,
+.offerDetails,
+.offerActions {
+  min-width: 0;
+}
+
+.offerDetails {
+  padding-block: 1.5rem;
+  border-block: 1px solid var(--border-subtle);
+}
+
+.offerActions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.offerActions > p {
+  margin-top: 0;
+}
+
+.stackStrip {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-block: 1.5rem;
+  border-block: 1px solid var(--border-subtle);
+}
+
+.sectionNav {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.5rem;
+  row-gap: 0.25rem;
+  padding-block: 1rem;
+}
+
+.productPage .foundationIntro {
+  margin-bottom: 2.5rem;
+}
+
+.productPage .foundationCards {
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.productPage .featuredFoundation,
+.productPage .supportingFoundation {
+  background: var(--background);
+}
+
+.productPage .foundationEvidence {
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: color-mix(in oklab, var(--foreground) 1%, var(--background));
+}
+
+.productPage .foundationFlow {
+  background: color-mix(in oklab, var(--primary) 2%, var(--background));
+}
+
+.productPage .foundationNode {
+  border-color: color-mix(in oklab, var(--primary) 15%, var(--border-subtle));
+  color: var(--primary);
+  box-shadow: none;
+}
+
+.productPage .stage {
+  background: linear-gradient(
+    120deg,
+    var(--background),
+    color-mix(in oklab, var(--primary) 5%, var(--background))
+  );
+}
+
+@media (min-width: 40rem) {
+  .stackStrip {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 64rem) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    min-height: 34rem;
+  }
+
+  .heroArtwork {
+    display: block;
+    inset: 3rem -2rem 22% 42.5%;
+  }
+
+  .heroActions {
+    margin-top: 2rem;
+  }
+
+  .heroCaption {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .offerBody {
+    grid-template-columns:
+      minmax(0, 0.9fr) minmax(0, 1.25fr)
+      minmax(13rem, 0.85fr);
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .offerDetails {
+    padding-block: 0;
+    padding-inline: 2rem;
+    border-block: 0;
+    border-inline: 1px solid var(--border-subtle);
+  }
+}
+
 /* Matches the diagonal treatment of the Theme Builder workspace preview. */
 .stage {
   background: linear-gradient(
