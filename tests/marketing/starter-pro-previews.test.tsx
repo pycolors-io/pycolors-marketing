@@ -92,6 +92,15 @@ describe("Starter Pro product page", () => {
       "[data-readiness-illustration]",
     );
     expect(illustrations).toHaveLength(6);
+    for (const illustration of illustrations) {
+      const image = illustration.querySelector("img");
+      expect(image).not.toBeNull();
+      expect(image).toHaveAttribute("alt", "");
+      expect(image).toHaveAttribute("loading", "lazy");
+      expect(decodeURIComponent(image?.getAttribute("src") ?? "")).toContain(
+        "/images/starters/pro/concepts/",
+      );
+    }
     for (const artwork of [
       ...illustrations,
       ...container.querySelectorAll("[data-body-artwork]"),
@@ -107,42 +116,86 @@ describe("Starter Pro product page", () => {
     expect(within(readiness).getAllByRole("link")).toHaveLength(6);
   });
 
-  it("grounds the integration details in genuine captures with their demonstration context", () => {
+  it("keeps concept artwork decorative and separate from genuine interface previews", () => {
+    render(<StarterProPage />);
+    for (const [title, guide] of [
+      ["Source & architecture", "Included source"],
+      ["Delivery & ownership", "Delivery guide"],
+      ["Your downloadable package", "Review everything included"],
+      ["Claim email and purchase recovery", "Open purchase recovery"],
+      ["Updates and access support", "Review release history"],
+      ["Commercial license and setup", "Review the license"],
+    ] as const) {
+      const heading = screen.getByRole("heading", { name: title, level: 3 });
+      const card = heading.closest<HTMLElement>("[data-card-art]")!;
+      const art = card.querySelector("img");
+      expect(art).not.toBeNull();
+      expect(decodeURIComponent(art?.getAttribute("src") ?? "")).toContain(
+        "/images/starters/pro/concepts/",
+      );
+      expect(art).toHaveAttribute("alt", "");
+      expect(art).toHaveAttribute("loading", "lazy");
+      expect(art?.closest('[aria-hidden="true"]')).not.toBeNull();
+      expect(within(card).queryByRole("img")).not.toBeInTheDocument();
+      expect(within(card).getByRole("link", { name: guide })).toHaveAttribute(
+        "href",
+      );
+    }
+  });
+
+  it("keeps setup requirements visible beside decorative configuration artwork", () => {
+    render(<StarterProPage />);
+    const panel = screen.getByRole("heading", {
+      name: "Prepare the services your app will use.",
+      level: 3,
+    }).parentElement!;
+    const image = panel.querySelector("img");
+    expect(image).toHaveAttribute("alt", "");
+    expect(image).toHaveAttribute("loading", "lazy");
+    expect(image?.closest('[aria-hidden="true"]')).not.toBeNull();
+    for (const term of ["Runtime", "Database", "Auth & email", "Payments"]) {
+      expect(within(panel).getByText(term, { selector: "dt" })).toBeVisible();
+    }
+    expect(
+      within(panel).getByRole("link", { name: "Review setup" }),
+    ).toHaveAttribute("href");
+  });
+
+  it("keeps recurring-work cards conceptual and real screenshots in the product preview", () => {
     render(<StarterProPage />);
     const included = screen.getByRole("region", {
       name: "The recurring work, already connected.",
     });
-    for (const [name, file, guide, href] of [
-      [
-        "Authentication",
-        "auth-indigo-2x.png",
-        "Authentication guide",
-        "/docs/starter-pro/auth",
-      ],
-      [
-        "Billing",
-        "billing-emerald-2x.png",
-        "Billing guide",
-        "/docs/starter-pro/billing",
-      ],
+    const cards = included.querySelectorAll<HTMLElement>(
+      "[data-foundation-card]",
+    );
+    expect(cards).toHaveLength(6);
+    for (const card of cards) {
+      const image = card.querySelector("img");
+      expect(image).toHaveAttribute("alt", "");
+      expect(image).toHaveAttribute("loading", "lazy");
+      expect(image?.closest('[aria-hidden="true"]')).not.toBeNull();
+      expect(decodeURIComponent(image?.getAttribute("src") ?? "")).toContain(
+        "/images/starters/pro/concepts/",
+      );
+      expect(within(card).queryByRole("img")).not.toBeInTheDocument();
+    }
+    expect(within(included).queryByRole("figure")).not.toBeInTheDocument();
+    for (const [guide, href] of [
+      ["Authentication guide", "/docs/starter-pro/auth"],
+      ["Billing guide", "/docs/starter-pro/billing"],
     ]) {
-      const preview = within(included).getByRole("figure", { name });
-      expect(within(preview).getByRole("img")).toHaveAccessibleName(
-        /Starter Pro/u,
-      );
-      expect(within(preview).getByRole("img").getAttribute("src")).toContain(
-        file,
-      );
-      expect(preview).toHaveTextContent("Light theme · Demonstration data");
       expect(
         within(included).getByRole("link", { name: guide }),
       ).toHaveAttribute("href", href);
     }
-    expect(
-      within(included).getByRole("figure", { name: "Billing" }),
-    ).toHaveTextContent(
-      "not evidence of a payment or a verified Stripe integration",
+    const previews = screen.getByRole("region", {
+      name: "Inspect the screens you can build on",
+    });
+    expect(within(previews).getAllByRole("img", { hidden: true })).toHaveLength(
+      5,
     );
+    expect(previews).toHaveTextContent("Demonstration data");
   });
 
   it("keeps the source offer distinct from a scoped implementation and exposes the readiness guides", () => {

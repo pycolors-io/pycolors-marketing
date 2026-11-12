@@ -5054,7 +5054,10 @@
     .foundationTile,
     .readinessCard,
     .setupStep,
-    .resourceCard
+    .resourceCard,
+    .configurationPanel,
+    .purchaseCard,
+    .implementationCard
   )[data-card-tone],
 .productPage .comparisonSurface .comparisonTable tr > :nth-child(3) {
   --background: var(--starter-pro-tile-neutral);
@@ -5086,7 +5089,10 @@
     .foundationTile,
     .readinessCard,
     .setupStep,
-    .resourceCard
+    .resourceCard,
+    .configurationPanel,
+    .purchaseCard,
+    .implementationCard
   )[data-card-tone="lilac"],
 .productPage .comparisonSurface .comparisonTable tr > :nth-child(3) {
   --background: var(--starter-pro-tile-lilac);
@@ -5097,7 +5103,10 @@
     .foundationTile,
     .readinessCard,
     .setupStep,
-    .resourceCard
+    .resourceCard,
+    .configurationPanel,
+    .purchaseCard,
+    .implementationCard
   )[data-card-tone="sun"] {
   --background: var(--starter-pro-tile-sun);
 }
@@ -5107,7 +5116,10 @@
     .foundationTile,
     .readinessCard,
     .setupStep,
-    .resourceCard
+    .resourceCard,
+    .configurationPanel,
+    .purchaseCard,
+    .implementationCard
   )[data-card-tone="peach"] {
   --background: var(--starter-pro-tile-peach);
 }
@@ -5115,6 +5127,8 @@
 .productPage .foundationTile[data-card-tone],
 .productPage .workflowBand .readinessCard[data-card-tone],
 .productPage .setupPanel .setupStep[data-card-tone],
+.productPage .setupPanel .configurationPanel[data-card-tone],
+.productPage .purchasePanel .purchaseCard[data-card-tone],
 .productPage .docsSection .resourceCard[data-card-tone],
 .productPage .comparisonSurface .comparisonTable tr > :nth-child(3),
 .productPage .comparisonSurface .comparisonTable thead tr > th:nth-child(3) {
@@ -5171,6 +5185,8 @@
   .productPage .foundationTile[data-card-tone],
   .productPage .workflowBand .readinessCard[data-card-tone],
   .productPage .setupPanel .setupStep[data-card-tone],
+  .productPage .setupPanel .configurationPanel[data-card-tone],
+  .productPage .purchasePanel .purchaseCard[data-card-tone],
   .productPage .docsSection .resourceCard[data-card-tone],
   .productPage
     .docsSection
@@ -5202,5 +5218,497 @@
     > a:hover {
     background: Highlight;
     color: HighlightText;
+  }
+}
+
+/* Spatial illustrations and selected vivid surfaces punctuate the neutral cards. */
+.productPage {
+  --starter-pro-vivid-cobalt: #2059bf;
+  --starter-pro-vivid-cobalt-ink: #ffffff;
+  --starter-pro-vivid-violet: #5a2aac;
+  --starter-pro-vivid-violet-ink: #ffffff;
+  --starter-pro-vivid-gold: #ffd43b;
+  --starter-pro-vivid-gold-ink: #35261b;
+  --starter-pro-vivid-gold-accent: #583095;
+}
+
+:global(html.dark) .productPage {
+  --starter-pro-vivid-cobalt: #204694;
+  --starter-pro-vivid-violet: #4d248d;
+  --starter-pro-vivid-gold: #594519;
+  --starter-pro-vivid-gold-ink: #ffffff;
+  --starter-pro-vivid-gold-accent: #f4d98c;
+}
+
+:global(html[data-site-palette="monochrome"]) .productPage {
+  --starter-pro-vivid-cobalt: var(--surface-muted);
+  --starter-pro-vivid-cobalt-ink: var(--foreground);
+  --starter-pro-vivid-violet: var(--surface-muted);
+  --starter-pro-vivid-violet-ink: var(--foreground);
+  --starter-pro-vivid-gold: var(--surface-muted);
+  --starter-pro-vivid-gold-ink: var(--foreground);
+  --starter-pro-vivid-gold-accent: var(--primary);
+}
+
+.productPage
+  :is(
+    .foundationTile,
+    .readinessCard,
+    .setupStep,
+    .resourceCard,
+    .purchaseCard,
+    .configurationPanel
+  )[data-card-tone="brand"] {
+  --background: var(--starter-pro-vivid-violet);
+  --foreground: var(--starter-pro-vivid-violet-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 92%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+}
+
+.productPage
+  :is(
+    .foundationTile,
+    .readinessCard,
+    .setupStep,
+    .resourceCard,
+    .purchaseCard,
+    .configurationPanel
+  )[data-card-tone="gold"] {
+  --background: var(--starter-pro-vivid-gold);
+  --foreground: var(--starter-pro-vivid-gold-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 92%,
+    var(--background)
+  );
+  --primary: var(--starter-pro-vivid-gold-accent);
+}
+
+.productPage
+  :is(
+    .foundationTile,
+    .readinessCard,
+    .setupStep,
+    .resourceCard,
+    .purchaseCard,
+    .configurationPanel
+  )[data-card-tone="cobalt"] {
+  --background: var(--starter-pro-vivid-cobalt);
+  --foreground: var(--starter-pro-vivid-cobalt-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 92%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+}
+
+.productPage .foundationTile .foundationArtConcept {
+  padding: clamp(1rem, 2vw, 1.75rem);
+  background: transparent;
+}
+
+.foundationSculpture {
+  position: relative;
+  width: 100%;
+  height: clamp(18rem, 60vw, 21rem);
+}
+
+.productIllustration {
+  object-fit: contain;
+  filter: drop-shadow(0 18px 22px rgb(25 16 43 / 14%));
+}
+
+:global(html[data-site-palette="monochrome"]) .productIllustration {
+  filter: grayscale(1) drop-shadow(0 18px 22px rgb(0 0 0 / 10%));
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .productIllustration {
+    transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .foundationTile:hover .productIllustration {
+    transform: translateY(-4px);
+  }
+}
+
+@media (forced-colors: active) {
+  .productPage,
+  :global(html.dark) .productPage,
+  :global(html[data-site-palette="monochrome"]) .productPage {
+    --starter-pro-vivid-cobalt: Canvas;
+    --starter-pro-vivid-cobalt-ink: CanvasText;
+    --starter-pro-vivid-violet: Canvas;
+    --starter-pro-vivid-violet-ink: CanvasText;
+    --starter-pro-vivid-gold: Canvas;
+    --starter-pro-vivid-gold-ink: CanvasText;
+    --starter-pro-vivid-gold-accent: LinkText;
+  }
+
+  .productPage
+    :is(
+      .foundationTile,
+      .readinessCard,
+      .setupStep,
+      .resourceCard,
+      .purchaseCard,
+      .configurationPanel
+    ):is(
+      [data-card-tone="brand"],
+      [data-card-tone="gold"],
+      [data-card-tone="cobalt"]
+    ) {
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+  }
+
+  .productPage .foundationTile .foundationArtConcept {
+    min-height: 8rem;
+  }
+
+  .foundationSculpture {
+    display: none;
+  }
+}
+
+.productPage .workflowBand .readinessCard[data-card-art] .detailGraphic {
+  padding: 0 clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.readinessArtwork {
+  position: relative;
+  width: 100%;
+  height: clamp(11rem, 18vw, 14rem);
+}
+
+.readinessFallbackIcon {
+  display: none;
+}
+
+.productPage .readinessCard[data-card-art] .readinessCopy > a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.productPage .configurationPanel[data-card-art] .serviceOrbit {
+  display: none;
+}
+
+.configurationArtwork {
+  position: relative;
+  width: 100%;
+  height: clamp(10rem, 20vw, 13rem);
+  margin-bottom: 1rem;
+}
+
+@media (forced-colors: active) {
+  .readinessArtwork,
+  .configurationArtwork {
+    display: none;
+  }
+
+  .productPage .workflowBand .readinessCard[data-card-art] .detailGraphic {
+    min-height: 5rem;
+  }
+
+  .readinessFallbackIcon {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .productPage .configurationPanel[data-card-art] .serviceOrbit {
+    display: flex;
+  }
+}
+
+/* Illustrated product cards share one palette from workflows to delivery. */
+.productPage {
+  --starter-pro-faq-surface: #eeeaf5;
+}
+
+:global(html.dark) .productPage {
+  --starter-pro-faq-surface: #211b2d;
+}
+
+:global(html[data-site-palette="monochrome"]) .productPage {
+  --starter-pro-faq-surface: var(--surface-muted);
+}
+
+.purchaseCardArtwork {
+  position: relative;
+  width: 100%;
+  height: clamp(8rem, 18vw, 10rem);
+  margin-bottom: 1.5rem;
+}
+
+.purchaseFallbackIcon {
+  display: none;
+}
+
+.productPage
+  .docsSection
+  .resourceCard[data-card-tone="gold"]
+  > svg:first-child {
+  background: var(--starter-pro-soft);
+}
+
+.productPage .faqSection {
+  background: var(--starter-pro-faq-surface);
+  box-shadow: 0 0 0 100vmax var(--starter-pro-faq-surface);
+}
+
+.productPage .faqSection details {
+  box-shadow: 0 3px 12px color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+@media (forced-colors: active) {
+  .productPage,
+  :global(html.dark) .productPage,
+  :global(html[data-site-palette="monochrome"]) .productPage {
+    --starter-pro-faq-surface: Canvas;
+  }
+
+  .purchaseCardArtwork {
+    display: none;
+  }
+
+  .purchaseFallbackIcon {
+    display: block;
+  }
+
+  .productPage .faqSection details {
+    box-shadow: none;
+  }
+
+  .productPage
+    .docsSection
+    .resourceCard[data-card-tone="gold"]
+    > svg:first-child {
+    background: Canvas;
+  }
+}
+
+/* A restrained graphite, white and blue hierarchy complements the yellow accents. */
+.productPage {
+  --starter-pro-graphite: #17181d;
+  --starter-pro-graphite-ink: #ffffff;
+}
+
+:global(html.dark) .productPage {
+  --starter-pro-graphite: #191b23;
+}
+
+:global(html[data-site-palette="monochrome"]) .productPage {
+  --starter-pro-graphite: var(--surface-muted);
+  --starter-pro-graphite-ink: var(--foreground);
+}
+
+.productPage
+  :is(
+    .foundationTile,
+    .resourceCard,
+    .implementationCard
+  )[data-card-tone="ink"] {
+  --background: var(--starter-pro-graphite);
+  --foreground: var(--starter-pro-graphite-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+}
+
+.productPage .foundationTile[data-card-art] {
+  box-shadow: none;
+}
+
+.productPage .foundationTileCopy h3 {
+  max-width: 20ch;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.productPage .docsSection .resourceCard {
+  grid-template-rows: auto 1fr auto;
+  gap: 1.5rem 1rem;
+  min-height: 18rem;
+  box-shadow: none;
+}
+
+.resourceIndex {
+  grid-column: 2;
+  grid-row: 1;
+  padding-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.productPage .docsSection .resourceCard h3 {
+  max-width: 22ch;
+  font-size: clamp(1.375rem, 2vw, 1.625rem);
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.resourceCta {
+  display: inline-flex;
+  grid-column: 1 / -1;
+  grid-row: 3;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 2.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.resourceCta > svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.productPage .servicesBand .implementationCard[data-card-tone] {
+  border-color: var(--border-subtle);
+  background: var(--background);
+  box-shadow: none;
+}
+
+.productPage .implementationCard[data-card-tone="neutral"] {
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+}
+
+.productPage .implementationCard .implementationIdentity {
+  margin-bottom: 2.25rem;
+}
+
+.implementationOffer {
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.productPage .implementationCard h3 {
+  max-width: 20ch;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+
+.productPage .implementationCard .implementationPrice {
+  margin-top: 1.5rem;
+  font-size: clamp(2rem, 3.3vw, 2.875rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+
+.implementationOffer + p {
+  margin-top: 1.5rem;
+}
+
+.productPage .implementationCard .implementationFeatures {
+  gap: 1rem;
+  padding: 0;
+  border: 0;
+}
+
+.productPage .implementationCard .implementationDelivery {
+  padding: 1.5rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+}
+
+.productPage .implementationCard .implementationDelivery h4 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.productPage .servicesBand .implementationCard .implementationAction {
+  width: 100%;
+  min-height: 3rem;
+  justify-content: center;
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.productPage .servicesBand .implementationCard .implementationAction:hover {
+  border-color: color-mix(in srgb, var(--primary) 88%, var(--background));
+  background: color-mix(in srgb, var(--primary) 88%, var(--background));
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .productPage .docsSection .resourceCard {
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      border-color 180ms ease;
+  }
+
+  .productPage .docsSection .resourceCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px
+      color-mix(in srgb, var(--foreground) 6%, transparent);
+  }
+}
+
+@media (forced-colors: active) {
+  .productPage,
+  :global(html.dark) .productPage,
+  :global(html[data-site-palette="monochrome"]) .productPage {
+    --starter-pro-graphite: Canvas;
+    --starter-pro-graphite-ink: CanvasText;
+  }
+
+  .productPage
+    :is(
+      .foundationTile,
+      .resourceCard,
+      .implementationCard
+    )[data-card-tone="ink"],
+  .productPage .implementationCard[data-card-tone="neutral"] {
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --ring: Highlight;
+  }
+
+  .productPage .servicesBand .implementationCard[data-card-tone] {
+    border-color: CanvasText;
+  }
+
+  .productPage .servicesBand .implementationCard .implementationAction,
+  .productPage .servicesBand .implementationCard .implementationAction:hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+
+  .productPage .docsSection .resourceCard:hover {
+    transform: none;
+    box-shadow: none;
   }
 }

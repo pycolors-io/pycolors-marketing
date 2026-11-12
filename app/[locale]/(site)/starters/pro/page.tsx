@@ -142,6 +142,8 @@ const stackItems = [
 const postPurchaseDetails = [
   {
     title: "Your downloadable package",
+    tone: "gold",
+    artwork: "/images/starters/pro/concepts/delivery-case-test-v1.png",
     description:
       "Your secure access link unlocks a Starter Pro ZIP with the full source code, documentation, and production checklist.",
     icon: Download,
@@ -158,6 +160,8 @@ const postPurchaseDetails = [
   },
   {
     title: "Claim email and purchase recovery",
+    tone: "neutral",
+    artwork: "/images/starters/pro/concepts/recovery-loop-test-v1.png",
     description:
       "Missing the purchase email or using an expired link? Request a fresh access link with the email used at checkout. Eligible purchases can be recovered without creating an account or buying again.",
     icon: Mail,
@@ -174,6 +178,8 @@ const postPurchaseDetails = [
   },
   {
     title: "Updates and access support",
+    tone: "lilac",
+    artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
     description: (
       <>
         <SiteText text={STARTER_PRO_UPDATES_SUMMARY} />{" "}
@@ -194,6 +200,8 @@ const postPurchaseDetails = [
   },
   {
     title: "Commercial license and setup",
+    tone: "neutral",
+    artwork: "/images/starters/pro/concepts/workflow-path-test-v1.png",
     description:
       "Use Starter Pro for personal and commercial applications and modify the source for your own products. Redistribution, resale, sublicensing, or repackaging as a competing template or product is not permitted. The repository license remains authoritative. Setup requires dependencies, PostgreSQL, and environment variables for auth, billing, and email.",
     icon: FileText,
@@ -221,7 +229,7 @@ const setupSteps = [
   },
   {
     title: "Configure your integrations",
-    tone: "sun",
+    tone: "gold",
     description:
       "Set up your authentication providers, email sender and Stripe test environment. Check sign-in, checkout and webhook handling with your own configuration.",
     href: INTERNAL.docsBillingTesting,
@@ -240,7 +248,7 @@ const setupSteps = [
 const docResourceCards = [
   {
     title: "See what is included",
-    tone: "lilac",
+    tone: "ink",
     description: "Review the complete Starter Pro package before buying.",
     href: INTERNAL.docsWhatIsIncluded,
     cta: "Review scope",
@@ -257,7 +265,7 @@ const docResourceCards = [
   },
   {
     title: "Production checklist",
-    tone: "sun",
+    tone: "gold",
     description:
       "Confirm auth, billing, backend, delivery, and release readiness.",
     href: INTERNAL.docsProductionChecklist,
@@ -275,7 +283,7 @@ const docResourceCards = [
   },
   {
     title: "Billing guide",
-    tone: "peach",
+    tone: "cobalt",
     description:
       "Understand subscriptions, checkout, customer portal, and billing states.",
     href: INTERNAL.docsBilling,
@@ -349,10 +357,10 @@ const heroScreenshots = [
 const includedGroups = [
   {
     title: "Authentication & access",
-    tone: "lilac",
+    tone: "neutral",
+    artwork: "/images/starters/pro/concepts/recovery-loop-test-v1.png",
     icon: Lock,
     technology: "Auth.js",
-    preview: heroScreenshots[1],
     flow: [
       { title: "Sign in", detail: "Email or OAuth", icon: KeyRound },
       { title: "Session", detail: "Auth.js", icon: UserRound },
@@ -373,10 +381,10 @@ const includedGroups = [
   },
   {
     title: "Billing & subscriptions",
-    tone: "neutral",
+    tone: "cobalt",
+    artwork: "/images/starters/pro/concepts/billing-loops-test-v1.png",
     icon: CreditCard,
     technology: "Stripe",
-    preview: heroScreenshots[2],
     flow: [
       { title: "Checkout", detail: "Stripe Checkout", icon: CreditCard },
       { title: "Webhook", detail: "Subscription events", icon: Webhook },
@@ -398,9 +406,9 @@ const includedGroups = [
   },
   {
     title: "Application & mobile",
-    tone: "peach",
+    tone: "ink",
+    artwork: "/images/starters/pro/concepts/connected-workspace-test-v1.png",
     icon: Smartphone,
-    preview: heroScreenshots[0],
     technology: "Responsive + PWA",
     description: "Build on a responsive product interface.",
     href: INTERNAL.docsPwa,
@@ -414,9 +422,9 @@ const includedGroups = [
   },
   {
     title: "Data & configuration",
-    tone: "neutral",
+    tone: "gold",
+    artwork: "/images/starters/pro/concepts/workflow-path-test-v1.png",
     icon: Database,
-    preview: heroScreenshots[4],
     technology: "Prisma + PostgreSQL",
     description: "Organize persistence, forms and configuration.",
     href: INTERNAL.docsBackend,
@@ -430,7 +438,8 @@ const includedGroups = [
   },
   {
     title: "Source & architecture",
-    tone: "neutral",
+    tone: "ink",
+    artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
     icon: Code2,
     technology: "Next.js + TypeScript",
     description: "Inspect the code and adapt it to your product.",
@@ -444,7 +453,8 @@ const includedGroups = [
   },
   {
     title: "Delivery & ownership",
-    tone: "sun",
+    tone: "neutral",
+    artwork: "/images/starters/pro/concepts/delivery-case-test-v1.png",
     icon: Download,
     technology: "Source + License",
     description: "Understand your package and access path.",
@@ -892,6 +902,7 @@ export default function StarterProPage() {
                 <article
                   key={group.title}
                   data-foundation-card=""
+                  data-card-art=""
                   data-card-tone={group.tone}
                   aria-labelledby={`foundation-${index}-title`}
                   className={styles.foundationTile}
@@ -908,45 +919,22 @@ export default function StarterProPage() {
                       {tSite(group.technology)}
                     </span>
                   </div>
-                  {"preview" in group ? (
-                    <figure
-                      aria-label={tSite(
-                        index < 2 ? group.preview.title : group.title,
-                      )}
-                      className={styles.foundationTileFigure}
-                    >
-                      <div className={styles.foundationTileStage}>
-                        <div className={styles.foundationTileImage}>
-                          <Image
-                            src={group.preview.image}
-                            alt={tSite(group.preview.alt)}
-                            fill
-                            loading="lazy"
-                            quality={100}
-                            sizes="(min-width: 768px) 440px, 80vw"
-                            className="object-contain"
-                          />
-                        </div>
-                      </div>
-                      <figcaption>
-                        <span>{tSite("Light theme · Demonstration data")}</span>
-                        <p>{tSite(group.preview.annotation)}</p>
-                      </figcaption>
-                    </figure>
-                  ) : (
-                    <div
-                      className={styles.foundationConcept}
-                      aria-hidden="true"
-                    >
-                      <div className={styles.foundationBlueprint}>
-                        <span />
-                        <span />
-                        <span />
-                      </div>
-                      <Icon />
-                      <span>{tSite(group.technology)}</span>
+                  <div
+                    className={`${styles.foundationConcept} ${styles.foundationArtConcept}`}
+                    aria-hidden="true"
+                  >
+                    <div className={styles.foundationSculpture}>
+                      <Image
+                        src={group.artwork}
+                        alt=""
+                        fill
+                        loading="lazy"
+                        quality={75}
+                        sizes="(min-width: 1024px) 360px, (min-width: 640px) 420px, 80vw"
+                        className={styles.productIllustration}
+                      />
                     </div>
-                  )}
+                  </div>
                   <div className={styles.foundationTileCopy}>
                     <h3 id={`foundation-${index}-title`}>
                       {tSite(group.title)}
@@ -1249,13 +1237,36 @@ export default function StarterProPage() {
               </div>
               <div className={`${styles.purchaseGrid} grid md:grid-cols-2`}>
                 {postPurchaseDetails.map(
-                  ({ title, description, icon: Icon, links }) => (
+                  ({
+                    title,
+                    tone,
+                    artwork,
+                    description,
+                    icon: Icon,
+                    links,
+                  }) => (
                     <div
                       key={title}
+                      data-card-tone={tone}
+                      data-card-art=""
                       className={`${styles.purchaseCard} flex flex-col bg-background p-6 sm:p-7`}
                     >
+                      <div
+                        className={styles.purchaseCardArtwork}
+                        aria-hidden="true"
+                      >
+                        <Image
+                          src={artwork}
+                          alt=""
+                          fill
+                          loading="lazy"
+                          quality={75}
+                          sizes="(min-width: 1024px) 280px, (min-width: 768px) 40vw, 86vw"
+                          className={styles.productIllustration}
+                        />
+                      </div>
                       <Icon
-                        className="mb-5 size-4 text-muted-foreground"
+                        className={`${styles.purchaseFallbackIcon} mb-5 size-4 text-muted-foreground`}
                         aria-hidden="true"
                       />
                       <h3 className="text-sm font-semibold leading-6">
@@ -1398,8 +1409,21 @@ export default function StarterProPage() {
               ))}
             </ol>
             <div
+              data-card-tone="cobalt"
+              data-card-art=""
               className={`${styles.configurationPanel} flex flex-col p-6 sm:p-8`}
             >
+              <div className={styles.configurationArtwork} aria-hidden="true">
+                <Image
+                  src="/images/starters/pro/concepts/workflow-path-test-v1.png"
+                  alt=""
+                  fill
+                  loading="lazy"
+                  quality={75}
+                  sizes="(min-width: 1024px) 400px, 86vw"
+                  className={styles.productIllustration}
+                />
+              </div>
               <div className={styles.serviceOrbit} aria-hidden="true">
                 <svg
                   className={styles.orbitConnections}
@@ -1480,7 +1504,7 @@ export default function StarterProPage() {
             className={`${styles.resourceGrid} grid md:grid-cols-2 lg:grid-cols-3`}
           >
             {docResourceCards.map(
-              ({ title, tone, description, href, icon: Icon }) => (
+              ({ title, tone, description, href, cta, icon: Icon }, index) => (
                 <Link
                   key={href}
                   data-card-tone={tone}
@@ -1491,16 +1515,19 @@ export default function StarterProPage() {
                     className="mt-1 size-4 shrink-0 text-muted-foreground"
                     aria-hidden="true"
                   />
+                  <span className={styles.resourceIndex} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   <div className="min-w-0 flex-1">
                     <h3 className="text-sm font-semibold">{tSite(title)}</h3>
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
                       {tSite(description)}
                     </p>
                   </div>
-                  <ArrowUpRight
-                    className="mt-1 size-4 shrink-0 text-muted-foreground"
-                    aria-hidden="true"
-                  />
+                  <span className={styles.resourceCta}>
+                    {tSite(cta)}
+                    <ArrowUpRight aria-hidden="true" />
+                  </span>
                 </Link>
               ),
             )}

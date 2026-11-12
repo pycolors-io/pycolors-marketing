@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
 import {
@@ -23,7 +24,8 @@ import styles from "./starter-pro.module.css";
 const foundations = [
   {
     title: "A ZIP that runs on its own",
-    tone: "sun",
+    artwork: "/images/starters/pro/concepts/delivery-case-test-v1.png",
+    tone: "gold",
     icon: Download,
     description:
       "Packaging requires isolated extraction, a frozen install, empty-database migrations, a production build and a first-user browser journey.",
@@ -32,6 +34,7 @@ const foundations = [
   },
   {
     title: "Billing that reconciles",
+    artwork: "/images/starters/pro/concepts/billing-loops-test-v1.png",
     tone: "neutral",
     icon: Webhook,
     description:
@@ -41,6 +44,7 @@ const foundations = [
   },
   {
     title: "Workflows checked together",
+    artwork: "/images/starters/pro/concepts/workflow-path-test-v1.png",
     tone: "lilac",
     icon: ShieldCheck,
     description:
@@ -50,6 +54,7 @@ const foundations = [
   },
   {
     title: "A recovery path to rehearse",
+    artwork: "/images/starters/pro/concepts/recovery-loop-test-v1.png",
     tone: "neutral",
     icon: Database,
     description:
@@ -59,7 +64,8 @@ const foundations = [
   },
   {
     title: "A working business example",
-    tone: "peach",
+    artwork: "/images/starters/pro/concepts/connected-workspace-test-v1.png",
+    tone: "cobalt",
     icon: Layers3,
     description:
       "Multiple workspaces, team roles and invitations connect to projects with assigned tasks, calendar due dates, discussions and reversible archiving.",
@@ -68,7 +74,8 @@ const foundations = [
   },
   {
     title: "A baseline you can maintain",
-    tone: "neutral",
+    artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
+    tone: "brand",
     icon: BookOpen,
     description:
       "Product configuration, customization recipes, migration guidance, source revision tracking and documented support boundaries come with the source.",
@@ -102,10 +109,14 @@ export function StarterProReadiness() {
         className={`${styles.readinessGrid} grid sm:grid-cols-2 xl:grid-cols-3`}
       >
         {foundations.map(
-          ({ title, tone, icon: Icon, description, href, link }, index) => (
+          (
+            { title, tone, artwork, icon: Icon, description, href, link },
+            index,
+          ) => (
             <article
               key={title}
               data-card-tone={tone}
+              data-card-art=""
               className={`${styles.readinessCard} flex min-w-0 flex-col bg-background`}
             >
               <div
@@ -113,23 +124,21 @@ export function StarterProReadiness() {
                 data-readiness-illustration=""
                 aria-hidden="true"
               >
-                <svg
-                  className={styles.detailConnections}
-                  viewBox="0 0 360 120"
-                  preserveAspectRatio="none"
+                <div className={styles.readinessArtwork}>
+                  <Image
+                    src={artwork}
+                    alt=""
+                    fill
+                    loading="lazy"
+                    quality={75}
+                    sizes="(min-width: 1280px) 360px, (min-width: 640px) 44vw, 86vw"
+                    className={styles.productIllustration}
+                  />
+                </div>
+                <Icon
+                  className={styles.readinessFallbackIcon}
                   focusable="false"
-                >
-                  <path d="M60 78C110 78 125 45 180 52S245 62 300 42" />
-                </svg>
-                <span className={styles.detailSatellite}>
-                  <BookOpen focusable="false" />
-                </span>
-                <span className={styles.detailCore}>
-                  <Icon focusable="false" />
-                </span>
-                <span className={styles.detailSatellite}>
-                  <Check focusable="false" />
-                </span>
+                />
                 <span className={styles.detailIndex}>0{tSite(index + 1)}</span>
               </div>
               <div className={styles.readinessCopy}>
@@ -188,6 +197,7 @@ export function StarterProImplementation() {
         {Object.values(STARTER_PRO_SERVICES).map((service, index) => (
           <article
             key={service.id}
+            data-card-tone={service.id === "guided-setup" ? "neutral" : "ink"}
             aria-labelledby={`${service.id}-heading`}
             className={styles.implementationCard}
           >
@@ -197,18 +207,20 @@ export function StarterProImplementation() {
               </span>
               <span>{String(index + 1).padStart(2, "0")}</span>
             </div>
-            <h3
-              id={`${service.id}-heading`}
-              className="text-lg font-semibold tracking-tight"
-            >
-              {tSite(service.title)}
-            </h3>
-            <p className={styles.implementationPrice}>
-              {tSite(service.priceLabel)}
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground">
-              {tSite("Starting service fee · Written scope")}
-            </p>
+            <div className={styles.implementationOffer}>
+              <h3
+                id={`${service.id}-heading`}
+                className="text-lg font-semibold tracking-tight"
+              >
+                {tSite(service.title)}
+              </h3>
+              <p className={styles.implementationPrice}>
+                {tSite(service.priceLabel)}
+              </p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {tSite("Starting service fee · Written scope")}
+              </p>
+            </div>
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
               {tSite(service.description)}
             </p>

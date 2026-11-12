@@ -1,0 +1,36 @@
+{
+  "tool": "Built-in image_gen.imagegen",
+  "intent": "Original decorative product illustrations for a local Starter Pro design experiment",
+  "prompts": [
+    {
+      "key": "source",
+      "prompt": "Use case: stylized-concept. Asset type: original transparent 3D product illustration for the Source & architecture card of PyColors Starter Pro. Create a sophisticated, photorealistic studio render of a compact stack of four thin, oversized rounded-square slabs, assembled with precise offsets as a metaphor for modular software foundations. Broad pearl-white faces, finely machined satin violet and cobalt-blue edges, one restrained warm-gold layer. The white upper face should be the clearest shape. Carefully chamfered corners, subtle brushed microtexture, realistic light and material reflections, elegant soft occlusion between the layers. A single coherent sculptural object, three-quarter front view from slightly above, complete silhouette, centred and occupying about 75 percent of a square canvas with safe space on every edge. Premium editorial product photography, calm, tactile, simple and meticulous, suitable for a spacious Apple-inspired marketing card while remaining an original PyColors composition. The page background will be deep violet, so retain clean luminous ivory edges. Genuinely transparent background, no floor or rectangular backdrop, no opaque vignette. No text, letters, code, numerals, logos, Apple products, screens, interface, people, watermarks, badges or extra props. Avoid cartoon clipart, an app icon tile, excessive gloss, neon glows, random floating ornaments and busy scenery."
+    },
+    {
+      "key": "delivery",
+      "prompt": "Use case: stylized-concept. Asset type: original transparent 3D product illustration for the Delivery & ownership card of PyColors Starter Pro. Create a sophisticated, photorealistic studio render of a small open archival case as a metaphor for a downloadable source package. A pearl-white case with softly rounded machined corners and a subtle frosted inner rim, its slim lid slightly raised; three immaculate thin document-like plates nested inside, with satin violet and cobalt-blue edges and one restrained warm-gold tab. No writing on any surface. One compact coherent sculptural object, three-quarter front view from slightly above, full silhouette, centred and occupying about 75 percent of a square canvas with safe space on every edge. Meticulous premium editorial product photography, broad softbox light, tactile ceramic-like white and anodised accents, natural reflections and soft occlusion between parts. Simple, calm, spacious Apple-inspired product presentation while remaining an original PyColors design; same visual family as a pearl-white stack of modular slabs with violet, cobalt and gold edges. This object will sit on a vivid golden-yellow marketing card. Genuinely transparent background, no floor or rectangular backdrop, no opaque vignette. No text, letters, code, numerals, logos, Apple products, screens, interfaces, people, watermarks, security seals or extra props. Avoid cartoon clipart, an app icon tile, gift bows, cheap plastic, neon glows, confetti and busy scenery."
+    }
+  ],
+  "references": [
+    "https://www.apple.com/es/store",
+    "https://www.apple.com/es/ipad/"
+  ],
+  "assets": [
+    {
+      "key": "source",
+      "filename": "source-stack-test-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1583637,
+      "transparentCornerVerified": true
+    },
+    {
+      "key": "delivery",
+      "filename": "delivery-case-test-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1471782,
+      "transparentCornerVerified": true
+    }
+  ]
+}
