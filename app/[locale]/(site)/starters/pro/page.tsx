@@ -213,6 +213,7 @@ const postPurchaseDetails = [
 const setupSteps = [
   {
     title: "Prepare your local environment",
+    tone: "neutral",
     description:
       "Download and unzip the source, install dependencies and connect a local PostgreSQL database. Follow the requirements in your downloaded release.",
     href: INTERNAL.docsGettingStarted,
@@ -220,6 +221,7 @@ const setupSteps = [
   },
   {
     title: "Configure your integrations",
+    tone: "sun",
     description:
       "Set up your authentication providers, email sender and Stripe test environment. Check sign-in, checkout and webhook handling with your own configuration.",
     href: INTERNAL.docsBillingTesting,
@@ -227,6 +229,7 @@ const setupSteps = [
   },
   {
     title: "Build and validate your product",
+    tone: "neutral",
     description:
       "Adapt the screens, connect your domain data and complete the production checklist before you deploy. You own the product logic and operation of your app.",
     href: INTERNAL.docsProductionChecklist,
@@ -237,6 +240,7 @@ const setupSteps = [
 const docResourceCards = [
   {
     title: "See what is included",
+    tone: "lilac",
     description: "Review the complete Starter Pro package before buying.",
     href: INTERNAL.docsWhatIsIncluded,
     cta: "Review scope",
@@ -244,6 +248,7 @@ const docResourceCards = [
   },
   {
     title: "Review setup",
+    tone: "neutral",
     description:
       "Check local installation, environment setup, and the first run.",
     href: INTERNAL.docsGettingStarted,
@@ -252,6 +257,7 @@ const docResourceCards = [
   },
   {
     title: "Production checklist",
+    tone: "sun",
     description:
       "Confirm auth, billing, backend, delivery, and release readiness.",
     href: INTERNAL.docsProductionChecklist,
@@ -260,6 +266,7 @@ const docResourceCards = [
   },
   {
     title: "Deployment guide",
+    tone: "neutral",
     description:
       "Prepare the Starter Pro foundation for a production deployment.",
     href: INTERNAL.docsDeployment,
@@ -268,6 +275,7 @@ const docResourceCards = [
   },
   {
     title: "Billing guide",
+    tone: "peach",
     description:
       "Understand subscriptions, checkout, customer portal, and billing states.",
     href: INTERNAL.docsBilling,
@@ -276,6 +284,7 @@ const docResourceCards = [
   },
   {
     title: "Authentication guide",
+    tone: "neutral",
     description:
       "Review sign-in, sessions, OAuth, reset password, and protected access.",
     href: INTERNAL.docsAuth,
@@ -340,6 +349,7 @@ const heroScreenshots = [
 const includedGroups = [
   {
     title: "Authentication & access",
+    tone: "lilac",
     icon: Lock,
     technology: "Auth.js",
     preview: heroScreenshots[1],
@@ -363,6 +373,7 @@ const includedGroups = [
   },
   {
     title: "Billing & subscriptions",
+    tone: "neutral",
     icon: CreditCard,
     technology: "Stripe",
     preview: heroScreenshots[2],
@@ -387,6 +398,7 @@ const includedGroups = [
   },
   {
     title: "Application & mobile",
+    tone: "peach",
     icon: Smartphone,
     preview: heroScreenshots[0],
     technology: "Responsive + PWA",
@@ -402,6 +414,7 @@ const includedGroups = [
   },
   {
     title: "Data & configuration",
+    tone: "neutral",
     icon: Database,
     preview: heroScreenshots[4],
     technology: "Prisma + PostgreSQL",
@@ -417,6 +430,7 @@ const includedGroups = [
   },
   {
     title: "Source & architecture",
+    tone: "neutral",
     icon: Code2,
     technology: "Next.js + TypeScript",
     description: "Inspect the code and adapt it to your product.",
@@ -430,6 +444,7 @@ const includedGroups = [
   },
   {
     title: "Delivery & ownership",
+    tone: "sun",
     icon: Download,
     technology: "Source + License",
     description: "Understand your package and access path.",
@@ -877,6 +892,7 @@ export default function StarterProPage() {
                 <article
                   key={group.title}
                   data-foundation-card=""
+                  data-card-tone={group.tone}
                   aria-labelledby={`foundation-${index}-title`}
                   className={styles.foundationTile}
                 >
@@ -1356,6 +1372,7 @@ export default function StarterProPage() {
               {setupSteps.map((step, index) => (
                 <li
                   key={step.title}
+                  data-card-tone={step.tone}
                   className={`${styles.setupStep} flex items-start gap-4 p-6 sm:gap-5 sm:p-7`}
                 >
                   <span className="grid size-8 shrink-0 place-items-center rounded-[5px] border border-border-subtle font-mono text-xs text-muted-foreground">
@@ -1463,9 +1480,10 @@ export default function StarterProPage() {
             className={`${styles.resourceGrid} grid md:grid-cols-2 lg:grid-cols-3`}
           >
             {docResourceCards.map(
-              ({ title, description, href, icon: Icon }) => (
+              ({ title, tone, description, href, icon: Icon }) => (
                 <Link
                   key={href}
+                  data-card-tone={tone}
                   href={href}
                   className={`${styles.resourceCard} group flex items-start gap-4 p-6 transition-colors focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring sm:p-7`}
                 >

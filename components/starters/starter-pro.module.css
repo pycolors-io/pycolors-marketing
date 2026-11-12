@@ -3,6 +3,7 @@
   --font-sans: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
   --font-brand: var(--font-sans);
   --starter-pro-soft: #f8f9fc;
+  --starter-pro-purchase-surface: #f2f2f4;
   --starter-pro-panel-radius: clamp(1.5rem, 3vw, 2.25rem);
   --starter-pro-card-radius: clamp(1.25rem, 2.4vw, 1.75rem);
   --starter-pro-icon-radius: 0.875rem;
@@ -1485,6 +1486,7 @@
 
 /* Dark mode keeps the same hierarchy with restrained violet accents. */
 :global(html.dark) .productPage {
+  --starter-pro-purchase-surface: var(--surface-muted);
   --starter-pro-ink: var(--foreground);
   --starter-pro-copy: var(--muted-foreground);
   --starter-pro-soft: color-mix(
@@ -4350,7 +4352,7 @@
 .productPage .purchaseGrid {
   gap: 1rem;
   padding: clamp(1rem, 2vw, 1.5rem);
-  background: var(--starter-pro-soft);
+  background: var(--starter-pro-purchase-surface);
 }
 
 .productPage .purchaseCard,
@@ -5012,5 +5014,193 @@
     --closing-ink: CanvasText;
     border-block: 1px solid CanvasText;
     background: Canvas;
+  }
+}
+
+/* A few pastel surfaces sit among neutral cards, using the workflow palette. */
+.productPage {
+  --starter-pro-tile-lilac: #eee8fc;
+  --starter-pro-tile-sun: #fff0cc;
+  --starter-pro-tile-peach: #fce8df;
+  --starter-pro-tile-neutral: var(--background);
+  --starter-pro-tile-text: #2c2339;
+  --starter-pro-tile-copy: #645a72;
+  --starter-pro-tile-accent: #6032aa;
+  --starter-pro-tile-action-ink: #ffffff;
+}
+
+:global(html.dark) .productPage {
+  --starter-pro-tile-lilac: #2c243b;
+  --starter-pro-tile-sun: #332c20;
+  --starter-pro-tile-peach: #36252c;
+  --starter-pro-tile-text: #f6f2fb;
+  --starter-pro-tile-copy: #c8bed4;
+  --starter-pro-tile-accent: #cdb1ff;
+  --starter-pro-tile-action-ink: #241b34;
+}
+
+:global(html[data-site-palette="monochrome"]) .productPage {
+  --starter-pro-tile-lilac: var(--surface-muted);
+  --starter-pro-tile-sun: var(--surface-muted);
+  --starter-pro-tile-peach: var(--surface-muted);
+  --starter-pro-tile-text: var(--foreground);
+  --starter-pro-tile-copy: var(--muted-foreground);
+  --starter-pro-tile-accent: var(--primary);
+  --starter-pro-tile-action-ink: var(--primary-foreground);
+}
+
+.productPage
+  :is(
+    .foundationTile,
+    .readinessCard,
+    .setupStep,
+    .resourceCard
+  )[data-card-tone],
+.productPage .comparisonSurface .comparisonTable tr > :nth-child(3) {
+  --background: var(--starter-pro-tile-neutral);
+  --foreground: var(--starter-pro-tile-text);
+  --muted-foreground: var(--starter-pro-tile-copy);
+  --primary: var(--starter-pro-tile-accent);
+  --primary-foreground: var(--starter-pro-tile-action-ink);
+  --ring: var(--primary);
+  --border: color-mix(in srgb, var(--foreground) 12%, var(--background));
+  --border-subtle: color-mix(in srgb, var(--foreground) 9%, var(--background));
+  --starter-pro-soft: color-mix(
+    in srgb,
+    var(--foreground) 4%,
+    var(--background)
+  );
+  --starter-pro-ink: var(--foreground);
+  --starter-pro-copy: var(--muted-foreground);
+  --starter-pro-action: var(--primary);
+  --starter-pro-action-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--foreground)
+  );
+  color: var(--foreground);
+}
+
+.productPage
+  :is(
+    .foundationTile,
+    .readinessCard,
+    .setupStep,
+    .resourceCard
+  )[data-card-tone="lilac"],
+.productPage .comparisonSurface .comparisonTable tr > :nth-child(3) {
+  --background: var(--starter-pro-tile-lilac);
+}
+
+.productPage
+  :is(
+    .foundationTile,
+    .readinessCard,
+    .setupStep,
+    .resourceCard
+  )[data-card-tone="sun"] {
+  --background: var(--starter-pro-tile-sun);
+}
+
+.productPage
+  :is(
+    .foundationTile,
+    .readinessCard,
+    .setupStep,
+    .resourceCard
+  )[data-card-tone="peach"] {
+  --background: var(--starter-pro-tile-peach);
+}
+
+.productPage .foundationTile[data-card-tone],
+.productPage .workflowBand .readinessCard[data-card-tone],
+.productPage .setupPanel .setupStep[data-card-tone],
+.productPage .docsSection .resourceCard[data-card-tone],
+.productPage .comparisonSurface .comparisonTable tr > :nth-child(3),
+.productPage .comparisonSurface .comparisonTable thead tr > th:nth-child(3) {
+  border-color: var(--border-subtle);
+  background: var(--background);
+}
+
+.productPage :is(.foundationTile, .setupStep)[data-card-tone]:focus-within {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+}
+
+.foundationTile[data-card-tone] .foundationTileStage,
+.foundationTile[data-card-tone] .foundationConcept {
+  background: color-mix(in srgb, var(--foreground) 3%, var(--background));
+}
+
+.foundationTile[data-card-tone] .foundationConcept > svg {
+  background: color-mix(in srgb, var(--primary) 5%, var(--background));
+  box-shadow: none;
+}
+
+.productPage .workflowBand .readinessCard[data-card-tone] .detailGraphic {
+  background: transparent;
+}
+
+.productPage .workflowBand .readinessCard[data-card-tone] .detailCore,
+.productPage .workflowBand .readinessCard[data-card-tone] .detailSatellite {
+  background: color-mix(in srgb, var(--foreground) 4%, var(--background));
+  color: var(--primary);
+}
+
+.productPage
+  .docsSection
+  .resourceCard[data-card-tone]:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  background: var(--background);
+}
+
+@media (forced-colors: active) {
+  .productPage,
+  :global(html.dark) .productPage,
+  :global(html[data-site-palette="monochrome"]) .productPage {
+    --starter-pro-tile-lilac: Canvas;
+    --starter-pro-tile-sun: Canvas;
+    --starter-pro-tile-peach: Canvas;
+    --starter-pro-tile-neutral: Canvas;
+    --starter-pro-purchase-surface: Canvas;
+    --starter-pro-tile-text: CanvasText;
+    --starter-pro-tile-copy: CanvasText;
+    --starter-pro-tile-accent: LinkText;
+    --starter-pro-tile-action-ink: Canvas;
+  }
+
+  .productPage .foundationTile[data-card-tone],
+  .productPage .workflowBand .readinessCard[data-card-tone],
+  .productPage .setupPanel .setupStep[data-card-tone],
+  .productPage .docsSection .resourceCard[data-card-tone],
+  .productPage
+    .docsSection
+    .resourceCard[data-card-tone]:is(:hover, :focus-visible),
+  .productPage .comparisonSurface .comparisonTable tr > :nth-child(3),
+  .productPage .comparisonSurface .comparisonTable thead tr > th:nth-child(3) {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+
+  .productPage
+    .comparisonSurface
+    .comparisonTable
+    thead
+    tr
+    > th:nth-child(3)
+    > a {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+
+  .productPage
+    .comparisonSurface
+    .comparisonTable
+    thead
+    tr
+    > th:nth-child(3)
+    > a:hover {
+    background: Highlight;
+    color: HighlightText;
   }
 }

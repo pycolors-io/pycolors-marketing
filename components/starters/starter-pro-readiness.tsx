@@ -23,6 +23,7 @@ import styles from "./starter-pro.module.css";
 const foundations = [
   {
     title: "A ZIP that runs on its own",
+    tone: "sun",
     icon: Download,
     description:
       "Packaging requires isolated extraction, a frozen install, empty-database migrations, a production build and a first-user browser journey.",
@@ -31,6 +32,7 @@ const foundations = [
   },
   {
     title: "Billing that reconciles",
+    tone: "neutral",
     icon: Webhook,
     description:
       "Signed webhooks reconcile current Stripe state. PostgreSQL regressions cover concurrent duplicates, reversed order, failed payments, cancellations and retries.",
@@ -39,6 +41,7 @@ const foundations = [
   },
   {
     title: "Workflows checked together",
+    tone: "lilac",
     icon: ShieldCheck,
     description:
       "Browser suites cover onboarding, workspace access, English/French, Customize and responsive layouts. The required CI gate waits for selected checks.",
@@ -47,6 +50,7 @@ const foundations = [
   },
   {
     title: "A recovery path to rehearse",
+    tone: "neutral",
     icon: Database,
     description:
       "Configuration diagnostics, health probes, structured error references, alert hooks and a PostgreSQL backup/restore drill support your operations handover.",
@@ -55,6 +59,7 @@ const foundations = [
   },
   {
     title: "A working business example",
+    tone: "peach",
     icon: Layers3,
     description:
       "Multiple workspaces, team roles and invitations connect to projects with assigned tasks, calendar due dates, discussions and reversible archiving.",
@@ -63,6 +68,7 @@ const foundations = [
   },
   {
     title: "A baseline you can maintain",
+    tone: "neutral",
     icon: BookOpen,
     description:
       "Product configuration, customization recipes, migration guidance, source revision tracking and documented support boundaries come with the source.",
@@ -96,9 +102,10 @@ export function StarterProReadiness() {
         className={`${styles.readinessGrid} grid sm:grid-cols-2 xl:grid-cols-3`}
       >
         {foundations.map(
-          ({ title, icon: Icon, description, href, link }, index) => (
+          ({ title, tone, icon: Icon, description, href, link }, index) => (
             <article
               key={title}
+              data-card-tone={tone}
               className={`${styles.readinessCard} flex min-w-0 flex-col bg-background`}
             >
               <div
