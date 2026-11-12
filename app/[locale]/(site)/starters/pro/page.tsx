@@ -546,50 +546,37 @@ function StarterProWaves({ id }: Readonly<{ id: string }>) {
           x2="0.95"
           y2="0.1"
         >
-          <stop offset="0" stopColor="var(--brand-platform)" stopOpacity="0" />
+          <stop
+            offset="0"
+            stopColor="var(--starter-pro-wave-start)"
+            stopOpacity="0"
+          />
           <stop
             offset="0.18"
-            stopColor="var(--brand-platform)"
+            stopColor="var(--starter-pro-wave-start)"
             stopOpacity="0.7"
           />
-          <stop offset="0.48" stopColor="var(--primary)" stopOpacity="0.9" />
+          <stop
+            offset="0.32"
+            stopColor="var(--starter-pro-teal)"
+            stopOpacity="0.8"
+          />
+          <stop offset="0.48" stopColor="var(--primary)" stopOpacity="0.78" />
           <stop
             offset="0.8"
-            stopColor="var(--starter-pro-glow)"
+            stopColor="var(--starter-pro-wave-end)"
             stopOpacity="0.55"
           />
           <stop
             offset="1"
-            stopColor="var(--starter-pro-glow)"
+            stopColor="var(--starter-pro-wave-end)"
             stopOpacity="0.1"
-          />
-        </linearGradient>
-        <linearGradient id={`${id}-light`} x1="0" y1="0.9" x2="1" y2="0.2">
-          <stop
-            offset="0"
-            stopColor="var(--starter-pro-wave-light)"
-            stopOpacity="0"
-          />
-          <stop
-            offset="0.38"
-            stopColor="var(--brand-platform)"
-            stopOpacity="0.45"
-          />
-          <stop offset="0.75" stopColor="var(--primary)" stopOpacity="0.3" />
-          <stop
-            offset="1"
-            stopColor="var(--starter-pro-glow)"
-            stopOpacity="0"
           />
         </linearGradient>
       </defs>
       <path
-        d="M-160 465C100 570 180 150 460 195C700 235 680 425 925 300C1160 180 1220-70 1600-25L1600 255C1390 165 1205 430 935 445C690 460 550 310 340 360C120 415 10 650-160 585Z"
+        d="M-140 455C155 500 360 205 700 250S1185 300 1580 60L1580 410C1260 345 1065 525 720 425S185 555-140 560Z"
         fill={`url(#${id}-spectrum)`}
-      />
-      <path
-        d="M-170 385C145 160 330 570 670 365C970 185 1130 410 1580 80L1580 395C1240 580 1090 365 835 470C495 610 235 335-170 610Z"
-        fill={`url(#${id}-light)`}
       />
     </svg>
   );
@@ -1017,21 +1004,20 @@ export default function StarterProPage() {
                         <div className="px-5 pt-6 sm:px-8 sm:pt-8">
                           <div className="flex items-center justify-between gap-4">
                             <span className="inline-flex items-center gap-3">
-                              <span className="grid size-10 place-items-center rounded-[5px] border border-border-subtle bg-background text-foreground">
+                              <span className={styles.foundationIcon}>
                                 <Icon className="size-4" aria-hidden="true" />
                               </span>
                               <span className="font-mono text-[10px] tracking-[0.12em] text-muted-foreground">
                                 {tSite("CORE INTEGRATION")}
                               </span>
                             </span>
-                            <span
-                              className="font-mono text-[11px] text-muted-foreground"
-                              aria-hidden="true"
-                            >
-                              0{tSite(index + 1)}
+                            <span className={styles.technologyBadge}>
+                              {tSite(technology)}
                             </span>
                           </div>
-                          <h3 className="mt-6 text-[22px] font-semibold tracking-subheading sm:text-2xl">
+                          <h3
+                            className={`${styles.integrationTitle} mt-6 font-semibold tracking-subheading`}
+                          >
                             {tSite(title)}
                           </h3>
                           <p className="mt-2 text-sm leading-7 text-muted-foreground">
@@ -1052,6 +1038,46 @@ export default function StarterProPage() {
                               </StarterProCheckItem>
                             ))}
                           </ul>
+                        </div>
+                        <div
+                          className={`${styles.integrationSummary} rounded-[5px] border border-border-subtle`}
+                        >
+                          <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-3">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                              {tSite("Integration overview")}
+                            </span>
+                            <span className="font-mono text-[11px] text-foreground">
+                              {tSite(technology)}
+                            </span>
+                          </div>
+                          <ol
+                            aria-label={tSite("{value0} flow overview", {
+                              value0: title,
+                            })}
+                            className={styles.foundationFlow}
+                          >
+                            {flow.map(
+                              ({ title: step, detail, icon: StepIcon }) => (
+                                <li
+                                  key={step}
+                                  className="relative min-w-0 text-center"
+                                >
+                                  <span className={styles.foundationNode}>
+                                    <StepIcon
+                                      className="size-[18px]"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                  <span className="mt-3 block text-xs font-medium">
+                                    {tSite(step)}
+                                  </span>
+                                  <span className="mt-1 block text-[10px] leading-4 text-muted-foreground sm:text-[11px]">
+                                    {tSite(detail)}
+                                  </span>
+                                </li>
+                              ),
+                            )}
+                          </ol>
                         </div>
                         <div
                           className={`${detailStyles.footer} mt-auto border-t border-border-subtle px-5 py-4 sm:px-8`}
@@ -1098,7 +1124,7 @@ export default function StarterProPage() {
                               fill
                               loading="lazy"
                               quality={100}
-                              sizes="(min-width: 1440px) 700px, (min-width: 1024px) 50vw, 90vw"
+                              sizes="(min-width: 1280px) 544px, (min-width: 1024px) 44vw, 90vw"
                               className="object-contain"
                             />
                           </div>
@@ -1109,46 +1135,6 @@ export default function StarterProPage() {
                             <p>{tSite(preview.annotation)}</p>
                           </figcaption>
                         </figure>
-                        <div
-                          className={`${detailStyles.preview} mx-5 mt-6 rounded-[5px] border border-border-subtle sm:mx-8`}
-                        >
-                          <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-3">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                              {tSite("Integration overview")}
-                            </span>
-                            <span className="font-mono text-[11px] text-foreground">
-                              {tSite(technology)}
-                            </span>
-                          </div>
-                          <ol
-                            aria-label={tSite("{value0} flow overview", {
-                              value0: title,
-                            })}
-                            className={styles.foundationFlow}
-                          >
-                            {flow.map(
-                              ({ title: step, detail, icon: StepIcon }) => (
-                                <li
-                                  key={step}
-                                  className="relative min-w-0 text-center"
-                                >
-                                  <span className={styles.foundationNode}>
-                                    <StepIcon
-                                      className="size-[18px]"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                  <span className="mt-3 block text-xs font-medium">
-                                    {tSite(step)}
-                                  </span>
-                                  <span className="mt-1 block text-[10px] leading-4 text-muted-foreground sm:text-[11px]">
-                                    {tSite(detail)}
-                                  </span>
-                                </li>
-                              ),
-                            )}
-                          </ol>
-                        </div>
                       </div>
                     </div>
                   </article>
@@ -1158,67 +1144,52 @@ export default function StarterProPage() {
             {includedGroups
               .filter((group) => !("flow" in group))
               .map(
-                (
-                  {
-                    title,
-                    description,
-                    icon: Icon,
-                    items,
-                    href,
-                    link,
-                    technology,
-                  },
-                  index,
-                ) => (
+                ({
+                  title,
+                  description,
+                  icon: Icon,
+                  items,
+                  href,
+                  link,
+                  technology,
+                }) => (
                   <article
                     key={title}
                     data-foundation-card=""
                     className={`${styles.supportingFoundation} flex min-w-0 flex-col bg-background`}
                   >
-                    <div className={styles.cardShape} aria-hidden="true">
-                      <StarterProWaves
-                        id={`starter-pro-foundation-${index}-shape`}
-                      />
-                    </div>
-                    <div className={`${styles.foundationReveal} p-5 sm:p-8`}>
-                      <div className="mb-6 flex items-center justify-between gap-4">
+                    <div
+                      className={`${styles.foundationReveal} ${styles.supportingContent}`}
+                    >
+                      <div className={styles.supportingHeader}>
                         <span className={styles.foundationIcon}>
-                          <Icon
-                            className="size-4 text-muted-foreground"
-                            aria-hidden="true"
-                          />
+                          <Icon className="size-4" aria-hidden="true" />
                         </span>
-                        <span
-                          className="font-mono text-[11px] text-muted-foreground"
-                          aria-hidden="true"
-                        >
-                          0{tSite(index + 3)}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-                        <h3 className="text-lg font-semibold tracking-normal">
-                          {tSite(title)}
-                        </h3>
                         <span className={styles.technologyBadge}>
                           {tSite(technology)}
                         </span>
                       </div>
-                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        {tSite(description)}
-                      </p>
-                      <ul className="mb-6 mt-6 space-y-3">
-                        {items.map((item) => (
-                          <StarterProCheckItem
-                            key={item}
-                            className="text-[13px]"
-                          >
-                            {tSite(item)}
-                          </StarterProCheckItem>
-                        ))}
-                      </ul>
+                      <div className={styles.supportingCopy}>
+                        <h3 className="text-xl font-semibold tracking-subheading">
+                          {tSite(title)}
+                        </h3>
+                        <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                          {tSite(description)}
+                        </p>
+                        <ul className="mb-6 mt-6 space-y-3">
+                          {items.map((item) => (
+                            <StarterProCheckItem
+                              key={item}
+                              className="text-[13px]"
+                            >
+                              {tSite(item)}
+                            </StarterProCheckItem>
+                          ))}
+                        </ul>
+                      </div>
                       <Link
                         href={href}
-                        className={`${textLink} group mt-auto justify-between border-t border-border-subtle pt-4 text-xs`}
+                        className={`${textLink} ${styles.supportingAction} group mt-auto justify-between text-xs`}
                       >
                         {tSite(link)}
                         <ArrowUpRight
@@ -1534,7 +1505,7 @@ export default function StarterProPage() {
                   preserveAspectRatio="none"
                   focusable="false"
                 >
-                  <path d="M20 90C110-20 290 150 380 35M30 40C140 150 260-30 375 100" />
+                  <path d="M20 85C110 20 250 110 380 45" />
                 </svg>
                 {[Code2, Database, Lock, CreditCard].map((Icon, index) => (
                   <span key={index}>

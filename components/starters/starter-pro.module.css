@@ -4,11 +4,23 @@
   --starter-pro-section-space: clamp(4rem, 7vw, 7rem);
   --starter-pro-glow: var(--brand-accent);
   --starter-pro-primary: var(--primary);
-  --starter-pro-wave-light: color-mix(
+  --starter-pro-teal: color-mix(
     in srgb,
-    var(--brand-platform) 25%,
-    var(--background)
+    var(--brand-platform) 45%,
+    var(--brand-success)
   );
+  --starter-pro-teal-ink: color-mix(
+    in srgb,
+    var(--starter-pro-teal) 80%,
+    var(--foreground)
+  );
+  --starter-pro-wave-start: var(--brand-platform);
+  --starter-pro-wave-end: color-mix(
+    in srgb,
+    var(--primary) 65%,
+    var(--starter-pro-glow)
+  );
+  --starter-pro-art-opacity: 0.12;
   --starter-pro-action: color-mix(
     in srgb,
     var(--primary) 65%,
@@ -28,6 +40,8 @@
 
 :global(html[data-site-palette="monochrome"]) .productPage {
   --starter-pro-glow: var(--primary);
+  --starter-pro-teal: var(--foreground);
+  --starter-pro-teal-ink: var(--foreground);
 }
 
 /* A shared action hierarchy for this product page, including guide links. */
@@ -141,21 +155,24 @@
 .productPage :global(.marketing-section) h2,
 .faqSection h2 {
   max-width: 24ch;
-  font-size: clamp(1.875rem, 3.4vw, 3.25rem);
-  line-height: 1.12;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.875rem, 3vw, 2.625rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
 }
 
 .productPage :global(.marketing-section) [data-slot="badge"],
 .faqSection [data-slot="badge"] {
-  padding: 0 0 0 0.875rem;
+  padding: 0;
   border: 0;
-  border-left: 2px solid var(--primary);
   border-radius: 0;
   background: transparent;
   color: var(--primary);
-  font-size: 0.6875rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0;
 }
 
 .productBar {
@@ -219,10 +236,10 @@
 .heroCopy h1 {
   max-width: 17ch;
   margin-inline: auto;
-  font-size: clamp(2.75rem, 6.5vw, 6.25rem);
+  font-size: clamp(2.625rem, 5.5vw, 5rem);
   font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.06em;
+  line-height: 1.06;
+  letter-spacing: -0.045em;
 }
 
 .heroContent {
@@ -232,8 +249,9 @@
 
 .heroContent > p {
   max-width: 65ch;
-  font-size: clamp(0.9375rem, 1.3vw, 1.125rem);
-  line-height: 1.8;
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.7;
 }
 
 .heroCopy [data-slot="badge"] {
@@ -352,7 +370,7 @@
   inset: -2rem -14% auto;
   height: clamp(20rem, 46vw, 44rem);
   opacity: 0.8;
-  filter: blur(10px);
+  filter: blur(3px);
   mask-image: linear-gradient(
     to bottom,
     transparent,
@@ -529,13 +547,25 @@
 }
 
 .productPage .featuredFoundation {
+  --body-accent: var(--starter-pro-action);
   grid-column: 1 / -1;
-  border-color: color-mix(in oklab, var(--primary) 20%, var(--border));
-  background: linear-gradient(
-    145deg,
-    color-mix(in oklab, var(--primary) 4%, var(--background)),
-    var(--background) 60%
-  );
+  border-color: var(--border);
+  background: var(--background);
+  box-shadow: 0 2px 5px color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+.productPage .featuredFoundation:nth-child(2) {
+  --body-accent: var(--brand-platform);
+}
+.integrationTitle {
+  font-size: clamp(1.5rem, 2.1vw, 1.875rem);
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.productPage .featuredFoundation:focus-within,
+.productPage .supportingFoundation:focus-within {
+  border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
 }
 
 .productPage .integrationLayout {
@@ -567,15 +597,10 @@
   display: flex;
   min-width: 0;
   flex-direction: column;
-  padding: clamp(1rem, 2.5vw, 2rem);
+  justify-content: center;
+  padding: clamp(1.5rem, 3vw, 3rem);
   border-top: 1px solid var(--border-subtle);
-  background:
-    radial-gradient(
-      ellipse at 100% 0,
-      color-mix(in srgb, var(--starter-pro-action) 6%, transparent),
-      transparent 65%
-    ),
-    var(--starter-pro-soft);
+  background: var(--starter-pro-soft);
 }
 
 .visualWaves {
@@ -589,8 +614,10 @@
 
 .integrationPreview {
   position: relative;
+  width: 100%;
+  max-width: 34rem;
   min-width: 0;
-  margin: 0;
+  margin: 0 auto;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 5px;
@@ -619,30 +646,26 @@
   font-weight: 500;
 }
 
-.foundationVisual > div:last-child {
-  margin-inline: 0;
-  margin-top: 1.25rem;
+.integrationSummary {
+  margin: 0 clamp(1.25rem, 3vw, 2rem) 1.5rem;
+  overflow: hidden;
   background: var(--background);
 }
 
-.productPage .foundationVisual .foundationFlow {
+.productPage .foundationCopy .foundationFlow {
   margin-top: 0;
   padding-block: 1.125rem;
 }
 
-.productPage .foundationVisual .foundationFlow::before {
+.productPage .foundationCopy .foundationFlow::before {
   top: 2.125rem;
 }
 
-.productPage .foundationVisual .foundationNode {
+.productPage .foundationCopy .foundationNode {
   width: 2rem;
   height: 2rem;
-  border-color: color-mix(
-    in srgb,
-    var(--starter-pro-action) 24%,
-    var(--border)
-  );
-  color: var(--starter-pro-action);
+  border-color: color-mix(in srgb, var(--body-accent) 24%, var(--border));
+  color: var(--body-accent);
 }
 
 @media (min-width: 64rem) {
@@ -670,14 +693,7 @@
   margin-top: 0.5rem;
   padding-block: 2rem;
   overflow: hidden;
-  background:
-    linear-gradient(
-      150deg,
-      transparent 50%,
-      color-mix(in oklab, var(--primary) 9%, transparent) 50% 72%,
-      transparent 72%
-    ),
-    var(--starter-pro-soft);
+  background: var(--starter-pro-soft);
 }
 
 .productPage .foundationFlow::before {
@@ -888,9 +904,10 @@
 
 .closingCta h2 {
   max-width: 21ch;
-  font-size: clamp(1.875rem, 3.5vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.875rem, 3vw, 2.625rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
 }
 
 .closingCta :global(.site-primary-action) {
@@ -1029,7 +1046,7 @@
   z-index: -1;
   inset: 7rem -18% auto 20%;
   height: clamp(18rem, 40vw, 36rem);
-  opacity: 0.17;
+  opacity: var(--starter-pro-art-opacity);
   mask-image: radial-gradient(ellipse at center, black 15%, transparent 72%);
   pointer-events: none;
 }
@@ -1078,11 +1095,7 @@
 .purchaseCard:nth-child(3n),
 .setupStep:nth-child(3n),
 .resourceCard:nth-child(3n) {
-  --body-accent: color-mix(
-    in srgb,
-    var(--primary) 75%,
-    var(--starter-pro-glow)
-  );
+  --body-accent: var(--starter-pro-teal-ink);
 }
 
 .workflowBand .readinessCard {
@@ -1129,14 +1142,12 @@
 .detailCore {
   width: 3.25rem;
   height: 3.25rem;
-  transform: rotate(-8deg);
   box-shadow: 0 8px 18px color-mix(in srgb, var(--body-accent) 12%, transparent);
 }
 
 .detailCore svg {
   width: 1.375rem;
   height: 1.375rem;
-  transform: rotate(8deg);
 }
 .detailSatellite {
   width: 2rem;
@@ -1179,17 +1190,6 @@
   border-top-color: var(--brand-platform);
 }
 
-.cardShape {
-  position: absolute;
-  z-index: -1;
-  top: -3rem;
-  right: -25%;
-  width: 80%;
-  height: 13rem;
-  opacity: 0.14;
-  mask-image: radial-gradient(ellipse at center, black, transparent 70%);
-  pointer-events: none;
-}
 .foundationIcon {
   display: grid;
   width: 2.75rem;
@@ -1319,7 +1319,6 @@
 
 @media (forced-colors: active) {
   .bodyArtwork,
-  .cardShape,
   .detailConnections,
   .orbitConnections {
     display: none;
@@ -1331,6 +1330,226 @@
   .detailCore svg {
     transform: none;
   }
+}
+
+/* Sans for editorial hierarchy; mono is reserved for technical metadata. */
+.productPage :global(.marketing-section) h2 + p,
+.faqSection h2 + p {
+  max-width: 62ch;
+  font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
+  font-weight: 400;
+  line-height: 1.7;
+}
+.readinessCopy h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+.supportingCopy h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+.readinessCopy > p,
+.supportingCopy > p {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.75;
+}
+.readinessCopy > a,
+.supportingAction {
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.technologyBadge {
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+.foundationPoints {
+  font-size: 0.8125rem;
+  line-height: 1.75;
+}
+
+/* Stripe-like feature boxes: quiet frames, generous previews, fixed guide rows. */
+.productPage .foundationEvidence {
+  gap: 1rem;
+  border: 0;
+  background: transparent;
+}
+.productPage .foundationEvidence > a {
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+.productPage .foundationEvidence > a > svg:first-child {
+  box-sizing: content-box;
+  padding: 0.625rem;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--primary) 6%, var(--background));
+  color: var(--primary);
+}
+.supportingContent {
+  height: 100%;
+}
+.supportingHeader {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--body-accent) 3%, var(--background));
+}
+.supportingCopy {
+  flex: 1;
+  padding: 1.5rem 1.5rem 0;
+}
+.supportingAction {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--body-accent);
+}
+.supportingAction > svg {
+  color: inherit;
+}
+.supportingHeader .technologyBadge {
+  min-width: 0;
+  max-width: calc(100% - 4rem);
+}
+
+/* Dark chapters keep quiet surfaces with violet and restrained teal details. */
+:global(html.dark) .productPage {
+  --starter-pro-soft: color-mix(
+    in srgb,
+    var(--primary) 1.5%,
+    var(--background)
+  );
+  --starter-pro-glow: color-mix(
+    in srgb,
+    var(--primary) 86%,
+    var(--brand-accent)
+  );
+  --starter-pro-wave-start: color-mix(
+    in srgb,
+    var(--primary) 80%,
+    var(--brand-platform)
+  );
+  --starter-pro-wave-end: var(--primary);
+  --starter-pro-teal-ink: color-mix(
+    in srgb,
+    var(--starter-pro-teal) 75%,
+    var(--foreground)
+  );
+  --starter-pro-action: var(--primary);
+  --starter-pro-art-opacity: 0.055;
+}
+
+:global(html.dark) .productPage .heroArtwork {
+  opacity: 0.45;
+}
+:global(html.dark) .productPage .waveDivider .waves {
+  opacity: 0.3;
+}
+:global(html.dark) .productPage .visualWaves {
+  opacity: 0.075;
+}
+:global(html.dark) .productPage .closingArtwork {
+  opacity: 0.1;
+}
+
+:global(html.dark) .productPage .featuredFoundation,
+:global(html.dark) .productPage .readinessCard,
+:global(html.dark) .productPage .supportingFoundation,
+:global(html.dark) .productPage .purchaseCard,
+:global(html.dark) .productPage .setupStep,
+:global(html.dark) .productPage .resourceCard {
+  --body-accent: var(--primary);
+  background: var(--card);
+  box-shadow: none;
+}
+
+/* A secondary accent recurs in a few details without recoloring actions. */
+:global(html.dark) .productPage .readinessCard:nth-child(3n),
+:global(html.dark) .productPage .supportingFoundation:nth-child(3n),
+:global(html.dark) .productPage .purchaseCard:nth-child(3n),
+:global(html.dark) .productPage .setupStep:nth-child(3n),
+:global(html.dark) .productPage .resourceCard:nth-child(3n) {
+  --body-accent: var(--starter-pro-teal-ink);
+}
+
+:global(html.dark) .productPage .workflowBand article,
+:global(html.dark) .productPage .configurationPanel,
+:global(html.dark) .productPage .purchasePanel,
+:global(html.dark) .productPage .integrationPreview,
+:global(html.dark) .productPage .referenceBand dl,
+:global(html.dark) .productPage .faqSection details {
+  background: var(--card);
+  box-shadow: none;
+}
+
+:global(html.dark) .productPage .supportingHeader,
+:global(html.dark) .productPage .detailGraphic {
+  background: color-mix(in srgb, var(--body-accent) 4%, var(--card));
+}
+:global(html.dark) .productPage .detailCore,
+:global(html.dark) .productPage .detailSatellite {
+  background: var(--card);
+  border-color: color-mix(in srgb, var(--body-accent) 18%, var(--border));
+  box-shadow: none;
+}
+
+:global(html.dark) .productPage .demoAction :global([data-slot="button"]) {
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  background: color-mix(in srgb, var(--primary) 6%, var(--card));
+  color: var(--primary);
+  box-shadow: none;
+}
+:global(html.dark)
+  .productPage
+  .demoAction
+  :global([data-slot="button"]):hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+}
+
+:global(html.dark) .productPage .closingCta {
+  border-color: var(--border);
+  background: var(--card);
+  color: var(--foreground);
+}
+:global(html.dark) .productPage .closingCta p {
+  color: var(--muted-foreground);
+}
+:global(html.dark) .productPage .closingCta :global(.site-primary-action) {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: none;
+}
+:global(html.dark)
+  .productPage
+  .closingCta
+  :global(.site-primary-action):not(:disabled):not(
+    [aria-disabled="true"]
+  ):hover {
+  border-color: var(--starter-pro-action-hover);
+  background: var(--starter-pro-action-hover);
+  color: var(--primary-foreground);
+}
+
+:global(html.dark) .productPage .serviceOrbit span {
+  color: var(--primary);
+}
+:global(html.dark) .productPage .workflowBand .implementationCard {
+  border-top-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+}
+
+:global(html.dark) .productPage .resourceCard:hover {
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  background: color-mix(in srgb, var(--primary) 4%, var(--card));
 }
 
 /* Matches the diagonal treatment of the Theme Builder workspace preview. */

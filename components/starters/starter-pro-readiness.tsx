@@ -109,7 +109,7 @@ export function StarterProReadiness() {
                   preserveAspectRatio="none"
                   focusable="false"
                 >
-                  <path d="M70 78C105 78 112 38 180 50S252 90 290 42M70 78C125 110 220 15 290 42" />
+                  <path d="M60 78C110 78 125 45 180 52S245 62 300 42" />
                 </svg>
                 <span className={styles.detailSatellite}>
                   <BookOpen focusable="false" />
