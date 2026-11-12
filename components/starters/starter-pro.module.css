@@ -1,8 +1,14 @@
 /* Page-owned composition; the public UI and site palettes remain canonical. */
 .productPage {
+  --starter-pro-soft: #f8fafd;
   --starter-pro-section-space: clamp(4rem, 7vw, 7rem);
   --starter-pro-glow: var(--brand-accent);
   --starter-pro-primary: var(--primary);
+}
+
+:global(html.dark) .productPage,
+:global(html[data-site-palette="monochrome"]) .productPage {
+  --starter-pro-soft: var(--surface-muted);
 }
 
 :global(html[data-site-palette="monochrome"]) .productPage {
@@ -12,6 +18,7 @@
 .pageFrame {
   padding-bottom: clamp(4rem, 7vw, 7rem);
   border-inline: 1px solid var(--border-subtle);
+  background: var(--background);
 }
 
 .productPage :global(.marketing-section) {
@@ -32,6 +39,7 @@
   border: 0;
   border-left: 2px solid var(--primary);
   border-radius: 0;
+  background: transparent;
   color: var(--primary);
   font-size: 0.6875rem;
   letter-spacing: 0.1em;
@@ -253,15 +261,16 @@
 .offer {
   position: relative;
   margin-top: clamp(2.5rem, 5vw, 5rem);
-  border-block: 1px solid var(--border);
-  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--starter-pro-soft);
 }
 
 .offerBody {
   display: grid;
   min-width: 0;
   gap: 1.5rem;
-  padding: 2rem 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
 }
 
 .offerIntro,
@@ -305,47 +314,30 @@
   letter-spacing: -0.02em;
 }
 
-.softBand {
-  background: var(--surface-muted);
-  box-shadow: 0 0 0 100vmax var(--surface-muted);
-  clip-path: inset(0 -100vmax);
-}
-
-.inkBand {
-  --background: var(--surface-inverted);
-  --foreground: var(--surface-inverted-foreground);
-  --muted-foreground: color-mix(
-    in oklab,
-    var(--surface-inverted-foreground) 72%,
-    var(--surface-inverted)
-  );
-  --primary: color-mix(
-    in oklab,
-    var(--starter-pro-primary) 55%,
-    var(--surface-inverted-foreground)
-  );
-  --primary-foreground: var(--surface-inverted);
-  --border-subtle: color-mix(
-    in oklab,
-    var(--surface-inverted-foreground) 14%,
-    var(--surface-inverted)
-  );
-  --border: var(--border-subtle);
-  --surface-muted: color-mix(
-    in oklab,
-    var(--surface-inverted-foreground) 5%,
-    var(--surface-inverted)
-  );
-  --ring: var(--primary);
+.softBand,
+.workflowBand,
+.purchaseSection,
+.setupSection,
+.faqSection {
   position: relative;
-  padding-block: 1rem;
-  background: var(--background);
-  color: var(--foreground);
-  box-shadow: 0 0 0 100vmax var(--background);
+  isolation: isolate;
+  background: var(--starter-pro-soft);
+  box-shadow: 0 0 0 100vmax var(--starter-pro-soft);
   clip-path: inset(0 -100vmax);
 }
 
-.inkBand :global(.marketing-section-pattern)::before {
+.referenceBand,
+.includedSection,
+.comparisonSection,
+.docsSection {
+  position: relative;
+  isolation: isolate;
+  background: var(--background);
+}
+
+/* The same blue-gray canvas continues through every supporting chapter. */
+.softBand :global(.marketing-section-pattern)::before,
+.workflowBand :global(.marketing-section-pattern)::before {
   border-color: var(--border-subtle);
   background: repeating-linear-gradient(
     135deg,
@@ -354,11 +346,64 @@
   );
 }
 
-.inkBand article {
-  background: var(--surface-muted);
+.workflowBand :global(.marketing-section) > div > div:has(> article) {
+  gap: 1.25rem;
+  overflow: visible;
+  border: 0;
+  background: transparent;
 }
-.inkBand :global(.marketing-section-pattern) {
+
+.workflowBand article {
+  position: relative;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+
+.workflowBand article > div:first-child > svg {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.75rem;
+  border-radius: 5px;
+  background: color-mix(in oklab, var(--primary) 8%, var(--background));
+  color: var(--primary);
+}
+
+.workflowBand article > h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+.workflowBand article:nth-child(3n + 2) > div:first-child > svg {
+  background: color-mix(
+    in oklab,
+    var(--starter-pro-glow) 9%,
+    var(--background)
+  );
+}
+
+.workflowBand :global(.marketing-section-pattern) {
   padding-top: 4rem;
+}
+
+/* White surfaces float above the shared canvas, never above reading text. */
+.softBand video,
+.softBand .carousel,
+.referenceBand figure {
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  box-shadow: 0 12px 32px color-mix(in oklab, var(--foreground) 5%, transparent);
+}
+
+.softBand .stage {
+  background:
+    linear-gradient(
+      145deg,
+      transparent 43%,
+      color-mix(in oklab, var(--primary) 12%, transparent) 43% 70%,
+      transparent 70%
+    ),
+    var(--starter-pro-soft);
 }
 
 .productPage .foundationIntro {
@@ -384,13 +429,21 @@
 .productPage .foundationEvidence {
   border-block: 1px solid var(--border);
   border-radius: 0;
-  background: transparent;
+  background: var(--starter-pro-soft);
 }
 
 .productPage .foundationFlow {
   margin-top: 0.5rem;
   padding-block: 2rem;
-  background: color-mix(in oklab, var(--primary) 5%, var(--background));
+  overflow: hidden;
+  background:
+    linear-gradient(
+      150deg,
+      transparent 50%,
+      color-mix(in oklab, var(--primary) 9%, transparent) 50% 72%,
+      transparent 72%
+    ),
+    var(--starter-pro-soft);
 }
 
 .productPage .foundationFlow::before {
@@ -403,26 +456,173 @@
   box-shadow: none;
 }
 
-.purchaseSection,
-.setupSection {
-  background: linear-gradient(
-    120deg,
-    transparent 55%,
-    color-mix(in oklab, var(--primary) 3%, transparent)
-  );
+.purchasePanel {
+  background: var(--background);
 }
 
-.docsSection h3 {
+.deliveryPath {
+  position: relative;
+  background:
+    linear-gradient(
+      155deg,
+      transparent 68%,
+      color-mix(in oklab, var(--primary) 7%, transparent) 68% 84%,
+      transparent 84%
+    ),
+    var(--background);
+}
+
+.deliveryPath > div:first-child > svg,
+.purchaseCard > svg {
+  box-sizing: content-box;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0.75rem;
+  border-radius: 5px;
+  background: color-mix(in oklab, var(--primary) 8%, var(--background));
   color: var(--primary);
 }
-.docsSection a > svg:first-child {
+
+.purchaseGrid {
+  gap: 1px;
+  background: var(--border-subtle);
+}
+
+.purchaseCard h3 {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.purchaseFooter {
+  background: var(--starter-pro-soft);
+}
+
+.productPage .comparisonTable thead th {
+  background: var(--starter-pro-soft);
+}
+
+.productPage .comparisonTable tr > :nth-child(3) {
+  background: color-mix(in oklab, var(--primary) 4%, var(--background));
+}
+
+.setupPanel {
+  gap: 1.5rem;
+}
+
+.setupSteps {
+  display: grid;
+  gap: 1rem;
+}
+
+.setupStep {
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+
+.setupStep > span:first-child {
+  border-color: transparent;
+  background: color-mix(in oklab, var(--primary) 8%, var(--background));
   color: var(--primary);
+}
+
+.configurationPanel {
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+
+.serviceOrbit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1.25rem);
+  min-height: 8rem;
+  margin: -2rem -2rem 2rem;
+  isolation: isolate;
+  background:
+    linear-gradient(
+      155deg,
+      transparent 35%,
+      color-mix(in oklab, var(--primary) 12%, transparent) 35% 60%,
+      transparent 60%
+    ),
+    var(--starter-pro-soft);
+}
+
+.serviceOrbit::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 80%;
+  height: 1px;
+  background: color-mix(in oklab, var(--primary) 30%, transparent);
+}
+
+.serviceOrbit span {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid color-mix(in oklab, var(--primary) 15%, var(--border));
+  border-radius: 5px;
+  background: var(--background);
+  color: var(--primary);
+  box-shadow: 0 4px 12px color-mix(in oklab, var(--primary) 6%, transparent);
+}
+
+.serviceOrbit svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.resourceGrid {
+  gap: 1.25rem;
+}
+
+.resourceCard {
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--starter-pro-soft);
+}
+
+.resourceCard:hover {
+  border-color: color-mix(in oklab, var(--primary) 30%, var(--border));
+  background: color-mix(in oklab, var(--primary) 3%, var(--starter-pro-soft));
+}
+
+.resourceCard > svg:first-child {
+  box-sizing: content-box;
+  width: 1.125rem;
+  height: 1.125rem;
+  padding: 0.625rem;
+  margin-top: 0;
+  border-radius: 5px;
+  background: var(--background);
+  color: var(--primary);
+}
+
+.resourceCard h3 {
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .faqSection {
   padding-block: var(--starter-pro-section-space);
   scroll-margin-top: 9rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.faqSection details {
+  padding-inline: clamp(1rem, 2vw, 1.75rem);
+  background: var(--background);
+}
+
+.faqSection details summary {
+  font-size: 0.9375rem;
 }
 
 .closingCta {
@@ -438,7 +638,19 @@
       color-mix(in oklab, var(--primary) 15%, transparent),
       transparent 70%
     ),
-    var(--background);
+    var(--starter-pro-soft);
+}
+
+.closingCta::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -6rem;
+  bottom: -8rem;
+  width: 24rem;
+  height: 14rem;
+  transform: rotate(-25deg);
+  background: linear-gradient(110deg, var(--primary), var(--starter-pro-glow));
 }
 
 .closingCta h2 {
@@ -511,6 +723,9 @@
   .heroActions > div > * {
     width: 100%;
   }
+  .closingCta::after {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-transparency: reduce), (forced-colors: active) {
@@ -524,7 +739,7 @@
     display: none;
   }
   .softBand,
-  .inkBand {
+  .workflowBand {
     box-shadow: none;
   }
 }

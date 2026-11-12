@@ -799,8 +799,10 @@ export default function StarterProPage() {
           <StarterProTour />
           <StarterProPreviews />
         </div>
-        <ProductStudioReference />
-        <div className={styles.inkBand}>
+        <div className={styles.referenceBand}>
+          <ProductStudioReference />
+        </div>
+        <div className={styles.workflowBand}>
           <StarterProReadiness />
           <StarterProImplementation />
         </div>
@@ -808,7 +810,7 @@ export default function StarterProPage() {
         <MarketingSectionShell
           id="included"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.includedSection}`}
           aria-labelledby="included-heading"
         >
           <StarterProFoundations
@@ -1163,10 +1165,12 @@ export default function StarterProPage() {
               "A source package you can inspect and adapt, with a clear path to download it and recover access.",
             )}
           />
-          <div className="overflow-hidden rounded-[5px] border border-border-subtle">
+          <div
+            className={`${styles.purchasePanel} overflow-hidden rounded-[5px] border border-border-subtle`}
+          >
             <div className="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.7fr)]">
               <div
-                className={`${styles.stage} flex flex-col border-b border-border-subtle p-6 sm:p-8 lg:border-b-0 lg:border-r`}
+                className={`${styles.deliveryPath} flex flex-col border-b border-border-subtle p-6 sm:p-8 lg:border-b-0 lg:border-r`}
               >
                 <div className="mb-7 flex items-center justify-between gap-4">
                   <Download
@@ -1227,12 +1231,12 @@ export default function StarterProPage() {
                   </Link>
                 </div>
               </div>
-              <div className="grid gap-px bg-border-subtle md:grid-cols-2">
+              <div className={`${styles.purchaseGrid} grid md:grid-cols-2`}>
                 {postPurchaseDetails.map(
                   ({ title, description, icon: Icon, links }) => (
                     <div
                       key={title}
-                      className="flex flex-col bg-background p-6 sm:p-7"
+                      className={`${styles.purchaseCard} flex flex-col bg-background p-6 sm:p-7`}
                     >
                       <Icon
                         className="mb-5 size-4 text-muted-foreground"
@@ -1265,7 +1269,9 @@ export default function StarterProPage() {
                 )}
               </div>
             </div>
-            <div className="flex flex-col gap-3 border-t border-border-subtle px-6 py-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
+            <div
+              className={`${styles.purchaseFooter} flex flex-col gap-3 border-t border-border-subtle px-6 py-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between`}
+            >
               <p className="text-sm">
                 {tSite(sourcePrice)}{" "}
                 {tSite(" · One-time payment · Full source code")}
@@ -1297,7 +1303,7 @@ export default function StarterProPage() {
         <MarketingSectionShell
           id="free-vs-pro"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.comparisonSection}`}
           aria-labelledby="comparison-heading"
         >
           <MarketingSectionHeader
@@ -1339,12 +1345,14 @@ export default function StarterProPage() {
               "Follow the documentation from your first local run to a validated customer flow. Setup depends on your environment and the providers you choose.",
             )}
           />
-          <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
-            <ol className="divide-y divide-border-subtle">
+          <div
+            className={`${styles.setupPanel} grid lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]`}
+          >
+            <ol className={styles.setupSteps}>
               {setupSteps.map((step, index) => (
                 <li
                   key={step.title}
-                  className="flex items-start gap-4 p-6 sm:gap-5 sm:p-7"
+                  className={`${styles.setupStep} flex items-start gap-4 p-6 sm:gap-5 sm:p-7`}
                 >
                   <span className="grid size-8 shrink-0 place-items-center rounded-[5px] border border-border-subtle font-mono text-xs text-muted-foreground">
                     0{tSite(index + 1)}
@@ -1369,8 +1377,15 @@ export default function StarterProPage() {
               ))}
             </ol>
             <div
-              className={`${styles.stage} flex flex-col border-t border-border-subtle p-6 sm:p-8 lg:border-l lg:border-t-0`}
+              className={`${styles.configurationPanel} flex flex-col p-6 sm:p-8`}
             >
+              <div className={styles.serviceOrbit} aria-hidden="true">
+                {[Code2, Database, Lock, CreditCard].map((Icon, index) => (
+                  <span key={index}>
+                    <Icon focusable="false" />
+                  </span>
+                ))}
+              </div>
               <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
                 {tSite("Configuration checklist")}
               </p>
@@ -1431,13 +1446,15 @@ export default function StarterProPage() {
               "Review the scope, understand the integrations and prepare your first deployment.",
             )}
           />
-          <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle md:grid-cols-2 lg:grid-cols-3">
+          <div
+            className={`${styles.resourceGrid} grid md:grid-cols-2 lg:grid-cols-3`}
+          >
             {docResourceCards.map(
               ({ title, description, href, icon: Icon }) => (
                 <Link
                   key={href}
                   href={href}
-                  className="group flex items-start gap-4 bg-background p-6 transition-colors hover:bg-surface-muted/40 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-ring sm:p-7"
+                  className={`${styles.resourceCard} group flex items-start gap-4 p-6 transition-colors focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring sm:p-7`}
                 >
                   <Icon
                     className="mt-1 size-4 shrink-0 text-muted-foreground"
