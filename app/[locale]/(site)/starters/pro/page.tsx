@@ -595,6 +595,21 @@ function StarterProWaves({ id }: Readonly<{ id: string }>) {
   );
 }
 
+function StarterProBodyArtwork({
+  id,
+  reverse = false,
+}: Readonly<{ id: string; reverse?: boolean }>) {
+  return (
+    <div
+      data-body-artwork=""
+      className={`${styles.bodyArtwork} ${reverse ? styles.bodyArtworkLeft : ""}`}
+      aria-hidden="true"
+    >
+      <StarterProWaves id={id} />
+    </div>
+  );
+}
+
 function StarterProHeroPreview() {
   const tSite = useCopy();
   const dashboard = heroScreenshots[0];
@@ -884,9 +899,11 @@ export default function StarterProPage() {
           <StarterProPreviews />
         </div>
         <div className={styles.referenceBand}>
+          <StarterProBodyArtwork id="starter-pro-reference-body" />
           <ProductStudioReference />
         </div>
         <div className={styles.workflowBand}>
+          <StarterProBodyArtwork id="starter-pro-workflow-body" reverse />
           <StarterProReadiness />
           <StarterProImplementation />
         </div>
@@ -1158,9 +1175,14 @@ export default function StarterProPage() {
                     data-foundation-card=""
                     className={`${styles.supportingFoundation} flex min-w-0 flex-col bg-background`}
                   >
+                    <div className={styles.cardShape} aria-hidden="true">
+                      <StarterProWaves
+                        id={`starter-pro-foundation-${index}-shape`}
+                      />
+                    </div>
                     <div className={`${styles.foundationReveal} p-5 sm:p-8`}>
                       <div className="mb-6 flex items-center justify-between gap-4">
-                        <span className="grid size-10 place-items-center rounded-[5px] border border-border-subtle bg-surface-muted/20">
+                        <span className={styles.foundationIcon}>
                           <Icon
                             className="size-4 text-muted-foreground"
                             aria-hidden="true"
@@ -1177,7 +1199,7 @@ export default function StarterProPage() {
                         <h3 className="text-lg font-semibold tracking-normal">
                           {tSite(title)}
                         </h3>
-                        <span className="font-mono text-[10px] text-muted-foreground">
+                        <span className={styles.technologyBadge}>
                           {tSite(technology)}
                         </span>
                       </div>
@@ -1280,6 +1302,7 @@ export default function StarterProPage() {
           className={`${sectionClass} ${styles.purchaseSection}`}
           aria-labelledby="purchase-heading"
         >
+          <StarterProBodyArtwork id="starter-pro-purchase-body" />
           <MarketingSectionHeader
             titleId="purchase-heading"
             align="left"
@@ -1308,7 +1331,7 @@ export default function StarterProPage() {
                 <h3 className="text-xl font-semibold tracking-subheading">
                   {tSite("From checkout to your code.")}
                 </h3>
-                <ol className="mt-7 space-y-6">
+                <ol className={`${styles.deliveryTimeline} mt-7 space-y-6`}>
                   {[
                     {
                       title: "Payment confirmed",
@@ -1460,6 +1483,7 @@ export default function StarterProPage() {
           className={`${sectionClass} ${styles.setupSection}`}
           aria-labelledby="setup-heading"
         >
+          <StarterProBodyArtwork id="starter-pro-setup-body" reverse />
           <MarketingSectionHeader
             titleId="setup-heading"
             align="left"
@@ -1504,6 +1528,14 @@ export default function StarterProPage() {
               className={`${styles.configurationPanel} flex flex-col p-6 sm:p-8`}
             >
               <div className={styles.serviceOrbit} aria-hidden="true">
+                <svg
+                  className={styles.orbitConnections}
+                  viewBox="0 0 400 130"
+                  preserveAspectRatio="none"
+                  focusable="false"
+                >
+                  <path d="M20 90C110-20 290 150 380 35M30 40C140 150 260-30 375 100" />
+                </svg>
                 {[Code2, Database, Lock, CreditCard].map((Icon, index) => (
                   <span key={index}>
                     <Icon focusable="false" />
@@ -1561,6 +1593,7 @@ export default function StarterProPage() {
           className={`${sectionClass} ${styles.docsSection}`}
           aria-labelledby="docs-heading"
         >
+          <StarterProBodyArtwork id="starter-pro-docs-body" />
           <MarketingSectionHeader
             titleId="docs-heading"
             align="left"

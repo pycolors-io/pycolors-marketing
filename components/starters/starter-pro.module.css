@@ -497,28 +497,6 @@
   background: var(--background);
 }
 
-.workflowBand article > div:first-child > svg {
-  width: 2.75rem;
-  height: 2.75rem;
-  padding: 0.75rem;
-  border-radius: 5px;
-  background: color-mix(in oklab, var(--primary) 8%, var(--background));
-  color: var(--primary);
-}
-
-.workflowBand article > h3 {
-  font-size: 1.125rem;
-  line-height: 1.4;
-}
-
-.workflowBand article:nth-child(3n + 2) > div:first-child > svg {
-  background: color-mix(
-    in oklab,
-    var(--starter-pro-glow) 9%,
-    var(--background)
-  );
-}
-
 .workflowBand :global(.marketing-section-pattern) {
   padding-top: 4rem;
 }
@@ -740,8 +718,9 @@
 }
 
 .purchaseGrid {
-  gap: 1px;
-  background: var(--border-subtle);
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  background: var(--starter-pro-soft);
 }
 
 .purchaseCard h3 {
@@ -830,7 +809,7 @@
   box-shadow: 0 4px 12px color-mix(in oklab, var(--primary) 6%, transparent);
 }
 
-.serviceOrbit svg {
+.serviceOrbit span svg {
   width: 1.125rem;
   height: 1.125rem;
 }
@@ -1041,6 +1020,316 @@
   .softBand,
   .workflowBand {
     box-shadow: none;
+  }
+}
+
+/* Body chapters share their own accents and decorative product details. */
+.bodyArtwork {
+  position: absolute;
+  z-index: -1;
+  inset: 7rem -18% auto 20%;
+  height: clamp(18rem, 40vw, 36rem);
+  opacity: 0.17;
+  mask-image: radial-gradient(ellipse at center, black 15%, transparent 72%);
+  pointer-events: none;
+}
+
+.bodyArtworkLeft {
+  transform: scaleX(-1);
+}
+
+.referenceBand dl {
+  padding-inline: 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--background);
+}
+
+.referenceBand :global([data-slot="button"]) {
+  border-color: var(--starter-pro-action);
+  background: var(--starter-pro-action);
+  color: var(--primary-foreground);
+}
+
+.productPage .readinessGrid {
+  gap: 1.25rem;
+}
+
+.readinessCard,
+.supportingFoundation,
+.purchaseCard,
+.setupStep,
+.resourceCard {
+  --body-accent: var(--starter-pro-action);
+  position: relative;
+  isolation: isolate;
+}
+
+.readinessCard:nth-child(3n + 2),
+.supportingFoundation:nth-child(3n + 2),
+.purchaseCard:nth-child(3n + 2),
+.setupStep:nth-child(3n + 2),
+.resourceCard:nth-child(3n + 2) {
+  --body-accent: var(--brand-platform);
+}
+
+.readinessCard:nth-child(3n),
+.supportingFoundation:nth-child(3n),
+.purchaseCard:nth-child(3n),
+.setupStep:nth-child(3n),
+.resourceCard:nth-child(3n) {
+  --body-accent: color-mix(
+    in srgb,
+    var(--primary) 75%,
+    var(--starter-pro-glow)
+  );
+}
+
+.workflowBand .readinessCard {
+  overflow: hidden;
+  padding: 0;
+}
+
+.detailGraphic {
+  position: relative;
+  display: flex;
+  min-height: 8rem;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.75rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--border-subtle);
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    color-mix(in srgb, var(--body-accent) 10%, var(--background)),
+    var(--starter-pro-soft)
+  );
+}
+
+.detailConnections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: color-mix(in srgb, var(--body-accent) 26%, transparent);
+  stroke-width: 1;
+}
+
+.detailCore,
+.detailSatellite {
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--body-accent) 22%, var(--border));
+  border-radius: 5px;
+  background: var(--background);
+  color: var(--body-accent);
+}
+
+.detailCore {
+  width: 3.25rem;
+  height: 3.25rem;
+  transform: rotate(-8deg);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--body-accent) 12%, transparent);
+}
+
+.detailCore svg {
+  width: 1.375rem;
+  height: 1.375rem;
+  transform: rotate(8deg);
+}
+.detailSatellite {
+  width: 2rem;
+  height: 2rem;
+}
+.detailSatellite svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.detailSatellite:first-of-type {
+  transform: translateY(0.75rem);
+}
+.detailSatellite:nth-of-type(3) {
+  transform: translateY(-0.75rem);
+}
+.detailIndex {
+  position: absolute;
+  top: 0.875rem;
+  right: 1rem;
+  color: var(--muted-foreground);
+  font: 0.625rem var(--font-mono);
+}
+.readinessCopy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+.readinessCopy > a {
+  color: var(--body-accent);
+}
+
+.workflowBand .implementationCard {
+  border-top: 3px solid
+    color-mix(in srgb, var(--starter-pro-action) 60%, var(--border));
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+.workflowBand .implementationCard:nth-child(2) {
+  border-top-color: var(--brand-platform);
+}
+
+.cardShape {
+  position: absolute;
+  z-index: -1;
+  top: -3rem;
+  right: -25%;
+  width: 80%;
+  height: 13rem;
+  opacity: 0.14;
+  mask-image: radial-gradient(ellipse at center, black, transparent 70%);
+  pointer-events: none;
+}
+.foundationIcon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--body-accent) 18%, var(--border));
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--body-accent) 7%, var(--background));
+}
+.foundationIcon svg {
+  color: var(--body-accent);
+}
+.technologyBadge {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--body-accent) 16%, var(--border));
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--body-accent) 5%, var(--background));
+  color: var(--body-accent);
+  font: 0.625rem var(--font-mono);
+  line-height: 1.5;
+}
+
+.deliveryTimeline {
+  position: relative;
+}
+.deliveryTimeline::before {
+  content: "";
+  position: absolute;
+  top: 0.875rem;
+  bottom: 2rem;
+  left: 0.875rem;
+  width: 1px;
+  background: color-mix(in srgb, var(--starter-pro-action) 24%, var(--border));
+}
+.deliveryTimeline li {
+  position: relative;
+}
+.deliveryTimeline li > span:first-child {
+  border-color: color-mix(
+    in srgb,
+    var(--starter-pro-action) 24%,
+    var(--border)
+  );
+  background: var(--background);
+  color: var(--starter-pro-action);
+}
+.purchaseCard {
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+}
+.purchaseCard > svg,
+.resourceCard > svg:first-child {
+  background: color-mix(in srgb, var(--body-accent) 8%, var(--background));
+  color: var(--body-accent);
+}
+
+.productPage .comparisonTable thead tr > :nth-child(3) {
+  box-shadow: inset 0 3px var(--starter-pro-action);
+  background: color-mix(
+    in srgb,
+    var(--starter-pro-action) 7%,
+    var(--background)
+  );
+}
+.comparisonTable thead tr > :nth-child(3) > span:first-child {
+  color: var(--starter-pro-action);
+}
+
+.setupStep {
+  border-left: 3px solid
+    color-mix(in srgb, var(--body-accent) 65%, var(--border));
+}
+.setupStep > span:first-child {
+  background: color-mix(in srgb, var(--body-accent) 9%, var(--background));
+  color: var(--body-accent);
+}
+.serviceOrbit {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--primary) 8%, var(--background)),
+    var(--starter-pro-soft)
+  );
+}
+.serviceOrbit::before {
+  display: none;
+}
+.serviceOrbit .orbitConnections {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: color-mix(in srgb, var(--primary) 26%, transparent);
+  stroke-width: 1;
+}
+.serviceOrbit span:nth-of-type(even) {
+  transform: translateY(-0.5rem);
+  color: var(--brand-platform);
+}
+.serviceOrbit span:nth-of-type(odd) {
+  transform: translateY(0.5rem);
+}
+
+.resourceCard {
+  background: var(--background);
+  border-top: 3px solid
+    color-mix(in srgb, var(--body-accent) 55%, var(--border));
+}
+.resourceCard > svg:last-child {
+  color: var(--body-accent);
+}
+.faqSection details {
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-radius: 5px;
+}
+.faqSection > div > div:last-child {
+  border-block: 0;
+}
+
+.faqSection details[open] {
+  border-left-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 2%, var(--background));
+}
+
+@media (forced-colors: active) {
+  .bodyArtwork,
+  .cardShape,
+  .detailConnections,
+  .orbitConnections {
+    display: none;
+  }
+  .detailCore {
+    transform: none;
+    box-shadow: none;
+  }
+  .detailCore svg {
+    transform: none;
   }
 }
 

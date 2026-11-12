@@ -83,6 +83,30 @@ describe("Starter Pro product page", () => {
     }
   });
 
+  it("keeps body illustrations decorative and preserves the six readiness guide destinations", () => {
+    const { container } = render(<StarterProPage />);
+    const readiness = screen.getByRole("region", {
+      name: "More of the product journey, already connected.",
+    });
+    const illustrations = readiness.querySelectorAll(
+      "[data-readiness-illustration]",
+    );
+    expect(illustrations).toHaveLength(6);
+    for (const artwork of [
+      ...illustrations,
+      ...container.querySelectorAll("[data-body-artwork]"),
+    ]) {
+      expect(artwork).toHaveAttribute("aria-hidden", "true");
+      expect(artwork.querySelectorAll("a, button, input, text")).toHaveLength(
+        0,
+      );
+    }
+    for (const guide of within(readiness).getAllByRole("link")) {
+      expect(guide.getAttribute("href")).toMatch(/^\/docs\/starter-pro\//u);
+    }
+    expect(within(readiness).getAllByRole("link")).toHaveLength(6);
+  });
+
   it("grounds the integration details in genuine captures with their demonstration context", () => {
     render(<StarterProPage />);
     const included = screen.getByRole("region", {

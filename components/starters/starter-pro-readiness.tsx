@@ -16,6 +16,8 @@ import { SiteButton } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 
+import styles from "./starter-pro.module.css";
+
 const foundations = [
   {
     title: "A ZIP that runs on its own",
@@ -87,35 +89,57 @@ export function StarterProReadiness() {
           "Inspect the workflows, the checks behind them and the responsibilities you keep when launching your own SaaS.",
         )}
       />
-      <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle sm:grid-cols-2 xl:grid-cols-3">
+      <div
+        className={`${styles.readinessGrid} grid sm:grid-cols-2 xl:grid-cols-3`}
+      >
         {foundations.map(
           ({ title, icon: Icon, description, href, link }, index) => (
             <article
               key={title}
-              className="flex min-w-0 flex-col bg-background p-5 sm:p-7"
+              className={`${styles.readinessCard} flex min-w-0 flex-col bg-background`}
             >
-              <div className="flex items-center justify-between gap-4 text-muted-foreground">
-                <Icon className="size-5" aria-hidden="true" />
-                <span className="font-mono text-[10px]" aria-hidden="true">
-                  0{tSite(index + 1)}
-                </span>
-              </div>
-              <h3 className="mt-6 text-base font-semibold tracking-tight">
-                {tSite(title)}
-              </h3>
-              <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
-                {tSite(description)}
-              </p>
-              <Link
-                href={href}
-                className="mt-5 inline-flex min-h-11 items-center gap-2 text-xs font-medium hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+              <div
+                className={styles.detailGraphic}
+                data-readiness-illustration=""
+                aria-hidden="true"
               >
-                {tSite(link)}
-                <ArrowUpRight
-                  className="size-3.5 shrink-0"
-                  aria-hidden="true"
-                />
-              </Link>
+                <svg
+                  className={styles.detailConnections}
+                  viewBox="0 0 360 120"
+                  preserveAspectRatio="none"
+                  focusable="false"
+                >
+                  <path d="M70 78C105 78 112 38 180 50S252 90 290 42M70 78C125 110 220 15 290 42" />
+                </svg>
+                <span className={styles.detailSatellite}>
+                  <BookOpen focusable="false" />
+                </span>
+                <span className={styles.detailCore}>
+                  <Icon focusable="false" />
+                </span>
+                <span className={styles.detailSatellite}>
+                  <Check focusable="false" />
+                </span>
+                <span className={styles.detailIndex}>0{tSite(index + 1)}</span>
+              </div>
+              <div className={styles.readinessCopy}>
+                <h3 className="text-base font-semibold tracking-tight">
+                  {tSite(title)}
+                </h3>
+                <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
+                  {tSite(description)}
+                </p>
+                <Link
+                  href={href}
+                  className="mt-5 inline-flex min-h-11 items-center gap-2 text-xs font-medium hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                >
+                  {tSite(link)}
+                  <ArrowUpRight
+                    className="size-3.5 shrink-0"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </div>
             </article>
           ),
         )}
@@ -154,7 +178,7 @@ export function StarterProImplementation() {
           <article
             key={service.id}
             aria-labelledby={`${service.id}-heading`}
-            className="flex min-w-0 flex-col rounded-[5px] border border-border-subtle bg-card p-6 sm:p-8"
+            className={`${styles.implementationCard} flex min-w-0 flex-col rounded-[5px] border border-border-subtle bg-card p-6 sm:p-8`}
           >
             <h3
               id={`${service.id}-heading`}
