@@ -59,6 +59,30 @@ describe("Starter Pro product page", () => {
     );
   });
 
+  it("keeps repeated wave artwork decorative with unique, resolving gradient references", () => {
+    const { container } = render(<StarterProPage />);
+    const allIds = Array.from(
+      container.querySelectorAll("[id]"),
+      (node) => node.id,
+    );
+    expect(new Set(allIds).size).toBe(allIds.length);
+    const waves = container.querySelectorAll("[data-starter-pro-waves]");
+    expect(waves.length).toBeGreaterThan(1);
+    for (const wave of waves) {
+      expect(wave).toHaveAttribute("aria-hidden", "true");
+      expect(wave).toHaveAttribute("focusable", "false");
+      expect(
+        wave.querySelectorAll("a, button, image, foreignObject, text"),
+      ).toHaveLength(0);
+      for (const painted of wave.querySelectorAll('[fill^="url("]')) {
+        const target = painted.getAttribute("fill")!.slice(5, -1);
+        expect(
+          Array.from(wave.querySelectorAll("[id]"), (node) => node.id),
+        ).toContain(target);
+      }
+    }
+  });
+
   it("grounds the integration details in genuine captures with their demonstration context", () => {
     render(<StarterProPage />);
     const included = screen.getByRole("region", {

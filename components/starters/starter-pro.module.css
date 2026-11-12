@@ -4,6 +4,11 @@
   --starter-pro-section-space: clamp(4rem, 7vw, 7rem);
   --starter-pro-glow: var(--brand-accent);
   --starter-pro-primary: var(--primary);
+  --starter-pro-wave-light: color-mix(
+    in srgb,
+    var(--brand-platform) 25%,
+    var(--background)
+  );
   --starter-pro-action: color-mix(
     in srgb,
     var(--primary) 65%,
@@ -28,6 +33,7 @@
 /* A shared action hierarchy for this product page, including guide links. */
 .productPage :global([data-slot="button"]) {
   border-radius: 5px;
+  padding-inline: 1rem;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
@@ -35,7 +41,11 @@
 .productPage :global(.site-primary-action),
 .productPage .integrationAction {
   border: 1px solid var(--starter-pro-action);
-  background: var(--starter-pro-action);
+  background: linear-gradient(
+    112deg,
+    var(--starter-pro-action),
+    var(--primary)
+  );
   color: var(--primary-foreground);
   box-shadow:
     inset 0 1px color-mix(in srgb, var(--primary-foreground) 12%, transparent),
@@ -53,28 +63,39 @@
     color-mix(in srgb, var(--starter-pro-action) 16%, transparent);
 }
 
-.heroActions :global([data-slot="button"]):not(:global(.site-primary-action)),
-.offerActions :global([data-slot="button"]):not(:global(.site-primary-action)),
+.productPage .demoAction :global([data-slot="button"]) {
+  width: 100%;
+  border: 1px solid var(--brand-platform);
+  background: var(--brand-platform);
+  color: var(--primary-foreground);
+  box-shadow: 0 2px 4px
+    color-mix(in srgb, var(--brand-platform) 15%, transparent);
+}
+
+.productPage .demoAction :global([data-slot="button"]):hover {
+  border-color: var(--brand-platform-hover);
+  background: var(--brand-platform-hover);
+}
+
+.productPage .tourAction,
 .workflowBand :global([data-slot="button"]) {
-  border-color: color-mix(
+  border: 1px solid
+    color-mix(in srgb, var(--starter-pro-action) 22%, var(--background));
+  background: color-mix(
     in srgb,
-    var(--starter-pro-action) 32%,
+    var(--starter-pro-action) 7%,
     var(--background)
   );
-  background: var(--background);
   color: var(--starter-pro-action);
   box-shadow: none;
 }
 
-.heroActions
-  :global([data-slot="button"]):not(:global(.site-primary-action)):hover,
-.offerActions
-  :global([data-slot="button"]):not(:global(.site-primary-action)):hover,
+.productPage .tourAction:hover,
 .workflowBand :global([data-slot="button"]):hover {
   border-color: var(--starter-pro-action);
   background: color-mix(
     in srgb,
-    var(--starter-pro-action) 4%,
+    var(--starter-pro-action) 12%,
     var(--background)
   );
 }
@@ -242,11 +263,6 @@
   padding-top: clamp(2rem, 5vw, 4rem);
 }
 
-.heroVisual > [data-product-light] {
-  inset: -2rem 3% auto;
-  opacity: 0.7;
-}
-
 .heroShowcase {
   position: relative;
   min-width: 0;
@@ -329,44 +345,54 @@
   text-wrap: pretty;
 }
 
-/* Static, token-derived ribbons stay behind the product, below the copy. */
+/* Broad, static curves sit below the hero copy and behind the real product. */
 .heroArtwork {
   position: absolute;
   z-index: -1;
-  inset: 0 -1rem -2rem;
+  inset: -2rem -14% auto;
+  height: clamp(20rem, 46vw, 44rem);
+  opacity: 0.8;
+  filter: blur(10px);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 15% 78%,
+    transparent
+  );
   overflow: clip;
   pointer-events: none;
 }
 
-.heroArtwork::before,
-.heroArtwork::after {
-  content: "";
-  position: absolute;
-  inset: 15% -10% 5%;
-  transform: skewY(-13deg);
-  background:
-    radial-gradient(
-      ellipse at 15% 80%,
-      var(--starter-pro-glow),
-      transparent 62%
-    ),
-    linear-gradient(
-      110deg,
-      color-mix(in oklab, var(--primary) 55%, var(--background)),
-      var(--primary) 65%,
-      color-mix(in oklab, var(--starter-pro-glow) 65%, var(--primary))
-    );
+.waves {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  user-select: none;
 }
 
-.heroArtwork::after {
-  inset: 20% -10% 0;
-  border-block: 1px solid
-    color-mix(in oklab, var(--primary-foreground) 30%, transparent);
-  background: linear-gradient(
-    170deg,
-    transparent 65%,
-    color-mix(in oklab, var(--background) 35%, transparent)
-  );
+.waveDivider {
+  position: relative;
+  height: clamp(4.5rem, 8vw, 8rem);
+  margin-inline: -1rem;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--starter-pro-soft);
+}
+
+.waveDivider .waves {
+  position: absolute;
+  inset: -80% -5%;
+  width: 110%;
+  height: 260%;
+  opacity: 0.6;
+  filter: blur(6px);
+  mask-image: radial-gradient(ellipse at 56% 50%, black 15%, transparent 72%);
+}
+
+.reverseWaves .waves {
+  transform: scale(-1, 1);
 }
 
 .offer {
@@ -557,6 +583,9 @@
 }
 
 .foundationVisual {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   min-width: 0;
   flex-direction: column;
@@ -569,6 +598,15 @@
       transparent 65%
     ),
     var(--starter-pro-soft);
+}
+
+.visualWaves {
+  position: absolute;
+  z-index: -1;
+  inset: 25% -20% 0;
+  opacity: 0.18;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  pointer-events: none;
 }
 
 .integrationPreview {
@@ -849,27 +887,24 @@
   isolation: isolate;
   overflow: hidden;
   padding: clamp(2rem, 5vw, 5rem);
-  border: 1px solid color-mix(in oklab, var(--primary) 20%, var(--border));
+  border: 1px solid var(--foreground);
   border-radius: 5px;
-  background:
-    radial-gradient(
-      ellipse at 100% 100%,
-      color-mix(in oklab, var(--primary) 15%, transparent),
-      transparent 70%
-    ),
-    var(--starter-pro-soft);
+  background: var(--foreground);
+  color: var(--background);
 }
 
-.closingCta::after {
-  content: "";
+.closingCta p {
+  max-width: 54ch;
+  color: color-mix(in srgb, var(--background) 80%, var(--foreground));
+}
+
+.closingArtwork {
   position: absolute;
   z-index: -1;
-  right: -6rem;
-  bottom: -8rem;
-  width: 24rem;
-  height: 14rem;
-  transform: rotate(-25deg);
-  background: linear-gradient(110deg, var(--primary), var(--starter-pro-glow));
+  inset: -20% -25% -60% 30%;
+  opacity: 0.28;
+  mask-image: linear-gradient(100deg, transparent, black 40%);
+  pointer-events: none;
 }
 
 .closingCta h2 {
@@ -877,6 +912,26 @@
   font-size: clamp(1.875rem, 3.5vw, 3rem);
   line-height: 1.1;
   letter-spacing: -0.04em;
+}
+
+.closingCta :global(.site-primary-action) {
+  border-color: var(--background);
+  background: var(--background);
+  color: var(--starter-pro-action);
+  box-shadow: 0 2px 4px color-mix(in srgb, var(--background) 8%, transparent);
+}
+
+.closingCta
+  :global(.site-primary-action):not(:disabled):not(
+    [aria-disabled="true"]
+  ):hover {
+  border-color: var(--background);
+  background: color-mix(
+    in srgb,
+    var(--background) 94%,
+    var(--starter-pro-action)
+  );
+  color: var(--starter-pro-action);
 }
 
 .productPage :global(.marketing-section),
@@ -942,8 +997,9 @@
   .heroActions > div > * {
     width: 100%;
   }
-  .closingCta::after {
-    display: none;
+  .closingArtwork {
+    inset: 50% -30% -15% 0;
+    opacity: 0.18;
   }
 }
 
@@ -976,7 +1032,10 @@
 }
 
 @media (forced-colors: active) {
-  .heroArtwork {
+  .heroArtwork,
+  .waveDivider,
+  .visualWaves,
+  .closingArtwork {
     display: none;
   }
   .softBand,

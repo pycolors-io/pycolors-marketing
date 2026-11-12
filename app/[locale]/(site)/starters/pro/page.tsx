@@ -34,7 +34,6 @@ import { STARTER_PRO_UPDATES_SUMMARY } from "@/lib/products/commercial-policy";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
-import { ProductLight } from "@/components/marketing/product-light";
 import effects from "@/components/marketing/product-light.module.css";
 import {
   MarketingCheckItem,
@@ -528,6 +527,74 @@ function StarterProPreviews() {
   );
 }
 
+/** Static, local SVG artwork; each placement owns its gradient references. */
+function StarterProWaves({ id }: Readonly<{ id: string }>) {
+  return (
+    <svg
+      data-starter-pro-waves=""
+      className={styles.waves}
+      viewBox="0 0 1440 560"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient
+          id={`${id}-spectrum`}
+          x1="0.05"
+          y1="0.8"
+          x2="0.95"
+          y2="0.1"
+        >
+          <stop offset="0" stopColor="var(--brand-platform)" stopOpacity="0" />
+          <stop
+            offset="0.18"
+            stopColor="var(--brand-platform)"
+            stopOpacity="0.7"
+          />
+          <stop offset="0.48" stopColor="var(--primary)" stopOpacity="0.9" />
+          <stop
+            offset="0.8"
+            stopColor="var(--starter-pro-glow)"
+            stopOpacity="0.55"
+          />
+          <stop
+            offset="1"
+            stopColor="var(--starter-pro-glow)"
+            stopOpacity="0.1"
+          />
+        </linearGradient>
+        <linearGradient id={`${id}-light`} x1="0" y1="0.9" x2="1" y2="0.2">
+          <stop
+            offset="0"
+            stopColor="var(--starter-pro-wave-light)"
+            stopOpacity="0"
+          />
+          <stop
+            offset="0.38"
+            stopColor="var(--brand-platform)"
+            stopOpacity="0.45"
+          />
+          <stop offset="0.75" stopColor="var(--primary)" stopOpacity="0.3" />
+          <stop
+            offset="1"
+            stopColor="var(--starter-pro-glow)"
+            stopOpacity="0"
+          />
+        </linearGradient>
+      </defs>
+      <path
+        d="M-160 465C100 570 180 150 460 195C700 235 680 425 925 300C1160 180 1220-70 1600-25L1600 255C1390 165 1205 430 935 445C690 460 550 310 340 360C120 415 10 650-160 585Z"
+        fill={`url(#${id}-spectrum)`}
+      />
+      <path
+        d="M-170 385C145 160 330 570 670 365C970 185 1130 410 1580 80L1580 395C1240 580 1090 365 835 470C495 610 235 335-170 610Z"
+        fill={`url(#${id}-light)`}
+      />
+    </svg>
+  );
+}
+
 function StarterProHeroPreview() {
   const tSite = useCopy();
   const dashboard = heroScreenshots[0];
@@ -658,13 +725,15 @@ export default function StarterProPage() {
                       fullWidth={false}
                       className={`${effects.primaryAction} w-full sm:w-auto`}
                     />
-                    <ProDemoLink />
+                    <span className={styles.demoAction}>
+                      <ProDemoLink />
+                    </span>
                   </div>
                   <Button
                     asChild
                     variant="outline"
                     size="lg"
-                    className="rounded-[5px]"
+                    className={styles.tourAction}
                   >
                     <a href="#product-tour">
                       {tSite("Watch the product tour")}
@@ -694,8 +763,9 @@ export default function StarterProPage() {
               }
             />
             <div className={`${styles.heroVisual} ${effects.visual}`}>
-              <div className={styles.heroArtwork} aria-hidden="true" />
-              <ProductLight idPrefix="starter-pro" />
+              <div className={styles.heroArtwork} aria-hidden="true">
+                <StarterProWaves id="starter-pro-hero-waves" />
+              </div>
               <StarterProHeroPreview />
             </div>
           </div>
@@ -749,7 +819,9 @@ export default function StarterProPage() {
               </div>
               <div className={styles.offerActions}>
                 <BuyStarterProButton className={effects.primaryAction} />
-                <ProDemoLink />
+                <span className={styles.demoAction}>
+                  <ProDemoLink />
+                </span>
                 {proDemoUrl() ? (
                   <p className="mt-3 text-xs leading-6 text-muted-foreground">
                     {tSite(
@@ -801,6 +873,10 @@ export default function StarterProPage() {
             {tSite(" ")}
             <ArrowRight className="size-3.5" aria-hidden="true" />
           </Link>
+        </div>
+
+        <div className={styles.waveDivider} aria-hidden="true">
+          <StarterProWaves id="starter-pro-tour-waves" />
         </div>
 
         <div className={styles.softBand}>
@@ -986,6 +1062,14 @@ export default function StarterProPage() {
                         </div>
                       </div>
                       <div className={styles.foundationVisual}>
+                        <div
+                          className={`${styles.visualWaves} ${index === 1 ? styles.reverseWaves : ""}`}
+                          aria-hidden="true"
+                        >
+                          <StarterProWaves
+                            id={`starter-pro-integration-${index}-waves`}
+                          />
+                        </div>
                         <figure
                           aria-label={tSite(preview.title)}
                           className={styles.integrationPreview}
@@ -1547,6 +1631,9 @@ export default function StarterProPage() {
           aria-labelledby="starter-pro-next-step"
           className={`${styles.closingCta} flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between`}
         >
+          <div className={styles.closingArtwork} aria-hidden="true">
+            <StarterProWaves id="starter-pro-closing-waves" />
+          </div>
           <div className="max-w-2xl">
             <h2
               id="starter-pro-next-step"
