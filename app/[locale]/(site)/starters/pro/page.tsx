@@ -548,20 +548,20 @@ function StarterProHeroPreview() {
           src={dashboard.image}
           alt={tSite(dashboard.alt)}
           fill
-          loading="lazy"
+          loading="eager"
           fetchPriority="high"
           quality={100}
-          sizes="(min-width: 1440px) 740px, (min-width: 1024px) 53vw, 95vw"
+          sizes="(min-width: 1280px) 1120px, 90vw"
           className={`${styles.heroLight} object-contain object-top`}
         />
         <Image
           src="/images/starters/pro/dashboard-dark-pycolors-2x.png"
           alt={tSite(dashboard.alt)}
           fill
-          loading="lazy"
+          loading="eager"
           fetchPriority="high"
           quality={100}
-          sizes="(min-width: 1440px) 740px, (min-width: 1024px) 53vw, 95vw"
+          sizes="(min-width: 1280px) 1120px, 90vw"
           className={`${styles.heroDark} object-contain object-top`}
         />
       </div>
@@ -596,16 +596,48 @@ export default function StarterProPage() {
       className={`${styles.productPage} bg-background text-foreground`}
     >
       <JsonLd id="starter-pro-product-jsonld" data={starterProJsonLd} />
-      <Container className="pb-16">
+      <Container className={styles.pageFrame}>
+        <div className={styles.productBar}>
+          <span className={styles.productIdentity}>
+            <Layers3 className="size-4 text-primary" aria-hidden="true" />
+            {tSite("Starter Pro")}
+          </span>
+          <nav
+            aria-label={tSite("Starter Pro sections")}
+            className={styles.sectionNav}
+          >
+            {[
+              ["#product-tour", "Product tour"],
+              ["#product-preview", "Product preview"],
+              ["#built-with-pycolors", "Built with Starter Pro"],
+              ["#readiness", "Validation & workflows"],
+              ["#implementation", "Scoped implementation"],
+              ["#included", "What’s included"],
+              ["#purchase", "Purchase & delivery"],
+              ["#free-vs-pro", "Free vs Pro"],
+              ["#setup", "Getting started"],
+              ["#buyer-faq", "FAQ"],
+            ].map(([href, label]) => (
+              <a
+                key={href}
+                href={href}
+                className={`${textLink} text-xs text-muted-foreground`}
+              >
+                {tSite(label)}
+              </a>
+            ))}
+          </nav>
+        </div>
         <div className={styles.hero}>
-          <div className={styles.heroArtwork} aria-hidden="true" />
           <div className={styles.heroGrid}>
             <PageHero
               variant="compact"
-              align="left"
+              align="center"
+              maxWidth="5xl"
               className={`${styles.heroCopy} ${effects.copyEntry}`}
               contentClassName={styles.heroContent}
               actionsClassName={styles.heroActions}
+              extraClassName={styles.heroExtra}
               badges={[{ label: "Starter Pro", variant: "outline" }]}
               title={tSite("The foundation for your next SaaS.")}
               description={tSite(
@@ -653,7 +685,8 @@ export default function StarterProPage() {
                 </ul>
               }
             />
-            <div className={effects.visual}>
+            <div className={`${styles.heroVisual} ${effects.visual}`}>
+              <div className={styles.heroArtwork} aria-hidden="true" />
               <ProductLight idPrefix="starter-pro" />
               <StarterProHeroPreview />
             </div>
@@ -761,37 +794,16 @@ export default function StarterProPage() {
             <ArrowRight className="size-3.5" aria-hidden="true" />
           </Link>
         </div>
-        <nav
-          aria-label={tSite("Starter Pro sections")}
-          className={styles.sectionNav}
-        >
-          {[
-            ["#product-tour", "Product tour"],
-            ["#product-preview", "Product preview"],
-            ["#built-with-pycolors", "Built with Starter Pro"],
-            ["#readiness", "Validation & workflows"],
-            ["#implementation", "Scoped implementation"],
-            ["#included", "What’s included"],
-            ["#purchase", "Purchase & delivery"],
-            ["#free-vs-pro", "Free vs Pro"],
-            ["#setup", "Getting started"],
-            ["#buyer-faq", "FAQ"],
-          ].map(([href, label]) => (
-            <a
-              key={href}
-              href={href}
-              className={`${textLink} text-xs text-muted-foreground`}
-            >
-              {tSite(label)}
-            </a>
-          ))}
-        </nav>
 
-        <StarterProTour />
-        <StarterProPreviews />
+        <div className={styles.softBand}>
+          <StarterProTour />
+          <StarterProPreviews />
+        </div>
         <ProductStudioReference />
-        <StarterProReadiness />
-        <StarterProImplementation />
+        <div className={styles.inkBand}>
+          <StarterProReadiness />
+          <StarterProImplementation />
+        </div>
 
         <MarketingSectionShell
           id="included"
@@ -1139,7 +1151,7 @@ export default function StarterProPage() {
         <MarketingSectionShell
           id="purchase"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.purchaseSection}`}
           aria-labelledby="purchase-heading"
         >
           <MarketingSectionHeader
@@ -1315,7 +1327,7 @@ export default function StarterProPage() {
         <MarketingSectionShell
           id="setup"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.setupSection}`}
           aria-labelledby="setup-heading"
         >
           <MarketingSectionHeader
@@ -1407,7 +1419,7 @@ export default function StarterProPage() {
         <MarketingSectionShell
           id="starter-pro-docs"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.docsSection}`}
           aria-labelledby="docs-heading"
         >
           <MarketingSectionHeader
@@ -1462,7 +1474,7 @@ export default function StarterProPage() {
         <section
           id="buyer-faq"
           aria-labelledby="buyer-faq-heading"
-          className="scroll-mt-24 border-t border-border-subtle py-14 sm:py-16"
+          className={styles.faqSection}
         >
           <MarketingFaq
             titleId="buyer-faq-heading"
@@ -1476,7 +1488,7 @@ export default function StarterProPage() {
 
         <section
           aria-labelledby="starter-pro-next-step"
-          className={`${styles.stage} flex flex-col gap-6 rounded-[5px] border border-border-subtle p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between`}
+          className={`${styles.closingCta} flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between`}
         >
           <div className="max-w-2xl">
             <h2
