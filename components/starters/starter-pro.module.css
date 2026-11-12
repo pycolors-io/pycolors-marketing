@@ -4,6 +4,16 @@
   --starter-pro-section-space: clamp(4rem, 7vw, 7rem);
   --starter-pro-glow: var(--brand-accent);
   --starter-pro-primary: var(--primary);
+  --starter-pro-action: color-mix(
+    in srgb,
+    var(--primary) 65%,
+    var(--brand-platform)
+  );
+  --starter-pro-action-hover: color-mix(
+    in srgb,
+    var(--starter-pro-action) 92%,
+    var(--foreground)
+  );
 }
 
 :global(html.dark) .productPage,
@@ -13,6 +23,88 @@
 
 :global(html[data-site-palette="monochrome"]) .productPage {
   --starter-pro-glow: var(--primary);
+}
+
+/* A shared action hierarchy for this product page, including guide links. */
+.productPage :global([data-slot="button"]) {
+  border-radius: 5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.productPage :global(.site-primary-action),
+.productPage .integrationAction {
+  border: 1px solid var(--starter-pro-action);
+  background: var(--starter-pro-action);
+  color: var(--primary-foreground);
+  box-shadow:
+    inset 0 1px color-mix(in srgb, var(--primary-foreground) 12%, transparent),
+    0 1px 3px color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.productPage
+  :global(.site-primary-action):not(:disabled):not(
+    [aria-disabled="true"]
+  ):hover,
+.productPage .integrationAction:hover {
+  border-color: var(--starter-pro-action-hover);
+  background: var(--starter-pro-action-hover);
+  box-shadow: 0 3px 8px
+    color-mix(in srgb, var(--starter-pro-action) 16%, transparent);
+}
+
+.heroActions :global([data-slot="button"]):not(:global(.site-primary-action)),
+.offerActions :global([data-slot="button"]):not(:global(.site-primary-action)),
+.workflowBand :global([data-slot="button"]) {
+  border-color: color-mix(
+    in srgb,
+    var(--starter-pro-action) 32%,
+    var(--background)
+  );
+  background: var(--background);
+  color: var(--starter-pro-action);
+  box-shadow: none;
+}
+
+.heroActions
+  :global([data-slot="button"]):not(:global(.site-primary-action)):hover,
+.offerActions
+  :global([data-slot="button"]):not(:global(.site-primary-action)):hover,
+.workflowBand :global([data-slot="button"]):hover {
+  border-color: var(--starter-pro-action);
+  background: color-mix(
+    in srgb,
+    var(--starter-pro-action) 4%,
+    var(--background)
+  );
+}
+
+.productPage :global([data-slot="button"]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.textLink {
+  color: var(--starter-pro-action);
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--starter-pro-action) 30%,
+    transparent
+  );
+  text-underline-offset: 4px;
+}
+
+.textLink:hover {
+  color: var(--starter-pro-action-hover);
+  text-decoration-line: underline;
+}
+
+.sectionNav .textLink {
+  color: var(--muted-foreground);
+}
+
+.sectionNav .textLink:hover {
+  color: var(--starter-pro-action);
 }
 
 .pageFrame {
@@ -56,6 +148,7 @@
   padding-block: 0.5rem;
   border-bottom: 1px solid var(--border);
   background: var(--background);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 4%, transparent);
 }
 
 .productIdentity {
@@ -183,6 +276,24 @@
 .heroChrome > :first-child {
   color: var(--foreground);
   font-weight: 600;
+}
+
+.previewLocation {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.windowDots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.windowDots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--foreground) 18%, var(--background));
 }
 
 .heroImage {
@@ -414,12 +525,119 @@
 }
 
 .productPage .featuredFoundation {
+  grid-column: 1 / -1;
   border-color: color-mix(in oklab, var(--primary) 20%, var(--border));
   background: linear-gradient(
     145deg,
     color-mix(in oklab, var(--primary) 4%, var(--background)),
     var(--background) 60%
   );
+}
+
+.productPage .integrationLayout {
+  display: grid;
+  min-width: 0;
+}
+
+.foundationCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.foundationCopy > :last-child {
+  margin-top: 0;
+  background: transparent;
+}
+
+.integrationAction {
+  align-self: flex-start;
+  margin-top: 1.25rem;
+}
+
+.foundationVisual {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  border-top: 1px solid var(--border-subtle);
+  background:
+    radial-gradient(
+      ellipse at 100% 0,
+      color-mix(in srgb, var(--starter-pro-action) 6%, transparent),
+      transparent 65%
+    ),
+    var(--starter-pro-soft);
+}
+
+.integrationPreview {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--background);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--foreground) 7%, transparent);
+}
+
+.integrationImage {
+  position: relative;
+  aspect-ratio: 36 / 25;
+  background: var(--background);
+}
+
+.integrationPreview figcaption {
+  padding: 0.875rem 1rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+}
+
+.integrationPreview figcaption > span {
+  display: block;
+  margin-bottom: 0.375rem;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.foundationVisual > div:last-child {
+  margin-inline: 0;
+  margin-top: 1.25rem;
+  background: var(--background);
+}
+
+.productPage .foundationVisual .foundationFlow {
+  margin-top: 0;
+  padding-block: 1.125rem;
+}
+
+.productPage .foundationVisual .foundationFlow::before {
+  top: 2.125rem;
+}
+
+.productPage .foundationVisual .foundationNode {
+  width: 2rem;
+  height: 2rem;
+  border-color: color-mix(
+    in srgb,
+    var(--starter-pro-action) 24%,
+    var(--border)
+  );
+  color: var(--starter-pro-action);
+}
+
+@media (min-width: 64rem) {
+  .productPage .integrationLayout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  }
+
+  .foundationVisual {
+    border-top: 0;
+    border-left: 1px solid var(--border-subtle);
+  }
 }
 
 .productPage .supportingFoundation {
@@ -590,6 +808,7 @@
 }
 
 .resourceCard:hover {
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 5%, transparent);
   border-color: color-mix(in oklab, var(--primary) 30%, var(--border));
   background: color-mix(in oklab, var(--primary) 3%, var(--starter-pro-soft));
 }
@@ -725,6 +944,28 @@
   }
   .closingCta::after {
     display: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .resourceCard,
+  .integrationAction {
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+}
+
+@media (forced-colors: active) {
+  .integrationPreview,
+  .productBar,
+  .resourceCard:hover {
+    box-shadow: none;
+  }
+  .productPage :global(.site-primary-action),
+  .productPage .integrationAction {
+    border-color: ButtonText;
   }
 }
 

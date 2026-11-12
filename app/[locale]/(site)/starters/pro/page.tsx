@@ -341,6 +341,7 @@ const includedGroups = [
     title: "Authentication & access",
     icon: Lock,
     technology: "Auth.js",
+    preview: heroScreenshots[1],
     flow: [
       { title: "Sign in", detail: "Email or OAuth", icon: KeyRound },
       { title: "Session", detail: "Auth.js", icon: UserRound },
@@ -363,6 +364,7 @@ const includedGroups = [
     title: "Billing & subscriptions",
     icon: CreditCard,
     technology: "Stripe",
+    preview: heroScreenshots[2],
     flow: [
       { title: "Checkout", detail: "Stripe Checkout", icon: CreditCard },
       { title: "Webhook", detail: "Subscription events", icon: Webhook },
@@ -439,8 +441,7 @@ const includedGroups = [
   },
 ] as const;
 
-const textLink =
-  "inline-flex min-h-11 items-center gap-2 rounded-[5px] text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
+const textLink = `${styles.textLink} inline-flex min-h-11 items-center gap-2 rounded-[5px] text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring`;
 const sectionClass = "scroll-mt-24 border-t border-border-subtle";
 
 function StarterProPreviews() {
@@ -541,7 +542,14 @@ function StarterProHeroPreview() {
           <Layers3 className="size-4 text-primary" aria-hidden="true" />
           {tSite("Starter Pro")}
         </span>
-        <span id="starter-pro-hero-preview-title">{tSite("Dashboard")}</span>
+        <span className={styles.previewLocation}>
+          <span className={styles.windowDots} aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span id="starter-pro-hero-preview-title">{tSite("Dashboard")}</span>
+        </span>
       </div>
       <div className={styles.heroImage}>
         <Image
@@ -898,6 +906,7 @@ export default function StarterProPage() {
                     href,
                     link,
                     technology,
+                    preview,
                     flow,
                     setupNote,
                   },
@@ -908,106 +917,137 @@ export default function StarterProPage() {
                     data-foundation-card=""
                     className={`${styles.featuredFoundation} ${detailStyles.surface} flex min-w-0 flex-col`}
                   >
-                    <div className={styles.foundationReveal}>
-                      <div className="px-5 pt-6 sm:px-8 sm:pt-8">
-                        <div className="flex items-center justify-between gap-4">
-                          <span className="inline-flex items-center gap-3">
-                            <span className="grid size-10 place-items-center rounded-[5px] border border-border-subtle bg-background text-foreground">
-                              <Icon className="size-4" aria-hidden="true" />
+                    <div
+                      className={`${styles.foundationReveal} ${styles.integrationLayout}`}
+                    >
+                      <div className={styles.foundationCopy}>
+                        <div className="px-5 pt-6 sm:px-8 sm:pt-8">
+                          <div className="flex items-center justify-between gap-4">
+                            <span className="inline-flex items-center gap-3">
+                              <span className="grid size-10 place-items-center rounded-[5px] border border-border-subtle bg-background text-foreground">
+                                <Icon className="size-4" aria-hidden="true" />
+                              </span>
+                              <span className="font-mono text-[10px] tracking-[0.12em] text-muted-foreground">
+                                {tSite("CORE INTEGRATION")}
+                              </span>
                             </span>
-                            <span className="font-mono text-[10px] tracking-[0.12em] text-muted-foreground">
-                              {tSite("CORE INTEGRATION")}
-                            </span>
-                          </span>
-                          <span
-                            className="font-mono text-[11px] text-muted-foreground"
-                            aria-hidden="true"
-                          >
-                            0{tSite(index + 1)}
-                          </span>
-                        </div>
-                        <h3 className="mt-6 text-[22px] font-semibold tracking-subheading sm:text-2xl">
-                          {tSite(title)}
-                        </h3>
-                        <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                          {tSite(description)}
-                        </p>
-                      </div>
-                      <div
-                        className={`${detailStyles.preview} mx-5 mt-6 rounded-[5px] border border-border-subtle sm:mx-8`}
-                      >
-                        <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-3">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                            {tSite("Integration overview")}
-                          </span>
-                          <span className="font-mono text-[11px] text-foreground">
-                            {tSite(technology)}
-                          </span>
-                        </div>
-                        <ol
-                          aria-label={tSite("{value0} flow overview", {
-                            value0: title,
-                          })}
-                          className={styles.foundationFlow}
-                        >
-                          {flow.map(
-                            ({ title: step, detail, icon: StepIcon }) => (
-                              <li
-                                key={step}
-                                className="relative min-w-0 text-center"
-                              >
-                                <span className={styles.foundationNode}>
-                                  <StepIcon
-                                    className="size-[18px]"
-                                    aria-hidden="true"
-                                  />
-                                </span>
-                                <span className="mt-3 block text-xs font-medium">
-                                  {tSite(step)}
-                                </span>
-                                <span className="mt-1 block text-[10px] leading-4 text-muted-foreground sm:text-[11px]">
-                                  {tSite(detail)}
-                                </span>
-                              </li>
-                            ),
-                          )}
-                        </ol>
-                      </div>
-                      <div className="px-5 pb-6 pt-7 sm:px-8 sm:pb-8">
-                        <p className="mb-4 text-[11px] font-medium text-foreground">
-                          {tSite("Included in the source")}
-                        </p>
-                        <ul className={styles.foundationPoints}>
-                          {items.map((item) => (
-                            <StarterProCheckItem
-                              key={item}
-                              className="text-[13px]"
+                            <span
+                              className="font-mono text-[11px] text-muted-foreground"
+                              aria-hidden="true"
                             >
-                              {tSite(item)}
-                            </StarterProCheckItem>
-                          ))}
-                        </ul>
-                      </div>
-                      <div
-                        className={`${detailStyles.footer} mt-auto border-t border-border-subtle px-5 py-4 sm:px-8`}
-                      >
-                        <p className="text-xs leading-6 text-muted-foreground">
-                          <span className="font-medium text-foreground">
-                            {tSite("Your setup.")}
-                          </span>
-                          {tSite(" ")}
-                          {tSite(setupNote)}
-                        </p>
-                        <Link
-                          href={href}
-                          className={`${textLink} group mt-1 w-full justify-between text-xs`}
+                              0{tSite(index + 1)}
+                            </span>
+                          </div>
+                          <h3 className="mt-6 text-[22px] font-semibold tracking-subheading sm:text-2xl">
+                            {tSite(title)}
+                          </h3>
+                          <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                            {tSite(description)}
+                          </p>
+                        </div>
+                        <div className="px-5 pb-6 pt-7 sm:px-8 sm:pb-8">
+                          <p className="mb-4 text-[11px] font-medium text-foreground">
+                            {tSite("Included in the source")}
+                          </p>
+                          <ul className={styles.foundationPoints}>
+                            {items.map((item) => (
+                              <StarterProCheckItem
+                                key={item}
+                                className="text-[13px]"
+                              >
+                                {tSite(item)}
+                              </StarterProCheckItem>
+                            ))}
+                          </ul>
+                        </div>
+                        <div
+                          className={`${detailStyles.footer} mt-auto border-t border-border-subtle px-5 py-4 sm:px-8`}
                         >
-                          {tSite(link)}
-                          <ArrowUpRight
-                            className="size-4 text-muted-foreground transition-colors group-hover:text-foreground"
-                            aria-hidden="true"
-                          />
-                        </Link>
+                          <p className="text-xs leading-6 text-muted-foreground">
+                            <span className="font-medium text-foreground">
+                              {tSite("Your setup.")}
+                            </span>
+                            {tSite(" ")}
+                            {tSite(setupNote)}
+                          </p>
+                          <Button
+                            asChild
+                            size="lg"
+                            className={styles.integrationAction}
+                          >
+                            <Link href={href}>
+                              {tSite(link)}
+                              <ArrowUpRight
+                                className="size-3.5"
+                                aria-hidden="true"
+                              />
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+                      <div className={styles.foundationVisual}>
+                        <figure
+                          aria-label={tSite(preview.title)}
+                          className={styles.integrationPreview}
+                        >
+                          <div className={styles.integrationImage}>
+                            <Image
+                              src={preview.image}
+                              alt={tSite(preview.alt)}
+                              fill
+                              loading="lazy"
+                              quality={100}
+                              sizes="(min-width: 1440px) 700px, (min-width: 1024px) 50vw, 90vw"
+                              className="object-contain"
+                            />
+                          </div>
+                          <figcaption>
+                            <span>
+                              {tSite("Light theme · Demonstration data")}
+                            </span>
+                            <p>{tSite(preview.annotation)}</p>
+                          </figcaption>
+                        </figure>
+                        <div
+                          className={`${detailStyles.preview} mx-5 mt-6 rounded-[5px] border border-border-subtle sm:mx-8`}
+                        >
+                          <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-3">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                              {tSite("Integration overview")}
+                            </span>
+                            <span className="font-mono text-[11px] text-foreground">
+                              {tSite(technology)}
+                            </span>
+                          </div>
+                          <ol
+                            aria-label={tSite("{value0} flow overview", {
+                              value0: title,
+                            })}
+                            className={styles.foundationFlow}
+                          >
+                            {flow.map(
+                              ({ title: step, detail, icon: StepIcon }) => (
+                                <li
+                                  key={step}
+                                  className="relative min-w-0 text-center"
+                                >
+                                  <span className={styles.foundationNode}>
+                                    <StepIcon
+                                      className="size-[18px]"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                  <span className="mt-3 block text-xs font-medium">
+                                    {tSite(step)}
+                                  </span>
+                                  <span className="mt-1 block text-[10px] leading-4 text-muted-foreground sm:text-[11px]">
+                                    {tSite(detail)}
+                                  </span>
+                                </li>
+                              ),
+                            )}
+                          </ol>
+                        </div>
                       </div>
                     </div>
                   </article>

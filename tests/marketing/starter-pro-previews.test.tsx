@@ -59,6 +59,44 @@ describe("Starter Pro product page", () => {
     );
   });
 
+  it("grounds the integration details in genuine captures with their demonstration context", () => {
+    render(<StarterProPage />);
+    const included = screen.getByRole("region", {
+      name: "The recurring work, already connected.",
+    });
+    for (const [name, file, guide, href] of [
+      [
+        "Authentication",
+        "auth-indigo-2x.png",
+        "Authentication guide",
+        "/docs/starter-pro/auth",
+      ],
+      [
+        "Billing",
+        "billing-emerald-2x.png",
+        "Billing guide",
+        "/docs/starter-pro/billing",
+      ],
+    ]) {
+      const preview = within(included).getByRole("figure", { name });
+      expect(within(preview).getByRole("img")).toHaveAccessibleName(
+        /Starter Pro/u,
+      );
+      expect(within(preview).getByRole("img").getAttribute("src")).toContain(
+        file,
+      );
+      expect(preview).toHaveTextContent("Light theme · Demonstration data");
+      expect(
+        within(included).getByRole("link", { name: guide }),
+      ).toHaveAttribute("href", href);
+    }
+    expect(
+      within(included).getByRole("figure", { name: "Billing" }),
+    ).toHaveTextContent(
+      "not evidence of a payment or a verified Stripe integration",
+    );
+  });
+
   it("keeps the source offer distinct from a scoped implementation and exposes the readiness guides", () => {
     render(<StarterProPage />);
     const readiness = screen.getByRole("region", {
