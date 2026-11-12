@@ -408,9 +408,14 @@ export function SiteHeader({
           >
             {tSite("Skip to content")}
           </a>
-          <Container>
+          <Container className={styles.headerFrame}>
             <div className="flex h-(--site-header-row-height) items-center gap-3">
-              <div className="flex shrink-0 items-center gap-3 lg:min-w-40">
+              <div
+                className={cn(
+                  styles.headerBrand,
+                  "flex shrink-0 items-center gap-3 lg:min-w-40",
+                )}
+              >
                 {tSite(logo)}
               </div>
               <nav
@@ -549,7 +554,10 @@ export function SiteHeader({
             productsButtonRef.current?.focus({ preventScroll: true });
           }
         }}
-        className="inset-0 flex h-dvh w-full flex-col gap-0 overflow-hidden border-0 bg-background p-0 shadow-none transition-none [&>button]:right-3 [&>button]:top-1.5 [&>button]:flex [&>button]:size-11 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-md"
+        className={cn(
+          styles.mobileSheet,
+          "inset-0 flex h-dvh w-full flex-col gap-0 overflow-hidden border-0 bg-background p-0 shadow-none transition-none [&>button]:right-3 [&>button]:top-1.5 [&>button]:flex [&>button]:size-11 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-md",
+        )}
       >
         <div className="flex min-h-(--site-header-height) shrink-0 flex-wrap items-center gap-x-3 gap-y-2 border-b border-border-subtle py-1.5 pl-4 pr-16">
           <SheetTitle className="min-w-0 flex-1 basis-32 text-base">

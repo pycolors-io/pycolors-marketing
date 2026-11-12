@@ -524,3 +524,370 @@
     display: block;
   }
 }
+
+/* Starter Pro keeps the shared footer semantics with a quieter visual treatment. */
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter {
+  --font-sans: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-brand: var(--font-sans);
+  --footer-surface: color-mix(in srgb, var(--foreground) 4%, var(--background));
+  z-index: 21;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--footer-surface);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter::before,
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter::after,
+:global(.site-frame:has(#starter-pro-next-step))
+  .publicFooter
+  .invitation::before,
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .eyebrow::before,
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .brandGeometry {
+  display: none;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter > div {
+  max-width: 76rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .invitation {
+  gap: 2rem;
+  padding-block: clamp(2.5rem, 4vw, 4rem);
+  border-bottom: 1px solid var(--border);
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .eyebrow {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .invitation h2 {
+  max-width: 25ch;
+  margin-top: 0.75rem;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .description {
+  max-width: 51ch;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .actions {
+  min-width: 0;
+  gap: 0.625rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .actions a {
+  min-height: 2.75rem;
+  height: auto;
+  padding: 0.75rem 1.125rem;
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  text-align: center;
+  white-space: normal;
+  box-shadow: none;
+}
+
+:global(.site-frame:has(#starter-pro-next-step))
+  .publicFooter
+  .actions
+  :global(.site-primary-action) {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .directory {
+  gap: 2.5rem;
+  padding-block: clamp(2.5rem, 4vw, 4rem);
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .brand {
+  display: block;
+}
+
+:global(.site-frame:has(#starter-pro-next-step))
+  .publicFooter
+  .brand
+  > div:first-child
+  > a
+  > svg {
+  height: 1.25rem;
+  width: auto;
+}
+
+:global(.site-frame:has(#starter-pro-next-step))
+  .publicFooter
+  .brandDescription {
+  max-width: 28ch;
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .repositories {
+  margin-top: 1.5rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step))
+  .publicFooter
+  .repositoryHeading {
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step))
+  .publicFooter
+  .repositories
+  ul {
+  gap: 0.625rem;
+  margin-top: 0.75rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .repositories a {
+  min-height: 2.75rem;
+  padding-inline: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--background) 50%, transparent);
+  color: var(--foreground);
+  font-size: 0.75rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .groups {
+  min-width: 0;
+  gap: 2rem 1.5rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .groups nav {
+  min-width: 0;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .groups h2 {
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .directoryLink {
+  min-height: 2.75rem;
+  padding-block: 0.375rem;
+  border-radius: 0.375rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.6;
+  text-underline-offset: 3px;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .bottomBar {
+  align-items: stretch;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-block: 1.25rem 2rem;
+  border-top: 1px solid var(--border);
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .legal {
+  min-width: 0;
+  gap: 0.25rem 1.5rem;
+  font-size: 0.6875rem;
+  line-height: 1.6;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .legal nav {
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .legal a,
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .versions {
+  border-radius: 0.375rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .utilities {
+  min-width: 0;
+  gap: 0.75rem 1.5rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .versions {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .preferences {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .appearance,
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .palette {
+  padding: 3px;
+  border-color: var(--border);
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--background) 55%, var(--footer-surface));
+}
+
+:global(.site-frame:has(#starter-pro-next-step))
+  .publicFooter
+  .appearance
+  button {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+}
+
+:global(.site-frame:has(#starter-pro-next-step)) .publicFooter .palette button {
+  min-height: 2.25rem;
+  border-radius: 100px;
+}
+
+:global(.site-frame:has(#starter-pro-next-step))
+  .publicFooter
+  .preferences
+  button[data-variant="footer"] {
+  min-height: 2.75rem;
+  padding-inline: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--background) 55%, var(--footer-surface));
+  font-size: 0.75rem;
+}
+
+@media (min-width: 40rem) and (max-width: 63.999rem) {
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .brand {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .repositories {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 64rem) {
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .directory {
+    grid-template-columns: minmax(12rem, 0.9fr) minmax(0, 3.1fr);
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .bottomBar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+  }
+
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .utilities {
+    flex: 1;
+    justify-content: flex-end;
+  }
+}
+
+@media (pointer: fine) and (min-width: 40rem) {
+  :global(.site-frame:has(#starter-pro-next-step))
+    .publicFooter
+    .directoryLink {
+    min-height: 2rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (pointer: coarse), (max-width: 39.999rem) {
+  :global(.site-frame:has(#starter-pro-next-step))
+    .publicFooter
+    .appearance
+    button {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  :global(.site-frame:has(#starter-pro-next-step))
+    .publicFooter
+    .palette
+    button {
+    min-height: 2.75rem;
+  }
+}
+
+@media (max-width: 39.999rem) {
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .actions,
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .actions a {
+    width: 100%;
+  }
+
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .legal {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .utilities {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (hover: hover) {
+  :global(.site-frame:has(#starter-pro-next-step))
+    .publicFooter
+    .directoryLink:hover,
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .legal a:hover,
+  :global(.site-frame:has(#starter-pro-next-step))
+    .publicFooter
+    .versions:hover {
+    color: var(--foreground);
+    text-decoration: underline;
+  }
+
+  :global(.site-frame:has(#starter-pro-next-step))
+    .publicFooter
+    .repositories
+    a:hover {
+    border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+    background: var(--background);
+    color: var(--foreground);
+  }
+}
+
+@media (forced-colors: active) {
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .actions a,
+  :global(.site-frame:has(#starter-pro-next-step))
+    .publicFooter
+    .repositories
+    a,
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .appearance,
+  :global(.site-frame:has(#starter-pro-next-step)) .publicFooter .palette,
+  :global(.site-frame:has(#starter-pro-next-step))
+    .publicFooter
+    .preferences
+    button[data-variant="footer"] {
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+}

@@ -1,46 +1,46 @@
 /* Page-owned composition; the public UI and site palettes remain canonical. */
 .productPage {
-  --starter-pro-soft: #f8fafd;
+  --font-sans: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-brand: var(--font-sans);
+  --starter-pro-soft: #f8f9fc;
+  --starter-pro-panel-radius: clamp(1.5rem, 3vw, 2.25rem);
+  --starter-pro-card-radius: clamp(1.25rem, 2.4vw, 1.75rem);
+  --starter-pro-icon-radius: 0.875rem;
+  --starter-pro-panel-shadow: 0 8px 32px
+    color-mix(in srgb, var(--foreground) 3%, transparent);
+  --starter-pro-sun: #f3d479;
   --starter-pro-section-space: clamp(3.5rem, 6vw, 6rem);
-  --starter-pro-ink: color-mix(
-    in srgb,
-    var(--foreground) 92%,
-    var(--brand-platform)
-  );
-  --starter-pro-copy: color-mix(
-    in srgb,
-    var(--starter-pro-ink) 72%,
-    var(--background)
-  );
-  --starter-pro-glow: var(--brand-accent);
-  --starter-pro-primary: var(--primary);
-  --starter-pro-teal: color-mix(
-    in srgb,
-    var(--brand-platform) 45%,
-    var(--brand-success)
-  );
-  --starter-pro-teal-ink: color-mix(
-    in srgb,
-    var(--starter-pro-teal) 80%,
-    var(--foreground)
-  );
-  --starter-pro-wave-start: var(--brand-platform);
-  --starter-pro-wave-end: color-mix(
-    in srgb,
-    var(--primary) 65%,
-    var(--starter-pro-glow)
-  );
+  --starter-pro-ink: var(--foreground);
+  --starter-pro-copy: var(--muted-foreground);
+  --starter-pro-aura-start: #f7a365;
+  --starter-pro-aura-middle: #d7a4ec;
+  --starter-pro-wave-start: var(--starter-pro-aura-start);
+  --starter-pro-wave-middle: #e3a1d8;
+  --starter-pro-wave-end: var(--primary);
+  --starter-pro-teal-ink: var(--starter-pro-action);
   --starter-pro-art-opacity: 0.12;
-  --starter-pro-action: color-mix(
-    in srgb,
-    var(--primary) 65%,
-    var(--brand-platform)
-  );
+  --starter-pro-action: var(--primary);
   --starter-pro-action-hover: color-mix(
     in srgb,
-    var(--starter-pro-action) 92%,
+    var(--starter-pro-action) 88%,
     var(--foreground)
   );
+  font-family: var(--font-sans);
+}
+
+/* PyColors actions sit beside an apricot, orchid and golden artwork palette. */
+:global(html[data-site-palette="pycolors"]:not(.dark)) .productPage,
+:global(html[data-site-palette="pycolors"]:not(.dark))
+  :global(.site-frame):has(.productPage) {
+  --foreground: #252137;
+  --muted-foreground: #616579;
+  --primary: #6b2fd4;
+  --primary-foreground: #ffffff;
+  --ring: var(--primary);
+  --card: #ffffff;
+  --card-foreground: var(--foreground);
+  --border: #e7e6ef;
+  --border-subtle: #efedf5;
 }
 
 :global(html.dark) .productPage,
@@ -51,9 +51,19 @@
 :global(html[data-site-palette="monochrome"]) .productPage {
   --starter-pro-ink: var(--foreground);
   --starter-pro-copy: var(--muted-foreground);
-  --starter-pro-glow: var(--primary);
-  --starter-pro-teal: var(--foreground);
+  --starter-pro-sun: var(--foreground);
+  --starter-pro-aura-start: var(--foreground);
+  --starter-pro-aura-middle: var(--foreground);
+  --starter-pro-wave-start: var(--foreground);
+  --starter-pro-wave-middle: var(--foreground);
+  --starter-pro-wave-end: var(--foreground);
   --starter-pro-teal-ink: var(--foreground);
+}
+
+/* Keep the existing alignment while removing the outer vertical frame. */
+:global(.site-frame):has(.productPage)::after,
+:global(.site-frame):has(.productPage) > :global(header.site-frame)::after {
+  display: none;
 }
 
 /* A shared action hierarchy for this product page, including guide links. */
@@ -160,11 +170,11 @@
 
 .productPage :global(.marketing-section) h2,
 .faqSection h2 {
-  max-width: 24ch;
-  font-size: clamp(1.625rem, 2.4vw, 2.125rem);
+  max-width: 38ch;
+  font-size: clamp(1.75rem, 3.1vw, 2.5rem);
   font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
 }
 
 .productPage :global(.marketing-section) [data-slot="badge"],
@@ -183,7 +193,7 @@
 
 .productBar {
   position: sticky;
-  z-index: 20;
+  z-index: 30;
   top: var(--site-header-height);
   display: flex;
   min-width: 0;
@@ -224,14 +234,57 @@
 .hero {
   position: relative;
   isolation: isolate;
-  padding-top: clamp(2.5rem, 4vw, 3rem);
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(4.5rem, 8vw, 7rem);
+  background: color-mix(in srgb, var(--primary) 3%, var(--background));
+  box-shadow: 0 0 0 100vmax
+    color-mix(in srgb, var(--primary) 3%, var(--background));
+  clip-path: inset(0 -100vmax);
+}
+
+.heroAtmosphere {
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto 0 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 14% 94%,
+      color-mix(in srgb, var(--starter-pro-sun) 28%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 80% 25%,
+      color-mix(in srgb, var(--starter-pro-aura-start) 16%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(
+      110deg,
+      var(--background) 8%,
+      color-mix(in srgb, var(--primary) 5%, var(--background)) 45%,
+      color-mix(in srgb, var(--starter-pro-aura-middle) 34%, var(--background))
+    );
+  pointer-events: none;
+}
+.heroAtmosphere .waves {
+  position: absolute;
+  right: -12%;
+  bottom: -18%;
+  width: 135%;
+  height: 90%;
+  opacity: 0.24;
+  mask-image: linear-gradient(90deg, transparent 12%, black 72%);
 }
 
 .heroGrid {
   position: relative;
   display: grid;
   min-width: 0;
-  gap: 2rem;
+  gap: 2.5rem;
+  max-width: 72rem;
+  margin-inline: auto;
+  align-items: center;
 }
 
 .heroCopy,
@@ -240,23 +293,23 @@
 }
 
 .heroCopy h1 {
-  max-width: 30ch;
-  margin-inline: auto;
-  font-size: clamp(2rem, 3.3vw, 2.75rem);
-  font-weight: 500;
-  line-height: 1.13;
-  letter-spacing: -0.035em;
+  max-width: 22ch;
+  margin-inline: 0;
+  font-size: clamp(2.375rem, 4.2vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.045em;
 }
 
 .heroContent {
-  max-width: 64rem;
-  margin-inline: auto;
+  max-width: none;
+  margin-inline: 0;
 }
 
 .heroContent > p {
-  max-width: 62ch;
-  margin-top: 1rem;
-  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  max-width: 46ch;
+  margin-top: 1.25rem;
+  font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.7;
 }
@@ -267,6 +320,8 @@
   border: 0;
   background: transparent;
   color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
 }
 
 .heroActions {
@@ -283,7 +338,7 @@
 
 .heroActions > div,
 .heroExtra > ul {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .heroExtra {
@@ -292,10 +347,12 @@
 }
 
 .heroVisual {
+  position: relative;
+  isolation: isolate;
   width: 100%;
-  max-width: 68rem;
+  max-width: 42rem;
   margin-inline: auto;
-  padding-top: 0;
+  padding: 1.5rem 1rem 1rem;
 }
 
 .heroShowcase {
@@ -380,21 +437,33 @@
   text-wrap: pretty;
 }
 
-/* Broad, static curves sit below the hero copy and behind the real product. */
+/* Broad, continuous curves frame the product without crossing the copy. */
 .heroArtwork {
   position: absolute;
   z-index: -1;
-  inset: 0 -18% auto;
-  height: clamp(24rem, 52vw, 46rem);
-  opacity: 0.9;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 15% 78%,
-    transparent
-  );
-  overflow: clip;
+  inset: 0 -1rem 6.5rem;
+  overflow: hidden;
+  border-radius: 6px;
+  background:
+    radial-gradient(
+      ellipse at 10% 5%,
+      color-mix(in srgb, var(--starter-pro-aura-start) 65%, var(--background)),
+      transparent 66%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--starter-pro-aura-start) 65%, var(--background)),
+      var(--starter-pro-aura-middle) 54%,
+      var(--primary)
+    );
   pointer-events: none;
+}
+.heroArtwork .waves {
+  position: absolute;
+  inset: 0 -25% -20%;
+  width: 150%;
+  height: 120%;
+  opacity: 0.85;
 }
 
 .waves {
@@ -507,15 +576,18 @@
   background: var(--background);
 }
 
-/* The same blue-gray canvas continues through every supporting chapter. */
-.softBand :global(.marketing-section-pattern)::before,
-.workflowBand :global(.marketing-section-pattern)::before {
-  border-color: var(--border-subtle);
-  background: repeating-linear-gradient(
-    135deg,
-    transparent 0 10px,
-    var(--border-subtle) 10px 11px
-  );
+/* The full-width gallery stays beneath the product and site navigation. */
+.productPage .includedSection {
+  z-index: 21;
+}
+
+/* Stripe-like chapters use quiet rules rather than patterned dividers. */
+.productPage :global(.marketing-section-pattern)::before,
+.productPage :global(.marketing-section-pattern)::after {
+  display: none;
+}
+.productPage :global(.marketing-section-pattern) > div {
+  padding-top: 0;
 }
 
 .workflowBand :global(.marketing-section) > div > div:has(> article) {
@@ -534,15 +606,6 @@
 
 .workflowBand :global(.marketing-section-pattern) {
   padding-top: 4rem;
-}
-
-/* White surfaces float above the shared canvas, never above reading text. */
-.softBand video,
-.softBand .carousel,
-.referenceBand figure {
-  border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  box-shadow: 0 12px 32px color-mix(in oklab, var(--foreground) 5%, transparent);
 }
 
 .softBand .stage {
@@ -578,7 +641,7 @@
   font-size: clamp(1.25rem, 1.8vw, 1.5rem);
   font-weight: 500;
   line-height: 1.25;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
 }
 
 .productPage .featuredFoundation:focus-within,
@@ -618,15 +681,25 @@
   justify-content: center;
   padding: clamp(1.25rem, 2.5vw, 2rem);
   border-top: 1px solid var(--border-subtle);
-  background: var(--starter-pro-soft);
+  background:
+    radial-gradient(
+      ellipse at 0 10%,
+      color-mix(in srgb, var(--starter-pro-sun) 50%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse at 0 0,
+      color-mix(in srgb, var(--starter-pro-aura-start) 65%, var(--background)),
+      transparent 72%
+    ),
+    linear-gradient(145deg, var(--starter-pro-aura-middle), var(--primary));
 }
 
 .visualWaves {
   position: absolute;
   z-index: -1;
-  inset: 25% -20% 0;
-  opacity: 0.18;
-  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  inset: 0 -15% -20%;
+  opacity: 0.8;
   pointer-events: none;
 }
 
@@ -922,10 +995,10 @@
 
 .closingCta h2 {
   max-width: 21ch;
-  font-size: clamp(1.625rem, 2.4vw, 2.125rem);
+  font-size: clamp(1.625rem, 2.4vw, 2rem);
   font-weight: 500;
   line-height: 1.2;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
 }
 
 .closingCta :global(.site-primary-action) {
@@ -1055,13 +1128,6 @@
 }
 
 /* Body chapters share their own accents and decorative product details. */
-.referenceBand dl {
-  padding-inline: 1rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background: var(--background);
-}
-
 .referenceBand :global([data-slot="button"]) {
   border-color: var(--starter-pro-action);
   background: var(--starter-pro-action);
@@ -1333,7 +1399,7 @@
 .productPage :global(.marketing-section) h2 + p,
 .faqSection h2 + p {
   max-width: 62ch;
-  font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.7;
 }
@@ -1417,7 +1483,7 @@
   max-width: calc(100% - 4rem);
 }
 
-/* Dark chapters keep quiet surfaces with violet and restrained teal details. */
+/* Dark mode keeps the same hierarchy with restrained violet accents. */
 :global(html.dark) .productPage {
   --starter-pro-ink: var(--foreground);
   --starter-pro-copy: var(--muted-foreground);
@@ -1426,34 +1492,25 @@
     var(--primary) 1.5%,
     var(--background)
   );
-  --starter-pro-glow: color-mix(
-    in srgb,
-    var(--primary) 86%,
-    var(--brand-accent)
-  );
-  --starter-pro-wave-start: color-mix(
-    in srgb,
-    var(--primary) 80%,
-    var(--brand-platform)
-  );
+  --starter-pro-wave-start: var(--primary);
+  --starter-pro-wave-middle: var(--primary);
   --starter-pro-wave-end: var(--primary);
-  --starter-pro-teal-ink: color-mix(
-    in srgb,
-    var(--starter-pro-teal) 75%,
-    var(--foreground)
-  );
+  --starter-pro-teal-ink: var(--starter-pro-action);
   --starter-pro-action: var(--primary);
   --starter-pro-art-opacity: 0.055;
 }
 
 :global(html.dark) .productPage .heroArtwork {
-  opacity: 0.45;
+  opacity: 0.32;
 }
 :global(html.dark) .productPage .waveDivider .waves {
   opacity: 0.3;
 }
 :global(html.dark) .productPage .visualWaves {
-  opacity: 0.075;
+  opacity: 0.12;
+}
+:global(html.dark) .productPage .foundationVisual {
+  background: color-mix(in srgb, var(--primary) 5%, var(--card));
 }
 :global(html.dark) .productPage .closingArtwork {
   opacity: 0.1;
@@ -1483,7 +1540,6 @@
 :global(html.dark) .productPage .configurationPanel,
 :global(html.dark) .productPage .purchasePanel,
 :global(html.dark) .productPage .integrationPreview,
-:global(html.dark) .productPage .referenceBand dl,
 :global(html.dark) .productPage .faqSection details {
   background: var(--card);
   box-shadow: none;
@@ -1567,15 +1623,6 @@
 .productPage .sectionNav .textLink {
   color: var(--starter-pro-copy);
 }
-:global(html[data-site-palette="pycolors"]:not(.dark))
-  .productPage
-  .heroArtwork {
-  --starter-pro-wave-start: color-mix(
-    in srgb,
-    var(--brand-accent) 45%,
-    var(--warning)
-  );
-}
 
 .productPage :global(.marketing-section) [data-slot="badge"],
 .faqSection [data-slot="badge"] {
@@ -1583,7 +1630,7 @@
   font-size: 0.75rem;
 }
 .productPage .demoAction :global([data-slot="button"]) {
-  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--background));
   background: var(--background);
   color: var(--primary);
   box-shadow: none;
@@ -1695,20 +1742,6 @@
   .productPage .integrationLayout {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   }
-  .productPage .referenceBand :global(.marketing-section) > div {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 3rem;
-    align-items: center;
-  }
-  .productPage
-    .referenceBand
-    :global(.marketing-section)
-    > div
-    > div:first-child {
-    display: block;
-    margin: 0;
-  }
 }
 @media (max-width: 39.999rem) {
   .heroActions .heroSecondary {
@@ -1721,6 +1754,304 @@
   .foundationInventory,
   .integrationNotes {
     padding-inline: 1.25rem;
+  }
+}
+
+/* Editorial hierarchy pairs product detail with restrained visual proof. */
+.productPage :global(.marketing-section) > div,
+.stackStrip {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+.productPage :global(.marketing-section) h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+.productPage :global(.marketing-section) h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.productPage :global(.marketing-section) .integrationTitle {
+  font-size: 1.25rem;
+}
+.productPage :global(.site-primary-action),
+.heroActions .demoAction :global([data-slot="button"]) {
+  border-radius: 5px;
+}
+.heroActions {
+  align-items: flex-start;
+  margin-inline: 0;
+}
+.heroActions .heroSecondary {
+  justify-content: flex-start;
+}
+.heroExtra > ul {
+  justify-content: flex-start;
+}
+.heroShowcase {
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--foreground) 12%, transparent);
+}
+.heroCaption {
+  display: block;
+  font-size: 0.6875rem;
+}
+.heroCaption > a {
+  margin-top: 0.25rem;
+}
+.heroCompanion {
+  position: relative;
+  z-index: 2;
+  width: min(17rem, calc(100% - 2rem));
+  margin: -1rem 0 0 1rem;
+  padding: 1.125rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--background);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--foreground) 12%, transparent);
+}
+.heroCompanionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.heroCompanionTitle svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary);
+}
+.heroConnections {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.heroConnections > span {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  font: 0.625rem var(--font-mono);
+}
+.heroConnections svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary);
+}
+.productPage .visualFoundation {
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--background);
+}
+.supportingPreview {
+  margin: 0;
+}
+.supportingPreviewStage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background:
+    radial-gradient(
+      ellipse at 0 10%,
+      color-mix(in srgb, var(--starter-pro-sun) 50%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse at 5% 0,
+      color-mix(in srgb, var(--starter-pro-aura-start) 55%, var(--background)),
+      transparent 75%
+    ),
+    linear-gradient(145deg, var(--starter-pro-aura-middle), var(--primary));
+}
+.supportingPreviewStage > .waves {
+  position: absolute;
+  z-index: -1;
+  inset: 10% -20% -15%;
+  width: 140%;
+  height: 105%;
+  opacity: 0.7;
+}
+.supportingPreviewImage {
+  position: relative;
+  aspect-ratio: 36 / 25;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow: 0 16px 32px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+.supportingPreview figcaption {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--starter-pro-copy);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+}
+@media (min-width: 48rem) {
+  .supportingPreview figcaption {
+    min-height: 8.5rem;
+  }
+}
+.supportingPreview figcaption > span {
+  display: block;
+  margin-bottom: 0.375rem;
+  color: var(--starter-pro-ink);
+  font-weight: 500;
+}
+:global(html.dark) .productPage .heroAtmosphere {
+  opacity: 0.55;
+}
+:global(html.dark) .productPage .visualFoundation {
+  background: var(--card);
+}
+:global(html.dark) .productPage .supportingPreviewStage {
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+}
+:global(html.dark) .productPage .supportingPreviewStage > .waves {
+  opacity: 0.16;
+}
+
+.servicesBand {
+  position: relative;
+  isolation: isolate;
+  background: var(--starter-pro-soft);
+  box-shadow: 0 0 0 100vmax var(--starter-pro-soft);
+  clip-path: inset(0 -100vmax);
+}
+.productPage .servicesBand .implementationCard {
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.productPage .servicesBand :global([data-slot="button"]) {
+  align-self: flex-start;
+  width: auto;
+}
+
+/* Light, open chapters follow the latest palette reference. */
+.productPage .readinessCard,
+.productPage .featuredFoundation,
+.productPage .supportingFoundation,
+.productPage .purchaseCard,
+.productPage .setupStep,
+.productPage .resourceCard {
+  --body-accent: var(--starter-pro-action);
+}
+.productPage .workflowBand .readinessCard {
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding-top: 1.5rem;
+}
+.productPage .workflowBand .detailGraphic {
+  min-height: 0;
+  justify-content: flex-start;
+  padding-inline: 1.5rem;
+  border: 0;
+  background: transparent;
+}
+.productPage .workflowBand .detailCore {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--background));
+  border-radius: 3px;
+  background: var(--background);
+  color: var(--starter-pro-action);
+  box-shadow: none;
+}
+.workflowBand .detailSatellite,
+.workflowBand .detailConnections,
+.workflowBand .detailIndex {
+  display: none;
+}
+.productPage .workflowBand .readinessCopy {
+  padding-top: 1rem;
+}
+.productPage .workflowBand :global(.marketing-section-pattern)::before {
+  display: none;
+}
+@media (min-width: 64rem) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+    gap: 3rem;
+  }
+  .heroVisual {
+    width: calc(100% + 2rem);
+    max-width: none;
+    margin-inline: 0;
+  }
+  .heroCompanion {
+    position: absolute;
+    left: -2rem;
+    bottom: 9rem;
+    margin: 0;
+  }
+  .heroArtwork {
+    inset-inline: -1rem;
+  }
+}
+@media (max-width: 63.999rem) {
+  .heroArtwork {
+    inset-inline: 0;
+  }
+}
+@media (max-width: 39.999rem) {
+  .heroChrome {
+    gap: 0.5rem;
+    padding-inline: 0.875rem;
+  }
+  .heroChrome > :first-child {
+    white-space: nowrap;
+  }
+  .heroChrome .windowDots {
+    display: none;
+  }
+  .heroCopy h1 {
+    font-size: clamp(2.125rem, 7vw, 2.75rem);
+  }
+  .heroContent > p {
+    max-width: none;
+    font-size: 0.9375rem;
+  }
+  .productPage :global(.marketing-section) h3 {
+    font-size: 1.125rem;
+  }
+  .heroActions {
+    margin-inline: 0;
+  }
+}
+@media (forced-colors: active) {
+  .heroAtmosphere,
+  .heroArtwork,
+  .supportingPreviewStage > .waves,
+  .workflowBand::after {
+    display: none;
+  }
+  .heroCompanion {
+    box-shadow: none;
+  }
+  .productPage .workflowBand {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --primary: LinkText;
+    --starter-pro-ink: CanvasText;
+    --starter-pro-copy: CanvasText;
+    --starter-pro-action: LinkText;
+    background: Canvas;
+    color: CanvasText;
   }
 }
 
@@ -1768,6 +2099,299 @@
     color-mix(in oklab, var(--primary) 7%, var(--background)),
     color-mix(in oklab, var(--primary) 3%, var(--background)) 80%
   );
+}
+
+/* A page-owned product comparison: open typography and quiet product columns. */
+.productPage .comparisonHeading {
+  max-width: 54rem;
+  margin-inline: auto;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.productPage .comparisonHeading h2 {
+  max-width: 24ch;
+  margin-inline: auto;
+  font-size: clamp(2rem, 4.2vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.productPage .comparisonHeading h2 + p {
+  max-width: 65ch;
+  margin-top: 1.5rem;
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  line-height: 1.8;
+}
+
+.comparisonSurface {
+  --comparison-surface: color-mix(
+    in srgb,
+    var(--foreground) 3%,
+    var(--background)
+  );
+  padding: clamp(0.75rem, 2.3vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2.25rem);
+  background: var(--comparison-surface);
+}
+
+.comparisonSurface > div {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.comparisonSurface > div > div:first-child {
+  gap: 0.75rem 1.5rem;
+  padding: 0.5rem 0.75rem 1.75rem;
+  border: 0;
+}
+
+.comparisonSurface > div > div:first-child > p {
+  max-width: 38ch;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+.comparisonSurface > div > div:first-child > span {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.comparisonSurface > div > div:nth-child(2) {
+  border-radius: 1.5rem;
+}
+
+.productPage .comparisonSurface .comparisonTable {
+  border-collapse: separate;
+  border-spacing: clamp(0.5rem, 1.2vw, 1rem) 0;
+  color: var(--foreground);
+}
+
+.productPage .comparisonSurface .comparisonTable th,
+.productPage .comparisonSurface .comparisonTable td {
+  padding-inline: clamp(1rem, 2.2vw, 2rem);
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--background);
+  box-shadow: none;
+  font-size: 0.8125rem;
+  line-height: 1.85;
+}
+
+.productPage .comparisonSurface .comparisonTable tr > :first-child {
+  width: 22%;
+  padding-inline: 0.5rem 1rem;
+  background: var(--comparison-surface);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.productPage .comparisonSurface .comparisonTable thead th {
+  padding-block: clamp(1.75rem, 3vw, 2.75rem) 2rem;
+}
+
+.productPage .comparisonSurface .comparisonTable thead th:first-child {
+  vertical-align: bottom;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 400;
+}
+
+.productPage .comparisonSurface .comparisonTable thead th[aria-labelledby] {
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+
+.productPage .comparisonSurface .comparisonTable thead th:last-child {
+  border-top-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  background:
+    radial-gradient(
+      ellipse at 100% 0,
+      color-mix(in srgb, var(--primary) 5%, transparent),
+      transparent 65%
+    ),
+    var(--background);
+}
+
+.productPage .comparisonSurface .comparisonTable thead th > span:first-child {
+  color: var(--foreground);
+  font-size: clamp(1.5rem, 2.7vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.productPage .comparisonSurface .comparisonTable thead th > p:first-of-type {
+  min-height: 4.8em;
+  margin-top: 0.875rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.productPage .comparisonSurface .comparisonTable thead th > p:nth-of-type(2) {
+  min-height: 4.25rem;
+  align-content: flex-start;
+  gap: 0.5rem 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.productPage
+  .comparisonSurface
+  .comparisonTable
+  thead
+  th
+  > p:nth-of-type(2)
+  > span:first-child {
+  color: var(--foreground);
+  font-size: clamp(1.875rem, 3.3vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+
+.productPage
+  .comparisonSurface
+  .comparisonTable
+  thead
+  th
+  > p:nth-of-type(2)
+  > span:last-child {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 400;
+}
+
+.productPage .comparisonSurface .comparisonTable thead th > a {
+  min-height: 3.5rem;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.productPage .comparisonSurface .comparisonTable thead th > a:hover {
+  background: var(--comparison-surface);
+}
+
+.productPage .comparisonSurface .comparisonTable thead th:last-child > a {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.productPage .comparisonSurface .comparisonTable thead th:last-child > a:hover {
+  background: var(--starter-pro-action-hover);
+}
+
+.productPage .comparisonSurface .comparisonTable tbody th,
+.productPage .comparisonSurface .comparisonTable tbody td {
+  padding-block: 1.375rem;
+}
+
+.productPage .comparisonSurface .comparisonTable tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.productPage .comparisonSurface .comparisonTable tbody tr:last-child > td {
+  padding-bottom: 1.75rem;
+  border-radius: 0 0 1.5rem 1.5rem;
+}
+
+.comparisonSurface > div > div:last-child {
+  gap: 1rem;
+  margin-top: 1.5rem;
+  border: 0;
+}
+
+.comparisonSurface > div > div:last-child > div {
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: var(--background);
+}
+
+.comparisonSurface > div > div:last-child h3 {
+  align-items: center;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+}
+
+.comparisonSurface > div > div:last-child h3 > svg {
+  box-sizing: content-box;
+  flex-shrink: 0;
+  padding: 0.625rem;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--primary) 5%, var(--background));
+  color: var(--primary);
+}
+
+.comparisonSurface > div > div:last-child p {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.9;
+}
+
+.comparisonSurface > div > div:last-child a {
+  gap: 0.5rem;
+  border-radius: 100px;
+  color: var(--primary);
+  font-size: 0.75rem;
+}
+
+.comparisonResources {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 2rem;
+  margin-top: 1.75rem;
+}
+
+.comparisonResources > a {
+  min-height: 2.75rem;
+  border-radius: 100px;
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 47.999rem) {
+  .comparisonSurface > div > div:first-child {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-bottom: 1.25rem;
+  }
+
+  .productPage .comparisonSurface .comparisonTable tr > :first-child {
+    width: 20%;
+    font-size: 0.6875rem;
+  }
+
+  .productPage .comparisonSurface .comparisonTable thead th > a {
+    width: 100%;
+    padding-inline: 0.75rem;
+  }
+
+  .comparisonResources {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-inline: 0.25rem;
+  }
 }
 
 .foundationStory {
@@ -1878,51 +2502,1579 @@
   }
 }
 
-/* Cards remain visible in server HTML and without JavaScript. Only cards
-   below the viewport are prepared for a one-time reveal after hydration. */
-@media (prefers-reduced-motion: no-preference) {
-  .foundationCards > [data-reveal] {
+/* Product-led polish: expressive headlines, soft frames and quieter details. */
+.pageFrame {
+  border-inline-color: transparent;
+}
+
+.productPage .heroShowcase {
+  border-radius: 16px;
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--foreground) 3%, transparent),
+    0 28px 70px color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.productPage .heroArtwork {
+  border-radius: 24px;
+}
+
+.heroContent > p {
+  font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
+  line-height: 1.7;
+}
+
+.productPage .heroActions :global([data-slot="button"]),
+.productPage .integrationGuide :global([data-slot="button"]),
+.productPage .closingCta :global([data-slot="button"]) {
+  border-radius: 999px;
+  padding-inline: 1.25rem;
+}
+
+.productPage .workflowBand .readinessCard {
+  padding: 1.75rem 0 0;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 20px;
+  background: var(--background);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+.productPage .workflowBand .detailGraphic {
+  padding-inline: 1.75rem;
+}
+
+.productPage .workflowBand .detailCore {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--starter-pro-sun) 22%, var(--background));
+}
+
+.productPage .workflowBand .readinessCard:nth-child(2n) .detailCore {
+  background: color-mix(in srgb, var(--primary) 8%, var(--background));
+}
+
+.productPage .workflowBand .readinessCopy {
+  padding: 1.25rem 1.75rem 1.75rem;
+}
+
+.productPage .visualFoundation,
+.productPage .integrationPreview,
+.productPage .supportingPreviewImage {
+  border-radius: 12px;
+}
+
+.productPage .purchaseCard,
+.productPage .servicesBand .implementationCard {
+  border-radius: 16px;
+}
+
+.productPage .servicesBand .implementationCard {
+  border: 1px solid var(--border-subtle);
+  background: var(--background);
+}
+
+.productPage .resourceCard {
+  border-radius: 12px;
+}
+
+.productPage .foundationChapter .integrationImage,
+.productPage .foundationChapter .supportingPreviewImage {
+  background: #ffffff;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .productPage .workflowBand .readinessCard {
     transition:
-      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .foundationCards > [data-reveal="pending"] {
-    opacity: 0;
-    transform: translateY(40px) scale(0.985);
+  .productPage .workflowBand .readinessCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px
+      color-mix(in srgb, var(--foreground) 6%, transparent);
+  }
+}
+
+/* A centered chapter with a warm diagonal, owned by this product page. */
+.productPage .workflowBand {
+  --workflow-angle: -3deg;
+  --workflow-plane-inset: 3vw;
+  --workflow-edge: 1rem;
+  --workflow-ribbon-inset: max(var(--workflow-edge), calc((100vw - 68rem) / 2));
+  background: transparent;
+  box-shadow: none;
+  clip-path: none;
+  padding-block: clamp(1.5rem, 3vw, 3rem);
+}
+
+.workflowBand::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: var(--workflow-plane-inset) auto var(--workflow-plane-inset) 50%;
+  width: 100vw;
+  transform: translateX(-50%) skewY(var(--workflow-angle));
+  background:
+    radial-gradient(
+      ellipse at 7% 5%,
+      color-mix(in srgb, var(--starter-pro-sun) 25%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(
+      130deg,
+      var(--starter-pro-soft),
+      color-mix(in srgb, var(--primary) 4%, var(--starter-pro-soft))
+    );
+  pointer-events: none;
+}
+
+/* Matching full-width planes keep the ribbon flush with the section edge. */
+.workflowBand::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: var(--workflow-plane-inset) auto var(--workflow-plane-inset) 50%;
+  width: 100vw;
+  background-image:
+    linear-gradient(
+      90deg,
+      var(--starter-pro-sun) 0% 56%,
+      var(--primary) 56% 80%,
+      var(--starter-pro-aura-middle) 80%
+    ),
+    linear-gradient(var(--border-subtle), var(--border-subtle));
+  background-size:
+    clamp(10rem, 24vw, 22rem) clamp(0.625rem, 1.1vw, 1rem),
+    100% 1px;
+  background-position:
+    right var(--workflow-ribbon-inset) bottom 0,
+    left 0 bottom 0;
+  background-repeat: no-repeat;
+  transform: translateX(-50%) skewY(var(--workflow-angle));
+  pointer-events: none;
+}
+
+@media (min-width: 40rem) {
+  .productPage .workflowBand {
+    --workflow-edge: 1.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .productPage .workflowBand {
+    --workflow-edge: 2rem;
+  }
+}
+
+.productPage .readinessHeading {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+.productPage .readinessHeading h2 {
+  max-width: 26ch;
+  margin-inline: auto;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.productPage .readinessHeading > div > p {
+  max-width: 58ch;
+  margin-inline: auto;
+}
+
+.productPage .readinessGrid {
+  max-width: 68rem;
+  margin-inline: auto;
+  gap: 1.5rem;
+}
+
+.productPage .workflowBand .readinessCopy h3 {
+  font-size: 1.125rem;
+  line-height: 1.35;
+}
+
+:global(html.dark) .productPage .workflowBand::before {
+  background:
+    radial-gradient(
+      ellipse at 7% 5%,
+      color-mix(in srgb, var(--starter-pro-sun) 6%, transparent),
+      transparent 62%
+    ),
+    var(--starter-pro-soft);
+}
+
+@media (forced-colors: active) {
+  .workflowBand::before,
+  .workflowBand::after {
+    display: none;
+  }
+}
+
+/* Product foundations retain their native flow before scroll enhancement. */
+.foundationStep {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+  color: var(--primary);
+  font: 500 0.75rem / 1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.foundationStep > span {
+  color: var(--muted-foreground);
+}
+
+.foundationStep::after {
+  content: "";
+  width: 3rem;
+  height: 1px;
+  margin-left: 0.5rem;
+  background: color-mix(in srgb, var(--primary) 30%, var(--border));
+  transform-origin: left;
+}
+
+/* Vertical page progress drives this bounded story only when the cards fit. */
+.foundationJourney {
+  position: relative;
+}
+
+.foundationSticky {
+  top: calc(var(--site-header-height, 3.5rem) + 4.75rem);
+  padding-bottom: 1rem;
+}
+
+.foundationJourney[data-scroll-linked] > .foundationSticky {
+  position: sticky;
+}
+
+.foundationJourney[data-scroll-linked] .foundationRail {
+  scroll-snap-type: none;
+  scrollbar-width: none;
+}
+
+.foundationScrollHint {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.foundationJourney[data-scroll-linked] .foundationScrollHint {
+  display: inline-flex;
+}
+
+/* All six foundations form a native horizontal gallery with readable content. */
+.foundationControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.foundationPosition {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.foundationPosition > span[aria-hidden] {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.productPage .foundationControl {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--starter-pro-soft);
+  color: var(--foreground);
+}
+
+.productPage .foundationControl:not(:disabled):hover {
+  border-color: var(--border);
+  background: color-mix(in srgb, var(--foreground) 7%, var(--background));
+}
+
+.productPage .foundationControl:disabled {
+  opacity: 0.35;
+}
+
+.foundationRail {
+  --foundation-rail-edge: 1rem;
+  --foundation-rail-inset: max(
+    var(--foundation-rail-edge),
+    calc((var(--foundation-viewport-width, 100vw) - 72rem) / 2)
+  );
+  display: grid;
+  position: relative;
+  grid-auto-flow: column;
+  grid-auto-columns: min(90%, 31rem);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--foreground) 20%, transparent)
+    transparent;
+  width: var(--foundation-viewport-width, 100vw);
+  margin-inline: calc(50% - var(--foundation-viewport-width, 100vw) / 2);
+  padding: 0.25rem var(--foundation-rail-inset) 1.25rem;
+  scroll-padding-inline: var(--foundation-rail-inset);
+  border-radius: 0;
+}
+
+.foundationRail:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -4px;
+}
+
+@media (min-width: 40rem) {
+  .foundationRail {
+    --foundation-rail-edge: 1.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .foundationRail {
+    --foundation-rail-edge: 2rem;
+  }
+}
+
+.foundationTile {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-self: stretch;
+  overflow: hidden;
+  scroll-snap-align: start;
+  border: 1px solid var(--border);
+  border-radius: clamp(1.25rem, 2.4vw, 1.75rem);
+  background: var(--background);
+  box-shadow: 0 3px 12px color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+.foundationTile:focus-within {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+}
+
+.foundationTileHeader {
+  display: flex;
+  min-height: 3.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 2.2vw, 1.5rem);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.foundationTileNumber {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.foundationTileTechnology {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--foreground);
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.foundationTileTechnology > svg {
+  color: var(--primary);
+}
+
+.foundationTileFigure {
+  min-width: 0;
+}
+
+.foundationTileStage,
+.foundationConcept {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1rem, 2.2vw, 1.75rem);
+  background:
+    radial-gradient(
+      ellipse at 0 0,
+      color-mix(in srgb, var(--starter-pro-sun) 40%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 100% 100%,
+      color-mix(in srgb, var(--starter-pro-aura-middle) 35%, transparent),
+      transparent 70%
+    ),
+    color-mix(in srgb, var(--starter-pro-aura-start) 10%, var(--background));
+}
+
+.foundationTileImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: 0.625rem;
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgb(43 25 67 / 10%);
+}
+
+.foundationTileFigure figcaption {
+  min-height: 12.5rem;
+  padding: 1.25rem clamp(1rem, 2.2vw, 1.5rem);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.8;
+}
+
+.foundationTileFigure figcaption > span {
+  display: block;
+  margin-bottom: 0.625rem;
+  color: var(--foreground);
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.foundationTileCopy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.productPage .foundationTileCopy h3 {
+  min-height: 2.3em;
+  font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.foundationTileCopy > p {
+  margin-top: 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+.productPage .foundationTileAction {
+  min-height: 2.75rem;
+  margin-block: 1.25rem 1.5rem;
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--background));
+  color: var(--primary);
+}
+
+.productPage .foundationTileAction:hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 9%, var(--background));
+}
+
+.foundationTileDetails {
+  width: 100%;
+  margin-top: auto;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.foundationTileDetails summary {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+}
+
+.foundationTileDetails summary::-webkit-details-marker {
+  display: none;
+}
+
+.foundationTileDetails summary:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.foundationTileDetails[open] summary > svg {
+  transform: rotate(180deg);
+}
+
+.foundationTileDetails > div {
+  padding-top: 1.25rem;
+}
+
+.foundationFlowLabel {
+  margin-top: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.foundationTileFlow {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.foundationTileFlow li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.625rem;
+  background: var(--starter-pro-soft);
+  font-size: 0.75rem;
+}
+
+.foundationTileFlow li > svg {
+  grid-row: span 2;
+  color: var(--primary);
+}
+
+.foundationTileFlow li > span:last-child {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.foundationTileSetup {
+  margin-top: 1.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+
+.foundationTileSetup strong {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.foundationConcept {
+  display: flex;
+  min-height: 28rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.foundationConcept > svg {
+  box-sizing: content-box;
+  width: 3rem;
+  height: 3rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  background: var(--background);
+  color: var(--primary);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--foreground) 7%, transparent);
+}
+
+.foundationConcept > span {
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.foundationBlueprint {
+  display: grid;
+  position: absolute;
+  z-index: -1;
+  inset: 15% -10%;
+  gap: 1rem;
+  transform: rotate(-12deg);
+}
+
+.foundationBlueprint > span {
+  border: 1px solid color-mix(in srgb, var(--primary) 10%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--background) 15%, transparent);
+}
+
+.foundationProgress {
+  height: 3px;
+  margin-top: 1rem;
+  overflow: hidden;
+  border-radius: 100px;
+  background: var(--border-subtle);
+}
+
+.foundationProgress > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .foundationProgress > span {
+    transition: transform 300ms ease;
+  }
+}
+
+@media (max-width: 47.999rem) {
+  .foundationRail {
+    grid-auto-columns: 92%;
   }
 
-  .foundationCards > [data-reveal="visible"] {
-    opacity: 1;
-    transform: none;
+  .foundationConcept {
+    min-height: 24rem;
   }
 
-  .foundationCards > [data-reveal="focused"] {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .foundationPosition {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Wide product cards make the whole story readable within a desktop viewport. */
+@media (min-width: 64rem) {
+  .foundationRail {
+    grid-auto-columns: min(88%, 62rem);
   }
 
-  @media (min-width: 48rem) {
-    .foundationCards > [data-reveal="visible"]:nth-child(even) {
-      transition-delay: 120ms;
-    }
+  .foundationTile {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    grid-template-rows: auto 1fr;
   }
 
-  @media (max-width: 47.999rem) {
-    .foundationCards > [data-reveal] {
-      transition-duration: 500ms;
-    }
-
-    .foundationCards > [data-reveal="pending"] {
-      transform: translateY(24px);
-    }
+  .foundationTileHeader {
+    grid-column: 1 / -1;
   }
+
+  .foundationTileFigure {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    border-right: 1px solid var(--border-subtle);
+    background: var(--starter-pro-soft);
+  }
+
+  .foundationTileFigure figcaption {
+    min-height: 0;
+    border-bottom: 0;
+  }
+
+  .foundationConcept {
+    min-height: 25rem;
+    border-right: 1px solid var(--border-subtle);
+    border-bottom: 0;
+  }
+
+  .foundationTileCopy {
+    padding: clamp(1.5rem, 2.5vw, 2.5rem);
+  }
+
+  .productPage .foundationTileCopy h3 {
+    min-height: 0;
+    font-size: clamp(1.75rem, 2.7vw, 2.125rem);
+  }
+}
+
+/* An open white services chapter with quiet, product-like detail. */
+.productPage .servicesBand {
+  background: var(--background);
+  box-shadow: 0 0 0 100vmax var(--background);
+}
+
+.productPage .implementationHeading {
+  max-width: 52rem;
+  margin-inline: auto;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.productPage .implementationHeading h2 {
+  max-width: 25ch;
+  margin-inline: auto;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+
+.implementationGrid {
+  display: grid;
+  gap: clamp(1rem, 2.2vw, 1.75rem);
+}
+
+.productPage .servicesBand .implementationCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+  border: 1px solid var(--border);
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+  background: var(--background);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+.implementationIdentity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.implementationIdentity > span:first-child {
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 10%, var(--border));
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--primary) 5%, var(--background));
+  color: var(--primary);
+}
+
+.implementationIdentity > span:last-child {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.productPage .implementationCard h3 {
+  font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.implementationPrice {
+  margin-top: 1.25rem;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.implementationFeatures {
+  display: grid;
+  gap: 1.25rem;
+  margin-block: 2rem;
+  padding-block: 1.75rem;
+  border-block: 1px solid var(--border-subtle);
+}
+
+.implementationFeatures > li > svg {
+  box-sizing: content-box;
+  width: 0.75rem;
+  height: 0.75rem;
+  padding: 0.125rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--primary) 7%, var(--background));
+}
+
+.implementationDelivery {
+  margin-bottom: 1.5rem;
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: var(--starter-pro-soft);
+}
+
+.productPage .implementationAction {
+  width: 100%;
+  min-height: 3rem;
+  height: auto;
+  padding: 0.75rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--border));
+  border-radius: 100px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  text-align: center;
+  white-space: normal;
+}
+
+.productPage .implementationAction:hover {
+  background: var(--starter-pro-action-hover);
+  color: var(--primary-foreground);
+}
+
+@media (min-width: 64rem) {
+  .implementationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* A single owned reference, presented as a spacious product story. */
+.studioCard {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--starter-pro-soft);
+}
+
+.studioIntro {
+  align-self: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.studioEyebrow {
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.productPage .studioIntro h2 {
+  max-width: 18ch;
+  margin-top: 1.25rem;
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.studioSummary {
+  max-width: 34rem;
+  margin-top: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+
+.productPage .studioAction {
+  min-height: 2.75rem;
+  margin-top: 1.75rem;
+  padding-inline: 1.25rem;
+  border-radius: 100px;
+}
+
+.studioVisual {
+  display: block;
+  position: relative;
+  isolation: isolate;
+  align-self: center;
+  min-width: 0;
+  margin: 0 0.75rem 0.75rem;
+  padding: clamp(1rem, 2.5vw, 2.25rem) clamp(0.875rem, 2vw, 2rem)
+    clamp(3.5rem, 7vw, 6rem);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.125rem, 2.3vw, 1.75rem);
+  background:
+    radial-gradient(
+      ellipse at 0% 0%,
+      color-mix(in srgb, var(--starter-pro-sun) 50%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse at 100% 100%,
+      color-mix(in srgb, var(--starter-pro-aura-middle) 42%, transparent),
+      transparent 65%
+    ),
+    color-mix(in srgb, var(--starter-pro-aura-start) 15%, var(--background));
+}
+
+.studioVisual:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: -5px;
+}
+
+.studioDisplay {
+  position: relative;
+  margin-left: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  background: var(--background);
+  box-shadow:
+    0 18px 40px rgb(43 25 67 / 14%),
+    0 2px 8px rgb(43 25 67 / 6%);
+}
+
+.studioChrome {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--foreground);
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.studioIdentity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.studioIdentity > svg {
+  color: var(--primary);
+}
+
+.studioDisplay > [role="img"],
+.studioInset > [role="img"] {
+  border: 0;
+  border-radius: 0;
+}
+
+.studioInset {
+  position: absolute;
+  bottom: clamp(0.75rem, 2vw, 1.5rem);
+  left: clamp(0.75rem, 2vw, 1.75rem);
+  width: 46%;
+  max-width: 17rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--background);
+  box-shadow:
+    0 12px 32px rgb(43 25 67 / 18%),
+    0 2px 6px rgb(43 25 67 / 6%);
+}
+
+.studioInset > p {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--foreground);
+  font-size: 0.625rem;
+  font-weight: 600;
+}
+
+.studioDetails {
+  padding: 1.5rem clamp(1.5rem, 4vw, 3rem);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--background);
+}
+
+.studioFacts {
+  display: grid;
+  gap: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.studioFacts > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+}
+
+.studioFacts dt {
+  color: var(--muted-foreground);
+}
+
+.studioFacts dd {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.studioDisclosure {
+  max-width: 59rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+
+@media (min-width: 48rem) {
+  .studioFacts {
+    grid-template-columns: 1fr 1fr 1.25fr;
+    gap: 1.5rem;
+  }
+
+  .studioFacts > div {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.375rem;
+  }
+
+  .studioFacts > div + div {
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--border-subtle);
+  }
+}
+
+@media (min-width: 64rem) {
+  .studioCard {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+
+  .studioIntro {
+    padding-right: 1.5rem;
+  }
+
+  .studioVisual {
+    margin: 1rem 1rem 1rem 0;
+  }
+
+  .studioDetails {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .studioDisplay,
+  .studioInset {
+    transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .studioVisual:hover .studioDisplay {
+    transform: translateY(-3px);
+  }
+
+  .studioVisual:hover .studioInset {
+    transform: translateY(-6px);
+  }
+}
+
+/* Product media uses a quiet, spacious stage and familiar capsule controls. */
+.productPage .mediaSection .showcaseHeader {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.productPage .mediaSection .showcaseHeader h2 {
+  max-width: 23ch;
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+
+.showcaseHeader > div:first-child > p {
+  max-width: 39rem;
+}
+
+.tourStage {
+  padding: clamp(0.5rem, 2.2vw, 2rem);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: clamp(1.25rem, 3vw, 2.5rem);
+  background:
+    radial-gradient(
+      ellipse at 6% 6%,
+      color-mix(in srgb, var(--starter-pro-sun) 48%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 92% 92%,
+      color-mix(in srgb, var(--starter-pro-aura-middle) 48%, transparent),
+      transparent 65%
+    ),
+    color-mix(in srgb, var(--starter-pro-aura-start) 15%, var(--background));
+}
+
+.tourScreen {
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: clamp(0.875rem, 2vw, 1.5rem);
+  background: #09090b;
+  box-shadow:
+    0 14px 36px rgb(28 15 46 / 15%),
+    0 2px 8px rgb(28 15 46 / 8%);
+}
+
+.tourPoster,
+.tourVideo {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.tourPoster {
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tourPoster:focus-visible,
+.tourVideo:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: -5px;
+}
+
+.tourPosterImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tourPlay {
+  display: inline-flex;
+  position: absolute;
+  bottom: 7%;
+  left: 50%;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0.375rem 1.25rem 0.375rem 0.375rem;
+  border: 1px solid rgb(255 255 255 / 55%);
+  border-radius: 100px;
+  background: rgb(255 255 255 / 94%);
+  color: #252137;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 20%);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.tourPlayIcon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border-radius: 50%;
+  background: #252137;
+  color: #ffffff;
+}
+
+.tourPlayIcon svg {
+  margin-left: 2px;
+}
+
+.tourDuration {
+  padding-left: 0.75rem;
+  border-left: 1px solid #d9d7e0;
+  color: #626172;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.tourDetails {
+  display: grid;
+  align-items: start;
+  gap: 0.5rem 2rem;
+  margin-top: 1rem;
+  padding-inline: clamp(0.25rem, 1.5vw, 1.25rem);
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+
+.tourMetadata {
+  padding-block: 0.75rem;
+}
+
+.tourTranscript {
+  min-width: 0;
+}
+
+.tourTranscript summary {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  color: var(--foreground);
+  list-style: none;
+  cursor: pointer;
+}
+
+.tourTranscript summary::-webkit-details-marker {
+  display: none;
+}
+
+.tourTranscript summary:hover {
+  background: var(--background);
+}
+
+.tourTranscript summary:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.tourTranscript[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.productPage .tourTranscript h3 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.tourTranscript ol {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.5rem;
+  background: var(--background);
 }
 
 .carousel {
   --preview-direction: 1;
   --preview-distance: clamp(4px, 0.7vw, 8px);
+  min-width: 0;
+}
+
+.previewFigure {
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.previewStage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(0.875rem, 4vw, 4rem);
+  border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  border-radius: clamp(1.25rem, 3vw, 2.5rem);
+  background:
+    radial-gradient(
+      ellipse at 8% 2%,
+      color-mix(in srgb, var(--starter-pro-sun) 45%, transparent),
+      transparent 64%
+    ),
+    radial-gradient(
+      ellipse at 98% 100%,
+      color-mix(in srgb, var(--starter-pro-aura-middle) 42%, transparent),
+      transparent 64%
+    ),
+    color-mix(in srgb, var(--starter-pro-aura-start) 12%, var(--background));
+}
+
+.previewScreen {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 1px solid rgb(255 255 255 / 75%);
+  border-radius: clamp(0.5rem, 1vw, 0.875rem);
+  background: #ffffff;
+  box-shadow:
+    0 20px 50px rgb(43 25 67 / 12%),
+    0 2px 8px rgb(43 25 67 / 6%);
+}
+
+.previewCaption {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  align-items: start;
+  gap: 1.5rem 2.5rem;
+  margin-top: 0.75rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.25rem, 2vw, 1.75rem);
+  background: var(--background);
+}
+
+.previewEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.previewNumber {
+  font-variant-numeric: tabular-nums;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.previewEyebrow > span + span {
+  padding-left: 0.625rem;
+  border-left: 1px solid var(--border);
+}
+
+.productPage .previewTitle h3 {
+  margin-top: 0.75rem;
+  color: var(--foreground);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.previewExplanation {
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.previewTheme {
+  display: inline-flex;
+  margin-top: 0.875rem;
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  background: var(--starter-pro-soft);
+  color: var(--muted-foreground);
+  font-size: 0.625rem;
+  line-height: 1.6;
+}
+
+.previewAnnotation {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+
+.previewAnnotation > svg {
+  margin-top: 0.1875rem;
+  color: var(--muted-foreground);
+}
+
+.carouselNavigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  margin-top: 1.5rem;
+}
+
+.previewPicker {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--foreground) 4%, var(--background));
+}
+
+.previewChoice {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.previewChoice[aria-current="true"] {
+  cursor: default;
+}
+
+.previewChoice:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+
+.previewDot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--foreground) 35%, transparent);
+}
+
+.previewChoice:hover .previewDot {
+  background: var(--foreground);
+}
+
+.previewProgress {
+  display: block;
+  width: 1.5rem;
+  height: 0.375rem;
+  overflow: hidden;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--primary) 16%, transparent);
+}
+
+.carouselToolbar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.carouselPosition {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.carouselPosition > span:first-child {
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.rotationStatus {
+  display: none;
+}
+
+.carouselControls {
+  display: flex;
+  flex: none;
+  gap: 0.5rem;
+}
+
+.productPage .carouselControl {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--foreground) 4%, var(--background));
+  color: var(--foreground);
+  box-shadow: none;
+}
+
+.productPage .carouselControl:hover {
+  border-color: var(--border);
+  background: color-mix(in srgb, var(--foreground) 8%, var(--background));
+}
+
+.previewDisclaimer {
+  max-width: 60rem;
+  margin-top: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.9;
+}
+
+@media (min-width: 48rem) {
+  .tourDetails {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 27rem);
+  }
+
+  .previewCaption {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .previewExplanation {
+    padding-top: 0.25rem;
+  }
+
+  .rotationStatus {
+    display: inline;
+    margin-left: 0.25rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--border);
+  }
+}
+
+@media (min-width: 48rem) {
+  .carouselNavigation {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+  }
+
+  .previewPicker {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .carouselToolbar {
+    display: contents;
+  }
+
+  .carouselPosition {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .carouselControls {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+}
+
+@media (max-width: 30rem) {
+  .tourPlay {
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding-right: 0.875rem;
+    font-size: 0.6875rem;
+  }
+
+  .tourPlayIcon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .tourDuration {
+    padding-left: 0.5rem;
+    font-size: 0.625rem;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tourPosterImage {
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tourPlay {
+    transition:
+      transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+      background 200ms ease;
+  }
+
+  .tourPoster:hover .tourPosterImage {
+    transform: scale(1.015);
+  }
+
+  .tourPoster:hover .tourPlay {
+    background: #ffffff;
+    transform: translateX(-50%) scale(1.035);
+  }
+}
+
+@media (forced-colors: active) {
+  .tourPlay,
+  .tourPlayIcon {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
 }
 
 .carousel[data-direction="previous"] {
@@ -1932,7 +4084,7 @@
 .progressFill {
   display: block;
   height: 100%;
-  background: var(--foreground);
+  background: var(--primary);
   transform-origin: left;
 }
 
@@ -2023,5 +4175,842 @@
   .slide[data-exiting="true"] .media,
   .slide[data-exiting="true"] .caption {
     transform: none;
+  }
+}
+
+/* Remaining product panels share the same quiet, rounded presentation. */
+.productPage .bodyHeading {
+  max-width: 54rem;
+  margin-inline: auto;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.productPage .bodyHeading h2 {
+  max-width: 26ch;
+  margin-inline: auto;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+
+.productPage .bodyHeading h2 + p {
+  max-width: 65ch;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.productPage .heroShowcase,
+.productPage .heroArtwork {
+  border-radius: var(--starter-pro-panel-radius);
+}
+
+.productPage .heroCompanion {
+  border-radius: var(--starter-pro-card-radius);
+}
+
+.heroConnections > span {
+  border-radius: 0.75rem;
+}
+
+.productPage .workflowBand .readinessCard {
+  border-radius: var(--starter-pro-card-radius);
+}
+
+.productPage .foundationEvidence {
+  overflow: visible;
+  gap: 1rem;
+}
+
+.productPage .foundationEvidence > a {
+  gap: 0.875rem;
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: var(--background);
+}
+
+.productPage .foundationEvidence > a > svg:first-child {
+  flex-shrink: 0;
+  padding: 0.75rem;
+  border-radius: var(--starter-pro-icon-radius);
+}
+
+.productFit {
+  gap: 1.25rem;
+  overflow: visible;
+  border: 0;
+}
+
+.productPage .productFit > div {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--starter-pro-card-radius);
+  background: var(--background);
+}
+
+.productPage .productFit > div:last-child {
+  background: var(--starter-pro-soft);
+}
+
+.productPage .productFit h3 {
+  max-width: 25ch;
+  font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+}
+
+.productPage .offer,
+.productPage .purchasePanel,
+.productPage .configurationPanel {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--starter-pro-panel-radius);
+  background: var(--background);
+  box-shadow: var(--starter-pro-panel-shadow);
+}
+
+.productPage .offer {
+  margin-bottom: 1.5rem;
+  background:
+    radial-gradient(
+      ellipse at 0 0,
+      color-mix(in srgb, var(--starter-pro-sun) 9%, transparent),
+      transparent 55%
+    ),
+    var(--background);
+}
+
+.offerBody {
+  gap: 1.75rem;
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+}
+
+.productPage .offerIntro h3 {
+  color: var(--foreground);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.productPage .offerIntro :global(.text-5xl) {
+  font-size: clamp(3rem, 5vw, 4rem);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.productPage .offerActions :global([data-slot="button"]) {
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 100px;
+}
+
+.offerFooter {
+  padding: 0.875rem clamp(1.5rem, 3.5vw, 3rem);
+  background: color-mix(in srgb, var(--foreground) 2%, var(--background));
+}
+
+.productPage .deliveryPath {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--background);
+}
+
+.productPage .deliveryPath > div:first-child > svg,
+.productPage .purchaseCard > svg {
+  padding: 0.875rem;
+  border-radius: var(--starter-pro-icon-radius);
+  background: color-mix(in srgb, var(--primary) 5%, var(--background));
+  color: var(--primary);
+}
+
+.productPage .deliveryPath h3 {
+  max-width: 19ch;
+  font-size: clamp(1.5rem, 2.7vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.deliveryTimeline::before {
+  top: 1.125rem;
+  left: 1.125rem;
+  background: var(--border);
+}
+
+.deliveryTimeline li > span:first-child {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-color: var(--border);
+  border-radius: 50%;
+  background: var(--background);
+}
+
+.productPage .purchaseGrid {
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  background: var(--starter-pro-soft);
+}
+
+.productPage .purchaseCard,
+.productPage .setupStep,
+.productPage .resourceCard {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--starter-pro-card-radius);
+  background: var(--background);
+}
+
+.productPage .purchaseCard {
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.productPage .purchaseCard h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+.purchaseFooter {
+  gap: 1rem;
+  padding: 1.5rem clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--background);
+}
+
+.setupPanel,
+.setupSteps {
+  gap: 1.25rem;
+}
+
+.productPage .setupStep {
+  gap: 1.25rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.productPage .setupStep > span:first-child {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--starter-pro-soft);
+  color: var(--primary);
+}
+
+.productPage .setupStep h3 {
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
+
+.productPage .configurationPanel {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.productPage .configurationPanel h3 {
+  max-width: 24ch;
+  font-size: clamp(1.5rem, 2.6vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.productPage .serviceOrbit {
+  min-height: 9rem;
+  margin: 0 0 2rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: var(--starter-pro-soft);
+}
+
+.serviceOrbit span {
+  width: clamp(2.25rem, 4vw, 3rem);
+  height: clamp(2.25rem, 4vw, 3rem);
+  border-radius: var(--starter-pro-icon-radius);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--foreground) 4%, transparent);
+}
+
+.resourceGrid {
+  gap: 1.25rem;
+}
+
+.productPage .resourceCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.75rem 1rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+
+.productPage .resourceCard > svg:first-child {
+  grid-column: 1;
+  grid-row: 1;
+  padding: 0.875rem;
+  border-radius: var(--starter-pro-icon-radius);
+  background: color-mix(in srgb, var(--primary) 5%, var(--background));
+  color: var(--primary);
+}
+
+.productPage .resourceCard > svg:last-child {
+  box-sizing: content-box;
+  grid-column: 2;
+  grid-row: 1;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background: var(--starter-pro-soft);
+  color: var(--muted-foreground);
+}
+
+.resourceCard > div {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.productPage .resourceCard h3 {
+  max-width: 24ch;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+}
+
+.docsResources {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 2rem;
+  margin-top: 1.75rem;
+}
+
+.productPage .buyerFaqLayout {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem;
+  max-width: 58rem;
+  margin-inline: auto;
+}
+
+.buyerFaqLayout > div:first-child {
+  display: block;
+  max-width: 48rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.productPage .faqSection h2 {
+  max-width: 25ch;
+  margin-inline: auto;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+
+.productPage .faqSection h2 + p {
+  margin-inline: auto;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.productPage .faqSection > div > div:last-child {
+  display: grid;
+  gap: 0.75rem;
+  border: 0;
+}
+
+.productPage .faqSection details,
+.productPage .faqSection details[open] {
+  margin: 0;
+  padding-inline: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: var(--background);
+}
+
+.productPage .faqSection details[open] {
+  border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+}
+
+.productPage .faqSection summary {
+  min-height: 5rem;
+  gap: 1rem;
+  padding-block: 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+}
+
+.productPage .faqSection summary > span:last-child {
+  padding: 0.5rem;
+  border-radius: 50%;
+  background: var(--starter-pro-soft);
+  color: var(--foreground);
+}
+
+.productPage .closingCta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 2rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 4vw, 4rem);
+  border: 1px solid var(--border);
+  border-radius: var(--starter-pro-panel-radius);
+  background: var(--background);
+  box-shadow: var(--starter-pro-panel-shadow);
+  text-align: center;
+}
+
+.closingCta > div:not(.closingArtwork) {
+  min-width: 0;
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+.productPage .closingCta h2 {
+  max-width: 24ch;
+  margin-inline: auto;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+
+.productPage .closingCta p {
+  margin-inline: auto;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.productPage .closingCta :global(.site-primary-action) {
+  min-height: 3rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 100px;
+}
+
+.productPage
+  .closingCta
+  :global(.site-primary-action):not(:disabled):not(
+    [aria-disabled="true"]
+  ):hover {
+  transform: none;
+  background: var(--starter-pro-action-hover);
+  color: var(--primary-foreground);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .productPage .resourceCard,
+  .productPage .foundationEvidence > a {
+    transition:
+      transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 200ms ease,
+      box-shadow 300ms ease;
+  }
+
+  .productPage .resourceCard:hover,
+  .productPage .foundationEvidence > a:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+    box-shadow: var(--starter-pro-panel-shadow);
+  }
+}
+
+@media (max-width: 39.999rem) {
+  .productPage .offerBody {
+    gap: 1.5rem;
+  }
+
+  .offerIntro > div:first-child {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .productPage .setupStep {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .productPage .closingCta > div:last-child {
+    width: 100%;
+  }
+}
+
+@media (forced-colors: active) {
+  .productPage
+    :is(
+      .offer,
+      .purchasePanel,
+      .purchaseCard,
+      .configurationPanel,
+      .setupStep,
+      .resourceCard,
+      .closingCta
+    ),
+  .productPage .productFit > div,
+  .productPage .foundationEvidence > a,
+  .productPage .faqSection details {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+}
+
+/* The full-width bar keeps its contents aligned with the site header. */
+.productPage .productBar {
+  display: block;
+  width: 100%;
+  max-width: none;
+  min-height: 4rem;
+  margin: 0;
+  padding: 0;
+  border-bottom-color: var(--border-subtle);
+  background: var(--background);
+  box-shadow: 0 3px 14px color-mix(in srgb, var(--foreground) 2%, transparent);
+}
+
+.productPage .productBarInner {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 76rem;
+  min-height: 4rem;
+  gap: clamp(0.75rem, 1.2vw, 1.25rem);
+  padding-block: 0.375rem;
+}
+
+.productPage .productIdentity {
+  min-height: 2.25rem;
+  padding-inline: 0 clamp(0.75rem, 1.2vw, 1.25rem);
+  border-inline-end: 1px solid var(--border-subtle);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+}
+
+.productIdentity > svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--primary);
+}
+
+.sectionNavShell {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: clamp(0.5rem, 1vw, 1rem);
+}
+
+.productPage .sectionNav {
+  flex: 1;
+  gap: 0.375rem;
+  padding: 0.25rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  scroll-padding-inline: 0.25rem;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.productPage .sectionNavLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.625rem clamp(0.875rem, 1.25vw, 1.125rem);
+  border: 1px solid transparent;
+  border-radius: 100px;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.sectionNavIndex {
+  margin-right: 0.5rem;
+  opacity: 0.6;
+  font-size: 0.625rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.productPage .sectionNavLink[aria-current="location"] {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+  color: var(--foreground);
+  box-shadow: none;
+}
+
+.sectionNavLink[aria-current="location"] .sectionNavIndex {
+  opacity: 1;
+  color: var(--primary);
+}
+
+.productPage .sectionNavLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -3px;
+}
+
+.productPage .sectionNavLink[aria-current="location"]:focus-visible {
+  outline-color: var(--ring);
+}
+
+.productPage .sectionNavLink:active {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--foreground);
+}
+
+.productPage .sectionNavLink[aria-current="location"]:active {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--foreground);
+  box-shadow: none;
+}
+
+.sectionNavControls {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.375rem;
+  padding-inline-start: clamp(0.5rem, 1vw, 1rem);
+  border-inline-start: 1px solid var(--border-subtle);
+}
+
+.sectionNavPosition {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-inline: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.625rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.sectionNavPosition > span {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.productPage .sectionNavControl {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted-foreground);
+  box-shadow: none;
+}
+
+.sectionNavControl:disabled {
+  opacity: 0.3;
+}
+
+.productPage .sectionNavControl:not(:disabled):active {
+  background: color-mix(in srgb, var(--primary) 12%, var(--background));
+}
+
+.productPage :global(.marketing-section),
+.productPage .faqSection {
+  scroll-margin-top: calc(var(--site-header-height) + 5.5rem);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .productPage .productBar {
+    background: color-mix(in srgb, var(--background) 92%, transparent);
+    backdrop-filter: blur(20px) saturate(1.1);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .productPage .sectionNavLink:not([aria-current="location"]):hover {
+    background: color-mix(in srgb, var(--foreground) 4%, transparent);
+    color: var(--foreground);
+  }
+
+  .productPage .sectionNavLink[aria-current="location"]:hover {
+    background: color-mix(in srgb, var(--primary) 11%, transparent);
+    color: var(--foreground);
+  }
+
+  .productPage .sectionNavControl {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .productPage .sectionNavControl:not(:disabled):hover {
+    background: color-mix(in srgb, var(--foreground) 5%, var(--background));
+    color: var(--foreground);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .productPage .sectionNavLink,
+  .productPage .sectionNavControl {
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      box-shadow 180ms ease;
+  }
+}
+
+@media (max-width: 39.999rem) {
+  .productPage .productBarInner {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.375rem;
+    padding-block: 0.75rem 0.5rem;
+  }
+
+  .productPage .productIdentity {
+    min-height: 1.5rem;
+    padding-inline: 0.25rem;
+    border: 0;
+  }
+
+  .sectionNavShell,
+  .productPage .sectionNav {
+    width: 100%;
+  }
+
+  .sectionNavControls {
+    display: none;
+  }
+
+  .productPage :global(.marketing-section),
+  .productPage .faqSection {
+    scroll-margin-top: calc(var(--site-header-height) + 7rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(html):has(.productPage) {
+    scroll-behavior: auto;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .productPage .productBar {
+    background: var(--background);
+    backdrop-filter: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .productPage .productBar,
+  .productPage .productIdentity,
+  .sectionNavControls,
+  .productPage .sectionNavControl {
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+
+  .productPage .sectionNavLink[aria-current="location"],
+  .productPage .sectionNavLink[aria-current="location"]:is(:hover, :active) {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+    box-shadow: none;
+  }
+
+  .productPage .sectionNavLink[aria-current="location"]:focus-visible {
+    outline-color: HighlightText;
+  }
+
+  .sectionNavLink[aria-current="location"] .sectionNavIndex {
+    color: HighlightText;
+  }
+}
+
+/* A full-width color moment gives the closing action a clear visual weight. */
+.productPage .closingCta,
+:global(html.dark) .productPage .closingCta {
+  --closing-fill: #51229c;
+  --closing-ink: #ffffff;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(1.5rem, calc((100vw - 72rem) / 2));
+  padding-block: clamp(3.5rem, 7vw, 7rem);
+  border: 0;
+  border-radius: 0;
+  background:
+    radial-gradient(
+      ellipse at 0 100%,
+      color-mix(in srgb, var(--starter-pro-sun) 16%, transparent),
+      transparent 60%
+    ),
+    var(--closing-fill);
+  color: var(--closing-ink);
+  box-shadow: none;
+}
+
+.productPage .closingCta h2,
+.productPage .closingCta p,
+:global(html.dark) .productPage .closingCta h2,
+:global(html.dark) .productPage .closingCta p {
+  color: var(--closing-ink);
+}
+
+.productPage .closingCta p,
+:global(html.dark) .productPage .closingCta p {
+  opacity: 0.84;
+}
+
+.productPage .closingCta :global(.site-primary-action),
+:global(html.dark) .productPage .closingCta :global(.site-primary-action) {
+  border: 1px solid var(--closing-ink);
+  background: var(--closing-ink);
+  color: var(--closing-fill);
+  box-shadow: 0 3px 12px rgb(0 0 0 / 8%);
+}
+
+.productPage .closingCta :global(.site-primary-action):focus-visible {
+  outline-color: var(--closing-ink);
+  outline-offset: 4px;
+}
+
+.productPage
+  .closingCta
+  :global(.site-primary-action):not(:disabled):not(
+    [aria-disabled="true"]
+  ):hover,
+:global(html.dark)
+  .productPage
+  .closingCta
+  :global(.site-primary-action):not(:disabled):not(
+    [aria-disabled="true"]
+  ):hover {
+  border-color: var(--closing-ink);
+  background: color-mix(in srgb, var(--closing-ink) 92%, var(--closing-fill));
+  color: var(--closing-fill);
+}
+
+.productPage .pageFrame {
+  padding-bottom: 0;
+}
+
+:global(html[data-site-palette="monochrome"]) .productPage .closingCta {
+  --closing-fill: var(--foreground);
+  --closing-ink: var(--background);
+  background: var(--closing-fill);
+}
+
+@media (forced-colors: active) {
+  .productPage .closingCta,
+  :global(html.dark) .productPage .closingCta {
+    --closing-fill: Canvas;
+    --closing-ink: CanvasText;
+    border-block: 1px solid CanvasText;
+    background: Canvas;
   }
 }

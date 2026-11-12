@@ -8,6 +8,8 @@ import {
   Download,
   Layers3,
   ShieldCheck,
+  Settings2,
+  Workflow,
   Webhook,
 } from "lucide-react";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
@@ -82,7 +84,8 @@ export function StarterProReadiness() {
     >
       <MarketingSectionHeader
         titleId="starter-pro-readiness-heading"
-        align="left"
+        align="center"
+        className={styles.readinessHeading}
         eyebrow={tSite("From source to handover")}
         title={tSite("More of the product journey, already connected.")}
         description={tSite(
@@ -144,7 +147,7 @@ export function StarterProReadiness() {
           ),
         )}
       </div>
-      <p className="mt-4 max-w-3xl text-xs leading-6 text-muted-foreground">
+      <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-6 text-muted-foreground">
         {tSite(
           "Automated acceptance uses synthetic data and intercepted providers. Your launch checks include real email delivery, your Stripe sandbox, backups and the monitoring destination you configure.",
         )}
@@ -165,7 +168,8 @@ export function StarterProImplementation() {
     >
       <MarketingSectionHeader
         titleId="starter-pro-implementation-heading"
-        align="left"
+        className={styles.implementationHeading}
+        align="center"
         eyebrow={tSite("Optional services · Written quote")}
         title={tSite("An assisted start, scoped to your product.")}
         description={tSite(
@@ -173,20 +177,26 @@ export function StarterProImplementation() {
           { value0: PRODUCT_DISPLAY["starter-pro"].priceLabel },
         )}
       />
-      <div className="grid gap-4 lg:grid-cols-2">
-        {Object.values(STARTER_PRO_SERVICES).map((service) => (
+      <div className={styles.implementationGrid}>
+        {Object.values(STARTER_PRO_SERVICES).map((service, index) => (
           <article
             key={service.id}
             aria-labelledby={`${service.id}-heading`}
-            className={`${styles.implementationCard} flex min-w-0 flex-col rounded-[5px] border border-border-subtle bg-card p-6 sm:p-8`}
+            className={styles.implementationCard}
           >
+            <div className={styles.implementationIdentity} aria-hidden="true">
+              <span>
+                {service.id === "guided-setup" ? <Settings2 /> : <Workflow />}
+              </span>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+            </div>
             <h3
               id={`${service.id}-heading`}
               className="text-lg font-semibold tracking-tight"
             >
               {tSite(service.title)}
             </h3>
-            <p className="mt-4 font-brand text-3xl font-semibold tracking-tight">
+            <p className={styles.implementationPrice}>
               {tSite(service.priceLabel)}
             </p>
             <p className="mt-2 text-xs text-muted-foreground">
@@ -195,7 +205,7 @@ export function StarterProImplementation() {
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
               {tSite(service.description)}
             </p>
-            <ul className="my-6 space-y-3 border-y border-border-subtle py-5">
+            <ul className={styles.implementationFeatures}>
               {service.features.map((feature) => (
                 <li key={feature} className="flex gap-3 text-sm leading-6">
                   <Check
@@ -206,7 +216,7 @@ export function StarterProImplementation() {
                 </li>
               ))}
             </ul>
-            <div className="mb-5">
+            <div className={styles.implementationDelivery}>
               <h4 className="text-xs font-medium">
                 {tSite("What you receive")}
               </h4>
@@ -224,7 +234,11 @@ export function StarterProImplementation() {
             <p className="mb-6 flex-1 text-xs leading-6 text-muted-foreground">
               {tSite(service.scope)}
             </p>
-            <SiteButton variant="outline" asChild className="w-full">
+            <SiteButton
+              variant="outline"
+              asChild
+              className={styles.implementationAction}
+            >
               <Link href={service.href}>{tSite(service.action)}</Link>
             </SiteButton>
           </article>

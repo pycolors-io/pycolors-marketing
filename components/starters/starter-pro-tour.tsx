@@ -1,8 +1,10 @@
+import { ChevronDown } from "lucide-react";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { STARTER_PRO_TOUR } from "@/lib/products/starter-pro-tour";
 import { StarterProTourPlayer } from "./starter-pro-tour-player";
+import styles from "./starter-pro.module.css";
 
 export function StarterProTour() {
   const tSite = useCopy();
@@ -12,10 +14,11 @@ export function StarterProTour() {
       id={STARTER_PRO_TOUR.id}
       divider="pattern"
       width="full"
-      className="scroll-mt-24"
+      className={`${styles.mediaSection} scroll-mt-24`}
       aria-labelledby="starter-pro-tour-heading"
     >
       <MarketingSectionHeader
+        className={styles.showcaseHeader}
         titleId="starter-pro-tour-heading"
         align="left"
         eyebrow={tSite("Product tour")}
@@ -30,16 +33,17 @@ export function StarterProTour() {
         captions={STARTER_PRO_TOUR.captions}
         duration={STARTER_PRO_TOUR.duration}
       />
-      <div className="mt-4 flex flex-col gap-3 text-xs leading-6 text-muted-foreground sm:flex-row sm:items-start sm:justify-between sm:gap-8">
-        <p>
+      <div className={styles.tourDetails}>
+        <p className={styles.tourMetadata}>
           {tSite(STARTER_PRO_TOUR.duration)}{" "}
           {tSite(" · English · Instrumental music · Example data")}
         </p>
-        <details className="min-w-0 sm:max-w-2xl sm:flex-1">
-          <summary className="min-h-11 cursor-pointer rounded-[3px] py-2 text-foreground underline decoration-border underline-offset-4 hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
+        <details className={styles.tourTranscript}>
+          <summary>
             {tSite("Read the tour transcript")}
+            <ChevronDown className="size-4 shrink-0" aria-hidden="true" />
           </summary>
-          <ol className="mt-4 space-y-5 border-t border-border-subtle pt-5">
+          <ol>
             {STARTER_PRO_TOUR.transcript.map(({ title, text }) => (
               <li key={title}>
                 <h3 className="font-medium text-foreground">{tSite(title)}</h3>

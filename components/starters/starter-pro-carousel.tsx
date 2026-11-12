@@ -96,88 +96,11 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
       aria-label={tSite("Starter Pro interface previews")}
       data-direction={direction}
       data-rotating={rotating}
-      className={`${styles.carousel} min-w-0 overflow-hidden rounded-[5px] border border-border-subtle bg-background`}
+      className={styles.carousel}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setPlaying(false)}
     >
-      <div className="flex items-center justify-between gap-2 border-b border-border-subtle px-3 py-2 sm:px-5">
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <p>
-            {tSite("Preview")}
-            {tSite(" ")}
-            <span className="ml-2 font-mono text-foreground">
-              {tSite(String(active + 1).padStart(2, "0"))} /{tSite(" ")}
-              {tSite(String(slides.length).padStart(2, "0"))}
-            </span>
-          </p>
-          <span
-            aria-hidden="true"
-            className="hidden items-center gap-1.5 border-l border-border-subtle pl-3 sm:inline-flex"
-          >
-            <span
-              className={`size-1.5 rounded-full ${rotating ? "bg-foreground" : "bg-muted-foreground/40"}`}
-            />
-            {tSite(rotating ? "Auto-play" : "Paused")}
-          </span>
-        </div>
-        <div className="flex gap-1">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="rounded-[5px]"
-            aria-label={tSite(playing ? "Pause slideshow" : "Play slideshow")}
-            aria-controls={id}
-            onPointerDown={() => {
-              // Keep a pointer's intended action when focus also stops rotation.
-              rotationIntent.current = !playing;
-            }}
-            onPointerCancel={() => {
-              rotationIntent.current = null;
-            }}
-            onKeyDown={() => {
-              rotationIntent.current = null;
-            }}
-            onClick={() => {
-              const resume = rotationIntent.current ?? !playing;
-              setPlaying(resume);
-              // An explicit Play action takes effect even while the pointer
-              // remains over the controls. A later hover can pause again.
-              if (resume) setHovered(false);
-              rotationIntent.current = null;
-            }}
-          >
-            {playing ? (
-              <Pause className="size-4" aria-hidden="true" />
-            ) : (
-              <Play className="size-4" aria-hidden="true" />
-            )}
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="rounded-[5px]"
-            aria-label={tSite("Previous preview")}
-            aria-controls={id}
-            onClick={() => select(active - 1)}
-          >
-            <ArrowLeft className="size-4" aria-hidden="true" />
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="rounded-[5px]"
-            aria-label={tSite("Next preview")}
-            aria-controls={id}
-            onClick={() => select(active + 1)}
-          >
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Button>
-        </div>
-      </div>
       <div
         id={id}
         className="grid"
@@ -204,44 +127,108 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
           </div>
         ))}
       </div>
-      <div
-        role="group"
-        aria-label={tSite("Choose a preview")}
-        className="grid grid-cols-2 border-t border-border-subtle sm:grid-cols-5"
-      >
-        {slides.map((slide, index) => (
-          <button
-            key={slide.title}
-            type="button"
-            aria-label={tSite(slide.title)}
-            aria-disabled={index === active}
-            aria-current={index === active ? "true" : undefined}
-            aria-controls={id}
-            onClick={() => {
-              if (index !== active) select(index);
-            }}
-            className={`relative flex min-h-11 items-center justify-center gap-2 px-3 py-3 text-xs transition-colors last:col-span-2 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-ring sm:last:col-span-1 ${index === active ? "bg-surface-muted/40 font-medium text-foreground" : "text-muted-foreground hover:bg-surface-muted/30 hover:text-foreground"}`}
-          >
-            <span
-              aria-hidden="true"
-              className="hidden font-mono text-[10px] text-muted-foreground lg:inline"
+      <div className={styles.carouselNavigation}>
+        <div
+          role="group"
+          aria-label={tSite("Choose a preview")}
+          className={styles.previewPicker}
+        >
+          {slides.map((slide, index) => (
+            <button
+              key={slide.title}
+              type="button"
+              aria-label={tSite(slide.title)}
+              title={tSite(slide.title)}
+              aria-disabled={index === active}
+              aria-current={index === active ? "true" : undefined}
+              aria-controls={id}
+              onClick={() => {
+                if (index !== active) select(index);
+              }}
+              className={styles.previewChoice}
             >
-              {tSite(String(index + 1).padStart(2, "0"))}
+              <span className="sr-only">{tSite(slide.title)}</span>
+              {index === active ? (
+                <span aria-hidden="true" className={styles.previewProgress}>
+                  <span
+                    className={styles.progressFill}
+                    style={{ animationDuration: `${AUTOPLAY_DELAY}ms` }}
+                  />
+                </span>
+              ) : (
+                <span aria-hidden="true" className={styles.previewDot} />
+              )}
+            </button>
+          ))}
+        </div>
+        <div className={styles.carouselToolbar}>
+          <p className={styles.carouselPosition}>
+            {tSite("Preview")}
+            <span>
+              {tSite(String(active + 1).padStart(2, "0"))} /{tSite(" ")}
+              {tSite(String(slides.length).padStart(2, "0"))}
             </span>
-            {tSite(slide.title)}
-            {index === active ? (
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 overflow-hidden bg-foreground/15"
-              >
-                <span
-                  className={styles.progressFill}
-                  style={{ animationDuration: `${AUTOPLAY_DELAY}ms` }}
-                />
-              </span>
-            ) : null}
-          </button>
-        ))}
+            <span aria-hidden="true" className={styles.rotationStatus}>
+              {tSite(rotating ? "Auto-play" : "Paused")}
+            </span>
+          </p>
+          <div className={styles.carouselControls}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              className={styles.carouselControl}
+              aria-label={tSite(playing ? "Pause slideshow" : "Play slideshow")}
+              aria-controls={id}
+              onPointerDown={() => {
+                // Keep a pointer's intended action when focus also stops rotation.
+                rotationIntent.current = !playing;
+              }}
+              onPointerCancel={() => {
+                rotationIntent.current = null;
+              }}
+              onKeyDown={() => {
+                rotationIntent.current = null;
+              }}
+              onClick={() => {
+                const resume = rotationIntent.current ?? !playing;
+                setPlaying(resume);
+                // An explicit Play action takes effect even while the pointer
+                // remains over the controls. A later hover can pause again.
+                if (resume) setHovered(false);
+                rotationIntent.current = null;
+              }}
+            >
+              {playing ? (
+                <Pause className="size-4" aria-hidden="true" />
+              ) : (
+                <Play className="size-4" aria-hidden="true" />
+              )}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              className={styles.carouselControl}
+              aria-label={tSite("Previous preview")}
+              aria-controls={id}
+              onClick={() => select(active - 1)}
+            >
+              <ArrowLeft className="size-4" aria-hidden="true" />
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              className={styles.carouselControl}
+              aria-label={tSite("Next preview")}
+              aria-controls={id}
+              onClick={() => select(active + 1)}
+            >
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
