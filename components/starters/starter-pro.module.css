@@ -296,10 +296,10 @@
 .heroCopy h1 {
   max-width: 22ch;
   margin-inline: 0;
-  font-size: clamp(2.375rem, 4.2vw, 3.5rem);
-  font-weight: 600;
-  line-height: 1.07;
-  letter-spacing: -0.045em;
+  font-size: clamp(2.5rem, 4.6vw, 4.125rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.055em;
 }
 
 .heroContent {
@@ -321,7 +321,7 @@
   border: 0;
   background: transparent;
   color: var(--primary);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
@@ -433,7 +433,7 @@
   border-top: 1px solid var(--border-subtle);
   background: var(--background);
   color: var(--muted-foreground);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   line-height: 1.7;
   text-wrap: pretty;
 }
@@ -1798,7 +1798,7 @@
 }
 .heroCaption {
   display: block;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
 }
 .heroCaption > a {
   margin-top: 0.25rem;
@@ -2022,7 +2022,7 @@
     display: none;
   }
   .heroCopy h1 {
-    font-size: clamp(2.125rem, 7vw, 2.75rem);
+    font-size: clamp(2.25rem, 9vw, 3rem);
   }
   .heroContent > p {
     max-width: none;
@@ -2986,15 +2986,21 @@
 .productPage .foundationTileAction {
   min-height: 2.75rem;
   margin-block: 1.25rem 1.5rem;
-  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+  border-color: var(--primary);
   border-radius: 100px;
-  background: color-mix(in srgb, var(--primary) 5%, var(--background));
-  color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .productPage .foundationTileAction:hover {
-  border-color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 9%, var(--background));
+  border-color: color-mix(in srgb, var(--primary) 88%, var(--background));
+  background: color-mix(in srgb, var(--primary) 88%, var(--background));
+  color: var(--primary-foreground);
+}
+
+.productPage .foundationTileAction:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
 }
 
 .foundationTileDetails {
@@ -3356,9 +3362,9 @@
 .productPage .studioIntro h2 {
   max-width: 18ch;
   margin-top: 1.25rem;
-  font-size: clamp(2rem, 3.4vw, 2.75rem);
-  font-weight: 600;
-  line-height: 1.08;
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 650;
+  line-height: 1.06;
   letter-spacing: -0.045em;
 }
 
@@ -3569,9 +3575,9 @@
 
 .productPage .mediaSection .showcaseHeader h2 {
   max-width: 23ch;
-  font-size: clamp(2rem, 3.6vw, 3rem);
-  font-weight: 600;
-  line-height: 1.1;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 650;
+  line-height: 1.06;
   letter-spacing: -0.045em;
 }
 
@@ -3827,7 +3833,7 @@
   margin-top: 0.75rem;
   color: var(--foreground);
   font-size: clamp(1.5rem, 2.5vw, 2rem);
-  font-weight: 600;
+  font-weight: 650;
   line-height: 1.15;
   letter-spacing: -0.035em;
 }
@@ -5700,6 +5706,8 @@
     border-color: CanvasText;
   }
 
+  .productPage .foundationTileAction,
+  .productPage .foundationTileAction:hover,
   .productPage .servicesBand .implementationCard .implementationAction,
   .productPage .servicesBand .implementationCard .implementationAction:hover {
     border-color: ButtonText;
