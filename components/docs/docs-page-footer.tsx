@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@pycolors/ui";
+import styles from "./docs-design.module.css";
 
 type NavItem = Readonly<{
   title: string;
@@ -44,12 +45,7 @@ export function DocsPageFooter({
   const [feedback, setFeedback] = React.useState<"up" | "down" | null>(null);
 
   return (
-    <footer
-      className={cn(
-        "mt-14 border-t border-border-subtle pt-8 sm:mt-16",
-        className,
-      )}
-    >
+    <footer className={cn(styles.articleFooter, className)}>
       {previous || next ? (
         <p className="mb-4 text-xs font-medium text-muted-foreground">
           {tSite("Continue reading")}
@@ -80,12 +76,7 @@ export function DocsPageFooter({
         ) : null}
       </nav>
 
-      <div
-        className={cn(
-          "mt-6 rounded-lg border border-border-subtle",
-          "bg-card bg-linear-to-br from-primary/[0.035] to-transparent p-5 sm:p-6",
-        )}
-      >
+      <div className={styles.continueCard}>
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="min-w-0 max-w-xl">
             <div className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground">
@@ -178,7 +169,8 @@ function DocsFooterNavCard({
     <Link
       href={href}
       className={cn(
-        "group rounded-lg border border-border-subtle bg-card p-4 sm:p-5",
+        styles.paginationCard,
+        "group",
         "no-underline transition-colors duration-200 motion-reduce:transition-none",
         "hover:border-border hover:bg-muted/25",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",

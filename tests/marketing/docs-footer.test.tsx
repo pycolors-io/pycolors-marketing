@@ -36,17 +36,17 @@ afterEach(() => {
 });
 
 describe("documentation footer", () => {
-  it("separates documentation from product discovery and links to existing destinations", () => {
+  it("uses the marketing footer with product discovery and existing destinations", () => {
     render(<DocsFooter />);
     const footer = screen.getByRole("contentinfo", {
-      name: "PyColors Docs footer",
+      name: "PyColors site footer",
     });
     expect(
       within(footer).getByRole("button", { name: "Language: English" }),
     ).toHaveTextContent("English");
-    for (const title of ["Documentation", "Build", "Resources", "Help"]) {
+    for (const title of ["Products", "Resources", "Compare", "Company"]) {
       const nav = within(footer).getByRole("navigation", {
-        name: `Docs footer ${title}`,
+        name: `Footer ${title}`,
       });
       expect(
         within(nav).getByRole("heading", { name: title, level: 2 }),
@@ -54,24 +54,26 @@ describe("documentation footer", () => {
       expect(within(nav).getByRole("list")).toBeVisible();
     }
     expect(
-      within(footer).getByRole("link", { name: "PyColors Docs" }),
-    ).toHaveAttribute("href", "/docs");
-    expect(
-      within(footer).getByRole("link", { name: "Back to PyColors" }),
+      within(footer).getByRole("link", { name: "PyColors" }),
     ).toHaveAttribute("href", "/");
+    const invitation = within(footer).getByRole("region", {
+      name: "Your next product starts here.",
+    });
+    expect(
+      within(invitation).getByRole("link", { name: "Explore Starter Pro" }),
+    ).toHaveAttribute("href", "/starters/pro");
+    expect(
+      within(invitation).getByRole("link", { name: "Compare products" }),
+    ).toHaveAttribute("href", "/pricing");
     expect(
       within(footer).getByRole("link", { name: "Contact" }),
     ).toHaveAttribute("href", "/contact");
-    const docs = within(footer).getByRole("navigation", {
-      name: "Docs footer Documentation",
+    const resources = within(footer).getByRole("navigation", {
+      name: "Footer Resources",
     });
     expect(
-      within(docs).getByRole("link", { name: "Starter Pro" }),
-    ).toHaveAttribute("href", "/docs/starter-pro");
-    expect(within(docs).getByRole("link", { name: "Blocks" })).toHaveAttribute(
-      "href",
-      "/docs/blocks",
-    );
+      within(resources).getByRole("link", { name: "Documentation" }),
+    ).toHaveAttribute("href", "/docs");
     const explorer = within(footer).getByRole("link", { name: "UI Explorer" });
     expect(explorer).toHaveAttribute("href", "https://ui.pycolors.io/");
     expect(explorer).toHaveAttribute("target", "_blank");
@@ -126,7 +128,7 @@ describe("documentation footer", () => {
       }),
     ).toHaveAttribute("href", "/changelog");
     const repos = screen.getByRole("navigation", {
-      name: "Docs repositories on GitHub",
+      name: "PyColors on GitHub",
     });
     for (const link of within(repos).getAllByRole("link")) {
       expect(link).toHaveAttribute("target", "_blank");
@@ -147,14 +149,14 @@ describe("documentation footer", () => {
   it("returns keyboard focus to the docs article when reselecting its current page", () => {
     vi.spyOn(window, "scrollTo").mockImplementation(() => {});
     vi.stubGlobal("scrollY", 1400);
-    window.history.replaceState(null, "", "/docs/ui");
+    window.history.replaceState(null, "", "/docs");
     render(
       <>
         <article id="nd-page">UI documentation</article>
         <DocsFooter />
       </>,
     );
-    const link = screen.getByRole("link", { name: "UI Library" });
+    const link = screen.getByRole("link", { name: "Documentation" });
     link.focus();
     fireEvent.click(link);
     expect(screen.getByRole("article")).toHaveFocus();

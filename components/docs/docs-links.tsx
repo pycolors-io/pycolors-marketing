@@ -4,6 +4,7 @@ import { Link } from "@/lib/i18n/navigation";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 import { cn } from "@pycolors/ui";
+import design from "./docs-design.module.css";
 
 type DocsLinksVariant = "steps" | "list" | "compact" | "grid";
 
@@ -74,7 +75,9 @@ export function DocsLinks({
 
   return (
     <div
+      data-docs-links={variant}
       className={cn(
+        design.linkCollection,
         "not-prose my-2",
         isGrid
           ? "grid gap-3 sm:grid-cols-2"
@@ -123,6 +126,7 @@ function DocsLinksItemRow({
   const TrailingIcon = item.external ? ExternalLink : ArrowRight;
 
   const className = cn(
+    design.linkEntry,
     "group relative grid items-start gap-4 no-underline",
     "transition-colors duration-200 motion-reduce:transition-none",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",

@@ -1,7 +1,7 @@
 import { useCopy } from "@/lib/i18n/use-copy";
 import type { ReactNode } from "react";
 import { Link } from "@/lib/i18n/navigation";
-import { ArrowRight, BookOpen, Code2 } from "lucide-react";
+import { ArrowRight, BookOpen, Code2, Terminal } from "lucide-react";
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 
@@ -39,6 +39,15 @@ export function DocsHomeHero({ children }: Readonly<{ children: ReactNode }>) {
         </div>
       </div>
       <div className={styles.quickstart} aria-label={tSite("UI quick start")}>
+        <div className={styles.windowBar} aria-hidden="true">
+          <span className={styles.windowDots}>
+            <i />
+            <i />
+            <i />
+          </span>
+          <Terminal className="size-3.5" />
+          <span>PyColors UI</span>
+        </div>
         {tSite(children)}
       </div>
     </header>

@@ -12,6 +12,7 @@ import {
 } from "fumadocs-ui/components/card";
 
 import { Preview } from "@/components/docs/preview";
+import design from "@/components/docs/docs-article.module.css";
 
 import {
   Alert,
@@ -106,7 +107,7 @@ function HeadingAnchor({ id }: Readonly<{ id: string }>) {
     <a
       href={`#${id}`}
       aria-label={tSite("Link to section")}
-      className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground/0 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:text-muted-foreground hover:text-foreground focus:opacity-100 focus:text-foreground focus:outline-none"
+      className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground/0 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:text-muted-foreground hover:text-foreground focus:opacity-100 focus:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
     >
       <LinkIcon className="h-3.5 w-3.5" />
       <span className="sr-only">{tSite("Link to section")}</span>
@@ -121,7 +122,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     pre: (props) => (
       <CodeBlock
         {...props}
-        className="docs-code-block my-6 rounded-lg border border-border-subtle bg-card shadow-none"
+        className={`docs-code-block my-6 border border-border-subtle shadow-none ${design.codeBlock}`}
         viewportProps={{
           style: {
             "--padding-right": props.title ? undefined : "3.75rem",
@@ -270,7 +271,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
       <blockquote
         {...props}
         className={[
-          "my-6 rounded-r-xl border-l-2 border-primary/40 bg-muted/30 px-4 py-3 text-sm text-foreground/80",
+          design.quote,
+          "my-6 text-sm text-foreground",
           props.className,
         ]
           .filter(Boolean)
@@ -282,7 +284,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
         role="region"
         aria-label={props["aria-label"] ?? "Scrollable table"}
         tabIndex={0}
-        className="not-prose relative my-6 overflow-x-auto rounded-[8px] border border-border-subtle bg-card shadow-off focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        className={`not-prose relative my-6 overflow-x-auto border border-border-subtle shadow-off focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${design.tableFrame}`}
       >
         <table
           {...props}
@@ -332,7 +334,10 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     tr: ({ className, ...props }) => (
       <tr
         {...props}
-        className={["border-b border-border/4ro0 transition-colors", className]
+        className={[
+          "border-b border-border-subtle transition-colors motion-reduce:transition-none",
+          className,
+        ]
           .filter(Boolean)
           .join(" ")}
       />

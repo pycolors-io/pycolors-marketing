@@ -1,4 +1,5 @@
 import { useCopy } from "@/lib/i18n/use-copy";
+import design from "./docs-article.module.css";
 import { ArrowDownRight } from "lucide-react";
 
 type SectionLink = Readonly<{ title: string; href: string }>;
@@ -15,7 +16,10 @@ export function DocsSectionLinks({
   if (items.length === 0) return null;
 
   return (
-    <nav aria-label={tSite(label)} className="not-prose flex flex-wrap gap-2">
+    <nav
+      aria-label={tSite(label)}
+      className={`not-prose flex flex-wrap gap-2 ${design.sectionLinks}`}
+    >
       {items.map((item) => (
         <a
           key={item.href}

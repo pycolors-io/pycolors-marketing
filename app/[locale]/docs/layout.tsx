@@ -14,6 +14,7 @@ import { DocsFooter } from "@/components/docs-footer";
 import { JsonLd } from "@/components/seo/json-ld";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import { DocsHeader } from "@/components/docs-header";
+import styles from "@/components/docs/docs-design.module.css";
 import {
   DocsSidebarItem,
   DocsSidebarNavTitle,
@@ -55,10 +56,7 @@ function SidebarBanner() {
   const tSite = useCopy();
 
   return (
-    <Link
-      href="/docs"
-      className="group flex items-start gap-3 rounded-md border border-border-subtle bg-card p-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-    >
+    <Link href="/docs" className={styles.sidebarBanner}>
       <BookOpen
         className="mt-0.5 size-4 shrink-0 text-primary"
         aria-hidden="true"
@@ -107,7 +105,7 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
     <>
       <JsonLd id="docs-breadcrumb" data={breadcrumb} />
 
-      <div className="site-frame relative min-h-screen">
+      <div className={`site-frame relative min-h-screen ${styles.frame}`}>
         <DocsSidebarPublications dates={publicationDates}>
           <DocsLayout
             tree={docsTree}

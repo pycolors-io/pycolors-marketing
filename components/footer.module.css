@@ -529,7 +529,7 @@
   }
 }
 
-/* The product invitation is public Marketing only, outside the Docs footer. */
+/* Shared product invitation for Marketing and Docs. */
 .publicFooter {
   --footer-glow: var(--brand-accent);
   background:
@@ -638,8 +638,8 @@
   max-width: 100%;
 }
 
-/* Public Marketing keeps the shared footer semantics and page Container width. */
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter {
+/* The shared footer owns its design independently of the page layout. */
+.publicFooter {
   --font-sans: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
   --font-brand: var(--font-sans);
   --footer-surface: color-mix(in srgb, var(--foreground) 4%, var(--background));
@@ -652,27 +652,19 @@
   font-family: var(--font-sans);
 }
 
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter::before,
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter::after,
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .invitation::before,
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .eyebrow::before,
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .brandGeometry {
+.publicFooter::before,
+.publicFooter::after,
+.publicFooter .invitation::before,
+.publicFooter .eyebrow::before,
+.publicFooter .brandGeometry {
   display: none;
 }
 
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter > div {
+.publicFooter > div {
   max-width: var(--site-frame-width);
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .invitation {
+.publicFooter .invitation {
   display: grid;
   gap: clamp(2rem, 5vw, 4.5rem);
   margin-top: clamp(2rem, 4vw, 4rem);
@@ -682,7 +674,7 @@
   background: var(--background);
 }
 
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter .eyebrow {
+.publicFooter .eyebrow {
   color: var(--primary);
   font-size: 0.75rem;
   font-weight: 600;
@@ -690,10 +682,7 @@
   text-transform: none;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .invitation
-  h2 {
+.publicFooter .invitation h2 {
   max-width: 19ch;
   margin-top: 1.25rem;
   font-size: clamp(2.25rem, 4.25vw, 4rem);
@@ -702,16 +691,14 @@
   letter-spacing: -0.05em;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .description {
+.publicFooter .description {
   max-width: 47ch;
   margin-top: 1.5rem;
   font-size: 0.9375rem;
   line-height: 1.8;
 }
 
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter .actions {
+.publicFooter .actions {
   min-width: 0;
   width: max-content;
   max-width: 100%;
@@ -723,10 +710,7 @@
   gap: 0.75rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .actions
-  a {
+.publicFooter .actions a {
   min-height: 2.75rem;
   height: auto;
   padding: 0.75rem 1.125rem;
@@ -740,19 +724,13 @@
   box-shadow: none;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .actions
-  :global(.site-primary-action) {
+.publicFooter .actions :global(.site-primary-action) {
   border: 1px solid var(--footer-action-fill);
   background: var(--footer-action-fill);
   color: var(--footer-action-ink);
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .actions
-  :global(.site-primary-action):hover {
+.publicFooter .actions :global(.site-primary-action):hover {
   background: color-mix(
     in srgb,
     var(--footer-action-fill) 88%,
@@ -760,93 +738,63 @@
   );
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .actions
-  a:not(:global(.site-primary-action)) {
+.publicFooter .actions a:not(:global(.site-primary-action)) {
   border: 1px solid var(--border);
   background: var(--background);
   color: var(--foreground);
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .actions
-  a:not(:global(.site-primary-action)):hover {
+.publicFooter .actions a:not(:global(.site-primary-action)):hover {
   border-color: var(--foreground);
   background: color-mix(in srgb, var(--foreground) 5%, var(--background));
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .actions
-  a:focus-visible {
+.publicFooter .actions a:focus-visible {
   outline: 2px solid var(--foreground);
   outline-offset: 4px;
 }
 
-:global(html[data-site-palette="monochrome"])
-  :global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter {
+:global(html[data-site-palette="monochrome"]) .publicFooter {
   --footer-action-fill: var(--foreground);
   --footer-action-ink: var(--background);
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .directory {
+.publicFooter .directory {
   gap: 2.5rem;
   padding-block: clamp(2.5rem, 4vw, 4rem);
 }
 
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter .brand {
+.publicFooter .brand {
   display: block;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .brand
-  > div:first-child
-  > a
-  > svg {
+.publicFooter .brand > div:first-child > a > svg {
   height: 1.25rem;
   width: auto;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .brandDescription {
+.publicFooter .brandDescription {
   max-width: 28ch;
   margin-top: 0.75rem;
   font-size: 0.8125rem;
   line-height: 1.8;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .repositories {
+.publicFooter .repositories {
   margin-top: 1.5rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .repositoryHeading {
+.publicFooter .repositoryHeading {
   gap: 0.5rem;
   font-size: 0.6875rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .repositories
-  ul {
+.publicFooter .repositories ul {
   gap: 0.625rem;
   margin-top: 0.75rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .repositories
-  a {
+.publicFooter .repositories a {
   min-height: 2.75rem;
   padding-inline: 0.875rem;
   border: 1px solid var(--border);
@@ -856,22 +804,16 @@
   font-size: 0.75rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter .groups {
+.publicFooter .groups {
   min-width: 0;
   gap: 2rem 1.5rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .groups
-  nav {
+.publicFooter .groups nav {
   min-width: 0;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .groups
-  h2 {
+.publicFooter .groups h2 {
   margin-bottom: 0.75rem;
   font-size: 0.75rem;
   font-weight: 600;
@@ -879,9 +821,7 @@
   letter-spacing: -0.01em;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .directoryLink {
+.publicFooter .directoryLink {
   min-height: 2.75rem;
   padding-block: 0.375rem;
   border-radius: 0.375rem;
@@ -892,9 +832,7 @@
   text-underline-offset: 3px;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .bottomBar {
+.publicFooter .bottomBar {
   align-items: stretch;
   flex-direction: column;
   gap: 0.75rem;
@@ -902,82 +840,60 @@
   border-top: 1px solid var(--border);
 }
 
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter .legal {
+.publicFooter .legal {
   min-width: 0;
   gap: 0.25rem 1.5rem;
   font-size: 0.6875rem;
   line-height: 1.6;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .legal
-  nav {
+.publicFooter .legal nav {
   flex-wrap: wrap;
   gap: 0.25rem 1.5rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter .legal a,
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .versions {
+.publicFooter .legal a,
+.publicFooter .versions {
   border-radius: 0.375rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .utilities {
+.publicFooter .utilities {
   min-width: 0;
   gap: 0.75rem 1.5rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .versions {
+.publicFooter .versions {
   font-family: var(--font-sans);
   font-size: 0.6875rem;
   line-height: 1.5;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .preferences {
+.publicFooter .preferences {
   min-width: 0;
   flex-wrap: wrap;
   gap: 0.625rem;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .appearance,
-:global(.site-frame[data-marketing-design="editorial"]) .publicFooter .palette {
+.publicFooter .appearance,
+.publicFooter .palette {
   padding: 3px;
   border-color: var(--border);
   border-radius: 100px;
   background: color-mix(in srgb, var(--background) 55%, var(--footer-surface));
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .appearance
-  button {
+.publicFooter .appearance button {
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .palette
-  button {
+.publicFooter .palette button {
   min-height: 2.25rem;
   border-radius: 100px;
 }
 
-:global(.site-frame[data-marketing-design="editorial"])
-  .publicFooter
-  .preferences
-  button[data-variant="footer"] {
+.publicFooter .preferences button[data-variant="footer"] {
   min-height: 2.75rem;
   padding-inline: 0.875rem;
   border: 1px solid var(--border);
@@ -987,24 +903,20 @@
 }
 
 @media (min-width: 40rem) and (max-width: 63.999rem) {
-  :global(.site-frame[data-marketing-design="editorial"]) .publicFooter .brand {
+  .publicFooter .brand {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 2rem;
   }
 
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .repositories {
+  .publicFooter .repositories {
     margin-top: 0;
   }
 }
 
 @media (min-width: 48rem) {
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .invitation {
+  .publicFooter .invitation {
     display: grid;
     grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.9fr);
     align-items: center;
@@ -1012,16 +924,12 @@
 }
 
 @media (min-width: 64rem) {
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .directory {
+  .publicFooter .directory {
     grid-template-columns: minmax(12rem, 0.9fr) minmax(0, 3.1fr);
     column-gap: clamp(2.5rem, 5vw, 5rem);
   }
 
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .bottomBar {
+  .publicFooter .bottomBar {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
@@ -1029,59 +937,42 @@
     gap: 1rem 2rem;
   }
 
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .utilities {
+  .publicFooter .utilities {
     flex: 1;
     justify-content: flex-end;
   }
 }
 
 @media (pointer: fine) and (min-width: 40rem) {
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .directoryLink {
+  .publicFooter .directoryLink {
     min-height: 2rem;
     font-size: 0.75rem;
   }
 }
 
 @media (pointer: coarse), (max-width: 39.999rem) {
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .appearance
-    button {
+  .publicFooter .appearance button {
     width: 2.75rem;
     height: 2.75rem;
   }
 
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .palette
-    button {
+  .publicFooter .palette button {
     min-height: 2.75rem;
   }
 }
 
 @media (max-width: 39.999rem) {
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .actions,
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .actions
-    a {
+  .publicFooter .actions,
+  .publicFooter .actions a {
     width: 100%;
   }
 
-  :global(.site-frame[data-marketing-design="editorial"]) .publicFooter .legal {
+  .publicFooter .legal {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .utilities {
+  .publicFooter .utilities {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.5rem;
@@ -1089,24 +980,14 @@
 }
 
 @media (hover: hover) {
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .directoryLink:hover,
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .legal
-    a:hover,
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .versions:hover {
+  .publicFooter .directoryLink:hover,
+  .publicFooter .legal a:hover,
+  .publicFooter .versions:hover {
     color: var(--foreground);
     text-decoration: underline;
   }
 
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .repositories
-    a:hover {
+  .publicFooter .repositories a:hover {
     border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
     background: var(--background);
     color: var(--foreground);
@@ -1126,61 +1007,35 @@
     display: none;
   }
 
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .actions
-    a:global(.site-primary-action),
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .actions
-    a:not(:global(.site-primary-action)) {
+  .publicFooter .actions a:global(.site-primary-action),
+  .publicFooter .actions a:not(:global(.site-primary-action)) {
     border-color: ButtonText;
     background: ButtonFace;
     color: ButtonText;
   }
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .actions
-    a:global(.site-primary-action):hover,
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .actions
-    a:not(:global(.site-primary-action)):hover {
+
+  .publicFooter .actions a:global(.site-primary-action):hover,
+  .publicFooter .actions a:not(:global(.site-primary-action)):hover {
     border-color: Highlight;
     background: Highlight;
     color: HighlightText;
   }
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .actions
-    a:focus-visible {
+
+  .publicFooter .actions a:focus-visible {
     outline-color: Highlight;
   }
 
-  :global(.site-frame[data-marketing-design="editorial"]) .publicFooter {
+  .publicFooter {
     border-color: CanvasText;
     background: Canvas;
     color: CanvasText;
   }
 
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .actions
-    a,
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .repositories
-    a,
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .appearance,
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .palette,
-  :global(.site-frame[data-marketing-design="editorial"])
-    .publicFooter
-    .preferences
-    button[data-variant="footer"] {
+  .publicFooter .actions a,
+  .publicFooter .repositories a,
+  .publicFooter .appearance,
+  .publicFooter .palette,
+  .publicFooter .preferences button[data-variant="footer"] {
     border-color: ButtonText;
     box-shadow: none;
   }

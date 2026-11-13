@@ -147,11 +147,14 @@ afterEach(async () => {
 });
 
 describe("Shared navigation in documentation", () => {
-  it("keeps the Docs identity, global navigation and dedicated search", () => {
+  it("uses the marketing brand and navigation while retaining Docs search", () => {
     render(<Fixture />);
-    const logo = screen.getByRole("link", { name: "PyColors Docs" });
-    expect(logo).toHaveAttribute("href", "/docs");
-    expect(logo).toHaveTextContent(/PYCOLORS\s*Docs/);
+    const logo = screen.getByRole("link", { name: "PyColors" });
+    expect(logo).toHaveAttribute("href", "/");
+    expect(logo).toHaveTextContent("PYCOLORS");
+    expect(
+      screen.queryByRole("link", { name: "PyColors Docs" }),
+    ).not.toBeInTheDocument();
     const primary = screen.getByRole("navigation", { name: "Primary" });
     expect(
       [...primary.children].map(

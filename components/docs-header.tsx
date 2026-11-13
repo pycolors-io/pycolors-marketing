@@ -7,14 +7,11 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "fumadocs-ui/components/sidebar/base";
-import {
-  FullSearchTrigger,
-  SearchTrigger,
-} from "fumadocs-ui/layouts/shared/slots/search-trigger";
+import { SearchTrigger } from "fumadocs-ui/layouts/shared/slots/search-trigger";
 
 import { Container } from "@/components/container";
-import { DocsLogo } from "@/components/docs-logo";
 import { SiteHeader } from "@/components/layout/site-header";
+import styles from "@/components/docs/docs-design.module.css";
 
 const focusRing =
   "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
@@ -40,16 +37,15 @@ export function DocsHeader() {
 
   return (
     <SiteHeader
-      logo={<DocsLogo />}
       onMobileMenuOpen={() => setOpen(false)}
       desktopActions={
-        <FullSearchTrigger
-          className={`h-8 w-36 rounded-md text-[13px] text-foreground xl:w-44 [@media(pointer:coarse)]:min-h-11 ${focusRing}`}
+        <SearchTrigger
+          className={`${styles.search} size-9 text-foreground [@media(pointer:coarse)]:size-11 ${focusRing}`}
         />
       }
       mobileActions={
         <SearchTrigger
-          className={`relative z-10 size-11 shrink-0 rounded-md text-foreground ${focusRing}`}
+          className={`relative z-10 size-11 shrink-0 rounded-full text-foreground ${focusRing}`}
         />
       }
       secondaryNavigation={
@@ -58,7 +54,7 @@ export function DocsHeader() {
             <SidebarTrigger
               ref={sidebarTriggerRef}
               aria-label={tSite("Browse documentation")}
-              className={`group inline-flex h-11 items-center gap-2 rounded-md text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground motion-reduce:transition-none ${focusRing}`}
+              className={`group inline-flex h-11 items-center gap-2 rounded-full text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground motion-reduce:transition-none ${focusRing}`}
             >
               <PanelLeft
                 aria-hidden="true"

@@ -1,0 +1,203 @@
+/* Scoped to the documentation: marketing pages and embedded UI previews retain
+   their own tokens, layout, and component behavior. */
+.frame {
+  --docs-radius: 1.25rem;
+  background: var(--background);
+}
+
+.frame :global(#nd-docs-layout) {
+  --fd-layout-width: var(--site-frame-width);
+}
+
+.sidebarBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: var(--surface-muted);
+  text-decoration: none;
+}
+
+.sidebarBanner:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.frame :global(#nd-sidebar) :is(a, button) {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.frame :global(#nd-sidebar) a[data-active="true"] {
+  background: color-mix(in oklch, var(--primary) 8%, var(--background));
+  color: var(--primary);
+}
+
+.search {
+  border-radius: 999px;
+  background: transparent;
+}
+
+.articleHeader {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.breadcrumb {
+  margin-bottom: 1.5rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.articleTitle {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+  color: var(--foreground);
+  text-wrap: balance;
+}
+
+.articleDescription {
+  max-width: 65ch;
+  margin: 1.125rem 0 0;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+.articleMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem 1rem;
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.articleMeta > :first-child:not(:last-child) {
+  min-height: 1.75rem;
+  border-radius: 999px;
+  background: var(--surface-muted);
+}
+
+.linkCollection[data-docs-links]:not([data-docs-links="grid"]) {
+  border-radius: var(--docs-radius, 1.25rem);
+  background: var(--background);
+}
+
+.linkCollection .linkEntry {
+  background: var(--background);
+}
+
+.linkCollection[data-docs-links="grid"] .linkEntry {
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: var(--docs-radius, 1.25rem);
+}
+
+.linkCollection .linkEntry:hover {
+  border-color: color-mix(
+    in oklch,
+    var(--foreground) 24%,
+    var(--border-subtle)
+  );
+  background: var(--surface-muted);
+}
+
+.linkCollection .linkEntry > span[aria-hidden="true"] {
+  border-radius: 0.75rem;
+  border-color: var(--border-subtle);
+  background: var(--surface-muted);
+  color: var(--foreground);
+}
+
+.articleFooter {
+  margin-top: 4rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.paginationCard {
+  padding: 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: var(--background);
+}
+
+.continueCard {
+  margin-top: 1rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius, 1.25rem);
+  background: var(--surface-muted);
+}
+
+@media (min-width: 768px) {
+  .frame :global(#nd-docs-layout) {
+    --fd-sidebar-width: 15rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .frame :global(#nd-sidebar) {
+    padding-inline-end: 0.5rem;
+  }
+
+  .frame :global(#nd-page) {
+    padding-top: 1.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .frame :global(#nd-toc) {
+    padding-top: 1.75rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .frame :global(#nd-docs-layout):has(:global(#nd-toc, #nd-toc-placeholder)) {
+    --fd-toc-width: 12.5rem;
+  }
+}
+
+@media (pointer: coarse) {
+  .frame :global(#nd-sidebar) :is(a, button) {
+    min-height: 2.75rem;
+  }
+}
+
+/* The localized Docs badge must not push the mobile menu off screen. The
+   navigation row below already names Documentation at this breakpoint. */
+@media (max-width: 479px) {
+  .headerLogo > a > span:last-child {
+    display: none;
+  }
+}
+
+/* Fumadocs notes retain their status icon and accent color. Only their
+   reading surface and spacing follow the shared documentation design. */
+.frame :global(.docs-prose div[style*="--callout-color"][class*="bg-fd-card"]) {
+  padding: 1.25rem;
+  border-radius: 1.25rem;
+  background: var(--surface-muted);
+}
+
+.frame :global(.docs-prose [data-card]):not(:global(.docs-preview *)) {
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background: var(--background);
+  box-shadow: none;
+}
+
+.frame :global(.docs-prose a[data-card]):not(:global(.docs-preview *)):hover {
+  border-color: var(--border);
+  background: var(--surface-muted);
+}

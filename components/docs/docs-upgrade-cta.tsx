@@ -1,4 +1,5 @@
 import { useCopy } from "@/lib/i18n/use-copy";
+import design from "./docs-article.module.css";
 import * as React from "react";
 import { Link } from "@/lib/i18n/navigation";
 
@@ -39,12 +40,8 @@ export function DocsUpgradeCTA({
   return (
     <section
       className={cn(
-        "not-prose my-8 rounded-[8px]",
-        "border border-border-subtle bg-card",
-        "p-5 shadow-none transition-all duration-200 sm:p-6",
-        "hover:-translate-y-px",
-        "hover:border-border",
-        "hover:shadow-soft",
+        design.upgradeCard,
+        "not-prose my-8 border border-border-subtle",
         className,
       )}
     >
