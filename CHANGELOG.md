@@ -1,5 +1,36 @@
 # Changelog
 
+## 1.33.0
+
+Release notes for 13 November 2026 (2026-11-13).
+
+Find relevant articles, compare mobile approaches and preserve filters in shareable pagination links.
+
+### Applications updated
+
+- Browse blog categories and tags with a consistent layout, article counts and clear links to the relevant articles.
+- Read bilingual guidance for choosing between a web/PWA approach, Capacitor and React Native with Expo.
+- Follow a bilingual Next.js pagination guide to keep search and multi-value filters when navigating or sharing a link.
+
+### Platform and shared capabilities
+
+- Move from a blog category or tag to the relevant articles through shared navigation and page structure.
+
+### Reliability and maintenance
+
+- Pagination examples check page values, preserve repeated filters and reset the page when search changes.
+- Mobile guidance explains code-sharing and delivery trade-offs; device qualification and distribution remain separate work.
+
+### For developers and candidates
+
+- Run the pagination example and compare mobile approaches before adapting them to your application.
+
+### For companies and recruiters
+
+- Use the documented constraints to agree on mobile scope and the behavior of shared links.
+
+[Read the implementation guides](https://pycolors.io/blog).
+
 ## 1.32.0
 
 Release notes for 6 November 2026 (2026-11-06).

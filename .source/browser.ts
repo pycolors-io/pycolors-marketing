@@ -5,6 +5,10 @@ import type * as Config from "../source.config";
 const create = fromConfig<typeof Config>();
 const browserCollections = {
   blog: create.doc("blog", {
+    "capacitor-vs-react-native-nextjs-saas.fr.mdx": () =>
+      import("../content/blog/capacitor-vs-react-native-nextjs-saas.fr.mdx?collection=blog"),
+    "capacitor-vs-react-native-nextjs-saas.mdx": () =>
+      import("../content/blog/capacitor-vs-react-native-nextjs-saas.mdx?collection=blog"),
     "email-verification-nextjs-authjs.fr.md": () =>
       import("../content/blog/email-verification-nextjs-authjs.fr.md?collection=blog"),
     "email-verification-nextjs-authjs.md": () =>
@@ -29,6 +33,10 @@ const browserCollections = {
       import("../content/blog/semantic-design-tokens-tailwind-v4.fr.mdx?collection=blog"),
     "semantic-design-tokens-tailwind-v4.mdx": () =>
       import("../content/blog/semantic-design-tokens-tailwind-v4.mdx?collection=blog"),
+    "shareable-pagination-urls-nextjs.fr.mdx": () =>
+      import("../content/blog/shareable-pagination-urls-nextjs.fr.mdx?collection=blog"),
+    "shareable-pagination-urls-nextjs.mdx": () =>
+      import("../content/blog/shareable-pagination-urls-nextjs.mdx?collection=blog"),
     "tailwind-node-modules-not-detecting-classes-nextjs.fr.mdx": () =>
       import("../content/blog/tailwind-node-modules-not-detecting-classes-nextjs.fr.mdx?collection=blog"),
     "tailwind-node-modules-not-detecting-classes-nextjs.mdx": () =>
