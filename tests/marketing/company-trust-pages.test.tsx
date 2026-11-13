@@ -84,15 +84,20 @@ describe("company and trust pages", () => {
       }
     });
 
-    // Scan the complete release/milestone history, including on slower CI
-    // runners. Keep the functional checks on Vitest's default deadline.
-    it(`${route} has no automated accessibility violations across the full page`, async () => {
-      const { container } = render(<Page />);
-      container.querySelectorAll("details").forEach((details) => {
-        details.open = true;
-      });
-      expect(await axe(container)).toHaveNoViolations();
-    }, 15_000);
+    // The complete Changelog history needs a bounded scan budget on CI.
+    // Keep the other page scans and functional checks on their existing deadlines.
+    const accessibilityTimeout = route === "changelog" ? 45_000 : 15_000;
+    it(
+      `${route} has no automated accessibility violations across the full page`,
+      async () => {
+        const { container } = render(<Page />);
+        container.querySelectorAll("details").forEach((details) => {
+          details.open = true;
+        });
+        expect(await axe(container)).toHaveNoViolations();
+      },
+      accessibilityTimeout,
+    );
   }
 
   it("connects the About ecosystem to available products with clear scope", () => {

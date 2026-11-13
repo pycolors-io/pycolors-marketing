@@ -1,0 +1,566 @@
+---
+title: "Capacitor vs React Native: how to choose for your Next.js SaaS"
+description: "Compare PWA, Capacitor and React Native with Expo: rendering, Next.js server boundaries, shared TypeScript, authentication and an original code example."
+author: Patrice Parny
+date: "2026-11-08"
+category: SaaS Architecture
+tags:
+  - Next.js
+  - React
+  - React Native
+  - Capacitor
+  - Architecture
+featured: false
+cover: /seo/blog/og-blog-saas.png
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+**Keep the web application when it already serves the mobile workflow. Consider
+Capacitor when that web interface remains useful and you need native packaging
+or specific integrations. Choose React Native when the product justifies a
+separate interface built around native interactions.** Expo is a framework you
+can use for that React Native application.
+
+The difficult question is what your users need to do on a phone, and which parts
+of the existing SaaS remain suitable. A dashboard used occasionally to approve
+a request has different constraints from an application used throughout the
+day for scanning, gestures and long lists. Start with those workflows, then
+evaluate code reuse, authentication and maintenance.
+
+## Make the first decision by situation [#first-decision]
+
+This is an architecture recommendation, conditional on your product:
+
+| Situation                                                                                             | First option to investigate                   | Evidence that could change the choice                                                            |
+| ----------------------------------------------------------------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Responsive forms, approvals and dashboards; the required capabilities work in target browsers         | Web/PWA                                       | A necessary capability or distribution requirement cannot be met on those browsers.              |
+| Existing web UI remains appropriate on mobile; a small, identified set of native integrations matters | Capacitor                                     | The hardest interaction requires extensive platform-specific UI work or an unsuitable plugin.    |
+| Frequent mobile use, complex navigation, gestures or demanding native interactions are central        | React Native, with Expo as a framework option | A representative web prototype already meets the actual experience and maintenance requirements. |
+
+A PWA is a real product choice. Installation and standalone launch are available
+on compatible browser/OS combinations, with different installation interfaces.
+Check your audience's devices rather than promising identical capabilities
+everywhere. Installation also does not implement offline reads, queued writes
+or conflict resolution. Those need their own design.
+[MDN explains installation requirements](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable);
+[web.dev separates offline data handling](https://web.dev/learn/pwa/offline-data).
+
+## Understand the three execution models [#execution-models]
+
+**Web/PWA** runs a web interface in the browser, potentially in an installed
+window. Your deployed Next.js server can continue serving authentication,
+request-time rendering and business operations. A service worker can improve
+selected network behavior; it does not move the database onto the phone.
+
+**Capacitor** places a web application inside native iOS/Android projects. Its
+UI still uses web rendering, and plugins connect JavaScript to native features.
+You can keep React DOM and CSS where they fit the mobile experience. Ionic's UI
+components are optional: Capacitor does not require an Ionic interface.
+[Capacitor documents UI choices](https://capacitorjs.com/docs/getting-started/ui)
+and [plugin integration](https://capacitorjs.com/docs/basics/using-plugins).
+
+**React Native** renders components such as `View`, `Text` and `TextInput`
+through the native platform. Knowing React helps with composition and state,
+but a DOM component does not become a native component by changing its import.
+Current React Native uses the New Architecture; the old serialized bridge is
+not an accurate default explanation of its current runtime.
+See [core components](https://reactnative.dev/docs/intro-react-native-components)
+and the [New Architecture transition](https://reactnative.dev/blog/2025/10/08/react-native-0.82).
+
+**Expo** supplies a framework, libraries and tooling around React Native.
+Its optional hosted services are a separate operational choice. Local native
+builds remain possible with the appropriate Android/iOS tools. Expo Go is a
+generic development environment; a development build includes your own native
+configuration and libraries. Neither label means a production release.
+[Expo's FAQ](https://docs.expo.dev/faq/) and
+[development-build guide](https://docs.expo.dev/develop/development-builds/introduction/)
+explain those boundaries.
+
+## Share contracts deliberately, not by percentage [#what-to-share]
+
+Inventory modules before estimating reuse. Mark dependencies on `window`, DOM
+elements, CSS, Node APIs and platform storage. A short dependency list can
+matter more than how many lines a file contains.
+
+| Layer                                                    | Web/PWA and Capacitor                                      | React Native                                                                          |
+| -------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| React DOM, HTML, CSS and DOM-based Radix components      | Reusable where the mobile layout and interaction still fit | Rebuild the presentation with native components or a deliberately compatible library. |
+| Design tokens                                            | Reuse semantic values and web styles                       | Reuse suitable data; adapt CSS variables, units and typography to native styles.      |
+| TypeScript DTOs and validation                           | Share browser-compatible modules                           | Share modules whose dependencies and serialization work in the native toolchain.      |
+| API client                                               | Share protocol, decoding and error model                   | Share that core; adapt transport, cancellation and credential handling.               |
+| Pure transformations and React state logic               | Often reusable                                             | Reusable when independent of DOM and platform APIs.                                   |
+| Database access, authorization and business transactions | Keep on the server                                         | Call the same authorized server operations; do not bundle server code.                |
+
+A shared TypeScript type does not validate a network response. Assertions such
+as `payload as Project[]` are erased at compilation. Decode untrusted JSON at
+the boundary, and let the server enforce workspace membership and permissions.
+[TypeScript documents this distinction](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions).
+
+## Decide what remains on the Next.js server [#nextjs-boundary]
+
+A Next.js application that works on the web is not automatically an application
+that can be embedded as static assets. Start by classifying each route.
+
+With `output: 'export'`, Next.js generates files that a static host or a
+Capacitor web asset directory can serve. **Some Server Components can run during
+that build.** The relevant boundary is whether their result can be computed
+then, without request-specific server behavior.
+[The static-export guide explains this model](https://nextjs.org/docs/app/guides/static-exports).
+
+| Existing behavior                                       | Implication for an embedded static frontend                                                                                      |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Server Component producing public content at build time | Can participate in a static export when its dependencies allow it.                                                               |
+| Session cookies read on the server for each request     | Keep that decision on a remote server; an exported file has no per-user request context.                                         |
+| Server Action that changes database state               | Server Actions are unsupported in a static export. Keep the mutation on a remote server with an explicit client/API integration. |
+| Dynamic route with known build-time parameters          | Can be generated under the static-export constraints. Unknown future paths need a different routing/data design.                 |
+| Request-dependent API handler                           | Run it remotely. A static `GET` response generated at build time is not a private, dynamic API.                                  |
+
+These constraints follow from
+[Next.js export limitations](https://nextjs.org/docs/app/guides/static-exports#unsupported-features)
+and its [backend-for-frontend guidance](https://nextjs.org/docs/app/guides/backend-for-frontend).
+Never put private per-user data into a public build artifact to make export
+succeed.
+
+Three coherent arrangements follow. Keep the current Next.js deployment and
+improve its web/PWA experience; extract a genuinely exportable frontend for
+Capacitor while retaining remote server operations; or build a React Native
+client against an explicit API. The API can remain in the existing backend.
+Choosing a mobile renderer alone is not a reason to create another service.
+
+Capacitor's `webDir` identifies compiled web assets. Its `server.url` setting is
+documented for live reload and is not intended for production. Pointing that
+development setting at a hosted SaaS is therefore not a validated packaging
+strategy. Review the [Capacitor configuration contract](https://capacitorjs.com/docs/config).
+
+## A small shared client with two presentations [#shared-example]
+
+<div className="docs-prose">
+
+<Callout type="info" title="Original example and simulated HTTP" role="note">
+
+This original example lists fictitious projects. It illustrates a module
+boundary, not a complete mobile application or a Starter Pro API. The example
+endpoint is `GET /api/projects`; the verification uses simulated HTTP responses.
+
+Both platforms share a JSON decoder and a client. Their loading adapters own
+the platform's request context, and their views accept the same validated data.
+No server implementation, private package or credential is included.
+
+</Callout>
+
+<Steps>
+
+<Step>
+
+### Contract and client
+
+```ts title="shared/projects.ts"
+export type Project = Readonly<{ id: string; name: string }>;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+export function parseProjects(value: unknown): readonly Project[] {
+  if (!isRecord(value) || !Array.isArray(value.items)) {
+    throw new Error("Invalid projects response");
+  }
+  const ids = new Set<string>();
+  return value.items.map((item: unknown) => {
+    if (
+      !isRecord(item) ||
+      typeof item.id !== "string" ||
+      item.id.length === 0 ||
+      ids.has(item.id) ||
+      typeof item.name !== "string" ||
+      item.name.trim().length === 0
+    ) {
+      throw new Error("Invalid project");
+    }
+    ids.add(item.id);
+    return { id: item.id, name: item.name };
+  });
+}
+```
+
+```ts title="shared/client.ts"
+import { parseProjects, type Project } from "./projects";
+
+type Reply = { status: number; json(): Promise<unknown> };
+export type ProjectTransport = (signal: AbortSignal) => Promise<Reply>;
+type Failure =
+  "aborted" | "network" | "unauthorized" | "http" | "invalid-response";
+
+export class ProjectRequestError extends Error {
+  constructor(readonly kind: Failure) {
+    super(kind);
+    this.name = "ProjectRequestError";
+  }
+}
+
+export async function listProjects(
+  get: ProjectTransport,
+  signal: AbortSignal,
+): Promise<readonly Project[]> {
+  if (signal.aborted) throw new ProjectRequestError("aborted");
+  let reply: Reply;
+  try {
+    reply = await get(signal);
+  } catch {
+    throw new ProjectRequestError(signal.aborted ? "aborted" : "network");
+  }
+  if (signal.aborted) throw new ProjectRequestError("aborted");
+  if (reply.status === 401) throw new ProjectRequestError("unauthorized");
+  if (reply.status !== 200) throw new ProjectRequestError("http");
+  try {
+    const body: unknown = await reply.json();
+    if (signal.aborted) throw new ProjectRequestError("aborted");
+    return parseProjects(body);
+  } catch {
+    throw new ProjectRequestError(
+      signal.aborted ? "aborted" : "invalid-response",
+    );
+  }
+}
+```
+
+</Step>
+
+<Step>
+
+### Separate loading adapters
+
+<Callout type="warning" title="Credential boundaries" role="note">
+
+The browser adapter requests same-origin cookies. The native adapter adds no
+`Authorization` header and implements no login. React Native documents
+[Fetch cookie limitations, including `credentials: "omit"`](https://reactnative.dev/docs/network),
+so this example makes no cookie-isolation guarantee. A protected backend must
+reject any request without valid credentials. Compilation does not establish
+an authenticated native session.
+The relative web URL is for a same-origin browser application. An embedded
+Capacitor frontend would need a verified remote-origin adapter and credential
+policy, which are not implemented here.
+
+</Callout>
+
+```ts title="web/load-projects.ts"
+import { listProjects } from "../shared/client";
+
+export function loadWebProjects(signal: AbortSignal) {
+  return listProjects(
+    (requestSignal) =>
+      fetch("/api/projects", {
+        method: "GET",
+        headers: { Accept: "application/json" },
+        credentials: "same-origin",
+        cache: "no-store",
+        redirect: "error",
+        signal: requestSignal,
+      }),
+    signal,
+  );
+}
+```
+
+```ts title="native/load-projects.ts"
+import { listProjects } from "../shared/client";
+
+// Fictitious endpoint; not deployed. This adapter does not implement native login.
+export function loadNativeProjects(signal: AbortSignal) {
+  return listProjects(
+    (requestSignal) =>
+      fetch("https://api.example.test/api/projects", {
+        method: "GET",
+        headers: { Accept: "application/json" },
+        signal: requestSignal,
+      }),
+    signal,
+  );
+}
+```
+
+</Step>
+
+<Step>
+
+### Separate rendering components
+
+Pass the result of `loadWebProjects` or `loadNativeProjects` to its corresponding
+`Projects` component. The screen that calls it still owns loading, empty and error states,
+cancellation and account changes. These pure list views keep the comparison
+small; they do not implement a complete screen lifecycle.
+
+```tsx title="web/Projects.tsx"
+import type { Project } from "../shared/projects";
+
+export function Projects({ projects }: { projects: readonly Project[] }) {
+  return (
+    <section aria-labelledby="projects-heading">
+      <h1 id="projects-heading">Projects</h1>
+      {projects.length === 0 ? (
+        <p>No projects yet.</p>
+      ) : (
+        <ul>
+          {projects.map((project) => (
+            <li key={project.id}>{project.name}</li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
+```
+
+```tsx title="native/Projects.tsx"
+import { FlatList, Text, View } from "react-native";
+import type { Project } from "../shared/projects";
+
+export function Projects({ projects }: { projects: readonly Project[] }) {
+  return (
+    <View>
+      <Text accessibilityRole="header">Projects</Text>
+      <FlatList
+        data={projects}
+        keyExtractor={(project) => project.id}
+        renderItem={({ item }) => <Text>{item.name}</Text>}
+        ListEmptyComponent={<Text>No projects yet.</Text>}
+      />
+    </View>
+  );
+}
+```
+
+The shared part ends before the rendering layer. An HTML list and a native
+`FlatList` can present the same data while retaining different semantics,
+layout and accessibility behavior. Adding more shared abstractions is useful
+only when it reduces the maintenance of a real second implementation.
+
+</Step>
+
+<Step>
+
+### Verification and reproduction
+
+The six source blocks were extracted from both language versions and checked
+in an isolated fixture using Node **24.22.1**, pnpm **10.32.1**, TypeScript
+**6.0.3**, React and `@types/react` **19.3.0**, and React Native **0.88.1**.
+
+| Check                            | What the result establishes                                                                                                                         |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Web TypeScript, both articles    | Strict source and declaration checking with DOM libraries.                                                                                          |
+| Native TypeScript, both articles | Strict source checking with React Native types and `skipLibCheck: true`, matching its standard profile.                                             |
+| 18 Node tests, nine per language | Simulated JSON, HTTP errors, network failures, cancellation and requested adapter options. No real HTTP server or native cookie store is exercised. |
+
+<Callout type="warning" title="Verification limits" role="note">
+
+Full declaration checking exposed three errors in the installed React Native
+packages; the native result does not certify those third-party declarations.
+The TSX views were typechecked, not executed on a device.
+
+</Callout>
+
+To reproduce the compiler checks, use Node 24 and pnpm 10.32.1 in an empty
+folder outside your application workspace. Save the six blocks at their labelled
+paths, then run:
+
+```sh title="typecheck.sh"
+pnpm init
+pnpm add --save-dev --save-exact --ignore-scripts \
+  typescript@6.0.3 @types/react@19.3.0 react@19.3.0 react-native@0.88.1
+
+pnpm exec tsc --noEmit --strict --noUncheckedIndexedAccess \
+  --exactOptionalPropertyTypes --verbatimModuleSyntax --target ES2022 \
+  --module ESNext --moduleResolution Bundler --jsx react-jsx \
+  --lib ES2022,DOM,DOM.Iterable --types react \
+  web/Projects.tsx web/load-projects.ts
+
+pnpm exec tsc --noEmit --strict --noUncheckedIndexedAccess \
+  --exactOptionalPropertyTypes --verbatimModuleSyntax --target ES2022 \
+  --module ESNext --moduleResolution Bundler --jsx react-native \
+  --lib ES2022 --types react-native --customConditions react-native \
+  --skipLibCheck true native/Projects.tsx native/load-projects.ts
+```
+
+</Step>
+
+</Steps>
+
+</div>
+
+## Treat authentication as a separate design [#authentication]
+
+A working browser cookie session does not automatically provide a native login
+protocol. Cookie origins and browser policies also need verification in a
+Capacitor WebView; existing web behavior should not be assumed equivalent.
+Auth.js describes [web session strategies](https://authjs.dev/concepts/session-strategies),
+which does not establish an OAuth issuer for a new mobile client.
+
+For a native OAuth flow, use the provider-supported system browser and return
+mechanism. For public clients using an authorization-code flow, use PKCE. Validate
+registered return URIs and the library's protections for transaction binding,
+including `state` or OIDC `nonce` where applicable; do not hand-build a partial
+protocol. A secret that must remain confidential belongs on a server, never
+in a mobile bundle. See [RFC 8252](https://www.rfc-editor.org/rfc/rfc8252),
+[OAuth Security BCP](https://www.rfc-editor.org/rfc/rfc9700.html)
+and [Expo authentication guidance](https://docs.expo.dev/guides/authentication/).
+
+Record the complete credential lifecycle before choosing a mobile path:
+
+1. **Issue and validate:** which system issues the credential, what API accepts
+   it, and how that API checks its intended audience and authorization.
+2. **Expire and renew:** lifetime, renewal rules and rotation where applicable.
+3. **Store:** appropriate platform storage, such as SecureStore for suitable
+   credentials; no secrets in AsyncStorage, source files or logs.
+4. **Revoke:** server behavior after logout, account deletion, access removal
+   and device loss, plus the fate of an already-running request.
+5. **Switch account:** cancel work and clear identity-scoped caches before
+   exposing the next account's data.
+
+[SecureStore](https://docs.expo.dev/versions/v58.0.0/sdk/securestore/) protects
+local storage; it does not revoke credentials on the server. Likewise, deleting
+a local token is not proof of server logout. Test OAuth callbacks in a suitable
+development build; Expo Go is not the environment for validating those custom
+return flows.
+
+If this lifecycle remains unresolved, keep the web login and defer the native
+authentication promise. A contract/client demonstration can still be useful,
+provided its evidence is described accurately.
+
+## Prototype UX, performance and maintenance together [#experience-and-cost]
+
+Select the most difficult realistic workflow, not a landing page. Include the
+keyboard opening over a form, safe areas, deep links, Android back navigation,
+gestures, a long list, permission denial and returning from the background.
+Test text enlargement, focus and screen-reader labels. A plugin's availability
+is the start of integration work: check its supported platforms, maintenance,
+permissions and failure behavior.
+
+For Capacitor, investigate web rendering, main-thread work, scrolling and
+plugin interactions. For React Native, investigate component rendering, list
+virtualization, JavaScript work and native integrations. Either can produce a
+poor experience when the application does excessive work or handles lifecycle
+events badly.
+
+Measure the same task and dataset on representative devices, with comparable
+network conditions and release builds. Observe startup, interaction latency,
+memory, list behavior and recovery from interruption. React Native's
+[performance guide](https://reactnative.dev/docs/performance) specifically
+distinguishes development overhead from release behavior. This article provides
+no device benchmark or measured performance ranking.
+
+Budget maintenance as a recurring responsibility: UI changes in each client,
+iOS/Android QA, SDK upgrades, plugins, signing, store submissions and support
+for older installed versions. A smaller initial UI rewrite can still carry
+integration work; a separate native UI can still share contracts and backend
+rules. There is no useful universal reuse percentage or development-cost
+multiplier for those different products.
+
+## Plan distribution and updates explicitly [#distribution]
+
+Capacitor and React Native applications still need suitable native builds,
+signing, installation testing and a distribution process. Expo's hosted build
+services are optional; local builds retain their platform toolchain
+requirements.
+
+An update must also fit the native runtime already installed. Adding native
+code requires a compatible new binary; JavaScript update mechanisms do not
+remove that boundary. [Expo runtime versions](https://docs.expo.dev/eas-update/runtime-versions/)
+document this compatibility problem.
+
+Framework choice does not guarantee store acceptance or a payment-policy
+exception. Check the actual product, distribution territories and purchase
+flows against [Apple's current review guidelines](https://developer.apple.com/app-store/review/guidelines/),
+[Google Play functionality requirements](https://support.google.com/googleplay/android-developer/answer/9898783?hl=en)
+and [Google Play payments policy](https://support.google.com/googleplay/android-developer/answer/9858738?hl=en).
+Those decisions cannot be reduced to whether the screen uses a WebView.
+
+## Three concrete architecture decisions [#three-scenarios]
+
+### A B2B back office with occasional mobile approvals
+
+Assume the product already has good responsive forms, table details and account
+management. Users mainly work on desktop and occasionally approve requests on
+their phones. No required capability has been shown to exceed the target
+browsers.
+
+Start with the web/PWA. Spend the next iteration on touch targets, form recovery,
+navigation and a useful interrupted-network state. Consider Capacitor when a
+specific distribution or native integration requirement emerges. Change the
+decision if that integration cannot meet the workflow in the browser; do not
+create two UI roadmaps solely to add an app icon.
+
+### A mobile product built around frequent interactions
+
+Assume the core job involves repeated scanning, gestures, media capture and long
+interactive lists, with mobile navigation central to the experience. The team
+can maintain a separate presentation layer.
+
+Investigate React Native with Expo and validate the hardest device workflow in
+a development build. The tradeoff is a native UI and its platform maintenance,
+even while data contracts and server rules remain shared. Reconsider if an
+existing web/Capacitor prototype demonstrably meets the same requirements with
+better maintainability for this team. This is a decision about evidence, not
+a guarantee attached to the framework name.
+
+### A Next.js SaaS gaining a companion client
+
+Assume the browser application relies on Server Actions, private session data
+and server-side workspace authorization. The mobile client only needs a subset
+of its workflows.
+
+First expose a small, versioned API boundary around those operations and retain
+server ownership of permissions and transactions. Then choose Capacitor or
+React Native for the companion's actual screens. Avoid making the web server
+call itself over HTTP everywhere just to share a client abstraction. The web
+can keep direct server-side application calls while mobile uses the API.
+
+Change the plan if native authentication or a critical device capability
+cannot be validated within the scope. The useful web foundation can continue
+without announcing a native product prematurely.
+
+## Validate one vertical slice before committing [#validation-checklist]
+
+Use the following checklist for one representative user journey:
+
+- State the mobile job and the condition that would justify leaving the web.
+- Classify Next.js routes as build-time, client-side or request-time server work.
+- Compile the intended shared modules in both toolchains and inspect what each
+  bundle includes; reject server modules and secrets.
+- Exercise real sign-in, return links, expiration, renewal where applicable,
+  revocation and account switching in the intended runtime.
+- Check keyboard, back behavior, safe areas, large text, accessibility and
+  required hardware permissions on target devices.
+- Define offline reads and writes separately, including private caches and
+  conflict handling; test reconnection rather than assuming it is harmless.
+- Measure release builds against a stated experience target and record devices,
+  data and network conditions.
+- Identify the owner of SDK/plugin upgrades, signing, store compliance and
+  support for old clients.
+- Record a decision, unresolved risks and the evidence that would reverse it.
+
+## Versions and evidence boundaries [#versions-and-evidence]
+
+Official documentation was checked on **8 November 2026**:
+
+| Technology studied                              | Documentation/release reference                                                   |
+| ----------------------------------------------- | --------------------------------------------------------------------------------- |
+| Capacitor 8.6.0, stable v8 docs                 | [Capacitor release](https://github.com/ionic-team/capacitor/releases/tag/8.6.0)   |
+| React Native 0.88                               | [React Native release](https://reactnative.dev/blog/2026/10/19/react-native-0.88) |
+| Expo SDK 58, React Native 0.88 and React 19.3.0 | [Expo SDK reference](https://docs.expo.dev/versions/v58.0.0/)                     |
+| Next.js App Router guide displaying 16.4.5      | [Static-export guide](https://nextjs.org/docs/app/guides/static-exports)          |
+
+These are the studied versions, not a claim that all four frameworks were
+installed or tested. The example verification above records its own exact
+toolchain. No Capacitor build, Expo/Metro bundle, iOS/Android simulator, device,
+native login or store submission was validated for this article. The scenario
+recommendations are architectural judgments; the documentation links support
+the underlying capabilities and constraints.
+
+For the next step, use the
+[SaaS foundation checklist](/guides/production-ready-saas-starter)
+to identify the authentication, data and operational responsibilities your
+chosen client will depend on. A clear backend boundary is useful whichever
+renderer you select.

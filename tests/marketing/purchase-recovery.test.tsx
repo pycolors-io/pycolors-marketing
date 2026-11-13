@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
@@ -133,7 +133,7 @@ describe("Purchase recovery guidance", () => {
       "does not verify a purchase or email delivery",
     );
     expect(status).not.toHaveTextContent("has been sent");
-    expect(status).toHaveFocus();
+    await waitFor(() => expect(status).toHaveFocus());
     expect(recoverCommerceAccess).toHaveBeenCalledExactlyOnceWith({
       email: "buyer@example.com",
       productSlug: "starter-pro",

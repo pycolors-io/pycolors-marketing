@@ -1,0 +1,268 @@
+---
+title: Partager ses URL de pagination Next.js sans perdre les filtres
+description: Construisez des liens qui conservent la recherche et les filtres à plusieurs valeurs, réinitialisent la pagination après une nouvelle recherche et utilisent les composants publics de PyColors UI.
+author: Patrice Parny
+date: "2026-11-09"
+category: Next.js
+tags:
+  - Next.js
+  - Pagination
+  - React
+  - URL State
+featured: false
+readingTime: 8 min de lecture
+cover: /seo/blog/og-blog-saas.png
+cta:
+  label: Découvrir Data Table
+  href: /docs/blocks/data/data-table
+  variant: blocks
+---
+
+## Un lien de pagination doit conserver la vue qu’il désigne [#a-page-link-should-preserve-the-view-it-points-to]
+
+Une personne filtre une table d’administration avec `q=invoice`, sélectionne deux étiquettes et ouvre la deuxième page. Le contrôle de pagination suivant mène à `/projects?page=3`. Le numéro de page a changé, mais les filtres ont disparu. Recharger ou partager cette URL désigne désormais un autre jeu de résultats.
+
+**Construisez la prochaine URL à partir des paramètres actuels, modifiez uniquement la clé de pagination et réinitialisez la page lorsque l’intention de recherche change.** Utilisez de vrais liens pour naviguer et laissez la page ou la couche de données déterminer la page effective, le total correspondant et les enregistrements.
+
+Le problème vient de la construction de l’URL, pas du style de la table. Il diffère aussi du [problème de pagination périmée](/blog/filtered-table-stale-pagination) : cet article corrige une page devenue invalide après la réduction d’une collection ; celui-ci conserve une vue reproductible lors de la navigation, d’un rechargement et du partage d’un lien.
+
+## Reproduire la perte d’information [#reproduce-the-information-loss]
+
+Supposons que l’adresse actuelle soit :
+
+```text
+/projects?q=invoice&tag=urgent&tag=review&sort=recent&page=2
+```
+
+Une implémentation tentante construit le lien suivant avec `"/projects?page=" + (page + 1)`. Le résultat `/projects?page=3` perd silencieusement `q`, les deux valeurs de `tag` et `sort`.
+
+Le navigateur a suivi le lien demandé. L’erreur vient de la construction de l’URL dans l’application. Pour la même vue filtrée, le lien correct est :
+
+```text
+/projects?q=invoice&tag=urgent&tag=review&sort=recent&page=3
+```
+
+L’API native [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) conserve les clés répétées grâce à `getAll()` et sérialise correctement les valeurs. Créer une nouvelle instance de `URLSearchParams` évite de modifier un instantané de routage en lecture seule.
+
+## Un petit utilitaire sans dépendance au routeur [#one-small-url-helper-no-routing-dependency]
+
+Créez `pagination-url.mjs`. Ce fichier utilise uniquement du JavaScript standard et suit des règles applicatives explicites : les pages sont des entiers positifs sûrs, numérotés à partir de un ; la première page est la valeur canonique par défaut et peut omettre `page` ; une nouvelle recherche revient à la première page ; les autres clés, y compris les étiquettes répétées, sont conservées. L’utilitaire reçoit volontairement un **chemin relatif à la racine et fiable**, fourni par votre routeur, plutôt que des URL externes arbitraires.
+
+```js title="pagination-url.mjs"
+function toHref(pathname, params) {
+  if (
+    typeof pathname !== "string" ||
+    !pathname.startsWith("/") ||
+    pathname.startsWith("//") ||
+    /[?#]/.test(pathname)
+  ) {
+    throw new TypeError("Expected a root-relative pathname");
+  }
+
+  const query = params.toString();
+  return pathname + (query ? `?${query}` : "");
+}
+
+export function parsePage(raw) {
+  if (typeof raw !== "string" || !/^[1-9]\d*$/.test(raw)) return 1;
+  const page = Number(raw);
+  return Number.isSafeInteger(page) ? page : 1;
+}
+
+export function hrefForPage(pathname, search, page) {
+  if (!Number.isSafeInteger(page) || page < 1) {
+    throw new RangeError("page must be a positive safe integer");
+  }
+
+  const params = new URLSearchParams(search);
+  params.delete("page"); // Also removes duplicate page keys.
+  if (page !== 1) params.set("page", String(page));
+  return toHref(pathname, params);
+}
+
+export function hrefForSearch(pathname, search, rawQuery) {
+  if (typeof rawQuery !== "string") {
+    throw new TypeError("query must be a string");
+  }
+
+  const params = new URLSearchParams(search);
+  const query = rawQuery.trim();
+  if (query) params.set("q", query);
+  else params.delete("q");
+  params.delete("page"); // A new search starts on page one.
+  return toHref(pathname, params);
+}
+```
+
+Cet utilitaire ne décide pas des filtres pris en charge par votre produit. Il conserve les clés déjà présentes dans la chaîne de requête ; le serveur doit valider séparément les tris autorisés, les valeurs des filtres et les bornes demandées. Conserver un paramètre ne donne aucun droit de l’utiliser.
+
+## Exécuter les tests de régression [#run-the-original-regression-checks]
+
+Placez ce second fichier à côté de l’utilitaire. Le premier test reproduit le lien défectueux ; les autres vérifient le contrat corrigé, notamment les étiquettes répétées, les pages invalides, la réinitialisation après recherche et l’encodage.
+
+```js title="pagination-url.test.mjs"
+import assert from "node:assert/strict";
+import test from "node:test";
+import { hrefForPage, hrefForSearch, parsePage } from "./pagination-url.mjs";
+
+const current = "q=invoice&tag=urgent&tag=review&sort=recent&page=2";
+
+test("reproduces a naive link that loses the filtered view", () => {
+  const broken = `/projects?page=${3}`;
+  assert.equal(broken, "/projects?page=3");
+  assert.equal(
+    new URL(broken, "https://example.test").searchParams.has("q"),
+    false,
+  );
+});
+
+test("page link preserves search, sorting and repeated tags", () => {
+  assert.equal(
+    hrefForPage("/projects", current, 3),
+    "/projects?q=invoice&tag=urgent&tag=review&sort=recent&page=3",
+  );
+});
+
+test("page one removes the default page key, not the filters", () => {
+  assert.equal(
+    hrefForPage("/projects", current, 1),
+    "/projects?q=invoice&tag=urgent&tag=review&sort=recent",
+  );
+});
+
+test("duplicate old page keys become a single requested page", () => {
+  const href = hrefForPage("/projects", "page=9&tag=a&page=8&tag=b", 2);
+  const url = new URL(href, "https://example.test");
+  assert.deepEqual(url.searchParams.getAll("page"), ["2"]);
+  assert.deepEqual(url.searchParams.getAll("tag"), ["a", "b"]);
+});
+
+test("search change resets page while preserving other choices", () => {
+  assert.equal(
+    hrefForSearch("/projects", current, " refund "),
+    "/projects?q=refund&tag=urgent&tag=review&sort=recent",
+  );
+});
+
+test("clearing search also clears its old page", () => {
+  assert.equal(
+    hrefForSearch("/projects", "tag=active&q=old&page=7", "  "),
+    "/projects?tag=active",
+  );
+});
+
+test("special characters round-trip as data", () => {
+  const href = hrefForSearch("/projects", "tag=priority&page=2", "R&D / EU");
+  assert.equal(
+    new URL(href, "https://example.test").searchParams.get("q"),
+    "R&D / EU",
+  );
+  assert.equal(href.includes("page="), false);
+});
+
+test("invalid page values fall back to one", () => {
+  for (const raw of [null, "0", "-1", "2.5", "01", "1e2", "9007199254740992"]) {
+    assert.equal(parsePage(raw), 1);
+  }
+  assert.equal(parsePage("12"), 12);
+});
+
+test("rejects invalid page requests and external pathnames", () => {
+  for (const page of [0, -1, 1.5, Infinity, "2"]) {
+    assert.throws(() => hrefForPage("/projects", current, page), RangeError);
+  }
+  assert.throws(() => hrefForPage("//evil.test", current, 2), TypeError);
+  assert.throws(() => hrefForSearch("/projects", current, null), TypeError);
+});
+```
+
+```sh
+node --test pagination-url.test.mjs
+```
+
+**Périmètre de vérification (9 novembre 2026) :** l’utilitaire et les neuf tests ci-dessus passent avec Node.js **24.18.1** dans un répertoire isolé, sans Next.js, React ni package PyColors. Retirer volontairement la conservation des paramètres provoque trois échecs attendus ; restaurer l’utilitaire rétablit les neuf succès. Cela vérifie les transformations des paramètres, pas une application SaaS en cours d’exécution ni l’historique du routeur. Le monorepo déclare Node **24.x**, pnpm **10.32.1**, Next.js **16.4.2** et React **^19.3.1** ; les packages du framework et de l’interface ne participent pas à ce test JavaScript isolé.
+
+## Composer de vrais liens Next.js avec PyColors UI [#compose-real-nextjs-page-links-with-pycolors-ui]
+
+La [documentation publique de Pagination](/docs/ui/pagination) prend en charge `PaginationLink asChild` ; le composant public transmet cet enfant à la composition Button existante. Le composant [Link de Next.js](https://nextjs.org/docs/app/api-reference/components/link) produit une ancre avec navigation côté client. L’exemple suivant montre ce raccordement dans un **Client Component** ; il ne constitue pas une application Next.js complète et testée.
+
+```jsx title="project-page-links.jsx"
+"use client";
+
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  buildPaginationRange,
+} from "@pycolors/ui";
+import { hrefForPage } from "./pagination-url.mjs";
+
+export function ProjectPageLinks({ page, totalPages }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const tokens = buildPaginationRange({ page, totalPages });
+
+  return (
+    <Pagination aria-label="Project pages">
+      <PaginationContent>
+        {tokens.map((token) =>
+          token.type === "ellipsis" ? (
+            <PaginationItem key={token.key}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={token.value}>
+              <PaginationLink asChild isActive={token.isActive}>
+                <Link
+                  href={hrefForPage(
+                    pathname,
+                    searchParams.toString(),
+                    token.value,
+                  )}
+                >
+                  {token.value}
+                </Link>
+              </PaginationLink>
+            </PaginationItem>
+          ),
+        )}
+      </PaginationContent>
+    </Pagination>
+  );
+}
+```
+
+La page ou le propriétaire des données fournit des valeurs **effectives et validées** de `page` et de `totalPages` pour la requête actuelle. Le composant ne récupère pas les enregistrements et ne déduit pas le nombre total de pages d’un sous-ensemble téléchargé. Pour les routes prérendues statiquement, suivez les [consignes Next.js sur `useSearchParams`](https://nextjs.org/docs/app/api-reference/functions/use-search-params), notamment l’ajout d’une frontière Suspense adaptée lorsque nécessaire. Une page rendue sur le serveur peut lire sa prop `searchParams` et y construire les liens ; évitez de dupliquer l’URL dans un état local désynchronisé.
+
+Lors d’une nouvelle recherche, naviguez vers `hrefForSearch(pathname, searchParams.toString(), submittedQuery)` avec le routeur ou un vrai lien. Par exemple, rechercher `refund` depuis la septième page doit produire une URL sans l’ancien `page=7`. Il s’agit d’une _règle produit_ explicite, pas d’un comportement fourni par le composant Pagination. Les boutons Précédent et Suivant du navigateur doivent alors restaurer la vue décrite par l’URL, à condition que le chargement des données utilise les mêmes paramètres.
+
+## Les responsabilités à clarifier avant la production [#boundaries-before-production]
+
+| Situation                                                 | Responsable et comportement attendu                                                                                                           |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Une personne partage un lien                              | La route analyse et valide la requête, puis charge les enregistrements correspondants.                                                        |
+| Une personne change les filtres                           | La fonctionnalité choisit de réinitialiser ou non la page ; cet exemple revient à la première.                                                |
+| La page demandée dépasse les données disponibles          | Le serveur ou la couche de données calcule une page effective ou une erreur documentée et maintient la cohérence entre URL, lignes et totaux. |
+| L’API utilise des curseurs plutôt que des numéros de page | Utilisez une navigation par curseurs opaques ; n’inventez pas de contrat de pagination numérotée.                                             |
+| Un nouveau résultat remplace une ancienne requête         | Empêchez une réponse périmée ou une clé de cache incorrecte d’afficher les données d’une autre requête.                                       |
+| La liste est vide ou en cours de chargement               | Présentez un état vide, de chargement ou d’erreur fidèle à la situation, plutôt qu’un contrôle de pagination trompeur.                        |
+
+L’article sur le [faux état vide](/blog/filtered-table-stale-pagination) traite la normalisation des bornes de pagination. La [documentation du Block Data Table](/docs/blocks/data/data-table) décrit la copie des sources et le contrat d’une table contrôlée. Ni le composant d’interface ni cet utilitaire d’URL ne fournissent l’autorisation serveur, l’invalidation des caches, la récupération des données, les totaux ou une certification d’accessibilité.
+
+## Points à vérifier [#review-checklist]
+
+- Copiez l’URL d’une page filtrée dans un nouvel onglet et vérifiez la cohérence entre recherche, tri, étiquettes, page effective et enregistrements.
+- Naviguez avec de vrais liens. Vérifiez les boutons Précédent et Suivant du navigateur ainsi que le rechargement.
+- Conservez les clés répétées telles que `tag=a&tag=b`, sans les réduire à une seule valeur.
+- Soumettez ou effacez une recherche ; vérifiez que l’ancien numéro de page ne reste pas présent par erreur.
+- Testez aussi `page=0`, les nombres négatifs, les fractions, les doublons et les très grandes valeurs à la frontière **serveur**.
+- Vérifiez les plages et les totaux sur la même requête, y compris en l’absence de résultat ou lorsque la collection rétrécit.
+- Vérifiez séparément le focus clavier, l’annonce de la page active, les petits écrans et l’hydratation Next.js réelle.
+
+## Étape suivante : composer les éléments sans les coupler [#next-step-compose-dont-couple]
+
+**Découvrez Data Table** pour voir comment le Block public reçoit l’état de recherche et de pagination contrôlé par l’application. Utilisez les [composants Pagination](/docs/ui/pagination) pour une navigation sémantique, puis gardez l’analyse des URL et la gestion des enregistrements dans la route de votre application. Un lien partagé n’est fiable que lorsque ses filtres, sa page et les données affichées décrivent la **même vue**.

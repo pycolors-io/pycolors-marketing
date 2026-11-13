@@ -4,8 +4,6 @@ import { Link } from "@/lib/i18n/navigation";
 import type { Metadata } from "next";
 import { ArrowLeft, Layers3, Sparkles } from "lucide-react";
 
-import { Badge, Card, cn } from "@pycolors/ui";
-import { SiteButton as Button } from "@/components/site-button";
 import { Container } from "@/components/container";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import {
@@ -13,6 +11,19 @@ import {
   getPostsByCategory,
   normalizeTaxonomy,
 } from "@/lib/blog/utils";
+
+import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import { MarketingSectionHeader } from "@/components/marketing/section-header";
+import {
+  MarketingPill,
+  MarketingPillList,
+} from "@/components/marketing/pill-list";
+import {
+  MarketingActionGroup,
+  MarketingLinkButton,
+} from "@/components/marketing/cta-panel";
+import { MarketingFeatureCard } from "@/components/marketing/feature-card";
 
 const metadata: Metadata = {
   title: "Next.js SaaS Engineering Categories",
@@ -39,255 +50,131 @@ const metadata: Metadata = {
   },
 };
 
-const focusRing =
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
-
-function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
-  const tSite = useCopy();
-
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center rounded-[5px]",
-        "border border-border-subtle",
-        "bg-background/50",
-        "px-2.5 py-1",
-        "text-[11px] font-medium text-muted-foreground",
-      )}
-    >
-      {tSite(children)}
-    </span>
-  );
-}
-
-function SectionHeader({
-  title,
-  description,
-}: Readonly<{
-  title: string;
-  description?: string;
-}>) {
-  const tSite = useCopy();
-
-  return (
-    <div className="mb-10 space-y-3">
-      <h2 className="font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl">
-        {tSite(title)}
-      </h2>
-
-      {description ? (
-        <p className="max-w-2xl text-sm leading-7 text-muted-foreground sm:text-[15px]">
-          {tSite(description)}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
 export default function BlogCategoriesPage() {
   const tSite = useCopy();
 
   const categories = getAllCategories(tSite.locale);
 
   return (
-    <Container className="py-16 sm:py-20">
-      <div className="relative min-w-0">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-[radial-gradient(circle_at_top,color-mix(in_oklch,var(--primary),transparent_95%),transparent_60%)]"
-        />
+    <main id="content" tabIndex={-1}>
+      <Container className="py-16 sm:py-20">
+        <div className="relative min-w-0">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-[radial-gradient(circle_at_top,color-mix(in_oklch,var(--primary),transparent_95%),transparent_60%)]"
+          />
 
-        <div className="mb-10">
-          <Breadcrumb
-            items={[
-              { label: "Home", href: "/" },
-              { label: "Blog", href: "/blog" },
-              { label: "Categories", href: "/blog/categories" },
+          <div className="mb-10">
+            <Breadcrumb
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Blog", href: "/blog" },
+                { label: "Categories", href: "/blog/categories" },
+              ]}
+            />
+          </div>
+
+          <PageHero
+            variant="compact"
+            maxWidth="5xl"
+            className="mb-10"
+            badges={[
+              {
+                label: tSite("Categories"),
+                variant: "secondary",
+                icon: <Layers3 className="h-3.5 w-3.5" aria-hidden="true" />,
+              },
+              { label: tSite("Blog taxonomy"), variant: "outline" },
+              {
+                label: tSite("Product-first"),
+                variant: "outline",
+                icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
+              },
             ]}
-          />
-        </div>
-
-        <header className="mx-auto mb-20 max-w-5xl">
-          <div className="space-y-10 text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Badge
-                variant="secondary"
-                className={cn(
-                  "gap-1.5 rounded-[5px]",
-                  "border border-border-subtle",
-                  "bg-surface-muted/80",
-                  "px-2.5 py-1",
-                  "text-[11px] font-medium",
-                )}
-              >
-                <Layers3 className="h-3.5 w-3.5" aria-hidden="true" />
-                {tSite("Categories")}
-              </Badge>
-
-              <Badge
-                variant="outline"
-                className={cn(
-                  "rounded-[5px]",
-                  "border-border-subtle",
-                  "bg-background/60",
-                  "px-2.5 py-1",
-                  "text-[11px] font-medium",
-                )}
-              >
-                {tSite("Blog taxonomy")}
-              </Badge>
-
-              <Badge
-                variant="outline"
-                className={cn(
-                  "gap-1.5 rounded-[5px]",
-                  "border-border-subtle",
-                  "bg-background/60",
-                  "px-2.5 py-1",
-                  "text-[11px] font-medium",
-                )}
-              >
-                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                {tSite("Product-first")}
-              </Badge>
-            </div>
-
-            <div className="mx-auto max-w-4xl space-y-6">
-              <h1
-                className={cn(
-                  "text-balance",
-                  "font-brand",
-                  "text-4xl font-semibold",
-                  "tracking-[-0.05em]",
-                  "text-foreground",
-                  "sm:text-5xl",
-                  "lg:text-[4.5rem]",
-                  "lg:leading-[0.95]",
-                )}
-              >
-                {tSite("Explore blog categories")}
-                <span className="block text-muted-foreground">
-                  {tSite("by product surface and technical domain.")}
-                </span>
-              </h1>
-
-              <p
-                className={cn(
-                  "mx-auto max-w-3xl",
-                  "text-balance",
-                  "text-[16px] leading-8",
-                  "text-muted-foreground",
-                  "sm:text-lg",
-                )}
-              >
-                {tSite(
-                  "Browse PyColors writing by topic to go deeper into SaaS architecture, product UX, implementation patterns, frontend systems, and production-ready engineering decisions.",
-                )}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button
-                asChild
-                className={`site-primary-action ${cn("rounded-[5px]", focusRing)}`}
-              >
-                <Link href="/blog">
-                  <ArrowLeft className="size-4" aria-hidden="true" />
-                  {tSite("Back to Blog")}
-                </Link>
-              </Button>
-
-              <Button
-                asChild
-                variant="outline"
-                className={cn("rounded-[5px]", focusRing)}
-              >
-                <Link href="/guides">{tSite("Browse Guides")}</Link>
-              </Button>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-2 pt-1">
-              <Pill>{tSite("SaaS Architecture")}</Pill>
-              <Pill>{tSite("Billing")}</Pill>
-              <Pill>{tSite("Next.js")}</Pill>
-              <Pill>{tSite("Design Systems")}</Pill>
-              <Pill>{tSite("Product Engineering")}</Pill>
-            </div>
-          </div>
-        </header>
-
-        <section className="py-4">
-          <SectionHeader
-            title={tSite("All categories")}
+            title={tSite("Explore blog categories")}
+            subtitle={tSite("by product surface and technical domain.")}
             description={tSite(
-              "Each category groups articles around the same implementation logic, product surface, or engineering concern.",
+              "Browse PyColors writing by topic to go deeper into SaaS architecture, product UX, implementation patterns, frontend systems, and production-ready engineering decisions.",
             )}
+            actions={
+              <MarketingActionGroup align="center">
+                <MarketingLinkButton>
+                  <Link href="/blog">
+                    <ArrowLeft className="size-4" aria-hidden="true" />
+                    {tSite("Back to Blog")}
+                  </Link>
+                </MarketingLinkButton>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/guides">{tSite("Browse Guides")}</Link>
+                </MarketingLinkButton>
+              </MarketingActionGroup>
+            }
+            extra={
+              <MarketingPillList align="center">
+                <MarketingPill>{tSite("SaaS Architecture")}</MarketingPill>
+                <MarketingPill>{tSite("Billing")}</MarketingPill>
+                <MarketingPill>{tSite("Next.js")}</MarketingPill>
+                <MarketingPill>{tSite("Design Systems")}</MarketingPill>
+                <MarketingPill>{tSite("Product Engineering")}</MarketingPill>
+              </MarketingPillList>
+            }
           />
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category) => {
-              const posts = getPostsByCategory(category, tSite.locale);
+          <MarketingSectionShell
+            spacing="compact"
+            aria-labelledby="categories-heading"
+          >
+            <MarketingSectionHeader
+              align="left"
+              titleId="categories-heading"
+              title={tSite("All categories")}
+              description={tSite(
+                "Each category groups articles around the same implementation logic, product surface, or engineering concern.",
+              )}
+            />
 
-              return (
-                <Card
-                  key={category}
-                  className={cn(
-                    "group relative flex h-full flex-col justify-between overflow-hidden rounded-[5px]",
-                    "border border-border-subtle",
-                    "bg-background/45",
-                    "p-6 backdrop-blur-sm",
-                    "transition-all duration-200",
-                    "hover:border-border",
-                    "hover:bg-background/65",
-                  )}
-                >
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-border to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {categories.map((category) => {
+                const posts = getPostsByCategory(category, tSite.locale);
+
+                return (
+                  <MarketingFeatureCard
+                    key={category}
+                    title={tSite(category)}
+                    meta={
+                      <MarketingPillList>
+                        <MarketingPill>
+                          {tSite(posts.length)} {tSite(" article")}
+                          {tSite(posts.length > 1 ? "s" : "")}
+                        </MarketingPill>
+                      </MarketingPillList>
+                    }
+                    description={
+                      <>
+                        {tSite("Explore articles related to ")}
+                        {tSite(category).toLocaleLowerCase(tSite.locale)}{" "}
+                        {tSite(
+                          " and adjacent implementation decisions across SaaS product engineering.",
+                        )}
+                      </>
+                    }
+                    action={
+                      <MarketingLinkButton variant="outline" className="w-full">
+                        <Link
+                          href={`/blog/categories/${normalizeTaxonomy(category)}`}
+                        >
+                          {tSite("View category")}
+                        </Link>
+                      </MarketingLinkButton>
+                    }
                   />
-
-                  <div className="space-y-5">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="outline" className="rounded-[5px]">
-                        {tSite(category)}
-                      </Badge>
-
-                      <Badge variant="secondary" className="rounded-[5px]">
-                        {tSite(posts.length)} {tSite(" article")}
-                        {tSite(posts.length > 1 ? "s" : "")}
-                      </Badge>
-                    </div>
-
-                    <p className="text-sm leading-7 text-muted-foreground">
-                      {tSite("Explore articles related to ")}
-                      {tSite(category).toLocaleLowerCase(tSite.locale)}{" "}
-                      {tSite(
-                        " and adjacent implementation decisions across SaaS product engineering.",
-                      )}
-                    </p>
-                  </div>
-
-                  <div className="mt-8">
-                    <Button
-                      asChild
-                      size="sm"
-                      variant="outline"
-                      className={cn("w-full rounded-[5px]", focusRing)}
-                    >
-                      <Link
-                        href={`/blog/categories/${normalizeTaxonomy(category)}`}
-                      >
-                        {tSite("View category")}
-                      </Link>
-                    </Button>
-                  </div>
-                </Card>
-              );
-            })}
-          </div>
-        </section>
-      </div>
-    </Container>
+                );
+              })}
+            </div>
+          </MarketingSectionShell>
+        </div>
+      </Container>
+    </main>
   );
 }
 
