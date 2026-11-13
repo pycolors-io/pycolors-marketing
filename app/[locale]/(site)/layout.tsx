@@ -1,7 +1,7 @@
 import { useCopy } from "@/lib/i18n/use-copy";
 import { SiteHeader } from "@/components/layout/site-header";
 
-import { Footer } from "@/components/footer";
+import { Footer, FooterPromotion } from "@/components/footer";
 import styles from "@/components/marketing/site-design.module.css";
 
 export default function MarketingLayout({
@@ -21,6 +21,7 @@ export default function MarketingLayout({
         <div className="flex-1 bg-background text-foreground">
           {tSite(children)}
         </div>
+        <FooterPromotion />
         <Footer />
       </div>
     </>

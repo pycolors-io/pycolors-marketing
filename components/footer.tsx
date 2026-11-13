@@ -104,16 +104,17 @@ const REPOSITORIES = [
   },
 ] as const;
 
-export function Footer() {
+/** Marketing discovery sits before the shared site footer. */
+export function FooterPromotion() {
   const tSite = useCopy();
 
   return (
-    <FooterNavigation className={`${styles.footer} ${styles.publicFooter}`}>
+    <section
+      className={`${styles.publicFooter} ${styles.promotion}`}
+      aria-labelledby="footer-invitation-title"
+    >
       <Container>
-        <section
-          className={styles.invitation}
-          aria-labelledby="footer-invitation-title"
-        >
+        <div className={styles.invitation}>
           <div className={styles.invitationCopy}>
             <p className={styles.eyebrow}>{tSite("Build with PyColors")}</p>
             <h2 id="footer-invitation-title">
@@ -153,8 +154,18 @@ export function Footer() {
               </Link>
             ))}
           </nav>
-        </section>
+        </div>
+      </Container>
+    </section>
+  );
+}
 
+export function Footer() {
+  const tSite = useCopy();
+
+  return (
+    <FooterNavigation className={`${styles.footer} ${styles.publicFooter}`}>
+      <Container>
         <div className={styles.directory}>
           <div className={styles.brand}>
             <div>

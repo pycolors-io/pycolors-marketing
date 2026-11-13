@@ -232,18 +232,12 @@
 }
 
 @media (min-width: 768px) {
-  .frame {
-    --docs-footer-sidebar-width: 15rem;
-  }
   .frame :global(#nd-docs-layout) {
     --fd-sidebar-width: 15rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .frame {
-    --docs-footer-sidebar-width: 18.75rem;
-  }
   .frame :global(#nd-docs-layout) {
     --fd-sidebar-width: 18.75rem;
   }
@@ -264,9 +258,6 @@
 }
 
 @media (min-width: 1280px) {
-  .frame:has(:global(#nd-toc, #nd-toc-placeholder)) {
-    --docs-footer-toc-width: 16rem;
-  }
   .frame :global(#nd-docs-layout):has(:global(#nd-toc, #nd-toc-placeholder)) {
     --fd-toc-width: 16rem;
   }

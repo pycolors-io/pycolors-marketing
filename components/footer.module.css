@@ -653,6 +653,12 @@
   font-family: var(--font-sans);
 }
 
+.promotion {
+  display: flow-root;
+  padding-bottom: clamp(2rem, 4vw, 4rem);
+  border-top: 0;
+}
+
 .publicFooter::before,
 .publicFooter::after,
 .publicFooter .invitation::before,

@@ -36,15 +36,15 @@ afterEach(() => {
 });
 
 describe("documentation footer", () => {
-  it("keeps documentation resources compact and linked to existing destinations", () => {
+  it("uses the shared site footer with product, resource, comparison, and support destinations", () => {
     render(<DocsFooter />);
     const footer = screen.getByRole("contentinfo", {
-      name: "PyColors documentation footer",
+      name: "PyColors site footer",
     });
     expect(
       within(footer).getByRole("button", { name: "Language: English" }),
     ).toHaveTextContent("English");
-    for (const title of ["Documentation", "Resources", "Support"]) {
+    for (const title of ["Products", "Resources", "Compare", "Company"]) {
       const nav = within(footer).getByRole("navigation", {
         name: `Footer ${title}`,
       });
@@ -54,8 +54,8 @@ describe("documentation footer", () => {
       expect(within(nav).getByRole("list")).toBeVisible();
     }
     expect(
-      within(footer).getByRole("link", { name: "PyColors Docs" }),
-    ).toHaveAttribute("href", "/docs");
+      within(footer).getByRole("link", { name: "PyColors" }),
+    ).toHaveAttribute("href", "/");
     expect(
       within(footer).queryByRole("region", {
         name: "Your next product starts here.",
@@ -63,14 +63,14 @@ describe("documentation footer", () => {
     ).not.toBeInTheDocument();
     expect(
       within(footer).getByText(
-        "Reference, guides, and support for building with PyColors.",
+        "Components, templates, and SaaS starters. Built to work together.",
       ),
     ).toBeVisible();
     expect(
       within(footer).getByRole("link", { name: "Contact" }),
     ).toHaveAttribute("href", "/contact");
     const resources = within(footer).getByRole("navigation", {
-      name: "Footer Documentation",
+      name: "Footer Resources",
     });
     expect(
       within(resources).getByRole("link", { name: "Documentation" }),
