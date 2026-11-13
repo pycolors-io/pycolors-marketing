@@ -16,13 +16,20 @@ import {
   DropdownMenuTrigger,
 } from "@pycolors/ui";
 import { cn } from "@pycolors/ui";
+import styles from "./breadcrumb.module.css";
 
 export type BreadcrumbProps = {
   items: BreadcrumbItem[];
   className?: string;
+  /** Keep an existing page-owned BreadcrumbList without duplicating it. */
+  renderJsonLd?: boolean;
 };
 
-export function BreadcrumbClient({ items, className }: BreadcrumbProps) {
+export function BreadcrumbClient({
+  items,
+  className,
+  renderJsonLd = true,
+}: BreadcrumbProps) {
   const tSite = useCopy();
 
   if (!items.length) return null;
@@ -36,9 +43,12 @@ export function BreadcrumbClient({ items, className }: BreadcrumbProps) {
 
   return (
     <>
-      <JsonLd id="breadcrumb-jsonld" data={jsonLd} />
+      {renderJsonLd ? <JsonLd id="breadcrumb-jsonld" data={jsonLd} /> : null}
 
-      <nav aria-label={tSite("Breadcrumb")} className={className}>
+      <nav
+        aria-label={tSite("Breadcrumb")}
+        className={cn(styles.root, className)}
+      >
         {/* Mobile */}
         <ol className="flex min-w-0 items-center gap-1 text-sm text-muted-foreground sm:hidden">
           {/* First */}
@@ -84,7 +94,10 @@ export function BreadcrumbClient({ items, className }: BreadcrumbProps) {
                     </button>
                   </DropdownMenuTrigger>
 
-                  <DropdownMenuContent align="start" className="min-w-44">
+                  <DropdownMenuContent
+                    align="start"
+                    className={cn("min-w-44", styles.menu)}
+                  >
                     {hiddenItems.map((item) => (
                       <DropdownMenuItem key={item.href} asChild>
                         <Link href={item.href}>{tSite(item.label)}</Link>

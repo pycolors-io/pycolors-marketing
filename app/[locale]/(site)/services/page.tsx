@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowUpRight,
   Check,
@@ -8,13 +9,14 @@ import {
   Users,
 } from "lucide-react";
 import { Container } from "@/components/container";
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { Link } from "@/lib/i18n/navigation";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
-import { MarketingFaq } from "@/components/marketing/faq";
+import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
 import {
   MarketingActionGroup,
   MarketingLinkButton,
@@ -40,6 +42,8 @@ const metadata: Metadata = {
 const useCases = [
   {
     id: "client-portals",
+    artwork: "/images/starters/pro/concepts/connected-workspace-test-v1.png",
+    tone: "neutral",
     icon: Users,
     title: "Client portals & activity tracking",
     description:
@@ -52,6 +56,8 @@ const useCases = [
   },
   {
     id: "internal-tools",
+    artwork: "/images/starters/pro/concepts/workflow-path-test-v1.png",
+    tone: "cobalt",
     icon: PanelsTopLeft,
     title: "Internal tools & dashboards",
     description:
@@ -64,6 +70,8 @@ const useCases = [
   },
   {
     id: "documents",
+    artwork: "/images/starters/pro/concepts/delivery-case-test-v1.png",
+    tone: "gold",
     icon: FileText,
     title: "Documents & automation",
     description:
@@ -76,6 +84,8 @@ const useCases = [
   },
   {
     id: "saas",
+    artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
+    tone: "neutral",
     icon: Layers3,
     title: "Custom SaaS applications",
     description:
@@ -179,8 +189,9 @@ const faq = [
 export default function ServicesPage() {
   const tSite = useCopy();
   return (
-    <main id="content" tabIndex={-1}>
-      <Container className="pb-12 pt-24 sm:pb-16 sm:pt-28">
+    <main id="content" tabIndex={-1} className={styles.page}>
+      <Container className={styles.heroContainer}>
+        <MarketingBreadcrumb route="/services" />
         <div className={styles.hero}>
           <PageHero
             className={styles.heroCopy}
@@ -276,22 +287,38 @@ export default function ServicesPage() {
           />
           <div className={styles.caseGrid}>
             {useCases.map(
-              ({ id, icon: Icon, title, description, features }, index) => (
-                <article key={id} className={styles.caseCard}>
+              (
+                { id, icon: Icon, title, description, features, artwork, tone },
+                index,
+              ) => (
+                <article key={id} className={styles.caseCard} data-tone={tone}>
                   <div className={styles.caseTop}>
                     <Icon aria-hidden="true" className="size-5" />
                     <span aria-hidden="true">0{index + 1}</span>
                   </div>
-                  <h3>{tSite(title)}</h3>
-                  <p>{tSite(description)}</p>
-                  <ul>
-                    {features.map((feature) => (
-                      <li key={feature}>
-                        <Check aria-hidden="true" />
-                        {tSite(feature)}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className={styles.caseContent}>
+                    <div className={styles.caseIntro}>
+                      <h3>{tSite(title)}</h3>
+                      <p>{tSite(description)}</p>
+                    </div>
+                    <div className={styles.caseArt} aria-hidden="true">
+                      <Image
+                        src={artwork}
+                        alt=""
+                        fill
+                        loading="lazy"
+                        sizes="(min-width: 1024px) 560px, (min-width: 640px) 44vw, 88vw"
+                      />
+                    </div>
+                    <ul>
+                      {features.map((feature) => (
+                        <li key={feature}>
+                          <Check aria-hidden="true" />
+                          {tSite(feature)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </article>
               ),
             )}
@@ -306,6 +333,7 @@ export default function ServicesPage() {
         <MarketingSectionShell
           id="approach"
           width="full"
+          className={styles.approachChapter}
           aria-labelledby="services-approach-title"
         >
           <div className={styles.approach}>
@@ -343,6 +371,7 @@ export default function ServicesPage() {
 
         <MarketingSectionShell
           id="delivery"
+          className={styles.deliveryChapter}
           width="full"
           aria-labelledby="services-delivery-title"
         >
@@ -379,7 +408,7 @@ export default function ServicesPage() {
             </div>
             <Link
               href="/starters/pro/implementation-example"
-              className={styles.textLink}
+              className={`${styles.textLink} ${styles.evidenceAction}`}
             >
               {tSite("View example delivery")}
               <ArrowUpRight aria-hidden="true" className="size-3.5" />
@@ -401,7 +430,7 @@ export default function ServicesPage() {
             )}
           />
           <article className={styles.customEngagement}>
-            <div>
+            <div className={styles.customIntro}>
               <p className={styles.eyebrow}>
                 {tSite("Custom product development")}
               </p>
@@ -446,10 +475,7 @@ export default function ServicesPage() {
           </p>
         </MarketingSectionShell>
 
-        <MarketingSectionShell
-          width="full"
-          aria-labelledby="services-faq-title"
-        >
+        <MarketingFaqSection width="full" aria-labelledby="services-faq-title">
           <MarketingFaq
             titleId="services-faq-title"
             title={tSite("Before getting started.")}
@@ -461,7 +487,7 @@ export default function ServicesPage() {
               answer: tSite(item.answer),
             }))}
           />
-        </MarketingSectionShell>
+        </MarketingFaqSection>
 
         <MarketingSectionShell
           width="full"

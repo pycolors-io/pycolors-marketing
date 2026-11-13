@@ -1,10 +1,5 @@
 .page {
-  background: radial-gradient(
-      ellipse at 85% 0%,
-      color-mix(in oklab, var(--primary) 5%, transparent),
-      transparent 65%
-    )
-    0 0 / 100% 38rem no-repeat;
+  background: var(--background);
 }
 
 .breadcrumb {
@@ -43,32 +38,45 @@
   padding-bottom: 3rem;
 }
 
-.hero h1 {
-  font-size: clamp(2.75rem, 6vw, 4.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.055em;
-}
-
 .hero p {
   max-width: 34rem;
 }
 
 .heroNote {
   padding: 1.25rem 1.5rem;
-  border-left: 1px solid var(--border-subtle);
+  border-left: 0;
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  --background: var(
+    --marketing-peach,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-peach-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+  padding-block: 1.5rem;
 }
 
 .noteIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 3.5rem;
+  height: 3.5rem;
   margin-bottom: 1rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  background: var(--background);
-  color: var(--muted-foreground);
+  border: 0;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--foreground) 8%, var(--background));
+  color: var(--foreground);
 }
 
 .eyebrow {
@@ -133,7 +141,7 @@
   gap: 1rem;
   padding: 0.625rem 0.75rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
+  border-radius: 100px;
   color: var(--muted-foreground);
   font-size: 0.75rem;
   transition:
@@ -169,7 +177,7 @@
   min-width: 0;
   scroll-margin-top: 6rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: var(--marketing-card-radius, 1.5rem);
   background: var(--background);
 }
 
@@ -187,14 +195,8 @@
 }
 
 .latest {
-  background:
-    radial-gradient(
-        ellipse at 100% 0%,
-        color-mix(in oklab, var(--primary) 6%, transparent),
-        transparent 60%
-      )
-      0 0 / 100% 24rem no-repeat,
-    var(--background);
+  background: var(--background);
+  overflow: hidden;
 }
 
 .release:not(.latest) {
@@ -268,6 +270,10 @@
   padding-inline: 0.25rem;
   font-size: 0.6875rem;
   font-weight: 500;
+  padding: 0.375rem 0.625rem;
+  border-radius: 100px;
+  background: var(--marketing-gold, var(--surface-muted));
+  color: var(--marketing-gold-ink, var(--foreground));
 }
 
 .releaseMeta time {
@@ -423,14 +429,8 @@
   margin-top: 3rem;
   padding: 1.5rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  background:
-    radial-gradient(
-      ellipse at 0% 100%,
-      color-mix(in oklab, var(--primary) 5%, transparent),
-      transparent 65%
-    ),
-    var(--background);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .nextStep h2 {
@@ -500,7 +500,7 @@
     gap: 5rem;
   }
   .heroNote {
-    padding-block: 0.5rem;
+    padding-block: 1.5rem;
   }
   .historyLayout {
     grid-template-columns: 12rem minmax(0, 1fr);
@@ -569,7 +569,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem 1.5rem;
-    padding: 0;
+    padding: 1.25rem 1.5rem;
     border: 0;
   }
 
@@ -590,5 +590,85 @@
   .archive li a,
   .notesToggle {
     transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .heroNote {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+  }
+}
+
+.latest .releaseHeader {
+  --background: var(
+    --marketing-lilac,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-lilac-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.latest .notesToggle {
+  margin: 0.5rem;
+  border-radius: 1rem;
+}
+
+.nextStep {
+  --background: var(
+    --marketing-cobalt,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-cobalt-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@media (forced-colors: active) {
+  .latest .releaseHeader,
+  .nextStep {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --ring: Highlight;
+    --border-subtle: CanvasText;
+    border-color: CanvasText;
+  }
+  .latestLabel {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid CanvasText;
   }
 }

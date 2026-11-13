@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import type { Metadata } from "next";
@@ -59,6 +60,7 @@ export default function StarterProFaqPage() {
   return (
     <main className="py-14 sm:py-20">
       <Container>
+        <MarketingBreadcrumb route="/starters/pro/faq" />
         <PageHero
           variant="compact"
           align="left"

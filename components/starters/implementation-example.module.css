@@ -1,0 +1,403 @@
+.page {
+  background: var(--background);
+  color: var(--foreground);
+}
+.intro {
+  padding-block: calc(
+      var(--site-header-height, 3.5rem) + clamp(1.5rem, 3vw, 3rem)
+    )
+    2.5rem;
+}
+.heroLayout {
+  display: grid;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+.hero h1 {
+  max-width: 17ch;
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  line-height: 1.04;
+}
+.hero p {
+  max-width: 48ch;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.documentStage {
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 3rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-peach);
+}
+.document {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: var(--background);
+  box-shadow: 0 12px 32px rgb(24 34 70 / 9%);
+}
+.document h2 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.document li {
+  padding-block: 0.875rem;
+}
+.disclosure {
+  max-width: 80ch;
+  margin-top: 2rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--marketing-gold);
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+.contents {
+  display: grid;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+}
+.contentsLink {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: var(--marketing-canvas);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+.contentsLink > svg {
+  color: var(--primary);
+}
+.contentsLink > span > span:first-child {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.contentsLink:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+.contentsLink:focus-visible,
+.environmentRecord:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.section {
+  padding-block: clamp(3rem, 6vw, 5rem);
+  scroll-margin-top: 6rem;
+}
+.scopeGrid {
+  display: grid;
+  align-items: stretch;
+  gap: 1.25rem;
+}
+.scopeCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-canvas);
+  scroll-margin-top: 6rem;
+}
+.scopeCard[id="business-adaptation"] {
+  --foreground: var(--marketing-lilac-ink);
+  --muted-foreground: color-mix(in oklab, var(--foreground) 86%, transparent);
+  --primary: var(--foreground);
+  background: var(--marketing-lilac);
+  color: var(--foreground);
+}
+.scopeCard:target {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.scopeMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.scopePrice {
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+.scopeTitle {
+  max-width: 25ch;
+  margin-top: 1.75rem;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.12;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.scopeOutcome {
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.scopeList {
+  display: grid;
+  gap: 1rem;
+  margin-block: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: color-mix(in oklab, var(--background) 45%, transparent);
+  list-style: none;
+}
+.scopeList li {
+  min-width: 0;
+  line-height: 1.75;
+}
+.scopeList svg {
+  color: currentColor;
+}
+.scopeBoundary {
+  flex: 1;
+  margin-bottom: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+.page :global([data-slot="button"]) {
+  min-height: 2.75rem;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  border-radius: 100px;
+  line-height: 1.5;
+  white-space: normal;
+  text-align: center;
+}
+.page .primaryAction {
+  border: 1px solid transparent;
+  background: var(--marketing-cobalt);
+  color: var(--marketing-cobalt-ink);
+}
+.page .primaryAction:hover {
+  background: color-mix(
+    in oklab,
+    var(--marketing-cobalt) 88%,
+    var(--foreground)
+  );
+}
+.page .secondaryAction {
+  border: 1px solid var(--border-strong);
+  background: var(--background);
+  color: var(--foreground);
+}
+.page .secondaryAction:hover {
+  background: var(--surface-muted);
+}
+.environmentRecord {
+  min-width: 0;
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius);
+  background: var(--background);
+}
+.environmentRecord thead {
+  background: var(--marketing-canvas);
+}
+.environmentRecord :is(th, td) {
+  padding: 1.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+.environmentRecord tbody th {
+  min-width: 10rem;
+  font-weight: 600;
+}
+.acceptanceStatus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.875rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: var(--marketing-canvas);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.acceptanceState {
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.75rem;
+  background: var(--marketing-gold);
+  color: var(--marketing-gold-ink);
+}
+.acceptanceList {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+}
+.acceptanceRow {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: var(--background);
+}
+.acceptanceRow > span {
+  padding-top: 0.125rem;
+  color: var(--primary);
+}
+.acceptanceRow h3 {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+.acceptanceRow p {
+  grid-column: 2;
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+.handoverLayout {
+  display: grid;
+  min-width: 0;
+  gap: 2rem;
+  padding: clamp(1.25rem, 3vw, 3rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-canvas);
+}
+.handoverList {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+}
+.handoverList li {
+  padding: 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: var(--background);
+}
+.handoverList h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.handoverList p {
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+.next {
+  --foreground: var(--marketing-graphite-ink);
+  --muted-foreground: color-mix(in oklab, var(--foreground) 86%, transparent);
+  --ring: var(--foreground);
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-graphite);
+  color: var(--foreground);
+}
+.next > div {
+  min-width: 0;
+}
+.nextTitle {
+  max-width: 25ch;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.12;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+}
+.nextActions {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+.next .primaryAction {
+  background: var(--marketing-gold);
+  color: var(--marketing-gold-ink);
+}
+.next .primaryAction:hover {
+  background: color-mix(
+    in oklab,
+    var(--marketing-gold) 88%,
+    var(--marketing-gold-ink)
+  );
+}
+@media (min-width: 40rem) {
+  .contents {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 64rem) {
+  .heroLayout {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.9fr);
+  }
+  .contents {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .scopeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .acceptanceRow {
+    grid-template-columns: 2rem minmax(0, 0.7fr) repeat(2, minmax(0, 1fr));
+  }
+  .acceptanceRow p {
+    grid-column: auto;
+  }
+  .handoverLayout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 3rem;
+  }
+  .next {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .next > div:first-child {
+    flex: 1;
+  }
+  .nextActions {
+    max-width: 24rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contentsLink {
+    transition: none;
+  }
+}
+@media (forced-colors: active) {
+  .document {
+    box-shadow: none;
+  }
+  .scopeCard:target {
+    outline-color: Highlight;
+  }
+  .page :is(.primaryAction, .secondaryAction),
+  .next .primaryAction {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .page :is(.primaryAction, .secondaryAction):hover,
+  .next .primaryAction:hover {
+    background: Highlight;
+    color: HighlightText;
+  }
+}

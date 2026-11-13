@@ -1,10 +1,5 @@
 .page {
-  background: radial-gradient(
-      ellipse at 80% 0%,
-      color-mix(in oklab, var(--primary) 6%, transparent),
-      transparent 65%
-    )
-    0 0 / 100% 48rem no-repeat;
+  background: var(--background);
 }
 .heroLayout {
   display: grid;
@@ -13,10 +8,7 @@
   padding: 1rem 0 3rem;
 }
 .hero h1 {
-  max-width: 44rem;
-  font-size: clamp(2rem, 5.5vw, 4.75rem);
-  line-height: 1.02;
-  letter-spacing: -0.055em;
+  max-width: 20ch;
 }
 .hero p {
   max-width: 34rem;
@@ -27,7 +19,7 @@
   min-height: 2.75rem;
   align-items: center;
   gap: 0.5rem;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   font-size: 0.75rem;
   font-weight: 500;
 }
@@ -40,35 +32,35 @@
   outline-offset: 4px;
 }
 .systemVisual {
+  min-width: 0;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 1.5rem;
+  --background: var(--marketing-lilac, var(--surface-muted));
+  --foreground: var(--marketing-lilac-ink, var(--surface-foreground));
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 14%, var(--background));
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background:
-    radial-gradient(
-      ellipse at 55% 40%,
-      color-mix(in oklab, var(--primary) 13%, transparent),
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse at 10% 100%,
-      color-mix(in oklab, var(--brand-platform) 7%, transparent),
-      transparent 70%
-    ),
-    var(--background);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--background);
+  color: var(--foreground);
 }
 .visualGrid {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image:
-    linear-gradient(var(--border-subtle) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
-  background-size: 32px 32px;
-  mask-image: radial-gradient(ellipse at center, #0008, transparent 70%);
+  background: radial-gradient(
+    ellipse at 50% 48%,
+    color-mix(in srgb, var(--foreground) 7%, transparent),
+    transparent 68%
+  );
 }
 .visualHeader {
   display: flex;
@@ -88,15 +80,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: min(100%, 17rem);
+  --background: var(--marketing-cobalt, var(--surface-inverted));
+  --foreground: var(--marketing-cobalt-ink, var(--surface-inverted-foreground));
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 85%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  width: min(100%, 18rem);
+  min-height: 12rem;
+  justify-content: center;
   margin: 3rem auto 0;
+  color: var(--foreground);
   padding: 1.5rem 1rem;
   border: 1px solid
     color-mix(in oklab, var(--primary) 20%, var(--border-subtle));
-  border-radius: 5px;
+  border-radius: var(--marketing-card-radius, 1.5rem);
   background: var(--background);
-  box-shadow: 0 16px 48px -24px
-    color-mix(in oklab, var(--primary) 40%, transparent);
+  box-shadow: 0 20px 35px color-mix(in srgb, var(--foreground) 12%, transparent);
 }
 .systemCore::after {
   position: absolute;
@@ -105,7 +108,11 @@
   left: 50%;
   width: 1px;
   height: 1.5rem;
-  background: color-mix(in oklab, var(--primary) 30%, var(--border-subtle));
+  background: color-mix(
+    in srgb,
+    var(--marketing-lilac-ink, var(--foreground)) 24%,
+    transparent
+  );
 }
 .coreMark {
   display: inline-flex;
@@ -116,13 +123,9 @@
   margin-bottom: 1rem;
   border: 1px solid
     color-mix(in oklab, var(--primary) 18%, var(--border-subtle));
-  border-radius: 12px;
-  background: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--primary) 12%, var(--background)),
-    var(--background)
-  );
-  color: var(--primary);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--foreground) 10%, var(--background));
+  color: var(--foreground);
 }
 .systemBranches {
   position: relative;
@@ -148,10 +151,22 @@
   gap: 0.75rem;
   padding: 1.125rem 0.25rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
+  border-radius: 1rem;
+  --background: var(--marketing-canvas, var(--surface-muted));
+  --foreground: var(--surface-foreground);
+  --primary: var(--foreground);
   background: var(--background);
+  color: var(--foreground);
   font-size: 0.6875rem;
   font-weight: 500;
+}
+.systemNode:first-child {
+  --background: var(--marketing-gold, var(--surface-muted));
+  --foreground: var(--marketing-gold-ink, var(--surface-foreground));
+}
+.systemNode:last-child {
+  --background: var(--marketing-peach, var(--surface-muted));
+  --foreground: var(--marketing-peach-ink, var(--surface-foreground));
 }
 .systemNode::before {
   position: absolute;
@@ -177,12 +192,15 @@
 .sectionNav {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.25rem 1.5rem;
-  padding-block: 0.75rem;
-  border-block: 1px solid var(--border-subtle);
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .sectionNav .textLink {
   gap: 0.75rem;
+  padding-inline: 0.75rem;
 }
 .eyebrow {
   display: block;
@@ -197,30 +215,33 @@
   overflow: hidden;
   display: grid;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
+  border-radius: var(--marketing-panel-radius, 2rem);
   background: var(--background);
 }
 .purposeHeading {
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
-  background:
-    radial-gradient(
-      ellipse at 0% 0%,
-      color-mix(in oklab, var(--primary) 11%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse at 100% 100%,
-      color-mix(in oklab, var(--brand-platform) 5%, transparent),
-      transparent 75%
-    );
+  background: var(--background);
+  --background: var(--marketing-gold, var(--surface-muted));
+  --foreground: var(--marketing-gold-ink, var(--surface-foreground));
+  --primary: var(--foreground);
+  --ring: var(--foreground);
+  --primary: var(--foreground);
+  --ring: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 85%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 14%, var(--background));
+  color: var(--foreground);
 }
 .purposeHeading h2 {
-  font-size: 1.75rem;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: var(--site-heading-tracking);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
 }
 .purposeHeading > p {
   max-width: 25rem;
@@ -276,24 +297,44 @@
 }
 .principleGrid {
   display: grid;
+  gap: 1.25rem;
 }
 .principle {
   display: flex;
   flex-direction: column;
-  padding-block: 1.75rem;
-  border-top: 1px solid var(--border-subtle);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .principleNumber {
   font-family: var(--font-mono), monospace;
-  font-size: 0.75rem;
-  color: var(--muted-foreground);
+  font-size: 2.5rem;
+  line-height: 1;
+  letter-spacing: -0.065em;
+  color: color-mix(in srgb, var(--foreground) 40%, var(--background));
+}
+.principle:nth-child(2) {
+  --background: var(--marketing-peach, var(--surface-muted));
+  --foreground: var(--marketing-peach-ink, var(--surface-foreground));
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 85%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 14%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
 }
 .principle h3 {
   max-width: 18rem;
   margin-top: 1.5rem;
   font-size: 1.125rem;
   font-weight: 600;
-  letter-spacing: normal;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
 }
 .principle > p {
   margin-block: 1rem 1.5rem;
@@ -327,30 +368,38 @@
 .productRow {
   display: grid;
   gap: 1rem;
-  padding-block: 1.75rem;
-  border-top: 1px solid var(--border-subtle);
+  padding: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .progressPanel {
-  border-top: 1px solid var(--border-subtle);
+  display: grid;
+  gap: 1rem;
 }
 .progressPanel > div {
-  padding-inline: 0;
-  border-bottom: 1px solid var(--border-subtle);
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+.progressPanel > div:first-child {
+  --background: var(--marketing-lilac, var(--surface-muted));
+  --foreground: var(--marketing-lilac-ink, var(--surface-foreground));
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 85%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
 }
 .cta {
   box-shadow: none;
-  background:
-    radial-gradient(
-      ellipse at 100% 0%,
-      color-mix(in oklab, var(--primary) 11%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse at 0% 100%,
-      color-mix(in oklab, var(--brand-platform) 5%, transparent),
-      transparent 70%
-    ),
-    var(--background);
+  background: var(--marketing-canvas, var(--surface-muted));
+  border-radius: var(--marketing-panel-radius, 2rem);
 }
 @media (min-width: 640px) {
   .heroLayout {
@@ -389,7 +438,7 @@
   }
   .principleGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 2rem;
+    column-gap: 1.25rem;
   }
 }
 @media (min-width: 1024px) {
@@ -408,7 +457,7 @@
     max-width: 48rem;
   }
   .principleGrid {
-    column-gap: 4rem;
+    column-gap: 1.25rem;
   }
   .ecosystemLayout {
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.5fr);
@@ -438,4 +487,7 @@
     flex-direction: column;
     align-items: stretch;
   }
+}
+.productRow + .productRow {
+  margin-top: 1rem;
 }

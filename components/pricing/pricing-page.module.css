@@ -1,0 +1,676 @@
+.page {
+  --pricing-paper: var(--background);
+  --pricing-ink: var(--foreground);
+  --pricing-muted: var(--muted-foreground);
+  --pricing-border: var(--border-subtle);
+  --pricing-canvas: var(--marketing-canvas);
+  --pricing-primary: var(--primary);
+  padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 4vw, 4rem));
+}
+
+.heroPanel {
+  margin-bottom: clamp(1.5rem, 3vw, 3rem);
+  padding-block: clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 3vw, 3rem);
+  border: 0;
+  background: transparent;
+}
+.heroContent {
+  width: 100%;
+  max-width: none;
+}
+.heroPanel h1 {
+  max-width: 17ch;
+  margin: 1.25rem 0 0;
+  font-size: clamp(3rem, 6vw, 5.25rem);
+  line-height: 1.01;
+  letter-spacing: -0.06em;
+}
+.heroPanel > div > p {
+  max-width: 52ch;
+  margin: 1.5rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.sectionNav {
+  gap: clamp(1rem, 2vw, 2rem);
+  width: 100%;
+  max-width: 100%;
+  justify-content: flex-start;
+  margin-bottom: 2rem;
+  padding: 0.375rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  background: transparent;
+}
+.sectionNav a {
+  min-height: 2.875rem;
+  padding: 0.625rem 0.25rem;
+  border-bottom: 2px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.sectionNav a:hover {
+  border-bottom-color: var(--foreground);
+  color: var(--foreground);
+}
+
+.offerGrid {
+  gap: 1.25rem;
+}
+.offer {
+  --offer-action-fill: var(--marketing-cobalt);
+  --offer-action-ink: var(--marketing-cobalt-ink);
+  --offer-art-surface: var(--marketing-canvas);
+  gap: 1.25rem;
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--pricing-paper);
+  box-shadow: none;
+}
+.offer[data-offer="na-ai-landing"] {
+  --offer-art-surface: #f5c4b0;
+}
+.offer[data-offer="starter-free"] {
+  --offer-art-surface: var(--marketing-lilac);
+  background: var(--marketing-canvas);
+}
+.offer[data-offer="starter-pro"] {
+  --background: var(--marketing-graphite);
+  --foreground: var(--marketing-graphite-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --brand-primary: var(--primary);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  --surface: color-mix(in srgb, var(--foreground) 8%, var(--background));
+  --surface-muted: color-mix(in srgb, var(--foreground) 10%, var(--background));
+  --accent: var(--surface-muted);
+  --accent-foreground: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --border: var(--border-subtle);
+  --pro-border: var(--border-subtle);
+  --pro-border-subtle: var(--border-subtle);
+  --offer-action-fill: var(--foreground);
+  --offer-action-ink: var(--background);
+  --offer-art-surface: #0b1430;
+  --ring: var(--foreground);
+  color: var(--foreground);
+  background: var(--background);
+}
+.offerSummary {
+  min-width: 0;
+}
+.offerPurchase {
+  min-width: 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.offerEyebrow > p {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.offer [data-slot="badge"] {
+  border-color: var(--border-subtle);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--foreground);
+}
+.offer[data-offer="starter-pro"] [data-slot="badge"] {
+  border-color: transparent;
+  background: var(--marketing-cobalt);
+  color: var(--marketing-cobalt-ink);
+}
+.offerTitle {
+  margin-top: 1.125rem;
+  font-size: clamp(1.875rem, 2.8vw, 2.25rem);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+.offerDescription {
+  min-height: 0;
+  margin-top: 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+.offerPrice {
+  margin-top: 0;
+}
+.priceValue {
+  font-size: clamp(3rem, 4.5vw, 3.5rem);
+  font-weight: 650;
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+  font-variant-numeric: tabular-nums;
+}
+.offerPrice > p:last-child {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+.offerAction {
+  margin-top: 1.25rem;
+}
+.offerAction [data-slot="button"] {
+  min-height: 2.875rem;
+  height: auto;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--offer-action-fill);
+  border-radius: 100px;
+  background: var(--offer-action-fill);
+  color: var(--offer-action-ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: normal;
+  box-shadow: none;
+}
+.offerAction [data-slot="button"]:hover:not(:disabled) {
+  background: color-mix(
+    in srgb,
+    var(--offer-action-fill) 88%,
+    var(--background)
+  );
+}
+.offerAction [data-slot="button"]:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+/* Concept art is decorative; genuine screenshots live in the proof chapter. */
+.offerArtwork {
+  position: relative;
+  min-width: 0;
+  height: clamp(11.5rem, 18vw, 14rem);
+  overflow: hidden;
+  border-radius: 1rem;
+  background: var(--offer-art-surface);
+}
+.conceptImage {
+  object-fit: contain;
+}
+.conceptCutout {
+  padding: 0.875rem;
+}
+
+.offerFeatures {
+  margin-top: 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.offerFeatures > p {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.offerFeatures li {
+  padding-block: 0.125rem;
+  font-size: 0.8125rem;
+}
+.offerFeatures li > span:first-child {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.1875rem;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+.offerFoot {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.offerScope {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+.offerLink {
+  margin-top: auto;
+  font-size: 0.8125rem;
+}
+
+.chapterHeading h2 {
+  max-width: 23ch;
+  margin-inline: auto;
+  font-size: clamp(2.125rem, 4vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+}
+.chapterHeading p {
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+.comparisonSection [role="region"] {
+  border-radius: var(--marketing-card-radius);
+  background: var(--pricing-paper);
+}
+.comparisonSection thead th:last-child,
+.comparisonSection tbody td:last-child {
+  background: var(--marketing-lilac);
+}
+.comparisonSection thead th {
+  padding-block: 1.5rem;
+}
+.comparisonSection thead th:not(:first-child) > p:first-child {
+  font-size: 1.75rem;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+}
+
+.screenshotCard {
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--background);
+  color: var(--foreground);
+}
+.screenshotCard:first-child {
+  --background: var(--marketing-cobalt);
+  --foreground: var(--marketing-cobalt-ink);
+}
+.screenshotCard:last-child {
+  --background: var(--marketing-peach);
+  --foreground: var(--marketing-peach-ink);
+}
+.screenshotCard > a {
+  border-radius: 1rem;
+  background: var(--pricing-paper);
+}
+.screenshotCard figcaption {
+  padding: 1rem 0.25rem 0.25rem;
+}
+.screenshotCard h3 {
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+.productProof {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--border-subtle);
+}
+.productProof > h3 {
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+.productProofGrid {
+  display: grid;
+  gap: 1.5rem;
+}
+.productProofCard {
+  min-width: 0;
+}
+.productProofCard > p {
+  margin-bottom: 0.875rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.productProofCard [data-product-preview] {
+  --background: var(--pricing-paper);
+  --foreground: var(--pricing-ink);
+  --card-foreground: var(--pricing-ink);
+  --muted-foreground: var(--pricing-muted);
+  --border-subtle: var(--pricing-border);
+  --border: var(--pricing-border);
+  --primary: var(--pricing-primary);
+  --surface-muted: var(--pricing-canvas);
+  border-radius: 1rem;
+}
+.productProofCard figcaption {
+  margin-top: 0.875rem;
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+
+@media (min-width: 48rem) {
+  .productProofGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 64rem) {
+  .productProofGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.previewSection [data-slot="button"],
+.helpPanel [data-slot="button"] {
+  min-height: 2.875rem;
+  height: auto;
+  padding: 0.75rem 1.125rem;
+  border: 1px solid var(--marketing-cobalt);
+  border-radius: 100px;
+  background: var(--marketing-cobalt);
+  color: var(--marketing-cobalt-ink);
+  white-space: normal;
+}
+.previewSection [data-slot="button"]:hover,
+.helpPanel [data-slot="button"]:hover {
+  background: color-mix(
+    in srgb,
+    var(--marketing-cobalt) 88%,
+    var(--background)
+  );
+}
+.previewSection [data-slot="button"]:focus-visible,
+.helpPanel [data-slot="button"]:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.helpPanel {
+  margin-block: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-canvas);
+}
+.helpPanel h2 {
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+@media (min-width: 64rem) {
+  .heroContent {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: end;
+    gap: 1.75rem clamp(2rem, 5vw, 5rem);
+  }
+  .heroContent > div:first-child {
+    grid-column: 1 / -1;
+  }
+  .heroPanel h1 {
+    max-width: 14ch;
+    margin: 0;
+  }
+  .heroPanel > div > p {
+    max-width: 38ch;
+    margin: 0;
+    padding-bottom: 0.25rem;
+    font-size: 1.125rem;
+  }
+  .screenshotGrid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    align-items: start;
+  }
+  .offerPrice > p:last-child {
+    min-height: 3.4em;
+  }
+  .offerGrid {
+    grid-template-rows: repeat(5, auto);
+    row-gap: 1.25rem;
+  }
+  .offer {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 5;
+    row-gap: 1.25rem;
+  }
+}
+@media (max-width: 39.999rem) {
+  .heroPanel h1 {
+    font-size: clamp(2.5rem, 10vw, 3.25rem);
+  }
+  .sectionNav {
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-padding-inline: 0.375rem;
+    scrollbar-width: thin;
+  }
+  .sectionNav a {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+:global(html[data-site-palette="monochrome"]) .offer {
+  --offer-action-fill: var(--pricing-ink);
+  --offer-action-ink: var(--pricing-paper);
+}
+
+:global(html[data-site-palette="monochrome"]) .offerArtwork {
+  background: var(--marketing-canvas);
+}
+:global(html[data-site-palette="monochrome"]) .conceptImage {
+  filter: grayscale(1);
+}
+
+@media (forced-colors: active) {
+  .offerArtwork {
+    display: none;
+  }
+  .heroPanel,
+  .offer,
+  .offer[data-offer="starter-pro"] {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --brand-primary: LinkText;
+    --brand-primary-hover: LinkText;
+    --surface: Canvas;
+    --surface-muted: Canvas;
+    --border-subtle: CanvasText;
+    --border: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .offerFeatures,
+  .comparisonSection [role="region"],
+  .comparisonSection thead th:last-child,
+  .comparisonSection tbody td:last-child,
+  .screenshotCard,
+  .screenshotCard > a,
+  .helpPanel {
+    border-color: CanvasText;
+    background: Canvas;
+  }
+  .screenshotCard:first-child,
+  .screenshotCard:last-child {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .offerAction [data-slot="button"],
+  .previewSection [data-slot="button"],
+  .helpPanel [data-slot="button"] {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .offerAction [data-slot="button"]:hover:not(:disabled),
+  .previewSection [data-slot="button"]:hover,
+  .helpPanel [data-slot="button"]:hover {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
+@media (forced-colors: active) and (min-width: 64rem) {
+  .offerGrid {
+    grid-template-rows: repeat(4, auto);
+  }
+  .offer {
+    grid-row: span 4;
+  }
+}
+
+.mobilePreview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.75rem;
+  margin-block: clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-canvas);
+}
+.mobileIntro {
+  min-width: 0;
+  align-self: center;
+}
+.mobileStatus {
+  display: inline-flex;
+  padding: 0.375rem 0.75rem;
+  border-radius: 100px;
+  background: var(--marketing-lilac);
+  color: var(--marketing-lilac-ink);
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+.mobileIntro h2 {
+  margin-top: 1rem;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+.mobileIntro > p {
+  max-width: 44ch;
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+.mobileChoices {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  min-width: 0;
+}
+.mobileChoice {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: start;
+  padding: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  background: var(--pricing-paper);
+  color: var(--pricing-ink);
+}
+.mobileChoice h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.mobileChoice > p {
+  margin-block: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.mobileChoice a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  border-radius: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-underline-offset: 0.25rem;
+}
+.mobileChoice a:hover {
+  text-decoration: underline;
+}
+.mobileChoice a:focus-visible {
+  outline: 2px solid var(--pricing-primary);
+  outline-offset: 4px;
+}
+@media (min-width: 48rem) {
+  .mobileChoices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 64rem) {
+  .mobilePreview {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+  }
+}
+@media (forced-colors: active) {
+  .mobilePreview,
+  .mobileStatus,
+  .mobileChoice {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .mobileIntro > p,
+  .mobileChoice > p {
+    color: CanvasText;
+  }
+  .mobileChoice a {
+    color: LinkText;
+  }
+  .mobileChoice a:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+.mobileChoice .mobileQualifier {
+  margin-block: -0.25rem 1rem;
+  color: var(--pricing-muted);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+@media (forced-colors: active) {
+  .mobileChoice .mobileQualifier {
+    color: CanvasText;
+  }
+}
+
+.mobileChoice > p:first-of-type {
+  color: var(--pricing-ink);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+@media (forced-colors: active) {
+  .mobileChoice > p:first-of-type {
+    color: CanvasText;
+  }
+}

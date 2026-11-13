@@ -32,7 +32,7 @@ import {
 } from "@/components/marketing/pill-list";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
-import { MarketingFaq } from "@/components/marketing/faq";
+import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import { PageHero } from "@/components/marketing/page-hero";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
@@ -214,7 +214,7 @@ export default function NaAiTemplatePage() {
       )}
     >
       <JsonLd id="na-ai-landing-product-jsonld" data={naAiLandingJsonLd} />
-      <Container className="pb-16 pt-24 sm:pt-28">
+      <Container className={styles.intro}>
         <Breadcrumb
           className={cn("mb-8", styles.breadcrumb)}
           items={[
@@ -223,8 +223,14 @@ export default function NaAiTemplatePage() {
             { label: PRODUCT.name, href: "/templates/na-ai-landing" },
           ]}
         />
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-14">
+        <div
+          className={cn(
+            "grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-14",
+            styles.heroLayout,
+          )}
+        >
           <PageHero
+            className={styles.heroIntro}
             variant="compact"
             align="left"
             contentClassName="mx-0 max-w-3xl"
@@ -242,7 +248,7 @@ export default function NaAiTemplatePage() {
                   size="lg"
                   asChild
                   variant="outline"
-                  className="rounded-[5px] shadow-none"
+                  className={styles.heroAction}
                 >
                   <Link href="#template-preview">
                     {tSite("Explore the preview")}
@@ -279,6 +285,7 @@ export default function NaAiTemplatePage() {
             className={cn(
               "rounded-[5px] border border-border-subtle p-5 sm:p-6",
               styles.purchasePanel,
+              styles.heroPurchase,
             )}
           >
             <div className="flex items-center justify-between gap-3">
@@ -291,7 +298,7 @@ export default function NaAiTemplatePage() {
               />
             </div>
             <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span className="text-4xl font-semibold tracking-[-0.04em]">
+              <span className={styles.productPrice}>
                 {tSite(PRODUCT.price)}
               </span>
               <span className="text-xs text-muted-foreground">
@@ -359,7 +366,7 @@ export default function NaAiTemplatePage() {
 
         <nav
           aria-label={tSite("NA-AI Landing sections")}
-          className="mt-10 flex flex-wrap gap-x-6 gap-y-1 border-y border-border-subtle py-2 text-muted-foreground"
+          className={styles.contentsNav}
         >
           {[
             ["Preview", "template-preview"],
@@ -379,7 +386,7 @@ export default function NaAiTemplatePage() {
           id="template-preview"
           aria-labelledby="template-preview-title"
           width="full"
-          className="scroll-mt-24"
+          className={styles.section}
         >
           <MarketingSectionHeader
             align="left"
@@ -464,7 +471,7 @@ export default function NaAiTemplatePage() {
           id="template-included"
           aria-labelledby="template-included-title"
           width="full"
-          className="scroll-mt-24 border-t border-border-subtle"
+          className={styles.section}
         >
           <MarketingSectionHeader
             align="left"
@@ -502,7 +509,12 @@ export default function NaAiTemplatePage() {
               />
             ))}
           </div>
-          <div className="mt-5 grid gap-6 rounded-[5px] border border-border-subtle bg-background p-5 sm:p-7 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)]">
+          <div
+            className={cn(
+              "mt-5 grid gap-6 border border-border-subtle bg-background p-5 sm:p-7 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)]",
+              styles.integrationNote,
+            )}
+          >
             <div>
               <h3 className="flex items-center gap-2.5 text-sm font-medium">
                 <SlidersHorizontal
@@ -543,7 +555,7 @@ export default function NaAiTemplatePage() {
           id="template-customization"
           aria-labelledby="template-customization-title"
           width="full"
-          className="scroll-mt-24 border-t border-border-subtle"
+          className={styles.section}
         >
           <MarketingSectionHeader
             align="left"
@@ -613,7 +625,12 @@ export default function NaAiTemplatePage() {
                 </Link>
               </div>
             </div>
-            <div className="flex min-w-0 flex-col justify-between rounded-[5px] border border-border-subtle bg-background p-5 sm:p-7">
+            <div
+              className={cn(
+                "flex min-w-0 flex-col justify-between border border-border-subtle bg-background p-5 sm:p-7",
+                styles.customizationCard,
+              )}
+            >
               <ol
                 aria-label={tSite("Customize NA-AI Landing")}
                 className="space-y-6"
@@ -661,7 +678,7 @@ export default function NaAiTemplatePage() {
           id="template-delivery"
           aria-labelledby="template-delivery-title"
           width="full"
-          className="scroll-mt-24 border-t border-border-subtle"
+          className={styles.section}
         >
           <div
             className={cn(
@@ -759,11 +776,11 @@ export default function NaAiTemplatePage() {
           </div>
         </MarketingSectionShell>
 
-        <MarketingSectionShell
+        <MarketingFaqSection
           id="template-faq"
           aria-labelledby="template-faq-heading"
           width="full"
-          className="scroll-mt-24 border-t border-border-subtle"
+          className="scroll-mt-24"
         >
           <MarketingFaq
             titleId="template-faq-heading"
@@ -783,7 +800,7 @@ export default function NaAiTemplatePage() {
               <ArrowRight className="size-3.5" aria-hidden="true" />
             </Link>
           </div>
-        </MarketingSectionShell>
+        </MarketingFaqSection>
 
         <section
           aria-labelledby="template-purchase-title"

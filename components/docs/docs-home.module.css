@@ -23,10 +23,10 @@
   max-width: 16ch;
   margin: 0;
   font-family: var(--font-brand);
-  font-size: clamp(2rem, 3.2vw, 3rem);
-  font-weight: 600;
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  font-weight: 650;
   line-height: 1.1;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.045em;
   text-wrap: balance;
 }
 
@@ -40,6 +40,10 @@
 
 .quickstart {
   min-width: 0;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.5rem;
+  background: var(--surface-muted);
 }
 
 .quickstart > div {
@@ -80,7 +84,7 @@
 
 .quickstart :global(.docs-code-block) {
   margin: 0;
-  border-radius: var(--site-radius-panel);
+  border-radius: 1rem;
   background: var(--background);
 }
 

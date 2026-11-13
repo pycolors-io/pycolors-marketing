@@ -1,3 +1,6 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
+import { MarketingHeroBand } from "@/components/marketing/hero-band";
+import { MarketingCardIllustration } from "@/components/marketing/card-illustration";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
@@ -10,6 +13,7 @@ import { UiSectionNav } from "@/components/marketing/ui-section-nav";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { ThemeBuilder } from "@/components/theme-builder/theme-builder";
+import styles from "@/components/marketing/catalogue-hub.module.css";
 import {
   THEME_BUILDER_DESCRIPTION,
   THEME_BUILDER_PATH,
@@ -42,62 +46,79 @@ export default function ThemeBuilderPage() {
   const tSite = useCopy();
 
   return (
-    <main id="content" className="bg-background text-foreground">
-      <Container className="pt-24 pb-8 sm:pt-28 sm:pb-10">
-        <UiSectionNav active="themes" />
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <PageHero
-            variant="compact"
-            align="left"
-            badges={[{ label: "Theme Builder", variant: "outline" }]}
-            title={tSite("Your brand. Your theme.")}
-            description={tSite(
-              "Turn your brand color into a complete light and dark theme. Try it on real PyColors components, then take the tokens into your app.",
-            )}
-            contentClassName="mx-0 max-w-2xl"
-          />
-          <Button
-            asChild
-            variant="outline"
-            className="w-fit shrink-0 rounded-[5px]"
+    <main
+      id="content"
+      className={`bg-background text-foreground ${styles.cataloguePage} ${styles.themeProductPage}`}
+    >
+      <MarketingHeroBand tone="cool">
+        <Container className={styles.themeImmersiveIntro}>
+          <MarketingBreadcrumb route="/tools/theme-builder" />
+          <UiSectionNav active="themes" />
+          <div className={styles.themeImmersiveGrid}>
+            <div className={styles.themeImmersiveCopy}>
+              <PageHero
+                className={styles.themeImmersiveHero}
+                variant="compact"
+                align="left"
+                badges={[{ label: "Theme Builder", variant: "outline" }]}
+                title={tSite("Your brand. Your theme.")}
+                description={tSite(
+                  "Turn your brand color into a complete light and dark theme. Try it on real PyColors components, then take the tokens into your app.",
+                )}
+                contentClassName="mx-0 max-w-2xl"
+              />
+              <Button
+                asChild
+                variant="outline"
+                className={`w-fit shrink-0 rounded-full ${styles.themeGuideAction}`}
+              >
+                <Link href="/docs/ui/theming">
+                  <BookOpen aria-hidden="true" />
+                  {tSite("Theming guide")}
+                </Link>
+              </Button>
+            </div>
+            <div className={styles.themeImmersiveVisual}>
+              <MarketingCardIllustration kind="tokens" />
+            </div>
+          </div>
+          <div
+            className={`mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground ${styles.proofStrip} ${styles.themeProductProof}`}
           >
-            <Link href="/docs/ui/theming">
-              <BookOpen aria-hidden="true" />
-              {tSite("Theming guide")}
-            </Link>
-          </Button>
-        </div>
-        <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-2">
-            <Check className="size-3.5" aria-hidden="true" />
-            {tSite("Free, no account needed")}
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <Check className="size-3.5" aria-hidden="true" />
-            {tSite("Light and dark included")}
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <LockKeyhole className="size-3.5" aria-hidden="true" />
-            {tSite("Your colors stay in your browser")}
-          </span>
-        </div>
-      </Container>
+            <span className="inline-flex items-center gap-2">
+              <Check className="size-3.5" aria-hidden="true" />
+              {tSite("Free, no account needed")}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Check className="size-3.5" aria-hidden="true" />
+              {tSite("Light and dark included")}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <LockKeyhole className="size-3.5" aria-hidden="true" />
+              {tSite("Your colors stay in your browser")}
+            </span>
+          </div>
+        </Container>
+      </MarketingHeroBand>
 
       <MarketingSectionShell
         aria-label={tSite("Theme customization workspace")}
-        divider="pattern"
         spacing="compact"
         width="full"
-        className="pb-12 lg:pb-16"
+        className={`pb-12 lg:pb-16 ${styles.themeWorkspaceChapter} ${styles.themeImmersiveWorkspace}`}
       >
         <Container>
-          <ThemeBuilder />
+          <div className={styles.themeWorkbenchFrame}>
+            <ThemeBuilder />
+          </div>
         </Container>
       </MarketingSectionShell>
 
       <section className="border-t border-border-subtle">
-        <Container className="py-10 lg:py-14">
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+        <Container className={`py-10 lg:py-14 ${styles.themeGuideContainer}`}>
+          <div
+            className={`grid gap-5 lg:grid-cols-2 ${styles.guideCards} ${styles.themeGuideCards} ${styles.themeImmersiveGuides}`}
+          >
             <section aria-labelledby="theme-builder-integration-heading">
               <p className="text-xs font-medium text-muted-foreground">
                 {tSite("From preview to product")}
@@ -131,7 +152,7 @@ export default function ThemeBuilderPage() {
               </ol>
               <Link
                 href="/docs/ui/theming"
-                className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                className={`mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring ${styles.themeImmersiveGuideLink}`}
               >
                 {tSite("Read the theming guide")}
                 <ArrowRight className="size-4" aria-hidden="true" />

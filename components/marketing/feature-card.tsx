@@ -1,4 +1,5 @@
 import { useCopy } from "@/lib/i18n/use-copy";
+import styles from "./presentation.module.css";
 import * as React from "react";
 import { Card, cn } from "@pycolors/ui";
 
@@ -49,6 +50,7 @@ export function MarketingFeatureCard({
       className={cn(
         "flex h-full flex-col justify-between rounded-lg border p-6 shadow-soft",
         marketingSurfaceToneClass[tone],
+        styles.feature,
         className,
       )}
     >

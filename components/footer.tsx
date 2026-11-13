@@ -11,7 +11,6 @@ import { FooterAppearance } from "./footer-appearance";
 import { FooterNavigation } from "./footer-navigation";
 import { Logo } from "./logo";
 import styles from "./footer.module.css";
-import effects from "./marketing/product-light.module.css";
 import { LanguageSwitcher } from "./layout/language-switcher";
 
 const GROUPS = [
@@ -100,7 +99,7 @@ export function Footer() {
             </p>
           </div>
           <div className={styles.actions}>
-            <MarketingLinkButton className={effects.primaryAction}>
+            <MarketingLinkButton>
               <Link href="/starters/pro">{tSite("Explore Starter Pro")}</Link>
             </MarketingLinkButton>
             <MarketingLinkButton variant="outline">
@@ -119,34 +118,36 @@ export function Footer() {
                 )}
               </p>
             </div>
-            <nav
-              aria-label={tSite("PyColors on GitHub")}
-              className={styles.repositories}
-            >
-              <p className={styles.repositoryHeading}>
-                <GitBranch className="size-3.5" aria-hidden="true" />
-                {tSite("On GitHub")}
-              </p>
-              <ul>
-                {REPOSITORIES.map((repo) => (
-                  <li key={repo.href}>
-                    <a
-                      href={repo.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={tSite(
-                        "{value0} on GitHub (opens in a new tab)",
-                        { value0: repo.name },
-                      )}
-                    >
-                      {tSite(repo.label)}
-                      <ArrowUpRight className="size-3" aria-hidden="true" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <FibonacciMark className={styles.brandGeometry} />
+            <div className={styles.repositoryArea}>
+              <nav
+                aria-label={tSite("PyColors on GitHub")}
+                className={styles.repositories}
+              >
+                <p className={styles.repositoryHeading}>
+                  <GitBranch className="size-3.5" aria-hidden="true" />
+                  {tSite("On GitHub")}
+                </p>
+                <ul>
+                  {REPOSITORIES.map((repo) => (
+                    <li key={repo.href}>
+                      <a
+                        href={repo.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={tSite(
+                          "{value0} on GitHub (opens in a new tab)",
+                          { value0: repo.name },
+                        )}
+                      >
+                        {tSite(repo.label)}
+                        <ArrowUpRight className="size-3" aria-hidden="true" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+              <FibonacciMark className={styles.footerSignature} />
+            </div>
           </div>
           <div className={styles.groups}>
             {GROUPS.map((group) => (

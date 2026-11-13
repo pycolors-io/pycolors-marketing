@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { localizedAlternates } from "@/lib/i18n/routes";
@@ -700,6 +701,10 @@ export default function StarterProPage() {
           <div className={styles.heroAtmosphere} aria-hidden="true">
             <StarterProWaves id="starter-pro-atmosphere-waves" />
           </div>
+          <MarketingBreadcrumb
+            route="/starters/pro"
+            className="mx-auto max-w-6xl"
+          />
           <div className={styles.heroGrid}>
             <PageHero
               variant="compact"

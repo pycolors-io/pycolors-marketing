@@ -62,7 +62,7 @@ function expectLinkButton(link: HTMLElement, primary: boolean) {
     "h-auto",
     "whitespace-normal",
   );
-  expect(link).toHaveClass("rounded-md", "focus-visible:ring-[3px]");
+  expect(link).toHaveClass("rounded-full", "focus-visible:ring-[3px]");
   expect(link).not.toHaveAttribute("role", "button");
   if (primary) {
     expect(link).toHaveClass("bg-primary", "text-primary-foreground");
@@ -262,7 +262,7 @@ describe("MarketingLinkButton", () => {
     const link = screen.getByRole("link", { name: label });
     expect(link).toHaveClass("max-w-full", "min-w-0", "whitespace-normal");
     expect(link).toHaveClass("h-auto", "min-h-8.5", "px-8", "rounded-lg");
-    for (const token of ["px-6", "rounded-md", "h-10"]) {
+    for (const token of ["px-6", "rounded-full", "rounded-md", "h-10"]) {
       expect(link).not.toHaveClass(token);
     }
   });

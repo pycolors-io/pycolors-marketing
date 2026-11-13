@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import type { Metadata } from "next";
@@ -22,6 +23,7 @@ import {
   MarketingLinkButton,
 } from "@/components/marketing/cta-panel";
 import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingCardIllustration } from "@/components/marketing/card-illustration";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import {
@@ -31,6 +33,7 @@ import {
 } from "@/lib/blocks/catalog";
 import { readBlockSource } from "@/lib/blocks/source.server";
 import { SiteText } from "@/components/site-text";
+import styles from "@/components/marketing/catalogue-hub.module.css";
 
 const title = "PyColors Blocks — Copyable React application patterns";
 const description =
@@ -143,10 +146,23 @@ export default function BlocksPage() {
   const tSite = useCopy();
 
   return (
-    <main id="content" tabIndex={-1}>
-      <Container className="pt-24 pb-12 sm:pt-28 sm:pb-16">
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`${styles.cataloguePage} ${styles.blocksPage}`}
+    >
+      <Container
+        className={`pt-24 pb-12 sm:pt-28 sm:pb-16 ${styles.productIntro}`}
+      >
+        <MarketingBreadcrumb route="/blocks" />
         <UiSectionNav active="blocks" />
         <PageHero
+          className={`${styles.heroFrame} ${styles.splitHero} ${styles.blocksHero}`}
+          background={
+            <div className={styles.heroArtwork} aria-hidden="true">
+              <MarketingCardIllustration kind="composition" />
+            </div>
+          }
           variant="compact"
           align="left"
           contentClassName="mx-0"
@@ -175,7 +191,9 @@ export default function BlocksPage() {
           title={tSite("Build the next screen. Own the code.")}
         />
 
-        <div className="mt-10 grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle md:grid-cols-3">
+        <div
+          className={`mt-10 grid gap-4 md:grid-cols-3 ${styles.proofCards} ${styles.blocksProof}`}
+        >
           {proofItems.map((item) => (
             <div className="bg-background p-5 sm:p-6" key={item.id}>
               <div className="flex items-start gap-3">
@@ -197,7 +215,7 @@ export default function BlocksPage() {
       <MarketingSectionShell
         divider="pattern"
         aria-labelledby="blocks-catalog-title"
-        className="scroll-mt-24 border-t border-border-subtle py-16 lg:py-20"
+        className={`scroll-mt-24 border-t border-border-subtle py-16 lg:py-20 ${styles.blocksCatalog}`}
         id="block-catalog"
         width="full"
       >
@@ -210,9 +228,12 @@ export default function BlocksPage() {
               )}
               title={tSite("Choose the interface you need next")}
               titleId="blocks-catalog-title"
+              className={styles.blocksHeading}
             />
 
-            <div className="sticky top-(--site-header-height) z-20 mb-10 border-y border-border-subtle bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
+            <div
+              className={`sticky top-(--site-header-height) z-20 mb-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85 ${styles.categoryNav}`}
+            >
               <nav
                 aria-label={tSite("Block categories")}
                 className="flex min-w-0 overflow-x-auto"
@@ -272,7 +293,7 @@ export default function BlocksPage() {
                       </Link>
                     </div>
 
-                    <div className="space-y-16">
+                    <div className={`space-y-16 ${styles.blockCatalogEntries}`}>
                       {blocks.map((block) => (
                         <BlockCatalogCard block={block} key={block.id} />
                       ))}
@@ -311,6 +332,7 @@ export default function BlocksPage() {
               )}
               title={tSite("Need the complete application foundation?")}
               titleId="blocks-starters-title"
+              className={styles.blocksClosing}
             />
           </div>
         </Container>

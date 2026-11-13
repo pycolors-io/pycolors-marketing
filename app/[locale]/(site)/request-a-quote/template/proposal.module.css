@@ -21,10 +21,10 @@
 }
 .hero h1 {
   margin-top: 1rem;
-  font-size: clamp(1.9rem, 3.8vw, 2.75rem);
-  line-height: 1.14;
-  letter-spacing: -0.045em;
-  font-weight: 600;
+  font-size: clamp(2.25rem, 4.8vw, 4.125rem);
+  line-height: 1.04;
+  letter-spacing: -0.05em;
+  font-weight: 650;
   text-wrap: balance;
 }
 .hero p {
@@ -102,6 +102,8 @@
   line-height: 1.6;
   color: var(--muted-foreground);
   transition: color 0.15s;
+  border-radius: 0.75rem;
+  padding-inline: 0.5rem;
 }
 .sidebar li a:hover,
 .back:hover {
@@ -133,9 +135,9 @@
   scroll-margin-top: 6rem;
   padding: clamp(1.25rem, 3vw, 3rem);
   border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  background: var(--card);
-  box-shadow: 0 8px 30px -24px #0003;
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--background);
+  box-shadow: none;
 }
 .documentHeader {
   padding-bottom: 2rem;
@@ -221,7 +223,7 @@
   max-width: 100%;
   overflow-x: auto;
   border: 1px solid var(--border);
-  border-radius: 0.25rem;
+  border-radius: 1rem;
 }
 .tableScroll table {
   width: 100%;

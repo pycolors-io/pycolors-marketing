@@ -23,7 +23,6 @@ import { Badge, cn } from "@pycolors/ui";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
-import { ProductLight } from "@/components/marketing/product-light";
 import effects from "@/components/marketing/product-light.module.css";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
@@ -40,8 +39,12 @@ import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 import { UI_VERSION } from "@/lib/version";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import styles from "@/components/marketing/home.module.css";
+import chapterStyles from "@/components/marketing/presentation.module.css";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/lib/seo/website";
+import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
+import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
 import { ProductStudioReference } from "@/components/marketing/product-studio-reference";
+import { FibonacciBackground } from "@/components/marketing/fibonacci-background";
 
 const metadata: Metadata = {
   title: {
@@ -109,6 +112,7 @@ const starterDemo = "https://starter-demo.pycolors.io";
 const startingPoints = [
   {
     product: "Templates",
+    visual: "template",
     icon: LayoutTemplate,
     situation: "Launch a focused landing page.",
     value: "Present your SaaS offer with an editable frontend.",
@@ -118,6 +122,7 @@ const startingPoints = [
   },
   {
     product: "PyColors UI",
+    visual: "components",
     icon: Box,
     situation: "Build inside your existing app.",
     value: "Compose custom screens with public components and semantic tokens.",
@@ -127,6 +132,7 @@ const startingPoints = [
   },
   {
     product: "Blocks",
+    visual: "composition",
     icon: Blocks,
     situation: "Add a complete interface section.",
     value: "Inspect and copy reusable layouts into your application.",
@@ -136,6 +142,7 @@ const startingPoints = [
   },
   {
     product: "PyColors Starter Free",
+    visual: "workflow",
     icon: PanelsTopLeft,
     situation: "Explore the application experience.",
     value: "Run the SaaS frontend with mocked auth, payments and data.",
@@ -145,6 +152,7 @@ const startingPoints = [
   },
   {
     product: starterPro.name,
+    visual: "source",
     icon: Server,
     situation: "Connect your application foundation.",
     value:
@@ -154,6 +162,47 @@ const startingPoints = [
     action: "View Starter Pro",
   },
 ] as const;
+
+/** Product evidence stays captioned; spatial artwork is purely decorative. */
+function StartingPointVisual({
+  kind,
+}: Readonly<{ kind: (typeof startingPoints)[number]["visual"] }>) {
+  const tSite = useCopy();
+
+  if (kind === "template") {
+    return (
+      <figure className={styles.productCapture}>
+        <ProductPreviewMedia
+          product="na-ai-landing"
+          sizes="(min-width: 1440px) 352px, (min-width: 1024px) 28vw, (min-width: 640px) 42vw, 80vw"
+        />
+        <figcaption>
+          {tSite(PRODUCT_PREVIEW_MEDIA["na-ai-landing"].caption)}
+        </figcaption>
+      </figure>
+    );
+  }
+
+  if (kind === "components" || kind === "composition") {
+    return <MarketingCardIllustration kind={kind} />;
+  }
+
+  return (
+    <div className={styles.productSculpture} aria-hidden="true">
+      <Image
+        src={
+          kind === "source"
+            ? "/images/starters/pro/concepts/source-stack-test-v1.png"
+            : "/images/starters/pro/concepts/workflow-path-test-v1.png"
+        }
+        alt=""
+        fill
+        loading="lazy"
+        sizes="(min-width: 1440px) 384px, (min-width: 1024px) 34vw, (min-width: 640px) 42vw, 80vw"
+      />
+    </div>
+  );
+}
 
 const trustLinks = [
   ["Public roadmap", "/roadmap"],
@@ -191,6 +240,44 @@ function StarterScope({ pro = false }: { pro?: boolean }) {
   );
 }
 
+/** The same decorative ribbon geometry as Starter Pro, owned by this hero. */
+function HomeHeroWaves() {
+  return (
+    <svg
+      className={styles.heroWaves}
+      viewBox="0 0 1440 560"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient id="home-hero-spectrum" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="var(--home-hero-apricot)" />
+          <stop offset="0.16" stopColor="var(--home-hero-sun)" />
+          <stop offset="0.38" stopColor="var(--home-hero-rose)" />
+          <stop offset="0.58" stopColor="var(--home-hero-violet)" />
+          <stop offset="1" stopColor="var(--home-hero-orchid)" />
+        </linearGradient>
+        <clipPath id="home-hero-ribbon-clip">
+          <path d="M-140 490C160 520 350 290 670 295S1120 450 1580 130L1580 620H-140Z" />
+        </clipPath>
+      </defs>
+      <path
+        d="M-140 490C160 520 350 290 670 295S1120 450 1580 130L1580 620H-140Z"
+        fill="url(#home-hero-spectrum)"
+      />
+      <g clipPath="url(#home-hero-ribbon-clip)" className={styles.heroContours}>
+        {Array.from({ length: 8 }, (_, index) => (
+          <path
+            key={index}
+            d={`M-140 ${490 + index * 13}C160 ${520 + index * 11} 350 ${290 + index * 10} 670 ${295 + index * 10}S1120 ${450 + index * 7} 1580 ${130 + index * 12}`}
+          />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
 /** Genuine Web product capture; the caption preserves its synthetic-data scope. */
 function HomeProductPreview() {
   const tSite = useCopy();
@@ -216,10 +303,10 @@ function HomeProductPreview() {
             "Starter Pro dashboard with saved project counts, weekly chart and workspace team",
           )}
           fill
-          loading="lazy"
+          loading="eager"
           fetchPriority="high"
           quality={100}
-          sizes="(min-width: 1440px) 740px, (min-width: 1024px) 53vw, 95vw"
+          sizes="(min-width: 1280px) 1024px, (min-width: 768px) 88vw, 90vw"
           className={styles.heroLight}
         />
         <Image
@@ -228,10 +315,10 @@ function HomeProductPreview() {
             "Starter Pro dashboard with saved project counts, weekly chart and workspace team",
           )}
           fill
-          loading="lazy"
+          loading="eager"
           fetchPriority="high"
           quality={100}
-          sizes="(min-width: 1440px) 740px, (min-width: 1024px) 53vw, 95vw"
+          sizes="(min-width: 1280px) 1024px, (min-width: 768px) 88vw, 90vw"
           className={styles.heroDark}
         />
       </div>
@@ -255,12 +342,16 @@ export default function HomePage() {
       <Container className={cn(styles.page, "pb-8")}>
         <main id="content" tabIndex={-1} className="w-full min-w-0">
           <section className={styles.hero}>
-            <div className={styles.heroArtwork} aria-hidden="true" />
+            <div className={styles.heroAtmosphere} aria-hidden="true">
+              <div className={styles.heroGlow} />
+              <HomeHeroWaves />
+            </div>
+            <FibonacciBackground />
             <div className={styles.heroGrid}>
               <PageHero
                 variant="compact"
                 maxWidth="4xl"
-                align="left"
+                align="center"
                 className={`${styles.heroCopy} ${effects.copyEntry}`}
                 contentClassName={styles.heroContent}
                 badges={[
@@ -290,7 +381,7 @@ export default function HomePage() {
                 }
                 extraClassName="mt-6"
                 actions={
-                  <MarketingActionGroup align="left" className="w-full">
+                  <MarketingActionGroup align="center" className="w-full">
                     <MarketingLinkButton className={effects.primaryAction}>
                       <a href="#start-with-pycolors">
                         {tSite("Choose your starting point")}
@@ -307,9 +398,10 @@ export default function HomePage() {
                   </MarketingActionGroup>
                 }
               />
-              <div className={effects.visual}>
-                <ProductLight idPrefix="home" />
-                <HomeProductPreview />
+              <div className={styles.heroVisual}>
+                <div className={styles.heroStage}>
+                  <HomeProductPreview />
+                </div>
               </div>
             </div>
           </section>
@@ -332,24 +424,26 @@ export default function HomePage() {
               className={sectionHeaderClass}
             />
             <div className={styles.startingPointsFrame}>
-              <div className={styles.startingPointsHeader} aria-hidden="true">
-                <span>{tSite("Product")}</span>
-                <span>{tSite("Best for your next step")}</span>
-                <span>{tSite("Explore the scope")}</span>
-              </div>
               <ol
                 aria-label={tSite("PyColors starting points")}
                 className={styles.startingPoints}
               >
-                {startingPoints.map(({ icon: Icon, ...point }) => (
+                {startingPoints.map(({ icon: Icon, ...point }, index) => (
                   <li
                     key={point.product}
                     className={cn(
                       "group",
                       styles.startingPoint,
+                      point.visual === "template" &&
+                        styles.templateStartingPoint,
+                      point.visual === "composition" &&
+                        styles.blocksStartingPoint,
                       point.href === "/starters/pro" && styles.proStartingPoint,
                     )}
                   >
+                    <span className={styles.pointIndex} aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     <div className="flex min-w-0 items-center gap-3.5">
                       <span aria-hidden="true" className={styles.productIcon}>
                         <Icon className="size-[18px]" strokeWidth={1.5} />
@@ -370,6 +464,9 @@ export default function HomePage() {
                       <p className="mt-1 max-w-md text-xs leading-5 text-muted-foreground">
                         {tSite(point.value)}
                       </p>
+                    </div>
+                    <div className={styles.productVisual}>
+                      <StartingPointVisual kind={point.visual} />
                     </div>
                     <Link
                       href={point.href}
@@ -517,7 +614,7 @@ export default function HomePage() {
               className={sectionHeaderClass}
             />
             <div className={styles.starters}>
-              <div className={styles.starterCard}>
+              <div className={cn(styles.starterCard, styles.freeStarterCard)}>
                 <div className={styles.starterEyebrow}>
                   <PanelsTopLeft
                     className="size-5"
@@ -536,6 +633,15 @@ export default function HomePage() {
                     "Inspect auth UX, dashboards, projects, settings, billing surfaces and admin flows. Authentication, payments and data are mocked.",
                   )}
                 </p>
+                <figure className={styles.starterMedia}>
+                  <ProductPreviewMedia
+                    product="starter-free"
+                    sizes="(min-width: 1024px) 600px, 90vw"
+                  />
+                  <figcaption>
+                    {tSite(PRODUCT_PREVIEW_MEDIA["starter-free"].caption)}
+                  </figcaption>
+                </figure>
                 <StarterScope />
                 <div className="mt-7">
                   <MarketingLinkButton
@@ -589,6 +695,15 @@ export default function HomePage() {
                     "Accounts, team workspaces, Stripe billing and projects with assigned tasks and discussions. Start with a validated ZIP, product configuration and a documented path to operations.",
                   )}
                 </p>
+                <figure className={styles.starterMedia}>
+                  <ProductPreviewMedia
+                    product="starter-pro"
+                    sizes="(min-width: 1024px) 600px, 90vw"
+                  />
+                  <figcaption>
+                    {tSite(PRODUCT_PREVIEW_MEDIA["starter-pro"].caption)}
+                  </figcaption>
+                </figure>
                 <StarterScope pro />
                 <div className="mt-7">
                   <BuyStarterProButton
@@ -639,6 +754,9 @@ export default function HomePage() {
                     {tSite("Explore our services")}
                     <ArrowUpRight className="size-3.5" aria-hidden="true" />
                   </Link>
+                </div>
+                <div className={styles.implementationVisual}>
+                  <MarketingCardIllustration kind="composition" />
                 </div>
                 <ol
                   aria-label={tSite("Implementation process")}
@@ -695,7 +813,7 @@ export default function HomePage() {
                       <ArrowUpRight className="size-3.5" aria-hidden="true" />
                     </Link>
                     <div className={styles.implementationAction}>
-                      <MarketingLinkButton variant="outline" className="w-full">
+                      <MarketingLinkButton className="w-full">
                         <Link href={service.href}>{tSite(service.action)}</Link>
                       </MarketingLinkButton>
                     </div>
@@ -725,7 +843,13 @@ export default function HomePage() {
             spacing="default"
             width="full"
             aria-labelledby="home-theme-builder-heading"
-            className={styles.section}
+            className={cn(
+              styles.section,
+              styles.themeChapter,
+              chapterStyles.diagonalChapter,
+              chapterStyles.diagonalWarm,
+              chapterStyles.straightChapter,
+            )}
           >
             <div className={styles.themeTeaser}>
               <div className={styles.themeContent}>

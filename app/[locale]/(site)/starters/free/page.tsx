@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
@@ -22,7 +23,7 @@ import { NpmBadges } from "@/components/npm-badges";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
-import { MarketingFaq } from "@/components/marketing/faq";
+import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
 import {
   MarketingPill,
   MarketingPillList,
@@ -31,7 +32,10 @@ import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingDetailCard } from "@/components/marketing/detail-card";
 import { MarketingCardIllustration } from "@/components/marketing/card-illustration";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import chapterStyles from "@/components/marketing/presentation.module.css";
 import { StarterFreePreview } from "@/components/starters/starter-free-preview";
+import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
+import styles from "@/components/starters/starter-free.module.css";
 
 const description =
   "Free Next.js SaaS starter with dashboard, project flows, auth screens and PyColors UI. Explore with demo data, customize the interface and connect your own backend.";
@@ -250,61 +254,80 @@ export default function StarterFreePage() {
   const tSite = useCopy();
 
   return (
-    <main id="content" tabIndex={-1} className="bg-background text-foreground">
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`bg-background text-foreground ${styles.page}`}
+    >
       <Container className="pb-16 pt-24 sm:pt-28">
-        <PageHero
-          variant="compact"
-          align="left"
-          contentClassName="mx-0 max-w-4xl"
-          badges={[
-            { label: "Starter Free", variant: "outline" },
-            { label: "Open source · MIT", variant: "outline" },
-          ]}
-          title={tSite("Your next SaaS starts here.")}
-          description={tSite(
-            "A free Next.js starter with a dashboard, project flows, auth screens and a shared design system. Shape your product with demo data, then connect the backend you choose.",
-          )}
-          actions={
-            <>
-              <Button
-                asChild
-                size="lg"
-                className="site-primary-action rounded-[5px]"
-              >
-                <a
-                  href={EXTERNAL.repo}
-                  target="_blank"
-                  rel="noreferrer noopener"
+        <MarketingBreadcrumb route="/starters/free" />
+        <div className={styles.heroLayout}>
+          <PageHero
+            variant="compact"
+            align="left"
+            contentClassName="mx-0 max-w-4xl"
+            badges={[
+              { label: "Starter Free", variant: "outline" },
+              { label: "Open source · MIT", variant: "outline" },
+            ]}
+            title={tSite("Your next SaaS starts here.")}
+            description={tSite(
+              "A free Next.js starter with a dashboard, project flows, auth screens and a shared design system. Shape your product with demo data, then connect the backend you choose.",
+            )}
+            actions={
+              <>
+                <Button
+                  asChild
+                  size="lg"
+                  className="site-primary-action rounded-[5px]"
                 >
-                  {tSite("Get Starter Free")}
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-[5px]"
-              >
-                <a
-                  href={EXTERNAL.demo}
-                  target="_blank"
-                  rel="noreferrer noopener"
+                  <a
+                    href={EXTERNAL.repo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {tSite("Get Starter Free")}
+                    <ArrowUpRight className="size-4" aria-hidden="true" />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="rounded-[5px]"
                 >
-                  {tSite("Open live demo")}
-                  <ExternalLink className="size-4" aria-hidden="true" />
-                </a>
-              </Button>
-            </>
-          }
-          extra={
-            <p className="text-xs leading-6 text-muted-foreground">
+                  <a
+                    href={EXTERNAL.demo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {tSite("Open live demo")}
+                    <ExternalLink className="size-4" aria-hidden="true" />
+                  </a>
+                </Button>
+              </>
+            }
+            extra={
+              <p className="text-xs leading-6 text-muted-foreground">
+                {tSite(
+                  "Full source code · No account required · Mocked auth, billing and product data",
+                )}
+              </p>
+            }
+          />
+          <figure className={styles.heroPreview}>
+            <ProductPreviewMedia
+              product="starter-free"
+              priority
+              sizes="(min-width: 1024px) 560px, 92vw"
+            />
+            <figcaption>
               {tSite(
-                "Full source code · No account required · Mocked auth, billing and product data",
+                "Captures follow your light or dark appearance with sample data. Authentication, payments and access control still need real service integrations.",
               )}
-            </p>
-          }
-        />
+            </figcaption>
+          </figure>
+        </div>
 
         <div className="mt-9 flex flex-col gap-3 border-t border-border-subtle pt-5 sm:flex-row sm:items-center sm:justify-between">
           <MarketingPillList
@@ -334,7 +357,7 @@ export default function StarterFreePage() {
 
         <nav
           aria-label={tSite("Starter Free sections")}
-          className="mt-3 flex flex-wrap gap-x-6 gap-y-1 border-b border-border-subtle pb-3"
+          className={`mt-3 flex flex-wrap gap-x-6 gap-y-1 ${styles.sectionNav}`}
         >
           {[
             ["#product-preview", "Product preview"],
@@ -354,10 +377,9 @@ export default function StarterFreePage() {
         </nav>
 
         <MarketingSectionShell
-          divider="pattern"
           id="product-preview"
           width="full"
-          className="scroll-mt-24"
+          className={`scroll-mt-24 ${chapterStyles.diagonalChapter} ${chapterStyles.diagonalCool} ${chapterStyles.diagonalPanel}`}
           aria-labelledby="preview-heading"
         >
           <MarketingSectionHeader
@@ -369,83 +391,89 @@ export default function StarterFreePage() {
               "Seven areas of a SaaS interface, ready to explore with demo data. Select a screen or open the live demo to try the flows.",
             )}
           />
-          <StarterFreePreview
-            screens={screens.map((screen, index) => ({
-              id: screen.id,
-              label: screen.label,
-              content: (
-                <figure className="grid min-w-0 lg:grid-cols-[minmax(0,1fr)_19rem]">
-                  <div className="flex min-w-0 items-center border-b border-border-subtle bg-[linear-gradient(135deg,color-mix(in_oklch,var(--primary),transparent_95%),var(--background)_50%,color-mix(in_oklch,var(--primary),transparent_97%))] p-3 sm:p-6 lg:border-b-0 lg:border-r">
-                    <div className="relative aspect-16/10 w-full overflow-hidden rounded-[3px] border border-border-subtle bg-background shadow-sm">
-                      <Image
-                        src={screen.images.light}
-                        alt={tSite(
-                          "Starter Free {value0} interface with demonstration data, light theme",
-                          {
-                            value0: tSite(screen.label).toLocaleLowerCase(
-                              tSite.locale,
-                            ),
-                          },
-                        )}
-                        data-preview-theme="light"
-                        fill
-                        priority={index === 0}
-                        sizes="(min-width: 1280px) 860px, (min-width: 1024px) 65vw, 95vw"
-                        className="object-contain dark:hidden"
-                      />
-                      <Image
-                        src={screen.images.dark}
-                        alt={tSite(
-                          "Starter Free {value0} interface with demonstration data, dark theme",
-                          {
-                            value0: tSite(screen.label).toLocaleLowerCase(
-                              tSite.locale,
-                            ),
-                          },
-                        )}
-                        data-preview-theme="dark"
-                        fill
-                        priority={index === 0}
-                        sizes="(min-width: 1280px) 860px, (min-width: 1024px) 65vw, 95vw"
-                        className="hidden object-contain dark:block"
-                      />
+          <div className={styles.previewPanel}>
+            <StarterFreePreview
+              screens={screens.map((screen) => ({
+                id: screen.id,
+                label: screen.label,
+                content: (
+                  <figure
+                    className={`grid min-w-0 lg:grid-cols-[minmax(0,1fr)_19rem] ${styles.screenFigure}`}
+                  >
+                    <div
+                      className={`flex min-w-0 items-center p-3 sm:p-6 ${styles.screenStage}`}
+                    >
+                      <div className="relative aspect-16/10 w-full overflow-hidden rounded-[3px] border border-border-subtle bg-background shadow-sm">
+                        <Image
+                          src={screen.images.light}
+                          alt={tSite(
+                            "Starter Free {value0} interface with demonstration data, light theme",
+                            {
+                              value0: tSite(screen.label).toLocaleLowerCase(
+                                tSite.locale,
+                              ),
+                            },
+                          )}
+                          data-preview-theme="light"
+                          fill
+                          loading="lazy"
+                          sizes="(min-width: 1280px) 860px, (min-width: 1024px) 65vw, 95vw"
+                          className="object-contain dark:hidden"
+                        />
+                        <Image
+                          src={screen.images.dark}
+                          alt={tSite(
+                            "Starter Free {value0} interface with demonstration data, dark theme",
+                            {
+                              value0: tSite(screen.label).toLocaleLowerCase(
+                                tSite.locale,
+                              ),
+                            },
+                          )}
+                          data-preview-theme="dark"
+                          fill
+                          loading="lazy"
+                          sizes="(min-width: 1280px) 860px, (min-width: 1024px) 65vw, 95vw"
+                          className="hidden object-contain dark:block"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <figcaption className="flex flex-col p-5 sm:p-7">
-                    <div className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
-                      <span className="font-mono">{tSite(screen.route)}</span>
-                      <span>{tSite("UI preview")}</span>
-                    </div>
-                    <h3 className="mt-5 text-xl font-semibold tracking-subheading">
-                      {tSite(screen.title)}
-                    </h3>
-                    <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                      {tSite(screen.description)}
-                    </p>
-                    <ul className="mt-5 space-y-3">
-                      {screen.points.map((point) => (
-                        <MarketingCheckItem key={point}>
-                          {tSite(point)}
-                        </MarketingCheckItem>
-                      ))}
-                    </ul>
-                    <div className="mt-auto pt-6">
-                      <a
-                        href={`${EXTERNAL.demo}${screen.route}`}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className={textLink}
-                      >
-                        {tSite("Try ")}
-                        {tSite(screen.label).toLocaleLowerCase(tSite.locale)}
-                        <ArrowUpRight className="size-4" aria-hidden="true" />
-                      </a>
-                    </div>
-                  </figcaption>
-                </figure>
-              ),
-            }))}
-          />
+                    <figcaption className="flex flex-col p-5 sm:p-7">
+                      <div className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
+                        <span className="font-mono">{tSite(screen.route)}</span>
+                        <span>{tSite("UI preview")}</span>
+                      </div>
+                      <h3 className="mt-5 text-xl font-semibold tracking-subheading">
+                        {tSite(screen.title)}
+                      </h3>
+                      <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                        {tSite(screen.description)}
+                      </p>
+                      <ul className="mt-5 space-y-3">
+                        {screen.points.map((point) => (
+                          <MarketingCheckItem key={point}>
+                            {tSite(point)}
+                          </MarketingCheckItem>
+                        ))}
+                      </ul>
+                      <div className="mt-auto pt-6">
+                        <a
+                          href={`${EXTERNAL.demo}${screen.route}`}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className={styles.cardAction}
+                        >
+                          {tSite("Try ")}
+                          {tSite(screen.label).toLocaleLowerCase(tSite.locale)}
+                          <ArrowUpRight className="size-4" aria-hidden="true" />
+                        </a>
+                      </div>
+                    </figcaption>
+                  </figure>
+                ),
+              }))}
+            />
+          </div>
           <p className="mt-4 text-xs leading-6 text-muted-foreground">
             {tSite(
               "Captures follow your light or dark appearance with sample data. Authentication, payments and access control still need real service integrations.",
@@ -472,16 +500,14 @@ export default function StarterFreePage() {
             {foundations.map(({ icon: Icon, ...item }) => (
               <MarketingDetailCard
                 key={item.title}
+                className={styles.foundationCard}
                 title={tSite(item.title)}
                 description={tSite(item.description)}
                 icon={<Icon />}
                 eyebrow={tSite(item.label)}
                 visual={<MarketingCardIllustration kind={item.illustration} />}
                 footer={
-                  <Link
-                    href={item.href}
-                    className={`${textLink} w-full justify-between text-xs`}
-                  >
+                  <Link href={item.href} className={styles.cardAction}>
                     {tSite(item.link)}
                     <ArrowUpRight className="size-3.5" aria-hidden="true" />
                   </Link>
@@ -522,7 +548,9 @@ export default function StarterFreePage() {
               "Start locally, explore the sample flows and make your first screen your own.",
             )}
           />
-          <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+          <div
+            className={`grid overflow-hidden border border-border-subtle lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] ${styles.setupPanel}`}
+          >
             <div className="p-6 sm:p-8">
               <ol className="space-y-6">
                 {[
@@ -559,7 +587,7 @@ export default function StarterFreePage() {
               </ol>
               <Link
                 href="/docs/starter/installation"
-                className={`${textLink} mt-6 text-xs`}
+                className={`${styles.cardAction} mt-6`}
               >
                 {tSite("Installation guide")}
                 {tSite("  ")}
@@ -615,7 +643,7 @@ export default function StarterFreePage() {
               </Link>
             }
           />
-          <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle md:grid-cols-2">
+          <div className={`grid gap-5 md:grid-cols-2 ${styles.comparisonGrid}`}>
             <div className="flex flex-col bg-background p-6 sm:p-8 md:row-span-5 md:grid md:grid-rows-subgrid md:gap-0">
               <p className="text-xs font-medium text-muted-foreground">
                 {tSite("Starter Free")}
@@ -647,7 +675,7 @@ export default function StarterFreePage() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="w-full rounded-[5px] sm:w-auto"
+                  className={`${styles.cardAction} w-full sm:w-auto`}
                 >
                   <a
                     href={EXTERNAL.repo}
@@ -661,7 +689,9 @@ export default function StarterFreePage() {
                 </Button>
               </div>
             </div>
-            <div className="flex flex-col bg-[linear-gradient(135deg,color-mix(in_oklch,var(--primary),var(--background)_96%),var(--background)_70%)] p-6 sm:p-8 md:row-span-5 md:grid md:grid-rows-subgrid md:gap-0">
+            <div
+              className={`flex flex-col p-6 sm:p-8 md:row-span-5 md:grid md:grid-rows-subgrid md:gap-0 ${styles.proCard}`}
+            >
               <p className="text-xs font-medium text-muted-foreground">
                 {tSite("Starter Pro")}
               </p>
@@ -690,11 +720,11 @@ export default function StarterFreePage() {
               <div className="mt-auto flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap sm:items-center md:mt-0 md:self-start">
                 <BuyStarterProButton
                   fullWidth={false}
-                  className="w-full sm:w-auto"
+                  className={`${styles.cardAction} w-full sm:w-auto`}
                 />
                 <Link
                   href="/starters/pro"
-                  className={`${textLink} justify-center sm:justify-start`}
+                  className={`${styles.cardAction} ${styles.secondaryAction}`}
                 >
                   {tSite("Explore Pro")}
                   {tSite("  ")}
@@ -710,7 +740,7 @@ export default function StarterFreePage() {
           </p>
         </MarketingSectionShell>
 
-        <MarketingSectionShell
+        <MarketingFaqSection
           id="faq"
           width="full"
           className={sectionClass}
@@ -724,7 +754,7 @@ export default function StarterFreePage() {
             )}
             items={faqs}
           />
-        </MarketingSectionShell>
+        </MarketingFaqSection>
 
         <MarketingSectionShell
           width="full"
@@ -739,7 +769,7 @@ export default function StarterFreePage() {
               "Use the same components and colors as you expand your app.",
             )}
           />
-          <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle md:grid-cols-3">
+          <div className={`grid gap-4 md:grid-cols-3 ${styles.resourceGrid}`}>
             {[
               {
                 title: "Customize your theme",
@@ -769,10 +799,6 @@ export default function StarterFreePage() {
               >
                 <div className="flex items-center justify-between text-muted-foreground">
                   <Icon className="size-5" aria-hidden="true" />
-                  <ArrowUpRight
-                    className="size-4 transition-colors group-hover:text-foreground"
-                    aria-hidden="true"
-                  />
                 </div>
                 <h3 className="mt-6 text-sm font-semibold">
                   {tSite(item.title)}
@@ -780,6 +806,9 @@ export default function StarterFreePage() {
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
                   {tSite(item.description)}
                 </p>
+                <span className={styles.resourceAction} aria-hidden="true">
+                  <ArrowUpRight className="size-4" />
+                </span>
               </Link>
             ))}
           </div>

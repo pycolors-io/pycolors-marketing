@@ -1,0 +1,82 @@
+.frame {
+  --marketing-panel-radius: clamp(1.25rem, 2.5vw, 2rem);
+  --marketing-card-radius: 1.5rem;
+  --marketing-canvas: #f5f5f7;
+  --marketing-graphite: #17181d;
+  --marketing-graphite-ink: #ffffff;
+  --marketing-cobalt: #2059bf;
+  --marketing-cobalt-ink: #ffffff;
+  --marketing-gold: #ffd43b;
+  --marketing-gold-ink: #35261b;
+  --marketing-lilac: #ece5ff;
+  --marketing-lilac-ink: #35215e;
+  --marketing-peach: #ffe1cd;
+  --marketing-peach-ink: #49291b;
+  --site-radius-panel: var(--marketing-panel-radius);
+}
+
+:global(html.dark) .frame {
+  --marketing-canvas: #121217;
+  --marketing-graphite: #191b23;
+  --marketing-cobalt: #204694;
+  --marketing-gold: #594519;
+  --marketing-gold-ink: #ffffff;
+  --marketing-lilac: #35264e;
+  --marketing-lilac-ink: #ede2ff;
+  --marketing-peach: #48312a;
+  --marketing-peach-ink: #ffe8dc;
+}
+
+:global(html[data-site-palette="monochrome"]) .frame {
+  --marketing-canvas: var(--surface-muted);
+  --marketing-graphite: var(--surface-muted);
+  --marketing-graphite-ink: var(--foreground);
+  --marketing-cobalt: var(--surface-muted);
+  --marketing-cobalt-ink: var(--foreground);
+  --marketing-gold: var(--surface-muted);
+  --marketing-gold-ink: var(--foreground);
+  --marketing-lilac: var(--surface-muted);
+  --marketing-lilac-ink: var(--foreground);
+  --marketing-peach: var(--surface-muted);
+  --marketing-peach-ink: var(--foreground);
+}
+
+.frame::after,
+.frame > :global(header.site-frame)::after {
+  display: none;
+}
+
+.frame :global(.marketing-section) {
+  border-image: none;
+}
+
+.frame :global(.marketing-section-pattern)::before,
+.frame :global(.marketing-section-pattern)::after {
+  display: none;
+}
+
+.frame :global(.marketing-section-pattern) > div {
+  padding-top: 0;
+}
+
+@media (forced-colors: active) {
+  .frame,
+  :global(html.dark) .frame,
+  :global(html[data-site-palette="monochrome"]) .frame {
+    --marketing-canvas: Canvas;
+    --marketing-graphite: Canvas;
+    --marketing-graphite-ink: CanvasText;
+    --marketing-cobalt: Canvas;
+    --marketing-cobalt-ink: CanvasText;
+    --marketing-gold: Canvas;
+    --marketing-gold-ink: CanvasText;
+    --marketing-lilac: Canvas;
+    --marketing-lilac-ink: CanvasText;
+    --marketing-peach: Canvas;
+    --marketing-peach-ink: CanvasText;
+  }
+}
+
+.frame :global(main#content) {
+  scroll-margin-top: 5rem;
+}

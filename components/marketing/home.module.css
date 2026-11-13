@@ -1,24 +1,198 @@
 .page {
-  --home-wash: color-mix(in oklab, var(--primary) 8%, transparent);
-  --home-glow: var(--brand-accent);
+  --home-preview-background: var(--background);
+  --home-preview-foreground: var(--foreground);
+  --home-preview-muted: var(--muted-foreground);
+  --home-preview-primary: var(--primary);
+  --home-preview-primary-ink: var(--primary-foreground);
+  --home-preview-border: var(--border-subtle);
+  --home-button-fill: var(--marketing-cobalt);
+  --home-button-ink: var(--marketing-cobalt-ink);
+  --home-highlight: #ffd43b;
+  --home-highlight-ink: #35261b;
 }
 
 :global(html[data-site-palette="monochrome"]) .page {
-  --home-glow: var(--primary);
+  --home-highlight: var(--foreground);
+  --home-highlight-ink: var(--background);
 }
 
 .hero {
+  --home-hero-apricot: #f7a365;
+  --home-hero-sun: #f3d479;
+  --home-hero-rose: #e3a1d8;
+  --home-hero-orchid: #d7a4ec;
+  --home-hero-violet: #6b2fd4;
   position: relative;
   isolation: isolate;
-  padding-block: clamp(6rem, 8vw, 8rem) clamp(3.5rem, 6vw, 5rem);
+  padding-block: clamp(3.5rem, 7vw, 6rem) 1rem;
+}
+
+/* Starter Pro's atmosphere spans the viewport; the centered copy stays clear. */
+.heroAtmosphere {
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto 0 50%;
+  width: 100vw;
+  overflow: hidden;
+  transform: translateX(-50%);
+  background: color-mix(in srgb, var(--home-hero-violet) 3%, var(--background));
+  pointer-events: none;
+  user-select: none;
+}
+.heroAtmosphere::before {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  background:
+    radial-gradient(
+      ellipse at 14% 94%,
+      color-mix(in srgb, var(--home-hero-sun) 28%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 80% 25%,
+      color-mix(in srgb, var(--home-hero-apricot) 16%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(
+      110deg,
+      var(--background) 8%,
+      color-mix(in srgb, var(--home-hero-violet) 5%, var(--background)) 45%,
+      color-mix(in srgb, var(--home-hero-orchid) 34%, var(--background))
+    );
+}
+.heroGlow {
+  position: absolute;
+  inset: 0 -8% -10%;
+  background:
+    radial-gradient(
+      ellipse at 10% 5%,
+      color-mix(in srgb, var(--home-hero-apricot) 65%, var(--background)),
+      transparent 66%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--home-hero-apricot) 65%, var(--background)),
+      var(--home-hero-orchid) 54%,
+      var(--home-hero-violet)
+    );
+  mask-image: linear-gradient(180deg, transparent 18%, #000 74%);
+  opacity: 0.7;
+}
+.heroWaves {
+  position: absolute;
+  right: -12%;
+  bottom: -18%;
+  width: 135%;
+  height: 90%;
+  opacity: 0.3;
+  mask-image: linear-gradient(180deg, transparent 22%, #000 72%);
+  pointer-events: none;
+}
+.heroContours {
+  fill: none;
+  stroke: #ffffff;
+  stroke-opacity: 0.14;
+  stroke-width: 0.65;
+}
+/* A stationary veil protects text throughout the background's slow movement. */
+.heroAtmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--background) 95%, transparent),
+    color-mix(in srgb, var(--background) 92%, transparent) 55%,
+    color-mix(in srgb, var(--background) 35%, transparent) 78%,
+    var(--background)
+  );
+}
+:global(html.dark) .heroAtmosphere {
+  opacity: 0.55;
+}
+:global(html.dark) .hero {
+  --home-hero-rose: var(--primary);
+  --home-hero-violet: var(--primary);
+}
+:global(html[data-site-palette="monochrome"]) .hero {
+  --home-hero-apricot: var(--foreground);
+  --home-hero-sun: var(--foreground);
+  --home-hero-rose: var(--foreground);
+  --home-hero-orchid: var(--foreground);
+  --home-hero-violet: var(--foreground);
+}
+@keyframes hero-atmosphere-drift {
+  from {
+    transform: translate3d(-1.5%, 0, 0) scale(1.02);
+  }
+  to {
+    transform: translate3d(1.5%, 1%, 0) scale(1.04);
+  }
+}
+@keyframes hero-ribbon-drift {
+  from {
+    transform: translate3d(0, 1%, 0) rotate(-1deg);
+  }
+  to {
+    transform: translate3d(-2%, -1%, 0) rotate(1deg);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .heroAtmosphere::before,
+  .heroGlow {
+    animation: hero-atmosphere-drift 26s ease-in-out infinite alternate;
+  }
+  .heroGlow {
+    animation-delay: -13s;
+  }
+  .heroWaves {
+    animation: hero-ribbon-drift 30s ease-in-out infinite alternate;
+  }
+}
+@media (max-width: 39.999rem) {
+  .heroAtmosphere::after {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--background) 96%, transparent),
+      color-mix(in srgb, var(--background) 92%, transparent) 55%,
+      color-mix(in srgb, var(--background) 35%, transparent) 78%,
+      var(--background)
+    );
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroAtmosphere::before,
+  .heroGlow,
+  .heroWaves {
+    animation: none;
+    transform: none;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .heroAtmosphere {
+    background: var(--background);
+  }
+  .heroAtmosphere::before,
+  .heroAtmosphere::after,
+  .heroGlow,
+  .heroWaves {
+    display: none;
+  }
+}
+@media (forced-colors: active) {
+  .heroAtmosphere {
+    display: none;
+  }
 }
 
 .heroGrid {
   position: relative;
-  display: grid;
+  display: flex;
   min-width: 0;
   align-items: center;
-  gap: 2.5rem;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  flex-direction: column;
 }
 
 .heroCopy,
@@ -27,20 +201,22 @@
 }
 
 .heroContent {
-  margin-inline: 0;
-  max-width: 38rem;
+  margin-inline: auto;
+  max-width: 58rem;
 }
 
 .heroCopy h1 {
-  max-width: 13ch;
-  font-size: clamp(2.75rem, 5vw, 4.75rem);
-  line-height: 1.04;
+  max-width: 22ch;
+  font-size: clamp(2.75rem, 5.6vw, 5.25rem);
+  line-height: 1.02;
   letter-spacing: -0.05em;
+  font-weight: 650;
+  margin-inline: auto;
 }
 
 .heroContent > p {
-  max-width: 47ch;
-  margin-inline: 0;
+  max-width: 58ch;
+  margin-inline: auto;
   font-size: 1rem;
   line-height: 1.8;
 }
@@ -54,8 +230,9 @@
   flex-wrap: wrap;
   gap: 0.5rem 1.25rem;
   color: var(--muted-foreground);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   line-height: 1.75;
+  justify-content: center;
 }
 
 .heroProof span {
@@ -68,52 +245,17 @@
   color: var(--primary);
 }
 
-.heroArtwork {
-  position: absolute;
-  z-index: -1;
-  inset: 0 -2rem 13% 43%;
-  display: none;
-  overflow: hidden;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      ellipse at 100% 16%,
-      color-mix(in oklab, var(--home-glow) 34%, transparent),
-      transparent 60%
-    ),
-    linear-gradient(
-      150deg,
-      transparent 23%,
-      color-mix(in oklab, var(--primary) 52%, transparent) 23%,
-      color-mix(in oklab, var(--primary) 22%, transparent) 72%,
-      transparent 72%
-    );
-}
-
-.heroArtwork::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    150deg,
-    transparent 24%,
-    color-mix(in oklab, var(--primary) 48%, transparent) 24%,
-    color-mix(in oklab, var(--home-glow) 30%, transparent) 44%,
-    transparent 44%
-  );
-}
-
 .heroPreview {
   position: relative;
   min-width: 0;
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 5px;
+  border-radius: var(--marketing-card-radius);
   background: var(--background);
-  box-shadow:
-    0 2px 4px color-mix(in oklab, var(--foreground) 4%, transparent),
-    0 24px 64px color-mix(in oklab, var(--primary) 12%, transparent);
+  box-shadow: 0 18px 50px rgb(0 0 0 / 10%);
+  max-width: 64rem;
+  margin-inline: auto;
 }
 
 .heroPreviewChrome {
@@ -169,10 +311,10 @@
 }
 
 .heroPreviewCaption {
-  padding: 0.875rem 1rem;
+  padding: 1rem 1.25rem;
   border-top: 1px solid var(--border-subtle);
   color: var(--muted-foreground);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   line-height: 1.75;
   text-wrap: pretty;
 }
@@ -191,12 +333,8 @@
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  background: linear-gradient(
-    115deg,
-    var(--background) 45%,
-    color-mix(in oklab, var(--primary) 2%, var(--background))
-  );
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-canvas);
 }
 .themeContent {
   min-width: 0;
@@ -381,17 +519,18 @@
 }
 .section {
   scroll-margin-top: 6rem;
-  border-top: 1px solid var(--border-subtle);
-  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+  border-top: 0;
+  padding-block: clamp(3.5rem, 7vw, 6rem);
 }
 .sectionHeader {
   margin-bottom: 2rem;
 }
 .sectionHeader h2 {
   max-width: 23ch;
-  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
-  line-height: 1.12;
-  letter-spacing: -0.035em;
+  font-size: clamp(1.875rem, 3.4vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  font-weight: 650;
 }
 .sectionHeader p {
   max-width: 42rem;
@@ -400,89 +539,141 @@
 }
 
 .startingPointsFrame {
-  overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--site-radius-panel);
-  background: var(--background);
+  background: transparent;
 }
+
 .startingPoints {
+  display: grid;
+  gap: 1rem;
   list-style: none;
 }
-.startingPointsHeader {
-  display: none;
-}
+
 .startingPoint {
-  display: grid;
-  gap: 0.75rem;
-  padding: 1.25rem;
-  transition: background-color 160ms ease;
-}
-.startingPoint + .startingPoint {
-  border-top: 1px solid var(--border-subtle);
-}
-.startingPoint:hover,
-.startingPoint:focus-within {
-  background-color: color-mix(in oklab, var(--foreground) 2%, transparent);
-}
-.productIcon {
+  position: relative;
   display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  min-width: 0;
+  min-height: 20rem;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--site-radius-control);
-  background: var(--background);
-  color: var(--muted-foreground);
-}
-.productLink {
-  justify-content: space-between;
-  align-self: center;
-  gap: 1rem;
-  width: 100%;
-  text-decoration: none;
-  font-size: 0.75rem;
-}
-.productLinkIcon {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  background: var(--background);
-  color: var(--muted-foreground);
-  transition:
-    border-color 160ms ease,
-    color 160ms ease;
-}
-.productLink:hover .productLinkIcon,
-.productLink:focus-visible .productLinkIcon {
-  border-color: var(--foreground);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-canvas);
   color: var(--foreground);
 }
-.proStartingPoint {
-  background: linear-gradient(100deg, var(--home-wash), transparent 65%);
+
+.pointIndex {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
 }
-.proStartingPoint .productIcon {
+
+.startingPoint h3 {
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.productIcon {
+  display: grid;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border-radius: 1rem;
+  background: var(--background);
   color: var(--primary);
 }
+
+.productDescription {
+  min-width: 0;
+}
+
+.productDescription > p:first-child {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.productDescription > p:last-child {
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+
+.productLink {
+  align-self: flex-start;
+  justify-content: center;
+  gap: 0.625rem;
+  max-width: 100%;
+  width: fit-content;
+  min-height: 2.75rem;
+  margin-top: 0;
+  padding: 0.625rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background: var(--home-button-fill);
+  color: var(--home-button-ink);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.productLink:hover {
+  background: color-mix(
+    in srgb,
+    var(--home-button-fill) 88%,
+    var(--background)
+  );
+}
+
+.productLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.productLinkIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.proStartingPoint {
+  --background: var(--marketing-graphite);
+  --foreground: var(--marketing-graphite-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  --home-button-fill: var(--home-highlight);
+  --home-button-ink: var(--home-highlight-ink);
+  background: var(--background);
+}
+
+.proStartingPoint .productIcon {
+  background: color-mix(in srgb, var(--foreground) 8%, var(--background));
+}
+
 .startingPointsFooter {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem 2rem;
-  padding: 1rem 1.5rem;
-  border-top: 1px solid var(--border-subtle);
-  background: color-mix(in oklab, var(--surface-muted) 35%, var(--background));
-  font-size: 0.6875rem;
+  gap: 0.75rem 2rem;
+  margin-top: 1rem;
+  padding: 1rem 0.5rem;
+  font-size: 0.75rem;
   line-height: 1.8;
   color: var(--muted-foreground);
 }
+
 .startingPointsFooter > span {
   display: inline-flex;
   align-items: center;
@@ -505,9 +696,9 @@
 }
 .starterCard {
   min-width: 0;
-  padding: 1.25rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--site-radius-panel);
+  border-radius: var(--marketing-panel-radius);
   background: var(--background);
 }
 .starterEyebrow {
@@ -524,10 +715,30 @@
   color: var(--muted-foreground);
 }
 .proCard {
-  border-color: color-mix(in oklab, var(--primary) 23%, var(--border-subtle));
-  background:
-    radial-gradient(ellipse at 100% 0%, var(--home-wash), transparent 65%),
-    var(--background);
+  --surface: var(--background);
+  --surface-muted: color-mix(in srgb, var(--foreground) 8%, var(--background));
+  --accent: color-mix(in srgb, var(--foreground) 12%, var(--background));
+  --accent-foreground: var(--foreground);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  border-color: var(--border-subtle);
+  background: var(--background);
+  --background: var(--marketing-graphite);
+  --foreground: var(--marketing-graphite-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 80%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  --pro-border-subtle: var(--border-subtle);
+  --ring: var(--foreground);
+  color: var(--foreground);
 }
 .starterScope {
   margin-top: 1.5rem;
@@ -551,94 +762,108 @@
   margin-top: 1.5rem;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  background: var(--card);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-canvas);
 }
 .implementationHeader {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: linear-gradient(
-    120deg,
-    color-mix(in oklab, var(--primary) 3%, var(--card)),
-    var(--card) 75%
-  );
-}
-.implementationHeader::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 0 0 0 55%;
-  background-image:
-    linear-gradient(var(--border-subtle) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
-  background-size: 40px 40px;
-  mask-image: linear-gradient(110deg, transparent 20%, #000);
-  opacity: 0.55;
-  pointer-events: none;
+  display: grid;
+  grid-template-areas: "copy" "visual" "process";
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  background: var(--background);
 }
 .implementationCopy {
+  grid-area: copy;
   min-width: 0;
+  align-self: center;
 }
 .implementationEyebrow {
-  font-size: 0.625rem;
-  line-height: 1.6;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--primary);
 }
 .implementation h3 {
-  margin-top: 0.625rem;
-  max-width: 26ch;
-  font-size: clamp(1.375rem, 2vw, 1.75rem);
-  line-height: 1.25;
-  font-weight: 600;
+  max-width: 24ch;
+  margin-top: 0.875rem;
+  font-size: clamp(1.875rem, 3.2vw, 2.5rem);
+  line-height: 1.1;
+  font-weight: 650;
   letter-spacing: var(--site-heading-tracking);
   text-wrap: balance;
 }
 .implementationDescription {
-  max-width: 64ch;
-  margin-top: 0.75rem;
-  font-size: 0.8125rem;
+  max-width: 60ch;
+  margin-top: 1rem;
+  font-size: 0.875rem;
   line-height: 1.8;
   color: var(--muted-foreground);
 }
+.implementationVisual {
+  --foreground: var(--marketing-peach-ink);
+  --muted-foreground: color-mix(in oklab, var(--foreground) 82%, transparent);
+  grid-area: visual;
+  display: grid;
+  min-width: 0;
+  min-height: 16rem;
+  place-items: center;
+  padding: clamp(0.5rem, 2vw, 1.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius);
+  background: var(--marketing-peach);
+  color: var(--foreground);
+}
+.implementationVisual > div {
+  width: 100%;
+  max-width: 26rem;
+}
 .implementationProcess {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
+  grid-area: process;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
   list-style: none;
-  font-size: 0.75rem;
-  line-height: 1.6;
-  color: var(--muted-foreground);
 }
 .implementationProcess li {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.625rem;
+  min-width: 0;
+  padding: 0.875rem;
+  border-radius: 1rem;
+  background: var(--marketing-canvas);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  font-weight: 500;
+  overflow-wrap: anywhere;
 }
 .implementationProcess span {
+  flex-shrink: 0;
   font-family: var(--font-mono);
-  font-size: 0.625rem;
-  color: var(--primary);
+  font-size: 0.6875rem;
+  color: var(--muted-foreground);
 }
 .implementationServices {
   display: grid;
-  border-block: 1px solid var(--border-subtle);
+  gap: 1rem;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
 }
 .implementationService {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius);
+  background: var(--background);
 }
-.implementationService + .implementationService {
-  border-top: 1px solid var(--border-subtle);
+.implementationService:first-child {
+  --foreground: var(--marketing-lilac-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(in oklab, var(--foreground) 86%, transparent);
+  --primary: var(--foreground);
+  background: var(--marketing-lilac);
+  color: var(--foreground);
 }
 .implementationServiceHeading {
   display: flex;
@@ -647,34 +872,35 @@
   gap: 1rem;
 }
 .implementationServiceHeading h4 {
-  font-size: 1rem;
-  line-height: 1.5;
-  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 600;
   letter-spacing: var(--site-subheading-tracking);
 }
 .implementationServiceHeading > span {
+  flex-shrink: 0;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--muted-foreground);
 }
 .implementationPrice {
-  margin-top: 0.625rem;
-  font-size: 1.5rem;
-  line-height: 1.4;
-  font-weight: 500;
+  margin-top: 1rem;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 600;
   letter-spacing: var(--site-heading-tracking);
 }
 .implementationServiceDescription {
   max-width: 56ch;
-  margin-top: 0.75rem;
-  font-size: 0.8125rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
   line-height: 1.8;
   color: var(--muted-foreground);
 }
 .implementationHighlights {
   display: grid;
   gap: 0.75rem;
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
   list-style: none;
   font-size: 0.8125rem;
   line-height: 1.7;
@@ -686,37 +912,60 @@
 }
 .implementationHighlights svg {
   flex-shrink: 0;
-  width: 0.875rem;
-  height: 0.875rem;
-  margin-top: 0.25rem;
-  color: var(--primary);
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.1875rem;
+  color: currentColor;
 }
 .implementationDeliverable {
   margin-top: 1.5rem;
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: color-mix(in oklab, var(--background) 45%, transparent);
 }
 .implementationDeliverable dt {
-  font-size: 0.625rem;
-  line-height: 1.6;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  font-weight: 600;
 }
 .implementationDeliverable dd {
-  margin-top: 0.375rem;
   max-width: 56ch;
+  margin-top: 0.5rem;
   font-size: 0.8125rem;
-  line-height: 1.8;
+  line-height: 1.7;
+  color: var(--muted-foreground);
 }
 .implementationAction {
   margin-top: auto;
   padding-top: 1.5rem;
 }
+.implementationAction :global([data-slot="button"]) {
+  min-height: 2.875rem;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background: var(--marketing-cobalt);
+  color: var(--marketing-cobalt-ink);
+  line-height: 1.5;
+  white-space: normal;
+  text-align: center;
+}
+.implementationAction :global([data-slot="button"]):hover {
+  background: color-mix(
+    in oklab,
+    var(--marketing-cobalt) 88%,
+    var(--foreground)
+  );
+}
 .implementationFooter {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1rem 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding: 0.5rem clamp(1.25rem, 3vw, 2.5rem) 1.5rem;
 }
 .implementationScope {
   max-width: 78ch;
@@ -726,7 +975,6 @@
 }
 .implementationScopeLink {
   display: inline-flex;
-  flex-shrink: 0;
   align-items: center;
   gap: 0.375rem;
   min-height: 2.75rem;
@@ -737,6 +985,7 @@
   text-underline-offset: 4px;
 }
 .implementationScopeLink svg {
+  flex-shrink: 0;
   width: 0.875rem;
   height: 0.875rem;
 }
@@ -747,44 +996,44 @@
   outline: 2px solid var(--ring);
   outline-offset: 4px;
 }
-@media (min-width: 768px) {
-  .implementationHeader,
-  .implementationService {
-    padding: 2rem;
-  }
-  .implementationServices {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .implementationService + .implementationService {
-    border-top: 0;
-    border-left: 1px solid var(--border-subtle);
-  }
-  .implementationFooter {
-    padding-inline: 2rem;
-  }
-}
-@media (min-width: 1024px) {
-  .implementationHeader {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-  .implementationProcess {
-    flex-shrink: 0;
-    padding-top: 0.25rem;
-    gap: 1.5rem;
-  }
+@media (max-width: 39.999rem) {
   .implementationProcess li {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.375rem;
+    padding: 0.75rem;
   }
-  .implementationFooter {
+}
+@media (max-width: 23.999rem) {
+  .implementationProcess {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .implementationProcess li {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    gap: 0.625rem;
+  }
+}
+@media (min-width: 48rem) {
+  .implementationServices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 64rem) {
+  .implementationHeader {
+    grid-template-areas: "copy visual" "process process";
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+}
+@media (forced-colors: active) {
+  .implementationAction :global([data-slot="button"]) {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .implementationAction :global([data-slot="button"]):hover {
+    background: Highlight;
+    color: HighlightText;
   }
 }
 .trust > div {
@@ -807,23 +1056,33 @@
   text-decoration: none;
 }
 .closing {
+  --surface: var(--background);
+  --surface-muted: color-mix(in srgb, var(--foreground) 8%, var(--background));
+  --accent: color-mix(in srgb, var(--foreground) 12%, var(--background));
+  --accent-foreground: var(--foreground);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
   position: relative;
   overflow: hidden;
   padding: 2rem 1.5rem;
   border-radius: var(--site-radius-panel);
-  border-color: var(--border-subtle);
-  background:
-    radial-gradient(
-      ellipse at 95% 15%,
-      color-mix(in oklab, var(--primary) 10%, transparent),
-      transparent 65%
-    ),
-    linear-gradient(
-      115deg,
-      var(--background) 40%,
-      color-mix(in oklab, var(--brand-platform) 4%, var(--background))
-    );
+  border-color: transparent;
+  background: var(--background);
   box-shadow: none;
+  --background: var(--marketing-cobalt);
+  --foreground: var(--marketing-cobalt-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 85%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  color: var(--foreground);
 }
 .closing h2 {
   max-width: 23ch;
@@ -849,9 +1108,6 @@
     border-top: 0;
     border-left: 1px solid var(--border-subtle);
   }
-  .startingPoint {
-    padding: 1.5rem 2rem;
-  }
   .startingPointsFooter {
     padding-inline: 2rem;
   }
@@ -868,47 +1124,11 @@
   }
 }
 @media (min-width: 1024px) {
-  .heroGrid {
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-    gap: clamp(2rem, 4vw, 4rem);
-    min-height: 34rem;
-  }
-  .heroArtwork {
-    display: block;
-  }
   .themeContent {
     padding: 2.5rem 3rem;
   }
   .themeVisual {
     padding: 2rem 2.5rem;
-  }
-  .startingPointsHeader,
-  .startingPoint {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.45fr) 11rem;
-    align-items: center;
-    gap: 2rem;
-  }
-  .startingPointsHeader {
-    display: grid;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid var(--border-subtle);
-    background: color-mix(
-      in oklab,
-      var(--surface-muted) 35%,
-      var(--background)
-    );
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted-foreground);
-  }
-  .productDescription {
-    padding-inline: 1.5rem 0;
-    border-left: 1px solid var(--border-subtle);
-  }
-  .startingPointsHeader > span:nth-child(2) {
-    padding-left: 1.5rem;
   }
   .foundations {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -931,5 +1151,250 @@
   .productLinkIcon,
   .primaryAction {
     transition: none;
+  }
+}
+.starterMedia {
+  margin-top: 1.5rem;
+}
+.starterMedia > div {
+  border-radius: 1rem;
+}
+.starterMedia figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+.proCard [data-slot="button"] {
+  border-radius: 100px;
+}
+@media (forced-colors: active) {
+  .proCard,
+  .closing {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+  }
+}
+.heroCopy {
+  width: 100%;
+}
+.heroStage {
+  width: 100%;
+  min-width: 0;
+  max-width: 70rem;
+  padding: clamp(0.75rem, 2.5vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--marketing-canvas);
+}
+.heroActions :global(.site-primary-action) {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: none;
+}
+.heroActions :global(.site-primary-action):hover {
+  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
+}
+.starterCard > h3,
+.starterCard > div > h3 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+.starterCard .starterMedia {
+  margin-block: 2rem;
+}
+@media (min-width: 40rem) {
+  .startingPoints {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .proStartingPoint {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 64rem) {
+  .startingPoints {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .startingPoint {
+    grid-column: span 2;
+  }
+  .startingPoint:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+}
+@media (max-width: 39.999rem) {
+  .heroCopy h1 {
+    font-size: clamp(2.5rem, 10vw, 3.25rem);
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .startingPoint {
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease;
+  }
+  .startingPoint:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgb(0 0 0 / 6%);
+  }
+}
+@media (forced-colors: active) {
+  .productLink,
+  .productLink:hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .proStartingPoint {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --ring: Highlight;
+    border-color: CanvasText;
+  }
+  .heroActions :global(.site-primary-action),
+  .heroActions :global(.site-primary-action):hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}
+
+/* A few saturated cards punctuate the neutral product gallery. */
+.templateStartingPoint {
+  --background: var(--marketing-gold);
+  --foreground: var(--marketing-gold-ink);
+}
+.blocksStartingPoint {
+  --background: var(--marketing-cobalt);
+  --foreground: var(--marketing-cobalt-ink);
+}
+.templateStartingPoint,
+.blocksStartingPoint {
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 85%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  --ring: var(--foreground);
+  --home-button-fill: var(--foreground);
+  --home-button-ink: var(--background);
+  background: var(--background);
+}
+.templateStartingPoint .productIcon,
+.blocksStartingPoint .productIcon {
+  background: color-mix(in srgb, var(--foreground) 10%, var(--background));
+}
+.productVisual {
+  --background: var(--home-preview-background);
+  --foreground: var(--home-preview-foreground);
+  --muted-foreground: var(--home-preview-muted);
+  --primary: var(--home-preview-primary);
+  --primary-foreground: var(--home-preview-primary-ink);
+  --border-subtle: var(--home-preview-border);
+  position: relative;
+  width: 100%;
+  height: 15rem;
+  min-width: 0;
+  margin-top: auto;
+  isolation: isolate;
+}
+.productVisual > div {
+  height: 100%;
+  padding: 0.25rem;
+}
+.productCapture {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+}
+.productCapture > div {
+  max-width: 24rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 12px 24px rgb(0 0 0 / 10%);
+}
+.productCapture figcaption {
+  color: var(--marketing-gold-ink);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  text-align: center;
+}
+.productSculpture {
+  position: relative;
+  max-width: 24rem;
+  margin-inline: auto;
+}
+.productSculpture img {
+  object-fit: contain;
+}
+.freeStarterCard {
+  background: color-mix(in srgb, var(--marketing-gold) 12%, var(--background));
+}
+.freeStarterCard [data-slot="button"] {
+  border-color: var(--home-button-fill);
+  border-radius: 100px;
+  background: var(--home-button-fill);
+  color: var(--home-button-ink);
+}
+.freeStarterCard [data-slot="button"]:hover {
+  background: color-mix(
+    in srgb,
+    var(--home-button-fill) 88%,
+    var(--background)
+  );
+}
+@media (forced-colors: active) {
+  .templateStartingPoint,
+  .blocksStartingPoint,
+  .freeStarterCard {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+  }
+  .freeStarterCard [data-slot="button"],
+  .freeStarterCard [data-slot="button"]:hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}
+
+/* Keep the product capture and the remaining chapter aligned. */
+.hero .heroVisual {
+  width: 100%;
+  min-width: 0;
+  padding-block: clamp(1.5rem, 4vw, 3rem);
+}
+.heroVisual .heroStage {
+  margin-inline: auto;
+}
+.section.themeChapter {
+  padding-block: clamp(5rem, 9vw, 8rem);
+}
+.themeChapter .themeTeaser {
+  background: var(--background);
+  box-shadow: 0 20px 64px rgb(24 34 70 / 12%);
+}
+@media (forced-colors: active) {
+  .themeChapter .themeTeaser {
+    box-shadow: none;
   }
 }

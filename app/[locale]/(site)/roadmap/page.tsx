@@ -1335,6 +1335,7 @@ export default function RoadmapPage() {
                 className={cn(
                   styles.priorityLane,
                   status === "Now" && styles.nowLane,
+                  status === "Next" && styles.nextLane,
                 )}
               >
                 <div className={styles.laneHeading}>

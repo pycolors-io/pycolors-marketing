@@ -1,29 +1,63 @@
+.page {
+  --blog-paper: var(--background);
+  --blog-ink: var(--foreground);
+  --blog-copy: var(--muted-foreground);
+}
+
 .intro h1 {
-  max-width: 22ch;
+  max-width: 17ch;
+  font-size: clamp(2.75rem, 5.8vw, 5rem);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
 }
 
 .introNote {
-  border-left: 1px solid var(--border-subtle);
-  padding-left: 1.25rem;
+  border-left: 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  --background: var(--blog-paper);
+  --foreground: var(--blog-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: var(--blog-copy);
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
 }
 
-@media (min-width: 1024px) {
-  .introNote {
-    padding-block: 0.25rem;
-    padding-left: 1.5rem;
-  }
-}
-
-.leadArticle {
-  background: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--primary) 3%, var(--background)) 45%,
-    color-mix(in oklab, var(--primary) 7%, var(--background)) 45%
+.featuredArticle.leadArticle {
+  background: var(--background);
+  --background: var(--marketing-graphite, #17181d);
+  --foreground: var(--marketing-graphite-ink, #ffffff);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
   );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  color: var(--foreground);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  min-height: 26rem;
+  padding: clamp(1.75rem, 4vw, 3.5rem);
 }
 
 .featuredArticle {
   transition: border-color 180ms ease;
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--background);
+  overflow: hidden;
+  min-height: 16rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .featuredArticle:hover {
@@ -32,18 +66,18 @@
 
 .articleRow {
   transition: background-color 180ms ease;
+  border-radius: 1rem;
 }
 
 .articleRow:hover {
-  background-color: color-mix(in oklab, var(--primary) 2%, var(--background));
+  background-color: var(--marketing-canvas, var(--surface-muted));
 }
 
 .nextSteps {
-  background: radial-gradient(
-    ellipse at 100% 0%,
-    color-mix(in oklab, var(--primary) 6%, var(--background)),
-    var(--background) 80%
-  );
+  background: transparent;
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  border: 0;
+  gap: 1.25rem;
 }
 
 .tagDisclosure summary::-webkit-details-marker {
@@ -66,5 +100,282 @@
   .articleRow {
     transition: none;
     transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .featuredArticle.leadArticle,
+  .introNote {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+  }
+}
+
+.introArt {
+  position: relative;
+  height: 3.5rem;
+  margin: 0 0 1.5rem;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--foreground) 8%, var(--background));
+}
+
+.supportingArticles > article:first-child .featuredArticle {
+  --background: var(
+    --marketing-peach,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-peach-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.nextStepCard {
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.nextSteps > .nextStepCard:first-child {
+  --background: var(
+    --marketing-lilac,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-lilac-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.nextSteps > .nextStepCard:last-child {
+  --background: var(
+    --marketing-cobalt,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-cobalt-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@media (forced-colors: active) {
+  .supportingArticles > article:first-child .featuredArticle,
+  .nextSteps > .nextStepCard {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --ring: Highlight;
+    --border-subtle: CanvasText;
+    border-color: CanvasText;
+  }
+}
+
+.nextSteps > .nextStepCard:last-child :global(.site-primary-action):hover {
+  background: color-mix(in srgb, var(--primary) 88%, var(--background));
+  color: var(--primary-foreground);
+}
+
+@media (forced-colors: active) {
+  .nextSteps > .nextStepCard:last-child :global(.site-primary-action):hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}
+
+.pageContainer {
+  padding-top: 0;
+  padding-bottom: 4rem;
+}
+
+.intro {
+  --primary: var(--blog-ink);
+  --primary-foreground: var(--blog-paper);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  display: grid;
+  min-width: 0;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.intro > section > div > p {
+  max-width: 50ch;
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.7;
+}
+
+.editorialMark {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--foreground);
+}
+
+.page :global([data-slot="button"]) {
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--primary);
+  border-radius: 100px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  height: auto;
+  line-height: 1.5;
+  white-space: normal;
+}
+
+.page :global([data-slot="button"]):hover {
+  background: color-mix(in srgb, var(--primary) 88%, var(--background));
+  color: var(--primary-foreground);
+}
+
+.introAction {
+  box-shadow: none;
+}
+
+.introSecondary {
+  padding: 0.75rem 1.25rem;
+  border-radius: 100px;
+  background: var(--marketing-canvas, var(--blog-paper));
+  color: var(--blog-ink);
+}
+
+.introSecondary:hover {
+  background: color-mix(in srgb, var(--blog-ink) 8%, var(--blog-paper));
+}
+
+.articleArchive {
+  min-width: 0;
+  padding: 0.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--background);
+}
+
+.page .articleRow h3 {
+  max-width: 42ch;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+@media (max-width: 39.999rem) {
+  .intro h1 {
+    max-width: 18ch;
+    font-size: clamp(2rem, 8.5vw, 2.875rem);
+  }
+  .pageContainer {
+    padding-bottom: 3rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .introSecondary,
+  .page :global([data-slot="button"]),
+  .page :global([data-slot="button"]):hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}
+
+.heroContainer {
+  padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 4vw, 4rem));
+  padding-bottom: clamp(3rem, 5vw, 5rem);
+}
+
+.featuredChapter {
+  border-top: 0;
+  padding-block: clamp(3rem, 5vw, 4.5rem);
+}
+
+.featuredArticle h3 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.featuredArticle.leadArticle h3 {
+  max-width: 20ch;
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.articleArchive > div:first-child {
+  border-radius: 1.25rem 1.25rem 0 0;
+  background: var(--marketing-canvas);
+}
+
+.nextStepCard h3 {
+  font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.page a:focus-visible,
+.page :global([data-slot="button"]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+@media (min-width: 64rem) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    gap: 4rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .page a:focus-visible,
+  .page :global([data-slot="button"]):focus-visible {
+    outline-color: Highlight;
   }
 }

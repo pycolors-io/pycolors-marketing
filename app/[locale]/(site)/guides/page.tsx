@@ -1,7 +1,9 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowDown,
   ArrowRight,
@@ -23,6 +25,7 @@ import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingResourceCard } from "@/components/marketing/resource-card";
@@ -168,108 +171,129 @@ export default function GuidesPage() {
   const tSite = useCopy();
 
   return (
-    <main id="content" tabIndex={-1} className="bg-background text-foreground">
-      <Container className="pb-16 pt-24 sm:pt-28">
-        <div className="grid items-center gap-10 pb-14 sm:pb-16 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
-          <PageHero
-            variant="compact"
-            align="left"
-            contentClassName="mx-0 max-w-2xl"
-            badges={[{ label: "Guides", variant: "outline" }]}
-            title={tSite("SaaS building guides for developers.")}
-            description={tSite(
-              "Make the architecture and product decisions behind a better SaaS. Practical guides to dashboards, authentication, billing and the systems that connect them.",
-            )}
-            actions={
-              <>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="rounded-[5px]"
-                >
-                  <Link href="#browse-guides">
-                    {tSite("Browse guides")}
+    <main id="content" tabIndex={-1} className={styles.page}>
+      <MarketingHeroBand tone="warm">
+        <Container className={styles.heroContainer}>
+          <MarketingBreadcrumb route="/guides" />
+          <div className={styles.heroLayout}>
+            <PageHero
+              className={styles.heroCopy}
+              variant="compact"
+              align="left"
+              contentClassName="mx-0 max-w-2xl"
+              badges={[{ label: "Guides", variant: "outline" }]}
+              title={tSite("SaaS building guides for developers.")}
+              description={tSite(
+                "Make the architecture and product decisions behind a better SaaS. Practical guides to dashboards, authentication, billing and the systems that connect them.",
+              )}
+              actions={
+                <>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className={styles.heroAction}
+                  >
+                    <Link href="#browse-guides">
+                      {tSite("Browse guides")}
+                      {tSite(" ")}
+                      <ArrowDown className="size-4" aria-hidden="true" />
+                    </Link>
+                  </Button>
+                  <Link
+                    href="/docs"
+                    className={`${textLink} ${styles.heroSecondary}`}
+                  >
+                    {tSite("Open documentation")}
                     {tSite(" ")}
-                    <ArrowDown className="size-4" aria-hidden="true" />
+                    <ArrowUpRight className="size-4" aria-hidden="true" />
                   </Link>
-                </Button>
-                <Link
-                  href="/docs"
-                  className={`${textLink} justify-center sm:px-2`}
-                >
-                  {tSite("Open documentation")}
-                  {tSite(" ")}
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </Link>
-              </>
-            }
-            extra={
-              <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
-                <span>
-                  {tSite(guides.length)} {tSite(" practical guides")}
-                </span>
-                <span aria-hidden="true">/</span>
-                <span>{tSite("From product structure to implementation")}</span>
-              </p>
-            }
-          />
-          <Link
-            href="/guides/production-ready-saas-starter"
-            aria-labelledby="recommended-guide-title"
-            aria-describedby="recommended-guide-summary"
-            className={`${styles.featuredGuide} group block rounded-[5px] border border-border-subtle focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring`}
-          >
-            <div className="p-6 sm:p-8">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                  {tSite("Recommended starting point")}
+                </>
+              }
+              extra={
+                <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
+                  <span>
+                    {tSite(guides.length)} {tSite(" practical guides")}
+                  </span>
+                  <span aria-hidden="true">/</span>
+                  <span>
+                    {tSite("From product structure to implementation")}
+                  </span>
                 </p>
-                <BookOpen
-                  className="size-4 shrink-0 text-muted-foreground"
-                  aria-hidden="true"
+              }
+            />
+            <Link
+              href="/guides/production-ready-saas-starter"
+              aria-labelledby="recommended-guide-title"
+              aria-describedby="recommended-guide-summary"
+              className={`${styles.featuredGuide} group block rounded-[5px] border border-border-subtle focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring`}
+            >
+              <div
+                className={styles.featuredArt}
+                aria-hidden="true"
+                data-editorial-art=""
+              >
+                <Image
+                  src="/images/starters/pro/concepts/source-stack-test-v1.png"
+                  alt=""
+                  fill
+                  quality={75}
+                  sizes="(min-width: 1024px) 420px, 90vw"
+                  className={styles.editorialArt}
                 />
               </div>
-              <h2
-                id="recommended-guide-title"
-                className="mt-6 max-w-sm font-brand text-2xl font-semibold leading-tight tracking-heading sm:text-3xl"
-              >
-                {tSite("What should your SaaS starter include?")}
-              </h2>
-              <p
-                id="recommended-guide-summary"
-                className="mt-4 max-w-sm text-sm leading-7 text-muted-foreground"
-              >
-                {tSite(
-                  "Understand the essential screens, integrations and architecture before choosing your foundation.",
-                )}
-              </p>
-              <div className="mt-7 grid grid-cols-3 divide-x divide-border-subtle border-y border-border-subtle py-4 text-center">
-                {[
-                  { label: "Interface", icon: PanelTop },
-                  { label: "Integrations", icon: Boxes },
-                  { label: "Architecture", icon: Layers3 },
-                ].map(({ label, icon: Icon }) => (
-                  <div key={label} className="space-y-2 px-1">
-                    <Icon
-                      className="mx-auto size-4 text-muted-foreground"
-                      aria-hidden="true"
-                    />
-                    <p className="text-[11px] font-medium">{tSite(label)}</p>
-                  </div>
-                ))}
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                    {tSite("Recommended starting point")}
+                  </p>
+                  <BookOpen
+                    className="size-4 shrink-0 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </div>
+                <h2
+                  id="recommended-guide-title"
+                  className="mt-6 max-w-sm font-brand text-2xl font-semibold leading-tight tracking-heading sm:text-3xl"
+                >
+                  {tSite("What should your SaaS starter include?")}
+                </h2>
+                <p
+                  id="recommended-guide-summary"
+                  className="mt-4 max-w-sm text-sm leading-7 text-muted-foreground"
+                >
+                  {tSite(
+                    "Understand the essential screens, integrations and architecture before choosing your foundation.",
+                  )}
+                </p>
+                <div className="mt-7 grid grid-cols-3 divide-x divide-border-subtle border-y border-border-subtle py-4 text-center">
+                  {[
+                    { label: "Interface", icon: PanelTop },
+                    { label: "Integrations", icon: Boxes },
+                    { label: "Architecture", icon: Layers3 },
+                  ].map(({ label, icon: Icon }) => (
+                    <div key={label} className="space-y-2 px-1">
+                      <Icon
+                        className="mx-auto size-4 text-muted-foreground"
+                        aria-hidden="true"
+                      />
+                      <p className="text-[11px] font-medium">{tSite(label)}</p>
+                    </div>
+                  ))}
+                </div>
+                <span
+                  className="mt-5 flex min-h-6 items-center justify-between gap-3 text-sm font-medium"
+                  aria-hidden="true"
+                >
+                  {tSite("Read the foundations guide")}
+                  <ArrowRight className="size-4 shrink-0 transition-transform motion-safe:group-hover:translate-x-1" />
+                </span>
               </div>
-              <span
-                className="mt-5 flex min-h-6 items-center justify-between gap-3 text-sm font-medium"
-                aria-hidden="true"
-              >
-                {tSite("Read the foundations guide")}
-                <ArrowRight className="size-4 shrink-0 transition-transform motion-safe:group-hover:translate-x-1" />
-              </span>
-            </div>
-          </Link>
-        </div>
-
+            </Link>
+          </div>
+        </Container>
+      </MarketingHeroBand>
+      <Container className={styles.contentContainer}>
         <MarketingSectionShell
           divider="pattern"
           id="browse-guides"
@@ -341,7 +365,8 @@ export default function GuidesPage() {
                 <section
                   key={topic.id}
                   id={topic.id}
-                  className="scroll-mt-24"
+                  data-topic={topic.id}
+                  className={styles.topicSection}
                   aria-labelledby={`${topic.id}-title`}
                 >
                   <div className="mb-5 flex items-start gap-4">
@@ -389,7 +414,7 @@ export default function GuidesPage() {
 
         <MarketingSectionShell
           width="full"
-          className="border-t border-border-subtle"
+          className={styles.nextChapter}
           aria-labelledby="guides-next-title"
         >
           <MarketingSectionHeader
@@ -401,8 +426,8 @@ export default function GuidesPage() {
               "Explore an interface, try a complete frontend, or inspect the integrations your product needs.",
             )}
           />
-          <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-3">
-            <div className="flex flex-col p-6 sm:p-8">
+          <div className={styles.nextSteps}>
+            <div className={styles.nextStepCard}>
               <PanelTop
                 className="size-5 text-muted-foreground"
                 aria-hidden="true"
@@ -440,7 +465,7 @@ export default function GuidesPage() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col border-t border-border-subtle p-6 sm:p-8 lg:border-l lg:border-t-0">
+            <div className={styles.nextStepCard}>
               <LayoutDashboard
                 className="size-5 text-muted-foreground"
                 aria-hidden="true"
@@ -467,9 +492,7 @@ export default function GuidesPage() {
                 </p>
               </div>
             </div>
-            <div
-              className={`${styles.nextStep} flex flex-col border-t border-border-subtle p-6 sm:p-8 lg:border-l lg:border-t-0`}
-            >
+            <div className={`${styles.nextStep} ${styles.nextStepCard}`}>
               <Boxes
                 className="size-5 text-muted-foreground"
                 aria-hidden="true"

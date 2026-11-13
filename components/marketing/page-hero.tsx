@@ -1,6 +1,7 @@
 import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { Badge, cn } from "@pycolors/ui";
+import styles from "./presentation.module.css";
 
 type PageHeroBadge = {
   label: string;
@@ -81,27 +82,12 @@ export function PageHero({
     <section
       className={cn(
         "relative",
-        !isCompact &&
-          "overflow-hidden bg-background/80 px-6 py-14 backdrop-blur sm:px-8 sm:py-16 lg:px-12 lg:py-20",
+        !isCompact && "overflow-hidden px-6 sm:px-8 lg:px-12",
+        !isCompact && styles.hero,
         className,
       )}
     >
       {tSite(background)}
-      {!isCompact ? (
-        <>
-          {/* subtle premium glow */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,color-mix(in_oklch,var(--primary),transparent_96%),transparent_42%)]"
-          />
-
-          {/* top separator */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
-          />
-        </>
-      ) : null}
 
       <div
         className={cn(
@@ -116,6 +102,7 @@ export function PageHero({
             className={cn(
               "flex flex-wrap items-center gap-2",
               isCentered ? "justify-center" : "justify-start",
+              styles.heroBadges,
               badgesClassName,
             )}
           >
@@ -134,7 +121,8 @@ export function PageHero({
 
         <h1
           className={cn(
-            "text-balance font-brand font-semibold tracking-[-0.035em] text-foreground",
+            "text-balance font-brand text-foreground",
+            styles.heroTitle,
             isCompact
               ? "text-3xl leading-[1.15] sm:text-4xl lg:text-5xl"
               : "text-4xl leading-[1.1] sm:text-5xl lg:text-[4rem]",
@@ -168,6 +156,7 @@ export function PageHero({
               isCompact && "flex-wrap",
               "mt-7 sm:mt-8",
               isCentered ? "justify-center" : "justify-start",
+              styles.heroActions,
               actionsClassName,
             )}
           >

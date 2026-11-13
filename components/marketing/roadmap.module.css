@@ -1,10 +1,5 @@
 .page {
-  background: radial-gradient(
-      ellipse at 85% 0%,
-      color-mix(in oklab, var(--primary) 5%, transparent),
-      transparent 65%
-    )
-    0 0 / 100% 42rem no-repeat;
+  background: var(--background);
 }
 
 .breadcrumb {
@@ -46,9 +41,6 @@
 
 .hero h1 {
   max-width: 16ch;
-  font-size: clamp(2.25rem, 5vw, 4rem);
-  line-height: 1.05;
-  letter-spacing: -0.05em;
 }
 
 .hero p {
@@ -59,14 +51,8 @@
   min-width: 0;
   padding: 1.25rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  background:
-    radial-gradient(
-      ellipse at 100% 0%,
-      color-mix(in oklab, var(--primary) 7%, transparent),
-      transparent 65%
-    ),
-    var(--background);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .overviewHeading {
@@ -82,7 +68,7 @@
 }
 
 .overviewHeading > svg {
-  color: var(--muted-foreground);
+  color: var(--marketing-cobalt, var(--primary));
 }
 
 .statusTotals {
@@ -146,12 +132,16 @@
 }
 
 .statusCount {
-  min-width: 2ch;
+  min-width: 3rem;
   font-size: 1.125rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.03em;
-  text-align: right;
+  text-align: center;
+  padding: 0.375rem 0.625rem;
+  border-radius: 100px;
+  background: var(--marketing-gold, var(--surface-muted));
+  color: var(--marketing-gold-ink, var(--foreground));
 }
 
 .overviewNote {
@@ -205,21 +195,16 @@
 
 .priorityLane {
   min-width: 0;
-  padding: 1.25rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: var(--marketing-card-radius, 1.5rem);
   scroll-margin-top: 6rem;
   background: var(--background);
 }
 
 .nowLane {
-  background:
-    radial-gradient(
-      ellipse at 100% 0%,
-      color-mix(in oklab, var(--primary) 7%, transparent),
-      transparent 55%
-    ),
-    var(--background);
+  background: var(--marketing-canvas, var(--surface-muted));
+  border-top: 3px solid var(--marketing-cobalt, var(--primary));
 }
 
 .laneHeading {
@@ -482,15 +467,22 @@ a.item:hover {
 
 .feedbackPanel {
   border-color: var(--border-subtle);
-  border-radius: 8px;
+  border-radius: var(--marketing-panel-radius, 2rem);
   box-shadow: none;
-  background:
-    radial-gradient(
-      ellipse at 100% 0%,
-      color-mix(in oklab, var(--primary) 8%, transparent),
-      transparent 72%
-    ),
-    var(--background);
+  background: var(--background);
+  --background: var(--marketing-graphite, #17181d);
+  --foreground: var(--marketing-graphite-ink, #ffffff);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  color: var(--foreground);
 }
 
 .feedbackFooter {
@@ -587,5 +579,90 @@ a.item:hover {
 
   :global(html):has(.page) {
     scroll-behavior: auto;
+  }
+}
+
+@media (forced-colors: active) {
+  .feedbackPanel {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+  }
+}
+
+.overviewHeading {
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 1rem;
+  background: var(
+    --marketing-lilac,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  color: var(--marketing-lilac-ink, var(--foreground));
+}
+
+.priorityLane.nowLane {
+  --background: var(
+    --marketing-lilac,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-lilac-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.priorityLane.nextLane {
+  --background: var(
+    --marketing-peach,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-peach-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@media (forced-colors: active) {
+  .priorityLane.nowLane,
+  .priorityLane.nextLane {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --ring: Highlight;
+    --border-subtle: CanvasText;
+    border-color: CanvasText;
+  }
+  .statusCount,
+  .overviewHeading {
+    background: Canvas;
+    color: CanvasText;
   }
 }

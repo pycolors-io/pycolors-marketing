@@ -4,12 +4,18 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import { MarketingFaq } from "../../components/marketing/faq";
+import {
+  MarketingFaq,
+  MarketingFaqSection,
+} from "../../components/marketing/faq";
 import { starterProBuyerFaqs } from "../../lib/products/starter-pro-buyer-faq";
 import PricingPage from "../../app/[locale]/(site)/pricing/page";
 import StarterProPage from "../../app/[locale]/(site)/starters/pro/page";
 import TemplatePage from "../../app/[locale]/(site)/templates/na-ai-landing/page";
 import UpgradePage from "../../app/[locale]/(site)/upgrade/page";
+import StarterFreePage from "../../app/[locale]/(site)/starters/free/page";
+import ServicesPage from "../../app/[locale]/(site)/services/page";
+import TemplatesPage from "../../app/[locale]/(site)/templates/page";
 
 vi.mock("@/lib/api/client", () => ({
   createStarterProCheckout: vi.fn(),
@@ -43,14 +49,21 @@ describe("MarketingFaq", () => {
 
   it("lets readers open multiple answers independently and keeps buyer links intact", async () => {
     const { container } = render(
-      <section aria-labelledby="buyer-questions">
+      <MarketingFaqSection
+        id="buyer-question-chapter"
+        width="full"
+        aria-labelledby="buyer-questions"
+      >
         <MarketingFaq
           title="Buyer questions"
           titleId="buyer-questions"
           items={starterProBuyerFaqs}
         />
-      </section>,
+      </MarketingFaqSection>,
     );
+    expect(
+      screen.getByRole("region", { name: "Buyer questions" }),
+    ).toHaveAttribute("id", "buyer-question-chapter");
     const rows = Array.from(container.querySelectorAll("details"));
     expect(rows).toHaveLength(starterProBuyerFaqs.length);
     expect(rows.every((row) => !row.open)).toBe(true);
@@ -82,6 +95,9 @@ describe("MarketingFaq", () => {
 describe("Marketing FAQ integration", () => {
   it.each([
     { Page: PricingPage, title: "Your questions, answered.", count: 12 },
+    { Page: StarterFreePage, title: "Before you start.", count: 4 },
+    { Page: ServicesPage, title: "Before getting started.", count: 5 },
+    { Page: TemplatesPage, title: "Before you choose.", count: 3 },
     {
       Page: StarterProPage,
       title: "Questions buyers ask before paying",

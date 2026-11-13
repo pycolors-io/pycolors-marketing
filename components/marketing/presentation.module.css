@@ -1,0 +1,214 @@
+.hero {
+  background: var(--background);
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 4.8vw, 4.125rem);
+  font-weight: 650;
+  line-height: 1.04;
+  letter-spacing: -0.05em;
+}
+
+.heroBadges > span {
+  border: 0;
+  padding-inline: 0;
+  background: transparent;
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.heroActions :global([data-slot="button"]),
+.cta :global([data-slot="button"]) {
+  border-radius: 100px;
+}
+
+.sectionHeading {
+  font-size: clamp(1.875rem, 3.4vw, 3rem);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.eyebrow {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.feature,
+.resource {
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  border-color: var(--border-subtle);
+  box-shadow: none;
+}
+
+.feature h3,
+.resource h3 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.cta {
+  border-radius: var(--marketing-panel-radius, 2rem);
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  box-shadow: none;
+}
+
+.reference {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+
+.referenceVisual {
+  min-width: 0;
+  overflow: hidden;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-cobalt, var(--surface-muted));
+}
+
+@media (max-width: 39.999rem) {
+  .heroTitle {
+    font-size: clamp(2.25rem, 9vw, 3rem);
+  }
+}
+
+@media (forced-colors: active) {
+  .heroBadges > span,
+  .eyebrow {
+    color: CanvasText;
+  }
+  .referenceVisual {
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+}
+
+/* Shared full-width chapter planes; opaque panels preserve content contrast. */
+.diagonalChapter {
+  --chapter-gutter: 1rem;
+  --chapter-angle: -3deg;
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+.diagonalWarm {
+  --chapter-start: #ffd43b;
+  --chapter-warm: #ffbf8f;
+  --chapter-middle: #b89af3;
+  --chapter-end: #4b77d5;
+}
+.diagonalCool {
+  --chapter-start: #87d8ec;
+  --chapter-warm: #b2c9f4;
+  --chapter-middle: #ad9eea;
+  --chapter-end: #4b77d5;
+}
+.diagonalChapter::before,
+.diagonalChapter::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: clamp(1rem, 3vw, 2.5rem) auto clamp(1rem, 3vw, 2.5rem) 50%;
+  width: 100vw;
+  transform: translateX(-50%) skewY(var(--chapter-angle));
+  pointer-events: none;
+}
+.diagonalChapter::before {
+  background:
+    radial-gradient(
+      ellipse at 12% 15%,
+      rgb(255 255 255 / 28%),
+      transparent 60%
+    ),
+    linear-gradient(
+      115deg,
+      var(--chapter-start),
+      var(--chapter-warm) 28%,
+      var(--chapter-middle) 64%,
+      var(--chapter-end)
+    );
+}
+.diagonalChapter::after {
+  background: linear-gradient(
+    90deg,
+    var(--chapter-start) 0% 50%,
+    var(--chapter-end) 50% 72%,
+    var(--chapter-middle) 72%
+  );
+  background-size: clamp(10rem, 25vw, 24rem) 0.625rem;
+  background-position: right
+    max(
+      var(--chapter-gutter),
+      calc((100vw - var(--site-frame-width)) / 2 + var(--chapter-gutter))
+    )
+    bottom;
+  background-repeat: no-repeat;
+}
+/* Selected chapters keep the same full-width color field with level edges. */
+.straightChapter {
+  --chapter-angle: 0deg;
+}
+.straightChapter::before,
+.straightChapter::after {
+  inset-block: 0;
+}
+.diagonalPanel > div {
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--background);
+  box-shadow: 0 20px 64px rgb(24 34 70 / 10%);
+}
+:global(html.dark) .diagonalWarm {
+  --chapter-start: #9e792e;
+  --chapter-warm: #975a53;
+  --chapter-middle: #67519e;
+  --chapter-end: #294f99;
+}
+:global(html.dark) .diagonalCool {
+  --chapter-start: #286275;
+  --chapter-warm: #3d527e;
+  --chapter-middle: #615086;
+  --chapter-end: #294f99;
+}
+:global(html[data-site-palette="monochrome"]) .diagonalChapter {
+  --chapter-start: var(--surface-muted);
+  --chapter-warm: var(--surface-muted);
+  --chapter-middle: var(--surface);
+  --chapter-end: var(--surface-muted);
+}
+@media (forced-colors: active) {
+  .diagonalChapter::before,
+  .diagonalChapter::after {
+    display: none;
+  }
+  .diagonalPanel > div {
+    border-color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 40rem) {
+  .diagonalChapter {
+    --chapter-gutter: 1.5rem;
+  }
+}
+@media (min-width: 64rem) {
+  .diagonalChapter {
+    --chapter-gutter: 2rem;
+  }
+}

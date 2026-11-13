@@ -55,6 +55,37 @@ describe("UI overview", () => {
     ).toBeVisible();
   });
 
+  it("separates page-section anchors from the UI discovery routes", () => {
+    render(<UiPage />);
+    const sections = screen.getByRole("navigation", { name: "On this page" });
+    const links = within(sections).getAllByRole("link");
+    expect(links.map((link) => link.getAttribute("href"))).toEqual([
+      "#ui-preview",
+      "#ui-components",
+      "#ui-themes",
+      "#ui-install",
+      "#ui-next",
+    ]);
+    for (const link of links) {
+      const id = link.getAttribute("href")!.slice(1);
+      const destination = document.getElementById(id);
+      expect(link.tagName).toBe("A");
+      expect(link).not.toHaveAttribute("role", "button");
+      expect(link).toHaveAccessibleName();
+      expect(destination).toHaveAccessibleName();
+    }
+    const discovery = screen.getByRole("navigation", {
+      name: "PyColors UI navigation",
+    });
+    expect(discovery).not.toBe(sections);
+    expect(within(discovery).getAllByRole("link")).toHaveLength(6);
+    expect(
+      within(discovery).getByRole("link", { name: "UI overview" }),
+    ).toHaveAttribute("aria-current", "page");
+    const ids = [...document.querySelectorAll("[id]")].map((node) => node.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
   it("links every catalog item to an existing component documentation page", () => {
     render(<UiPage />);
     const catalog = within(

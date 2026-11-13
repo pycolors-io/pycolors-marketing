@@ -2,6 +2,7 @@ import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowDown,
   ArrowLeftRight,
@@ -287,6 +288,15 @@ export default function BuildVsBuyComparisonPage() {
               >
                 {tSite("Start with the fit.")}
               </h2>
+              <div className={styles.briefArtwork} aria-hidden="true">
+                <Image
+                  src="/images/starters/pro/concepts/source-stack-test-v1.png"
+                  alt=""
+                  fill
+                  loading="lazy"
+                  sizes="(min-width: 1024px) 320px, 70vw"
+                />
+              </div>
               <dl className="mt-6 divide-y divide-border-subtle">
                 {[
                   ["Stack", "Does the architecture match your constraints?"],

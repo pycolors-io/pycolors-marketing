@@ -404,7 +404,7 @@ describe("company and trust pages", () => {
     ).toHaveAttribute("href", permalinks[0]!.getAttribute("href"));
   });
 
-  it("keeps the existing hero default and supports a compact introduction with identical content", () => {
+  it("keeps the shared hero undecorated and preserves content in compact introductions", () => {
     const props = {
       title: "Company",
       description: "Existing description",
@@ -412,7 +412,7 @@ describe("company and trust pages", () => {
       extra: <p>Existing context</p>,
     };
     const { container, rerender } = render(<PageHero {...props} />);
-    expect(container.querySelectorAll('[aria-hidden="true"]')).toHaveLength(2);
+    expect(container.querySelectorAll('[aria-hidden="true"]')).toHaveLength(0);
     rerender(<PageHero {...props} variant="compact" />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
       "Company",

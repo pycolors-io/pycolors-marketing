@@ -47,13 +47,13 @@
 }
 .body [data-slot="card"] {
   border-color: var(--border-subtle);
-  border-radius: 5px;
+  border-radius: 1rem;
   background: var(--background);
   box-shadow: none;
 }
 .body div:has(> table) {
   border-color: var(--border-subtle);
-  border-radius: 5px;
+  border-radius: 1rem;
 }
 .body table {
   line-height: 1.75rem;
@@ -75,12 +75,9 @@
 
 .callout,
 .nextSteps {
-  background: radial-gradient(
-    ellipse at 100% 0%,
-    color-mix(in oklab, var(--primary) 5%, var(--background)),
-    var(--background) 80%
-  );
+  background: var(--marketing-canvas, var(--surface-muted));
   box-shadow: none;
+  border-radius: var(--marketing-card-radius, 1.5rem);
 }
 .tocLink {
   display: block;
@@ -93,6 +90,7 @@
   transition:
     color 180ms ease,
     background-color 180ms ease;
+  border-radius: 0.5rem;
 }
 .tocLink:hover {
   color: var(--foreground);
@@ -127,5 +125,79 @@
   .textLink,
   .tocLink {
     transition: none;
+  }
+}
+.heroContainer {
+  padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 4vw, 4rem));
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.heroHeader {
+  min-width: 0;
+}
+.contentContainer {
+  padding-bottom: 4rem;
+}
+.relatedGuides {
+  min-width: 0;
+}
+.relatedGuide {
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--marketing-card-radius);
+  background: var(--background);
+  color: var(--foreground);
+}
+.relatedGuide:first-child {
+  --background: var(--marketing-lilac);
+  --foreground: var(--marketing-lilac-ink);
+}
+.relatedGuide:last-child:not(:first-child) {
+  --background: var(--marketing-peach);
+  --foreground: var(--marketing-peach-ink);
+}
+.relatedGuide:first-child,
+.relatedGuide:last-child:not(:first-child) {
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  border-color: var(--border-subtle);
+}
+.relatedGuide:hover {
+  border-color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 4%, var(--background));
+}
+.relatedGuide:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .relatedGuide {
+    transition: none;
+  }
+}
+@media (forced-colors: active) {
+  .relatedGuide:first-child,
+  .relatedGuide:last-child:not(:first-child) {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .relatedGuide:hover {
+    background: Canvas;
+    color: CanvasText;
+  }
+  .relatedGuide:focus-visible {
+    outline-color: Highlight;
   }
 }

@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
@@ -384,6 +385,7 @@ export default function ExamplesPage() {
       )}
     >
       <Container className="pb-16 pt-24 sm:pt-28">
+        <MarketingBreadcrumb route="/ui/examples" />
         <div className={styles.sectionNav}>
           <UiSectionNav active="examples" />
         </div>

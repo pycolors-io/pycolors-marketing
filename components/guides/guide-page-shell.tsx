@@ -4,6 +4,7 @@ import { Link } from "@/lib/i18n/navigation";
 import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { Badge } from "@pycolors/ui";
 import { Container } from "@/components/container";
+import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import type { BreadcrumbItem } from "@/lib/seo/breadcrumb";
 import { OnThisPageInline, type TocItem } from "./on-this-page-inline";
@@ -49,47 +50,51 @@ export function GuidePageShell({
       tabIndex={-1}
       className={`${styles.page} bg-background text-foreground`}
     >
-      <Container className="pb-16 pt-24 sm:pt-28">
-        <Breadcrumb className={`${styles.breadcrumb} mb-8`} items={items} />
-        <header className="border-b border-border-subtle pb-10 sm:pb-12">
-          <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-            <Badge
-              variant="outline"
-              className="rounded-[5px] px-2.5 py-1 text-[11px]"
+      <MarketingHeroBand tone="warm">
+        <Container className={styles.heroContainer}>
+          <Breadcrumb className={`${styles.breadcrumb} mb-8`} items={items} />
+          <header className={styles.heroHeader}>
+            <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+              <Badge
+                variant="outline"
+                className="rounded-[5px] px-2.5 py-1 text-[11px]"
+              >
+                {tSite(badge)}
+              </Badge>
+              {tags.map((tag) => (
+                <span key={tag}>{tSite(tag)}</span>
+              ))}
+              <span aria-hidden="true">/</span>
+              <span>
+                {tSite(toc.length)} {tSite(" sections")}
+              </span>
+            </div>
+            <h1
+              id="guide-title"
+              className="mt-5 max-w-4xl text-balance font-brand text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl"
             >
-              {tSite(badge)}
-            </Badge>
-            {tags.map((tag) => (
-              <span key={tag}>{tSite(tag)}</span>
-            ))}
-            <span aria-hidden="true">/</span>
-            <span>
-              {tSite(toc.length)} {tSite(" sections")}
-            </span>
-          </div>
-          <h1
-            id="guide-title"
-            className="mt-5 max-w-4xl text-balance font-brand text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl"
-          >
-            {tSite(title)}
-          </h1>
-          <p className="mt-5 max-w-3xl text-[15px] leading-7 text-muted-foreground sm:text-base sm:leading-8">
-            {tSite(description)}
-          </p>
-          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-1">
-            <Link href="/guides" className={styles.textLink}>
-              <ArrowLeft className="size-3.5" aria-hidden="true" />{" "}
-              {tSite(" All guides")}
-            </Link>
-            {documentation ? (
-              <Link href={documentation.href} className={styles.textLink}>
-                <BookOpen className="size-3.5" aria-hidden="true" />
-                {tSite(" ")}
-                {tSite(documentation.title)}
+              {tSite(title)}
+            </h1>
+            <p className="mt-5 max-w-3xl text-[15px] leading-7 text-muted-foreground sm:text-base sm:leading-8">
+              {tSite(description)}
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-1">
+              <Link href="/guides" className={styles.textLink}>
+                <ArrowLeft className="size-3.5" aria-hidden="true" />{" "}
+                {tSite(" All guides")}
               </Link>
-            ) : null}
-          </div>
-        </header>
+              {documentation ? (
+                <Link href={documentation.href} className={styles.textLink}>
+                  <BookOpen className="size-3.5" aria-hidden="true" />
+                  {tSite(" ")}
+                  {tSite(documentation.title)}
+                </Link>
+              ) : null}
+            </div>
+          </header>
+        </Container>
+      </MarketingHeroBand>
+      <Container className={styles.contentContainer}>
         <div className="grid items-start gap-8 pt-8 lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-12 xl:gap-20">
           <aside className="min-w-0 lg:sticky lg:top-24 lg:col-start-2 lg:row-start-1">
             <OnThisPageInline
@@ -115,12 +120,14 @@ export function GuidePageShell({
                 >
                   {tSite("Connect the next part of your product.")}
                 </h2>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <div
+                  className={`${styles.relatedGuides} mt-6 grid gap-4 sm:grid-cols-2`}
+                >
                   {relatedGuides.map((guide) => (
                     <Link
                       key={guide.href}
                       href={guide.href}
-                      className="group flex flex-col justify-between gap-6 rounded-[5px] border border-border-subtle p-5 transition-colors hover:bg-surface-muted/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                      className={`${styles.relatedGuide} group flex flex-col justify-between gap-6 rounded-[5px] border border-border-subtle p-5 transition-colors hover:bg-surface-muted/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring`}
                     >
                       <h3 className="text-base font-medium leading-7">
                         {tSite(guide.title)}

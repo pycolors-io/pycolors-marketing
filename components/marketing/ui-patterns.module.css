@@ -1,10 +1,5 @@
 .page {
-  background: radial-gradient(
-      ellipse at 90% 0%,
-      color-mix(in oklab, var(--primary) 5%, transparent),
-      transparent 65%
-    )
-    0 0 / 100% 44rem no-repeat;
+  background: var(--background);
 }
 .sectionNav a {
   min-height: 2.75rem;
@@ -17,9 +12,6 @@
 }
 .hero h1 {
   max-width: 13ch;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.07;
-  letter-spacing: -0.05em;
 }
 .hero p {
   max-width: 33rem;
@@ -34,10 +26,9 @@
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: var(--marketing-panel-radius, 2rem);
   background: var(--background);
-  box-shadow: 0 24px 60px -40px
-    color-mix(in oklab, var(--primary) 30%, transparent);
+  box-shadow: none;
 }
 .anatomyHeading {
   display: flex;
@@ -63,18 +54,7 @@
 .previewStage {
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(
-      ellipse at 0% 0%,
-      color-mix(in oklab, var(--primary) 10%, transparent),
-      transparent 75%
-    ),
-    radial-gradient(
-      ellipse at 100% 100%,
-      color-mix(in oklab, var(--brand-platform) 6%, transparent),
-      transparent 70%
-    ),
-    var(--background);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .previewStage > .mock {
@@ -170,13 +150,14 @@
   flex-direction: column;
   scroll-margin-top: 6rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: var(--marketing-card-radius, 1.5rem);
   background: var(--background);
+  overflow: hidden;
 }
 .previewStage {
-  padding: 1.125rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
   border-bottom: 1px solid var(--border-subtle);
-  border-radius: 7px 7px 0 0;
+  border-radius: 0;
 }
 .previewMeta {
   display: flex;
@@ -191,7 +172,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 1.25rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
 }
 .cardHeading {
   display: flex;
@@ -305,7 +286,8 @@
   display: grid;
   list-style: none;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .workflow li {
   min-width: 0;
@@ -339,17 +321,23 @@
 .starters {
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  background:
-    radial-gradient(
-      ellipse at 0% 0%,
-      color-mix(in oklab, var(--primary) 6%, transparent),
-      transparent 65%
-    ),
-    var(--background);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .startersIntro {
+  --background: var(--marketing-lilac);
+  --foreground: var(--marketing-lilac-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
   padding: 1.5rem;
+  background: var(--background);
+  color: var(--foreground);
 }
 .startersIntro h2 {
   margin-top: 1rem;
@@ -376,7 +364,26 @@
   padding: 1.5rem;
 }
 .starterOption + .starterOption {
+  --background: var(--marketing-graphite);
+  --foreground: var(--marketing-graphite-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --primary: var(--marketing-gold);
+  --primary-foreground: var(--marketing-gold-ink);
+  --brand-primary: var(--primary);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
   border-top: 1px solid var(--border-subtle);
+  background: var(--background);
+  color: var(--foreground);
 }
 .starterHeading {
   display: flex;
@@ -887,5 +894,45 @@
   }
   .cardLink:hover svg {
     transform: none;
+  }
+}
+.anatomyStage {
+  background: var(--marketing-cobalt, var(--surface-muted));
+}
+.patternCard:first-child .previewStage {
+  background: var(--marketing-cobalt, var(--surface-muted));
+}
+.patternCard:first-child .previewMeta {
+  color: var(--marketing-cobalt-ink, var(--foreground));
+}
+
+.patternCard:nth-child(3) .previewStage {
+  background: var(--marketing-peach, var(--surface-muted));
+}
+.patternCard:nth-child(3) .previewMeta {
+  color: var(--marketing-peach-ink, var(--foreground));
+}
+
+@media (forced-colors: active) {
+  .startersIntro,
+  .starterOption + .starterOption {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .anatomyStage,
+  .patternCard:first-child .previewStage,
+  .patternCard:nth-child(3) .previewStage {
+    background: Canvas;
+  }
+  .patternCard:first-child .previewMeta,
+  .patternCard:nth-child(3) .previewMeta {
+    color: CanvasText;
   }
 }

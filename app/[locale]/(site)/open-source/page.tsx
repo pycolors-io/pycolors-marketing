@@ -202,7 +202,7 @@ function RepositoryCard({
   return (
     <article
       aria-labelledby={`repo-${repository.slug}`}
-      className={`${styles.repoCard} ${featured ? styles.featuredRepo : ""}`}
+      className={`${styles.repoCard} ${featured ? styles.featuredRepo : ""} ${repository.slug === "pycolors-tokens" ? styles.tokenRepo : ""}`}
     >
       <div className={styles.repoHeader}>
         <span className={styles.repoIcon}>

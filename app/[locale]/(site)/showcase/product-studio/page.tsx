@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import type { Metadata } from "next";
@@ -66,6 +67,7 @@ export default function ProductStudioPage() {
         ])}
       />
       <Container className="pb-10 pt-20 sm:pb-14 sm:pt-24">
+        <MarketingBreadcrumb route="/showcase/product-studio" />
         <Link
           href="/starters/pro#built-with-pycolors"
           className={`${linkClass} mb-8 text-xs text-muted-foreground`}
