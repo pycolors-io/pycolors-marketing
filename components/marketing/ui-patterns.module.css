@@ -7,14 +7,45 @@
 .heroLayout {
   display: grid;
   align-items: center;
-  gap: 2.5rem;
-  padding-block: 1.25rem 3rem;
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-block: 1.5rem 3rem;
 }
 .hero h1 {
   max-width: 13ch;
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
 }
 .hero p {
   max-width: 33rem;
+}
+.heroComposition {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  overflow: hidden;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background: linear-gradient(145deg, #2865ce, #173c83);
+}
+.heroComposition::before,
+.heroComposition::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 15% -15% -20% 15%;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 2rem;
+  transform: rotate(-22deg);
+}
+.heroComposition::after {
+  inset: -15% 20% 15% -20%;
+  transform: rotate(22deg);
+}
+.heroComposition .anatomy {
+  transform: rotate(-3deg);
+  border-color: rgb(255 255 255 / 18%);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 20%);
 }
 .eyebrow {
   font-size: 0.625rem;
@@ -182,10 +213,10 @@
   gap: 0.75rem;
 }
 .cardHeading h3 {
-  font-size: 1.125rem;
-  font-weight: 550;
-  line-height: 1.3;
-  letter-spacing: normal;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
 }
 .category {
   padding: 0.25rem 0.5rem;
@@ -325,16 +356,6 @@
   background: var(--marketing-canvas, var(--surface-muted));
 }
 .startersIntro {
-  --background: var(--marketing-lilac);
-  --foreground: var(--marketing-lilac-ink);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --primary: var(--foreground);
-  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
-  --ring: var(--foreground);
   padding: 1.5rem;
   background: var(--background);
   color: var(--foreground);
@@ -435,11 +456,11 @@
 .mock {
   display: flex;
   min-width: 0;
-  min-height: 14rem;
+  min-height: 16rem;
   flex-direction: column;
   padding: 0.875rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 6px;
+  border-radius: 0.875rem;
   background: var(--background);
   box-shadow: 0 12px 24px -22px
     color-mix(in oklab, var(--foreground) 30%, transparent);
@@ -801,7 +822,7 @@
     padding-bottom: 4rem;
   }
   .hero h1 {
-    font-size: 3.5rem;
+    font-size: clamp(3.5rem, 5vw, 5rem);
   }
   .anatomyStage {
     padding: 1.5rem;
@@ -897,17 +918,17 @@
   }
 }
 .anatomyStage {
-  background: var(--marketing-cobalt, var(--surface-muted));
+  background: var(--surface-muted);
 }
 .patternCard:first-child .previewStage {
-  background: var(--marketing-cobalt, var(--surface-muted));
+  background: #2059bf;
 }
 .patternCard:first-child .previewMeta {
   color: var(--marketing-cobalt-ink, var(--foreground));
 }
 
 .patternCard:nth-child(3) .previewStage {
-  background: var(--marketing-peach, var(--surface-muted));
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .patternCard:nth-child(3) .previewMeta {
   color: var(--marketing-peach-ink, var(--foreground));
@@ -934,5 +955,157 @@
   .patternCard:first-child .previewMeta,
   .patternCard:nth-child(3) .previewMeta {
     color: CanvasText;
+  }
+}
+
+@media (min-width: 64rem) {
+  .patternCard:first-child,
+  .patternCard:last-child {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-rows: auto;
+  }
+  .patternCard:first-child .previewStage,
+  .patternCard:last-child .previewStage {
+    justify-content: center;
+    border-bottom: 0;
+    padding: clamp(2rem, 4vw, 3.5rem);
+  }
+  .patternCard:first-child .cardContent,
+  .patternCard:last-child .cardContent {
+    padding: clamp(2rem, 4vw, 3.5rem);
+  }
+  .patternCard:last-child .previewStage {
+    background: #17181d;
+  }
+  .patternCard:last-child .previewMeta {
+    color: #d5d5db;
+  }
+  .patternCard:last-child .mock {
+    flex: none;
+  }
+}
+.section > div:first-child h2 {
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+.workflow h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.patternNav ul {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.patternNav li {
+  flex-shrink: 0;
+}
+.patternNav a {
+  padding-inline: 0.875rem;
+  border-radius: 100px;
+  background: var(--surface-muted);
+  font-size: 0.75rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroComposition .anatomy {
+    transform: none;
+  }
+}
+@media (forced-colors: active) {
+  .heroComposition,
+  .patternCard:last-child .previewStage {
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+  .heroComposition::before,
+  .heroComposition::after {
+    display: none;
+  }
+  .heroComposition .anatomy {
+    transform: none;
+    box-shadow: none;
+  }
+  .patternCard:last-child .previewMeta {
+    color: CanvasText;
+  }
+}
+
+/* Explain the task before sending visitors to the matching source. */
+.useLabel,
+.includesLabel {
+  color: var(--muted-foreground);
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.useLabel {
+  margin-top: 1.5rem;
+}
+.cardDescription {
+  margin-top: 0.5rem;
+}
+.includesLabel {
+  margin-top: 1.25rem;
+}
+.checks {
+  margin-top: 0.625rem;
+}
+.hero .heroNote {
+  max-width: 45ch;
+  font-size: 0.75rem;
+  line-height: 1.75;
+}
+.anatomyLegend strong {
+  font-size: 0.75rem;
+}
+.anatomyLegend small,
+.anatomy figcaption > p {
+  font-size: 0.625rem;
+}
+
+.section {
+  padding-block: clamp(4rem, 7vw, 7rem);
+}
+.patternGrid {
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+.cardContent {
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+}
+.cardDescription {
+  max-width: 46ch;
+  line-height: 1.9;
+}
+.checks {
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+.patternCard {
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+}
+.workflow li {
+  padding: clamp(1.75rem, 3vw, 3rem);
+}
+.workflow h3 {
+  max-width: 18ch;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+.starters {
+  gap: clamp(2rem, 5vw, 5rem);
+}
+@media (min-width: 64rem) {
+  .patternCard:first-child .cardContent,
+  .patternCard:last-child .cardContent {
+    padding: clamp(2rem, 4vw, 4rem);
+  }
+  .patternCard:first-child .previewStage,
+  .patternCard:last-child .previewStage {
+    padding: clamp(2rem, 4vw, 3.5rem);
   }
 }

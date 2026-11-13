@@ -254,7 +254,7 @@
   letter-spacing: -0.03em;
 }
 .uiHeroContainer {
-  padding-block: clamp(1.5rem, 3vw, 3rem) clamp(2rem, 4vw, 4rem);
+  padding-block: clamp(1rem, 2vw, 2rem) clamp(2rem, 4vw, 4rem);
 }
 .uiPage .uiHero {
   --catalogue-panel: var(--catalogue-paper);
@@ -293,13 +293,7 @@
   width: 100%;
   padding-block: clamp(2rem, 5vw, 5rem);
   border: 0;
-  background: linear-gradient(
-    112deg,
-    var(--marketing-gold),
-    var(--marketing-peach) 30%,
-    var(--marketing-lilac) 65%,
-    var(--marketing-cobalt)
-  );
+  background: var(--marketing-canvas);
 }
 .uiPreviewPanel {
   min-width: 0;
@@ -720,7 +714,7 @@
 
 /* Blocks and Theme Builder share the product rhythm, not their demo variables. */
 .productIntro {
-  padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 3vw, 3rem));
+  padding-top: clamp(1rem, 2vw, 2rem);
   padding-bottom: clamp(2.5rem, 4vw, 4rem);
 }
 .blocksPage .blocksHero {
@@ -938,7 +932,7 @@
 
 /* Immersive Theme Builder introduction stays outside the native workspace. */
 .themeImmersiveIntro {
-  padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 4vw, 4rem));
+  padding-top: clamp(1rem, 2vw, 2rem);
   padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
 }
 .themeImmersiveGrid {
@@ -1078,4 +1072,189 @@
   .themeImmersiveGuideLink:focus-visible {
     outline-color: Highlight;
   }
+}
+
+/* Blocks reads like a composition studio, with the real catalog below. */
+.blocksPage {
+  --blocks-art-plum: #8759e8;
+  --blocks-art-sun: #f5b85c;
+  --blocks-art-paper: #fffdfa;
+  --blocks-art-ink: #272333;
+  --blocks-gallery-surface: #f7f6f3;
+}
+:global(html.dark) .blocksPage {
+  --blocks-gallery-surface: #19191e;
+}
+:global(html[data-site-palette="monochrome"]) .blocksPage {
+  --blocks-art-plum: #929292;
+  --blocks-art-sun: #c7c7c7;
+  --blocks-gallery-surface: var(--surface-muted);
+}
+.blocksPage .blocksHero {
+  --primary: var(--blocks-art-plum);
+  --primary-foreground: #ffffff;
+  overflow: visible;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-block: clamp(2.5rem, 5vw, 5rem);
+}
+.blocksPage .blocksHero h1 {
+  max-width: 15ch;
+  font-size: clamp(3rem, 5.8vw, 5.75rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+.blocksPage .blocksHero p {
+  max-width: 45ch;
+}
+.blocksComposition {
+  grid-area: visual;
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
+  color: var(--catalogue-ink);
+}
+.blocksComposition::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--blocks-art-plum) 15%, transparent),
+    transparent 70%
+  );
+}
+.blocksComposition svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.blocksPage .blocksProof {
+  gap: 0;
+  margin-top: 0;
+  padding-block: 1.25rem;
+  border-block: 1px solid var(--catalogue-border);
+}
+.blocksProof > div,
+.blocksProof > div:first-child,
+.blocksProof > div:last-child {
+  --background: var(--catalogue-paper);
+  --foreground: var(--catalogue-ink);
+  --muted-foreground: var(--catalogue-muted);
+  padding: 1.25rem clamp(1rem, 2vw, 2rem);
+  border: 0;
+  border-radius: 0;
+  background: var(--background);
+  color: var(--foreground);
+}
+.blocksProof > div > div > span {
+  border: 0;
+  background: var(--blocks-gallery-surface);
+  color: var(--catalogue-ink);
+}
+.blocksPage .blocksCatalog {
+  background: var(--blocks-gallery-surface);
+}
+.blocksHeading h2 {
+  max-width: 20ch;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: 550;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+}
+.blocksPage .categoryNav {
+  top: calc(var(--site-header-height) + 0.75rem);
+  margin-block: 2.5rem 4rem;
+  padding: 0.5rem;
+  border: 1px solid var(--catalogue-border);
+  border-radius: 100px;
+}
+.blocksPage .categoryNav nav > a {
+  border-radius: 100px;
+}
+.blocksCategory > div:first-child {
+  align-items: baseline;
+  padding-bottom: 1.5rem;
+}
+.blocksCategory h3 {
+  font-size: clamp(1.875rem, 3vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+.categoryNumber {
+  align-self: flex-start;
+  margin-right: 0.75rem;
+  padding-top: 0.25rem;
+  color: var(--catalogue-muted);
+  font: 0.6875rem var(--font-mono);
+}
+.blockCatalogEntries > article > div:nth-child(2) {
+  border-radius: 1rem;
+}
+.blocksPage .blocksClosing {
+  --primary: var(--blocks-art-plum);
+  --primary-foreground: #ffffff;
+  padding: clamp(2rem, 5vw, 5rem);
+}
+.blocksClosing h2 {
+  max-width: 20ch;
+  font-size: clamp(2rem, 4vw, 3.75rem);
+  font-weight: 550;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+@media (min-width: 48rem) {
+  .blocksProof > div + div {
+    border-left: 1px solid var(--catalogue-border);
+  }
+}
+@media (min-width: 64rem) {
+  .blocksPage .blocksHero {
+    grid-template-areas: "copy visual";
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+@media (max-width: 39.999rem) {
+  .blocksPage .blocksHero h1 {
+    font-size: clamp(2.75rem, 12vw, 4rem);
+  }
+  .blocksComposition {
+    max-width: 32rem;
+    margin-inline: auto;
+  }
+  .blocksPage .categoryNav {
+    border-radius: 1.5rem;
+  }
+  .categoryNumber {
+    margin-right: 0.25rem;
+  }
+}
+@media (forced-colors: active) {
+  .blocksPage {
+    --blocks-gallery-surface: Canvas;
+  }
+  .blocksComposition {
+    display: none;
+  }
+  .blocksPage .blocksHero {
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    grid-template-areas: "copy";
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .blocksPage .categoryNav {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+}
+
+.uiDiscoveryHeader {
+  padding-top: 1rem;
+  padding-bottom: 0.25rem;
+}
+.uiHeroContainer {
+  padding-top: 0.75rem;
 }

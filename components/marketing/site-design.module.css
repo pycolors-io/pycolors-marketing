@@ -5,6 +5,9 @@
   --marketing-graphite: #17181d;
   --marketing-graphite-ink: #ffffff;
   --marketing-cobalt: #2059bf;
+  --marketing-action-fill: #6b2fd4;
+  --marketing-action-ink: #ffffff;
+  --marketing-action-hover: #5822ba;
   --marketing-cobalt-ink: #ffffff;
   --marketing-gold: #ffd43b;
   --marketing-gold-ink: #35261b;
@@ -79,4 +82,49 @@
 
 .frame :global(main#content) {
   scroll-margin-top: 5rem;
+}
+
+/* Starter discovery actions share the violet brand, independently of panel color. */
+.frame
+  :global(a[data-slot="button"]):is(
+    [href$="/starters/pro"],
+    [href$="/starters/free"],
+    [href^="https://starter-demo.pycolors.io"]
+  ) {
+  border-color: var(--marketing-action-fill);
+  background: var(--marketing-action-fill);
+  color: var(--marketing-action-ink);
+}
+.frame
+  :global(a[data-slot="button"]):is(
+    [href$="/starters/pro"],
+    [href$="/starters/free"],
+    [href^="https://starter-demo.pycolors.io"]
+  ):hover {
+  border-color: var(--marketing-action-hover);
+  background: var(--marketing-action-hover);
+  color: var(--marketing-action-ink);
+}
+@media (forced-colors: active) {
+  .frame {
+    --marketing-action-fill: ButtonFace;
+    --marketing-action-ink: ButtonText;
+    --marketing-action-hover: ButtonFace;
+  }
+  .frame
+    :global(a[data-slot="button"]):is(
+      [href$="/starters/pro"],
+      [href$="/starters/free"],
+      [href^="https://starter-demo.pycolors.io"]
+    ) {
+    border-color: ButtonText;
+  }
+}
+
+/* The header is fixed: reserve its height once, then a compact reading gutter. */
+.frame :global(.marketing-page-intro) {
+  padding-top: calc(var(--site-header-height, 3.5rem) + 1rem);
+}
+.frame :global([data-marketing-breadcrumb]) {
+  margin-bottom: 1.25rem;
 }

@@ -86,7 +86,7 @@ export default function ImplementationExamplePage() {
           { label: "Example delivery", href: example.href },
         ])}
       />
-      <Container className={styles.intro}>
+      <Container className={`marketing-page-intro ${styles.intro}`}>
         <MarketingBreadcrumb route="/starters/pro/implementation-example" />
         <Link
           href="/starters/pro#implementation"

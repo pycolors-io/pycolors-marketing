@@ -11,6 +11,7 @@
     color-mix(in srgb, var(--foreground) 3%, transparent);
   --starter-pro-sun: #f3d479;
   --starter-pro-section-space: clamp(3.5rem, 6vw, 6rem);
+  --starter-pro-frame-gutter: 1rem;
   --starter-pro-ink: var(--foreground);
   --starter-pro-copy: var(--muted-foreground);
   --starter-pro-aura-start: #f7a365;
@@ -161,7 +162,6 @@
 
 .pageFrame {
   padding-bottom: clamp(4rem, 7vw, 7rem);
-  border-inline: 1px solid var(--border-subtle);
   background: var(--background);
 }
 
@@ -283,7 +283,7 @@
   display: grid;
   min-width: 0;
   gap: 2.5rem;
-  max-width: 72rem;
+  max-width: 100%;
   margin-inline: auto;
   align-items: center;
 }
@@ -1762,7 +1762,7 @@
 /* Editorial hierarchy pairs product detail with restrained visual proof. */
 .productPage :global(.marketing-section) > div,
 .stackStrip {
-  max-width: 72rem;
+  max-width: 100%;
   margin-inline: auto;
 }
 .productPage :global(.marketing-section) h3 {
@@ -1991,7 +1991,7 @@
     gap: 3rem;
   }
   .heroVisual {
-    width: calc(100% + 2rem);
+    width: 100%;
     max-width: none;
     margin-inline: 0;
   }
@@ -2505,10 +2505,6 @@
 }
 
 /* Product-led polish: expressive headlines, soft frames and quieter details. */
-.pageFrame {
-  border-inline-color: transparent;
-}
-
 .productPage .heroShowcase {
   border-radius: 16px;
   box-shadow:
@@ -2821,10 +2817,12 @@
 }
 
 .foundationRail {
-  --foundation-rail-edge: 1rem;
   --foundation-rail-inset: max(
-    var(--foundation-rail-edge),
-    calc((var(--foundation-viewport-width, 100vw) - 72rem) / 2)
+    var(--starter-pro-frame-gutter),
+    calc(
+      (var(--foundation-viewport-width, 100vw) - var(--site-frame-width)) / 2 +
+        var(--starter-pro-frame-gutter)
+    )
   );
   display: grid;
   position: relative;
@@ -2850,14 +2848,14 @@
 }
 
 @media (min-width: 40rem) {
-  .foundationRail {
-    --foundation-rail-edge: 1.5rem;
+  .productPage {
+    --starter-pro-frame-gutter: 1.5rem;
   }
 }
 
 @media (min-width: 64rem) {
-  .foundationRail {
-    --foundation-rail-edge: 2rem;
+  .productPage {
+    --starter-pro-frame-gutter: 2rem;
   }
 }
 
@@ -3568,7 +3566,85 @@
   }
 }
 
-/* Product media uses a quiet, spacious stage and familiar capsule controls. */
+/* The video chapter darkens with its own entry into the viewport. */
+@property --starter-pro-tour-darkness {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+.productPage .tourSection {
+  --tour-light-surface: #ffffff;
+  --tour-contrast: clamp(
+    0,
+    calc((var(--starter-pro-tour-darkness) - 0.54) * 10000),
+    1
+  );
+  --background: color-mix(
+    in srgb,
+    #000000 calc(var(--starter-pro-tour-darkness) * 100%),
+    var(--tour-light-surface)
+  );
+  /* Switch ink at the black/white contrast crossover instead of fading text. */
+  --foreground: color-mix(
+    in srgb,
+    #ffffff calc(var(--tour-contrast) * 100%),
+    #000000
+  );
+  --muted-foreground: var(--foreground);
+  --starter-pro-ink: var(--foreground);
+  --starter-pro-copy: var(--muted-foreground);
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --border: color-mix(in srgb, var(--foreground) 24%, var(--background));
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  --ring: var(--foreground);
+  position: relative;
+  isolation: isolate;
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: 0 0 0 100vmax var(--background);
+  clip-path: inset(0 -100vmax);
+}
+
+:global(html.dark) .productPage .tourSection {
+  --tour-light-surface: #121217;
+  --tour-contrast: 1;
+}
+
+@keyframes tour-scroll-darken {
+  from {
+    --starter-pro-tour-darkness: 0;
+  }
+  to {
+    --starter-pro-tour-darkness: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  @supports (animation-timeline: view()) {
+    .productPage .tourSection {
+      animation: tour-scroll-darken linear both;
+      animation-timeline: view(block);
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .productPage .tourSection {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border: CanvasText;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    box-shadow: none;
+  }
+}
+
 .productPage .mediaSection .showcaseHeader {
   margin-bottom: clamp(2rem, 4vw, 3rem);
 }
@@ -3589,25 +3665,14 @@
   padding: clamp(0.5rem, 2.2vw, 2rem);
   border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
   border-radius: clamp(1.25rem, 3vw, 2.5rem);
-  background:
-    radial-gradient(
-      ellipse at 6% 6%,
-      color-mix(in srgb, var(--starter-pro-sun) 48%, transparent),
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse at 92% 92%,
-      color-mix(in srgb, var(--starter-pro-aura-middle) 48%, transparent),
-      transparent 65%
-    ),
-    color-mix(in srgb, var(--starter-pro-aura-start) 15%, var(--background));
+  background: var(--background);
 }
 
 .tourScreen {
   overflow: hidden;
   border: 1px solid rgb(255 255 255 / 16%);
   border-radius: clamp(0.875rem, 2vw, 1.5rem);
-  background: #09090b;
+  background: var(--background);
   box-shadow:
     0 14px 36px rgb(28 15 46 / 15%),
     0 2px 8px rgb(28 15 46 / 8%);
@@ -3619,6 +3684,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
+  background: var(--background);
 }
 
 .tourPoster {
@@ -4686,7 +4752,7 @@
   display: flex;
   align-items: center;
   min-width: 0;
-  max-width: 76rem;
+  max-width: var(--site-frame-width);
   min-height: 4rem;
   gap: clamp(0.75rem, 1.2vw, 1.25rem);
   padding-block: 0.375rem;
@@ -4947,7 +5013,12 @@
   --closing-ink: #ffffff;
   width: 100vw;
   margin-inline: calc(50% - 50vw);
-  padding-inline: max(1.5rem, calc((100vw - 72rem) / 2));
+  padding-inline: max(
+    var(--starter-pro-frame-gutter),
+    calc(
+      (100vw - var(--site-frame-width)) / 2 + var(--starter-pro-frame-gutter)
+    )
+  );
   padding-block: clamp(3.5rem, 7vw, 7rem);
   border: 0;
   border-radius: 0;
@@ -5719,4 +5790,289 @@
     transform: none;
     box-shadow: none;
   }
+}
+
+/* Product previews use a single neutral frame and labelled navigation. */
+.productPage .previewSection {
+  --starter-pro-soft: #f5f5f7;
+  --primary: #17171b;
+  --primary-foreground: #ffffff;
+  --ring: #6b2fd4;
+}
+.productPage .previewSection .showcaseHeader h2 {
+  max-width: 20ch;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.previewSection .carousel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.25rem, 2vw, 1.75rem);
+  background: var(--background);
+}
+.previewSection .carouselNavigation {
+  display: flex;
+  order: -1;
+  align-items: stretch;
+  gap: 1rem;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.previewSection .previewPicker {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0 0 0.25rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.previewSection .previewChoice {
+  position: relative;
+  display: flex;
+  width: auto;
+  height: auto;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.previewSection .previewChoice[aria-current="true"] {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+.previewChoiceLabel {
+  display: block;
+}
+.previewSection .previewProgress {
+  position: absolute;
+  bottom: 0.3125rem;
+  left: 1rem;
+  width: calc(100% - 2rem);
+  height: 2px;
+  background: color-mix(in srgb, currentColor 20%, transparent);
+}
+.previewSection .progressFill {
+  background: currentColor;
+}
+.previewSection .carouselToolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.previewSection .carouselPosition,
+.previewSection .carouselControls {
+  grid-column: auto;
+  grid-row: auto;
+}
+.previewSection .previewStage {
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+  border: 0;
+  border-radius: 0;
+  background: var(--starter-pro-soft);
+}
+.previewSection .previewScreen {
+  border-color: #d8d8dc;
+  border-radius: 0.75rem;
+  box-shadow: 0 18px 44px rgb(0 0 0 / 10%);
+}
+.previewSection .previewCaption {
+  margin: 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0;
+}
+.previewSection .previewNumber {
+  color: var(--muted-foreground);
+}
+.previewSection .previewTheme {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.previewSection .previewExplanation {
+  font-size: 0.875rem;
+}
+.previewSection .carouselControl {
+  background: transparent;
+}
+@media (min-width: 64rem) {
+  .previewSection .carouselNavigation {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .previewSection .previewPicker {
+    min-width: 0;
+  }
+  .previewSection .carouselToolbar {
+    width: auto;
+    flex-shrink: 0;
+  }
+  .previewSection .rotationStatus {
+    display: none;
+  }
+}
+:global(html.dark) .productPage .previewSection {
+  --starter-pro-soft: #1b1b1e;
+  --primary: #ffffff;
+  --primary-foreground: #17171b;
+}
+
+/* Services: restrained surfaces, clear prices and deliberate reading rhythm. */
+.productPage .servicesBand {
+  --services-canvas: #f5f5f7;
+  background: var(--services-canvas);
+  box-shadow: 0 0 0 100vmax var(--services-canvas);
+}
+.productPage .implementationHeading {
+  max-width: none;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.productPage .implementationHeading h2 {
+  max-width: 21ch;
+  margin-inline: 0;
+  font-size: clamp(2.5rem, 4.7vw, 4.5rem);
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.productPage .servicesBand .implementationCard[data-card-tone] {
+  padding: clamp(1.5rem, 3.5vw, 3.5rem);
+  border-radius: 1.75rem;
+}
+.productPage .servicesBand .implementationCard[data-card-tone="neutral"] {
+  --background: #ffffff;
+  --foreground: #17171b;
+  --muted-foreground: #62626b;
+  --border-subtle: #e5e5e8;
+  --primary: #17171b;
+  --primary-foreground: #ffffff;
+  background: var(--background);
+  color: var(--foreground);
+}
+.productPage .servicesBand .implementationCard[data-card-tone="ink"] {
+  --background: #141417;
+  --foreground: #ffffff;
+  --muted-foreground: #bdbdc6;
+  --border-subtle: #34343b;
+  --primary: #ffffff;
+  --primary-foreground: #141417;
+  background: var(--background);
+  color: var(--foreground);
+}
+.implementationIdentity > span:first-child {
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+}
+.productPage .implementationCard h3 {
+  max-width: 17ch;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+.productPage .implementationCard .implementationPrice {
+  margin-top: 1.75rem;
+  font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+  font-weight: 500;
+}
+.productPage .implementationCard .implementationFeatures {
+  gap: 0;
+  margin-block: 1.75rem;
+}
+.implementationFeatures > li {
+  padding-block: 0.875rem;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+.implementationFeatures > li > svg {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+}
+.productPage .implementationCard .implementationDelivery {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  border: 0;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--foreground) 5%, var(--background));
+}
+.productPage .servicesBand .implementationCard .implementationAction {
+  min-height: 3rem;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 64rem) {
+  .productPage .implementationHeading > div:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: end;
+    gap: 1.5rem 4rem;
+  }
+  .implementationHeading [data-slot="badge"] {
+    grid-column: 1 / -1;
+    width: fit-content;
+  }
+  .implementationHeading > div:first-child > p {
+    margin: 0;
+    max-width: 42ch;
+    font-size: 0.875rem;
+    line-height: 1.8;
+  }
+}
+:global(html.dark) .productPage .servicesBand {
+  --services-canvas: #101013;
+}
+@media (forced-colors: active) {
+  .productPage .previewSection,
+  :global(html.dark) .productPage .previewSection {
+    --starter-pro-soft: Canvas;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+  }
+  .previewSection .previewChoice[aria-current="true"] {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+  }
+  .previewSection .previewScreen {
+    box-shadow: none;
+    border-color: CanvasText;
+  }
+  .productPage .servicesBand,
+  :global(html.dark) .productPage .servicesBand {
+    --services-canvas: Canvas;
+  }
+  .productPage .servicesBand .implementationCard[data-card-tone] {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --border-subtle: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    border-color: CanvasText;
+  }
+}
+
+.productPage .hero {
+  padding-top: 1rem;
 }

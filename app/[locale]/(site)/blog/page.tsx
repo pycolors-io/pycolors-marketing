@@ -72,7 +72,7 @@ export default function BlogPage() {
       className={`${styles.page} bg-background text-foreground`}
     >
       <MarketingHeroBand tone="cool">
-        <Container className={styles.heroContainer}>
+        <Container className={`marketing-page-intro ${styles.heroContainer}`}>
           <MarketingBreadcrumb route="/blog" />
           <div className={styles.intro}>
             <PageHero

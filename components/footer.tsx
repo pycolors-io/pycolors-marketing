@@ -1,6 +1,12 @@
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
-import { ArrowUpRight, GitBranch } from "lucide-react";
+import {
+  ArrowUpRight,
+  Boxes,
+  GitBranch,
+  Layers,
+  LayoutTemplate,
+} from "lucide-react";
 
 import { Container } from "@/components/container";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
@@ -64,6 +70,27 @@ const GROUPS = [
   },
 ] as const;
 
+const STARTING_POINTS = [
+  {
+    title: "PyColors UI",
+    description: "Compose your interface.",
+    href: "/ui",
+    icon: Boxes,
+  },
+  {
+    title: "Templates",
+    description: "Start with a complete page.",
+    href: "/templates",
+    icon: LayoutTemplate,
+  },
+  {
+    title: "SaaS starters",
+    description: "Build on connected application foundations.",
+    href: "/starters",
+    icon: Layers,
+  },
+] as const;
+
 const REPOSITORIES = [
   {
     label: "UI",
@@ -90,22 +117,42 @@ export function Footer() {
           <div className={styles.invitationCopy}>
             <p className={styles.eyebrow}>{tSite("Build with PyColors")}</p>
             <h2 id="footer-invitation-title">
-              {tSite("Build with a head start.")}
+              {tSite("Your next product starts here.")}
             </h2>
             <p className={styles.description}>
               {tSite(
-                "Explore the components, templates, and SaaS foundations that fit your project.",
+                "Compose your interface, start with a template, or build on a SaaS starter. Choose the foundation that fits your project.",
               )}
             </p>
+            <div className={styles.actions}>
+              <MarketingLinkButton>
+                <Link href="/starters/pro">{tSite("Explore Starter Pro")}</Link>
+              </MarketingLinkButton>
+              <MarketingLinkButton variant="outline">
+                <Link href="/pricing">{tSite("Compare products")}</Link>
+              </MarketingLinkButton>
+            </div>
           </div>
-          <div className={styles.actions}>
-            <MarketingLinkButton>
-              <Link href="/starters/pro">{tSite("Explore Starter Pro")}</Link>
-            </MarketingLinkButton>
-            <MarketingLinkButton variant="outline">
-              <Link href="/pricing">{tSite("Compare products")}</Link>
-            </MarketingLinkButton>
-          </div>
+          <nav
+            className={styles.startingPoints}
+            aria-label={tSite("Choose your starting point")}
+          >
+            {STARTING_POINTS.map(({ title, description, href, icon: Icon }) => (
+              <Link key={href} href={href} className={styles.startingPoint}>
+                <span className={styles.startingPointIcon}>
+                  <Icon aria-hidden="true" />
+                </span>
+                <span className={styles.startingPointCopy}>
+                  <span>{tSite(title)}</span>
+                  <span>{tSite(description)}</span>
+                </span>
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className={styles.startingPointArrow}
+                />
+              </Link>
+            ))}
+          </nav>
         </section>
 
         <div className={styles.directory}>

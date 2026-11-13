@@ -181,9 +181,11 @@ export default function UpgradePage() {
         styles.page,
       )}
     >
-      <Container className="pb-16 pt-24 sm:pt-28">
+      <Container className="marketing-page-intro pb-16 pt-24 sm:pt-28">
         <MarketingBreadcrumb route="/upgrade" />
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-14">
+        <div
+          className={`${styles.heroLayout} grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-14`}
+        >
           <PageHero
             variant="compact"
             align="left"

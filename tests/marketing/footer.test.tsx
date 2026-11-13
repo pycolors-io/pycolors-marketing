@@ -47,6 +47,18 @@ describe("marketing footer", () => {
     expect(
       within(footer).getByRole("button", { name: "Language: English" }),
     ).toHaveTextContent("English");
+    const invitation = within(footer).getByRole("region", {
+      name: "Your next product starts here.",
+    });
+    expect(within(invitation).getByRole("heading", { level: 2 })).toBeVisible();
+    const startingPoints = within(invitation).getByRole("navigation", {
+      name: "Choose your starting point",
+    });
+    expect(
+      within(startingPoints)
+        .getAllByRole("link")
+        .map((link) => link.getAttribute("href")),
+    ).toEqual(["/ui", "/templates", "/starters"]);
     for (const group of ["Products", "Resources", "Compare", "Company"]) {
       const nav = within(footer).getByRole("navigation", {
         name: `Footer ${group}`,

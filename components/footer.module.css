@@ -77,6 +77,7 @@
   content: "";
 }
 .invitation h2 {
+  scroll-margin-top: calc(var(--site-header-height) + 2rem);
   margin-top: 0.875rem;
   max-width: 35rem;
   font-size: clamp(1.75rem, 3vw, 2.5rem);
@@ -99,6 +100,75 @@
 }
 .actions a {
   white-space: nowrap;
+}
+.startingPoints {
+  display: grid;
+  min-width: 0;
+}
+.startingPoint {
+  display: flex;
+  min-width: 0;
+  min-height: 5.5rem;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0.25rem;
+  color: var(--foreground);
+}
+.startingPoint:last-child {
+  border-bottom: 0;
+}
+.startingPointIcon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  background: var(--surface-muted);
+}
+.startingPointIcon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  stroke-width: 1.5;
+}
+.startingPointCopy {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 0.375rem;
+}
+.startingPointCopy > :first-child {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.startingPointCopy > :last-child {
+  max-width: 32ch;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+.startingPointArrow {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+@media (hover: hover) {
+  .startingPoint:hover .startingPointIcon {
+    border-color: var(--border);
+    background: var(--background);
+  }
+  .startingPoint:hover .startingPointCopy > :first-child {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .startingPoint:hover .startingPointArrow {
+    color: var(--foreground);
+  }
 }
 .directory {
   display: grid;
@@ -573,8 +643,8 @@
   --font-sans: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
   --font-brand: var(--font-sans);
   --footer-surface: color-mix(in srgb, var(--foreground) 4%, var(--background));
-  --footer-action-fill: var(--marketing-cobalt, var(--primary));
-  --footer-action-ink: var(--marketing-cobalt-ink, var(--primary-foreground));
+  --footer-action-fill: var(--marketing-action-fill, #6b2fd4);
+  --footer-action-ink: var(--marketing-action-ink, #ffffff);
   z-index: 21;
   border-top: 1px solid var(--border-subtle);
   background: var(--footer-surface);
@@ -603,15 +673,19 @@
 :global(.site-frame[data-marketing-design="editorial"])
   .publicFooter
   .invitation {
-  gap: 2rem;
-  padding-block: clamp(2.5rem, 4vw, 4rem);
-  border-bottom: 1px solid var(--border);
+  display: grid;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  margin-top: clamp(2rem, 4vw, 4rem);
+  padding: clamp(1.5rem, 4.5vw, 4rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+  background: var(--background);
 }
 
 :global(.site-frame[data-marketing-design="editorial"]) .publicFooter .eyebrow {
-  color: var(--muted-foreground);
+  color: var(--primary);
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0;
   text-transform: none;
 }
@@ -620,20 +694,20 @@
   .publicFooter
   .invitation
   h2 {
-  max-width: 25ch;
-  margin-top: 0.75rem;
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  max-width: 19ch;
+  margin-top: 1.25rem;
+  font-size: clamp(2.25rem, 4.25vw, 4rem);
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
 }
 
 :global(.site-frame[data-marketing-design="editorial"])
   .publicFooter
   .description {
-  max-width: 51ch;
-  margin-top: 1rem;
-  font-size: 0.875rem;
+  max-width: 47ch;
+  margin-top: 1.5rem;
+  font-size: 0.9375rem;
   line-height: 1.8;
 }
 
@@ -641,10 +715,12 @@
   min-width: 0;
   width: max-content;
   max-width: 100%;
-  margin-inline-start: auto;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 0.625rem;
+  flex-direction: row;
+  margin-top: 2rem;
+  margin-inline-start: 0;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
 }
 
 :global(.site-frame[data-marketing-design="editorial"])
@@ -930,7 +1006,7 @@
     .publicFooter
     .invitation {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.9fr);
     align-items: center;
   }
 }
@@ -1038,6 +1114,14 @@
 }
 
 @media (forced-colors: active) {
+  .startingPoint,
+  .startingPointIcon {
+    border-color: CanvasText;
+  }
+  .startingPointIcon {
+    background: Canvas;
+    color: CanvasText;
+  }
   .footerSignature {
     display: none;
   }

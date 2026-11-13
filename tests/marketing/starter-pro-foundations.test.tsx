@@ -222,19 +222,16 @@ describe("Starter Pro horizontal foundations", () => {
     expect(scrollTo).not.toHaveBeenCalled();
   });
 
-  it("brings a focused guide into view without moving focus", () => {
+  it("keeps the current gallery position when a card action receives focus", () => {
     renderCards();
     const link = screen.getByRole("link", { name: "Billing guide" });
     act(() => link.focus());
     expect(link).toHaveFocus();
-    expect(scrollTo).toHaveBeenLastCalledWith({
-      left: 420,
-      behavior: "instant",
-    });
-    expect(screen.getByText("Foundation 2 of 3")).toBeInTheDocument();
+    expect(scrollTo).not.toHaveBeenCalled();
+    expect(window.scrollTo).not.toHaveBeenCalled();
   });
 
-  it("keeps arrows, focus and the active foundation aligned with a full-width gallery inset", () => {
+  it("keeps navigation aligned with the gallery inset without realigning focused actions", () => {
     const { rail, next } = renderCards();
     rail.style.paddingInlineStart = "120px";
     fireEvent.click(next);
@@ -250,11 +247,11 @@ describe("Starter Pro horizontal foundations", () => {
     fireEvent.scroll(rail);
     flushScroll();
     expect(screen.getByText("Foundation 2 of 3")).toBeInTheDocument();
+    scrollTo.mockClear();
     act(() => screen.getByRole("link", { name: "Billing guide" }).focus());
-    expect(scrollTo).toHaveBeenLastCalledWith({
-      left: 420,
-      behavior: "instant",
-    });
+    expect(rail.scrollLeft).toBe(300);
+    expect(scrollTo).not.toHaveBeenCalled();
+    expect(window.scrollTo).not.toHaveBeenCalled();
   });
 
   it("uses immediate scrolling for reduced motion, including a changed preference", () => {

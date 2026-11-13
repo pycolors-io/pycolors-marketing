@@ -57,6 +57,7 @@ export function ArticleCTA({ cta }: ArticleCTAProps) {
     variantContent[cta.variant ?? "free"];
   return (
     <Card
+      data-product={cta.variant ?? "free"}
       className={`${styles.nextStep} rounded-lg border-border-subtle p-6 shadow-none sm:p-8`}
     >
       <Badge

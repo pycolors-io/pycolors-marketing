@@ -41,7 +41,7 @@ export default async function QuoteRequestPage({
   const initialService = quoteService(params.service);
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className={styles.introContainer}>
+      <Container className={`marketing-page-intro ${styles.introContainer}`}>
         <MarketingBreadcrumb route="/request-a-quote" />
         <div className={styles.heroLayout}>
           <PageHero
@@ -96,6 +96,7 @@ export default async function QuoteRequestPage({
               {QUOTE_SERVICES.map((service) => (
                 <section
                   className={styles.service}
+                  data-service={service.id}
                   key={service.id}
                   aria-labelledby={`quote-${service.id}-title`}
                 >

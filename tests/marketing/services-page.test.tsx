@@ -54,15 +54,18 @@ describe("custom project services", () => {
     expect(
       screen.getByText(/Examples of projects to scope around your activity/),
     ).toBeVisible();
-    expect(view.container).toHaveTextContent("Reference implementation");
+    const brief = screen.getByRole("complementary", {
+      name: "A clear scope. A concrete delivery.",
+    });
+    expect(within(brief).queryByRole("img")).toBeNull();
+    expect(brief).toHaveTextContent(
+      "Source code, setup notes and validation results",
+    );
+    expect(within(brief).getByRole("link")).toHaveAttribute(
+      "href",
+      "#delivery",
+    );
     expect(view.container.textContent).not.toMatch(/\b(?:we|our|us)\b/i);
-    const reference = screen
-      .getByRole("img", { name: productStudio.images.project.alt })
-      .closest("figure")!;
-    expect(reference).toHaveTextContent(productStudio.disclosure);
-    expect(
-      within(reference).getByRole("link", { name: "Explore the reference" }),
-    ).toHaveAttribute("href", productStudio.href);
     const approach = screen.getByRole("region", {
       name: "Explore the work behind PyColors.",
     });
@@ -106,7 +109,7 @@ describe("custom project services", () => {
       "Fictional projects, people and activity",
     );
     expect(view.container).toHaveTextContent(
-      "Les projets, personnes et activités sont fictifs.",
+      "Un périmètre clair. Une livraison concrète.",
     );
     expect(screen.getByText("Prix défini après cadrage")).toBeVisible();
     expect(view.container.textContent).not.toMatch(/\b(?:nous|nos|notre)\b/i);

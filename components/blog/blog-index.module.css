@@ -130,11 +130,8 @@
 }
 
 .supportingArticles > article:first-child .featuredArticle {
-  --background: var(
-    --marketing-peach,
-    var(--marketing-canvas, var(--surface-muted))
-  );
-  --foreground: var(--marketing-peach-ink);
+  --background: #2059bf;
+  --foreground: #fff;
   --card-foreground: var(--foreground);
   --muted-foreground: color-mix(
     in srgb,
@@ -159,31 +156,12 @@
 }
 
 .nextSteps > .nextStepCard:first-child {
-  --background: var(
-    --marketing-lilac,
-    var(--marketing-canvas, var(--surface-muted))
-  );
-  --foreground: var(--marketing-lilac-ink);
-  --card-foreground: var(--foreground);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 82%,
-    var(--background)
-  );
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  --ring: var(--foreground);
-  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .nextSteps > .nextStepCard:last-child {
-  --background: var(
-    --marketing-cobalt,
-    var(--marketing-canvas, var(--surface-muted))
-  );
-  --foreground: var(--marketing-cobalt-ink);
+  --background: #000;
+  --foreground: #fff;
   --card-foreground: var(--foreground);
   --muted-foreground: color-mix(
     in srgb,
@@ -326,7 +304,7 @@
 }
 
 .heroContainer {
-  padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 4vw, 4rem));
+  padding-top: clamp(1rem, 2vw, 2rem);
   padding-bottom: clamp(3rem, 5vw, 5rem);
 }
 
@@ -377,5 +355,33 @@
   .page a:focus-visible,
   .page :global([data-slot="button"]):focus-visible {
     outline-color: Highlight;
+  }
+}
+
+.articleArchive {
+  padding: clamp(0.25rem, 1vw, 1rem);
+}
+.page .articleRow {
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
+}
+.page .articleRow h3 {
+  max-width: 34ch;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.articleRow > div > p {
+  max-width: 64ch;
+  line-height: 1.8;
+}
+.nextSteps > .nextStepCard:last-child :global(.site-primary-action) {
+  background: var(--marketing-action-fill, #6b2fd4);
+  color: #fff;
+  border-color: transparent;
+}
+@media (forced-colors: active) {
+  .nextSteps > .nextStepCard:last-child :global(.site-primary-action) {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
   }
 }

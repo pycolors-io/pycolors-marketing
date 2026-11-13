@@ -259,13 +259,14 @@ export default function StarterFreePage() {
       tabIndex={-1}
       className={`bg-background text-foreground ${styles.page}`}
     >
-      <Container className="pb-16 pt-24 sm:pt-28">
+      <Container className="marketing-page-intro pb-16 pt-6 sm:pt-8">
         <MarketingBreadcrumb route="/starters/free" />
         <div className={styles.heroLayout}>
           <PageHero
             variant="compact"
-            align="left"
-            contentClassName="mx-0 max-w-4xl"
+            align="center"
+            className={styles.hero}
+            contentClassName="max-w-4xl"
             badges={[
               { label: "Starter Free", variant: "outline" },
               { label: "Open source · MIT", variant: "outline" },
@@ -319,7 +320,7 @@ export default function StarterFreePage() {
             <ProductPreviewMedia
               product="starter-free"
               priority
-              sizes="(min-width: 1024px) 560px, 92vw"
+              sizes="(min-width: 1152px) 1008px, 92vw"
             />
             <figcaption>
               {tSite(

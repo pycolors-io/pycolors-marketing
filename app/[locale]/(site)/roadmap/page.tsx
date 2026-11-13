@@ -1206,7 +1206,7 @@ export default function RoadmapPage() {
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="pb-16 pt-24 sm:pb-24 sm:pt-28">
+      <Container className="marketing-page-intro pb-16 pt-6 sm:pb-24 sm:pt-8">
         <Breadcrumb
           className={styles.breadcrumb}
           items={[

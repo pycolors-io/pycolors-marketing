@@ -46,6 +46,7 @@ export function BreadcrumbClient({
       {renderJsonLd ? <JsonLd id="breadcrumb-jsonld" data={jsonLd} /> : null}
 
       <nav
+        data-marketing-breadcrumb=""
         aria-label={tSite("Breadcrumb")}
         className={cn(styles.root, className)}
       >

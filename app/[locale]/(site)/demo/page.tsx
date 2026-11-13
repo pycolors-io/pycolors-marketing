@@ -17,6 +17,10 @@ import {
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import { ProductPreviewWindow } from "@/components/marketing/product-preview-window";
+import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
+import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { ProDemoLink } from "@/components/marketing/pro-demo-link";
 import { SiteButton as Button } from "@/components/site-button";
 import { proDemoUrl } from "@/lib/pro-demo-url";
@@ -78,31 +82,33 @@ function DemoCapture({
   const tSite = useCopy();
 
   return (
-    <div
-      className={`${styles.capture} relative overflow-hidden border border-border-subtle bg-background`}
-      style={{ aspectRatio }}
-    >
-      <Image
-        src={light}
-        alt={tSite("{value0} dashboard with fictional data, light theme", {
-          value0: product,
-        })}
-        fill
-        quality={product === "Starter Pro" ? 100 : 75}
-        sizes={sizes}
-        className="object-contain dark:hidden"
-      />
-      <Image
-        src={dark}
-        alt={tSite("{value0} dashboard with fictional data, dark theme", {
-          value0: product,
-        })}
-        fill
-        quality={product === "Starter Pro" ? 100 : 75}
-        sizes={sizes}
-        className="hidden object-contain dark:block"
-      />
-    </div>
+    <ProductPreviewWindow label={product}>
+      <div
+        className={`${styles.capture} relative overflow-hidden bg-background`}
+        style={{ aspectRatio }}
+      >
+        <Image
+          src={light}
+          alt={tSite("{value0} dashboard with fictional data, light theme", {
+            value0: product,
+          })}
+          fill
+          quality={product === "Starter Pro" ? 100 : 75}
+          sizes={sizes}
+          className="object-contain dark:hidden"
+        />
+        <Image
+          src={dark}
+          alt={tSite("{value0} dashboard with fictional data, dark theme", {
+            value0: product,
+          })}
+          fill
+          quality={product === "Starter Pro" ? 100 : 75}
+          sizes={sizes}
+          className="hidden object-contain dark:block"
+        />
+      </div>
+    </ProductPreviewWindow>
   );
 }
 
@@ -112,8 +118,8 @@ export default function DemoPage() {
   const livePro = Boolean(proDemoUrl());
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <MarketingHeroBand tone="warm">
-        <Container className={styles.introContainer}>
+      <MarketingHeroBand tone="warm" className={styles.heroBand}>
+        <Container className={`marketing-page-intro ${styles.introContainer}`}>
           <MarketingBreadcrumb route="/demo" />
           <div className={styles.heroLayout}>
             <PageHero
@@ -366,6 +372,56 @@ export default function DemoPage() {
               />
               <figcaption className="text-[11px] leading-5 text-muted-foreground">
                 {tSite("Frontend demo · Fictional data")}
+              </figcaption>
+            </figure>
+          </article>
+
+          <article
+            aria-labelledby="demo-template-title"
+            className={`${styles.demoCard} ${styles.templateCard}`}
+          >
+            <div className={styles.templateCopy}>
+              <p className={styles.productEyebrow}>
+                {tSite("Landing page template")}
+              </p>
+              <h2 id="demo-template-title">{tSite("NA-AI Landing")}</h2>
+              <p className={styles.templateDescription}>
+                {tSite(
+                  "Give your AI, analytics or SaaS product a considered marketing page. NA-AI Landing brings the sections, visuals and editable Next.js source. Make it your own, then connect your services.",
+                )}
+              </p>
+              <p className={styles.templatePrice}>
+                {tSite(PRODUCT_DISPLAY["na-ai-landing"].priceLabel)}
+                <span>{tSite("One-time payment")}</span>
+              </p>
+              <div className={styles.templateActions}>
+                <Button asChild size="lg">
+                  <a href="https://na-ai.pycolors.io">
+                    {tSite("Open live demo")}
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className={styles.secondaryButton}
+                >
+                  <Link href="/templates/na-ai-landing">
+                    {tSite("Explore NA-AI Landing")}
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            <figure className={styles.templateStage}>
+              <ProductPreviewWindow label="NA-AI Landing">
+                <ProductPreviewMedia
+                  product="na-ai-landing"
+                  sizes="(min-width: 1440px) 720px, (min-width: 1024px) 55vw, 100vw"
+                />
+              </ProductPreviewWindow>
+              <figcaption>
+                {tSite(PRODUCT_PREVIEW_MEDIA["na-ai-landing"].caption)}
               </figcaption>
             </figure>
           </article>

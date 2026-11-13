@@ -299,7 +299,7 @@ export default function TemplatesPage() {
         styles.page,
       )}
     >
-      <Container className="pb-16 pt-24 sm:pt-28">
+      <Container className="marketing-page-intro pb-16 pt-24 sm:pt-28">
         <MarketingBreadcrumb route="/templates" />
         <PageHero
           variant="compact"

@@ -173,7 +173,7 @@ export default function GuidesPage() {
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
       <MarketingHeroBand tone="warm">
-        <Container className={styles.heroContainer}>
+        <Container className={`marketing-page-intro ${styles.heroContainer}`}>
           <MarketingBreadcrumb route="/guides" />
           <div className={styles.heroLayout}>
             <PageHero

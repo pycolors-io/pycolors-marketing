@@ -478,3 +478,49 @@
     transition: none;
   }
 }
+
+.hero h1 {
+  max-width: 17ch;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.workspace {
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+.stepsPanel {
+  --background: #17181d;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --border-subtle: #36363e;
+  --primary: #fff;
+  --primary-foreground: #17181d;
+  --ring: #fff;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: 1.75rem;
+  background: var(--background);
+  color: var(--foreground);
+}
+.stepsPanel .stepIcon {
+  background: #303139;
+  color: #fff;
+}
+@media (max-width: 39.999rem) {
+  .hero h1 {
+    font-size: clamp(2.5rem, 10vw, 3rem);
+  }
+}
+@media (forced-colors: active) {
+  .stepsPanel {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --border-subtle: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+  }
+}

@@ -67,78 +67,78 @@ const patterns: readonly Pattern[] = [
     title: "Dashboard layout",
     category: "Overview",
     description:
-      "Help people understand what matters now, what has changed, and where to go next.",
+      "For your application home: key metrics, recent activity and the next action to take.",
     points: [
       "Lead with a small set of useful metrics",
       "Keep recent activity and next actions in context",
     ],
     docs: "/docs/blocks/data/stats-overview",
-    docsLabel: "Explore the stats block",
+    docsLabel: "View dashboard example and source",
   },
   {
     id: "billing",
     title: "Billing page",
     category: "Subscription",
     description:
-      "Bring the current plan, payment details, and billing actions into one predictable place.",
+      "For subscribers who need to check their current plan, payment method and invoices.",
     points: [
       "Make the current plan and status easy to find",
       "Separate billing information from plan changes",
     ],
     docs: "/docs/blocks/commerce/billing-overview",
-    docsLabel: "Explore the billing block",
+    docsLabel: "View billing example and source",
   },
   {
     id: "settings",
     title: "Settings page",
     category: "Account",
     description:
-      "Organize everyday preferences and sensitive changes around clear groups of related controls.",
+      "For people updating a profile or workspace: grouped fields, validation and an explicit save action.",
     points: [
       "Group fields by purpose, with a clear save action",
       "Keep destructive actions separate",
     ],
     docs: "/docs/blocks/account/settings-panel",
-    docsLabel: "Explore the settings block",
+    docsLabel: "View settings example and source",
   },
   {
     id: "team",
     title: "Team management",
     category: "Collaboration",
     description:
-      "Make it easy to understand who belongs to a workspace and which role each person holds.",
+      "For workspace owners managing members, roles and pending invitations.",
     points: [
       "Keep identity, role, and status together",
       "Distinguish invitations from active membership",
     ],
     docs: "/docs/blocks/account/workspace-members",
-    docsLabel: "Explore the members block",
+    docsLabel: "View team example and source",
   },
   {
     id: "shell",
-    title: "Protected app shell",
+    title: "Application navigation",
     category: "Navigation",
     description:
-      "Give signed-in screens a consistent frame, with a visible location and predictable navigation.",
+      "For an application with several screens: a shared sidebar, workspace identity and a clear current location.",
     points: [
       "Keep workspace navigation consistent across screens",
       "Enforce authentication and permissions in your app",
     ],
     docs: "/docs/blocks/app-shells/responsive-sidebar",
-    docsLabel: "Explore the sidebar block",
+    docsLabel: "View navigation example and source",
   },
   {
     id: "upgrade",
-    title: "Upgrade moment",
+    title: "Plan comparison",
     category: "Plan selection",
     description:
-      "Explain the next plan at a relevant moment, with visible terms and a clear way to continue.",
+      "For people choosing a subscription: compare features and terms while keeping the current plan visible.",
     points: [
       "Show the value and billing terms before the action",
       "Keep the current plan and alternatives visible",
     ],
     docs: "/docs/blocks/commerce/pricing-plans",
-    docsLabel: "Explore the pricing block",
+    docsLabel: "View pricing example and source",
   },
 ];
 
@@ -199,7 +199,11 @@ function PatternCard({ pattern, index }: { pattern: Pattern; index: number }) {
             {tSite(pattern.category)}
           </Badge>
         </div>
+        <p className={styles.useLabel}>{tSite("When to use it")}</p>
         <p className={styles.cardDescription}>{tSite(pattern.description)}</p>
+        <p className={styles.includesLabel}>
+          {tSite("What the layout covers")}
+        </p>
         <ul className={styles.checks}>
           {pattern.points.map((point) => (
             <MarketingCheckItem key={point} className={styles.checkItem}>
@@ -221,11 +225,11 @@ export default function PatternsPage() {
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="pb-16 pt-24 sm:pb-24 sm:pt-28">
-        <MarketingBreadcrumb route="/ui/patterns" />
-        <div className={styles.sectionNav}>
-          <UiSectionNav active="patterns" />
-        </div>
+      <Container className="marketing-page-intro pb-16 pt-6 sm:pb-24 sm:pt-8">
+        <UiSectionNav
+          active="patterns"
+          breadcrumb={<MarketingBreadcrumb route="/ui/patterns" />}
+        />
         <div className="w-full min-w-0">
           <div className={styles.heroLayout}>
             <PageHero
@@ -235,15 +239,22 @@ export default function PatternsPage() {
               contentClassName="!max-w-none"
               badges={[
                 {
-                  label: "UI patterns",
+                  label: "SaaS screen layouts",
                   variant: "outline",
                   icon: <Layers3 size={13} aria-hidden="true" />,
                 },
               ]}
-              title={tSite("Give every screen a clear purpose.")}
+              title={tSite("The right structure for every SaaS screen.")}
               description={tSite(
-                "Six interface patterns for the everyday work of a SaaS product. Find the right structure, explore the matching Block, and make it your own.",
+                "A pattern shows how to organize a screen. Choose a dashboard, settings or billing layout, then open its Block to get the example and source code.",
               )}
+              extra={
+                <p className={styles.heroNote}>
+                  {tSite(
+                    "Illustrative previews. Free Block source. Your data and services to connect.",
+                  )}
+                </p>
+              }
               actions={
                 <>
                   <MarketingLinkButton>
@@ -258,14 +269,16 @@ export default function PatternsPage() {
                 </>
               }
             />
-            <PatternAnatomy />
+            <div className={styles.heroComposition}>
+              <PatternAnatomy />
+            </div>
           </div>
 
           <nav
             aria-label={tSite("Pattern categories")}
             className={styles.patternNav}
           >
-            <span className={styles.eyebrow}>{tSite("Find your surface")}</span>
+            <span className={styles.eyebrow}>{tSite("Choose a screen")}</span>
             <ul>
               {patterns.map((pattern) => (
                 <li key={pattern.id}>
@@ -287,9 +300,9 @@ export default function PatternsPage() {
             <MarketingSectionHeader
               align="left"
               titleId="pattern-library-title"
-              title={tSite("Familiar patterns. Considered details.")}
+              title={tSite("Six screens. A concrete starting point.")}
               description={tSite(
-                "Illustrative layouts with a practical starting point for each one. Open the related Block for working examples, complete source, and integration guidance.",
+                "Each preview explains a screen structure. The linked Block provides the interface code; you connect your data and services.",
               )}
               action={
                 <Link href="/blocks" className={styles.textLink}>

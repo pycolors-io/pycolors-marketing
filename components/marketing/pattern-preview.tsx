@@ -286,18 +286,18 @@ export function PatternAnatomy() {
         <ol className={styles.anatomyLegend}>
           <li>
             <span>01</span>
-            <strong>{tSite("Orient")}</strong>
-            <small>{tSite("A clear location")}</small>
+            <strong>{tSite("Navigation")}</strong>
+            <small>{tSite("Know where you are")}</small>
           </li>
           <li>
             <span>02</span>
-            <strong>{tSite("Understand")}</strong>
-            <small>{tSite("Useful context")}</small>
+            <strong>{tSite("Information")}</strong>
+            <small>{tSite("See what matters")}</small>
           </li>
           <li>
             <span>03</span>
-            <strong>{tSite("Act")}</strong>
-            <small>{tSite("A visible next step")}</small>
+            <strong>{tSite("Action")}</strong>
+            <small>{tSite("Know what to do next")}</small>
           </li>
         </ol>
         <p>{tSite("Illustrative layout · Sample data")}</p>

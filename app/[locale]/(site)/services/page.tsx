@@ -21,7 +21,6 @@ import {
   MarketingActionGroup,
   MarketingLinkButton,
 } from "@/components/marketing/cta-panel";
-import { ProductStudioCapture } from "@/components/marketing/product-studio-capture";
 import { productStudio } from "@/lib/showcase/product-studio";
 import { CUSTOM_SOFTWARE_SERVICE } from "@/lib/products/project-services";
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
@@ -104,24 +103,28 @@ const steps = [
     description:
       "Your users, current tools and first useful outcome shape the proposed scope.",
     output: "Your priorities and constraints",
+    task: "Share the problem, users and existing tools.",
   },
   {
     title: "Agree on the delivery",
     description:
       "Screens, workflows, integrations, responsibilities and acceptance criteria are defined before development.",
     output: "A written proposal to approve",
+    task: "Approve the scope, budget and acceptance criteria.",
   },
   {
     title: "Build and verify",
     description:
       "Review the agreed workflows in a shared environment, with recorded checks and consolidated feedback.",
     output: "A version to review together",
+    task: "Try the agreed workflows and consolidate feedback.",
   },
   {
     title: "Hand over clearly",
     description:
       "Receive the agreed source, configuration notes, validation results and next steps for your team.",
     output: "Source, checks and operating notes",
+    task: "Review the handover and agree on any follow-up.",
   },
 ] as const;
 
@@ -190,7 +193,7 @@ export default function ServicesPage() {
   const tSite = useCopy();
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className={styles.heroContainer}>
+      <Container className={`marketing-page-intro ${styles.heroContainer}`}>
         <MarketingBreadcrumb route="/services" />
         <div className={styles.hero}>
           <PageHero
@@ -201,7 +204,7 @@ export default function ServicesPage() {
             badges={[{ label: "PyColors Services" }]}
             title={tSite("Build the software your business needs.")}
             description={tSite(
-              "Client portals, internal tools and custom SaaS. Work directly with PyColors to define, design and build the workflows your team needs.",
+              "PyColors designs and develops client portals, internal tools and SaaS applications around your business workflows. Agree on the scope, review the software, then receive a documented handover.",
             )}
             actions={
               <MarketingActionGroup>
@@ -222,36 +225,47 @@ export default function ServicesPage() {
               </p>
             }
           />
-          <figure className={styles.preview}>
-            <div className={styles.previewHeader}>
-              <span>
-                <span aria-hidden="true" className={styles.referenceMark} />
-                {tSite("Reference implementation")}
-              </span>
-              <Link href={productStudio.href}>
-                {tSite("Explore the reference")}
-                <ArrowUpRight aria-hidden="true" className="size-3.5" />
-              </Link>
-            </div>
-            <Link
-              href={productStudio.href}
-              aria-label={tSite(
-                "View the Product studio reference implementation",
-              )}
-              className={styles.captureLink}
-            >
-              <ProductStudioCapture
-                view="project"
-                priority
-                sizes="(min-width: 1536px) 680px, (min-width: 1024px) 48vw, 95vw"
-              />
+          <aside
+            className={styles.serviceBrief}
+            aria-labelledby="services-brief-title"
+          >
+            <p className={styles.eyebrow}>
+              {tSite("From a business need to a useful tool")}
+            </p>
+            <h2 id="services-brief-title">
+              {tSite("A clear scope. A concrete delivery.")}
+            </h2>
+            <dl>
+              <div>
+                <dt>{tSite("Your starting point")}</dt>
+                <dd>
+                  {tSite(
+                    "The people, tasks and tools your application needs to bring together.",
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt>{tSite("The work to agree")}</dt>
+                <dd>
+                  {tSite(
+                    "Screens, workflows and integrations, with a budget and acceptance criteria.",
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt>{tSite("The agreed handover")}</dt>
+                <dd>
+                  {tSite(
+                    "Source code, setup notes and validation results, as specified in the proposal.",
+                  )}
+                </dd>
+              </div>
+            </dl>
+            <Link href="#delivery" className={styles.textLink}>
+              {tSite("See the four delivery stages")}
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
             </Link>
-            <figcaption>
-              <strong>{tSite("Product studio")}</strong>
-              <span>{tSite(productStudio.summary)}</span>
-              <p>{tSite(productStudio.disclosure)}</p>
-            </figcaption>
-          </figure>
+          </aside>
         </div>
         <dl
           className={styles.commitments}
@@ -381,7 +395,7 @@ export default function ServicesPage() {
             eyebrow={tSite("A practical delivery process")}
             title={tSite("From your first brief to your team’s next step.")}
             description={tSite(
-              "A shared scope and visible review points keep the work understandable, from the first discussion through handover.",
+              "Four stages with a clear role for you at each step: share the need, approve the proposal, review the software and take over the agreed delivery.",
             )}
           />
           <ol className={styles.steps}>
@@ -392,7 +406,14 @@ export default function ServicesPage() {
                 </span>
                 <h3>{tSite(step.title)}</h3>
                 <p>{tSite(step.description)}</p>
-                <span className={styles.stepOutput}>{tSite(step.output)}</span>
+                <div className={styles.stepRole}>
+                  <span>{tSite("Your part")}</span>
+                  <p>{tSite(step.task)}</p>
+                </div>
+                <div className={styles.stepOutput}>
+                  <span>{tSite("What you receive")}</span>
+                  <strong>{tSite(step.output)}</strong>
+                </div>
               </li>
             ))}
           </ol>

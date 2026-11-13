@@ -114,20 +114,7 @@
   }
 }
 .page .pathPanel {
-  --background: var(--marketing-gold, #ffd43b);
-  --foreground: var(--marketing-gold-ink, #35261b);
-  --card-foreground: var(--foreground);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 82%,
-    var(--background)
-  );
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
-  --ring: var(--foreground);
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 @media (forced-colors: active) {
   .offerPanel,
@@ -144,87 +131,15 @@
 }
 
 .page .foundationCard:nth-child(1) {
-  --background: var(--marketing-lilac);
-  --foreground: var(--marketing-lilac-ink);
-  --card-foreground: var(--foreground);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  --brand-primary: var(--primary);
-  --brand-primary-hover: color-mix(
-    in srgb,
-    var(--primary) 88%,
-    var(--background)
-  );
-  --surface: var(--background);
-  --surface-muted: color-mix(in srgb, var(--foreground) 8%, var(--background));
-  --accent: color-mix(in srgb, var(--foreground) 12%, var(--background));
-  --accent-foreground: var(--foreground);
-  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
-  --border: var(--border-subtle);
-  --ring: var(--foreground);
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .page .foundationCard:nth-child(3) {
-  --background: var(--marketing-peach);
-  --foreground: var(--marketing-peach-ink);
-  --card-foreground: var(--foreground);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  --brand-primary: var(--primary);
-  --brand-primary-hover: color-mix(
-    in srgb,
-    var(--primary) 88%,
-    var(--background)
-  );
-  --surface: var(--background);
-  --surface-muted: color-mix(in srgb, var(--foreground) 8%, var(--background));
-  --accent: color-mix(in srgb, var(--foreground) 12%, var(--background));
-  --accent-foreground: var(--foreground);
-  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
-  --border: var(--border-subtle);
-  --ring: var(--foreground);
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .page .deliveryPanel {
-  --background: var(--marketing-lilac);
-  --foreground: var(--marketing-lilac-ink);
-  --card-foreground: var(--foreground);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  --brand-primary: var(--primary);
-  --brand-primary-hover: color-mix(
-    in srgb,
-    var(--primary) 88%,
-    var(--background)
-  );
-  --surface: var(--background);
-  --surface-muted: color-mix(in srgb, var(--foreground) 8%, var(--background));
-  --accent: color-mix(in srgb, var(--foreground) 12%, var(--background));
-  --accent-foreground: var(--foreground);
-  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
-  --border: var(--border-subtle);
-  --ring: var(--foreground);
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .pathArtwork {
@@ -280,5 +195,81 @@
 @media (forced-colors: active) {
   .offerPanel {
     --brand-primary-hover: LinkText;
+  }
+}
+
+.heroLayout {
+  --background: #11121c;
+  --foreground: #fff;
+  --muted-foreground: #d1d0de;
+  --primary: #fff;
+  --primary-foreground: #11121c;
+  --border-subtle: #43424f;
+  --ring: #fff;
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background:
+    radial-gradient(ellipse at 95% 0, rgb(107 47 212 / 65%), transparent 65%),
+    radial-gradient(ellipse at 0 100%, rgb(32 89 191 / 55%), transparent 70%),
+    #11121c;
+  color: #fff;
+}
+.heroLayout h1 {
+  max-width: 17ch;
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.heroLayout .offerPanel {
+  --background: #08080d;
+  border: 1px solid #45404f;
+  background: #08080d;
+}
+.page .foundationCard h3 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.page .deliveryPanel {
+  --background: #17181d;
+  --foreground: #fff;
+  --card-foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #17181d;
+  --border-subtle: #36363e;
+  --ring: #fff;
+  background: #17181d;
+  color: #fff;
+}
+:global(html[data-site-palette="monochrome"]) .heroLayout {
+  background:
+    radial-gradient(ellipse at 100% 0, #41414b, transparent 70%), #11121c;
+}
+@media (max-width: 39.999rem) {
+  .heroLayout h1 {
+    font-size: clamp(2.25rem, 9vw, 3rem);
+  }
+}
+@media (forced-colors: active) {
+  .heroLayout,
+  .page .deliveryPanel,
+  .heroLayout .offerPanel {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
   }
 }

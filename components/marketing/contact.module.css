@@ -23,8 +23,8 @@
   overflow: hidden;
   border: 1px solid var(--border-subtle);
   border-radius: var(--marketing-panel-radius, 2rem);
-  background: var(--marketing-peach, var(--surface-muted));
-  color: var(--marketing-peach-ink, var(--surface-foreground));
+  background: var(--marketing-canvas, var(--surface-muted));
+  color: var(--foreground);
 }
 
 .artworkOrbit {
@@ -143,19 +143,7 @@
 }
 
 .generalCard {
-  --background: var(--marketing-lilac, var(--surface-muted));
-  --foreground: var(--marketing-lilac-ink, var(--surface-foreground));
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 85%,
-    var(--background)
-  );
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  --ring: var(--foreground);
-  --border-subtle: color-mix(in srgb, var(--foreground) 14%, var(--background));
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .purchaseCard {
@@ -492,5 +480,24 @@
 @media (forced-colors: active) {
   .heroArtwork {
     display: none;
+  }
+}
+
+.hero h1 {
+  max-width: 16ch;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.card h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+@media (max-width: 39.999rem) {
+  .hero h1 {
+    font-size: clamp(2.5rem, 10vw, 3rem);
   }
 }

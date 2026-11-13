@@ -111,7 +111,9 @@ describe("starter demo discovery", () => {
   it("uses existing labelled captures and valid product/comparison destinations", () => {
     vi.stubEnv("NEXT_PUBLIC_STARTER_PRO_DEMO_URL", "");
     render(<DemoPage />);
-    const images = screen.getAllByRole("img");
+    const images = screen
+      .getAllByRole("img")
+      .filter((image) => image.tagName === "IMG");
     expect(images).toHaveLength(4);
     for (const image of images) {
       expect(image).toHaveAccessibleName(/fictional data/);
@@ -138,6 +140,30 @@ describe("starter demo discovery", () => {
     expect(
       screen.getByRole("link", { name: "Compare Free and Pro" }),
     ).toHaveAttribute("href", "/starters");
+  });
+
+  it("adds the NA-AI frontend template with its preview, demo and product details", () => {
+    render(<DemoPage />);
+    const template = screen.getByRole("article", { name: "NA-AI Landing" });
+    expect(
+      within(template).getByRole("img", {
+        name: "NA-AI Landing template with illustrative analytics content",
+      }),
+    ).toBeVisible();
+    expect(template).toHaveTextContent(
+      "Landing page template · Illustrative content",
+    );
+    expect(
+      within(template).getByRole("link", { name: "Open live demo" }),
+    ).toHaveAttribute("href", "https://na-ai.pycolors.io");
+    expect(
+      within(template).getByRole("link", { name: "Explore NA-AI Landing" }),
+    ).toHaveAttribute("href", "/templates/na-ai-landing");
+    for (const image of template.querySelectorAll("img")) {
+      const src = new URL(image.getAttribute("src")!, "https://pycolors.io");
+      const asset = src.searchParams.get("url") ?? src.pathname;
+      expect(existsSync(resolve("public", asset.slice(1))), asset).toBe(true);
+    }
   });
 
   it.each(["", "https://pro-demo.pycolors.io/demo"])(

@@ -51,9 +51,13 @@ export default function ThemeBuilderPage() {
       className={`bg-background text-foreground ${styles.cataloguePage} ${styles.themeProductPage}`}
     >
       <MarketingHeroBand tone="cool">
-        <Container className={styles.themeImmersiveIntro}>
-          <MarketingBreadcrumb route="/tools/theme-builder" />
-          <UiSectionNav active="themes" />
+        <Container
+          className={`marketing-page-intro ${styles.themeImmersiveIntro}`}
+        >
+          <UiSectionNav
+            active="themes"
+            breadcrumb={<MarketingBreadcrumb route="/tools/theme-builder" />}
+          />
           <div className={styles.themeImmersiveGrid}>
             <div className={styles.themeImmersiveCopy}>
               <PageHero

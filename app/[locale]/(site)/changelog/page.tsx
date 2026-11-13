@@ -2512,7 +2512,7 @@ export default function ChangelogPage() {
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="pb-16 pt-20 sm:pb-24">
+      <Container className="marketing-page-intro pb-16 pt-6 sm:pb-24 sm:pt-8">
         <div className="w-full min-w-0">
           <div className={styles.breadcrumb}>
             <Breadcrumb

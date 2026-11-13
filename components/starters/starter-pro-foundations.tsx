@@ -341,13 +341,6 @@ export function StarterProFoundations({
               event.preventDefault();
               goTo(next);
             }}
-            onFocusCapture={(event) => {
-              const rail = railRef.current;
-              const card = event.target.closest<HTMLElement>(
-                "[data-foundation-card]",
-              );
-              if (rail && card) goTo(cardsIn(rail).indexOf(card), true);
-            }}
           >
             {tSite(children)}
           </div>

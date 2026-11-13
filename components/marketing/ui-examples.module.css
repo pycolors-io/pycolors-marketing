@@ -10,22 +10,7 @@
   overflow: hidden;
 }
 .previewStage {
-  background: var(--marketing-peach, var(--surface-muted));
-}
-.browserWindow {
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  border-radius: 1rem;
-  background: var(--background);
-  box-shadow: 0 16px 40px color-mix(in srgb, var(--foreground) 10%, transparent);
-}
-.windowDot {
-  width: 0.25rem;
-  height: 0.25rem;
-  border-radius: 50%;
-  background: var(--border);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .textLink {
   display: inline-flex;
@@ -159,5 +144,107 @@
     --border-subtle: CanvasText;
     --ring: Highlight;
     border-color: CanvasText;
+  }
+}
+
+.hero {
+  --background: #092936;
+  --foreground: #fff;
+  --muted-foreground: #d0e2e5;
+  --primary: #fff;
+  --primary-foreground: #092936;
+  --border-subtle: #427078;
+  --ring: #fff;
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(2rem, 5vw, 4rem);
+  color: #fff;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto 0 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse at 0 0, #08694f, transparent 65%),
+    radial-gradient(ellipse at 100% 100%, #2059bf, transparent 70%), #092936;
+  pointer-events: none;
+}
+.hero h1 {
+  max-width: 17ch;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.screenDetails {
+  --background: #000;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #000;
+  --border-subtle: #36363e;
+  --ring: #fff;
+  background: #000;
+  color: #fff;
+}
+.screenDetails h4 {
+  font-size: 1.75rem;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+.page .componentCard:nth-child(2),
+.page .resourceCard:last-child {
+  --background: #17181d;
+  --foreground: #fff;
+  --card-foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #17181d;
+  --border-subtle: #36363e;
+  --ring: #fff;
+  background: #17181d;
+  color: #fff;
+}
+.setupPanel > div:first-child {
+  --background: var(--marketing-canvas);
+  background: var(--marketing-canvas);
+}
+.page .proPanel {
+  --primary: var(--marketing-action-fill, #6b2fd4);
+  --primary-foreground: #fff;
+}
+.componentCard h3,
+.resourceCard h3 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+:global(html[data-site-palette="monochrome"]) .hero::before {
+  background:
+    radial-gradient(ellipse at 100% 0, #41414b, transparent 70%), #11121c;
+}
+@media (forced-colors: active) {
+  .hero,
+  .screenDetails,
+  .page .componentCard:nth-child(2),
+  .page .resourceCard:last-child,
+  .setupPanel > div:first-child,
+  .page .proPanel {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .hero::before {
+    background: Canvas;
   }
 }

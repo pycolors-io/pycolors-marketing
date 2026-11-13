@@ -20,6 +20,7 @@ const approved = new Set([
   "lib/i18n/navigation.tsx",
   "lib/i18n/routing.ts",
   "components/marketing/home.module.css",
+  "components/marketing/home-product-journey.tsx",
   "components/marketing/fibonacci-background.tsx",
   "components/marketing/fibonacci-background.module.css",
   "components/marketing/presentation.module.css",
@@ -158,6 +159,7 @@ describe("homepage ownership and source contract", () => {
       ),
     ).toBe(false);
     expect(clients.sort()).toEqual([
+      "components/marketing/home-product-journey.tsx",
       "components/pricing/buy-starter-pro-button.tsx",
       "components/pricing/use-product-checkout.ts",
       "components/privacy/consent-gated-gtm.tsx",

@@ -680,3 +680,89 @@
     border-color: CanvasText;
   }
 }
+
+.page {
+  --marketing-lilac: #17181d;
+  --marketing-lilac-ink: #fff;
+  --marketing-peach: #17181d;
+  --marketing-peach-ink: #fff;
+  --marketing-gold: #24242d;
+  --marketing-gold-ink: #fff;
+}
+.heroLayout {
+  --background: #11121c;
+  --foreground: #fff;
+  --muted-foreground: #d1d0de;
+  --primary: #fff;
+  --primary-foreground: #11121c;
+  --border-subtle: #45434f;
+  --ring: #fff;
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(2rem, 5vw, 4rem);
+  background: #11121c;
+  color: #fff;
+}
+.heroLayout::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto 0 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse at 95% 0, rgb(107 47 212 / 65%), transparent 65%),
+    radial-gradient(ellipse at 0 100%, rgb(32 89 191 / 60%), transparent 70%),
+    #11121c;
+  pointer-events: none;
+}
+.hero h1 {
+  max-width: 14ch;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.repoCard h4 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+.page .tokenRepo {
+  background: #17181d;
+  color: #fff;
+}
+.page .modelIntro {
+  background: #000;
+  --background: #000;
+}
+:global(html[data-site-palette="monochrome"]) .heroLayout::before {
+  background:
+    radial-gradient(ellipse at 100% 0, #41414b, transparent 70%), #11121c;
+}
+@media (forced-colors: active) {
+  .page {
+    --marketing-lilac: Canvas;
+    --marketing-lilac-ink: CanvasText;
+    --marketing-peach: Canvas;
+    --marketing-peach-ink: CanvasText;
+    --marketing-gold: Canvas;
+    --marketing-gold-ink: CanvasText;
+  }
+  .heroLayout,
+  .page .tokenRepo,
+  .page .modelIntro {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .heroLayout::before {
+    background: Canvas;
+  }
+}

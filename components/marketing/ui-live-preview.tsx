@@ -6,13 +6,9 @@ import { Link } from "@/lib/i18n/navigation";
 import { ArrowUpRight } from "lucide-react";
 import type { SerializedThemeResult, ThemeMode } from "@pycolors/color-engine";
 import { Button } from "@pycolors/ui";
-import {
-  ThemeComponentsPreview,
-  INITIAL_THEME_COMPONENTS_STATE,
-} from "@/components/theme-builder/theme-components-preview";
+import { UiWorkspacePreview } from "./ui-workspace-preview";
 import { UiConversationPreview } from "./ui-conversation-preview";
 import { ThemeModeControl } from "@/components/theme-builder/theme-mode-control";
-import { DEFAULT_THEME_FONT } from "@/components/theme-builder/theme-typography";
 
 export function UiLivePreview({
   modes,
@@ -20,10 +16,9 @@ export function UiLivePreview({
   const tSite = useCopy();
 
   const [mode, setMode] = useState<ThemeMode>("light");
-  const [view, setView] = useState(INITIAL_THEME_COMPONENTS_STATE);
   return (
-    <div className="min-w-0 overflow-hidden rounded-[5px] border border-border-subtle">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle bg-background px-4 py-3 sm:px-5">
+    <div className="min-w-0 overflow-hidden rounded-2xl border border-border-subtle">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle bg-background px-5 py-4 sm:px-8">
         <p className="flex items-center gap-2 text-xs font-medium">
           <span
             aria-hidden="true"
@@ -48,7 +43,7 @@ export function UiLivePreview({
             asChild
             variant="outline"
             size="sm"
-            className="h-auto min-h-10 max-w-full whitespace-normal rounded-[5px] px-3 py-2 text-xs"
+            className="h-auto min-h-10 max-w-full whitespace-normal rounded-2xl px-3 py-2 text-xs"
           >
             <Link href="/tools/theme-builder">
               {tSite("Customize colors")}
@@ -58,15 +53,9 @@ export function UiLivePreview({
           </Button>
         </div>
       </div>
-      <ThemeComponentsPreview
-        theme={modes[mode]}
-        mode={mode}
-        fontFamily={DEFAULT_THEME_FONT.previewFamily}
-        view={view}
-        onViewChange={setView}
-      >
+      <UiWorkspacePreview theme={modes[mode]} mode={mode}>
         <UiConversationPreview />
-      </ThemeComponentsPreview>
+      </UiWorkspacePreview>
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-border-subtle bg-background px-4 py-3 text-xs text-muted-foreground sm:px-5">
         <p>{tSite("Demo content · Built with public PyColors components.")}</p>
         <Link

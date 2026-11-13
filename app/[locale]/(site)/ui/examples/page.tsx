@@ -21,6 +21,7 @@ import { Badge, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
+import { ProductPreviewWindow } from "@/components/marketing/product-preview-window";
 import { UiSectionNav } from "@/components/marketing/ui-section-nav";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
@@ -261,19 +262,7 @@ function AvailableNowCard() {
                     styles.previewStage,
                   )}
                 >
-                  <div className={styles.browserWindow}>
-                    <div
-                      className="flex h-9 items-center gap-2 border-b border-border-subtle bg-background px-3 text-[10px] text-muted-foreground"
-                      aria-hidden="true"
-                    >
-                      <span className={styles.windowDot} />
-                      <span className={styles.windowDot} />
-                      <span className={styles.windowDot} />
-                      <span className="ml-2 truncate font-mono">
-                        {tSite("starter-free")}
-                        {tSite(screen.route)}
-                      </span>
-                    </div>
+                  <ProductPreviewWindow label={tSite("Starter Free")}>
                     <div className="relative aspect-16/10 bg-white">
                       <Image
                         src={screen.image}
@@ -291,9 +280,11 @@ function AvailableNowCard() {
                         className="object-contain"
                       />
                     </div>
-                  </div>
+                  </ProductPreviewWindow>
                 </div>
-                <figcaption className="flex flex-col p-5 sm:p-7">
+                <figcaption
+                  className={`${styles.screenDetails} flex flex-col p-5 sm:p-7`}
+                >
                   <div className="flex items-center justify-between gap-3 font-mono text-[10px] text-muted-foreground">
                     <span>0{tSite(index + 1)} / 06</span>
                     <span>{tSite(screen.route)}</span>
@@ -384,12 +375,13 @@ export default function ExamplesPage() {
         styles.page,
       )}
     >
-      <Container className="pb-16 pt-24 sm:pt-28">
-        <MarketingBreadcrumb route="/ui/examples" />
-        <div className={styles.sectionNav}>
-          <UiSectionNav active="examples" />
-        </div>
+      <Container className="marketing-page-intro pb-16 pt-6 sm:pt-8">
+        <UiSectionNav
+          active="examples"
+          breadcrumb={<MarketingBreadcrumb route="/ui/examples" />}
+        />
         <PageHero
+          className={styles.hero}
           variant="compact"
           align="left"
           contentClassName="mx-0 max-w-4xl"

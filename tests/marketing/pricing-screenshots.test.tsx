@@ -234,6 +234,33 @@ describe("Starter Pro pricing screenshots", () => {
     expect(metadata.alternates?.canonical).toBe("/pricing");
   });
 
+  it("connects screen previews to useful guides and keeps mobile informational", () => {
+    render(<PricingPage />);
+    const preview = screen.getByRole("region", {
+      name: "See the screens you can build on",
+    });
+    expect(
+      within(preview).getByRole("link", { name: "Explore auth flows" }),
+    ).toHaveAttribute("href", "/docs/starter-pro/auth");
+    expect(
+      within(preview).getByRole("link", {
+        name: "Explore the included workflows",
+      }),
+    ).toHaveAttribute("href", "/docs/starter-pro/what-is-included");
+    const mobile = within(preview).getByRole("article", {
+      name: "Starter Pro Mobile",
+    });
+    expect(mobile).toHaveTextContent("Coming soon");
+    expect(mobile).toHaveTextContent(
+      "Final scope, availability and terms are to be announced.",
+    );
+    expect(within(mobile).getByRole("link")).toHaveAttribute(
+      "href",
+      "/starters/mobile",
+    );
+    expect(within(mobile).queryByRole("button")).toBeNull();
+  });
+
   it("keeps the preview section accessible", async () => {
     render(<PricingPage />);
     const preview = screen.getByRole("region", {

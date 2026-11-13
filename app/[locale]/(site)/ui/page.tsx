@@ -196,6 +196,12 @@ export default function UiPage() {
       tabIndex={-1}
       className={`bg-background text-foreground ${styles.cataloguePage} ${styles.uiPage}`}
     >
+      <Container className={styles.uiDiscoveryHeader}>
+        <UiSectionNav
+          active="overview"
+          breadcrumb={<MarketingBreadcrumb route="/ui" />}
+        />
+      </Container>
       <div className={styles.uiProductBar}>
         <Container className={styles.uiProductBarInner}>
           <span className={styles.uiProductIdentity}>
@@ -211,8 +217,6 @@ export default function UiPage() {
         </Container>
       </div>
       <Container className={styles.uiHeroContainer}>
-        <MarketingBreadcrumb route="/ui" />
-        <UiSectionNav active="overview" />
         <PageHero
           className={`${styles.heroFrame} ${styles.uiHero}`}
           variant="compact"

@@ -292,12 +292,10 @@
   color: var(--foreground);
 }
 .screenshotCard:first-child {
-  --background: var(--marketing-cobalt);
-  --foreground: var(--marketing-cobalt-ink);
+  background: var(--pricing-paper);
 }
 .screenshotCard:last-child {
-  --background: var(--marketing-peach);
-  --foreground: var(--marketing-peach-ink);
+  background: var(--pricing-paper);
 }
 .screenshotCard > a {
   border-radius: 1rem;
@@ -672,5 +670,189 @@
 @media (forced-colors: active) {
   .mobileChoice > p:first-of-type {
     color: CanvasText;
+  }
+}
+
+.previewSection .screenshotCard {
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border-radius: 1.75rem;
+  background: var(--pricing-paper);
+}
+.screenshotCard > a {
+  border: 0;
+  border-radius: 1rem;
+}
+.productProof {
+  padding: clamp(1.5rem, 3vw, 3rem);
+  border: 1px solid var(--pricing-border);
+  border-radius: 2rem;
+  background: var(--pricing-canvas);
+}
+.productProofCard [data-product-preview] {
+  border: 0;
+  border-radius: 0;
+}
+.mobilePreview {
+  --background: #17181d;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --border-subtle: #36363e;
+  --ring: #fff;
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+  background: var(--background);
+  color: var(--foreground);
+}
+.mobileStatus {
+  border: 1px solid #55555f;
+  background: transparent;
+  color: #fff;
+  font-weight: 500;
+}
+.mobileIntro h2 {
+  max-width: 13ch;
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+.mobileChoice {
+  --pricing-paper: #22232a;
+  --pricing-ink: #fff;
+  --pricing-muted: #c8c8d0;
+  --pricing-primary: #fff;
+  border-color: #41424b;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+.mobileChoice h3 {
+  font-size: 1.125rem;
+  letter-spacing: -0.025em;
+}
+.mobileStack {
+  display: block;
+  margin-top: 0.5rem;
+  color: #c8c8d0;
+  font-size: 0.6875rem;
+  line-height: 1.6;
+}
+.mobileChoice a {
+  width: 100%;
+  justify-content: space-between;
+  border-top: 1px solid #41424b;
+  border-radius: 0;
+  padding-top: 0.75rem;
+}
+@media (forced-colors: active) {
+  .mobilePreview,
+  .mobileChoice {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --pricing-paper: Canvas;
+    --pricing-ink: CanvasText;
+    --pricing-muted: CanvasText;
+    --pricing-primary: LinkText;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .mobileStatus,
+  .mobileStack {
+    color: CanvasText;
+    border-color: CanvasText;
+  }
+}
+
+.screenActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.25rem;
+}
+.screenGuide {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 1rem;
+  border-radius: 100px;
+  background: var(--marketing-action-fill, #6b2fd4);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.screenGuide:hover {
+  background: var(--marketing-action-hover, #5822ba);
+  color: #fff;
+}
+.screenDemo {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.screenGuide:focus-visible,
+.screenDemo:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.futureMobile {
+  display: grid;
+  grid-column: 1 / -1;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--pricing-border);
+  border-radius: 1.75rem;
+  background: var(--pricing-canvas);
+}
+.futureMobileArt {
+  position: relative;
+  min-height: 15rem;
+}
+.futureMobileContent {
+  padding: clamp(1.5rem, 3vw, 3rem);
+}
+.futureMobileContent h3 {
+  max-width: 18ch;
+  margin-top: 1rem;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+.futureMobileContent > p {
+  max-width: 54ch;
+  margin-top: 1rem;
+  color: var(--pricing-muted);
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+.futureMobileContent .screenGuide {
+  margin-top: 1.5rem;
+}
+@media (min-width: 48rem) {
+  .futureMobile {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: center;
+  }
+  .futureMobileArt {
+    min-height: 20rem;
+  }
+}
+@media (forced-colors: active) {
+  .screenGuide,
+  .screenGuide:hover {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .futureMobile {
+    border-color: CanvasText;
+    background: Canvas;
   }
 }

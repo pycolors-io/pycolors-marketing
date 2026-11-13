@@ -298,3 +298,93 @@
     box-shadow: none;
   }
 }
+
+.page .brief {
+  --background: #000;
+  --foreground: #fff;
+  --card-foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #000;
+  --border-subtle: #36363e;
+  --ring: #fff;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: #000;
+  color: #fff;
+}
+.brief h2 {
+  max-width: 15ch;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+.page > div > div:first-of-type h1 {
+  max-width: 17ch;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.option h3 {
+  max-width: 18ch;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+.option > div:first-child > span:last-child {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  opacity: 0.6;
+}
+.iconFrame {
+  border-radius: 1rem;
+}
+.page .proOption {
+  background:
+    radial-gradient(ellipse at 100% 0, rgb(104 155 255 / 28%), transparent 65%),
+    linear-gradient(145deg, #2059bf, #17366f);
+}
+.comparisonTable thead th:last-child {
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  background: #17181d;
+  color: #fff;
+}
+.foundationCard h3 {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.foundationGrid .foundationCard:first-child {
+  --background: #17181d;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #17181d;
+  --border-subtle: #36363e;
+  --ring: #fff;
+  background: #17181d;
+  color: #fff;
+}
+@media (forced-colors: active) {
+  .page .brief,
+  .page .proOption,
+  .foundationGrid .foundationCard:first-child {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .comparisonTable thead th:last-child {
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+}

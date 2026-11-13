@@ -23,7 +23,6 @@ import {
   MarketingLinkButton,
 } from "@/components/marketing/cta-panel";
 import { PageHero } from "@/components/marketing/page-hero";
-import { MarketingCardIllustration } from "@/components/marketing/card-illustration";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import {
@@ -94,6 +93,198 @@ const proofItems = [
   },
 ] as const;
 
+/** An abstract composition, separate from the real interactive catalog. */
+function BlocksComposition() {
+  return (
+    <div className={styles.blocksComposition} aria-hidden="true">
+      <svg viewBox="0 0 720 660" fill="none" focusable="false">
+        <defs>
+          <filter
+            id="blocks-art-shadow"
+            x="-50%"
+            y="-50%"
+            width="200%"
+            height="220%"
+          >
+            <feDropShadow
+              dx="0"
+              dy="24"
+              stdDeviation="18"
+              floodColor="#191423"
+              floodOpacity="0.16"
+            />
+          </filter>
+          <pattern
+            id="blocks-art-grid"
+            width="36"
+            height="36"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M36 0H0V36" stroke="currentColor" strokeOpacity="0.07" />
+          </pattern>
+        </defs>
+        <circle
+          cx="365"
+          cy="330"
+          r="266"
+          stroke="currentColor"
+          strokeOpacity="0.12"
+        />
+        <circle
+          cx="365"
+          cy="330"
+          r="218"
+          stroke="currentColor"
+          strokeOpacity="0.08"
+        />
+        <path
+          d="M365 28V632M62 330H668"
+          stroke="currentColor"
+          strokeOpacity="0.1"
+          strokeDasharray="4 8"
+        />
+        <g filter="url(#blocks-art-shadow)">
+          <g transform="rotate(-19 360 260)">
+            <rect
+              x="159"
+              y="92"
+              width="382"
+              height="320"
+              rx="24"
+              fill="var(--blocks-art-plum)"
+            />
+            <rect
+              x="181"
+              y="116"
+              width="338"
+              height="270"
+              rx="12"
+              fill="url(#blocks-art-grid)"
+            />
+            <path
+              d="M208 322V246L276 272L339 184L406 218L478 149"
+              stroke="white"
+              strokeWidth="9"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <circle cx="478" cy="149" r="13" fill="white" />
+          </g>
+          <g transform="rotate(-7 330 345)">
+            <rect
+              x="104"
+              y="234"
+              width="420"
+              height="274"
+              rx="24"
+              fill="var(--blocks-art-sun)"
+            />
+            <circle
+              cx="170"
+              cy="302"
+              r="24"
+              stroke="var(--blocks-art-ink)"
+              strokeWidth="8"
+            />
+            <path
+              d="M220 292H362M220 316H310M145 370H463M145 404H463M145 438H365"
+              stroke="var(--blocks-art-ink)"
+              strokeOpacity="0.3"
+              strokeWidth="12"
+              strokeLinecap="round"
+            />
+          </g>
+          <g transform="rotate(11 420 424)">
+            <rect
+              x="238"
+              y="304"
+              width="368"
+              height="280"
+              rx="24"
+              fill="var(--blocks-art-paper)"
+            />
+            <rect
+              x="238.5"
+              y="304.5"
+              width="367"
+              height="279"
+              rx="23.5"
+              stroke="var(--blocks-art-ink)"
+              strokeOpacity="0.12"
+            />
+            <path
+              d="M239 350H606"
+              stroke="var(--blocks-art-ink)"
+              strokeOpacity="0.12"
+            />
+            {[268, 283, 298].map((cx) => (
+              <circle
+                key={cx}
+                cx={cx}
+                cy="328"
+                r="4"
+                fill="var(--blocks-art-ink)"
+                fillOpacity="0.3"
+              />
+            ))}
+            <rect
+              x="265"
+              y="376"
+              width="142"
+              height="82"
+              rx="12"
+              fill="var(--blocks-art-ink)"
+            />
+            <path
+              d="M287 397H327M287 435H365"
+              stroke="white"
+              strokeWidth="7"
+              strokeLinecap="round"
+            />
+            <rect
+              x="424"
+              y="376"
+              width="154"
+              height="82"
+              rx="12"
+              fill="var(--blocks-art-plum)"
+              fillOpacity="0.15"
+            />
+            <path
+              d="M448 433L470 410L492 420L549 394"
+              stroke="var(--blocks-art-plum)"
+              strokeWidth="6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M270 487H569M270 514H569M270 541H468"
+              stroke="var(--blocks-art-ink)"
+              strokeOpacity="0.15"
+              strokeWidth="8"
+              strokeLinecap="round"
+            />
+          </g>
+        </g>
+        <circle cx="596" cy="182" r="35" fill="var(--blocks-art-ink)" />
+        <path
+          d="M583 195L609 169M585 169H609V193"
+          stroke="white"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="128" cy="548" r="13" fill="var(--blocks-art-plum)" />
+        <path
+          d="M80 148H104M92 136V160M620 555H644M632 543V567"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
+      </svg>
+    </div>
+  );
+}
+
 function BlockCatalogCard({ block }: Readonly<{ block: BlockCatalogEntry }>) {
   const tSite = useCopy();
 
@@ -152,17 +343,15 @@ export default function BlocksPage() {
       className={`${styles.cataloguePage} ${styles.blocksPage}`}
     >
       <Container
-        className={`pt-24 pb-12 sm:pt-28 sm:pb-16 ${styles.productIntro}`}
+        className={`marketing-page-intro pt-24 pb-12 sm:pt-28 sm:pb-16 ${styles.productIntro}`}
       >
-        <MarketingBreadcrumb route="/blocks" />
-        <UiSectionNav active="blocks" />
+        <UiSectionNav
+          active="blocks"
+          breadcrumb={<MarketingBreadcrumb route="/blocks" />}
+        />
         <PageHero
           className={`${styles.heroFrame} ${styles.splitHero} ${styles.blocksHero}`}
-          background={
-            <div className={styles.heroArtwork} aria-hidden="true">
-              <MarketingCardIllustration kind="composition" />
-            </div>
-          }
+          background={<BlocksComposition />}
           variant="compact"
           align="left"
           contentClassName="mx-0"
@@ -258,7 +447,7 @@ export default function BlocksPage() {
             </div>
 
             <div className="space-y-20">
-              {BLOCK_CATEGORIES.map((category) => {
+              {BLOCK_CATEGORIES.map((category, index) => {
                 const blocks = BLOCKS_CATALOG.filter(
                   (block) => block.category === category.label,
                 );
@@ -266,12 +455,18 @@ export default function BlocksPage() {
                 return (
                   <section
                     aria-labelledby={`category-${category.slug}-title`}
-                    className="scroll-mt-32"
+                    className={`scroll-mt-32 ${styles.blocksCategory}`}
                     id={`category-${category.slug}`}
                     key={category.slug}
                   >
                     <div className="mb-7 flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle pb-5">
                       <div className="flex flex-wrap items-center gap-3">
+                        <span
+                          className={styles.categoryNumber}
+                          aria-hidden="true"
+                        >
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
                         <h3
                           className="text-[22px] font-semibold leading-snug tracking-subheading sm:text-2xl"
                           id={`category-${category.slug}-title`}

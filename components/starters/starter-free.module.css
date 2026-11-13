@@ -1,5 +1,5 @@
 .page {
-  --free-action-cobalt: #2059bf;
+  --free-action-cobalt: var(--marketing-action-fill, #6b2fd4);
   --free-action-cobalt-ink: #ffffff;
   --free-action-gold: #ffd43b;
   --free-action-gold-ink: #35261b;
@@ -14,14 +14,35 @@
   gap: clamp(2rem, 5vw, 4.5rem);
 }
 
-.heroPreview {
-  min-width: 0;
-  padding: clamp(1rem, 3vw, 2rem);
-  border-radius: var(--marketing-panel-radius, 2rem);
-  background: var(--marketing-cobalt, #2059bf);
-  color: var(--marketing-cobalt-ink, #ffffff);
+.hero {
+  max-width: 64rem;
+  margin-inline: auto;
+  padding-block: clamp(2rem, 5vw, 4rem) 0;
 }
-
+.hero h1 {
+  max-width: 16ch;
+  margin-inline: auto;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+.heroPreview {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background: linear-gradient(
+    140deg,
+    var(--background),
+    var(--marketing-canvas)
+  );
+  color: var(--foreground);
+}
 .heroPreview :global([data-product-preview]) {
   border: 0;
   border-radius: 1rem;
@@ -31,8 +52,10 @@
 
 .heroPreview figcaption {
   margin-top: 1rem;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   line-height: 1.75;
+  color: var(--muted-foreground);
+  text-align: center;
 }
 
 .heroLayout :global([data-slot="button"]),
@@ -86,49 +109,19 @@
 }
 
 .foundationCard:nth-child(2) {
-  --free-action-fill: var(--free-action-gold);
-  --free-action-ink: var(--free-action-gold-ink);
-  --background: var(--marketing-cobalt, #2059bf);
-  --foreground: var(--marketing-cobalt-ink, #ffffff);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 92%,
-    var(--background)
-  );
-  --primary: var(--foreground);
-  --primary-foreground: var(--marketing-cobalt, #2059bf);
-  --brand-primary: var(--primary);
-  --brand-primary-hover: color-mix(
-    in srgb,
-    var(--primary) 88%,
-    var(--background)
-  );
-  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
-  --border: var(--border-subtle);
-  --ring: var(--foreground);
+  --background: #17181d;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #17181d;
+  --border-subtle: #36363e;
+  --ring: #d3c2ff;
   background: var(--background);
   color: var(--foreground);
 }
-
 .foundationCard:nth-child(3) {
-  --background: var(--marketing-gold, #ffd43b);
-  --foreground: var(--marketing-gold-ink, #35261b);
-  --muted-foreground: var(--foreground);
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  --brand-primary: var(--primary);
-  --brand-primary-hover: color-mix(
-    in srgb,
-    var(--primary) 88%,
-    var(--background)
-  );
-  --border-subtle: color-mix(in srgb, var(--foreground) 15%, var(--background));
-  --border: var(--border-subtle);
-  --ring: var(--foreground);
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
-
 .setupPanel,
 .comparisonGrid > div,
 .resourceGrid > a {
@@ -138,8 +131,8 @@
 }
 
 .proCard {
-  --free-action-fill: var(--free-action-gold);
-  --free-action-ink: var(--free-action-gold-ink);
+  --free-action-fill: var(--free-action-cobalt);
+  --free-action-ink: var(--free-action-cobalt-ink);
   --background: var(--marketing-graphite, #17181d);
   --foreground: var(--marketing-graphite-ink, #ffffff);
   --muted-foreground: color-mix(
@@ -256,7 +249,7 @@
 
 @media (min-width: 64rem) {
   .heroLayout {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -293,5 +286,40 @@
   .page .cardAction:focus-visible,
   .page .resourceGrid > a:focus-visible .resourceAction {
     outline-color: Highlight;
+  }
+}
+
+.page section h2 {
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+}
+.page .foundationCard h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+.heroLayout :global(.site-primary-action) {
+  border-color: var(--free-action-fill);
+  background: var(--free-action-fill);
+  color: var(--free-action-ink);
+}
+.heroLayout :global(.site-primary-action):hover {
+  background: var(--marketing-action-hover, #5822ba);
+}
+@media (min-width: 64rem) {
+  .heroLayout {
+    gap: 3rem;
+  }
+  .heroPreview {
+    margin-top: 1rem;
+  }
+}
+@media (forced-colors: active) {
+  .heroLayout :global(.site-primary-action),
+  .heroLayout :global(.site-primary-action):hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
   }
 }

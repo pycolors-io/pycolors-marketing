@@ -14,7 +14,7 @@ export function StarterProTour() {
       id={STARTER_PRO_TOUR.id}
       divider="pattern"
       width="full"
-      className={`${styles.mediaSection} scroll-mt-24`}
+      className={`${styles.mediaSection} ${styles.tourSection} scroll-mt-24`}
       aria-labelledby="starter-pro-tour-heading"
     >
       <MarketingSectionHeader

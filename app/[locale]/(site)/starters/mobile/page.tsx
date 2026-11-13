@@ -64,7 +64,7 @@ export default function StarterMobilePage() {
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
       <MarketingHeroBand tone="cool">
-        <Container className={styles.heroContainer}>
+        <Container className={`marketing-page-intro ${styles.heroContainer}`}>
           <MarketingBreadcrumb route="/starters/mobile" />
           <div className={styles.heroLayout}>
             <PageHero

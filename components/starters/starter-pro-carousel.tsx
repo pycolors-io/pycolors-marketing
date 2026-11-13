@@ -147,7 +147,9 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
               }}
               className={styles.previewChoice}
             >
-              <span className="sr-only">{tSite(slide.title)}</span>
+              <span className={styles.previewChoiceLabel}>
+                {tSite(slide.title)}
+              </span>
               {index === active ? (
                 <span aria-hidden="true" className={styles.previewProgress}>
                   <span
@@ -155,9 +157,7 @@ export function StarterProCarousel({ slides }: StarterProCarouselProps) {
                     style={{ animationDuration: `${AUTOPLAY_DELAY}ms` }}
                   />
                 </span>
-              ) : (
-                <span aria-hidden="true" className={styles.previewDot} />
-              )}
+              ) : null}
             </button>
           ))}
         </div>

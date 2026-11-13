@@ -17,6 +17,7 @@ import {
   FileCode2,
   LayoutTemplate,
   Palette,
+  PanelsTopLeft,
   SlidersHorizontal,
 } from "lucide-react";
 
@@ -214,7 +215,7 @@ export default function NaAiTemplatePage() {
       )}
     >
       <JsonLd id="na-ai-landing-product-jsonld" data={naAiLandingJsonLd} />
-      <Container className={styles.intro}>
+      <Container className={`marketing-page-intro ${styles.intro}`}>
         <Breadcrumb
           className={cn("mb-8", styles.breadcrumb)}
           items={[
@@ -439,6 +440,21 @@ export default function NaAiTemplatePage() {
                         styles.previewImage,
                       )}
                     >
+                      <div
+                        className={styles.previewChrome}
+                        data-window-mode={preview.mode}
+                        aria-hidden="true"
+                      >
+                        <span className={styles.windowControls}>
+                          <span />
+                          <span />
+                          <span />
+                        </span>
+                        <span className={styles.windowAddress}>
+                          na-ai.pycolors.io
+                        </span>
+                        <PanelsTopLeft className={styles.windowSidebar} />
+                      </div>
                       <Image
                         src={preview.src}
                         alt={tSite(

@@ -13,7 +13,6 @@ import {
   ArrowUpRight,
   BookOpen,
   Code2,
-  ChevronDown,
   CreditCard,
   Database,
   Download,
@@ -50,6 +49,7 @@ import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingFaq } from "@/components/marketing/faq";
 import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
+import { StarterProIncludedDialog } from "@/components/starters/starter-pro-included-dialog";
 import { StarterProCarousel } from "@/components/starters/starter-pro-carousel";
 import { StarterProTour } from "@/components/starters/starter-pro-tour";
 import { StarterProFoundations } from "@/components/starters/starter-pro-foundations";
@@ -480,7 +480,7 @@ function StarterProPreviews() {
     <MarketingSectionShell
       id="product-preview"
       width="full"
-      className={`${styles.mediaSection} scroll-mt-24`}
+      className={`${styles.mediaSection} ${styles.previewSection} scroll-mt-24`}
       aria-labelledby="starter-pro-previews-title"
     >
       <MarketingSectionHeader
@@ -701,10 +701,7 @@ export default function StarterProPage() {
           <div className={styles.heroAtmosphere} aria-hidden="true">
             <StarterProWaves id="starter-pro-atmosphere-waves" />
           </div>
-          <MarketingBreadcrumb
-            route="/starters/pro"
-            className="mx-auto max-w-6xl"
-          />
+          <MarketingBreadcrumb route="/starters/pro" />
           <div className={styles.heroGrid}>
             <PageHero
               variant="compact"
@@ -955,58 +952,56 @@ export default function StarterProPage() {
                         <ArrowUpRight className="size-3.5" aria-hidden="true" />
                       </Link>
                     </Button>
-                    <details className={styles.foundationTileDetails}>
-                      <summary>
-                        {tSite("Included in the source")}
-                        <ChevronDown
-                          className="size-4 shrink-0"
-                          aria-hidden="true"
-                        />
-                      </summary>
-                      <div>
-                        <ul className="space-y-3">
-                          {group.items.map((item) => (
-                            <StarterProCheckItem
-                              key={item}
-                              className="text-[13px]"
-                            >
-                              {tSite(item)}
-                            </StarterProCheckItem>
-                          ))}
-                        </ul>
-                        {"flow" in group ? (
-                          <>
-                            <p className={styles.foundationFlowLabel}>
-                              {tSite("Integration overview")}
-                            </p>
-                            <ol
-                              className={styles.foundationTileFlow}
-                              aria-label={tSite("{value0} flow overview", {
-                                value0: group.title,
-                              })}
-                            >
-                              {group.flow.map(
-                                ({ title, detail, icon: StepIcon }) => (
-                                  <li key={title}>
-                                    <StepIcon
-                                      className="size-4"
-                                      aria-hidden="true"
-                                    />
-                                    <span>{tSite(title)}</span>
-                                    <span>{tSite(detail)}</span>
-                                  </li>
-                                ),
-                              )}
-                            </ol>
-                            <p className={styles.foundationTileSetup}>
-                              <strong>{tSite("Your setup.")}</strong>
-                              {tSite(" ")}
-                              {tSite(group.setupNote)}
-                            </p>
-                          </>
-                        ) : null}
-                      </div>
-                    </details>
+                    <StarterProIncludedDialog
+                      title={tSite(group.title)}
+                      description={tSite(group.description)}
+                      technology={tSite(group.technology)}
+                      artwork={group.artwork}
+                      href={group.href}
+                      guide={tSite(group.link)}
+                    >
+                      <ul className="space-y-3">
+                        {group.items.map((item) => (
+                          <StarterProCheckItem
+                            key={item}
+                            className="text-[13px]"
+                          >
+                            {tSite(item)}
+                          </StarterProCheckItem>
+                        ))}
+                      </ul>
+                      {"flow" in group ? (
+                        <>
+                          <p className={styles.foundationFlowLabel}>
+                            {tSite("Integration overview")}
+                          </p>
+                          <ol
+                            className={styles.foundationTileFlow}
+                            aria-label={tSite("{value0} flow overview", {
+                              value0: group.title,
+                            })}
+                          >
+                            {group.flow.map(
+                              ({ title, detail, icon: StepIcon }) => (
+                                <li key={title}>
+                                  <StepIcon
+                                    className="size-4"
+                                    aria-hidden="true"
+                                  />
+                                  <span>{tSite(title)}</span>
+                                  <span>{tSite(detail)}</span>
+                                </li>
+                              ),
+                            )}
+                          </ol>
+                          <p className={styles.foundationTileSetup}>
+                            <strong>{tSite("Your setup.")}</strong>
+                            {tSite(" ")}
+                            {tSite(group.setupNote)}
+                          </p>
+                        </>
+                      ) : null}
+                    </StarterProIncludedDialog>
                   </div>
                 </article>
               );

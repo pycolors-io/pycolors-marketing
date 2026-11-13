@@ -26,6 +26,7 @@ import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
+import { ProductPreviewWindow } from "@/components/marketing/product-preview-window";
 import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
 import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
 import { PricingComparisonTable } from "@/components/pricing/pricing-comparison-table";
@@ -107,6 +108,8 @@ const starterProScreenshots = [
     width: 2880,
     height: 2000,
     title: "Sign-in screen",
+    guide: "/docs/starter-pro/auth",
+    guideLabel: "Explore auth flows",
     alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
     caption:
       "Start with an account entry screen: email and password fields, provider buttons, and a password recovery link.",
@@ -116,6 +119,8 @@ const starterProScreenshots = [
     width: 2880,
     height: 2000,
     title: "Project work",
+    guide: "/docs/starter-pro/what-is-included",
+    guideLabel: "Explore the included workflows",
     alt: "Starter Pro project with assigned tasks, due dates and a discussion",
     caption:
       "Adapt a persisted workspace workflow with assigned tasks, due dates, comments and archiving.",
@@ -270,7 +275,9 @@ export default function PricingPage() {
   const tSite = useCopy();
 
   return (
-    <Container className={`${styles.page} pb-12 pt-20 sm:pb-16 sm:pt-24`}>
+    <Container
+      className={`marketing-page-intro ${styles.page} pb-12 pt-20 sm:pb-16 sm:pt-24`}
+    >
       <JsonLd id="pricing-products-jsonld" data={pricingJsonLd} />
       <main id="content" tabIndex={-1} className="w-full min-w-0">
         <MarketingBreadcrumb route="/pricing" />
@@ -506,6 +513,9 @@ export default function PricingPage() {
             ].map((option) => (
               <article key={option.href} className={styles.mobileChoice}>
                 <h3>{tSite(option.name)}</h3>
+                <span className={styles.mobileStack}>
+                  {tSite(option.stack)}
+                </span>
                 <p>{tSite(option.priceLabel)}</p>
                 <p className={styles.mobileQualifier}>
                   {tSite(option.priceQualifier)}
@@ -601,15 +611,17 @@ export default function PricingPage() {
                     focusRing,
                   )}
                 >
-                  <Image
-                    src={screenshot.src}
-                    alt={tSite(screenshot.alt)}
-                    quality={100}
-                    width={screenshot.width}
-                    height={screenshot.height}
-                    sizes="(min-width: 1440px) 680px, (min-width: 768px) calc(50vw - 32px), calc(100vw - 32px)"
-                    className="h-auto w-full"
-                  />
+                  <ProductPreviewWindow label={tSite(screenshot.title)}>
+                    <Image
+                      src={screenshot.src}
+                      alt={tSite(screenshot.alt)}
+                      quality={100}
+                      width={screenshot.width}
+                      height={screenshot.height}
+                      sizes="(min-width: 1440px) 680px, (min-width: 768px) calc(50vw - 32px), calc(100vw - 32px)"
+                      className="h-auto w-full"
+                    />
+                  </ProductPreviewWindow>
                 </a>
                 <figcaption className="space-y-2">
                   <h3 className="text-base font-semibold text-foreground">
@@ -618,6 +630,18 @@ export default function PricingPage() {
                   <p className="text-sm leading-6 text-muted-foreground">
                     {tSite(screenshot.caption)}
                   </p>
+                  <div className={styles.screenActions}>
+                    <Link
+                      href={screenshot.guide}
+                      className={styles.screenGuide}
+                    >
+                      {tSite(screenshot.guideLabel)}
+                      <ArrowRight className="size-3.5" aria-hidden="true" />
+                    </Link>
+                    <Link href="/demo" className={styles.screenDemo}>
+                      {tSite("Explore the demos")}
+                    </Link>
+                  </div>
                   <a
                     href={screenshot.src}
                     className={cn(
@@ -634,6 +658,39 @@ export default function PricingPage() {
                 </figcaption>
               </figure>
             ))}
+            <article
+              aria-labelledby="pricing-future-mobile-title"
+              className={styles.futureMobile}
+            >
+              <div className={styles.futureMobileArt} aria-hidden="true">
+                <Image
+                  src="/images/marketing/concepts/modular-platform-v1.webp"
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 400px, 90vw"
+                  className="object-contain"
+                />
+              </div>
+              <div className={styles.futureMobileContent}>
+                <Badge variant="outline">
+                  {tSite(STARTER_PRO_MOBILE_PREVIEW.status)}
+                </Badge>
+                <h3 id="pricing-future-mobile-title">
+                  {tSite(STARTER_PRO_MOBILE_PREVIEW.name)}
+                </h3>
+                <p className={styles.mobileStack}>
+                  {tSite(STARTER_PRO_MOBILE_PREVIEW.stack)}
+                </p>
+                <p>{tSite(STARTER_PRO_MOBILE_PREVIEW.description)}</p>
+                <Link
+                  href={STARTER_PRO_MOBILE_PREVIEW.href}
+                  className={styles.screenGuide}
+                >
+                  {tSite(STARTER_PRO_MOBILE_PREVIEW.action)}
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
           </div>
           <div
             role="group"
@@ -651,10 +708,12 @@ export default function PricingPage() {
                   className={styles.productProofCard}
                 >
                   <p id={`pricing-proof-${offer.id}`}>{tSite(offer.name)}</p>
-                  <ProductPreviewMedia
-                    product={offer.id}
-                    sizes="(min-width: 1280px) 355px, (min-width: 1024px) 31vw, (min-width: 768px) 48vw, 90vw"
-                  />
+                  <ProductPreviewWindow label={tSite(offer.name)}>
+                    <ProductPreviewMedia
+                      product={offer.id}
+                      sizes="(min-width: 1280px) 355px, (min-width: 1024px) 31vw, (min-width: 768px) 48vw, 90vw"
+                    />
+                  </ProductPreviewWindow>
                   <figcaption className="mt-2 text-xs leading-5 text-muted-foreground">
                     {tSite(PRODUCT_PREVIEW_MEDIA[offer.id].caption)}
                   </figcaption>

@@ -12,6 +12,8 @@ import {
   type StarterProFaqFilter,
 } from "@/lib/products/starter-pro-faq-search";
 
+import styles from "./starter-pro-faq.module.css";
+
 const subscribe = () => () => undefined;
 const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
@@ -41,11 +43,15 @@ export function StarterProFaqExplorer() {
   }
 
   return (
-    <MarketingFaqSection width="full" aria-labelledby={titleId}>
+    <MarketingFaqSection
+      width="full"
+      aria-labelledby={titleId}
+      className={styles.explorer}
+    >
       <div className="min-w-0 space-y-8">
         <fieldset
           disabled={!hydrated}
-          className="min-w-0 space-y-5 rounded-xl border border-border bg-card p-5 sm:p-6"
+          className={`${styles.filters} min-w-0 space-y-5 rounded-xl border border-border bg-card p-5 sm:p-6`}
         >
           <legend className="sr-only">
             {tSite("Search and filter buyer questions")}

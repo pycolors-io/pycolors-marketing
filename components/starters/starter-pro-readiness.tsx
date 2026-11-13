@@ -20,6 +20,7 @@ import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 
 import styles from "./starter-pro.module.css";
+import implementationStyles from "./starter-pro-services.module.css";
 
 const foundations = [
   {
@@ -180,12 +181,12 @@ export function StarterProImplementation() {
       id="implementation"
       width="full"
       aria-labelledby="starter-pro-implementation-heading"
-      className="scroll-mt-24"
+      className={`${implementationStyles.section} scroll-mt-24`}
     >
       <MarketingSectionHeader
         titleId="starter-pro-implementation-heading"
-        className={styles.implementationHeading}
-        align="center"
+        className={implementationStyles.implementationHeading}
+        align="left"
         eyebrow={tSite("Optional services · Written quote")}
         title={tSite("An assisted start, scoped to your product.")}
         description={tSite(
@@ -193,28 +194,31 @@ export function StarterProImplementation() {
           { value0: PRODUCT_DISPLAY["starter-pro"].priceLabel },
         )}
       />
-      <div className={styles.implementationGrid}>
+      <div className={implementationStyles.implementationGrid}>
         {Object.values(STARTER_PRO_SERVICES).map((service, index) => (
           <article
             key={service.id}
             data-card-tone={service.id === "guided-setup" ? "neutral" : "ink"}
             aria-labelledby={`${service.id}-heading`}
-            className={styles.implementationCard}
+            className={implementationStyles.implementationCard}
           >
-            <div className={styles.implementationIdentity} aria-hidden="true">
+            <div
+              className={implementationStyles.implementationIdentity}
+              aria-hidden="true"
+            >
               <span>
                 {service.id === "guided-setup" ? <Settings2 /> : <Workflow />}
               </span>
               <span>{String(index + 1).padStart(2, "0")}</span>
             </div>
-            <div className={styles.implementationOffer}>
+            <div className={implementationStyles.implementationOffer}>
               <h3
                 id={`${service.id}-heading`}
                 className="text-lg font-semibold tracking-tight"
               >
                 {tSite(service.title)}
               </h3>
-              <p className={styles.implementationPrice}>
+              <p className={implementationStyles.implementationPrice}>
                 {tSite(service.priceLabel)}
               </p>
               <p className="mt-2 text-xs text-muted-foreground">
@@ -224,7 +228,7 @@ export function StarterProImplementation() {
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
               {tSite(service.description)}
             </p>
-            <ul className={styles.implementationFeatures}>
+            <ul className={implementationStyles.implementationFeatures}>
               {service.features.map((feature) => (
                 <li key={feature} className="flex gap-3 text-sm leading-6">
                   <Check
@@ -235,7 +239,7 @@ export function StarterProImplementation() {
                 </li>
               ))}
             </ul>
-            <div className={styles.implementationDelivery}>
+            <div className={implementationStyles.implementationDelivery}>
               <h4 className="text-xs font-medium">
                 {tSite("What you receive")}
               </h4>
@@ -256,7 +260,7 @@ export function StarterProImplementation() {
             <SiteButton
               variant="outline"
               asChild
-              className={styles.implementationAction}
+              className={implementationStyles.implementationAction}
             >
               <Link href={service.href}>{tSite(service.action)}</Link>
             </SiteButton>
