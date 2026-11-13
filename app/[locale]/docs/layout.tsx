@@ -2,6 +2,7 @@ import { useCopy } from "@/lib/i18n/use-copy";
 import type { CSSProperties, ReactNode } from "react";
 import type { Metadata } from "next";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { FullSearchTrigger } from "fumadocs-ui/layouts/shared/slots/search-trigger";
 import { Link } from "@/lib/i18n/navigation";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 
@@ -58,6 +59,10 @@ function SidebarBanner() {
 
   return (
     <div className={styles.sidebarStart}>
+      <FullSearchTrigger
+        className={styles.sidebarSearch}
+        aria-label={tSite("Search the documentation")}
+      />
       <Link href="/docs" className={styles.sidebarBanner}>
         <BookOpen className="size-4 shrink-0" aria-hidden="true" />
         <span className="flex-1 text-[13px] font-medium">

@@ -81,8 +81,10 @@ test("keeps discovery, docs links, and the CTA funnel on real routes", () => {
     footer,
     /label: "Theme Builder", href: "\/tools\/theme-builder"/u,
   );
-  assert.match(docsFooter, /import \{ Footer \} from "\.\/footer"/u);
-  assert.match(docsFooter, /<Footer \/>/u);
+  assert.match(
+    docsFooter,
+    /label: "Theme Builder", href: "\/tools\/theme-builder"/u,
+  );
   assert.match(sitemap, /["']\/tools\/theme-builder["']/u);
   for (const document of docs) {
     assert.match(document, /\/tools\/theme-builder/u);

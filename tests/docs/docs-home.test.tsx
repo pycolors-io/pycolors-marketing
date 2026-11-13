@@ -9,10 +9,12 @@ import {
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
+import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import {
   DocsHome,
   DocsHomeAI,
   DocsHomeHero,
+  DocsHomeQuickstart,
   DocsHomeExample,
   DocsHomePaths,
   DocsHomeResources,
@@ -42,6 +44,7 @@ vi.mock("fumadocs-ui/layouts/shared/slots/search-trigger", () => ({
     </button>
   ),
 }));
+vi.mock("next/navigation", () => ({ usePathname: () => "/docs" }));
 const descriptor = Object.getOwnPropertyDescriptor(navigator, "clipboard");
 afterEach(() => {
   localeState.value = "en";
@@ -52,7 +55,20 @@ function Home() {
   return (
     <main>
       <DocsHome>
-        <DocsHomeHero />
+        <DocsHomeHero>
+          <DocsHomeQuickstart>
+            <Tabs items={["Install UI", "Run Starter Free", "Set up Pro"]}>
+              <Tab value="Install UI">
+                pnpm add @pycolors/ui @pycolors/tokens
+              </Tab>
+              <Tab value="Run Starter Free">
+                git clone
+                https://github.com/pycolors-io/pycolors-starter-free.git
+              </Tab>
+              <Tab value="Set up Pro">pnpm install --frozen-lockfile</Tab>
+            </Tabs>
+          </DocsHomeQuickstart>
+        </DocsHomeHero>
         <DocsHomePaths />
         <DocsHomeExample />
         <DocsHomeAI />
@@ -81,11 +97,8 @@ describe("documentation home", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: "Tout pour construire avec PyColors.",
+        name: "Construisez avec PyColors.",
       }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Rechercher dans la documentation" }),
     ).toBeInTheDocument();
     expect(container).not.toHaveTextContent("Components and API references.");
     expect(container).not.toHaveTextContent("Sign-in, sessions");
@@ -109,19 +122,66 @@ describe("documentation home", () => {
       ).toBe(true);
     }
   });
-  it("offers four clear documentation entry points with real destinations", () => {
+  it("offers six clear documentation entry points with real destinations", () => {
     render(<Home />);
     const navigation = screen.getByRole("navigation", {
       name: "Explore the documentation",
     });
     const links = within(navigation).getAllByRole("link");
-    expect(links).toHaveLength(4);
+    expect(links).toHaveLength(6);
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "/docs/ui",
       "/docs/blocks",
-      "/docs/getting-started#choose-your-starting-point",
+      "/docs/starter",
+      "/docs/starter-pro/getting-started",
       "/docs/templates",
+      "/docs/design-system",
     ]);
+  });
+  it("keeps all three setup paths usable inside the hero", () => {
+    render(<Home />);
+    const hero = screen.getByRole("heading", { level: 1 }).closest("header")!;
+    const setup = within(hero).getByRole("region", {
+      name: "Choose your quick start",
+    });
+    expect(within(setup).getByRole("tabpanel")).toHaveTextContent(
+      "pnpm add @pycolors/ui",
+    );
+    fireEvent.keyDown(
+      within(setup).getByRole("tab", { name: "Run Starter Free" }),
+      { key: "Enter" },
+    );
+    expect(within(setup).getByRole("tabpanel")).toHaveTextContent(
+      "git clone https://github.com/pycolors-io/pycolors-starter-free.git",
+    );
+    fireEvent.keyDown(within(setup).getByRole("tab", { name: "Set up Pro" }), {
+      key: "Enter",
+    });
+    expect(within(setup).getByRole("tabpanel")).toHaveTextContent(
+      "pnpm install --frozen-lockfile",
+    );
+  });
+  it("expands and collapses the agent brief while preserving complete copied context", () => {
+    render(<Home />);
+    const preview = screen.getByLabelText("AI context to copy");
+    const expand = screen.getByRole("button", { name: "Show more" });
+    expect(expand).toHaveAttribute("aria-expanded", "false");
+    expect(preview).not.toHaveTextContent(
+      "https://pycolors.io/docs/ui/installation",
+    );
+    fireEvent.click(expand);
+    expect(screen.getByRole("button", { name: "Show less" })).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
+    expect(preview).toHaveTextContent(
+      "https://pycolors.io/docs/ui/installation",
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Show less" }));
+    expect(screen.getByRole("button", { name: "Show more" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
   });
   it("shows a public component with its matching example and documentation destination", () => {
     render(<Home />);
@@ -136,6 +196,17 @@ describe("documentation home", () => {
     expect(source).toHaveTextContent('import { Button } from "@pycolors/ui";');
     expect(source).toHaveTextContent('<a href="/docs/ui/button">Button</a>');
     expect(source).toHaveAttribute("tabindex", "0");
+  });
+  it("opens contextual AI help directly from the home hero", () => {
+    render(<Home />);
+    const hero = screen.getByRole("heading", { level: 1 }).closest("header")!;
+    fireEvent.click(within(hero).getByRole("button", { name: "Ask AI" }));
+    expect(
+      screen.getByRole("dialog", { name: "Your question. The right context." }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/paste it into your own AI tool to get an answer/),
+    ).toBeInTheDocument();
   });
   it("copies a usable agent brief with public guide URLs and repository boundaries", async () => {
     const write = vi.fn().mockResolvedValue(undefined);
@@ -170,6 +241,29 @@ describe("documentation home", () => {
     );
     expect(screen.getByLabelText("AI context to copy")).toHaveTextContent(
       "Public documentation and project conventions.",
+    );
+  });
+  it("expands the complete brief for manual selection when copying fails", async () => {
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: undefined,
+    });
+    render(
+      <DocsContextCopy
+        context={"Project instructions.\n\nhttps://pycolors.io/docs/ui"}
+        collapsible
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Copy AI context" }));
+    await waitFor(() =>
+      expect(screen.getByRole("status")).toHaveTextContent("copy it manually"),
+    );
+    expect(screen.getByLabelText("AI context to copy")).toHaveTextContent(
+      "https://pycolors.io/docs/ui",
+    );
+    expect(screen.getByRole("button", { name: "Show less" })).toHaveAttribute(
+      "aria-expanded",
+      "true",
     );
   });
   it("has no detectable accessibility violations", async () => {

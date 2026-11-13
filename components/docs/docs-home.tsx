@@ -10,18 +10,19 @@ import {
   CreditCard,
   Layers3,
   LayoutTemplate,
+  Palette,
+  Accessibility,
   LockKeyhole,
   ShieldCheck,
   Sparkles,
-  Terminal,
 } from "lucide-react";
-import { FullSearchTrigger } from "fumadocs-ui/layouts/shared/slots/search-trigger";
 import { Button as UiButton, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import { SITE_URL } from "@/lib/seo/website";
 import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
 import { DocsLinks } from "./docs-links";
 import { DocsContextCopy } from "./docs-context-copy";
+import { DocsAssistant } from "./docs-assistant";
 import { DocsFeedback } from "./docs-feedback";
 import styles from "./docs-home.module.css";
 
@@ -29,40 +30,26 @@ export function DocsHome({ children }: Readonly<{ children: ReactNode }>) {
   return <div className={cn("not-prose", styles.home)}>{children}</div>;
 }
 
-export function DocsHomeHero() {
+export function DocsHomeHero({ children }: Readonly<{ children?: ReactNode }>) {
   const tSite = useCopy();
   return (
     <header className={styles.hero}>
       <div className={styles.intro}>
         <p className={styles.eyebrow}>{tSite("PyColors Documentation")}</p>
-        <h1>{tSite("Everything you need to build with PyColors.")}</h1>
+        <h1>{tSite("Build with PyColors.")}</h1>
         <p className={styles.description}>
           {tSite(
-            "Find a component, follow a guide, and bring your next idea to life.",
+            "Install the UI library, explore a starter, and follow the guides to build your product.",
           )}
         </p>
-        <FullSearchTrigger
-          className={styles.search}
-          aria-label={tSite("Search the documentation")}
-        />
-        <nav
-          className={styles.shortcuts}
-          aria-label={tSite("Popular documentation")}
-        >
-          <Link href="/docs/ui/installation">{tSite("Installation")}</Link>
-          <Link href="/docs/ui/theming">{tSite("Theming")}</Link>
-          <Link href="/docs/starter-pro/getting-started">Starter Pro</Link>
-        </nav>
         <div className={styles.heroActions}>
           <Button asChild className="site-primary-action">
             <Link href="/docs/getting-started">{tSite("Get started")}</Link>
           </Button>
-          <Link href="/docs/ui">
-            {tSite("Browse components")}
-            <ArrowRight aria-hidden="true" />
-          </Link>
+          <DocsAssistant className={styles.homeAssistant} />
         </div>
       </div>
+      {children}
     </header>
   );
 }
@@ -72,27 +59,13 @@ export function DocsHomeQuickstart({
 }: Readonly<{ children: ReactNode }>) {
   const tSite = useCopy();
   return (
-    <DocsHomeSection
+    <section
       id="choose-your-quick-start"
-      title="Start with the right command."
-      description="Install the UI library, explore Starter Free, or set up your purchased Starter Pro."
+      className={styles.quickstart}
+      aria-label={tSite("Choose your quick start")}
     >
-      <div
-        className={styles.quickstart}
-        aria-label={tSite("Choose your quick start")}
-      >
-        <div className={styles.windowBar}>
-          <span className={styles.windowDots} aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </span>
-          <Terminal className="size-3.5" aria-hidden="true" />
-          <span>{tSite("Your next step")}</span>
-        </div>
-        {children}
-      </div>
-    </DocsHomeSection>
+      {children}
+    </section>
   );
 }
 
@@ -182,10 +155,16 @@ export function DocsHomePaths() {
       icon: Blocks,
     },
     {
-      title: "Starters",
-      href: "/docs/getting-started#choose-your-starting-point",
-      description: "Choose and set up your application.",
+      title: "Starter Free",
+      href: "/docs/starter",
+      description: "Explore application flows with demo data.",
       icon: Layers3,
+    },
+    {
+      title: "Starter Pro",
+      href: "/docs/starter-pro/getting-started",
+      description: "Configure your purchased SaaS foundation.",
+      icon: ShieldCheck,
     },
     {
       title: "Templates",
@@ -193,23 +172,37 @@ export function DocsHomePaths() {
       description: "Install and adapt your landing page.",
       icon: LayoutTemplate,
     },
+    {
+      title: "Design System",
+      href: "/docs/design-system",
+      description: "Understand colors, typography, and design tokens.",
+      icon: Palette,
+    },
   ];
   return (
-    <nav
-      className={styles.entryNav}
-      aria-label={tSite("Explore the documentation")}
-    >
-      {entries.map(({ title, href, description, icon: Icon }) => (
-        <Link key={href} href={href} className={styles.entry}>
-          <span className={styles.entryIcon}>
-            <Icon aria-hidden="true" />
-          </span>
-          <span className={styles.entryTitle}>{tSite(title)}</span>
-          <span className={styles.entryDescription}>{tSite(description)}</span>
-          <ArrowRight className={styles.entryArrow} aria-hidden="true" />
-        </Link>
-      ))}
-    </nav>
+    <section className={styles.discovery} aria-labelledby="docs-next-step">
+      <div className={styles.sectionHeading}>
+        <h2 id="docs-next-step">{tSite("Explore the PyColors ecosystem.")}</h2>
+        <p>{tSite("Explore a product, then follow its setup guide.")}</p>
+      </div>
+      <nav
+        className={styles.entryNav}
+        aria-label={tSite("Explore the documentation")}
+      >
+        {entries.map(({ title, href, description, icon: Icon }) => (
+          <Link key={href} href={href} className={styles.entry}>
+            <span className={styles.entryIcon}>
+              <Icon aria-hidden="true" />
+            </span>
+            <span className={styles.entryTitle}>{tSite(title)}</span>
+            <span className={styles.entryDescription}>
+              {tSite(description)}
+            </span>
+            <ArrowRight className={styles.entryArrow} aria-hidden="true" />
+          </Link>
+        ))}
+      </nav>
+    </section>
   );
 }
 
@@ -218,13 +211,13 @@ export function DocsHomeResources() {
   return (
     <DocsHomeSection
       id="connect-and-launch"
-      title="Go from setup to real product flows"
-      description="Practical guides for the decisions and integrations ahead."
+      title="Guides for your next product flow."
+      description="Follow a documented path for authentication, billing, composition, or launch checks."
     >
       <DocsLinks
         variant="grid"
         tone="neutral"
-        className="xl:grid-cols-4"
+        className={styles.cardGrid}
         items={[
           {
             title: "Authentication",
@@ -251,6 +244,19 @@ export function DocsHomeResources() {
             description:
               "Review configuration and verify your flows before launch.",
             icon: ShieldCheck,
+          },
+          {
+            title: "Theming",
+            href: "/docs/ui/theming",
+            description: "Apply your colors and support light and dark modes.",
+            icon: Palette,
+          },
+          {
+            title: "Accessibility",
+            href: "/docs/ui/accessibility",
+            description:
+              "Check keyboard navigation, focus, and accessible names.",
+            icon: Accessibility,
           },
         ]}
       />
@@ -284,66 +290,83 @@ export function DocsHomeAI() {
     ...paths.map((path) => new URL(tSite.href(path), SITE_URL).href),
   ].join("\n\n");
   return (
-    <section
-      className={styles.aiSection}
-      aria-labelledby="build-with-your-agent"
+    <DocsHomeSection
+      id="build-with-your-agent"
+      title="Set up your coding agent."
+      description="Give your coding agent the official guides and your project's conventions. Copy this brief into the tool you already use."
     >
-      <div className={styles.aiIntro}>
-        <p className={styles.aiEyebrow}>
-          <Sparkles aria-hidden="true" />
-          {tSite("Build with your AI tools")}
-        </p>
-        <h2 id="build-with-your-agent">
-          {tSite("Give your coding agent the right starting point.")}
-        </h2>
-        <p>
-          {tSite(
-            "Copy a focused brief and the relevant public guides into the AI tool you already use. Keep your project's conventions and permissions in control.",
-          )}
-        </p>
-        <Link href="/docs/registry/agent-context">
-          {tSite("Read the AI coding guide")}
-          <ArrowRight aria-hidden="true" />
-        </Link>
-      </div>
-      <DocsContextCopy context={context} />
-    </section>
+      <DocsContextCopy context={context} collapsible />
+      <DocsLinks
+        variant="grid"
+        tone="neutral"
+        className={styles.cardGrid}
+        items={[
+          {
+            title: "Agent context",
+            href: "/docs/registry/agent-context",
+            description:
+              "Use documented APIs, follow project boundaries, and verify the result.",
+            icon: Sparkles,
+          },
+          {
+            title: "Registry",
+            href: "/docs/registry",
+            description:
+              "Understand the documented source-copy workflow and its limits.",
+            icon: Blocks,
+          },
+          {
+            title: "UI reference",
+            href: "/docs/ui",
+            description:
+              "Find component props, usage examples, and accessibility guidance.",
+            icon: BookOpen,
+          },
+        ]}
+      />
+    </DocsHomeSection>
   );
 }
 
 export function DocsHomeUpdates() {
   const tSite = useCopy();
   return (
-    <section className={styles.updates} aria-labelledby="docs-updates">
-      <div>
-        <p className={styles.eyebrow}>
-          {tSite("Keep your foundation current")}
-        </p>
-        <h2 id="docs-updates">
-          {tSite("Follow what changes. Know what comes next.")}
-        </h2>
-        <p>
-          {tSite(
-            "Review release notes and the roadmap before updating your project.",
-          )}
-        </p>
-      </div>
+    <DocsHomeSection
+      id="docs-updates"
+      title="Versions and updates."
+      description="Read the release notes and review what is planned before updating your project."
+    >
       <div className={styles.releaseLinks}>
         <Link href="/changelog">
-          <span>{tSite("Latest release notes")}</span>
-          <strong>
-            UI {UI_VERSION}
-            <span aria-hidden="true"> · </span>Tokens {TOKENS_VERSION}
-          </strong>
+          <span>UI {UI_VERSION}</span>
+          <div>
+            <strong>{tSite("Latest release notes")}</strong>
+            <p>{tSite("Review changes across the PyColors ecosystem.")}</p>
+          </div>
+          <ArrowRight aria-hidden="true" />
+        </Link>
+        <Link href="/docs/design-system/tokens">
+          <span>Tokens {TOKENS_VERSION}</span>
+          <div>
+            <strong>{tSite("Design tokens")}</strong>
+            <p>
+              {tSite(
+                "Keep your colors, typography, and interface foundations consistent.",
+              )}
+            </p>
+          </div>
           <ArrowRight aria-hidden="true" />
         </Link>
         <Link href="/roadmap">
-          <span>{tSite("Product roadmap")}</span>
-          <strong>{tSite("Shipped, in progress, and planned")}</strong>
+          <span>{tSite("Coming next")}</span>
+          <div>
+            <strong>{tSite("Product roadmap")}</strong>
+            <p>{tSite("Shipped, in progress, and planned")}</p>
+          </div>
           <ArrowRight aria-hidden="true" />
         </Link>
       </div>
-    </section>
+    </DocsHomeSection>
   );
 }
 

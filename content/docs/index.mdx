@@ -22,9 +22,7 @@ import {
 } from "@/components/docs/docs-home";
 
 <DocsHome>
-  <DocsHomeHero />
-  <DocsHomePaths />
-  <DocsHomeExample />
+  <DocsHomeHero>
   <DocsHomeQuickstart>
     <Tabs items={["Install UI", "Run Starter Free", "Set up Pro"]}>
       <Tab value="Install UI">
@@ -61,9 +59,12 @@ After downloading and unzipping your purchase, run these commands in its folder.
     </Tabs>
 
   </DocsHomeQuickstart>
-  <DocsHomeResources />
+  </DocsHomeHero>
   <DocsHomeAI />
   <DocsHomeUpdates />
-  <DocsHomeFeedback />
+  <DocsHomePaths />
+  <DocsHomeResources />
+  <DocsHomeExample />
   <DocsHomeHelp />
+  <DocsHomeFeedback />
 </DocsHome>

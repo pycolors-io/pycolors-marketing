@@ -36,15 +36,15 @@ afterEach(() => {
 });
 
 describe("documentation footer", () => {
-  it("uses the marketing footer with product discovery and existing destinations", () => {
+  it("keeps documentation resources compact and linked to existing destinations", () => {
     render(<DocsFooter />);
     const footer = screen.getByRole("contentinfo", {
-      name: "PyColors site footer",
+      name: "PyColors documentation footer",
     });
     expect(
       within(footer).getByRole("button", { name: "Language: English" }),
     ).toHaveTextContent("English");
-    for (const title of ["Products", "Resources", "Compare", "Company"]) {
+    for (const title of ["Documentation", "Resources", "Support"]) {
       const nav = within(footer).getByRole("navigation", {
         name: `Footer ${title}`,
       });
@@ -54,22 +54,23 @@ describe("documentation footer", () => {
       expect(within(nav).getByRole("list")).toBeVisible();
     }
     expect(
-      within(footer).getByRole("link", { name: "PyColors" }),
-    ).toHaveAttribute("href", "/");
-    const invitation = within(footer).getByRole("region", {
-      name: "Your next product starts here.",
-    });
+      within(footer).getByRole("link", { name: "PyColors Docs" }),
+    ).toHaveAttribute("href", "/docs");
     expect(
-      within(invitation).getByRole("link", { name: "Explore Starter Pro" }),
-    ).toHaveAttribute("href", "/starters/pro");
+      within(footer).queryByRole("region", {
+        name: "Your next product starts here.",
+      }),
+    ).not.toBeInTheDocument();
     expect(
-      within(invitation).getByRole("link", { name: "Compare products" }),
-    ).toHaveAttribute("href", "/pricing");
+      within(footer).getByText(
+        "Reference, guides, and support for building with PyColors.",
+      ),
+    ).toBeVisible();
     expect(
       within(footer).getByRole("link", { name: "Contact" }),
     ).toHaveAttribute("href", "/contact");
     const resources = within(footer).getByRole("navigation", {
-      name: "Footer Resources",
+      name: "Footer Documentation",
     });
     expect(
       within(resources).getByRole("link", { name: "Documentation" }),

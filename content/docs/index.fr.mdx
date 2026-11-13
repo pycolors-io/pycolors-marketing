@@ -22,9 +22,7 @@ import {
 } from "@/components/docs/docs-home";
 
 <DocsHome>
-  <DocsHomeHero />
-  <DocsHomePaths />
-  <DocsHomeExample />
+  <DocsHomeHero>
   <DocsHomeQuickstart>
     <Tabs items={["Installer l’UI", "Lancer Starter Free", "Configurer Pro"]}>
       <Tab value="Installer l’UI">
@@ -61,9 +59,12 @@ Après avoir téléchargé et décompressé votre achat, exécutez ces commandes
     </Tabs>
 
   </DocsHomeQuickstart>
-  <DocsHomeResources />
+  </DocsHomeHero>
   <DocsHomeAI />
   <DocsHomeUpdates />
-  <DocsHomeFeedback />
+  <DocsHomePaths />
+  <DocsHomeResources />
+  <DocsHomeExample />
   <DocsHomeHelp />
+  <DocsHomeFeedback />
 </DocsHome>
