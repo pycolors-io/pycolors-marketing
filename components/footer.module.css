@@ -638,11 +638,12 @@
   max-width: 100%;
 }
 
-/* The shared footer owns its design independently of the page layout. */
+/* The shared footer keeps the marketing frame even inside full-width Docs. */
 .publicFooter {
+  --site-frame-width: 90rem;
   --font-sans: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
   --font-brand: var(--font-sans);
-  --footer-surface: color-mix(in srgb, var(--foreground) 4%, var(--background));
+  --footer-surface: var(--background);
   --footer-action-fill: var(--marketing-action-fill, #6b2fd4);
   --footer-action-ink: var(--marketing-action-ink, #ffffff);
   z-index: 21;

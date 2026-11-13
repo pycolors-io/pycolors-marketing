@@ -1,7 +1,11 @@
 /* Scoped to the documentation: marketing pages and embedded UI previews retain
    their own tokens, layout, and component behavior. */
 .frame {
-  --docs-radius: 1.25rem;
+  /* Match the reference docs proportions: a full-width shell, 300px sidebar,
+     1024px content, and 240px TOC with a 16px trailing gutter on desktop. */
+  --site-frame-width: 100%;
+  --docs-content-width: 64rem;
+  --docs-radius: 0.625rem;
   background: var(--background);
 }
 
@@ -9,15 +13,22 @@
   --fd-layout-width: var(--site-frame-width);
 }
 
+.sidebarStart {
+  display: grid;
+  gap: 0.125rem;
+}
 .sidebarBanner {
   display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 1rem;
-  background: var(--surface-muted);
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 2rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.375rem;
+  color: var(--foreground);
   text-decoration: none;
+}
+.sidebarBanner:hover {
+  background: var(--surface-muted);
 }
 
 .sidebarBanner:focus-visible {
@@ -27,7 +38,18 @@
 
 .frame :global(#nd-sidebar) :is(a, button) {
   font-size: 0.8125rem;
-  line-height: 1.6;
+  line-height: 1.45;
+  min-height: 2rem;
+  padding-block: 0.375rem;
+  border-radius: 0.375rem;
+}
+
+.frame :global(#nd-sidebar-mobile) :is(a, button) {
+  min-height: 2.75rem;
+}
+
+.frame :global(#nd-sidebar) [data-radix-scroll-area-viewport] {
+  padding-block: 0.625rem;
 }
 
 .frame :global(#nd-sidebar) a[data-active="true"] {
@@ -41,9 +63,8 @@
 }
 
 .articleHeader {
-  margin-bottom: 2.5rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0;
 }
 
 .breadcrumb {
@@ -65,9 +86,9 @@
 
 .articleDescription {
   max-width: 65ch;
-  margin: 1.125rem 0 0;
+  margin: 1rem 0 0;
   font-size: 1rem;
-  line-height: 1.85;
+  line-height: 1.7;
   color: var(--muted-foreground);
   text-wrap: pretty;
 }
@@ -98,9 +119,47 @@
 }
 
 .linkCollection[data-docs-links="grid"] .linkEntry {
-  gap: 1.5rem;
-  padding: 1.5rem;
-  border-radius: var(--docs-radius, 1.25rem);
+  grid-template-columns: 1.75rem minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.625rem;
+  padding: 1rem;
+  border-radius: var(--docs-radius, 0.625rem);
+}
+
+.linkCollection .linkEntry {
+  min-height: 2.75rem;
+}
+.linkCollection:not([data-docs-links="grid"]) .linkEntry {
+  padding-block: 0.75rem;
+  gap: 0.75rem;
+}
+.linkCollection .linkTitle {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.linkCollection .linkDescription {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+}
+.linkCollection[data-docs-links="grid"] .linkIcon {
+  grid-column: 1;
+  grid-row: 1;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.375rem;
+}
+.linkCollection[data-docs-links="grid"] .linkText {
+  grid-column: 2;
+  grid-row: 1;
+}
+.linkCollection[data-docs-links="grid"] .linkArrow {
+  grid-column: 3;
+  grid-row: 1;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: 0.25rem;
 }
 
 .linkCollection .linkEntry:hover {
@@ -120,21 +179,22 @@
 }
 
 .articleFooter {
-  margin-top: 4rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid var(--border-subtle);
+  width: 100%;
+  max-width: var(--docs-content-width);
+  margin: 3rem auto 0;
+  padding-top: 0;
 }
 
 .paginationCard {
-  padding: 1.25rem;
+  padding: 0.875rem 1rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 1rem;
+  border-radius: 0.625rem;
   background: var(--background);
 }
 
 .continueCard {
   margin-top: 1rem;
-  padding: clamp(1.25rem, 3vw, 1.75rem);
+  padding: 1rem;
   border: 1px solid var(--border-subtle);
   border-radius: var(--docs-radius, 1.25rem);
   background: var(--surface-muted);
@@ -147,8 +207,12 @@
 }
 
 @media (min-width: 1024px) {
+  .frame :global(#nd-docs-layout) {
+    --fd-sidebar-width: 18.75rem;
+  }
+
   .frame :global(#nd-sidebar) {
-    padding-inline-end: 0.5rem;
+    padding-inline-end: 0.75rem;
   }
 
   .frame :global(#nd-page) {
@@ -164,7 +228,7 @@
 
 @media (min-width: 1280px) {
   .frame :global(#nd-docs-layout):has(:global(#nd-toc, #nd-toc-placeholder)) {
-    --fd-toc-width: 12.5rem;
+    --fd-toc-width: 16rem;
   }
 }
 
@@ -174,10 +238,17 @@
   }
 }
 
-/* The localized Docs badge must not push the mobile menu off screen. The
-   navigation row below already names Documentation at this breakpoint. */
+.headerLogo,
+.headerSection {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+/* The article navigation already names Documentation on small screens.
+   Reserve the header row for the brand, search and navigation controls. */
 @media (max-width: 479px) {
-  .headerLogo > a > span:last-child {
+  .headerSection {
     display: none;
   }
 }
@@ -185,14 +256,14 @@
 /* Fumadocs notes retain their status icon and accent color. Only their
    reading surface and spacing follow the shared documentation design. */
 .frame :global(.docs-prose div[style*="--callout-color"][class*="bg-fd-card"]) {
-  padding: 1.25rem;
-  border-radius: 1.25rem;
+  padding: 1rem;
+  border-radius: 0.625rem;
   background: var(--surface-muted);
 }
 
 .frame :global(.docs-prose [data-card]):not(:global(.docs-preview *)) {
-  padding: 1.5rem;
-  border-radius: 1.25rem;
+  padding: 1rem;
+  border-radius: 0.625rem;
   background: var(--background);
   box-shadow: none;
 }
@@ -200,4 +271,431 @@
 .frame :global(.docs-prose a[data-card]):not(:global(.docs-preview *)):hover {
   border-color: var(--border);
   background: var(--surface-muted);
+}
+
+/* Page utilities stay outside the prose and embedded product examples. */
+.articleHeader:has(+ .pageActions) {
+  margin-bottom: 1rem;
+}
+.pageActions {
+  margin-bottom: 2rem;
+}
+.pageActionLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.pageActionLinks :is(button, a) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 0.75rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.pageActionLinks :is(button, a):hover {
+  color: var(--foreground);
+  background: var(--surface-muted);
+}
+.pageActionLinks :is(button, a):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.pageActionLinks button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+.pageActionLinks svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.pageActionError {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.75;
+}
+
+/* Keep Fumadocs' named regions and mobile navigation. The main region has
+   the reference 24px top / 64px bottom spacing and open, borderless gutters. */
+.frame :global(#nd-page) {
+  max-width: none;
+  margin-inline: auto;
+  padding: 1.5rem 1.5rem 4rem;
+  justify-self: center;
+}
+@media (min-width: 768px) {
+  .frame :global(#nd-docs-layout) {
+    grid-template-columns:
+      0 var(--fd-sidebar-col) minmax(0, 1fr) var(--fd-toc-width)
+      0 !important;
+    padding-inline: 0;
+  }
+  .frame :global(#nd-sidebar) {
+    border-inline-end: 0;
+  }
+  .frame :global(#nd-toc) {
+    --fd-toc-width: 15rem;
+    width: var(--fd-toc-width);
+    margin-inline-end: 1rem;
+    justify-self: start;
+    border-inline-start: 0;
+    padding: 1.5rem 0 1rem;
+  }
+}
+@media (min-width: 961px) {
+  .frame :global(#nd-page) {
+    padding-inline: 0.75rem 3rem;
+  }
+}
+.frame :global(.docs-prose > p) {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.frame :global(.docs-prose > h2) {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+.frame :global(.docs-prose > h3) {
+  margin-top: 2rem;
+  line-height: 1.35;
+}
+.assistantTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.assistantTrigger svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--primary);
+}
+.assistantTrigger:hover {
+  background: var(--surface-muted);
+}
+.sidebarAssistant {
+  width: 100%;
+  justify-content: flex-start;
+  min-height: 2rem;
+  padding: 0.375rem 0.5rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+}
+.headerAssistant {
+  display: none;
+}
+@media (min-width: 1280px) {
+  .headerAssistant {
+    display: inline-flex;
+  }
+}
+.assistantPanel {
+  position: fixed;
+  inset: 0 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: min(100vw, 28rem);
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow-y: auto;
+  padding: 1.5rem;
+  border: 0;
+  border-inline-start: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  transform: none;
+  translate: none;
+}
+.assistantPanel > button:last-child {
+  display: none;
+}
+.assistantPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.assistantEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+.assistantEyebrow svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary);
+}
+.assistantClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+}
+.assistantClose svg {
+  width: 1rem;
+  height: 1rem;
+}
+.assistantPanel .assistantTitle {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 1.875rem;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+.assistantPanel .assistantDescription {
+  margin: 1rem 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.assistantPage {
+  margin-bottom: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.assistantSuggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.assistantSuggestions button {
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--surface-muted);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.assistantLabel {
+  margin-bottom: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.assistantPanel textarea {
+  width: 100%;
+  min-height: 8rem;
+  padding: 0.875rem;
+  border-radius: 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.assistantCopy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 2.75rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.assistantCopy svg {
+  width: 1rem;
+  height: 1rem;
+}
+.assistantCopy:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.assistantStatus {
+  margin-block: 0.875rem 1.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+.assistantContext {
+  padding: 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.875rem;
+  background: var(--surface-muted);
+}
+.assistantContext summary {
+  min-height: 2rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+.assistantContext pre {
+  max-height: 15rem;
+  overflow: auto;
+  margin-top: 0.875rem;
+  font-size: 0.6875rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.assistantMarkdown {
+  display: inline-flex;
+  align-self: flex-start;
+  min-height: 2.75rem;
+  align-items: center;
+  margin-top: 1rem;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  text-underline-offset: 4px;
+}
+.assistantTrigger:focus-visible,
+.assistantPanel :is(button, a, summary, pre):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.feedback {
+  margin-block: 2rem;
+  padding: 1.5rem 0;
+  border-block: 1px solid var(--border-subtle);
+}
+.feedbackTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.feedbackTop h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.feedbackRatings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+.feedbackRatings button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.feedbackRatings button[aria-pressed="true"] {
+  border-color: var(--foreground);
+  background: var(--surface-muted);
+  color: var(--foreground);
+}
+.feedbackRatings button svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.feedbackForm {
+  display: grid;
+  gap: 0.875rem;
+  margin-top: 1.25rem;
+}
+.feedbackForm label {
+  font-size: 0.8125rem;
+  color: var(--foreground);
+}
+.feedbackForm textarea {
+  border-radius: 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.feedbackForm p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+.feedbackActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+}
+.feedbackActions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  text-underline-offset: 4px;
+}
+.feedbackActions a:first-child {
+  padding-inline: 1rem;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: var(--background);
+  text-decoration: none;
+}
+.feedbackActions svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.feedback :is(button, a):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.continueCard :global(a.site-primary-action) {
+  height: auto;
+  min-height: 2.75rem;
+  white-space: normal;
+}
+@media (prefers-reduced-motion: reduce) {
+  .assistantPanel {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .frame :global(#nd-sidebar) > * {
+    width: 100%;
+    min-width: 0;
+  }
 }

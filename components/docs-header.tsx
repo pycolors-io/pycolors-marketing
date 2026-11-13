@@ -10,6 +10,8 @@ import {
 import { SearchTrigger } from "fumadocs-ui/layouts/shared/slots/search-trigger";
 
 import { Container } from "@/components/container";
+import { DocsLogo } from "@/components/docs-logo";
+import { DocsAssistant } from "@/components/docs/docs-assistant";
 import { SiteHeader } from "@/components/layout/site-header";
 import styles from "@/components/docs/docs-design.module.css";
 
@@ -37,11 +39,15 @@ export function DocsHeader() {
 
   return (
     <SiteHeader
+      logo={<DocsLogo />}
       onMobileMenuOpen={() => setOpen(false)}
       desktopActions={
-        <SearchTrigger
-          className={`${styles.search} size-9 text-foreground [@media(pointer:coarse)]:size-11 ${focusRing}`}
-        />
+        <>
+          <DocsAssistant className={styles.headerAssistant} />
+          <SearchTrigger
+            className={`${styles.search} size-9 text-foreground [@media(pointer:coarse)]:size-11 ${focusRing}`}
+          />
+        </>
       }
       mobileActions={
         <SearchTrigger

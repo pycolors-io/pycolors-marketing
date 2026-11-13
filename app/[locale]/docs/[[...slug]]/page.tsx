@@ -12,6 +12,7 @@ import { getMDXComponents } from "@/mdx-components";
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
 import { DocsPageFooter } from "@/components/docs/docs-page-footer";
 import { DocsPageHeader } from "@/components/docs/docs-page-header";
+import { DocsPageActions } from "@/components/docs/docs-page-actions";
 import { UiExplorerLink } from "@/components/docs/ui-explorer-link";
 import { formatDate } from "@/lib/format-date";
 import { getPrevNextFromTree } from "@/lib/docs-navigation";
@@ -34,9 +35,12 @@ function getBreadcrumbs(slug?: string[]) {
     currentPath += `/${segment}`;
 
     items.push({
-      label: segment
-        .replaceAll("-", " ")
-        .replace(/\b\w/g, (char) => char.toUpperCase()),
+      label:
+        segment === "ui"
+          ? "UI"
+          : segment
+              .replaceAll("-", " ")
+              .replace(/\b\w/g, (char) => char.toUpperCase()),
       href: currentPath,
     });
   }
@@ -134,7 +138,14 @@ export default async function Page(
       footer={{
         enabled: !isDocsHome,
         component: (
-          <DocsPageFooter previous={previous} next={next} {...footerCta} />
+          <DocsPageFooter
+            previous={previous}
+            next={next}
+            {...footerCta}
+            showFeedback
+            pageTitle={tSite(page.data.title)}
+            pageUrl={page.url}
+          />
         ),
       }}
     >
@@ -146,6 +157,18 @@ export default async function Page(
             lastUpdated={formatDate(page.data.lastUpdated, tSite.locale)}
             appliesTo={page.data.appliesTo}
             breadcrumbs={breadcrumbs}
+          />
+        ) : null}
+
+        {!isDocsHome ? (
+          <DocsPageActions
+            markdownUrl={
+              "/api/docs/markdown?" +
+              new URLSearchParams({
+                slug: params.slug?.join("/") ?? "",
+                locale: params.locale,
+              }).toString()
+            }
           />
         ) : null}
 

@@ -1,18 +1,12 @@
 "use client";
 
 import { useCopy } from "@/lib/i18n/use-copy";
-import * as React from "react";
 import { Link } from "@/lib/i18n/navigation";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Sparkles,
-  ThumbsDown,
-  ThumbsUp,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 
 import { cn } from "@pycolors/ui";
 import styles from "./docs-design.module.css";
+import { DocsFeedback } from "./docs-feedback";
 
 type NavItem = Readonly<{
   title: string;
@@ -27,6 +21,8 @@ type DocsPageFooterProps = Readonly<{
   ctaTitle?: string;
   ctaDescription?: string;
   showFeedback?: boolean;
+  pageTitle?: string;
+  pageUrl?: string;
   className?: string;
 }>;
 
@@ -38,11 +34,11 @@ export function DocsPageFooter({
   ctaTitle = "Ready to go further?",
   ctaDescription = "Move from docs to production-ready UI, templates, and SaaS foundations.",
   showFeedback = false,
+  pageTitle = "Documentation",
+  pageUrl = "/docs",
   className,
 }: DocsPageFooterProps) {
   const tSite = useCopy();
-
-  const [feedback, setFeedback] = React.useState<"up" | "down" | null>(null);
 
   return (
     <footer className={cn(styles.articleFooter, className)}>
@@ -75,6 +71,10 @@ export function DocsPageFooter({
           />
         ) : null}
       </nav>
+
+      {showFeedback ? (
+        <DocsFeedback pageTitle={pageTitle} pageUrl={pageUrl} />
+      ) : null}
 
       <div className={styles.continueCard}>
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
@@ -114,36 +114,6 @@ export function DocsPageFooter({
           </Link>
         </div>
       </div>
-
-      {showFeedback ? (
-        <div className="mt-15 mb-5 flex justify-center">
-          <div
-            className={cn(
-              "inline-flex items-center gap-2 rounded-full",
-              "border border-border-subtle bg-card px-4 py-2",
-              "shadow-off",
-            )}
-          >
-            <span className="text-xs font-medium text-muted-foreground">
-              {tSite("Was this helpful?")}
-            </span>
-
-            <FeedbackButton
-              active={feedback === "up"}
-              label={tSite("Yes")}
-              onClick={() => setFeedback("up")}
-              icon={ThumbsUp}
-            />
-
-            <FeedbackButton
-              active={feedback === "down"}
-              label={tSite("No")}
-              onClick={() => setFeedback("down")}
-              icon={ThumbsDown}
-            />
-          </div>
-        </div>
-      ) : null}
     </footer>
   );
 }
@@ -196,39 +166,5 @@ function DocsFooterNavCard({
         {tSite(title)}
       </div>
     </Link>
-  );
-}
-
-type FeedbackButtonProps = Readonly<{
-  active: boolean;
-  label: string;
-  onClick: () => void;
-  icon: React.ComponentType<{ className?: string }>;
-}>;
-
-function FeedbackButton({
-  active,
-  label,
-  onClick,
-  icon: Icon,
-}: FeedbackButtonProps) {
-  const tSite = useCopy();
-
-  return (
-    <button
-      type="button"
-      aria-pressed={active}
-      onClick={onClick}
-      className={cn(
-        "inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 cursor-pointer",
-        "text-xs font-medium transition",
-        active
-          ? "border-primary bg-primary/10 text-foreground"
-          : "border-transparent text-muted-foreground hover:bg-muted hover:text-foreground",
-      )}
-    >
-      <Icon className="h-3.5 w-3.5" />
-      <span className="sr-only sm:not-sr-only">{tSite(label)}</span>
-    </button>
   );
 }

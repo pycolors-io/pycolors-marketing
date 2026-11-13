@@ -3,7 +3,7 @@ title: Input
 description: Composant de saisie de texte de base pour l'interface utilisateur
   PyColors, avec étiquettes, texte d'aide, validation, icônes et accessibilité
   intégrés.
-lastUpdated: "2026-04-28"
+lastUpdated: "2026-11-13"
 appliesTo: UI
 ---
 
@@ -33,14 +33,14 @@ import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="outline">UI</Badge>
-  <Badge>Entrées</Badge>
+  <Badge>Input</Badge>
 </div>
 
 ## Champs de texte fiables pour les formulaires de produits [#reliable-text-fields-for-product-forms]
 
-Les **Entrées** component est un contrôle de formulaire fondamental dans PyColors UI.
+Le composant **Input** permet de saisir et de modifier un texte court dans les formulaires PyColors UI.
 
-Utilisez-le pour:
+Utilisez-le pour :
 
 - Formulaires de connexion
 - champs de recherche
@@ -51,9 +51,9 @@ Utilisez-le pour:
 - Flux de création de produits
 - Formulaires pilotés par validation
 
-L'entrée est conçue pour être accessible par défaut, sensible au thème et suffisamment flexible pour des champs simples ou des mises en page de formulaire de production.
+**Input** suit le thème de votre application et prend en charge les interactions au clavier et les lecteurs d’écran.
 
-Il soutient:
+Il prend en charge :
 
 - étiquettes
 - Texte d'aide
@@ -63,9 +63,8 @@ Il soutient:
 - support clavier et lecteur d'écran
 
 <Callout title="Idée de base">
-  Input collecte les données des utilisateurs. Les règles de validation doivent
-  résider dans votre calque de formulaire ou de schéma, et non dans la primitive
-  visuelle.
+  **Input** affiche le champ et ses états. Définissez les règles de validation dans
+  votre formulaire ou votre schéma, en dehors de la primitive visuelle.
 
 </Callout>
 
@@ -102,14 +101,14 @@ export function BasicInput() {
 </Tabs>
 
 <Callout type="info" title="Règle des étiquettes">
-  Le texte d'espace réservé n'est pas un remplacement pour une étiquette.
-  Utilisation `label` lorsque le terrain doit être seul.
+  Un placeholder ne remplace pas un libellé visible. Utilisez `label`
+  lorsqu’aucun libellé n’est fourni par le contexte.
 
 </Callout>
 
 ### Avec étiquette et texte d'aide [#with-label-and-helper-text]
 
-Utilisation `label` et `helperText` pour rendre le champ auto-explicatif.
+Associez `label` et `helperText` pour nommer le champ et préciser la saisie attendue.
 
 <Tabs items={["Aperçu", "Code"]}>
   <Tab value="Aperçu">
@@ -145,7 +144,7 @@ export function InputWithLabel() {
 
 ## Quand utiliser Input [#when-to-use-input]
 
-Utilisez la saisie lorsque l'utilisateur doit fournir ou modifier de courtes données textuelles.
+Utilisez **Input** pour saisir ou modifier un texte court.
 
 <DocsFeatureGrid
   columns={3}
@@ -154,21 +153,21 @@ Utilisez la saisie lorsque l'utilisateur doit fournir ou modifier de courtes don
     {
       title: "Formulaires",
       description:
-        "Utilisation pour les formulaires de compte, de profil, de facturation, d'organisation et de configuration.",
+        "Pour les paramètres de compte, le profil, la facturation et les informations de votre organisation.",
       icon: FormInput,
     },
     {
       title: "Rechercher",
       description:
-        "Utilisez avec une icône de premier plan pour la recherche, les filtres et les champs de recherche rapide.",
+        "Ajoutez une icône à gauche pour identifier un champ de recherche ou de filtrage.",
       icon: SearchIcon,
     },
     {
       title: "Validation",
       description: (
         <>
-          Use <code>error</code> to show field-level validation feedback
-          clearly.
+          Utilisez <code>error</code> pour afficher un message de validation
+          directement sous le champ.
         </>
       ),
       icon: ShieldCheck,
@@ -181,10 +180,10 @@ Utilisez la saisie lorsque l'utilisateur doit fournir ou modifier de courtes don
 Quand `error` est fourni :
 
 - Les styles d'erreur sont appliqués
-- `aria-invalid` est fixé
+- `aria-invalid` indique que le champ est invalide
 - Le texte de l'erreur est connecté au champ via `aria-describedby` et `aria-errormessage`
-- Le texte de l'erreur a `role="alert"`, il est donc annoncé immédiatement lorsqu'il apparaît - y compris lorsque le champ est déjà concentré, pas seulement sur le prochain événement focus
-- un consommateur fourni `aria-describedby` est composé avec les propres helper/error ids du champ plutôt que remplacé, donc les deux descriptions restent disponibles pour la technologie d'assistance
+- Le message porte `role="alert"` : il est annoncé dès son apparition, même si le champ a déjà le focus
+- Un `aria-describedby` fourni par votre application est conservé et combiné avec les identifiants du texte d’aide et de l’erreur
 
 <Tabs items={["Aperçu", "Code"]}>
   <Tab value="Aperçu">
@@ -344,11 +343,11 @@ export function InputSizes() {
 | ------ | --------------------------------------------------------------------------- |
 | `sm`   | Interfaces utilisateur denses, tableaux, filtres, barres d'outils compactes |
 | `md`   | Taille de saisie par défaut                                                 |
-| `lg`   | Onboarding, auth, formes marketing, flux proéminents                        |
+| `lg`   | Onboarding, authentification et formulaires mis en avant                    |
 
 <Callout type="info" title="Règle de densité">
-  Utilisation `md` par défaut. Utilisation `sm` pour les surfaces de produits
-  denses et `lg` lorsque la forme a besoin d'une plus grande importance.
+  Utilisez `md` par défaut, `sm` pour les interfaces denses et `lg` pour
+  mettre un formulaire en avant.
 
 </Callout>
 
@@ -392,12 +391,12 @@ export function InputSizes() {
 
 </Steps>
 
-## Entrée vs Mot de passeInput vs Textarea [#input-vs-passwordinput-vs-textarea]
+## Input, PasswordInput ou Textarea [#input-vs-passwordinput-vs-textarea]
 
 | Situation                                | Utilisation                                 |
 | ---------------------------------------- | ------------------------------------------- |
-| Valeur de texte court                    | Entrées                                     |
-| Email, nom, slug, URL                    | Entrées                                     |
+| Valeur de texte court                    | Input                                       |
+| Email, nom, slug, URL                    | Input                                       |
 | Mot de passe avec révélation             | PasswordInput                               |
 | Contenu long et libre                    | Textarea ou champ personnalisé              |
 | Champ de recherche                       | Entrée avec icône principale                |
@@ -422,9 +421,9 @@ export function InputSizes() {
 | `leftIcon`   | `React.ReactNode`      | —          | Icône affichée à gauche                 |
 | `rightIcon`  | `React.ReactNode`      | —          | Icône affichée à droite                 |
 | `size`       | `"sm" \| "md" \| "lg"` | `"md"`     | Densité visuelle                        |
-| `className`  | `string`               | —          | Dépassement du vent arrière             |
+| `className`  | `string`               | —          | Classes Tailwind supplémentaires        |
 
-L'entrée étend les props d'entrée standard, à l'exclusion de la `size` attribut.
+**Input** accepte les attributs HTML d’un champ de saisie, à l’exception de `size`, qui définit ici sa taille visuelle.
 
 ```ts title="input-props.ts"
 React.InputHTMLAttributes<HTMLInputElement>;
@@ -454,8 +453,8 @@ L'entrée est conçue pour prendre en charge la composition de formulaire access
 
 Directives :
 
-- Utiliser un visible `label` quand le terrain a besoin de contexte
-- Ne vous fiez pas au texte d'espace réservé comme seule étiquette
+- Afficher un `label` visible pour identifier le champ
+- Ne pas utiliser le placeholder comme seul libellé
 - `error` devrait fixer `aria-invalid`
 - helper et le texte d'erreur doivent être connectés via `aria-describedby`
 - texte d'erreur est également annoncé en direct via `role="alert"` Le moment où il apparaît
@@ -479,10 +478,10 @@ Directives :
     "Texte d'aide court",
     "Messages de validation spécifiques",
     "Types d'entrée sémantiques",
-    "Tailles cohérentes dans une forme",
+    "Tailles cohérentes dans un formulaire",
   ]}
   avoid={[
-    "Champs réservés",
+    "Champs identifiés uniquement par leur placeholder",
     "erreurs vagues comme “Invalide”",
     "trop d'icônes dans un champ",
     "mélange aléatoire des tailles d'entrée",
@@ -490,9 +489,9 @@ Directives :
   ]}
 />
 
-### Directives de copie du produit [#product-copy-guidelines]
+### Rédiger les libellés et les messages [#product-copy-guidelines]
 
-Les étiquettes, les espaces réservés, le texte d'aide et les erreurs ont chacun un travail différent.
+Le libellé identifie le champ, le placeholder donne un exemple de saisie, le texte d’aide précise une contrainte et le message d’erreur explique la correction attendue.
 
 <Tabs items={["Étiquettes", "Placeholders", "Erreurs"]}>
   <Tab value="Étiquettes">
@@ -540,14 +539,14 @@ Les étiquettes, les espaces réservés, le texte d'aide et les erreurs ont chac
     Non. L'entrée affiche l'état de validation. Votre formulaire, schéma, serveur ou couche de domaine doit définir ce qui est valide.
   </Accordion>
 
-<Accordion title="Un texte réservé peut-il remplacer une étiquette ?">
-  Non. Le texte de l'espace réservé disparaît lors de la saisie et ne suffit pas
-  pour la structure de formulaire accessible.
+<Accordion title="Un placeholder peut-il remplacer un libellé ?">
+  Non. Le placeholder disparaît lors de la saisie et ne suffit pas pour la
+  structure de formulaire accessible.
 </Accordion>
 
 <Accordion title="Quand dois-je utiliser le texte d'aide?">
-  Utilisez le texte d'aide lorsqu'il réduit l'incertitude, explique la mise en
-  forme ou clarifie la façon dont la valeur sera utilisée.
+  Ajoutez un texte d’aide pour préciser le format attendu ou expliquer comment
+  la valeur sera utilisée.
 </Accordion>
 
   <Accordion title="Les icônes peuvent-elles être interactives ?">
@@ -555,7 +554,7 @@ Les étiquettes, les espaces réservés, le texte d'aide et les erreurs ont chac
   </Accordion>
 </Accordions>
 
-## Related [#related]
+## Pour aller plus loin [#related]
 
 <DocsLinks
   variant="list"

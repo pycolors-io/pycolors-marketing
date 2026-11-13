@@ -160,6 +160,7 @@ function DocsLinksItemRow({
 
       <span
         className={cn(
+          design.linkIcon,
           "flex shrink-0 items-center justify-center rounded-[8px]",
           "border text-xs font-medium transition-colors duration-200",
           isGrid ? "size-9" : isCompact ? "size-6" : "size-7",
@@ -174,7 +175,13 @@ function DocsLinksItemRow({
         {isCompact ? <ArrowRight className="size-3.5" /> : null}
       </span>
 
-      <span className={cn("min-w-0", isGrid && "col-span-2 row-start-2")}>
+      <span
+        className={cn(
+          design.linkText,
+          "min-w-0",
+          isGrid && "col-span-2 row-start-2",
+        )}
+      >
         {item.eyebrow ? (
           <span className="mb-1 block text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
             {tSite(item.eyebrow)}
@@ -184,6 +191,7 @@ function DocsLinksItemRow({
         <span className="flex min-w-0 flex-wrap items-center gap-2">
           <span
             className={cn(
+              design.linkTitle,
               "block text-sm font-medium tracking-tight text-foreground",
               "transition-colors",
               isGrid && "text-[15px] font-semibold",
@@ -201,6 +209,7 @@ function DocsLinksItemRow({
         {item.description ? (
           <span
             className={cn(
+              design.linkDescription,
               "mt-1.5 block text-sm leading-6 text-muted-foreground",
               isCompact && "mt-1 leading-5",
             )}
@@ -221,6 +230,7 @@ function DocsLinksItemRow({
       {!isCompact ? (
         <TrailingIcon
           className={cn(
+            design.linkArrow,
             "mt-1 size-4 shrink-0 text-muted-foreground",
             "transition-[color,transform] duration-200 motion-reduce:transition-none motion-reduce:transform-none",
             isGrid && "col-start-2 row-start-1 mt-2",

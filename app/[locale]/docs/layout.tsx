@@ -14,6 +14,7 @@ import { DocsFooter } from "@/components/docs-footer";
 import { JsonLd } from "@/components/seo/json-ld";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import { DocsHeader } from "@/components/docs-header";
+import { DocsAssistant } from "@/components/docs/docs-assistant";
 import styles from "@/components/docs/docs-design.module.css";
 import {
   DocsSidebarItem,
@@ -56,24 +57,16 @@ function SidebarBanner() {
   const tSite = useCopy();
 
   return (
-    <Link href="/docs" className={styles.sidebarBanner}>
-      <BookOpen
-        className="mt-0.5 size-4 shrink-0 text-primary"
-        aria-hidden="true"
-      />
-      <span className="min-w-0 flex-1">
-        <span className="block text-sm font-medium text-foreground">
+    <div className={styles.sidebarStart}>
+      <Link href="/docs" className={styles.sidebarBanner}>
+        <BookOpen className="size-4 shrink-0" aria-hidden="true" />
+        <span className="flex-1 text-[13px] font-medium">
           {tSite("Documentation")}
         </span>
-        <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-          {tSite("Setup, components, and guides.")}
-        </span>
-      </span>
-      <ArrowUpRight
-        className="mt-0.5 size-3.5 shrink-0 text-muted-foreground group-hover:text-foreground"
-        aria-hidden="true"
-      />
-    </Link>
+        <ArrowUpRight className="size-3.5" aria-hidden="true" />
+      </Link>
+      <DocsAssistant className={styles.sidebarAssistant} />
+    </div>
   );
 }
 
