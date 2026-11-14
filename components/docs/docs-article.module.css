@@ -5,14 +5,14 @@
 .guidancePanel,
 .catalogCard {
   min-width: 0;
-  border-radius: 0.625rem;
-  background: var(--background);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
   box-shadow: none;
 }
 
 .decisionCard,
 .featureCard {
-  padding: 1rem;
+  padding: var(--docs-card-padding, 1.25rem);
 }
 
 .decisionCard h3,
@@ -26,52 +26,51 @@
   padding: 0.25rem 0.625rem;
   border-radius: 999px;
   border-color: var(--border-subtle);
-  background: var(--surface-muted);
+  background: var(--docs-canvas, var(--surface-muted));
   color: var(--muted-foreground);
   letter-spacing: 0;
 }
 
 .decisionCard > div:first-child > span[aria-hidden="true"],
 .featureCard > div[aria-hidden="true"] {
-  width: 1.875rem;
-  height: 1.875rem;
+  width: 1.25rem;
+  height: 1.25rem;
   margin-bottom: 0.75rem;
-  border-radius: 0.375rem;
-  border-color: var(--border-subtle);
-  background: var(--surface-muted);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
   box-shadow: none;
 }
 
+.decisionCard > div:first-child > span[aria-hidden="true"] svg,
+.featureCard > div[aria-hidden="true"] svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.featureCard > h3 + div {
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
 .decisionLink {
-  border-radius: 0.625rem;
+  border-radius: var(--docs-radius, 0.75rem);
 }
 
 .decisionLink:hover .decisionCard {
   border-color: color-mix(in srgb, var(--foreground) 25%, var(--border-subtle));
-  background: var(--surface-muted);
+  background: var(--docs-card, var(--background));
 }
 
-.decisionCard[data-tone="pro"],
-.upgradeCard {
-  --foreground: #fafafa;
-  --muted-foreground: #c7c7d0;
-  --border-subtle: #3b3b43;
-  --surface-muted: #292930;
-  --background: #17171c;
-  --primary: #bda0ff;
-  --primary-foreground: #17171c;
-  background: #17171c;
-  color: #fafafa;
-}
-
-.decisionLink:hover .decisionCard[data-tone="pro"] {
-  border-color: #686874;
-  background: #202026;
+.decisionCard[data-tone="pro"] {
+  border-color: var(--border-subtle);
 }
 
 .upgradeCard {
-  padding: 1.25rem;
-  border-radius: 0.625rem;
+  padding: var(--docs-card-padding, 1.25rem);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
 }
 
 .upgradeCard h3 {
@@ -92,8 +91,8 @@
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: 0.625rem;
-  background: var(--background);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
 }
 
 .conceptTabs .conceptList {
@@ -103,7 +102,7 @@
   max-width: 100%;
   padding: 0.375rem 0.625rem 0;
   border-bottom: 1px solid var(--border-subtle);
-  background: var(--surface-muted);
+  background: var(--docs-canvas, var(--surface-muted));
 }
 
 .conceptList .conceptTrigger {
@@ -115,9 +114,9 @@
 }
 
 .conceptPanel {
-  padding: 1rem;
+  padding: var(--docs-card-padding, 1.25rem);
   border: 0;
-  background: var(--background);
+  background: var(--docs-card, var(--background));
 }
 
 .conceptPanel span[aria-hidden="true"] {
@@ -128,17 +127,17 @@
   min-height: 2.75rem;
   padding: 0.625rem 0.875rem;
   border-radius: 999px;
-  background: var(--background);
+  background: var(--docs-card, var(--background));
   line-height: 1.5;
 }
 
 .sectionLinks a:hover {
-  background: var(--surface-muted);
+  background: var(--docs-canvas, var(--surface-muted));
 }
 
 .guidancePanel > header {
-  padding-inline: 1.25rem;
-  background: var(--surface-muted);
+  padding-inline: var(--docs-card-padding, 1.25rem);
+  background: var(--docs-card, var(--background));
 }
 
 .guidancePanel > ul > li {
@@ -146,36 +145,43 @@
   line-height: 1.7;
 }
 
+.catalogCard > div:first-child {
+  padding: var(--docs-card-padding, 1.25rem);
+  background: var(--docs-card, var(--background));
+}
+
 .catalogCard ul {
   padding: 0.5rem;
 }
 
-.codeBlock {
+.codeBlock,
+.commandBlock {
   overflow: hidden;
-  border-radius: 1rem;
-  background: var(--background);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
 }
 
-.codeBlock > div:has(> figcaption) {
+.codeBlock > div:has(> figcaption),
+.commandBlock > div:first-child {
   min-height: 3rem;
-  background: var(--surface-muted);
+  background: var(--docs-canvas, var(--surface-muted));
 }
 
 .tableFrame {
-  border-radius: 1rem;
-  background: var(--background);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
 }
 
 .tableFrame th {
-  background: var(--surface-muted);
+  background: var(--docs-canvas, var(--surface-muted));
 }
 
 .quote {
   padding: 1.25rem 1.5rem;
   border: 1px solid var(--border-subtle);
   border-inline-start: 3px solid var(--foreground);
-  border-radius: 0 1rem 1rem 0;
-  background: var(--surface-muted);
+  border-radius: 0 var(--docs-radius, 0.75rem) var(--docs-radius, 0.75rem) 0;
+  background: var(--docs-canvas, var(--surface-muted));
   font-style: normal;
 }
 
@@ -187,24 +193,12 @@
   }
 }
 
-@media (forced-colors: none) {
-  :global(html[data-site-palette="monochrome"]) .decisionCard[data-tone="pro"],
-  :global(html[data-site-palette="monochrome"]) .upgradeCard {
-    --primary: #fafafa;
-    --primary-foreground: #17171c;
-  }
-}
-
 @media (forced-colors: active) {
-  .decisionCard[data-tone="pro"],
+  .decisionCard,
+  .featureCard,
+  .guidancePanel,
+  .catalogCard,
   .upgradeCard {
-    --foreground: CanvasText;
-    --muted-foreground: CanvasText;
-    --border-subtle: CanvasText;
-    --surface-muted: Canvas;
-    --background: Canvas;
-    --primary: LinkText;
-    --primary-foreground: Canvas;
     border-color: CanvasText;
     background: Canvas;
     color: CanvasText;

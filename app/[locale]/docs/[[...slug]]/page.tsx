@@ -129,10 +129,13 @@ export default async function Page(
       ? page.data.toc.filter((item) => item.depth <= 2)
       : [];
 
+  // An empty TOC keeps Fumadocs' desktop column reserved on the home,
+  // so navigating to an article does not move the content horizontally.
   return (
     <DocsPage
-      toc={toc}
+      toc={isDocsHome ? [] : toc}
       full={page.data.full}
+      tableOfContent={{ enabled: true }}
       breadcrumb={{ enabled: false }}
       tableOfContentPopover={isDocsHome ? { enabled: false } : undefined}
       footer={{

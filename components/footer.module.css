@@ -599,51 +599,22 @@
   }
 }
 
-/* The repository links and their quiet Fibonacci signature stay together. */
-.footerSignature {
-  position: relative;
-  width: clamp(8rem, 12vw, 10rem);
-  max-width: 100%;
-  aspect-ratio: 8 / 5;
-  margin: 0.75rem 0 0;
-  overflow: hidden;
-  background: transparent;
-  pointer-events: none;
-  user-select: none;
-}
-.footerSignature > div {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  mask-image: none;
-}
-.footerSignature svg {
-  /* Rotate the 35×56 source; the complete outline fits at 88% of this 8:5 box. */
-  width: 55%;
-  height: 140.8%;
-  max-width: none;
-  max-height: none;
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-.footerSignature rect {
-  stroke: color-mix(in oklab, var(--foreground) 7%, transparent);
-}
-.footerSignature path {
-  stroke: color-mix(in oklab, var(--primary) 26%, transparent);
-  stroke-width: 1;
-}
-
+/* Keep repository links together beneath the directory. */
 .repositoryArea {
   min-width: 0;
   max-width: 100%;
 }
 
-/* The shared footer keeps the marketing frame even inside full-width Docs. */
+/* Shared directory: 1400px of content with 24px side gutters, including Docs. */
 .publicFooter {
-  --site-frame-width: 90rem;
+  --footer-content-width: 87.5rem;
+  --footer-page-margin: 1.5rem;
+  --site-frame-width: calc(
+    var(--footer-content-width) + 2 * var(--footer-page-margin)
+  );
   --font-sans: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
   --font-brand: var(--font-sans);
-  --footer-surface: var(--background);
+  --footer-surface: var(--docs-canvas, #fafafa);
   --footer-action-fill: var(--marketing-action-fill, #6b2fd4);
   --footer-action-ink: var(--marketing-action-ink, #ffffff);
   z-index: 21;
@@ -653,7 +624,12 @@
   font-family: var(--font-sans);
 }
 
+:global(.dark) .publicFooter {
+  --footer-surface: var(--background);
+}
+
 .promotion {
+  --site-frame-width: 90rem;
   display: flow-root;
   padding-bottom: clamp(2rem, 4vw, 4rem);
   border-top: 0;
@@ -669,6 +645,10 @@
 
 .publicFooter > div {
   max-width: var(--site-frame-width);
+}
+
+.publicFooter:not(.promotion) > div {
+  padding-inline: var(--footer-page-margin);
 }
 
 .publicFooter .invitation {
@@ -767,28 +747,33 @@
 }
 
 .publicFooter .directory {
+  grid-template-columns: minmax(0, 1fr);
   gap: 2.5rem;
-  padding-block: clamp(2.5rem, 4vw, 4rem);
+  padding-block: 2.5rem;
 }
 
 .publicFooter .brand {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 .publicFooter .brand > div:first-child > a > svg {
-  height: 1.25rem;
+  height: clamp(1.5rem, 2.2vw, 1.75rem);
   width: auto;
 }
 
 .publicFooter .brandDescription {
   max-width: 28ch;
-  margin-top: 0.75rem;
-  font-size: 0.8125rem;
-  line-height: 1.8;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.75;
 }
 
 .publicFooter .repositories {
-  margin-top: 1.5rem;
+  margin-top: 0;
 }
 
 .publicFooter .repositoryHeading {
@@ -813,7 +798,8 @@
 
 .publicFooter .groups {
   min-width: 0;
-  gap: 2rem 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
 }
 
 .publicFooter .groups nav {
@@ -821,10 +807,10 @@
 }
 
 .publicFooter .groups h2 {
-  margin-bottom: 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.5;
+  margin: 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
   letter-spacing: -0.01em;
 }
 
@@ -833,9 +819,9 @@
   padding-block: 0.375rem;
   border-radius: 0.375rem;
   color: var(--muted-foreground);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.25rem;
   text-underline-offset: 3px;
 }
 
@@ -843,7 +829,7 @@
   align-items: stretch;
   flex-direction: column;
   gap: 0.75rem;
-  padding-block: 1.25rem 2rem;
+  padding-block: 1.5rem 2.5rem;
   border-top: 1px solid var(--border);
 }
 
@@ -909,20 +895,11 @@
   font-size: 0.75rem;
 }
 
-@media (min-width: 40rem) and (max-width: 63.999rem) {
-  .publicFooter .brand {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-
-  .publicFooter .repositories {
-    margin-top: 0;
-  }
-}
-
 @media (min-width: 48rem) {
+  .publicFooter .groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .publicFooter .invitation {
     display: grid;
     grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.9fr);
@@ -931,9 +908,8 @@
 }
 
 @media (min-width: 64rem) {
-  .publicFooter .directory {
-    grid-template-columns: minmax(12rem, 0.9fr) minmax(0, 3.1fr);
-    column-gap: clamp(2.5rem, 5vw, 5rem);
+  .publicFooter .groups {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .publicFooter .bottomBar {
@@ -950,10 +926,16 @@
   }
 }
 
+@media (min-width: 80rem) {
+  .publicFooter .groups {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
 @media (pointer: fine) and (min-width: 40rem) {
   .publicFooter .directoryLink {
-    min-height: 2rem;
-    font-size: 0.75rem;
+    min-height: 1.75rem;
+    padding-block: 0.25rem;
   }
 }
 
@@ -1010,10 +992,6 @@
     background: Canvas;
     color: CanvasText;
   }
-  .footerSignature {
-    display: none;
-  }
-
   .publicFooter .actions a:global(.site-primary-action),
   .publicFooter .actions a:not(:global(.site-primary-action)) {
     border-color: ButtonText;

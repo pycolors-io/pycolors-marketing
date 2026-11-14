@@ -69,7 +69,20 @@ describe("marketing footer", () => {
         .getAllByRole("link")
         .map((link) => link.getAttribute("href")),
     ).toEqual(["/ui", "/templates", "/starters"]);
-    for (const group of ["Products", "Resources", "Compare", "Company"]) {
+    for (const group of [
+      "Products",
+      "UI",
+      "Blocks",
+      "Design System",
+      "Starter Free",
+      "Starter Pro",
+      "Templates",
+      "Guides",
+      "Registry",
+      "Resources",
+      "Compare",
+      "Company",
+    ]) {
       const nav = within(footer).getByRole("navigation", {
         name: `Footer ${group}`,
       });
@@ -86,6 +99,7 @@ describe("marketing footer", () => {
       "/starters/pro",
       "/templates",
       "/templates/na-ai-landing",
+      "/starters/mobile",
       "/docs",
       "/demo",
       "/guides",
@@ -107,6 +121,14 @@ describe("marketing footer", () => {
       "/terms",
       "/privacy",
     ];
+    const products = within(footer).getByRole("navigation", {
+      name: "Footer Products",
+    });
+    expect(
+      within(products).getByRole("link", {
+        name: "React Native mobile app · Coming soon",
+      }),
+    ).toHaveAttribute("href", "/starters/mobile");
     const links = within(footer).getAllByRole("link");
     const explorer = within(footer).getByRole("link", { name: "UI Explorer" });
     expect(explorer).toHaveAttribute("href", "https://ui.pycolors.io/");

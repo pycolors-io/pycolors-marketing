@@ -8,6 +8,23 @@ import { axe } from "vitest-axe";
 import { DocsFooter } from "@/components/docs-footer";
 import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
 
+const localeState = vi.hoisted(() => ({ value: "en" as "en" | "fr" }));
+vi.mock("@/lib/i18n/use-copy", async () => {
+  const { createCopy } = await import("../../lib/i18n/copy-core");
+  const french = (await import("../../messages/fr.json")).default
+    .site as Record<string, string>;
+  return {
+    useCopy: () =>
+      createCopy(
+        localeState.value,
+        Object.assign((key: string) => french[key] ?? key, {
+          has: (key: string) => Object.hasOwn(french, key),
+          raw: (key: string) => french[key],
+        }),
+      ),
+  };
+});
+
 const preference = vi.hoisted(() => ({ theme: "system", setTheme: vi.fn() }));
 const navigation = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock("fumadocs-ui/provider/base", () => ({ useTheme: () => preference }));
@@ -30,6 +47,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  localeState.value = "en";
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
   window.history.replaceState(null, "", "/");
@@ -44,7 +62,20 @@ describe("documentation footer", () => {
     expect(
       within(footer).getByRole("button", { name: "Language: English" }),
     ).toHaveTextContent("English");
-    for (const title of ["Products", "Resources", "Compare", "Company"]) {
+    for (const title of [
+      "Products",
+      "UI",
+      "Blocks",
+      "Design System",
+      "Starter Free",
+      "Starter Pro",
+      "Templates",
+      "Guides",
+      "Registry",
+      "Resources",
+      "Compare",
+      "Company",
+    ]) {
       const nav = within(footer).getByRole("navigation", {
         name: `Footer ${title}`,
       });
@@ -98,6 +129,37 @@ describe("documentation footer", () => {
         ).toBe(true);
       }
     }
+  });
+
+  it("localizes directory navigation and keeps the mobile product marked coming soon", () => {
+    localeState.value = "fr";
+    render(<DocsFooter />);
+    const registry = screen.getByRole("navigation", {
+      name: "Pied de page : Registre de composants",
+    });
+    expect(
+      within(registry).getByRole("heading", {
+        name: "Registre de composants",
+        level: 2,
+      }),
+    ).toBeVisible();
+    expect(
+      within(registry).getByRole("link", { name: "Mises à jour" }),
+    ).toHaveAttribute("href", "/docs/registry/updates");
+    const pro = screen.getByRole("navigation", {
+      name: "Pied de page : Starter Pro",
+    });
+    expect(
+      within(pro).getByRole("link", { name: "Déploiement" }),
+    ).toHaveAttribute("href", "/docs/starter-pro/deployment");
+    const products = screen.getByRole("navigation", {
+      name: "Pied de page : Produits",
+    });
+    expect(
+      within(products).getByRole("link", {
+        name: "Application mobile React Native · Bientôt disponible",
+      }),
+    ).toHaveAttribute("href", "/starters/mobile");
   });
 
   it("shares theme controls and animated navigation while exposing support and release information", () => {

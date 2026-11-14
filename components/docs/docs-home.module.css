@@ -7,19 +7,19 @@
 }
 .hero {
   display: grid;
-  align-items: center;
+  align-items: start;
   gap: 2rem;
-  padding-block: 1.5rem 0.5rem;
+  padding-block: 0 0.5rem;
 }
 .intro,
 .quickstart {
   min-width: 0;
 }
 .eyebrow {
-  margin: 0 0 1rem;
+  margin: 0 0 1.5rem;
   color: var(--muted-foreground);
   font-size: 0.75rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 .intro h1 {
   max-width: 16ch;
@@ -115,7 +115,7 @@
 }
 .section,
 .discovery {
-  margin-top: 2.75rem;
+  margin-top: var(--docs-section-gap, 2.75rem);
 }
 .sectionHeading {
   display: grid;
@@ -125,7 +125,7 @@
 .sectionHeading h2 {
   margin: 0;
   font-family: var(--font-brand);
-  font-size: 1.375rem;
+  font-size: var(--docs-section-title-size, 1.375rem);
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.035em;
@@ -179,9 +179,9 @@
   align-content: start;
   gap: 1rem;
   min-width: 0;
-  padding: 1.25rem;
+  padding: var(--docs-card-padding, 1.25rem);
   border: 1px solid var(--border-subtle);
-  border-radius: 0.75rem;
+  border-radius: var(--docs-radius, 0.75rem);
   background: var(--docs-card, var(--background));
   color: var(--foreground);
   text-decoration: none;
@@ -381,9 +381,9 @@
 .exampleResult {
   min-width: 0;
   margin: 0;
-  padding: 1.25rem;
+  padding: var(--docs-card-padding, 1.25rem);
   border: 1px solid var(--border-subtle);
-  border-radius: 0.75rem;
+  border-radius: var(--docs-radius, 0.75rem);
   background: var(--docs-card, var(--background));
 }
 .exampleCode figcaption,
@@ -464,7 +464,6 @@
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 2rem;
-    padding-top: 2.5rem;
   }
   .entryNav,
   .section .cardGrid[data-docs-links="grid"] {

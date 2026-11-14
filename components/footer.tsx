@@ -10,7 +10,6 @@ import {
 
 import { Container } from "@/components/container";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
-import { FibonacciMark } from "@/components/marketing/fibonacci-background";
 import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
 import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import { FooterAppearance } from "./footer-appearance";
@@ -28,8 +27,136 @@ const GROUPS = [
       { label: "Theme Builder", href: "/tools/theme-builder" },
       { label: "Starter Free", href: "/starters/free" },
       { label: "Starter Pro", href: "/starters/pro" },
+      {
+        label: "React Native mobile app · Coming soon",
+        href: "/starters/mobile",
+      },
       { label: "Templates", href: "/templates" },
       { label: "NA-AI Landing", href: "/templates/na-ai-landing" },
+    ],
+  },
+  {
+    title: "UI",
+    links: [
+      { label: "Overview", href: "/docs/ui" },
+      { label: "Installation", href: "/docs/ui/installation" },
+      { label: "Button", href: "/docs/ui/button" },
+      { label: "Input", href: "/docs/ui/input" },
+      { label: "Dialog", href: "/docs/ui/dialog" },
+      { label: "Table", href: "/docs/ui/table" },
+      { label: "Tabs", href: "/docs/ui/tabs" },
+      { label: "AI Composer", href: "/docs/ui/ai-composer" },
+    ],
+  },
+  {
+    title: "Blocks",
+    links: [
+      { label: "Overview", href: "/docs/blocks" },
+      {
+        label: "Responsive sidebar",
+        href: "/docs/blocks/app-shells/responsive-sidebar",
+      },
+      { label: "AI chat", href: "/docs/blocks/app-shells/ai-chat" },
+      { label: "Sign in", href: "/docs/blocks/auth/sign-in" },
+      { label: "Data table", href: "/docs/blocks/data/data-table" },
+      { label: "Settings panel", href: "/docs/blocks/account/settings-panel" },
+      {
+        label: "Workspace members",
+        href: "/docs/blocks/account/workspace-members",
+      },
+      {
+        label: "Invoice history",
+        href: "/docs/blocks/commerce/invoice-history",
+      },
+    ],
+  },
+  {
+    title: "Design System",
+    links: [
+      { label: "Overview", href: "/docs/design-system" },
+      { label: "Principles", href: "/docs/design-system/principles" },
+      { label: "Design tokens", href: "/docs/design-system/tokens" },
+      { label: "Colors", href: "/docs/design-system/colors" },
+      { label: "Typography", href: "/docs/design-system/typography" },
+      { label: "Theming", href: "/docs/ui/theming" },
+    ],
+  },
+  {
+    title: "Starter Free",
+    links: [
+      { label: "Getting started", href: "/docs/starter/getting-started" },
+      { label: "Installation", href: "/docs/starter/installation" },
+      { label: "Project structure", href: "/docs/starter/project-structure" },
+      { label: "Authentication concepts", href: "/docs/starter/auth-concept" },
+      { label: "Billing concepts", href: "/docs/starter/billing-concept" },
+      { label: "Deployment", href: "/docs/starter/deployment" },
+      { label: "Upgrade to Pro", href: "/docs/starter/upgrade" },
+    ],
+  },
+  {
+    title: "Starter Pro",
+    links: [
+      { label: "Getting started", href: "/docs/starter-pro/getting-started" },
+      { label: "Architecture", href: "/docs/starter-pro/architecture" },
+      {
+        label: "Environment variables",
+        href: "/docs/starter-pro/environment-variables",
+      },
+      { label: "Authentication", href: "/docs/starter-pro/auth" },
+      { label: "Billing", href: "/docs/starter-pro/billing" },
+      { label: "Recipes", href: "/docs/starter-pro/recipes" },
+      { label: "Deployment", href: "/docs/starter-pro/deployment" },
+      {
+        label: "Production checklist",
+        href: "/docs/starter-pro/production-checklist",
+      },
+    ],
+  },
+  {
+    title: "Templates",
+    links: [
+      { label: "Overview", href: "/docs/templates" },
+      { label: "NA-AI Landing", href: "/docs/templates/na-ai-landing" },
+      { label: "Setup", href: "/docs/templates/na-ai-landing/setup" },
+      {
+        label: "Customization",
+        href: "/docs/templates/na-ai-landing/customization",
+      },
+      { label: "Deployment", href: "/docs/templates/na-ai-landing/deployment" },
+      { label: "License", href: "/docs/templates/na-ai-landing/license" },
+    ],
+  },
+  {
+    title: "Guides",
+    links: [
+      { label: "Getting started", href: "/docs/getting-started" },
+      {
+        label: "Building a SaaS layout",
+        href: "/docs/guides/building-a-saas-layout",
+      },
+      {
+        label: "Forms with validation",
+        href: "/docs/guides/forms-with-validation",
+      },
+      {
+        label: "Empty, loading, and error states",
+        href: "/docs/guides/empty-loading-error",
+      },
+      { label: "Usage patterns", href: "/docs/ui/usage-patterns" },
+      { label: "Migration guidance", href: "/docs/ui/migration-guidance" },
+      { label: "Accessibility", href: "/docs/ui/accessibility" },
+    ],
+  },
+  {
+    title: "Registry",
+    links: [
+      { label: "Overview", href: "/docs/registry" },
+      { label: "Installation", href: "/docs/registry/installation" },
+      { label: "Agent context", href: "/docs/registry/agent-context" },
+      { label: "Updates", href: "/docs/registry/updates" },
+      { label: "Troubleshooting", href: "/docs/registry/troubleshooting" },
+      { label: "Release policy", href: "/docs/project/release-policy" },
+      { label: "Versioning policy", href: "/docs/project/versioning-policy" },
     ],
   },
   {
@@ -167,6 +294,52 @@ export function Footer() {
     <FooterNavigation className={`${styles.footer} ${styles.publicFooter}`}>
       <Container>
         <div className={styles.directory}>
+          <div className={styles.groups}>
+            {GROUPS.map((group) => (
+              <nav
+                key={group.title}
+                aria-label={tSite("Footer {value0}", {
+                  value0: tSite(group.title),
+                })}
+              >
+                <h2>{tSite(group.title)}</h2>
+                <ul>
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        prefetch={false}
+                        className={styles.directoryLink}
+                        target={
+                          link.href.startsWith("https://")
+                            ? "_blank"
+                            : undefined
+                        }
+                        rel={
+                          link.href.startsWith("https://")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        aria-description={tSite(
+                          link.href.startsWith("https://")
+                            ? "Opens in a new tab"
+                            : undefined,
+                        )}
+                      >
+                        {tSite(link.label)}
+                        {link.href.startsWith("https://") && (
+                          <ArrowUpRight
+                            className="ml-1.5 size-3"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+          </div>
           <div className={styles.brand}>
             <div>
               <Logo />
@@ -204,51 +377,7 @@ export function Footer() {
                   ))}
                 </ul>
               </nav>
-              <FibonacciMark className={styles.footerSignature} />
             </div>
-          </div>
-          <div className={styles.groups}>
-            {GROUPS.map((group) => (
-              <nav
-                key={group.title}
-                aria-label={tSite("Footer {value0}", { value0: group.title })}
-              >
-                <h2>{tSite(group.title)}</h2>
-                <ul>
-                  {group.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className={styles.directoryLink}
-                        target={
-                          link.href.startsWith("https://")
-                            ? "_blank"
-                            : undefined
-                        }
-                        rel={
-                          link.href.startsWith("https://")
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
-                        aria-description={tSite(
-                          link.href.startsWith("https://")
-                            ? "Opens in a new tab"
-                            : undefined,
-                        )}
-                      >
-                        {tSite(link.label)}
-                        {link.href.startsWith("https://") && (
-                          <ArrowUpRight
-                            className="ml-1.5 size-3"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            ))}
           </div>
         </div>
 
