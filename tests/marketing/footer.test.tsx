@@ -121,6 +121,17 @@ describe("marketing footer", () => {
       "/terms",
       "/privacy",
     ];
+    const ui = within(footer).getByRole("navigation", { name: "Footer UI" });
+    const uiLinks = within(ui).getAllByRole("link");
+    expect(uiLinks.at(-2)).toHaveTextContent("AI Composer");
+    expect(uiLinks.at(-1)).toHaveAccessibleName("View all components");
+    expect(uiLinks.at(-1)).toHaveAttribute("href", "/docs/ui");
+    const blocks = within(footer).getByRole("navigation", {
+      name: "Footer Blocks",
+    });
+    expect(
+      within(blocks).getByRole("link", { name: "View all blocks" }),
+    ).toHaveAttribute("href", "/blocks");
     const products = within(footer).getByRole("navigation", {
       name: "Footer Products",
     });

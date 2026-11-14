@@ -146,12 +146,19 @@ describe("documentation footer", () => {
     expect(
       within(registry).getByRole("link", { name: "Mises à jour" }),
     ).toHaveAttribute("href", "/docs/registry/updates");
+    const ui = screen.getByRole("navigation", { name: "Pied de page : UI" });
+    expect(
+      within(ui).getByRole("link", { name: "Voir tous les composants" }),
+    ).toHaveAttribute("href", "/docs/ui");
     const pro = screen.getByRole("navigation", {
       name: "Pied de page : Starter Pro",
     });
     expect(
       within(pro).getByRole("link", { name: "Déploiement" }),
     ).toHaveAttribute("href", "/docs/starter-pro/deployment");
+    expect(
+      within(pro).getByRole("link", { name: "Tous les guides Starter Pro" }),
+    ).toHaveAttribute("href", "/docs/starter-pro");
     const products = screen.getByRole("navigation", {
       name: "Pied de page : Produits",
     });

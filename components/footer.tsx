@@ -1,6 +1,7 @@
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
 import {
+  ArrowRight,
   ArrowUpRight,
   Boxes,
   GitBranch,
@@ -10,6 +11,7 @@ import {
 
 import { Container } from "@/components/container";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
+import { FibonacciMark } from "@/components/marketing/fibonacci-background";
 import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
 import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import { FooterAppearance } from "./footer-appearance";
@@ -34,6 +36,7 @@ const GROUPS = [
       { label: "Templates", href: "/templates" },
       { label: "NA-AI Landing", href: "/templates/na-ai-landing" },
     ],
+    more: { label: "Explore the ecosystem", href: "/" },
   },
   {
     title: "UI",
@@ -47,6 +50,7 @@ const GROUPS = [
       { label: "Tabs", href: "/docs/ui/tabs" },
       { label: "AI Composer", href: "/docs/ui/ai-composer" },
     ],
+    more: { label: "View all components", href: "/docs/ui" },
   },
   {
     title: "Blocks",
@@ -69,6 +73,7 @@ const GROUPS = [
         href: "/docs/blocks/commerce/invoice-history",
       },
     ],
+    more: { label: "View all blocks", href: "/blocks" },
   },
   {
     title: "Design System",
@@ -80,6 +85,7 @@ const GROUPS = [
       { label: "Typography", href: "/docs/design-system/typography" },
       { label: "Theming", href: "/docs/ui/theming" },
     ],
+    more: { label: "Explore the design system", href: "/docs/design-system" },
   },
   {
     title: "Starter Free",
@@ -92,6 +98,7 @@ const GROUPS = [
       { label: "Deployment", href: "/docs/starter/deployment" },
       { label: "Upgrade to Pro", href: "/docs/starter/upgrade" },
     ],
+    more: { label: "All Starter Free guides", href: "/docs/starter" },
   },
   {
     title: "Starter Pro",
@@ -111,6 +118,7 @@ const GROUPS = [
         href: "/docs/starter-pro/production-checklist",
       },
     ],
+    more: { label: "All Starter Pro guides", href: "/docs/starter-pro" },
   },
   {
     title: "Templates",
@@ -125,6 +133,7 @@ const GROUPS = [
       { label: "Deployment", href: "/docs/templates/na-ai-landing/deployment" },
       { label: "License", href: "/docs/templates/na-ai-landing/license" },
     ],
+    more: { label: "View all templates", href: "/templates" },
   },
   {
     title: "Guides",
@@ -146,6 +155,7 @@ const GROUPS = [
       { label: "Migration guidance", href: "/docs/ui/migration-guidance" },
       { label: "Accessibility", href: "/docs/ui/accessibility" },
     ],
+    more: { label: "View all guides", href: "/docs/guides" },
   },
   {
     title: "Registry",
@@ -158,6 +168,7 @@ const GROUPS = [
       { label: "Release policy", href: "/docs/project/release-policy" },
       { label: "Versioning policy", href: "/docs/project/versioning-policy" },
     ],
+    more: { label: "Explore the registry", href: "/docs/registry" },
   },
   {
     title: "Resources",
@@ -172,6 +183,7 @@ const GROUPS = [
       { label: "Changelog", href: "/changelog" },
       { label: "Roadmap", href: "/roadmap" },
     ],
+    more: { label: "Explore the documentation", href: "/docs" },
   },
   {
     title: "Compare",
@@ -183,6 +195,7 @@ const GROUPS = [
       { label: "Upgrade to Pro", href: "/upgrade" },
       { label: "Open source", href: "/open-source" },
     ],
+    more: { label: "Compare products", href: "/pricing" },
   },
   {
     title: "Company",
@@ -194,6 +207,7 @@ const GROUPS = [
       { label: "Contact", href: "/contact" },
       { label: "Request a quote", href: "/request-a-quote" },
     ],
+    more: { label: "Contact PyColors", href: "/contact" },
   },
 ] as const;
 
@@ -337,12 +351,23 @@ export function Footer() {
                     </li>
                   ))}
                 </ul>
+                <Link
+                  href={group.more.href}
+                  prefetch={false}
+                  className={styles.directoryMore}
+                >
+                  {tSite(group.more.label)}
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
               </nav>
             ))}
           </div>
           <div className={styles.brand}>
-            <div>
-              <Logo />
+            <div className={styles.brandCopy}>
+              <div className={styles.brandLogo}>
+                <FibonacciMark className={styles.signature} />
+                <Logo />
+              </div>
               <p className={styles.brandDescription}>
                 {tSite(
                   "Components, templates, and SaaS starters. Built to work together.",
