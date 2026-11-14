@@ -214,21 +214,43 @@ const GROUPS = [
 const STARTING_POINTS = [
   {
     title: "PyColors UI",
-    description: "Compose your interface.",
+    description:
+      "Build a consistent interface with accessible React components you can adapt to your brand.",
+    action: "Explore the components",
     href: "/ui",
     icon: Boxes,
+    tone: "neutral",
+    label: "For your interface",
+  },
+  {
+    title: "Blocks",
+    description:
+      "Assemble application screens from complete compositions, with source code to copy into your project.",
+    action: "Explore the blocks",
+    href: "/blocks",
+    icon: Layers,
+    tone: "blue",
+    label: "For your screens",
   },
   {
     title: "Templates",
-    description: "Start with a complete page.",
+    description:
+      "Start with a complete marketing page, then adapt its content and visual identity to your product.",
+    action: "Explore the templates",
     href: "/templates",
     icon: LayoutTemplate,
+    tone: "violet",
+    label: "For your website",
   },
   {
     title: "SaaS starters",
-    description: "Build on connected application foundations.",
+    description:
+      "Test your journeys with Starter Free, then connect authentication, billing, and data with Starter Pro.",
+    action: "Compare the starters",
     href: "/starters",
-    icon: Layers,
+    icon: GitBranch,
+    tone: "dark",
+    label: "For your SaaS app",
   },
 ] as const;
 
@@ -257,43 +279,69 @@ export function FooterPromotion() {
       <Container>
         <div className={styles.invitation}>
           <div className={styles.invitationCopy}>
-            <p className={styles.eyebrow}>{tSite("Build with PyColors")}</p>
-            <h2 id="footer-invitation-title">
-              {tSite("Your next product starts here.")}
-            </h2>
-            <p className={styles.description}>
-              {tSite(
-                "Compose your interface, start with a template, or build on a SaaS starter. Choose the foundation that fits your project.",
-              )}
-            </p>
-            <div className={styles.actions}>
-              <MarketingLinkButton>
-                <Link href="/starters/pro">{tSite("Explore Starter Pro")}</Link>
-              </MarketingLinkButton>
-              <MarketingLinkButton variant="outline">
-                <Link href="/pricing">{tSite("Compare products")}</Link>
-              </MarketingLinkButton>
+            <div className={styles.invitationHeading}>
+              <p className={styles.eyebrow}>{tSite("Build with PyColors")}</p>
+              <h2 id="footer-invitation-title">
+                {tSite("Your next product starts here.")}
+              </h2>
+            </div>
+            <div className={styles.invitationDetails}>
+              <p className={styles.description}>
+                {tSite(
+                  "UI components, copyable blocks, templates, or a SaaS starter. Start with what your project needs.",
+                )}
+              </p>
+              <div className={styles.actions}>
+                <MarketingLinkButton>
+                  <Link href="/starters/pro">
+                    {tSite("Explore Starter Pro")}
+                  </Link>
+                </MarketingLinkButton>
+                <MarketingLinkButton variant="outline">
+                  <Link href="/pricing">{tSite("Compare products")}</Link>
+                </MarketingLinkButton>
+              </div>
             </div>
           </div>
           <nav
             className={styles.startingPoints}
             aria-label={tSite("Choose your starting point")}
           >
-            {STARTING_POINTS.map(({ title, description, href, icon: Icon }) => (
-              <Link key={href} href={href} className={styles.startingPoint}>
-                <span className={styles.startingPointIcon}>
-                  <Icon aria-hidden="true" />
-                </span>
-                <span className={styles.startingPointCopy}>
-                  <span>{tSite(title)}</span>
-                  <span>{tSite(description)}</span>
-                </span>
-                <ArrowUpRight
-                  aria-hidden="true"
-                  className={styles.startingPointArrow}
-                />
-              </Link>
-            ))}
+            {STARTING_POINTS.map(
+              ({
+                title,
+                description,
+                action,
+                href,
+                icon: Icon,
+                tone,
+                label,
+              }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={styles.startingPoint}
+                  data-discovery-tone={tone}
+                >
+                  <span className={styles.startingPointIcon}>
+                    <Icon aria-hidden="true" />
+                  </span>
+                  <div className={styles.startingPointCopy}>
+                    <p className={styles.startingPointLabel}>{tSite(label)}</p>
+                    <h3 className={styles.startingPointTitle}>
+                      {tSite(title)}
+                    </h3>
+                    <p className={styles.startingPointDescription}>
+                      {tSite(description)}
+                    </p>
+                  </div>
+                  <span className={styles.startingPointAction}>
+                    {tSite(action)}
+                    <ArrowRight aria-hidden="true" />
+                  </span>
+                </Link>
+              ),
+            )}
           </nav>
         </div>
       </Container>

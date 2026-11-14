@@ -68,7 +68,7 @@ describe("marketing footer", () => {
       within(startingPoints)
         .getAllByRole("link")
         .map((link) => link.getAttribute("href")),
-    ).toEqual(["/ui", "/templates", "/starters"]);
+    ).toEqual(["/ui", "/blocks", "/templates", "/starters"]);
     for (const group of [
       "Products",
       "UI",
