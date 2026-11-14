@@ -1,8 +1,8 @@
 /* Scoped to the documentation: marketing pages and embedded UI previews retain
    their own tokens, layout, and component behavior. */
 .frame {
-  /* Match the reference docs proportions: a full-width shell, 300px sidebar,
-     1024px content, and 240px TOC with a 16px trailing gutter on desktop. */
+  /* Full-width shell, 300px sidebar, 1024px content, and a 256px TOC
+     column that includes its 16px trailing gutter on desktop. */
   --site-frame-width: 100%;
   --docs-content-width: 64rem;
   --docs-radius: 0.625rem;
@@ -373,12 +373,26 @@
     border-inline-end: 0;
   }
   .frame :global(#nd-toc) {
-    --fd-toc-width: 15rem;
-    width: var(--fd-toc-width);
-    margin-inline-end: 1rem;
-    justify-self: start;
+    /* Fit the named grid area: a separate local width plus an outer margin
+       could exceed its track and cut off headings at the viewport edge. */
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-inline: 0;
+    justify-self: stretch;
     border-inline-start: 0;
-    padding: 1.5rem 0 1rem;
+    padding: 1.5rem 1rem 1rem 0;
+  }
+  .frame :global(#nd-toc) > div {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .frame :global(#nd-toc) a {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 @media (min-width: 961px) {
