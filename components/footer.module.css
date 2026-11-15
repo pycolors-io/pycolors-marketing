@@ -635,13 +635,9 @@
   max-width: 100%;
 }
 
-/* Shared directory: 1400px of content with 24px side gutters, including Docs. */
+/* Keep the shared 1440px frame in Docs too; Container owns responsive gutters. */
 .publicFooter {
-  --footer-content-width: 87.5rem;
-  --footer-page-margin: 1.5rem;
-  --site-frame-width: calc(
-    var(--footer-content-width) + 2 * var(--footer-page-margin)
-  );
+  --site-frame-width: 90rem;
   --footer-surface: var(--docs-canvas, #fafafa);
   --footer-action-fill: var(--marketing-action-fill, #6b2fd4);
   --footer-action-ink: var(--marketing-action-ink, #ffffff);
@@ -657,7 +653,6 @@
 }
 
 .promotion {
-  --site-frame-width: 90rem;
   display: flow-root;
   padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2.5rem, 4vw, 4rem);
   border-top: 0;
@@ -674,14 +669,6 @@
 .publicFooter .eyebrow::before,
 .publicFooter .brandGeometry {
   display: none;
-}
-
-.publicFooter > div {
-  max-width: var(--site-frame-width);
-}
-
-.publicFooter:not(.promotion) > div {
-  padding-inline: var(--footer-page-margin);
 }
 
 .publicFooter .invitation {
