@@ -1,17 +1,10 @@
+/* Neutral demo surfaces follow the visitor’s palette and appearance. */
 .page {
-  --background: #ffffff;
-  --foreground: #17181d;
-  --muted-foreground: #646670;
-  --primary: #17181d;
-  --primary-foreground: #ffffff;
-  --surface: #f5f5f7;
-  --surface-muted: #f5f5f7;
-  --border: #dedee4;
-  --border-subtle: #e7e7ec;
-  --ring: #6b2fd4;
-  --marketing-canvas: #f5f5f7;
-  --marketing-graphite: #f5f5f7;
-  --marketing-graphite-ink: #17181d;
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --marketing-canvas: var(--surface-muted);
+  --marketing-graphite: var(--surface-muted);
+  --marketing-graphite-ink: var(--foreground);
   --demo-paper: var(--background);
   --demo-ink: var(--foreground);
   --demo-copy: var(--muted-foreground);
@@ -204,7 +197,7 @@
   background: var(--marketing-canvas);
 }
 .journeyGrid > li:first-child {
-  --background: #2059bf;
+  --background: var(--marketing-cobalt);
   --foreground: var(--marketing-cobalt-ink);
   --muted-foreground: color-mix(
     in srgb,
@@ -403,8 +396,8 @@
 
 /* Neutral reading surfaces keep the product captures in focus. */
 .page .heroBand {
-  --hero-base: #ffffff;
-  background: #ffffff;
+  --hero-base: var(--background);
+  background: var(--background);
 }
 .heroBand > div:first-child {
   opacity: 0.14;

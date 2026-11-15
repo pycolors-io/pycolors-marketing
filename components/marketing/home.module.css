@@ -156,6 +156,9 @@
   --home-hero-blue: var(--foreground);
   --home-hero-cyan: var(--foreground);
 }
+:global(html[data-site-palette="monochrome"]) .heroAtmosphere {
+  opacity: 0.1;
+}
 @keyframes hero-atmosphere-drift {
   from {
     transform: translate3d(-1.5%, 0, 0) scale(1.02);
@@ -1350,6 +1353,17 @@
   --ring: var(--foreground);
   color: var(--foreground);
 }
+/* A graphite editorial panel in either Monochrome appearance. */
+:global(html[data-site-palette="monochrome"]) .closing {
+  --background: #242424;
+  --foreground: #f5f5f7;
+  --border: #3b3b3b;
+  --border-subtle: #3b3b3b;
+  --marketing-action-fill: #f5f5f7;
+  --marketing-action-ink: #242424;
+  --marketing-action-hover: #dfdfdf;
+  border-color: var(--border-subtle);
+}
 .closing h2 {
   max-width: 23ch;
   font-size: clamp(1.75rem, 3vw, 2.25rem);
@@ -1428,7 +1442,11 @@
 }
 @media (forced-colors: active) {
   .proCard,
-  .closing {
+  .closing,
+  :global(html[data-site-palette="monochrome"]) .closing {
+    --marketing-action-fill: ButtonFace;
+    --marketing-action-ink: ButtonText;
+    --marketing-action-hover: ButtonFace;
     --background: Canvas;
     --foreground: CanvasText;
     --muted-foreground: CanvasText;

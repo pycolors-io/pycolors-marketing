@@ -421,8 +421,8 @@
     font-size: 1.125rem;
   }
   .screenshotGrid {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    align-items: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
   }
   .offerPrice > p:last-child {
     min-height: 3.4em;
@@ -674,9 +674,20 @@
 }
 
 .previewSection .screenshotCard {
+  --muted-foreground: var(--pricing-muted);
   padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 0;
   border-radius: 1.75rem;
-  background: var(--pricing-paper);
+  background: var(--pricing-canvas);
+}
+.previewSection .screenshotCard figcaption {
+  padding: 1rem 0.25rem 0.25rem;
+}
+.previewSection .screenshotCard h3 {
+  font-size: clamp(1.5rem, 2vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
 }
 .screenshotCard > a {
   border: 0;
@@ -778,14 +789,14 @@
   padding: 0.625rem 1rem;
   border-radius: 100px;
   background: var(--marketing-action-fill, #6b2fd4);
-  color: #fff;
+  color: var(--marketing-action-ink, #fff);
   font-size: 0.75rem;
   font-weight: 500;
   text-decoration: none;
 }
 .screenGuide:hover {
   background: var(--marketing-action-hover, #5822ba);
-  color: #fff;
+  color: var(--marketing-action-ink, #fff);
 }
 .screenDemo {
   display: inline-flex;
@@ -851,6 +862,7 @@
     background: ButtonFace;
     color: ButtonText;
   }
+  .previewSection .screenshotCard,
   .futureMobile {
     border-color: CanvasText;
     background: Canvas;

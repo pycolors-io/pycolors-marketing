@@ -1912,6 +1912,11 @@
 :global(html.dark) .productPage .heroAtmosphere {
   opacity: 0.55;
 }
+/* Keep gray artwork behind the copy subtle in either Monochrome appearance. */
+:global(html[data-site-palette="monochrome"]) .productPage .heroAtmosphere {
+  opacity: 0.12;
+}
+
 :global(html.dark) .productPage .visualFoundation {
   background: var(--card);
 }
@@ -5792,7 +5797,7 @@
   }
 }
 
-/* Product previews use a single neutral frame and labelled navigation. */
+/* Product previews pair a quiet canvas with the shared browser window. */
 .productPage .previewSection {
   --starter-pro-soft: #f5f5f7;
   --primary: #17171b;
@@ -5809,9 +5814,9 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  border-radius: clamp(1.25rem, 2vw, 1.75rem);
-  background: var(--background);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 .previewSection .carouselNavigation {
   display: flex;
@@ -5819,8 +5824,8 @@
   align-items: stretch;
   gap: 1rem;
   margin: 0;
-  padding: clamp(1rem, 2vw, 1.5rem);
-  border-bottom: 1px solid var(--border-subtle);
+  padding: 0 0 clamp(1rem, 2vw, 1.5rem);
+  border: 0;
 }
 .previewSection .previewPicker {
   display: flex;
@@ -5841,9 +5846,9 @@
   align-items: center;
   justify-content: center;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid transparent;
   border-radius: 100px;
-  background: transparent;
+  background: var(--starter-pro-soft);
   color: var(--foreground);
   font-size: 0.75rem;
   line-height: 1.4;
@@ -5881,20 +5886,23 @@
 .previewSection .previewStage {
   padding: clamp(0.75rem, 3vw, 2.5rem);
   border: 0;
-  border-radius: 0;
+  border-radius: clamp(1.25rem, 2vw, 1.75rem);
   background: var(--starter-pro-soft);
 }
+.previewSection .previewStage > div {
+  box-shadow: 0 16px 40px rgb(0 0 0 / 8%);
+}
 .previewSection .previewScreen {
-  border-color: #d8d8dc;
-  border-radius: 0.75rem;
-  box-shadow: 0 18px 44px rgb(0 0 0 / 10%);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 .previewSection .previewCaption {
   margin: 0;
   padding: clamp(1.5rem, 3vw, 2.5rem);
   border: 0;
-  border-top: 1px solid var(--border-subtle);
   border-radius: 0;
+  background: transparent;
 }
 .previewSection .previewNumber {
   color: var(--muted-foreground);
@@ -6054,6 +6062,7 @@
     background: Highlight;
     color: HighlightText;
   }
+  .previewSection .previewStage > div,
   .previewSection .previewScreen {
     box-shadow: none;
     border-color: CanvasText;

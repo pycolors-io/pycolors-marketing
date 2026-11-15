@@ -36,6 +36,7 @@ import { STARTER_PRO_UPDATES_SUMMARY } from "@/lib/products/commercial-policy";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
+import { ProductPreviewWindow } from "@/components/marketing/product-preview-window";
 import effects from "@/components/marketing/product-light.module.css";
 import {
   MarketingCheckItem,
@@ -511,17 +512,19 @@ function StarterProPreviews() {
           content: (
             <figure className={styles.previewFigure}>
               <div className={styles.previewStage}>
-                <div className={styles.previewScreen}>
-                  <Image
-                    src={screenshot.image}
-                    alt={tSite(screenshot.alt)}
-                    fill
-                    loading="lazy"
-                    quality={100}
-                    sizes="(min-width: 1440px) 1200px, (min-width: 1024px) 83vw, 92vw"
-                    className={`${styles.media} object-cover object-top`}
-                  />
-                </div>
+                <ProductPreviewWindow label={tSite(screenshot.title)}>
+                  <div className={styles.previewScreen}>
+                    <Image
+                      src={screenshot.image}
+                      alt={tSite(screenshot.alt)}
+                      fill
+                      loading="lazy"
+                      quality={100}
+                      sizes="(min-width: 1440px) 1200px, (min-width: 1024px) 83vw, 92vw"
+                      className={`${styles.media} object-cover object-top`}
+                    />
+                  </div>
+                </ProductPreviewWindow>
               </div>
               <figcaption
                 className={`${styles.previewCaption} ${styles.caption}`}

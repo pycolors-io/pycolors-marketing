@@ -36,6 +36,9 @@
   --marketing-graphite-ink: var(--foreground);
   --marketing-cobalt: var(--surface-muted);
   --marketing-cobalt-ink: var(--foreground);
+  --marketing-action-fill: var(--primary);
+  --marketing-action-ink: var(--primary-foreground);
+  --marketing-action-hover: var(--brand-primary-hover);
   --marketing-gold: var(--surface-muted);
   --marketing-gold-ink: var(--foreground);
   --marketing-lilac: var(--surface-muted);
@@ -84,7 +87,7 @@
   scroll-margin-top: 5rem;
 }
 
-/* Starter discovery actions share the violet brand, independently of panel color. */
+/* Starter discovery actions follow the selected palette, independently of panel color. */
 .frame
   :global(a[data-slot="button"]):is(
     [href$="/starters/pro"],
@@ -106,7 +109,8 @@
   color: var(--marketing-action-ink);
 }
 @media (forced-colors: active) {
-  .frame {
+  .frame,
+  :global(html[data-site-palette="monochrome"]) .frame {
     --marketing-action-fill: ButtonFace;
     --marketing-action-ink: ButtonText;
     --marketing-action-hover: ButtonFace;

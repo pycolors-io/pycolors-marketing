@@ -731,12 +731,8 @@
 }
 
 .publicFooter .startingPoint {
-  --discovery-fill: color-mix(
-    in srgb,
-    var(--surface-muted) 97%,
-    var(--foreground)
-  );
-  --discovery-ink: var(--foreground);
+  --discovery-fill: #050505;
+  --discovery-ink: #f5f5f7;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
@@ -748,33 +744,10 @@
   padding: clamp(1.5rem, 2.5vw, 2rem);
   border: 1px solid
     color-mix(in srgb, var(--discovery-ink) 10%, var(--discovery-fill));
-  border-radius: 1.75rem;
+  border-radius: 1.5rem;
   background: var(--discovery-fill);
   color: var(--discovery-ink);
   text-align: center;
-}
-
-.publicFooter .startingPoint:where([data-discovery-tone="blue"]) {
-  --discovery-fill: color-mix(
-    in oklab,
-    var(--marketing-cobalt, #2059bf) 94%,
-    var(--marketing-graphite, #17181d)
-  );
-  --discovery-ink: var(--marketing-cobalt-ink, #ffffff);
-}
-
-.publicFooter .startingPoint:where([data-discovery-tone="violet"]) {
-  --discovery-fill: color-mix(
-    in oklab,
-    var(--footer-action-fill) 94%,
-    var(--marketing-graphite, #17181d)
-  );
-  --discovery-ink: var(--footer-action-ink);
-}
-
-.publicFooter .startingPoint:where([data-discovery-tone="dark"]) {
-  --discovery-fill: var(--marketing-graphite, #17181d);
-  --discovery-ink: var(--marketing-graphite-ink, #ffffff);
 }
 
 .publicFooter .startingPointIcon {
