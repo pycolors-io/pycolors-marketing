@@ -151,7 +151,7 @@ describe("Shared navigation in documentation", () => {
     render(<Fixture />);
     const logo = screen.getByRole("link", { name: "PyColors" });
     expect(logo).toHaveAttribute("href", "/");
-    expect(logo).toHaveTextContent("PYCOLORS");
+    expect(logo).toHaveTextContent("PyColors");
     const docsHome = within(logo.parentElement!).getByRole("link", {
       name: "Docs",
     });

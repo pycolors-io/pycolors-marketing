@@ -29,6 +29,32 @@ await writeFile(
   favicon,
 );
 
+// A transparent, monochrome SVG for using the symbol independently of the wordmark.
+await writeFile(
+  publicFile("pycolors-symbol.svg"),
+  `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="${MARKETING_BRAND.mark.viewBox}">
+  <title>PyColors</title>
+  <path d="${MARKETING_BRAND.mark.path}" fill="currentColor"/>
+</svg>
+`,
+);
+
+// The Explorer's transparent manager/preview mark shares the canonical path.
+await writeFile(
+  new URL(
+    "../../../packages/ui/.storybook/public/pycolors-symbol.svg",
+    import.meta.url,
+  ),
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${MARKETING_BRAND.mark.viewBox}" width="17" height="17" fill="none">
+  <style>
+    path { fill: #6a30d4; }
+    @media (prefers-color-scheme: dark) { path { fill: #a78bfa; } }
+  </style>
+  <path d="${MARKETING_BRAND.mark.path}"/>
+</svg>
+`,
+);
+
 for (const [name, size, source] of [
   ["favicon.png", 64, favicon],
   ["apple-touch-icon.png", 180, svg()],

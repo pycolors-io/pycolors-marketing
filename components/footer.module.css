@@ -642,8 +642,6 @@
   --site-frame-width: calc(
     var(--footer-content-width) + 2 * var(--footer-page-margin)
   );
-  --font-sans: "Mona Sans", "Helvetica Neue", Arial, sans-serif;
-  --font-brand: var(--font-sans);
   --footer-surface: var(--docs-canvas, #fafafa);
   --footer-action-fill: var(--marketing-action-fill, #6b2fd4);
   --footer-action-ink: var(--marketing-action-ink, #ffffff);
@@ -1005,7 +1003,7 @@
 }
 
 .publicFooter .brandLogo > a > svg {
-  height: 1.375rem;
+  height: 1.25rem;
   width: auto;
 }
 
