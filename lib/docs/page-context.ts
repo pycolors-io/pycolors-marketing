@@ -7,6 +7,7 @@ export function docsPageContext(pathname: string | null, locale: SiteLocale) {
     path === "/docs" || path.startsWith("/docs/") ? path : "/docs";
   const slug = docsPath.slice("/docs".length).replace(/^\//, "");
   return {
+    path: docsPath,
     url: new URL(localizedHref(docsPath, locale), SITE_URL).href,
     markdownUrl:
       "/api/docs/markdown?" + new URLSearchParams({ slug, locale }).toString(),

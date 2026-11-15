@@ -1,5 +1,6 @@
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
+import { LATEST_MARKETING_RELEASE } from "@/lib/marketing-release";
 import type { Metadata } from "next";
 import { Link } from "@/lib/i18n/navigation";
 import {
@@ -65,11 +66,11 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
-    version: "v1.32.0",
+    version: `v${LATEST_MARKETING_RELEASE.version}`,
     title:
       "PyColors Marketing v1.32.0: explore in your language, shape your project",
-    dateLabel: "Fri 6 Nov 2026",
-    dateISO: "2026-11-06",
+    dateLabel: LATEST_MARKETING_RELEASE.dateLabel,
+    dateISO: LATEST_MARKETING_RELEASE.dateISO,
     status: "Stable",
     releaseWeekLabel: "Nov 2026 (weekly release)",
     summary:

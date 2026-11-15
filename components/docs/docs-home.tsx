@@ -20,6 +20,10 @@ import { Button as UiButton, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import { SITE_URL } from "@/lib/seo/website";
 import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
+import {
+  LATEST_MARKETING_RELEASE,
+  MARKETING_RELEASE_HREF,
+} from "@/lib/marketing-release";
 import { DocsLinks } from "./docs-links";
 import { DocsContextCopy } from "./docs-context-copy";
 import { DocsAssistant } from "./docs-assistant";
@@ -354,6 +358,28 @@ export function DocsHomeUpdates() {
                 "Keep your colors, typography, and interface foundations consistent.",
               )}
             </p>
+          </div>
+          <ArrowRight aria-hidden="true" />
+        </Link>
+        <Link href={MARKETING_RELEASE_HREF}>
+          <span>
+            {tSite("Site & Docs")} {LATEST_MARKETING_RELEASE.version}
+          </span>
+          <div>
+            <strong>{tSite("Website and documentation updates")}</strong>
+            <p>
+              {tSite(
+                "Explore the latest announced improvements to the website and documentation.",
+              )}
+            </p>
+            <time dateTime={LATEST_MARKETING_RELEASE.dateISO}>
+              {new Intl.DateTimeFormat(tSite.locale, {
+                dateStyle: "medium",
+                timeZone: "UTC",
+              }).format(
+                new Date(`${LATEST_MARKETING_RELEASE.dateISO}T00:00:00Z`),
+              )}
+            </time>
           </div>
           <ArrowRight aria-hidden="true" />
         </Link>

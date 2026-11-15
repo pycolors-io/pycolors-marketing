@@ -21,6 +21,10 @@ import {
   DocsHomeUpdates,
 } from "../../components/docs/docs-home";
 import { DocsContextCopy } from "../../components/docs/docs-context-copy";
+import {
+  LATEST_MARKETING_RELEASE,
+  MARKETING_RELEASE_HREF,
+} from "../../lib/marketing-release";
 const localeState = vi.hoisted(() => ({ value: "en" as "en" | "fr" }));
 vi.mock("@/lib/i18n/use-copy", async () => {
   const { createCopy } = await import("../../lib/i18n/copy-core");
@@ -47,6 +51,7 @@ vi.mock("fumadocs-ui/layouts/shared/slots/search-trigger", () => ({
 vi.mock("next/navigation", () => ({ usePathname: () => "/docs" }));
 const descriptor = Object.getOwnPropertyDescriptor(navigator, "clipboard");
 afterEach(() => {
+  vi.unstubAllGlobals();
   localeState.value = "en";
   if (descriptor) Object.defineProperty(navigator, "clipboard", descriptor);
   else Reflect.deleteProperty(navigator, "clipboard");
@@ -79,6 +84,36 @@ function Home() {
   );
 }
 describe("documentation home", () => {
+  it.each(["en", "fr"] as const)(
+    "shows four update entries and the announced site release in %s",
+    (locale) => {
+      localeState.value = locale;
+      render(<DocsHomeUpdates />);
+      const links = screen.getAllByRole("link");
+      expect(links).toHaveLength(4);
+      const release = links.find(
+        (link) => link.getAttribute("href") === MARKETING_RELEASE_HREF,
+      )!;
+      expect(release).toBeDefined();
+      expect(release).toHaveTextContent(
+        `Site & Docs ${LATEST_MARKETING_RELEASE.version}`,
+      );
+      expect(release.querySelector("time")).toHaveAttribute(
+        "datetime",
+        LATEST_MARKETING_RELEASE.dateISO,
+      );
+      expect(release.querySelector("time")).toHaveTextContent(
+        locale === "fr" ? "6 nov. 2026" : "Nov 6, 2026",
+      );
+      expect(links.map((link) => link.getAttribute("href"))).toEqual([
+        "/changelog",
+        "/docs/design-system/tokens",
+        MARKETING_RELEASE_HREF,
+        "/roadmap",
+      ]);
+    },
+  );
+
   it("localizes product descriptions and guide navigation in French", () => {
     localeState.value = "fr";
     const { container } = render(
@@ -197,16 +232,25 @@ describe("documentation home", () => {
     expect(source).toHaveTextContent('<a href="/docs/ui/button">Button</a>');
     expect(source).toHaveAttribute("tabindex", "0");
   });
-  it("opens contextual AI help directly from the home hero", () => {
+  it("opens contextual AI help directly from the home hero", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(new Response("# PyColors Documentation")),
+    );
     render(<Home />);
     const hero = screen.getByRole("heading", { level: 1 }).closest("header")!;
-    fireEvent.click(within(hero).getByRole("button", { name: "Ask AI" }));
+    fireEvent.click(
+      within(hero).getByRole("button", { name: "Use with my AI" }),
+    );
     expect(
       screen.getByRole("dialog", { name: "Your question. The right context." }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(/paste it into your own AI tool to get an answer/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/paste it into your AI tool/)).toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: "Copy question and context" }),
+      ).toBeEnabled(),
+    );
   });
   it("copies a usable agent brief with public guide URLs and repository boundaries", async () => {
     const write = vi.fn().mockResolvedValue(undefined);
