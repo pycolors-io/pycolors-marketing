@@ -2,16 +2,8 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { BookOpen, Check, Copy, Sparkles, X } from "lucide-react";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetTitle,
-  SheetTrigger,
-  Textarea,
-  cn,
-} from "@pycolors/ui";
+import * as Dialog from "@radix-ui/react-dialog";
+import { Textarea, cn } from "@pycolors/ui";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { usePathname } from "@/lib/i18n/navigation";
 import { docsPageContext } from "@/lib/docs/page-context";
@@ -203,8 +195,8 @@ function DocsAssistantPanel({
   }
   const busy = fetchStatus === "loading" || copyStatus === "copying";
   return (
-    <Sheet open={open} onOpenChange={changeOpen}>
-      <SheetTrigger asChild>
+    <Dialog.Root open={open} onOpenChange={changeOpen}>
+      <Dialog.Trigger asChild>
         <button
           type="button"
           className={cn(styles.assistantTrigger, className)}
@@ -212,194 +204,199 @@ function DocsAssistantPanel({
           <Sparkles aria-hidden="true" />
           {tSite("Use with my AI")}
         </button>
-      </SheetTrigger>
-      <SheetContent
-        side="right"
-        style={{ top: 0, borderRadius: 0 }}
-        className={styles.assistantPanel}
-        onOpenAutoFocus={(event) => {
-          if (questionInput.current) {
-            event.preventDefault();
-            questionInput.current.focus();
-          }
-        }}
-      >
-        <div className={styles.assistantPanelHeader}>
-          <span className={styles.assistantEyebrow}>
-            <Sparkles aria-hidden="true" />
-            PyColors Docs
-          </span>
-          <SheetClose asChild>
-            <button
-              type="button"
-              className={styles.assistantClose}
-              aria-label={tSite("Close AI help")}
-            >
-              <X aria-hidden="true" />
-            </button>
-          </SheetClose>
-        </div>
-        <SheetTitle className={styles.assistantTitle}>
-          {tSite("Your question. The right context.")}
-        </SheetTitle>
-        <SheetDescription className={styles.assistantDescription}>
-          {tSite(
-            "Copy your question with the official documentation, then paste it into your AI tool. The answer will appear there.",
-          )}
-        </SheetDescription>
-        <div
-          className={styles.assistantSource}
-          aria-busy={fetchStatus === "loading"}
-        >
-          <BookOpen aria-hidden="true" />
-          <div>
-            <span>{tSite("Documentation included")}</span>
-            <a href={page.url} target="_blank" rel="noopener noreferrer">
-              {title || tSite("Current documentation page")}
-              <span className="sr-only">{tSite("Opens in a new tab")}</span>
-            </a>
-            <p className={styles.assistantSourcePath}>
-              {new URL(page.url).pathname}
-            </p>
-            <p className={styles.assistantReferences}>
-              {tSite("Documentation references")}: {versions} ·{" "}
-              {tSite.locale.toUpperCase()}
-            </p>
-          </div>
-        </div>
-        <form
-          className={styles.assistantForm}
-          aria-busy={busy}
-          onSubmit={(event) => {
-            event.preventDefault();
-            void copyContext();
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Overlay className={styles.assistantOverlay} />
+        <Dialog.Content
+          style={{ top: 0, borderRadius: 0 }}
+          className={styles.assistantPanel}
+          onOpenAutoFocus={(event) => {
+            if (questionInput.current) {
+              event.preventDefault();
+              questionInput.current.focus();
+            }
           }}
         >
-          <div
-            className={styles.assistantSuggestions}
-            aria-label={tSite("Suggested questions")}
-          >
-            {suggestions.map((item) => (
+          <div className={styles.assistantPanelHeader}>
+            <span className={styles.assistantEyebrow}>
+              <Sparkles aria-hidden="true" />
+              PyColors Docs
+            </span>
+            <Dialog.Close asChild>
               <button
                 type="button"
-                key={item.label}
-                aria-pressed={question === tSite(item.question)}
-                onClick={() => {
-                  resetCopy();
-                  setQuestion(tSite(item.question));
-                  questionInput.current?.focus();
-                }}
+                className={styles.assistantClose}
+                aria-label={tSite("Close AI help")}
               >
-                {tSite(item.label)}
+                <X aria-hidden="true" />
               </button>
-            ))}
+            </Dialog.Close>
           </div>
-          <label htmlFor={id} className={styles.assistantLabel}>
-            {tSite("Your question")}
-          </label>
-          <Textarea
-            ref={questionInput}
-            id={id}
-            value={question}
-            onChange={(event) => {
-              resetCopy();
-              setQuestion(event.target.value);
-            }}
-            maxLength={2000}
-            rows={3}
-            placeholder={tSite("What would you like to understand?")}
-            aria-describedby={id + "-help"}
-          />
-          <p id={id + "-help"} className={styles.assistantHint}>
+          <Dialog.Title className={styles.assistantTitle}>
+            {tSite("Your question. The right context.")}
+          </Dialog.Title>
+          <Dialog.Description className={styles.assistantDescription}>
             {tSite(
-              "Choose a suggestion or write your own question. Leave it blank for an overview.",
+              "Copy your question with the official documentation, then paste it into your AI tool. The answer will appear there.",
             )}
-          </p>
-          <details className={styles.assistantProject}>
-            <summary>{tSite("Add project context (optional)")}</summary>
-            <label htmlFor={id + "-project"} className={styles.assistantLabel}>
-              {tSite("Project context")}
+          </Dialog.Description>
+          <div
+            className={styles.assistantSource}
+            aria-busy={fetchStatus === "loading"}
+          >
+            <BookOpen aria-hidden="true" />
+            <div>
+              <span>{tSite("Documentation included")}</span>
+              <a href={page.url} target="_blank" rel="noopener noreferrer">
+                {title || tSite("Current documentation page")}
+                <span className="sr-only">{tSite("Opens in a new tab")}</span>
+              </a>
+              <p className={styles.assistantSourcePath}>
+                {new URL(page.url).pathname}
+              </p>
+              <p className={styles.assistantReferences}>
+                {tSite("Documentation references")}: {versions} ·{" "}
+                {tSite.locale.toUpperCase()}
+              </p>
+            </div>
+          </div>
+          <form
+            className={styles.assistantForm}
+            aria-busy={busy}
+            onSubmit={(event) => {
+              event.preventDefault();
+              void copyContext();
+            }}
+          >
+            <div
+              className={styles.assistantSuggestions}
+              aria-label={tSite("Suggested questions")}
+            >
+              {suggestions.map((item) => (
+                <button
+                  type="button"
+                  key={item.label}
+                  aria-pressed={question === tSite(item.question)}
+                  onClick={() => {
+                    resetCopy();
+                    setQuestion(tSite(item.question));
+                    questionInput.current?.focus();
+                  }}
+                >
+                  {tSite(item.label)}
+                </button>
+              ))}
+            </div>
+            <label htmlFor={id} className={styles.assistantLabel}>
+              {tSite("Your question")}
             </label>
             <Textarea
-              id={id + "-project"}
-              value={project}
+              ref={questionInput}
+              id={id}
+              value={question}
               onChange={(event) => {
                 resetCopy();
-                setProject(event.target.value);
+                setQuestion(event.target.value);
               }}
-              maxLength={1500}
+              maxLength={2000}
               rows={3}
-              placeholder={tSite(
-                "Your framework, what you are building, or the error you encountered.",
+              placeholder={tSite("What would you like to understand?")}
+              aria-describedby={id + "-help"}
+            />
+            <p id={id + "-help"} className={styles.assistantHint}>
+              {tSite(
+                "Choose a suggestion or write your own question. Leave it blank for an overview.",
               )}
-            />
-          </details>
-          <button
-            type="submit"
-            className={styles.assistantCopy}
-            disabled={busy}
-          >
-            {copyStatus === "success" ? (
-              <Check aria-hidden="true" />
-            ) : (
-              <Copy aria-hidden="true" />
-            )}
-            {tSite(
-              fetchStatus === "loading"
-                ? "Loading the official documentation…"
-                : copyStatus === "copying"
-                  ? "Copying…"
-                  : copyStatus === "success"
-                    ? "Copied"
-                    : "Copy question and context",
-            )}
-          </button>
-        </form>
-        <p role="status" className={styles.assistantStatus}>
-          {fetchStatus === "error"
-            ? tSite(
-                "This page could not be loaded. Try again, or open its Markdown version below.",
-              )
-            : copyStatus === "success"
+            </p>
+            <details className={styles.assistantProject}>
+              <summary>{tSite("Add project context (optional)")}</summary>
+              <label
+                htmlFor={id + "-project"}
+                className={styles.assistantLabel}
+              >
+                {tSite("Project context")}
+              </label>
+              <Textarea
+                id={id + "-project"}
+                value={project}
+                onChange={(event) => {
+                  resetCopy();
+                  setProject(event.target.value);
+                }}
+                maxLength={1500}
+                rows={3}
+                placeholder={tSite(
+                  "Your framework, what you are building, or the error you encountered.",
+                )}
+              />
+            </details>
+            <button
+              type="submit"
+              className={styles.assistantCopy}
+              disabled={busy}
+            >
+              {copyStatus === "success" ? (
+                <Check aria-hidden="true" />
+              ) : (
+                <Copy aria-hidden="true" />
+              )}
+              {tSite(
+                fetchStatus === "loading"
+                  ? "Loading the official documentation…"
+                  : copyStatus === "copying"
+                    ? "Copying…"
+                    : copyStatus === "success"
+                      ? "Copied"
+                      : "Copy question and context",
+              )}
+            </button>
+          </form>
+          <p role="status" className={styles.assistantStatus}>
+            {fetchStatus === "error"
               ? tSite(
-                  "Copied. Paste the prompt into your AI tool to get an answer.",
+                  "This page could not be loaded. Try again, or open its Markdown version below.",
                 )
-              : copyStatus === "failure"
+              : copyStatus === "success"
                 ? tSite(
-                    "Copy unavailable. Select the prepared text below and copy it manually.",
+                    "Copied. Paste the prompt into your AI tool to get an answer.",
                   )
-                : ""}
-        </p>
-        {prompt ? (
-          <details
-            className={styles.assistantContext}
-            open={expanded}
-            onToggle={(event) => setExpanded(event.currentTarget.open)}
+                : copyStatus === "failure"
+                  ? tSite(
+                      "Copy unavailable. Select the prepared text below and copy it manually.",
+                    )
+                  : ""}
+          </p>
+          {prompt ? (
+            <details
+              className={styles.assistantContext}
+              open={expanded}
+              onToggle={(event) => setExpanded(event.currentTarget.open)}
+            >
+              <summary>{tSite("Review included context")}</summary>
+              <label htmlFor={id + "-prompt"} className={styles.assistantLabel}>
+                {tSite("Question and documentation to copy")}
+              </label>
+              <Textarea
+                ref={promptInput}
+                id={id + "-prompt"}
+                readOnly
+                value={prompt}
+                rows={8}
+                className={styles.assistantPrompt}
+              />
+            </details>
+          ) : null}
+          <a
+            className={styles.assistantMarkdown}
+            href={page.markdownUrl}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <summary>{tSite("Review included context")}</summary>
-            <label htmlFor={id + "-prompt"} className={styles.assistantLabel}>
-              {tSite("Question and documentation to copy")}
-            </label>
-            <Textarea
-              ref={promptInput}
-              id={id + "-prompt"}
-              readOnly
-              value={prompt}
-              rows={8}
-              className={styles.assistantPrompt}
-            />
-          </details>
-        ) : null}
-        <a
-          className={styles.assistantMarkdown}
-          href={page.markdownUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {tSite("View as Markdown")}
-          <span className="sr-only">{tSite("Opens in a new tab")}</span>
-        </a>
-      </SheetContent>
-    </Sheet>
+            {tSite("View as Markdown")}
+            <span className="sr-only">{tSite("Opens in a new tab")}</span>
+          </a>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
