@@ -971,17 +971,17 @@
 
 .publicFooter .directory {
   grid-template-columns: minmax(0, 1fr);
-  gap: 3rem;
-  padding-block: 2.5rem;
+  gap: clamp(3rem, 5vw, 4rem);
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(2.5rem, 5vw, 4rem);
 }
 
 .publicFooter .brand {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 1.5rem 2rem;
-  padding-top: 2rem;
+  gap: 1.25rem 2rem;
+  padding-top: clamp(2rem, 3vw, 2.5rem);
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -1005,15 +1005,15 @@
 }
 
 .publicFooter .brandLogo > a > svg {
-  height: clamp(1.5rem, 2.2vw, 1.75rem);
+  height: 1.375rem;
   width: auto;
 }
 
 .publicFooter .brandDescription {
-  max-width: 38ch;
-  margin-top: 0.75rem;
-  font-size: 0.875rem;
-  line-height: 1.7;
+  max-width: 44ch;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
 }
 
 .publicFooter .repositories {
@@ -1027,8 +1027,8 @@
 }
 
 .publicFooter .repositories ul {
-  gap: 0.25rem 1.25rem;
-  margin-top: 0.75rem;
+  gap: 0.25rem 1rem;
+  margin-top: 0.5rem;
 }
 
 .publicFooter .repositories a {
@@ -1037,14 +1037,14 @@
   border: 0;
   border-radius: 0.375rem;
   background: transparent;
-  color: var(--foreground);
+  color: var(--muted-foreground);
   font-size: 0.75rem;
 }
 
 .publicFooter .groups {
   min-width: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.25rem 1.5rem;
+  gap: clamp(2.5rem, 5vw, 4rem) 1.5rem;
 }
 
 .publicFooter .groups nav {
@@ -1052,11 +1052,11 @@
 }
 
 .publicFooter .groups h2 {
-  margin: 0.75rem 0;
-  font-size: 0.875rem;
+  margin: 0 0 1rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  line-height: 1.25rem;
-  letter-spacing: -0.01em;
+  line-height: 1.125rem;
+  letter-spacing: 0;
 }
 
 .publicFooter .directoryLink {
@@ -1064,7 +1064,7 @@
   padding-block: 0.375rem;
   border-radius: 0.375rem;
   color: var(--muted-foreground);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.25rem;
   text-underline-offset: 3px;
@@ -1079,11 +1079,17 @@
   padding-block: 0.375rem;
   border-radius: 0.375rem;
   color: var(--foreground);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.5;
   text-decoration: none;
   text-underline-offset: 4px;
+}
+
+.publicFooter .directoryMore > svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex-shrink: 0;
 }
 
 .publicFooter .bottomBar {
@@ -1091,19 +1097,19 @@
   flex-direction: column;
   gap: 0.75rem;
   padding-block: 1.5rem 2.5rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .publicFooter .legal {
   min-width: 0;
-  gap: 0.25rem 1.5rem;
-  font-size: 0.6875rem;
+  gap: 0.25rem 1.25rem;
+  font-size: 0.75rem;
   line-height: 1.6;
 }
 
 .publicFooter .legal nav {
   flex-wrap: wrap;
-  gap: 0.25rem 1.5rem;
+  gap: 0.25rem 1.25rem;
 }
 
 .publicFooter .legal a,
@@ -1118,59 +1124,61 @@
 
 .publicFooter .versions {
   font-family: var(--font-sans);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   line-height: 1.5;
 }
 
 .publicFooter .preferences {
   min-width: 0;
   flex-wrap: wrap;
-  gap: 0.625rem;
+  gap: 0.5rem;
 }
 
 .publicFooter .appearance,
 .publicFooter .palette {
   padding: 1px;
-  border-color: var(--border);
-  border-radius: 0.5rem;
-  background: var(--background);
+  border-color: transparent;
+  border-radius: 999px;
+  background: transparent;
 }
 
 .publicFooter .appearance button {
   width: 1.75rem;
   height: 1.75rem;
-  border-radius: 0.375rem;
+  border-radius: 50%;
 }
 
 .publicFooter .palette button {
   min-height: 1.75rem;
   height: 1.75rem;
-  border-radius: 0.375rem;
+  border-radius: 999px;
 }
 
 .publicFooter :is(.appearance, .palette) button[aria-pressed="true"] {
-  border-color: var(--border-strong);
-  background: var(--surface-muted);
-  color: var(--foreground);
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
   box-shadow: none;
 }
 
 .publicFooter .palette button[aria-pressed="true"] .paletteSwatch {
-  border-color: var(--border-strong);
+  border-color: currentColor;
 }
 
 .publicFooter .preferences button[data-variant="footer"] {
   min-height: 2rem;
   padding: 0.375rem 0.625rem;
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  background: var(--background);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
   font-size: 0.75rem;
 }
 
 .publicFooter .preferences button[data-variant="footer"][data-state="open"] {
-  border-color: var(--border-strong);
-  background: var(--surface-muted);
+  border-color: var(--border);
+  background: var(--background);
+  color: var(--foreground);
 }
 
 @media (min-width: 48rem) {
@@ -1215,10 +1223,25 @@
 }
 
 @media (pointer: fine) and (min-width: 40rem) {
+  .publicFooter .groups h2 {
+    font-size: 0.75rem;
+  }
+
   .publicFooter .directoryLink,
   .publicFooter .directoryMore {
     min-height: 1.75rem;
-    padding-block: 0.25rem;
+    padding-block: 0.3125rem;
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+  }
+
+  .publicFooter .repositories a,
+  .publicFooter .legal a,
+  .publicFooter .versions {
+    min-height: 1.5rem;
+    padding-block: 0.1875rem;
+    font-size: 0.75rem;
+    line-height: 1.125rem;
   }
 }
 
@@ -1255,9 +1278,26 @@
     flex-direction: column;
     gap: 0.5rem;
   }
+
+  .publicFooter .utilities > .preferences {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .publicFooter .preferences .preferences {
+    width: auto;
+    max-width: 100%;
+    flex-wrap: nowrap;
+  }
 }
 
 @media (hover: hover) {
+  .publicFooter .preferences button[data-variant="footer"]:hover {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
   .publicFooter .directoryLink:hover,
   .publicFooter .directoryMore:hover,
   .publicFooter .legal a:hover,
