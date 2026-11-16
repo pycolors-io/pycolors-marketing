@@ -1,0 +1,300 @@
+---
+title: Éviter les sauvegardes React en double entre plusieurs actions
+description: Reproduisez deux sauvegardes déclenchées dans un même tour, contrôlez la requête avec un verrou synchrone et reliez le retour utilisateur à un Settings Panel.
+author: Patrice Parny
+date: "2026-11-16"
+category: React
+tags:
+  - React
+  - SaaS
+  - Forms
+  - UI Patterns
+featured: false
+readingTime: 9 min de lecture
+cover: /seo/blog/og-blog-saas.png
+cta:
+  label: Découvrir Settings Panel
+  href: /docs/blocks/account/settings-panel
+  variant: blocks
+---
+
+## Le bouton Enregistrer ne verrouille pas la mutation [#the-save-ui-is-not-the-mutation-lock]
+
+Un formulaire de paramètres peut désactiver son bouton **Enregistrer** et afficher « Enregistrement… » pendant une requête. C’est utile pour l’interface, mais un autre chemin de code peut lancer la même opération avant que le prochain rendu ne reflète l’état d’attente. Deux appels qui lisent la même ancienne valeur de `saving` peuvent alors lancer deux opérations.
+
+**Séparez les responsabilités :** l’état React affiche l’attente, l’erreur et la réussite ; un verrou synchrone à la frontière de la mutation refuse un second appel effectué dans le **même tour**. Le verrou doit être libéré après une réussite **ou** un échec pour permettre une nouvelle tentative. Ce mécanisme côté client ne fournit pas l’idempotence côté serveur.
+
+Le cas est volontairement limité. React [traite séparément les clics intentionnels](https://react.dev/learn/queueing-a-series-of-state-updates) : un bouton réellement désactivé peut donc empêcher le double clic ordinaire. L’expérience modélise plutôt **deux appels programmatiques ou issus de deux points d’entrée avant le prochain rendu**. Elle ne prétend pas qu’un second clic traverse régulièrement un contrôle désactivé.
+
+Le [Settings Panel de PyColors](/docs/blocks/account/settings-panel) illustre cette séparation : la prop `submitting` pilote l’affichage occupé/désactivé, tandis que l’application possède `onSubmit`, la validation, la persistance et les permissions. Ce Block se **copie depuis sa source** ; il ne fournit pas d’API de sauvegarde et ne persiste rien lui-même.
+
+## Reproduire le chevauchement sans serveur [#reproduce-an-overlapping-call-without-a-server]
+
+Un instantané de rendu tel que `saving === false` n’est pas un verrou synchrone partagé entre deux appels réalisés avant sa mise à jour. Dans les tests ci-dessous, la fonction naïve capture `renderedBusy = false` ; deux appels durant le même tour déclenchent deux opérations. C’est un **modèle JavaScript autonome**, pas un test du navigateur ou des événements React.
+
+Le contrat corrigé ne demande qu’un état mutable immédiatement. Il refuse le travail simultané au lieu de le mettre en file d’attente, expose la progression pour le diagnostic et se libère systématiquement dans `finally`.
+
+Créez `save-gate.mjs` dans un dossier vide :
+
+```js title="save-gate.mjs"
+/**
+ * One gate per form/mutation scope. A second invocation while pending is
+ * ignored, not queued, and cannot reach the operation.
+ */
+export function createSaveGate() {
+  let pending = false;
+
+  return {
+    get pending() {
+      return pending;
+    },
+    async run(operation) {
+      if (typeof operation !== "function") {
+        throw new TypeError("operation must be a function");
+      }
+      if (pending) return { started: false };
+      pending = true; // Synchronous: precedes the first await.
+
+      try {
+        await operation();
+        return { started: true };
+      } finally {
+        pending = false; // Release after both success and failure.
+      }
+    },
+  };
+}
+```
+
+Le verrou renvoie `{ started: false }` pour un appel concurrent. Cet appel ne patiente pas jusqu’au résultat du premier. La règle « ignorer pendant l’attente » convient à un formulaire de **paramètres** dont les champs restent figés pendant l’envoi. Elle ne convient pas nécessairement à des messages, des paiements, des modifications à traiter successivement ou à des opérations dont chaque demande doit être conservée.
+
+## Tester la libération après succès et erreur [#verify-the-lock-and-its-failure-paths]
+
+Placez ce fichier de test à côté du module. Il utilise uniquement les outils intégrés de Node.js, sans fournisseur de paiement, données clients, dépendance de package ou accès réseau.
+
+```js title="save-gate.test.mjs"
+import assert from "node:assert/strict";
+import test from "node:test";
+import { createSaveGate } from "./save-gate.mjs";
+
+function deferred() {
+  let resolve;
+  let reject;
+  const promise = new Promise((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+}
+
+test("a captured render snapshot does not lock same-turn callers", () => {
+  const renderedBusy = false; // Synthetic snapshot, not a React browser test.
+  let calls = 0;
+  const naiveSave = () => {
+    if (renderedBusy) return;
+    calls++;
+    // A React setState call would request a future render, not mutate this snapshot.
+  };
+  naiveSave();
+  naiveSave();
+  assert.equal(calls, 2);
+});
+
+test("two same-turn submissions start just one operation", async () => {
+  const gate = createSaveGate();
+  const hold = deferred();
+  let calls = 0;
+  const work = async () => {
+    calls++;
+    await hold.promise;
+  };
+  const first = gate.run(work);
+  const secondPromise = gate.run(work);
+  const callsBeforeRelease = calls;
+  hold.resolve(); // Resolve even if the guard is deliberately removed.
+  assert.equal(callsBeforeRelease, 1);
+  assert.deepEqual(await secondPromise, { started: false });
+  assert.deepEqual(await first, { started: true });
+});
+
+test("pending is visible synchronously, then clears on success", async () => {
+  const gate = createSaveGate();
+  const hold = deferred();
+  const first = gate.run(() => hold.promise);
+  assert.equal(gate.pending, true);
+  hold.resolve();
+  await first;
+  assert.equal(gate.pending, false);
+});
+
+test("a failed save rejects and releases the gate", async () => {
+  const gate = createSaveGate();
+  await assert.rejects(
+    gate.run(async () => {
+      throw Error("offline");
+    }),
+    /offline/,
+  );
+  assert.equal(gate.pending, false);
+});
+
+test("a later retry can start after the failed save", async () => {
+  const gate = createSaveGate();
+  await assert.rejects(
+    gate.run(async () => {
+      throw Error("offline");
+    }),
+  );
+  assert.deepEqual(await gate.run(async () => {}), { started: true });
+});
+
+test("synchronous throws also release the gate", async () => {
+  const gate = createSaveGate();
+  await assert.rejects(
+    gate.run(() => {
+      throw Error("bad input");
+    }),
+    /bad input/,
+  );
+  assert.equal(gate.pending, false);
+});
+
+test("independent forms use independent gates", async () => {
+  const a = createSaveGate();
+  const b = createSaveGate();
+  const hold = deferred();
+  const first = a.run(() => hold.promise);
+  assert.deepEqual(await b.run(async () => {}), { started: true });
+  assert.equal(a.pending, true);
+  hold.resolve();
+  await first;
+});
+
+test("invalid callbacks do not acquire the gate", async () => {
+  const gate = createSaveGate();
+  await assert.rejects(gate.run(null), /operation must be a function/);
+  assert.equal(gate.pending, false);
+});
+```
+
+```sh
+node --test save-gate.test.mjs
+```
+
+**Résultat isolé observé (16 novembre 2026) :** les **8 tests sur 8** passent sous Node.js `22.16.0`. Le scénario naïf lance deux opérations, mais le verrou n’en autorise qu’une ; l’échec, la nouvelle tentative, les exceptions synchrones et l’indépendance de deux formulaires sont aussi contrôlés. Ce sont des tests de fonction : ils ne prouvent pas le rendu React, l’accessibilité d’un navigateur, l’installation d’un package PyColors ou le comportement réseau.
+
+Pour un contrôle négatif, supprimez temporairement `pending = true` : les assertions sur le chevauchement doivent échouer. Restaurez la ligne après le test.
+
+## Connecter le verrou au formulaire React [#connect-the-gate-to-a-real-form-boundary]
+
+Dans une application, une ref React peut porter le même invariant. La documentation [useRef](https://react.dev/reference/react/useRef) décrit une valeur persistante entre les rendus ; modifier `.current` ne provoque pas de rendu. La ref refuse ici immédiatement un deuxième appel, tandis que `saving` renseigne le Block copié.
+
+Après avoir [copié le Settings Panel](/docs/blocks/account/settings-panel), un composant client contrôlé par votre application peut avoir cette forme :
+
+```tsx title="profile-settings.tsx"
+"use client";
+
+import { useRef, useState, type FormEvent } from "react";
+import {
+  SettingsPanel,
+  type SettingsPanelFeedback,
+  type SettingsPanelSection,
+} from "./blocks/settings-panel";
+
+export function ProfileSettings({
+  persist,
+}: {
+  persist: (displayName: string) => Promise<void>;
+}) {
+  const [displayName, setDisplayName] = useState("Sample workspace");
+  const [saving, setSaving] = useState(false);
+  const [feedback, setFeedback] = useState<SettingsPanelFeedback>();
+  const inFlight = useRef(false);
+
+  async function save() {
+    // One synchronous gate shared by every save entry point.
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setSaving(true);
+    setFeedback(undefined);
+
+    try {
+      await persist(displayName);
+      setFeedback({ status: "success", title: "Settings saved" });
+    } catch {
+      setFeedback({ status: "error", title: "Save failed. Try again." });
+    } finally {
+      inFlight.current = false;
+      setSaving(false);
+    }
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void save();
+  }
+
+  const sections = [
+    {
+      id: "profile",
+      title: "Profile",
+      fields: [
+        {
+          id: "display-name",
+          name: "displayName",
+          label: "Display name",
+          value: displayName,
+          onValueChange: setDisplayName,
+        },
+      ],
+    },
+  ] satisfies readonly SettingsPanelSection[];
+
+  return (
+    <SettingsPanel
+      title="Profile settings"
+      sections={sections}
+      submitLabel="Save settings"
+      submitting={saving}
+      submittingLabel="Saving…"
+      feedback={feedback}
+      onSubmit={handleSubmit}
+    />
+  );
+}
+```
+
+La fonction `persist` est volontairement fournie par l’application. Ce n’est **pas** un service PyColors ; aucun backend, système d’authentification ou d’autorisation n’est fourni. Tous les points d’entrée Enregistrer doivent appeler la même fonction `save`. Si vos utilisateurs peuvent changer les champs pendant une requête, choisissez explicitement la mise en file, l’annulation du travail périmé ou le refus de nouveaux changements. Notre exemple choisit de **refuser pendant l’attente**.
+
+L’implémentation documentée du Block désactive les champs et le bouton lorsque `submitting` est vrai, expose `aria-busy` et présente les retours de succès/erreur dans une région annoncée. Cela ne remplace jamais les contrôles de permissions et d’idempotence côté serveur. Les propriétés effectives doivent être revérifiées dans la copie utilisée et avec un navigateur réel.
+
+## Un verrou local n’est pas une preuve d’idempotence [#do-not-confuse-a-client-lock-with-idempotency]
+
+| Frontière                           | Ce que montre l’exemple                    | Ce que votre application doit encore assurer                                 |
+| ----------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------- |
+| Même instance du formulaire         | Une seule tentative en cours par verrou    | Tous les points d’entrée doivent partager ce verrou                          |
+| Retour utilisateur                  | `saving` et `feedback` contrôlent le Block | Vérifier clavier, erreurs et focus dans un navigateur                        |
+| Requête réseau                      | Nouvelle tentative possible après l’issue  | Délais, déconnexions et validation serveur                                   |
+| Remontage, autre onglet ou appareil | **Aucune garantie**                        | Idempotence serveur et transactions appropriées                              |
+| Paiement ou action irréversible     | **Hors périmètre**                         | Idempotence du fournisseur, permissions et protection contre les répétitions |
+
+Une réponse HTTP peut être perdue après l’écriture sur le serveur. Une nouvelle demande envoyée depuis un autre appareil ne rencontre pas cette ref. Pour les mutations côté serveur, choisissez une sémantique d’idempotence et de transaction adaptée. Un bouton désactivé, une ref ou un test local ne prouvent jamais un traitement exactement une fois.
+
+## Checklist de vérification [#verification-checklist]
+
+- Identifier tous les points d’entrée Enregistrer ; les relier à une fonction de mutation commune.
+- Acquérir le verrou **avant** le premier `await`, puis le libérer dans `finally`.
+- Préciser si un chevauchement doit être ignoré, mis en file ou remplacer l’opération précédente.
+- Fournir les états attente, échec et nouvelle tentative via `submitting` et `feedback`.
+- Tester les appels simultanés, le rejet et la reprise de manière indépendante.
+- Vérifier au clavier l’envoi, le focus, les annonces d’erreur et les petits écrans.
+- Vérifier la validation, les permissions et l’idempotence éventuelle sur le serveur.
+- Traiter séparément les remontages, rechargements, répétitions réseau et appels multi-appareils.
+
+Pour la validation générale, consultez le [guide des formulaires](/docs/guides/forms-with-validation). Pour la course entre une ancienne validation de champ et une nouvelle valeur, consultez [l’article sur les validations asynchrones](/blog/prevent-stale-async-validation-react-forms). Celui-ci traite de **l’admission d’une mutation en cours**, pas de l’ordre de retour des validations.
+
+**Sources et versions (contrôlées le 16 novembre 2026) :** [React `useRef`](https://react.dev/reference/react/useRef), [regroupement des mises à jour React](https://react.dev/learn/queueing-a-series-of-state-updates), [attribut HTML `disabled`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled), [tests Node.js](https://nodejs.org/api/test.html) et [contrat public Settings Panel](/docs/blocks/account/settings-panel). Le manifeste Marketing déclare Next.js `16.4.2`, React `^19.3.1`, Node `24.x` et pnpm `10.32.1` ; ce sont des **versions déclarées et non installées dans ce laboratoire**. Les huit tests de fonction ont été exécutés uniquement avec Node.js `22.16.0`.
+
+## Étape suivante : examiner le formulaire contrôlé [#next-step-explore-the-controlled-form-surface]
+
+**Découvrir Settings Panel** dans la documentation PyColors Blocks pour consulter le code public, le contrat `submitting` et les retours de succès/erreur. Ne copiez ce Block dans votre application qu’après avoir déterminé qui possède réellement les données et les mutations. Il ne les sauvegarde pas pour vous.
