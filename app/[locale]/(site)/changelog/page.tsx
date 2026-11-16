@@ -67,9 +67,56 @@ const CHANGELOG: ChangelogItem[] = [
   {
     version: `v${LATEST_MARKETING_RELEASE.version}`,
     title:
-      "PyColors Marketing v1.32.0: explore in your language, shape your project",
+      "PyColors Marketing v1.33.0: clearer reading paths, practical implementation guides",
     dateLabel: LATEST_MARKETING_RELEASE.dateLabel,
     dateISO: LATEST_MARKETING_RELEASE.dateISO,
+    status: "Stable",
+    releaseWeekLabel: "Nov 2026 (weekly release)",
+    summary:
+      "Find relevant articles, compare mobile approaches and preserve filters in shareable pagination links.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Browse blog categories and tags with a consistent layout, article counts and clear links to the relevant articles.",
+          "Read bilingual guidance for choosing between a web/PWA approach, Capacitor and React Native with Expo.",
+          "Follow a bilingual Next.js pagination guide to keep search and multi-value filters when navigating or sharing a link.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Move from a blog category or tag to the relevant articles through shared navigation and page structure.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "Pagination examples check page values, preserve repeated filters and reset the page when search changes.",
+          "Mobile guidance explains code-sharing and delivery trade-offs; device qualification and distribution remain separate work.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Run the pagination example and compare mobile approaches before adapting them to your application.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Use the documented constraints to agree on mobile scope and the behavior of shared links.",
+        ],
+      },
+    ],
+    cta: { label: "Read the implementation guides", href: "/blog" },
+  },
+  {
+    version: "v1.32.0",
+    title:
+      "PyColors Marketing v1.32.0: explore in your language, shape your project",
+    dateLabel: "Fri 6 Nov 2026",
+    dateISO: "2026-11-06",
     status: "Stable",
     releaseWeekLabel: "Nov 2026 (weekly release)",
     summary:
