@@ -1,0 +1,72 @@
+.page h1 {
+  max-width: 18ch;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.page .explorer {
+  padding-block: 0 2rem;
+  background: transparent;
+  box-shadow: none;
+  clip-path: none;
+}
+.filters {
+  --background: #17181d;
+  --card: #17181d;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #17181d;
+  --border: #46464f;
+  --border-subtle: #46464f;
+  --ring: #fff;
+  --accent: #303038;
+  --accent-foreground: #fff;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: 1.75rem;
+  background: var(--background);
+  color: var(--foreground);
+}
+.filters input {
+  min-height: 3rem;
+  border-radius: 0.875rem;
+}
+.filters :global([data-slot="button"]) {
+  min-height: 2.75rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+}
+.filters :global([aria-pressed="false"]) {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--foreground);
+}
+.filters :global([aria-pressed="true"]) {
+  background: #fff;
+  color: #17181d;
+}
+@media (max-width: 39.999rem) {
+  .page h1 {
+    font-size: clamp(2.5rem, 10vw, 3rem);
+  }
+}
+@media (forced-colors: active) {
+  .filters {
+    --background: Canvas;
+    --card: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: Highlight;
+    --primary-foreground: HighlightText;
+    --border: CanvasText;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .filters :global([aria-pressed="true"]) {
+    background: Highlight;
+    color: HighlightText;
+  }
+}

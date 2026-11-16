@@ -68,11 +68,10 @@ describe("UI Examples page", () => {
     const nav = screen.getByRole("navigation", {
       name: "PyColors UI navigation",
     });
-    expect(within(nav).getByRole("link", { name: "Examples" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
-    expect(nav.querySelectorAll('[aria-current="page"]')).toHaveLength(1);
+    expect(
+      within(nav).getByRole("button", { name: "Browse PyColors UI: Examples" }),
+    ).toHaveAttribute("aria-expanded", "false");
+    expect(within(nav).getAllByRole("link")).toHaveLength(1);
     expect(
       screen.getByRole("link", { name: "Explore the screens" }),
     ).toHaveAttribute("href", "#example-screens");

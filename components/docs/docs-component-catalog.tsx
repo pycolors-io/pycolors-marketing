@@ -1,4 +1,5 @@
 import { useCopy } from "@/lib/i18n/use-copy";
+import design from "./docs-article.module.css";
 import { Link } from "@/lib/i18n/navigation";
 import { ArrowUpRight, FormInput, Layers3, PanelsTopLeft } from "lucide-react";
 
@@ -59,9 +60,9 @@ export function DocsComponentCatalog() {
       {groups.map(({ title, description, icon: Icon, components }) => (
         <div
           key={title}
-          className="overflow-hidden rounded-lg border border-border-subtle bg-card"
+          className={`${design.catalogCard} overflow-hidden border border-border-subtle`}
         >
-          <div className="border-b border-border-subtle bg-linear-to-br from-primary/[0.03] to-transparent p-4">
+          <div className="border-b border-border-subtle bg-surface-muted p-5">
             <Icon className="mb-4 size-4 text-primary" aria-hidden="true" />
             <h3 className="text-sm font-semibold text-foreground">
               {tSite(title)}
@@ -75,7 +76,7 @@ export function DocsComponentCatalog() {
               <li key={slug}>
                 <Link
                   href={`/docs/ui/${slug}`}
-                  className="group flex min-h-10 items-center justify-between gap-2 rounded-md px-3 py-2 text-sm text-foreground no-underline transition-colors hover:bg-muted/40 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
+                  className="group flex min-h-11 items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm text-foreground no-underline transition-colors hover:bg-muted/40 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
                 >
                   {tSite(name)}
                   <ArrowUpRight

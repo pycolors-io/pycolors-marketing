@@ -8,6 +8,23 @@ import { axe } from "vitest-axe";
 import { DocsFooter } from "@/components/docs-footer";
 import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
 
+const localeState = vi.hoisted(() => ({ value: "en" as "en" | "fr" }));
+vi.mock("@/lib/i18n/use-copy", async () => {
+  const { createCopy } = await import("../../lib/i18n/copy-core");
+  const french = (await import("../../messages/fr.json")).default
+    .site as Record<string, string>;
+  return {
+    useCopy: () =>
+      createCopy(
+        localeState.value,
+        Object.assign((key: string) => french[key] ?? key, {
+          has: (key: string) => Object.hasOwn(french, key),
+          raw: (key: string) => french[key],
+        }),
+      ),
+  };
+});
+
 const preference = vi.hoisted(() => ({ theme: "system", setTheme: vi.fn() }));
 const navigation = vi.hoisted(() => ({ push: vi.fn() }));
 vi.mock("fumadocs-ui/provider/base", () => ({ useTheme: () => preference }));
@@ -30,23 +47,37 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  localeState.value = "en";
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
   window.history.replaceState(null, "", "/");
 });
 
 describe("documentation footer", () => {
-  it("separates documentation from product discovery and links to existing destinations", () => {
+  it("uses the shared site footer with product, resource, comparison, and support destinations", () => {
     render(<DocsFooter />);
     const footer = screen.getByRole("contentinfo", {
-      name: "PyColors Docs footer",
+      name: "PyColors site footer",
     });
     expect(
       within(footer).getByRole("button", { name: "Language: English" }),
     ).toHaveTextContent("English");
-    for (const title of ["Documentation", "Build", "Resources", "Help"]) {
+    for (const title of [
+      "Products",
+      "UI",
+      "Blocks",
+      "Design System",
+      "Starter Free",
+      "Starter Pro",
+      "Templates",
+      "Guides",
+      "Registry",
+      "Resources",
+      "Compare",
+      "Company",
+    ]) {
       const nav = within(footer).getByRole("navigation", {
-        name: `Docs footer ${title}`,
+        name: `Footer ${title}`,
       });
       expect(
         within(nav).getByRole("heading", { name: title, level: 2 }),
@@ -54,24 +85,27 @@ describe("documentation footer", () => {
       expect(within(nav).getByRole("list")).toBeVisible();
     }
     expect(
-      within(footer).getByRole("link", { name: "PyColors Docs" }),
-    ).toHaveAttribute("href", "/docs");
-    expect(
-      within(footer).getByRole("link", { name: "Back to PyColors" }),
+      within(footer).getByRole("link", { name: "PyColors" }),
     ).toHaveAttribute("href", "/");
+    expect(
+      within(footer).queryByRole("region", {
+        name: "Your next product starts here.",
+      }),
+    ).not.toBeInTheDocument();
+    expect(
+      within(footer).getByText(
+        "Components, templates, and SaaS starters. Built to work together.",
+      ),
+    ).toBeVisible();
     expect(
       within(footer).getByRole("link", { name: "Contact" }),
     ).toHaveAttribute("href", "/contact");
-    const docs = within(footer).getByRole("navigation", {
-      name: "Docs footer Documentation",
+    const resources = within(footer).getByRole("navigation", {
+      name: "Footer Resources",
     });
     expect(
-      within(docs).getByRole("link", { name: "Starter Pro" }),
-    ).toHaveAttribute("href", "/docs/starter-pro");
-    expect(within(docs).getByRole("link", { name: "Blocks" })).toHaveAttribute(
-      "href",
-      "/docs/blocks",
-    );
+      within(resources).getByRole("link", { name: "Documentation" }),
+    ).toHaveAttribute("href", "/docs");
     const explorer = within(footer).getByRole("link", { name: "UI Explorer" });
     expect(explorer).toHaveAttribute("href", "https://ui.pycolors.io/");
     expect(explorer).toHaveAttribute("target", "_blank");
@@ -95,6 +129,44 @@ describe("documentation footer", () => {
         ).toBe(true);
       }
     }
+  });
+
+  it("localizes directory navigation and keeps the mobile product marked coming soon", () => {
+    localeState.value = "fr";
+    render(<DocsFooter />);
+    const registry = screen.getByRole("navigation", {
+      name: "Pied de page : Registre de composants",
+    });
+    expect(
+      within(registry).getByRole("heading", {
+        name: "Registre de composants",
+        level: 2,
+      }),
+    ).toBeVisible();
+    expect(
+      within(registry).getByRole("link", { name: "Mises à jour" }),
+    ).toHaveAttribute("href", "/docs/registry/updates");
+    const ui = screen.getByRole("navigation", { name: "Pied de page : UI" });
+    expect(
+      within(ui).getByRole("link", { name: "Voir tous les composants" }),
+    ).toHaveAttribute("href", "/docs/ui");
+    const pro = screen.getByRole("navigation", {
+      name: "Pied de page : Starter Pro",
+    });
+    expect(
+      within(pro).getByRole("link", { name: "Déploiement" }),
+    ).toHaveAttribute("href", "/docs/starter-pro/deployment");
+    expect(
+      within(pro).getByRole("link", { name: "Tous les guides Starter Pro" }),
+    ).toHaveAttribute("href", "/docs/starter-pro");
+    const products = screen.getByRole("navigation", {
+      name: "Pied de page : Produits",
+    });
+    expect(
+      within(products).getByRole("link", {
+        name: "Application mobile React Native · Bientôt disponible",
+      }),
+    ).toHaveAttribute("href", "/starters/mobile");
   });
 
   it("shares theme controls and animated navigation while exposing support and release information", () => {
@@ -126,7 +198,7 @@ describe("documentation footer", () => {
       }),
     ).toHaveAttribute("href", "/changelog");
     const repos = screen.getByRole("navigation", {
-      name: "Docs repositories on GitHub",
+      name: "PyColors on GitHub",
     });
     for (const link of within(repos).getAllByRole("link")) {
       expect(link).toHaveAttribute("target", "_blank");
@@ -147,14 +219,14 @@ describe("documentation footer", () => {
   it("returns keyboard focus to the docs article when reselecting its current page", () => {
     vi.spyOn(window, "scrollTo").mockImplementation(() => {});
     vi.stubGlobal("scrollY", 1400);
-    window.history.replaceState(null, "", "/docs/ui");
+    window.history.replaceState(null, "", "/docs");
     render(
       <>
         <article id="nd-page">UI documentation</article>
         <DocsFooter />
       </>,
     );
-    const link = screen.getByRole("link", { name: "UI Library" });
+    const link = screen.getByRole("link", { name: "Documentation" });
     link.focus();
     fireEvent.click(link);
     expect(screen.getByRole("article")).toHaveFocus();

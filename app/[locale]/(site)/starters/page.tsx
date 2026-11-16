@@ -1,7 +1,10 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
+import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowDown,
   ArrowRight,
@@ -18,6 +21,7 @@ import {
   STARTER_FREE_PRICE_LABEL,
 } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
+import { STARTER_PRO_MOBILE_PREVIEW } from "@/lib/products/starter-pro-mobile-preview";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
@@ -118,16 +122,29 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
   return (
     <article
       aria-labelledby={`starter-${offer.slug}-title`}
-      className="flex min-w-0 flex-col overflow-hidden rounded-[5px] border border-border-subtle bg-background md:row-span-3 md:grid md:grid-rows-subgrid"
+      className={cn(
+        "flex min-w-0 flex-col overflow-hidden border border-border-subtle bg-background md:row-span-3 md:grid md:grid-rows-subgrid",
+        styles.offerCard,
+        isPro && styles.proOffer,
+      )}
     >
-      <div className={cn("p-5 sm:p-7", isPro && styles.proHeader)}>
+      <div
+        className={cn(
+          "p-5 sm:p-7",
+          styles.offerHeader,
+          isPro ? styles.proHeader : styles.freeHeader,
+        )}
+      >
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-xs font-medium text-muted-foreground">
             {tSite(offer.label)}
           </p>
           <Badge
             variant="outline"
-            className="rounded-[5px] border-border-subtle bg-background/70 text-[11px]"
+            className={cn(
+              "rounded-[5px] border-border-subtle bg-background/70 text-[11px]",
+              styles.offerBadge,
+            )}
           >
             {tSite(isPro ? "Integration foundations" : "Frontend starter")}
           </Badge>
@@ -142,9 +159,7 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
           {tSite(offer.description)}
         </p>
         <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span className="text-3xl font-semibold tracking-[-0.04em]">
-            {tSite(offer.price)}
-          </span>
+          <span className={styles.offerPrice}>{tSite(offer.price)}</span>
           <span className="text-xs text-muted-foreground">
             {tSite(offer.access)}
           </span>
@@ -158,6 +173,7 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
         className={cn(
           "border-y border-border-subtle px-5 pt-5 sm:px-7 sm:pt-7",
           styles.previewStage,
+          isPro ? styles.proPreviewStage : styles.freePreviewStage,
         )}
       >
         <Link
@@ -190,7 +206,7 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
         </figcaption>
       </figure>
 
-      <div className="flex flex-1 flex-col p-5 sm:p-7">
+      <div className={cn("flex flex-1 flex-col p-5 sm:p-7", styles.offerBody)}>
         <p className="text-xs font-medium text-foreground">
           {tSite("What you start with")}
         </p>
@@ -207,11 +223,19 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
         <p className="mb-6 mt-5 border-t border-border-subtle pt-4 text-xs leading-6 text-muted-foreground">
           {tSite(offer.setup)}
         </p>
-        <div className="mt-auto grid gap-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+        <div
+          className={cn(
+            "mt-auto grid gap-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2",
+            styles.offerActions,
+          )}
+        >
           <Button
             asChild
             variant="outline"
-            className="h-auto rounded-[5px] shadow-none"
+            className={cn(
+              "h-auto rounded-[5px] shadow-none",
+              styles.exploreAction,
+            )}
           >
             <Link href={`/starters/${offer.slug}`}>
               {tSite("Explore ")}
@@ -250,64 +274,82 @@ export default function StartersPage() {
     <main
       id="content"
       tabIndex={-1}
-      className="bg-background text-foreground focus:outline-none"
+      className={cn(
+        "bg-background text-foreground focus:outline-none",
+        styles.page,
+      )}
     >
-      <Container className="pb-16 pt-24 sm:pt-28">
-        <PageHero
-          variant="compact"
-          align="left"
-          contentClassName="mx-0 max-w-3xl"
-          badges={[{ label: "SaaS starters", variant: "outline" }]}
-          title={tSite("A head start for your next SaaS.")}
-          description={tSite(
-            "Start with a considered interface. Choose Free to validate your screens, or Pro when you're ready to connect real accounts, billing and data. Both start with Next.js and PyColors UI.",
-          )}
-          actions={
-            <>
-              <Button
-                size="lg"
-                asChild
-                className="site-primary-action rounded-[5px] shadow-none"
-              >
-                <Link href="#choose-starter">
-                  {tSite("Find your starting point")}
-                  {tSite("  ")}
-                  <ArrowDown className="size-4" aria-hidden="true" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                asChild
-                variant="outline"
-                className="rounded-[5px] shadow-none"
-              >
-                <a href={demoUrl} target="_blank" rel="noreferrer noopener">
-                  {tSite("Try the Starter Free demo")}
-                  {tSite("  ")}
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                  <span className="sr-only">
-                    {" "}
-                    {tSite(" (opens in a new tab)")}
-                  </span>
-                </a>
-              </Button>
-            </>
-          }
-          extra={
-            <MarketingPillList aria-label={tSite("Shared starter stack")}>
-              {["Next.js", "React", "TypeScript", "Tailwind CSS"].map(
-                (technology) => (
-                  <MarketingPill key={technology} className="bg-background">
-                    {tSite(technology)}
-                  </MarketingPill>
-                ),
+      <MarketingHeroBand tone="cool">
+        <Container className={`marketing-page-intro ${styles.heroContainer}`}>
+          <MarketingBreadcrumb route="/starters" />
+          <div className={styles.heroLayout}>
+            <PageHero
+              variant="compact"
+              align="left"
+              contentClassName="mx-0 max-w-3xl"
+              badges={[{ label: "SaaS starters", variant: "outline" }]}
+              title={tSite("A head start for your next SaaS.")}
+              description={tSite(
+                "Start with a considered interface. Choose Free to validate your screens, or Pro when you're ready to connect real accounts, billing and data. Both start with Next.js and PyColors UI.",
               )}
-            </MarketingPillList>
-          }
-        />
-
+              actions={
+                <>
+                  <Button
+                    size="lg"
+                    asChild
+                    className="site-primary-action rounded-[5px] shadow-none"
+                  >
+                    <Link href="#choose-starter">
+                      {tSite("Find your starting point")}
+                      {tSite("  ")}
+                      <ArrowDown className="size-4" aria-hidden="true" />
+                    </Link>
+                  </Button>
+                  <Button
+                    size="lg"
+                    asChild
+                    variant="outline"
+                    className="rounded-[5px] shadow-none"
+                  >
+                    <a href={demoUrl} target="_blank" rel="noreferrer noopener">
+                      {tSite("Try the Starter Free demo")}
+                      {tSite("  ")}
+                      <ArrowUpRight className="size-4" aria-hidden="true" />
+                      <span className="sr-only">
+                        {" "}
+                        {tSite(" (opens in a new tab)")}
+                      </span>
+                    </a>
+                  </Button>
+                </>
+              }
+              extra={
+                <MarketingPillList aria-label={tSite("Shared starter stack")}>
+                  {["Next.js", "React", "TypeScript", "Tailwind CSS"].map(
+                    (technology) => (
+                      <MarketingPill key={technology} className="bg-background">
+                        {tSite(technology)}
+                      </MarketingPill>
+                    ),
+                  )}
+                </MarketingPillList>
+              }
+            />
+            <figure className={styles.heroPreview}>
+              <ProductPreviewMedia
+                product="starter-free"
+                priority
+                sizes="(min-width: 1024px) 560px, 92vw"
+              />
+              <figcaption>
+                {tSite("Dashboard preview · Sample data")}
+              </figcaption>
+            </figure>
+          </div>
+        </Container>
+      </MarketingHeroBand>
+      <Container className="pb-16">
         <MarketingSectionShell
-          divider="pattern"
           id="choose-starter"
           aria-labelledby="choose-starter-title"
           width="full"
@@ -337,6 +379,40 @@ export default function StartersPage() {
             )}
           </p>
         </MarketingSectionShell>
+
+        <section
+          aria-labelledby="starter-mobile-preview-title"
+          className={styles.mobilePreview}
+        >
+          <div className={styles.mobileCopy}>
+            <div className={styles.mobileMeta}>
+              <Badge variant="outline">
+                {tSite(STARTER_PRO_MOBILE_PREVIEW.status)}
+              </Badge>
+              <span>{tSite(STARTER_PRO_MOBILE_PREVIEW.stack)}</span>
+            </div>
+            <h2 id="starter-mobile-preview-title">
+              {tSite(STARTER_PRO_MOBILE_PREVIEW.name)}
+            </h2>
+            <p>{tSite(STARTER_PRO_MOBILE_PREVIEW.description)}</p>
+            <Button asChild className={styles.mobileAction}>
+              <Link href={STARTER_PRO_MOBILE_PREVIEW.href}>
+                {tSite(STARTER_PRO_MOBILE_PREVIEW.action)}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            </Button>
+          </div>
+          <div className={styles.mobileVisual} aria-hidden="true">
+            <Image
+              src="/images/marketing/concepts/modular-platform-v1.webp"
+              alt=""
+              width={1254}
+              height={1254}
+              sizes="(min-width: 1024px) 380px, (min-width: 768px) 36vw, 85vw"
+              loading="lazy"
+            />
+          </div>
+        </section>
 
         <MarketingSectionShell
           id="compare-starters"
@@ -407,7 +483,10 @@ export default function StartersPage() {
                     {tSite("Free → Pro")}
                   </span>
                 }
-                className="bg-background shadow-none hover:shadow-none"
+                className={cn(
+                  "bg-background shadow-none hover:shadow-none",
+                  styles.transitionResource,
+                )}
               />
               <MarketingResourceCard
                 href="/tools/theme-builder"
@@ -421,7 +500,10 @@ export default function StartersPage() {
                     {tSite("Theme Builder")}
                   </span>
                 }
-                className="bg-background shadow-none hover:shadow-none"
+                className={cn(
+                  "bg-background shadow-none hover:shadow-none",
+                  styles.themeResource,
+                )}
               />
             </div>
           </div>

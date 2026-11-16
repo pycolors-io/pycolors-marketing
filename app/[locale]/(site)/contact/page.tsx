@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import type { Metadata } from "next";
@@ -69,18 +70,35 @@ export default function ContactPage() {
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="pb-16 pt-24 sm:pb-24 sm:pt-28">
-        <PageHero
-          variant="compact"
-          align="left"
-          contentClassName="mx-0 max-w-4xl"
-          className={styles.hero}
-          badges={[{ label: "Get in touch" }]}
-          title={tSite("Contact PyColors.")}
-          description={tSite(
-            "Choose your next starting point, clarify a product detail or get help with a purchase. Let’s find the right next step.",
-          )}
-        />
+      <Container className="marketing-page-intro pb-16 pt-24 sm:pb-24 sm:pt-28">
+        <MarketingBreadcrumb route="/contact" />
+        <div className={styles.heroLayout}>
+          <PageHero
+            variant="compact"
+            align="left"
+            contentClassName="mx-0 max-w-4xl"
+            className={styles.hero}
+            badges={[{ label: "Get in touch" }]}
+            title={tSite("Contact PyColors.")}
+            description={tSite(
+              "Choose your next starting point, clarify a product detail or get help with a purchase. Let’s find the right next step.",
+            )}
+          />
+          <div className={styles.heroArtwork} aria-hidden="true">
+            <div className={styles.artworkOrbit} />
+            <div className={styles.artworkEnvelope}>
+              <Mail strokeWidth={1.1} />
+            </div>
+            <div className={styles.artworkMessage}>
+              <MessageSquareText strokeWidth={1.3} />
+              <span />
+              <span />
+            </div>
+            <span className={styles.artworkSupport}>
+              <LifeBuoy strokeWidth={1.4} />
+            </span>
+          </div>
+        </div>
 
         <div className={styles.contactGrid}>
           <section

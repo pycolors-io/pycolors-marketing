@@ -1,0 +1,1260 @@
+.cataloguePage {
+  --catalogue-paper: var(--background);
+  --catalogue-ink: var(--foreground);
+  --catalogue-muted: var(--muted-foreground);
+  --catalogue-border: var(--border-subtle);
+}
+
+.heroFrame {
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+
+.heroFrame :global([data-slot="button"]) {
+  border-radius: 100px;
+}
+
+.splitHero {
+  display: grid;
+  grid-template-areas: "copy" "visual";
+  align-items: center;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  overflow: hidden;
+}
+
+.splitHero > div:last-child {
+  grid-area: copy;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.uiHero {
+  --catalogue-panel: var(--marketing-lilac, var(--surface-muted));
+  --catalogue-panel-ink: var(--marketing-lilac-ink, var(--catalogue-ink));
+  --primary: var(--marketing-cobalt, var(--catalogue-ink));
+  --primary-foreground: var(--marketing-cobalt-ink, var(--catalogue-paper));
+}
+
+.blocksHero {
+  --catalogue-panel: var(--marketing-graphite, var(--surface-muted));
+  --catalogue-panel-ink: var(--marketing-graphite-ink, var(--catalogue-ink));
+  --primary: var(--marketing-gold, var(--catalogue-ink));
+  --primary-foreground: var(--marketing-gold-ink, var(--catalogue-paper));
+}
+
+.uiHero,
+.blocksHero {
+  --background: var(--catalogue-panel);
+  --foreground: var(--catalogue-panel-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --brand-primary: var(--primary);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  --accent: color-mix(in srgb, var(--foreground) 10%, var(--background));
+  --accent-foreground: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 20%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Native, decorative compositions stay separate from the interactive demos. */
+.heroArtwork {
+  --background: var(--catalogue-paper);
+  --foreground: var(--catalogue-ink);
+  --muted-foreground: var(--catalogue-muted);
+  --border-subtle: var(--catalogue-border);
+  --primary: var(--marketing-cobalt, var(--catalogue-ink));
+  --primary-foreground: var(--marketing-cobalt-ink, var(--catalogue-paper));
+  grid-area: visual;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-cobalt, var(--surface-muted));
+}
+
+.heroArtwork > div {
+  height: clamp(17rem, 29vw, 24rem);
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+@media (min-width: 72rem) {
+  .splitHero {
+    grid-template-areas: "copy visual";
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+}
+
+.proofStrip {
+  padding: 0.5rem clamp(0.25rem, 1vw, 1rem);
+}
+
+.proofCards > div,
+.nextCards > div,
+.guideCards > section {
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--background);
+}
+
+.proofCards > div:first-child,
+.brandIntro,
+.guideCards > section:first-child {
+  --background: var(--marketing-gold, #ffd43b);
+  --foreground: var(--marketing-gold-ink, #35261b);
+  --muted-foreground: var(--foreground);
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --brand-primary: var(--primary);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 15%, var(--background));
+  --ring: var(--foreground);
+  border-color: var(--border-subtle);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.componentCard,
+.exampleFrame {
+  border-radius: var(--marketing-card-radius, 1.5rem);
+}
+
+.lilacCard > div:first-child,
+.nextCards > div:nth-child(2) {
+  --catalogue-card: var(--marketing-lilac, var(--surface-muted));
+  --catalogue-card-ink: var(--marketing-lilac-ink, var(--catalogue-ink));
+}
+
+.peachCard > div:first-child,
+.installIntro {
+  --catalogue-card: var(--marketing-peach, var(--surface-muted));
+  --catalogue-card-ink: var(--marketing-peach-ink, var(--catalogue-ink));
+}
+
+.nextCards > div:last-child {
+  --catalogue-card: var(--marketing-graphite, var(--surface-muted));
+  --catalogue-card-ink: var(--marketing-graphite-ink, var(--catalogue-ink));
+}
+
+.lilacCard > div:first-child,
+.peachCard > div:first-child,
+.installIntro,
+.nextCards > div:nth-child(2),
+.nextCards > div:last-child {
+  --background: var(--catalogue-card);
+  --foreground: var(--catalogue-card-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.proofCards > div:last-child {
+  --background: var(--marketing-lilac, var(--surface-muted));
+  --foreground: var(--marketing-lilac-ink, var(--catalogue-ink));
+  --muted-foreground: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 15%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.categoryNav {
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  padding: 0.25rem;
+}
+
+.categoryNav nav > a {
+  min-height: 2.75rem;
+  border-radius: 0.75rem;
+}
+
+.categoryNav nav > a:hover {
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+
+@media (forced-colors: active) {
+  .uiHero,
+  .blocksHero,
+  .heroArtwork,
+  .lilacCard > div:first-child,
+  .peachCard > div:first-child,
+  .installIntro,
+  .nextCards > div:nth-child(2),
+  .nextCards > div:last-child,
+  .proofCards > div:last-child,
+  .proofCards > div:first-child,
+  .brandIntro,
+  .guideCards > section:first-child {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border: 1px solid CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+}
+
+/* UI discovery leads with the genuine, interactive component canvas. */
+.uiPage {
+  padding-top: var(--site-header-height);
+}
+.uiPage .uiProductBar {
+  position: sticky;
+  top: var(--site-header-height);
+  z-index: 30;
+  width: 100%;
+  min-width: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--background);
+  box-shadow: 0 3px 14px color-mix(in srgb, var(--foreground) 2%, transparent);
+}
+.uiPage .uiProductBarInner {
+  display: flex;
+  min-width: 0;
+  min-height: 4rem;
+  align-items: center;
+  gap: clamp(0.75rem, 1.2vw, 1.25rem);
+  padding-block: 0.375rem;
+}
+.uiProductIdentity {
+  display: inline-flex;
+  flex-shrink: 0;
+  min-height: 2.25rem;
+  align-items: center;
+  padding-inline-end: clamp(0.75rem, 1.2vw, 1.25rem);
+  border-inline-end: 1px solid var(--border-subtle);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.uiHeroContainer {
+  padding-block: clamp(1rem, 2vw, 2rem) clamp(2rem, 4vw, 4rem);
+}
+.uiPage .uiHero {
+  --catalogue-panel: var(--catalogue-paper);
+  --catalogue-panel-ink: var(--catalogue-ink);
+  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(0.75rem, 2vw, 2rem);
+  border-radius: 0;
+}
+.uiPage .uiHero h1 {
+  max-width: 18ch;
+  margin-inline: auto;
+  font-size: clamp(3rem, 6vw, 5.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+}
+.uiPage .uiHero :global([data-slot="button"]) {
+  min-height: 2.75rem;
+  padding: 0.75rem 1.5rem;
+}
+.uiPage .uiHero p {
+  max-width: 52ch;
+  margin-inline: auto;
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.7;
+}
+.uiPage .proofStrip {
+  justify-content: center;
+}
+.uiPage .uiSection {
+  scroll-margin-top: calc(var(--site-header-height) + 5.5rem);
+}
+.uiPage .uiContentSection {
+  padding-block: clamp(3.5rem, 6vw, 6rem);
+  border-top: 1px solid var(--border-subtle);
+}
+.uiPage .uiPreviewChapter {
+  width: 100%;
+  padding-block: clamp(2rem, 5vw, 5rem);
+  border: 0;
+  background: var(--marketing-canvas);
+}
+.uiPreviewPanel {
+  min-width: 0;
+  padding: clamp(0.5rem, 1.5vw, 1.25rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--background);
+  box-shadow: 0 18px 50px rgb(24 34 70 / 14%);
+}
+.uiPreviewPanel > div {
+  border-radius: 1rem;
+}
+@media (max-width: 39.999rem) {
+  .uiPage .uiProductBarInner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.375rem;
+    padding-block: 0.75rem 0.5rem;
+  }
+  .uiProductIdentity {
+    min-height: 1.5rem;
+    border: 0;
+    padding-inline: 0.25rem;
+  }
+  .uiPage .uiSection,
+  .uiPage :global(#conversation-primitives) {
+    scroll-margin-top: calc(var(--site-header-height) + 7.5rem);
+  }
+}
+@media (forced-colors: active) {
+  .uiPage .uiPreviewChapter,
+  .uiPreviewPanel {
+    background: Canvas;
+    box-shadow: none;
+  }
+  .uiPage .uiProductBar,
+  .uiPreviewPanel {
+    border-color: CanvasText;
+  }
+}
+
+/* UI details use quiet reading surfaces and keep colour in the real previews. */
+.uiPage .uiComponentCard {
+  --ui-component-preview: var(--marketing-canvas);
+  background: var(--catalogue-paper);
+}
+.uiPage .uiComponentCard.lilacCard {
+  --ui-component-preview: var(--marketing-lilac);
+}
+.uiPage .uiComponentCard.peachCard {
+  --ui-component-preview: var(--marketing-peach);
+}
+.uiPage .uiComponentCard > div:first-child {
+  --background: var(--catalogue-paper);
+  --foreground: var(--catalogue-ink);
+  --muted-foreground: var(--catalogue-muted);
+  --border-subtle: var(--catalogue-border);
+  min-height: 12.5rem;
+  padding: 1.5rem;
+  background: var(--background);
+  color: var(--foreground);
+}
+.uiPage .uiComponentCard > div:first-child > div {
+  margin-bottom: 1.25rem;
+}
+.uiPage .uiComponentCard > div:first-child > div > div > span:first-child {
+  border: 0;
+  border-radius: 0.75rem;
+  background: var(--marketing-canvas);
+}
+.uiPage .uiComponentCard > div:first-child > div > div > span:last-child {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.uiPage .uiComponentCard h3 {
+  font-size: clamp(1.5rem, 2.3vw, 1.875rem);
+  line-height: 1.15;
+}
+.uiPage .uiComponentCard > div:first-child > p {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.uiPage .uiComponentCard > div:nth-child(2) {
+  margin-inline: 1.5rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: var(--ui-component-preview);
+}
+.uiPage .uiComponentCard > div:nth-child(2) > div {
+  height: 12.5rem;
+}
+.uiPage .uiComponentCard > div:last-child {
+  padding: 0.625rem 1.5rem;
+  background: var(--catalogue-paper);
+}
+.uiPage .uiComponentCard > div:last-child a {
+  min-height: 2.75rem;
+  border-radius: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--catalogue-ink);
+}
+.uiPage :is(.uiThemeIntro, .uiInstallIntro) {
+  --background: var(--catalogue-paper);
+  --foreground: var(--catalogue-ink);
+  --muted-foreground: var(--catalogue-muted);
+  --border-subtle: var(--catalogue-border);
+  --primary: var(--marketing-cobalt);
+  --primary-foreground: var(--marketing-cobalt-ink);
+  --brand-primary: var(--primary);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  background: var(--background);
+  color: var(--foreground);
+}
+.uiPage :is(.uiThemeFrame, .uiInstallFrame) h2 {
+  max-width: 19ch;
+  font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+.uiPage :is(.uiThemeIntro, .uiInstallIntro) > svg {
+  box-sizing: content-box;
+  padding: 0.75rem;
+  border-radius: 0.875rem;
+  background: var(--marketing-canvas);
+  color: var(--primary);
+}
+.uiThemeCapabilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.uiThemeCapabilities > span {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--marketing-canvas);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+.uiThemeActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 2rem;
+}
+.uiPage .uiThemeAction {
+  min-height: 2.75rem;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  border-radius: 100px;
+  line-height: 1.5;
+  white-space: normal;
+}
+.uiThemePreview {
+  min-width: 0;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--marketing-canvas);
+}
+.uiPaletteHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1.25rem;
+}
+.uiPaletteHeader > p {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.uiPaletteHeader > span {
+  padding: 0.375rem 0.625rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.625rem;
+  background: var(--background);
+  font-size: 0.6875rem;
+}
+.uiModeSample {
+  margin-top: 0.75rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+}
+.uiModeSample > div:first-child > p {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.uiModeSample > div[role="img"] {
+  height: 2.75rem;
+  gap: 2px;
+}
+.uiPaletteNote,
+.uiCodeNote {
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+.uiInstallSteps {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  list-style: none;
+}
+.uiInstallSteps li > span {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.75rem;
+  background: var(--marketing-canvas);
+  color: var(--foreground);
+}
+.uiCodeStage {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--marketing-canvas);
+}
+.uiPage .uiCommand {
+  margin: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: var(--background);
+}
+.uiCommand > div:first-child {
+  min-height: 3.5rem;
+  padding: 0.375rem 1rem;
+  background: var(--background);
+}
+.uiCommand > pre {
+  padding: 1.25rem;
+}
+.uiCommand > pre > code {
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+.uiCodeBody {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+}
+.uiPage .uiCodeFigure {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  margin: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgb(24 34 70 / 5%);
+}
+.uiCodeFigure > div:first-child {
+  min-height: 3.5rem;
+  padding-inline: 1.25rem;
+  background: var(--marketing-canvas);
+}
+.uiPage .uiCodeViewport {
+  min-height: 14rem;
+  flex: 1;
+  padding: 1.25rem;
+}
+.uiCodeViewport pre {
+  font-size: 0.8125rem;
+  line-height: 1.9;
+}
+.uiPage :is(.uiCommand, .uiCodeFigure) button {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  height: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--background);
+  color: var(--foreground);
+}
+.uiPage :is(.uiCommand, .uiCodeFigure) button:hover {
+  background: var(--surface-muted);
+}
+.uiPage :is(.uiCommand, .uiCodeFigure) button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+@media (min-width: 64rem) {
+  .uiPage :is(.uiThemeFrame, .uiInstallFrame) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .uiThemePreview,
+  .uiCodeStage {
+    border-top: 0;
+    border-left: 1px solid var(--border-subtle);
+  }
+}
+@media (forced-colors: active) {
+  .uiPage .uiComponentCard > div:first-child,
+  .uiPage :is(.uiThemeIntro, .uiInstallIntro) {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .uiPage :is(.uiThemePreview, .uiCodeStage, .uiCommand, .uiCodeFigure) {
+    border-color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+  .uiPage :is(.uiCommand, .uiCodeFigure) button {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .uiPage :is(.uiCommand, .uiCodeFigure) button:hover {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
+/* Product pacing: an open hero, a genuine showcase, then clear feature chapters. */
+.uiProductMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.875rem 2rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.uiProductMeta > div {
+  justify-content: center;
+  text-align: center;
+}
+.uiPage .uiPreviewChapter {
+  padding-block: clamp(2rem, 6vw, 6rem);
+}
+.uiPage .uiPreviewPanel {
+  border-radius: clamp(1.5rem, 3vw, 2.25rem);
+  box-shadow: 0 28px 72px -24px rgb(24 34 70 / 25%);
+}
+.uiPage .uiPreviewPanel > div {
+  border-radius: clamp(1rem, 2vw, 1.5rem);
+}
+.uiPage .uiContentSection {
+  padding-block: clamp(4rem, 7vw, 7rem);
+}
+.uiPage .uiLibrarySection {
+  background: var(--marketing-canvas);
+}
+.uiProductHeading h2 {
+  max-width: 26ch;
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+.uiProductHeading p {
+  max-width: 56ch;
+}
+.uiPage .uiComponentCard {
+  border-radius: clamp(1.5rem, 2.5vw, 2rem);
+}
+.uiPage .uiComponentCard:focus-within {
+  border-color: var(--border-strong);
+}
+.uiPage :is(.uiThemeFrame, .uiInstallFrame) {
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+}
+.uiPage .uiModeSample {
+  border-radius: 1.5rem;
+}
+.uiPage .uiProductNext > div {
+  padding: clamp(1.5rem, 3.5vw, 2.75rem);
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+}
+.uiPage .uiProductNext h3 {
+  max-width: 25ch;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+.uiPage .uiProductNext > div > div:first-child > span:first-child {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 0.875rem;
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+@media (max-width: 39.999rem) {
+  .uiPage .uiHero h1 {
+    font-size: clamp(2.5rem, 11vw, 3rem);
+  }
+  .uiProductMeta {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+@media (forced-colors: active) {
+  .uiPage .uiPreviewPanel {
+    box-shadow: none;
+  }
+}
+
+/* Blocks and Theme Builder share the product rhythm, not their demo variables. */
+.productIntro {
+  padding-top: clamp(1rem, 2vw, 2rem);
+  padding-bottom: clamp(2.5rem, 4vw, 4rem);
+}
+.blocksPage .blocksHero {
+  --catalogue-panel: var(--catalogue-paper);
+  --catalogue-panel-ink: var(--catalogue-ink);
+  --primary: var(--marketing-cobalt);
+  --primary-foreground: var(--marketing-cobalt-ink);
+  padding-inline: 0;
+  padding-block: clamp(1.5rem, 3vw, 3rem);
+  border-radius: 0;
+}
+.blocksPage .blocksHero h1,
+.themeProductPage .themeProductHero h1 {
+  max-width: 18ch;
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+.blocksPage .blocksHero p,
+.themeProductPage .themeProductHero p {
+  max-width: 52ch;
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.75;
+}
+.blocksPage .blocksHero :global([data-slot="button"]),
+.themeProductPage .themeGuideAction {
+  min-height: 2.75rem;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  border-radius: 100px;
+  white-space: normal;
+}
+.blocksPage .heroArtwork {
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+  background: var(--marketing-graphite);
+}
+.blocksPage .heroArtwork > div {
+  height: clamp(19rem, 32vw, 26rem);
+}
+.blocksProof > div {
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+}
+.blocksProof > div:first-child {
+  --background: var(--catalogue-paper);
+  --foreground: var(--catalogue-ink);
+  --muted-foreground: var(--catalogue-muted);
+  --border-subtle: var(--catalogue-border);
+  background: var(--background);
+  color: var(--foreground);
+}
+.blocksProof > div > div > span {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.875rem;
+}
+.blocksProof p:first-child {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.blocksPage .blocksCatalog {
+  padding-block: clamp(3.5rem, 6vw, 6rem);
+  background: var(--marketing-canvas);
+}
+.blocksHeading h2 {
+  max-width: 25ch;
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  line-height: 1.08;
+}
+.blocksPage .categoryNav {
+  padding: 0.375rem;
+  border-radius: 1.25rem;
+  background: var(--background);
+  box-shadow: 0 8px 24px rgb(24 34 70 / 4%);
+}
+.blockCatalogEntries > article {
+  min-width: 0;
+}
+.blockCatalogEntries > article > div:first-child h4 {
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  line-height: 1.2;
+}
+.blockCatalogEntries > article > div:first-child > a {
+  min-height: 2.75rem;
+  padding-inline: 1rem;
+  border-radius: 100px;
+}
+.blockCatalogEntries > article > p:last-child {
+  padding-top: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+.blocksClosing {
+  --background: var(--marketing-graphite);
+  --foreground: var(--marketing-graphite-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --primary: var(--marketing-gold);
+  --primary-foreground: var(--marketing-gold-ink);
+  --brand-primary: var(--primary);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+}
+.blocksClosing h2 {
+  max-width: 25ch;
+}
+.blocksClosing :global([data-slot="button"]) {
+  min-height: 2.75rem;
+  height: auto;
+}
+.themeProductPage .themeProductHero {
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 3vw, 3rem) 0;
+  border-radius: 0;
+  background: var(--background);
+}
+.themeGuideAction {
+  border: 1px solid var(--border-strong);
+  background: var(--background);
+}
+.themeProductProof {
+  gap: 0.75rem 1.5rem;
+  padding-block: 0.5rem;
+}
+.themeProductProof > span {
+  min-height: 2.25rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--marketing-canvas);
+}
+.themeProductPage .themeWorkspaceChapter {
+  padding-block: clamp(1.5rem, 4vw, 3rem);
+  background: var(--marketing-canvas);
+}
+.themeWorkbenchFrame {
+  min-width: 0;
+  padding: clamp(0.5rem, 1.5vw, 1.25rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+  background: var(--background);
+  box-shadow: 0 24px 64px -32px rgb(24 34 70 / 20%);
+}
+.themeWorkbenchFrame > div > section:first-child {
+  border-radius: 1.25rem;
+}
+.themeGuideContainer {
+  padding-block: clamp(3rem, 5vw, 5rem);
+}
+.themeProductPage .themeGuideCards > section {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+}
+.themeProductPage .themeGuideCards > section:first-child {
+  --background: var(--catalogue-paper);
+  --foreground: var(--catalogue-ink);
+  --muted-foreground: var(--catalogue-muted);
+  --primary: var(--marketing-cobalt);
+  --primary-foreground: var(--marketing-cobalt-ink);
+  --border-subtle: var(--catalogue-border);
+  background: var(--background);
+  color: var(--foreground);
+}
+.themeProductPage .themeGuideCards > section:last-child {
+  background: var(--marketing-canvas);
+}
+.themeGuideCards h2 {
+  max-width: 25ch;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.16;
+}
+.themeGuideCards :is(p, li) {
+  line-height: 1.8;
+}
+@media (max-width: 39.999rem) {
+  .blocksPage .blocksHero h1,
+  .themeProductPage .themeProductHero h1 {
+    font-size: clamp(2.5rem, 11vw, 3rem);
+  }
+}
+@media (forced-colors: active) {
+  .blocksPage .heroArtwork,
+  .blocksProof > div:first-child,
+  .blocksClosing,
+  .themeProductPage .themeGuideCards > section:first-child {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --brand-primary: LinkText;
+    --brand-primary-hover: LinkText;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .blocksPage .categoryNav,
+  .themeWorkbenchFrame {
+    box-shadow: none;
+  }
+}
+
+/* Immersive Theme Builder introduction stays outside the native workspace. */
+.themeImmersiveIntro {
+  padding-top: clamp(1rem, 2vw, 2rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+.themeImmersiveGrid {
+  display: grid;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  padding-block: clamp(1.5rem, 3vw, 3rem);
+}
+.themeImmersiveCopy,
+.themeImmersiveHero {
+  min-width: 0;
+}
+.themeImmersiveHero h1 {
+  max-width: 14ch;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.themeImmersiveHero p {
+  max-width: 48ch;
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.75;
+}
+.themeImmersiveCopy .themeGuideAction {
+  margin-top: 1.75rem;
+  padding: 0.75rem 1.25rem;
+  border-color: var(--marketing-cobalt);
+  border-radius: 100px;
+  background: var(--marketing-cobalt);
+  color: var(--marketing-cobalt-ink);
+}
+.themeImmersiveCopy .themeGuideAction:hover {
+  background: color-mix(
+    in srgb,
+    var(--marketing-cobalt) 88%,
+    var(--background)
+  );
+  color: var(--marketing-cobalt-ink);
+}
+.themeImmersiveVisual {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--marketing-lilac);
+  box-shadow: 0 24px 64px -32px rgb(24 34 70 / 20%);
+}
+.themeImmersiveVisual > div {
+  --primary: var(--marketing-cobalt);
+  --primary-foreground: var(--marketing-cobalt-ink);
+  min-height: clamp(18rem, 30vw, 25rem);
+}
+.themeImmersiveIntro .themeProductProof > span {
+  background: var(--catalogue-paper);
+}
+.themeProductPage .themeImmersiveWorkspace {
+  padding-top: clamp(1.5rem, 3vw, 3rem);
+}
+.themeProductPage .themeImmersiveGuides > section:first-child {
+  --background: var(--marketing-lilac);
+  --foreground: var(--marketing-lilac-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+}
+.themeImmersiveGuides code {
+  overflow-wrap: anywhere;
+}
+.themeImmersiveGuideLink {
+  max-width: 100%;
+  padding: 0.625rem 1rem;
+  border-radius: 100px;
+  background: var(--foreground);
+  color: var(--background);
+  line-height: 1.5;
+  text-decoration: none;
+}
+.themeImmersiveGuideLink:hover {
+  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
+  color: var(--background);
+  text-decoration: none;
+}
+.themeImmersiveCopy .themeGuideAction:focus-visible,
+.themeImmersiveGuideLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+@media (min-width: 64rem) {
+  .themeImmersiveGrid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+}
+@media (max-width: 39.999rem) {
+  .themeImmersiveHero h1 {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+  }
+  .themeImmersiveVisual > div {
+    min-height: 17rem;
+  }
+}
+@media (forced-colors: active) {
+  .themeImmersiveGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .themeImmersiveVisual {
+    display: none;
+  }
+  .themeProductPage .themeImmersiveGuides > section:first-child {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .themeImmersiveCopy .themeGuideAction,
+  .themeImmersiveCopy .themeGuideAction:hover,
+  .themeImmersiveGuideLink,
+  .themeImmersiveGuideLink:hover {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .themeImmersiveCopy .themeGuideAction:focus-visible,
+  .themeImmersiveGuideLink:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* Blocks reads like a composition studio, with the real catalog below. */
+.blocksPage {
+  --blocks-art-plum: #8759e8;
+  --blocks-art-sun: #f5b85c;
+  --blocks-art-paper: #fffdfa;
+  --blocks-art-ink: #272333;
+  --blocks-gallery-surface: #f7f6f3;
+}
+:global(html.dark) .blocksPage {
+  --blocks-gallery-surface: #19191e;
+}
+:global(html[data-site-palette="monochrome"]) .blocksPage {
+  --blocks-art-plum: #929292;
+  --blocks-art-sun: #c7c7c7;
+  --blocks-gallery-surface: var(--surface-muted);
+}
+.blocksPage .blocksHero {
+  --primary: var(--blocks-art-plum);
+  --primary-foreground: #ffffff;
+  overflow: visible;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-block: clamp(2.5rem, 5vw, 5rem);
+}
+.blocksPage .blocksHero h1 {
+  max-width: 15ch;
+  font-size: clamp(3rem, 5.8vw, 5.75rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+.blocksPage .blocksHero p {
+  max-width: 45ch;
+}
+.blocksComposition {
+  grid-area: visual;
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
+  color: var(--catalogue-ink);
+}
+.blocksComposition::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--blocks-art-plum) 15%, transparent),
+    transparent 70%
+  );
+}
+.blocksComposition svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.blocksPage .blocksProof {
+  gap: 0;
+  margin-top: 0;
+  padding-block: 1.25rem;
+  border-block: 1px solid var(--catalogue-border);
+}
+.blocksProof > div,
+.blocksProof > div:first-child,
+.blocksProof > div:last-child {
+  --background: var(--catalogue-paper);
+  --foreground: var(--catalogue-ink);
+  --muted-foreground: var(--catalogue-muted);
+  padding: 1.25rem clamp(1rem, 2vw, 2rem);
+  border: 0;
+  border-radius: 0;
+  background: var(--background);
+  color: var(--foreground);
+}
+.blocksProof > div > div > span {
+  border: 0;
+  background: var(--blocks-gallery-surface);
+  color: var(--catalogue-ink);
+}
+.blocksPage .blocksCatalog {
+  background: var(--blocks-gallery-surface);
+}
+.blocksHeading h2 {
+  max-width: 20ch;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: 550;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+}
+.blocksPage .categoryNav {
+  top: calc(var(--site-header-height) + 0.75rem);
+  margin-block: 2.5rem 4rem;
+  padding: 0.5rem;
+  border: 1px solid var(--catalogue-border);
+  border-radius: 100px;
+}
+.blocksPage .categoryNav nav > a {
+  border-radius: 100px;
+}
+.blocksCategory > div:first-child {
+  align-items: baseline;
+  padding-bottom: 1.5rem;
+}
+.blocksCategory h3 {
+  font-size: clamp(1.875rem, 3vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+.categoryNumber {
+  align-self: flex-start;
+  margin-right: 0.75rem;
+  padding-top: 0.25rem;
+  color: var(--catalogue-muted);
+  font: 0.6875rem var(--font-mono);
+}
+.blockCatalogEntries > article > div:nth-child(2) {
+  border-radius: 1rem;
+}
+.blocksPage .blocksClosing {
+  --primary: var(--blocks-art-plum);
+  --primary-foreground: #ffffff;
+  padding: clamp(2rem, 5vw, 5rem);
+}
+.blocksClosing h2 {
+  max-width: 20ch;
+  font-size: clamp(2rem, 4vw, 3.75rem);
+  font-weight: 550;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+@media (min-width: 48rem) {
+  .blocksProof > div + div {
+    border-left: 1px solid var(--catalogue-border);
+  }
+}
+@media (min-width: 64rem) {
+  .blocksPage .blocksHero {
+    grid-template-areas: "copy visual";
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+@media (max-width: 39.999rem) {
+  .blocksPage .blocksHero h1 {
+    font-size: clamp(2.75rem, 12vw, 4rem);
+  }
+  .blocksComposition {
+    max-width: 32rem;
+    margin-inline: auto;
+  }
+  .blocksPage .categoryNav {
+    border-radius: 1.5rem;
+  }
+  .categoryNumber {
+    margin-right: 0.25rem;
+  }
+}
+@media (forced-colors: active) {
+  .blocksPage {
+    --blocks-gallery-surface: Canvas;
+  }
+  .blocksComposition {
+    display: none;
+  }
+  .blocksPage .blocksHero {
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    grid-template-areas: "copy";
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .blocksPage .categoryNav {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+}
+
+.uiDiscoveryHeader {
+  padding-top: 1rem;
+  padding-bottom: 0.25rem;
+}
+.uiHeroContainer {
+  padding-top: 0.75rem;
+}

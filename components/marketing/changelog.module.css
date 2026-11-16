@@ -1,10 +1,5 @@
 .page {
-  background: radial-gradient(
-      ellipse at 85% 0%,
-      color-mix(in oklab, var(--primary) 5%, transparent),
-      transparent 65%
-    )
-    0 0 / 100% 38rem no-repeat;
+  background: var(--background);
 }
 
 .breadcrumb {
@@ -43,32 +38,28 @@
   padding-bottom: 3rem;
 }
 
-.hero h1 {
-  font-size: clamp(2.75rem, 6vw, 4.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.055em;
-}
-
 .hero p {
   max-width: 34rem;
 }
 
 .heroNote {
-  padding: 1.25rem 1.5rem;
-  border-left: 1px solid var(--border-subtle);
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.5rem;
+  background: var(--marketing-canvas);
 }
 
 .noteIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 3.5rem;
+  height: 3.5rem;
   margin-bottom: 1rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  background: var(--background);
-  color: var(--muted-foreground);
+  border: 0;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--foreground) 8%, var(--background));
+  color: var(--foreground);
 }
 
 .eyebrow {
@@ -133,7 +124,7 @@
   gap: 1rem;
   padding: 0.625rem 0.75rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
+  border-radius: 100px;
   color: var(--muted-foreground);
   font-size: 0.75rem;
   transition:
@@ -159,17 +150,20 @@
   min-width: 0;
 }
 .releaseList {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
   list-style: none;
-}
-.releaseList > li + li {
-  margin-top: 0;
 }
 
 .release {
+  --release-padding: 1.25rem;
   min-width: 0;
+  overflow: hidden;
   scroll-margin-top: 6rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: var(--marketing-card-radius, 1.5rem);
   background: var(--background);
 }
 
@@ -187,34 +181,11 @@
 }
 
 .latest {
-  background:
-    radial-gradient(
-        ellipse at 100% 0%,
-        color-mix(in oklab, var(--primary) 6%, transparent),
-        transparent 60%
-      )
-      0 0 / 100% 24rem no-repeat,
-    var(--background);
-}
-
-.release:not(.latest) {
-  border: 0;
-  border-bottom: 1px solid var(--border-subtle);
-  border-radius: 0;
-  background: transparent;
-}
-
-.release:not(.latest) .releaseHeader {
-  padding-top: 2rem;
-}
-
-.release:not(.latest) .notes {
-  border-top: 0;
-  padding-bottom: 0.625rem;
+  --release-padding: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .releaseHeader {
-  padding: 1.25rem 1.25rem 0.875rem;
+  padding: var(--release-padding);
 }
 
 .releaseMeta,
@@ -265,7 +236,10 @@
 }
 
 .latestLabel {
-  padding-inline: 0.25rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 100px;
+  background: var(--foreground);
+  color: var(--background);
   font-size: 0.6875rem;
   font-weight: 500;
 }
@@ -291,6 +265,7 @@
 }
 
 .summary {
+  max-width: 76ch;
   margin-top: 1rem;
   color: var(--muted-foreground);
   font-size: 0.8125rem;
@@ -303,7 +278,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-top: 0.75rem;
+  margin-top: 1.25rem;
 }
 
 .textLink {
@@ -329,17 +304,20 @@
   background: var(--surface-muted);
 }
 .notes {
+  --notes-duration: 280ms;
+  --notes-easing: cubic-bezier(0.22, 1, 0.36, 1);
   border-top: 1px solid var(--border-subtle);
+  background: var(--background);
 }
 
 .notesToggle {
   display: flex;
-  min-height: 3.25rem;
+  min-height: 4rem;
   align-items: center;
   gap: 0.75rem;
-  margin: 0.125rem;
-  padding: 0.625rem 1.125rem;
-  border-radius: 6px;
+  margin: 0;
+  padding: 1rem var(--release-padding);
+  color: var(--foreground);
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
@@ -351,11 +329,16 @@
   display: none;
 }
 .notesToggle:hover {
-  background: color-mix(in oklab, var(--primary) 3%, transparent);
+  background: var(--surface-muted);
 }
-.notesToggle > svg {
+.notesIndicator {
+  width: 1rem;
+  height: 1rem;
   flex-shrink: 0;
   color: var(--muted-foreground);
+}
+.notes[open] > .notesToggle .notesIndicator {
+  transform: rotate(180deg);
 }
 .notesToggle:focus-visible {
   outline-offset: -4px;
@@ -370,19 +353,19 @@
 }
 
 .highlights {
-  padding: 0 1.25rem 1.25rem;
+  padding: 0 var(--release-padding) var(--release-padding);
 }
 .releasePeriod {
-  padding-block: 0.75rem 1.25rem;
+  padding-block: 0.5rem 1.25rem;
   color: var(--muted-foreground);
   font-size: 0.6875rem;
 }
 .highlight {
-  padding-block: 1.25rem;
+  padding-block: 1.5rem;
   border-top: 1px solid var(--border-subtle);
 }
 .highlight:last-child {
-  padding-bottom: 0.25rem;
+  padding-bottom: 0;
 }
 .highlight h3 {
   font-size: 0.8125rem;
@@ -423,14 +406,8 @@
   margin-top: 3rem;
   padding: 1.5rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  background:
-    radial-gradient(
-      ellipse at 0% 100%,
-      color-mix(in oklab, var(--primary) 5%, transparent),
-      transparent 65%
-    ),
-    var(--background);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .nextStep h2 {
@@ -474,14 +451,8 @@
   .heroLayout {
     padding-bottom: 3.5rem;
   }
-  .releaseHeader {
-    padding: 1.75rem 2rem 1.125rem;
-  }
-  .notesToggle {
-    padding-inline: 1.875rem;
-  }
-  .highlights {
-    padding: 0 2rem 1.75rem;
+  .release:not(.latest) {
+    --release-padding: 2rem;
   }
   .summary {
     font-size: 0.875rem;
@@ -500,7 +471,7 @@
     gap: 5rem;
   }
   .heroNote {
-    padding-block: 0.5rem;
+    padding-block: 1.5rem;
   }
   .historyLayout {
     grid-template-columns: 12rem minmax(0, 1fr);
@@ -542,16 +513,10 @@
   .archiveNote .textLink {
     font-size: 0.6875rem;
   }
-  .releaseList > li + li {
-    margin-top: 0.75rem;
-  }
-  .release:not(.latest) .releaseHeader {
-    padding-top: 2rem;
-  }
   .highlight {
     display: grid;
-    grid-template-columns: 10rem minmax(0, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+    gap: 2rem;
   }
   .highlight ul {
     margin-top: 0;
@@ -569,7 +534,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem 1.5rem;
-    padding: 0;
+    padding: 1.25rem 1.5rem;
     border: 0;
   }
 
@@ -590,5 +555,111 @@
   .archive li a,
   .notesToggle {
     transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .heroNote {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+  }
+}
+
+.latest .releaseHeader {
+  --background: #17181d;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --border-subtle: #36363e;
+  --primary: #fff;
+  --primary-foreground: #17181d;
+  --ring: #fff;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.nextStep {
+  background: var(--marketing-canvas);
+}
+
+@media (forced-colors: active) {
+  .latest .releaseHeader,
+  .nextStep {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --ring: Highlight;
+    --border-subtle: CanvasText;
+    border-color: CanvasText;
+  }
+  .latestLabel {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid CanvasText;
+  }
+}
+
+.hero h1 {
+  max-width: 16ch;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.version,
+.status {
+  border-radius: 100px;
+}
+.latest .highlight h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.nextStep h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+@media (max-width: 39.999rem) {
+  .hero h1 {
+    font-size: clamp(2.5rem, 10vw, 3rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .notesIndicator {
+    transition: transform var(--notes-duration) var(--notes-easing);
+  }
+
+  /* Native details remain usable without animation support or JavaScript. */
+  @supports selector(::details-content) and
+    (transition-behavior: allow-discrete) {
+    .notes::details-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition:
+        grid-template-rows var(--notes-duration) var(--notes-easing),
+        opacity 180ms ease-out,
+        content-visibility var(--notes-duration) allow-discrete;
+    }
+
+    .notes[open]::details-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .notesContent {
+      min-height: 0;
+      overflow: hidden;
+    }
   }
 }

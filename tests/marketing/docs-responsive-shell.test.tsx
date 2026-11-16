@@ -18,7 +18,7 @@ describe("DocsPageShell responsive contract", () => {
     const content = section?.firstElementChild;
 
     expect(section).toHaveClass("w-full", "min-w-0", "max-w-full");
-    expect(content).toHaveClass("w-full", "min-w-0", "max-w-3xl");
+    expect(content).toHaveClass("w-full", "min-w-0", "max-w-5xl");
   });
 
   it("preserves full-width pages within the outer documentation layout", () => {
@@ -34,6 +34,6 @@ describe("DocsPageShell responsive contract", () => {
     const content = section?.firstElementChild;
 
     expect(content).toHaveClass("max-w-none", "w-full", "min-w-0");
-    expect(content).not.toHaveClass("max-w-3xl");
+    expect(content).not.toHaveClass("max-w-5xl");
   });
 });

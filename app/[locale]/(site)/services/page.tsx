@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowUpRight,
   Check,
@@ -8,18 +9,18 @@ import {
   Users,
 } from "lucide-react";
 import { Container } from "@/components/container";
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { Link } from "@/lib/i18n/navigation";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
-import { MarketingFaq } from "@/components/marketing/faq";
+import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
 import {
   MarketingActionGroup,
   MarketingLinkButton,
 } from "@/components/marketing/cta-panel";
-import { ProductStudioCapture } from "@/components/marketing/product-studio-capture";
 import { productStudio } from "@/lib/showcase/product-studio";
 import { CUSTOM_SOFTWARE_SERVICE } from "@/lib/products/project-services";
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
@@ -40,6 +41,8 @@ const metadata: Metadata = {
 const useCases = [
   {
     id: "client-portals",
+    artwork: "/images/starters/pro/concepts/connected-workspace-test-v1.png",
+    tone: "neutral",
     icon: Users,
     title: "Client portals & activity tracking",
     description:
@@ -52,6 +55,8 @@ const useCases = [
   },
   {
     id: "internal-tools",
+    artwork: "/images/starters/pro/concepts/workflow-path-test-v1.png",
+    tone: "cobalt",
     icon: PanelsTopLeft,
     title: "Internal tools & dashboards",
     description:
@@ -64,6 +69,8 @@ const useCases = [
   },
   {
     id: "documents",
+    artwork: "/images/starters/pro/concepts/delivery-case-test-v1.png",
+    tone: "gold",
     icon: FileText,
     title: "Documents & automation",
     description:
@@ -76,6 +83,8 @@ const useCases = [
   },
   {
     id: "saas",
+    artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
+    tone: "neutral",
     icon: Layers3,
     title: "Custom SaaS applications",
     description:
@@ -94,24 +103,28 @@ const steps = [
     description:
       "Your users, current tools and first useful outcome shape the proposed scope.",
     output: "Your priorities and constraints",
+    task: "Share the problem, users and existing tools.",
   },
   {
     title: "Agree on the delivery",
     description:
       "Screens, workflows, integrations, responsibilities and acceptance criteria are defined before development.",
     output: "A written proposal to approve",
+    task: "Approve the scope, budget and acceptance criteria.",
   },
   {
     title: "Build and verify",
     description:
       "Review the agreed workflows in a shared environment, with recorded checks and consolidated feedback.",
     output: "A version to review together",
+    task: "Try the agreed workflows and consolidate feedback.",
   },
   {
     title: "Hand over clearly",
     description:
       "Receive the agreed source, configuration notes, validation results and next steps for your team.",
     output: "Source, checks and operating notes",
+    task: "Review the handover and agree on any follow-up.",
   },
 ] as const;
 
@@ -179,8 +192,9 @@ const faq = [
 export default function ServicesPage() {
   const tSite = useCopy();
   return (
-    <main id="content" tabIndex={-1}>
-      <Container className="pb-12 pt-24 sm:pb-16 sm:pt-28">
+    <main id="content" tabIndex={-1} className={styles.page}>
+      <Container className={`marketing-page-intro ${styles.heroContainer}`}>
+        <MarketingBreadcrumb route="/services" />
         <div className={styles.hero}>
           <PageHero
             className={styles.heroCopy}
@@ -190,7 +204,7 @@ export default function ServicesPage() {
             badges={[{ label: "PyColors Services" }]}
             title={tSite("Build the software your business needs.")}
             description={tSite(
-              "Client portals, internal tools and custom SaaS. Work directly with PyColors to define, design and build the workflows your team needs.",
+              "PyColors designs and develops client portals, internal tools and SaaS applications around your business workflows. Agree on the scope, review the software, then receive a documented handover.",
             )}
             actions={
               <MarketingActionGroup>
@@ -211,36 +225,47 @@ export default function ServicesPage() {
               </p>
             }
           />
-          <figure className={styles.preview}>
-            <div className={styles.previewHeader}>
-              <span>
-                <span aria-hidden="true" className={styles.referenceMark} />
-                {tSite("Reference implementation")}
-              </span>
-              <Link href={productStudio.href}>
-                {tSite("Explore the reference")}
-                <ArrowUpRight aria-hidden="true" className="size-3.5" />
-              </Link>
-            </div>
-            <Link
-              href={productStudio.href}
-              aria-label={tSite(
-                "View the Product studio reference implementation",
-              )}
-              className={styles.captureLink}
-            >
-              <ProductStudioCapture
-                view="project"
-                priority
-                sizes="(min-width: 1536px) 680px, (min-width: 1024px) 48vw, 95vw"
-              />
+          <aside
+            className={styles.serviceBrief}
+            aria-labelledby="services-brief-title"
+          >
+            <p className={styles.eyebrow}>
+              {tSite("From a business need to a useful tool")}
+            </p>
+            <h2 id="services-brief-title">
+              {tSite("A clear scope. A concrete delivery.")}
+            </h2>
+            <dl>
+              <div>
+                <dt>{tSite("Your starting point")}</dt>
+                <dd>
+                  {tSite(
+                    "The people, tasks and tools your application needs to bring together.",
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt>{tSite("The work to agree")}</dt>
+                <dd>
+                  {tSite(
+                    "Screens, workflows and integrations, with a budget and acceptance criteria.",
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt>{tSite("The agreed handover")}</dt>
+                <dd>
+                  {tSite(
+                    "Source code, setup notes and validation results, as specified in the proposal.",
+                  )}
+                </dd>
+              </div>
+            </dl>
+            <Link href="#delivery" className={styles.textLink}>
+              {tSite("See the four delivery stages")}
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
             </Link>
-            <figcaption>
-              <strong>{tSite("Product studio")}</strong>
-              <span>{tSite(productStudio.summary)}</span>
-              <p>{tSite(productStudio.disclosure)}</p>
-            </figcaption>
-          </figure>
+          </aside>
         </div>
         <dl
           className={styles.commitments}
@@ -276,22 +301,38 @@ export default function ServicesPage() {
           />
           <div className={styles.caseGrid}>
             {useCases.map(
-              ({ id, icon: Icon, title, description, features }, index) => (
-                <article key={id} className={styles.caseCard}>
+              (
+                { id, icon: Icon, title, description, features, artwork, tone },
+                index,
+              ) => (
+                <article key={id} className={styles.caseCard} data-tone={tone}>
                   <div className={styles.caseTop}>
                     <Icon aria-hidden="true" className="size-5" />
                     <span aria-hidden="true">0{index + 1}</span>
                   </div>
-                  <h3>{tSite(title)}</h3>
-                  <p>{tSite(description)}</p>
-                  <ul>
-                    {features.map((feature) => (
-                      <li key={feature}>
-                        <Check aria-hidden="true" />
-                        {tSite(feature)}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className={styles.caseContent}>
+                    <div className={styles.caseIntro}>
+                      <h3>{tSite(title)}</h3>
+                      <p>{tSite(description)}</p>
+                    </div>
+                    <div className={styles.caseArt} aria-hidden="true">
+                      <Image
+                        src={artwork}
+                        alt=""
+                        fill
+                        loading="lazy"
+                        sizes="(min-width: 1024px) 560px, (min-width: 640px) 44vw, 88vw"
+                      />
+                    </div>
+                    <ul>
+                      {features.map((feature) => (
+                        <li key={feature}>
+                          <Check aria-hidden="true" />
+                          {tSite(feature)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </article>
               ),
             )}
@@ -306,6 +347,7 @@ export default function ServicesPage() {
         <MarketingSectionShell
           id="approach"
           width="full"
+          className={styles.approachChapter}
           aria-labelledby="services-approach-title"
         >
           <div className={styles.approach}>
@@ -343,6 +385,7 @@ export default function ServicesPage() {
 
         <MarketingSectionShell
           id="delivery"
+          className={styles.deliveryChapter}
           width="full"
           aria-labelledby="services-delivery-title"
         >
@@ -352,7 +395,7 @@ export default function ServicesPage() {
             eyebrow={tSite("A practical delivery process")}
             title={tSite("From your first brief to your team’s next step.")}
             description={tSite(
-              "A shared scope and visible review points keep the work understandable, from the first discussion through handover.",
+              "Four stages with a clear role for you at each step: share the need, approve the proposal, review the software and take over the agreed delivery.",
             )}
           />
           <ol className={styles.steps}>
@@ -363,7 +406,14 @@ export default function ServicesPage() {
                 </span>
                 <h3>{tSite(step.title)}</h3>
                 <p>{tSite(step.description)}</p>
-                <span className={styles.stepOutput}>{tSite(step.output)}</span>
+                <div className={styles.stepRole}>
+                  <span>{tSite("Your part")}</span>
+                  <p>{tSite(step.task)}</p>
+                </div>
+                <div className={styles.stepOutput}>
+                  <span>{tSite("What you receive")}</span>
+                  <strong>{tSite(step.output)}</strong>
+                </div>
               </li>
             ))}
           </ol>
@@ -379,7 +429,7 @@ export default function ServicesPage() {
             </div>
             <Link
               href="/starters/pro/implementation-example"
-              className={styles.textLink}
+              className={`${styles.textLink} ${styles.evidenceAction}`}
             >
               {tSite("View example delivery")}
               <ArrowUpRight aria-hidden="true" className="size-3.5" />
@@ -401,7 +451,7 @@ export default function ServicesPage() {
             )}
           />
           <article className={styles.customEngagement}>
-            <div>
+            <div className={styles.customIntro}>
               <p className={styles.eyebrow}>
                 {tSite("Custom product development")}
               </p>
@@ -446,10 +496,7 @@ export default function ServicesPage() {
           </p>
         </MarketingSectionShell>
 
-        <MarketingSectionShell
-          width="full"
-          aria-labelledby="services-faq-title"
-        >
+        <MarketingFaqSection width="full" aria-labelledby="services-faq-title">
           <MarketingFaq
             titleId="services-faq-title"
             title={tSite("Before getting started.")}
@@ -461,7 +508,7 @@ export default function ServicesPage() {
               answer: tSite(item.answer),
             }))}
           />
-        </MarketingSectionShell>
+        </MarketingFaqSection>
 
         <MarketingSectionShell
           width="full"

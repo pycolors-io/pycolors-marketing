@@ -55,3 +55,9 @@
     scroll-behavior: auto;
   }
 }
+.related {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
+}

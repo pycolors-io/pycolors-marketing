@@ -1,50 +1,42 @@
 .page {
-  background-image: radial-gradient(
-    ellipse at 85% 0%,
-    color-mix(in oklab, var(--primary) 8%, transparent),
-    transparent 65%
-  );
-  background-size: 100% 48rem;
-  background-repeat: no-repeat;
+  background: var(--background);
 }
 .offerPanel,
 .pathPanel,
 .deliveryPanel {
-  background:
-    radial-gradient(
-      ellipse at 100% 0%,
-      color-mix(in oklab, var(--primary) 12%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse at 0% 100%,
-      color-mix(in oklab, var(--brand-platform) 6%, transparent),
-      transparent 70%
-    ),
-    var(--background);
+  background: var(--marketing-canvas, var(--surface-muted));
+  border-radius: var(--marketing-panel-radius, 2rem);
 }
 .offerPanel {
-  border-color: color-mix(in oklab, var(--primary) 18%, var(--border-subtle));
+  border-color: var(--border-subtle);
+  --background: var(--marketing-graphite, #17181d);
+  --foreground: var(--marketing-graphite-ink, #ffffff);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
 }
 .foundationGrid {
   display: grid;
-  overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background: var(--background);
-}
-.foundationCard {
+  overflow: visible;
   border: 0;
   border-radius: 0;
-  background: linear-gradient(
-    155deg,
-    color-mix(in oklab, var(--primary) 4%, var(--background)),
-    var(--background) 60%
-  );
-  box-shadow: none;
+  background: transparent;
+  gap: 1rem;
 }
-.foundationCard + .foundationCard {
-  border-top: 1px solid var(--border-subtle);
+.foundationCard {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
+  box-shadow: none;
 }
 .foundationCard h3 {
   font-size: 1rem;
@@ -104,20 +96,180 @@
 @media (min-width: 640px) {
   .foundationGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .foundationCard:nth-child(2) {
-    border-top: 0;
-  }
-  .foundationCard:nth-child(even) {
-    border-left: 1px solid var(--border-subtle);
+    gap: 1rem;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
   }
 }
 @media (min-width: 1024px) {
   .foundationGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
   }
-  .foundationCard + .foundationCard {
-    border-top: 0;
-    border-left: 1px solid var(--border-subtle);
+}
+.page .pathPanel {
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+@media (forced-colors: active) {
+  .offerPanel,
+  .page .pathPanel {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+  }
+}
+
+.page .foundationCard:nth-child(1) {
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+
+.page .foundationCard:nth-child(3) {
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+
+.page .deliveryPanel {
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+
+.pathArtwork {
+  position: relative;
+  width: 100%;
+  height: 12rem;
+  margin-top: 1.25rem;
+}
+.pathArtwork img {
+  object-fit: contain;
+}
+.offerPanel [data-slot="button"],
+.pathPanel [data-slot="button"],
+.deliveryPanel [data-slot="button"] {
+  border-radius: 100px;
+}
+.offerPanel {
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  --surface: var(--background);
+  --surface-muted: color-mix(in srgb, var(--foreground) 8%, var(--background));
+  --accent: color-mix(in srgb, var(--foreground) 12%, var(--background));
+  --accent-foreground: var(--foreground);
+}
+
+@media (forced-colors: active) {
+  .page .foundationCard:nth-child(1),
+  .page .foundationCard:nth-child(3),
+  .page .deliveryPanel {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --brand-primary: LinkText;
+    --brand-primary-hover: LinkText;
+    --accent: Canvas;
+    --accent-foreground: CanvasText;
+    --border-subtle: CanvasText;
+    --border: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .offerPanel {
+    --brand-primary-hover: LinkText;
+  }
+}
+
+.heroLayout {
+  --background: #11121c;
+  --foreground: #fff;
+  --muted-foreground: #d1d0de;
+  --primary: #fff;
+  --primary-foreground: #11121c;
+  --border-subtle: #43424f;
+  --ring: #fff;
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background:
+    radial-gradient(ellipse at 95% 0, rgb(107 47 212 / 65%), transparent 65%),
+    radial-gradient(ellipse at 0 100%, rgb(32 89 191 / 55%), transparent 70%),
+    #11121c;
+  color: #fff;
+}
+.heroLayout h1 {
+  max-width: 17ch;
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.05em;
+}
+.heroLayout .offerPanel {
+  --background: #08080d;
+  border: 1px solid #45404f;
+  background: #08080d;
+}
+.page .foundationCard h3 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.page .deliveryPanel {
+  --background: #17181d;
+  --foreground: #fff;
+  --card-foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #17181d;
+  --border-subtle: #36363e;
+  --ring: #fff;
+  background: #17181d;
+  color: #fff;
+}
+:global(html[data-site-palette="monochrome"]) .heroLayout {
+  background:
+    radial-gradient(ellipse at 100% 0, #41414b, transparent 70%), #11121c;
+}
+@media (max-width: 39.999rem) {
+  .heroLayout h1 {
+    font-size: clamp(2.25rem, 9vw, 3rem);
+  }
+}
+@media (forced-colors: active) {
+  .heroLayout,
+  .page .deliveryPanel,
+  .heroLayout .offerPanel {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
   }
 }

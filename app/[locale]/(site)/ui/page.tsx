@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
@@ -30,10 +31,12 @@ import { MarketingDetailCard } from "@/components/marketing/detail-card";
 import { MarketingCardIllustration } from "@/components/marketing/card-illustration";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
 import { UiSectionNav } from "@/components/marketing/ui-section-nav";
+import { MarketingSectionNav } from "@/components/marketing/section-nav";
 import { UiLivePreview } from "@/components/marketing/ui-live-preview";
 import { CopyableCommand } from "@/components/docs/copyable-command";
 import { createThemeBuilderState } from "@/components/theme-builder/theme-builder-state";
 import { UI_VERSION, formatVersion } from "@/lib/version";
+import styles from "@/components/marketing/catalogue-hub.module.css";
 
 const description =
   "React components and semantic colors for Next.js product interfaces. Try PyColors UI, customize a light and dark theme, and start building with the documentation.";
@@ -167,7 +170,15 @@ const nextSteps = [
 
 const textLink =
   "inline-flex min-h-11 items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
-const primaryAction = "rounded-[5px]";
+const primaryAction = "rounded-full px-5";
+
+const uiPageSections = [
+  { href: "#ui-preview", label: "Try PyColors UI" },
+  { href: "#ui-components", label: "The component library" },
+  { href: "#ui-themes", label: "Theme Builder" },
+  { href: "#ui-install", label: "From preview to your project" },
+  { href: "#ui-next", label: "Next steps" },
+] as const;
 
 const saveButtonCode = `import { Button } from "@pycolors/ui";
 
@@ -180,12 +191,36 @@ export default function UiPage() {
 
   const { generatedTheme } = createThemeBuilderState();
   return (
-    <main id="content" tabIndex={-1} className="bg-background text-foreground">
-      <Container className="pt-24 pb-10 sm:pt-28 sm:pb-12">
-        <UiSectionNav active="overview" />
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`bg-background text-foreground ${styles.cataloguePage} ${styles.uiPage}`}
+    >
+      <Container className={styles.uiDiscoveryHeader}>
+        <UiSectionNav
+          active="overview"
+          breadcrumb={<MarketingBreadcrumb route="/ui" />}
+        />
+      </Container>
+      <div className={styles.uiProductBar}>
+        <Container className={styles.uiProductBarInner}>
+          <span className={styles.uiProductIdentity}>
+            {tSite("PyColors UI")}
+          </span>
+          <MarketingSectionNav
+            items={uiPageSections.map((item) => ({
+              ...item,
+              label: tSite(item.label),
+            }))}
+            label="On this page"
+          />
+        </Container>
+      </div>
+      <Container className={styles.uiHeroContainer}>
         <PageHero
+          className={`${styles.heroFrame} ${styles.uiHero}`}
           variant="compact"
-          align="left"
+          align="center"
           badges={[
             { label: "PyColors UI", variant: "outline" },
             { label: formatVersion(UI_VERSION), variant: "outline" },
@@ -194,7 +229,7 @@ export default function UiPage() {
           description={tSite(
             "React components and semantic colors for dashboards, forms, and settings. Explore the UI, shape your theme, and bring it into your Next.js app.",
           )}
-          contentClassName="mx-0 max-w-3xl"
+          contentClassName="mx-auto max-w-4xl"
           actions={
             <>
               <Button
@@ -217,7 +252,9 @@ export default function UiPage() {
             </>
           }
         />
-        <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
+        <ul
+          className={`mt-7 flex flex-wrap gap-x-6 gap-y-2 ${styles.proofStrip}`}
+        >
           {[
             "Open source · MIT",
             "Light and dark",
@@ -229,7 +266,7 @@ export default function UiPage() {
             </MarketingCheckItem>
           ))}
         </ul>
-        <div className="mt-7 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-border-subtle pt-5">
+        <div className={styles.uiProductMeta}>
           <a
             href="https://www.npmjs.com/package/@pycolors/ui"
             target="_blank"
@@ -260,18 +297,20 @@ export default function UiPage() {
       <MarketingSectionShell
         id="ui-preview"
         aria-label={tSite("Try PyColors UI")}
-        divider="pattern"
         width="full"
-        className="scroll-mt-24"
+        className={`${styles.uiSection} ${styles.uiPreviewChapter}`}
       >
         <Container>
-          <UiLivePreview modes={generatedTheme.modes} />
+          <div className={styles.uiPreviewPanel}>
+            <UiLivePreview modes={generatedTheme.modes} />
+          </div>
         </Container>
       </MarketingSectionShell>
 
       <section
+        id="ui-components"
         aria-labelledby="ui-components-heading"
-        className="border-t border-border-subtle py-12 sm:py-16"
+        className={`${styles.uiSection} ${styles.uiContentSection} ${styles.uiLibrarySection}`}
       >
         <Container>
           <p className="mb-2 text-xs font-medium text-muted-foreground">
@@ -280,6 +319,7 @@ export default function UiPage() {
           <MarketingSectionHeader
             align="left"
             titleId="ui-components-heading"
+            className={styles.uiProductHeading}
             title={tSite("Small pieces. A consistent product.")}
             description={tSite(
               "Start with the primitives you need. Each component has usage examples, props, and guidance in the documentation.",
@@ -291,10 +331,19 @@ export default function UiPage() {
               </Link>
             }
           />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            className={`grid gap-5 sm:grid-cols-2 lg:grid-cols-3 ${styles.uiComponentGrid}`}
+          >
             {componentGroups.map((group) => (
               <MarketingDetailCard
                 key={group.title}
+                className={`${styles.componentCard} ${styles.uiComponentCard} ${
+                  group.illustration === "forms"
+                    ? styles.lilacCard
+                    : group.illustration === "feedback"
+                      ? styles.peachCard
+                      : ""
+                }`}
                 title={tSite(group.title)}
                 description={tSite(group.description)}
                 eyebrow={tSite("UI library")}
@@ -326,12 +375,17 @@ export default function UiPage() {
       </section>
 
       <section
+        id="ui-themes"
         aria-labelledby="ui-themes-heading"
-        className="border-t border-border-subtle py-12 sm:py-16"
+        className={`${styles.uiSection} ${styles.uiContentSection}`}
       >
         <Container>
-          <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+          <div
+            className={`grid overflow-hidden border border-border-subtle lg:grid-cols-[0.9fr_1.1fr] ${styles.exampleFrame} ${styles.uiThemeFrame}`}
+          >
+            <div
+              className={`flex flex-col justify-center p-6 sm:p-8 lg:p-10 ${styles.brandIntro} ${styles.uiThemeIntro}`}
+            >
               <Palette
                 aria-hidden="true"
                 className="mb-4 size-5 text-muted-foreground"
@@ -348,15 +402,15 @@ export default function UiPage() {
                   "Choose your brand color, neutrals, and typography in Theme Builder. Explore the palette, try it on components or a dashboard, and export CSS or JSON for both modes.",
                 )}
               />
-              <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted-foreground">
+              <div className={styles.uiThemeCapabilities}>
                 <span>{tSite("Brand colors")}</span>
                 <span>{tSite("Neutral surfaces")}</span>
                 <span>{tSite("Typography")}</span>
               </div>
-              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2">
+              <div className={styles.uiThemeActions}>
                 <Button
                   asChild
-                  className={`site-primary-action ${primaryAction}`}
+                  className={`site-primary-action ${styles.uiThemeAction}`}
                 >
                   <Link href="/tools/theme-builder">
                     {tSite("Open Theme Builder")}
@@ -367,8 +421,8 @@ export default function UiPage() {
                 </Link>
               </div>
             </div>
-            <div className="min-w-0 border-t border-border-subtle lg:border-t-0 lg:border-l">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle px-5 py-4 sm:px-7">
+            <div className={styles.uiThemePreview}>
+              <div className={styles.uiPaletteHeader}>
                 <p className="text-sm font-medium">
                   {tSite("One palette. Two modes.")}
                 </p>
@@ -379,12 +433,14 @@ export default function UiPage() {
               {(["light", "dark"] as const).map((mode) => (
                 <div
                   key={mode}
-                  className="border-b border-border-subtle p-5 sm:p-7"
+                  className={styles.uiModeSample}
                   style={{
                     backgroundColor:
                       generatedTheme.modes[mode].semantic.background.srgbHex,
                     color:
                       generatedTheme.modes[mode].semantic.foreground.srgbHex,
+                    borderColor:
+                      generatedTheme.modes[mode].semantic.border.srgbHex,
                   }}
                 >
                   <div className="mb-4 flex items-center justify-between gap-3">
@@ -456,7 +512,7 @@ export default function UiPage() {
                   </div>
                 </div>
               ))}
-              <p className="px-5 py-4 text-xs leading-6 text-muted-foreground sm:px-7">
+              <p className={styles.uiPaletteNote}>
                 {tSite(
                   "Preview your palette and review color contrast in Theme Builder before using it in your app.",
                 )}
@@ -467,12 +523,17 @@ export default function UiPage() {
       </section>
 
       <section
+        id="ui-install"
         aria-labelledby="ui-install-heading"
-        className="border-t border-border-subtle py-12 sm:py-16"
+        className={`${styles.uiSection} ${styles.uiContentSection}`}
       >
         <Container>
-          <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="p-6 sm:p-8 lg:p-10">
+          <div
+            className={`grid overflow-hidden border border-border-subtle lg:grid-cols-[0.9fr_1.1fr] ${styles.exampleFrame} ${styles.uiInstallFrame}`}
+          >
+            <div
+              className={`p-6 sm:p-8 lg:p-10 ${styles.installIntro} ${styles.uiInstallIntro}`}
+            >
               <Terminal
                 aria-hidden="true"
                 className="mb-4 size-5 text-muted-foreground"
@@ -489,7 +550,7 @@ export default function UiPage() {
                   "Add the components and tokens to your React or Next.js app. Follow the installation guide to configure Tailwind v4, then build your first screen.",
                 )}
               />
-              <ol className="mt-8 space-y-6">
+              <ol className={styles.uiInstallSteps}>
                 {[
                   {
                     title: "Install the packages",
@@ -525,12 +586,12 @@ export default function UiPage() {
                 <ArrowRight aria-hidden="true" className="size-4" />
               </Link>
             </div>
-            <div className="flex min-w-0 flex-col border-t border-border-subtle bg-surface-muted/20 lg:border-t-0 lg:border-l">
+            <div className={styles.uiCodeStage}>
               <CopyableCommand
                 command="pnpm add @pycolors/ui @pycolors/tokens"
-                className="my-0 rounded-none border-0 border-b border-border-subtle bg-transparent"
+                className={styles.uiCommand}
               />
-              <div className="flex flex-1 flex-col">
+              <div className={styles.uiCodeBody}>
                 <DynamicCodeBlock
                   lang="tsx"
                   code={saveButtonCode}
@@ -543,16 +604,15 @@ export default function UiPage() {
                       <Code2 aria-hidden="true" className="size-4 shrink-0" />
                     ),
                     allowCopy: true,
-                    className:
-                      "m-0 flex flex-1 flex-col rounded-none border-0 bg-transparent shadow-none [&>div:first-child]:h-12 [&_button]:size-8 max-sm:[&_button]:size-11 [@media(pointer:coarse)]:[&_button]:size-11",
+                    keepBackground: true,
+                    className: styles.uiCodeFigure,
                     viewportProps: {
                       "aria-label": "Button usage example",
-                      className:
-                        "flex-1 py-5 [&_pre]:text-xs [&_pre]:leading-8 sm:py-7 sm:[&_pre]:text-sm",
+                      className: styles.uiCodeViewport,
                     },
                   }}
                 />
-                <div className="border-t border-border-subtle px-5 py-4 text-xs leading-6 text-muted-foreground sm:px-7">
+                <div className={styles.uiCodeNote}>
                   {tSite(
                     "After the stylesheet setup in the installation guide.",
                   )}
@@ -571,8 +631,9 @@ export default function UiPage() {
       </section>
 
       <section
+        id="ui-next"
         aria-labelledby="ui-next-heading"
-        className="border-t border-border-subtle py-12 sm:py-16"
+        className={`${styles.uiSection} ${styles.uiContentSection}`}
       >
         <Container>
           <Layers3
@@ -581,7 +642,7 @@ export default function UiPage() {
           />
           <MarketingSectionHeader
             align="left"
-            className="mb-0"
+            className={`mb-0 ${styles.uiProductHeading}`}
             titleId="ui-next-heading"
             title={tSite("Keep building from here.")}
             description={tSite(
@@ -594,7 +655,9 @@ export default function UiPage() {
               </Link>
             }
           />
-          <div className="mt-8 grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle md:grid-cols-2">
+          <div
+            className={`mt-8 grid gap-5 md:grid-cols-2 ${styles.nextCards} ${styles.uiProductNext}`}
+          >
             {nextSteps.map((item) => (
               <div
                 key={item.title}

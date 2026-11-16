@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
 import {
@@ -8,6 +9,8 @@ import {
   Download,
   Layers3,
   ShieldCheck,
+  Settings2,
+  Workflow,
   Webhook,
 } from "lucide-react";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
@@ -16,9 +19,14 @@ import { SiteButton } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 
+import styles from "./starter-pro.module.css";
+import implementationStyles from "./starter-pro-services.module.css";
+
 const foundations = [
   {
     title: "A ZIP that runs on its own",
+    artwork: "/images/starters/pro/concepts/delivery-case-test-v1.png",
+    tone: "gold",
     icon: Download,
     description:
       "Packaging requires isolated extraction, a frozen install, empty-database migrations, a production build and a first-user browser journey.",
@@ -27,6 +35,8 @@ const foundations = [
   },
   {
     title: "Billing that reconciles",
+    artwork: "/images/starters/pro/concepts/billing-loops-test-v1.png",
+    tone: "neutral",
     icon: Webhook,
     description:
       "Signed webhooks reconcile current Stripe state. PostgreSQL regressions cover concurrent duplicates, reversed order, failed payments, cancellations and retries.",
@@ -35,6 +45,8 @@ const foundations = [
   },
   {
     title: "Workflows checked together",
+    artwork: "/images/starters/pro/concepts/workflow-path-test-v1.png",
+    tone: "lilac",
     icon: ShieldCheck,
     description:
       "Browser suites cover onboarding, workspace access, English/French, Customize and responsive layouts. The required CI gate waits for selected checks.",
@@ -43,6 +55,8 @@ const foundations = [
   },
   {
     title: "A recovery path to rehearse",
+    artwork: "/images/starters/pro/concepts/recovery-loop-test-v1.png",
+    tone: "neutral",
     icon: Database,
     description:
       "Configuration diagnostics, health probes, structured error references, alert hooks and a PostgreSQL backup/restore drill support your operations handover.",
@@ -51,6 +65,8 @@ const foundations = [
   },
   {
     title: "A working business example",
+    artwork: "/images/starters/pro/concepts/connected-workspace-test-v1.png",
+    tone: "cobalt",
     icon: Layers3,
     description:
       "Multiple workspaces, team roles and invitations connect to projects with assigned tasks, calendar due dates, discussions and reversible archiving.",
@@ -59,6 +75,8 @@ const foundations = [
   },
   {
     title: "A baseline you can maintain",
+    artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
+    tone: "brand",
     icon: BookOpen,
     description:
       "Product configuration, customization recipes, migration guidance, source revision tracking and documented support boundaries come with the source.",
@@ -80,47 +98,73 @@ export function StarterProReadiness() {
     >
       <MarketingSectionHeader
         titleId="starter-pro-readiness-heading"
-        align="left"
+        align="center"
+        className={styles.readinessHeading}
         eyebrow={tSite("From source to handover")}
         title={tSite("More of the product journey, already connected.")}
         description={tSite(
           "Inspect the workflows, the checks behind them and the responsibilities you keep when launching your own SaaS.",
         )}
       />
-      <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle sm:grid-cols-2 xl:grid-cols-3">
+      <div
+        className={`${styles.readinessGrid} grid sm:grid-cols-2 xl:grid-cols-3`}
+      >
         {foundations.map(
-          ({ title, icon: Icon, description, href, link }, index) => (
+          (
+            { title, tone, artwork, icon: Icon, description, href, link },
+            index,
+          ) => (
             <article
               key={title}
-              className="flex min-w-0 flex-col bg-background p-5 sm:p-7"
+              data-card-tone={tone}
+              data-card-art=""
+              className={`${styles.readinessCard} flex min-w-0 flex-col bg-background`}
             >
-              <div className="flex items-center justify-between gap-4 text-muted-foreground">
-                <Icon className="size-5" aria-hidden="true" />
-                <span className="font-mono text-[10px]" aria-hidden="true">
-                  0{tSite(index + 1)}
-                </span>
-              </div>
-              <h3 className="mt-6 text-base font-semibold tracking-tight">
-                {tSite(title)}
-              </h3>
-              <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
-                {tSite(description)}
-              </p>
-              <Link
-                href={href}
-                className="mt-5 inline-flex min-h-11 items-center gap-2 text-xs font-medium hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+              <div
+                className={styles.detailGraphic}
+                data-readiness-illustration=""
+                aria-hidden="true"
               >
-                {tSite(link)}
-                <ArrowUpRight
-                  className="size-3.5 shrink-0"
-                  aria-hidden="true"
+                <div className={styles.readinessArtwork}>
+                  <Image
+                    src={artwork}
+                    alt=""
+                    fill
+                    loading="lazy"
+                    quality={75}
+                    sizes="(min-width: 1280px) 360px, (min-width: 640px) 44vw, 86vw"
+                    className={styles.productIllustration}
+                  />
+                </div>
+                <Icon
+                  className={styles.readinessFallbackIcon}
+                  focusable="false"
                 />
-              </Link>
+                <span className={styles.detailIndex}>0{tSite(index + 1)}</span>
+              </div>
+              <div className={styles.readinessCopy}>
+                <h3 className="text-base font-semibold tracking-tight">
+                  {tSite(title)}
+                </h3>
+                <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
+                  {tSite(description)}
+                </p>
+                <Link
+                  href={href}
+                  className="mt-5 inline-flex min-h-11 items-center gap-2 text-xs font-medium hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                >
+                  {tSite(link)}
+                  <ArrowUpRight
+                    className="size-3.5 shrink-0"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </div>
             </article>
           ),
         )}
       </div>
-      <p className="mt-4 max-w-3xl text-xs leading-6 text-muted-foreground">
+      <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-6 text-muted-foreground">
         {tSite(
           "Automated acceptance uses synthetic data and intercepted providers. Your launch checks include real email delivery, your Stripe sandbox, backups and the monitoring destination you configure.",
         )}
@@ -137,10 +181,11 @@ export function StarterProImplementation() {
       id="implementation"
       width="full"
       aria-labelledby="starter-pro-implementation-heading"
-      className="scroll-mt-24"
+      className={`${implementationStyles.section} scroll-mt-24`}
     >
       <MarketingSectionHeader
         titleId="starter-pro-implementation-heading"
+        className={implementationStyles.implementationHeading}
         align="left"
         eyebrow={tSite("Optional services · Written quote")}
         title={tSite("An assisted start, scoped to your product.")}
@@ -149,29 +194,41 @@ export function StarterProImplementation() {
           { value0: PRODUCT_DISPLAY["starter-pro"].priceLabel },
         )}
       />
-      <div className="grid gap-4 lg:grid-cols-2">
-        {Object.values(STARTER_PRO_SERVICES).map((service) => (
+      <div className={implementationStyles.implementationGrid}>
+        {Object.values(STARTER_PRO_SERVICES).map((service, index) => (
           <article
             key={service.id}
+            data-card-tone={service.id === "guided-setup" ? "neutral" : "ink"}
             aria-labelledby={`${service.id}-heading`}
-            className="flex min-w-0 flex-col rounded-[5px] border border-border-subtle bg-card p-6 sm:p-8"
+            className={implementationStyles.implementationCard}
           >
-            <h3
-              id={`${service.id}-heading`}
-              className="text-lg font-semibold tracking-tight"
+            <div
+              className={implementationStyles.implementationIdentity}
+              aria-hidden="true"
             >
-              {tSite(service.title)}
-            </h3>
-            <p className="mt-4 font-brand text-3xl font-semibold tracking-tight">
-              {tSite(service.priceLabel)}
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground">
-              {tSite("Starting service fee · Written scope")}
-            </p>
+              <span>
+                {service.id === "guided-setup" ? <Settings2 /> : <Workflow />}
+              </span>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+            </div>
+            <div className={implementationStyles.implementationOffer}>
+              <h3
+                id={`${service.id}-heading`}
+                className="text-lg font-semibold tracking-tight"
+              >
+                {tSite(service.title)}
+              </h3>
+              <p className={implementationStyles.implementationPrice}>
+                {tSite(service.priceLabel)}
+              </p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {tSite("Starting service fee · Written scope")}
+              </p>
+            </div>
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
               {tSite(service.description)}
             </p>
-            <ul className="my-6 space-y-3 border-y border-border-subtle py-5">
+            <ul className={implementationStyles.implementationFeatures}>
               {service.features.map((feature) => (
                 <li key={feature} className="flex gap-3 text-sm leading-6">
                   <Check
@@ -182,7 +239,7 @@ export function StarterProImplementation() {
                 </li>
               ))}
             </ul>
-            <div className="mb-5">
+            <div className={implementationStyles.implementationDelivery}>
               <h4 className="text-xs font-medium">
                 {tSite("What you receive")}
               </h4>
@@ -200,7 +257,11 @@ export function StarterProImplementation() {
             <p className="mb-6 flex-1 text-xs leading-6 text-muted-foreground">
               {tSite(service.scope)}
             </p>
-            <SiteButton variant="outline" asChild className="w-full">
+            <SiteButton
+              variant="outline"
+              asChild
+              className={implementationStyles.implementationAction}
+            >
               <Link href={service.href}>{tSite(service.action)}</Link>
             </SiteButton>
           </article>

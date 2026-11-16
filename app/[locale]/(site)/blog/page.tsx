@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
@@ -13,6 +14,7 @@ import {
 } from "@/components/blog/blog-index-article";
 import { BlogSidebar } from "@/components/blog/blog-sidebar";
 import { PageHero } from "@/components/marketing/page-hero";
+import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import {
   getAllCategories,
@@ -69,80 +71,90 @@ export default function BlogPage() {
       tabIndex={-1}
       className={`${styles.page} bg-background text-foreground`}
     >
-      <Container className="pb-16 pt-24 sm:pt-28">
-        <div
-          className={`${styles.intro} grid items-end gap-8 pb-12 sm:gap-10 sm:pb-16 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16`}
-        >
-          <PageHero
-            variant="compact"
-            align="left"
-            contentClassName="mx-0 max-w-3xl"
-            badges={[{ label: "Blog", variant: "outline" }]}
-            title={tSite("Technical articles for developers")}
-            description={tSite(
-              "Architecture decisions, implementation notes and lessons from building PyColors. Practical reading for your next SaaS product.",
-            )}
-            actions={
-              <>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="rounded-md"
-                >
-                  <Link
-                    href={leadPost ? "#featured-articles" : "#latest-articles"}
-                  >
-                    {tSite("Browse articles")}
-                    {tSite("  ")}
-                    <ArrowDown className="size-4" aria-hidden="true" />
-                  </Link>
-                </Button>
-                <Link
-                  href="/guides"
-                  className={`${textLink} justify-center sm:px-2`}
-                >
-                  {tSite("Explore guides")}
-                  {tSite("  ")}
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </Link>
-              </>
-            }
-          />
-          <aside
-            aria-label={tSite("About the blog")}
-            className={`${styles.introNote} lg:mb-1`}
-          >
-            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-              {tSite("From the workbench")}
-            </p>
-            <p className="mt-3 text-sm leading-7 text-muted-foreground">
-              {tSite(
-                "The decisions behind the code, from interface details to production systems.",
+      <MarketingHeroBand tone="cool">
+        <Container className={`marketing-page-intro ${styles.heroContainer}`}>
+          <MarketingBreadcrumb route="/blog" />
+          <div className={styles.intro}>
+            <PageHero
+              variant="compact"
+              align="left"
+              contentClassName="mx-0 max-w-3xl"
+              badges={[{ label: "Blog", variant: "outline" }]}
+              title={tSite("Technical articles for developers")}
+              description={tSite(
+                "Architecture decisions, implementation notes and lessons from building PyColors. Practical reading for your next SaaS product.",
               )}
-            </p>
-            <p className="mt-4 flex flex-wrap gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
-              <span>
-                {tSite(posts.length)}{" "}
-                {tSite(posts.length === 1 ? "article" : "articles")}
-              </span>
-              <span aria-hidden="true">/</span>
-              <span>
-                {tSite(categories.length)}
-                {tSite("  ")}
-                {tSite(categories.length === 1 ? "topic" : "topics")}
-              </span>
-            </p>
-          </aside>
-        </div>
-
+              actions={
+                <>
+                  <Button
+                    asChild
+                    variant="default"
+                    size="lg"
+                    className={styles.introAction}
+                  >
+                    <Link
+                      href={
+                        leadPost ? "#featured-articles" : "#latest-articles"
+                      }
+                    >
+                      {tSite("Browse articles")}
+                      {tSite("  ")}
+                      <ArrowDown className="size-4" aria-hidden="true" />
+                    </Link>
+                  </Button>
+                  <Link
+                    href="/guides"
+                    className={`${textLink} ${styles.introSecondary}`}
+                  >
+                    {tSite("Explore guides")}
+                    {tSite("  ")}
+                    <ArrowUpRight className="size-4" aria-hidden="true" />
+                  </Link>
+                </>
+              }
+            />
+            <aside
+              aria-label={tSite("About the blog")}
+              className={`${styles.introNote} lg:mb-1`}
+            >
+              <div
+                className={styles.introArt}
+                aria-hidden="true"
+                data-editorial-art=""
+              >
+                <BookOpen className={styles.editorialMark} />
+              </div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                {tSite("From the workbench")}
+              </p>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                {tSite(
+                  "The decisions behind the code, from interface details to production systems.",
+                )}
+              </p>
+              <p className="mt-4 flex flex-wrap gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
+                <span>
+                  {tSite(posts.length)}{" "}
+                  {tSite(posts.length === 1 ? "article" : "articles")}
+                </span>
+                <span aria-hidden="true">/</span>
+                <span>
+                  {tSite(categories.length)}
+                  {tSite("  ")}
+                  {tSite(categories.length === 1 ? "topic" : "topics")}
+                </span>
+              </p>
+            </aside>
+          </div>
+        </Container>
+      </MarketingHeroBand>
+      <Container className={styles.pageContainer}>
         {leadPost ? (
           <MarketingSectionShell
-            divider="pattern"
             id="featured-articles"
             width="full"
             spacing="compact"
-            className="scroll-mt-24 border-t border-border-subtle"
+            className={`${styles.featuredChapter} scroll-mt-24`}
             aria-labelledby="featured-title"
           >
             <div className="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 sm:mb-8">
@@ -166,7 +178,9 @@ export default function BlogPage() {
             >
               <BlogFeaturedArticle post={leadPost} lead />
               {supportingPosts.length > 0 ? (
-                <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-1">
+                <div
+                  className={`${styles.supportingArticles} grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-1`}
+                >
                   {supportingPosts.map((post) => (
                     <BlogFeaturedArticle key={post.slug} post={post} />
                   ))}
@@ -193,7 +207,7 @@ export default function BlogPage() {
           />
           <div className="grid items-start gap-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-12">
             <BlogSidebar categories={categories} tags={tags} posts={posts} />
-            <div className="min-w-0 border-y border-border-subtle">
+            <div className={styles.articleArchive}>
               <div className="flex items-center justify-between gap-4 border-b border-border-subtle px-3 py-4 text-xs text-muted-foreground sm:px-5">
                 <span>
                   {tSite("All articles")}
@@ -252,7 +266,7 @@ export default function BlogPage() {
           <div
             className={`${styles.nextSteps} grid rounded-lg border border-border-subtle md:grid-cols-2`}
           >
-            <div className="flex flex-col p-6 sm:p-8">
+            <div className={styles.nextStepCard}>
               <div className="flex items-center justify-between gap-4">
                 <h3 className="font-brand text-lg font-semibold tracking-normal">
                   {tSite("Starter Free")}
@@ -274,7 +288,7 @@ export default function BlogPage() {
                 </Button>
               </div>
             </div>
-            <div className="flex flex-col border-t border-border-subtle p-6 sm:p-8 md:border-l md:border-t-0">
+            <div className={styles.nextStepCard}>
               <div className="flex items-center justify-between gap-4">
                 <h3 className="font-brand text-lg font-semibold tracking-normal">
                   {tSite("Starter Pro")}

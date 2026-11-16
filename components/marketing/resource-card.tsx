@@ -1,4 +1,5 @@
 import { useCopy } from "@/lib/i18n/use-copy";
+import styles from "./presentation.module.css";
 import * as React from "react";
 import { Link } from "@/lib/i18n/navigation";
 import { Card, cn } from "@pycolors/ui";
@@ -101,6 +102,7 @@ export function MarketingResourceCard({
       className={cn(
         "group flex h-full flex-col justify-between rounded-lg p-5 shadow-soft transition-colors hover:border-border",
         marketingSurfaceToneClass[tone],
+        styles.resource,
         className,
       )}
     >

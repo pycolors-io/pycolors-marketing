@@ -69,7 +69,7 @@
 }
 .page .body figure {
   border: 1px solid var(--border-subtle);
-  border-radius: var(--site-radius-panel);
+  border-radius: 1rem;
   background: color-mix(in oklab, var(--foreground) 2%, var(--background));
 }
 .page .body figure pre {
@@ -144,21 +144,16 @@
   box-shadow: none;
 }
 .nextStep {
-  background: radial-gradient(
-    ellipse at 100% 0%,
-    color-mix(in oklab, var(--primary) 6%, var(--background)),
-    var(--background) 80%
-  );
+  background: var(--marketing-canvas, var(--surface-muted));
+  border-radius: var(--marketing-card-radius, 1.5rem);
 }
 .tocPanel {
-  background: var(--background);
+  background: var(--marketing-canvas, var(--surface-muted));
+  border-radius: 1.25rem;
+  overflow: hidden;
 }
 .tocHeader {
-  background: linear-gradient(
-    120deg,
-    color-mix(in oklab, var(--primary) 4%, var(--background)),
-    var(--background)
-  );
+  background: transparent;
 }
 .tocPanel nav {
   scrollbar-width: thin;
@@ -171,7 +166,7 @@
   min-height: 2.25rem;
   padding: 0.625rem;
   border-left: 2px solid transparent;
-  border-radius: 3px;
+  border-radius: 0.5rem;
   color: var(--muted-foreground);
   font-size: 0.75rem;
   line-height: 1.6;
@@ -233,5 +228,48 @@
   .page [data-slot="badge"],
   .tocLink {
     transition: none;
+  }
+}
+
+.page .body :where(p, ul, ol) {
+  max-width: 68ch;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+.page .body h2 {
+  font-size: clamp(1.75rem, 2.8vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+.page .body h3 {
+  font-size: 1.375rem;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+.page .body blockquote {
+  padding: 1.25rem 1.5rem;
+  border-left-color: var(--foreground);
+  border-radius: 0 1rem 1rem 0;
+  background: var(--marketing-canvas);
+}
+.nextStep[data-product="pro"] {
+  --background: #000;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --border-subtle: #36363e;
+  --ring: #fff;
+  background: #000;
+  color: #fff;
+}
+@media (forced-colors: active) {
+  .nextStep[data-product="pro"] {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
   }
 }

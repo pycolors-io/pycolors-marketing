@@ -7,7 +7,7 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import UiPage, {
   generateMetadata as getLocalizedMetadata0,
@@ -17,6 +17,19 @@ import { UiSectionNav } from "@/components/marketing/ui-section-nav";
 const metadata = await getLocalizedMetadata0({
   params: Promise.resolve({ locale: "en" }),
 });
+
+// Radix measures the hidden native input for checkboxes inside the form.
+beforeEach(() =>
+  vi.stubGlobal(
+    "ResizeObserver",
+    class {
+      observe = vi.fn();
+      unobserve = vi.fn();
+      disconnect = vi.fn();
+    },
+  ),
+);
+afterEach(() => vi.unstubAllGlobals());
 
 describe("UI overview", () => {
   it("connects the live preview, setup, and customization through native links", () => {
@@ -53,6 +66,39 @@ describe("UI overview", () => {
     expect(
       screen.getByText("Versioned · documented · tested · actively maintained"),
     ).toBeVisible();
+  });
+
+  it("separates page-section anchors from the UI discovery routes", () => {
+    render(<UiPage />);
+    const sections = screen.getByRole("navigation", { name: "On this page" });
+    const links = within(sections).getAllByRole("link");
+    expect(links.map((link) => link.getAttribute("href"))).toEqual([
+      "#ui-preview",
+      "#ui-components",
+      "#ui-themes",
+      "#ui-install",
+      "#ui-next",
+    ]);
+    for (const link of links) {
+      const id = link.getAttribute("href")!.slice(1);
+      const destination = document.getElementById(id);
+      expect(link.tagName).toBe("A");
+      expect(link).not.toHaveAttribute("role", "button");
+      expect(link).toHaveAccessibleName();
+      expect(destination).toHaveAccessibleName();
+    }
+    const discovery = screen.getByRole("navigation", {
+      name: "PyColors UI navigation",
+    });
+    expect(discovery).not.toBe(sections);
+    expect(within(discovery).getAllByRole("link")).toHaveLength(1);
+    expect(
+      within(discovery).getByRole("button", {
+        name: "Browse PyColors UI: Overview",
+      }),
+    ).toHaveAttribute("aria-expanded", "false");
+    const ids = [...document.querySelectorAll("[id]")].map((node) => node.id);
+    expect(new Set(ids).size).toBe(ids.length);
   });
 
   it("links every catalog item to an existing component documentation page", () => {
@@ -113,6 +159,58 @@ describe("UI overview", () => {
       if (mode === "Dark") expect(preview.style.cssText).not.toBe(lightStyle);
       else expect(preview.style.cssText).toBe(lightStyle);
     }
+  });
+
+  it("changes preview accents locally without losing workspace edits", () => {
+    render(<UiPage />);
+    const preview = screen.getByRole("region", { name: "Your theme in use" });
+    const initial = preview.style.cssText;
+    const rootStyle = document.documentElement.style.cssText;
+    const name = screen.getByRole("textbox", {
+      name: /^Workspace display name/,
+    });
+    fireEvent.change(name, { target: { value: "Aurora Studio" } });
+    fireEvent.click(screen.getByRole("radio", { name: "Violet" }));
+    expect(preview.style.getPropertyValue("--primary")).toBe("#6b2fd4");
+    expect(name).toHaveValue("Aurora Studio");
+    fireEvent.click(screen.getByRole("radio", { name: "Dark" }));
+    expect(preview.style.getPropertyValue("--primary")).toBe("#c4a7ff");
+    fireEvent.click(screen.getByRole("radio", { name: "Graphite" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Light" }));
+    expect(preview.style.cssText).toBe(initial);
+    expect(document.documentElement.style.cssText).toBe(rootStyle);
+  });
+
+  it("validates edits, commits them to the workspace preview and can restore the sample", () => {
+    render(<UiPage />);
+    const result = screen.getByRole("complementary", {
+      name: "Workspace preview",
+    });
+    const name = screen.getByRole("textbox", {
+      name: /^Workspace display name/,
+    });
+    const email = screen.getByRole("textbox", { name: /^Contact email/ });
+    fireEvent.change(name, { target: { value: "Aurora Studio" } });
+    fireEvent.change(email, { target: { value: "invalid" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save demo settings" }));
+    expect(email).toHaveAttribute("aria-invalid", "true");
+    expect(result).toHaveTextContent("Northstar Studio");
+    expect(result).not.toHaveTextContent("Aurora Studio");
+    fireEvent.change(email, { target: { value: "team@example.com" } });
+    fireEvent.click(screen.getByRole("checkbox", { name: /Weekly summary/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Save demo settings" }));
+    expect(result).toHaveTextContent("Aurora Studio");
+    expect(result).toHaveTextContent("team@example.com");
+    expect(
+      within(result).getByText("Weekly summary").parentElement,
+    ).toHaveTextContent("Enabled");
+    fireEvent.click(screen.getByRole("button", { name: "Reset workspace" }));
+    expect(name).toHaveValue("Northstar Studio");
+    expect(email).toHaveValue("hello@example.com");
+    expect(
+      screen.getByRole("checkbox", { name: /Weekly summary/ }),
+    ).not.toBeChecked();
+    expect(result).not.toHaveTextContent("Aurora Studio");
   });
 
   it("composes themed conversation primitives with working copy, reset and documentation links", async () => {
@@ -224,25 +322,40 @@ describe("UI discovery navigation", () => {
     ["patterns", "/ui/patterns"],
     ["examples", "/ui/examples"],
     ["blocks", "/blocks"],
-  ] as const)("identifies only the current %s page", (active, href) => {
+  ] as const)("identifies only the current %s page", async (active, href) => {
     render(<UiSectionNav active={active} />);
-    const links = within(
-      screen.getByRole("navigation", {
-        name: "PyColors UI navigation",
-      }),
-    ).getAllByRole("link");
+    const nav = screen.getByRole("navigation", {
+      name: "PyColors UI navigation",
+    });
+    expect(within(nav).getAllByRole("link")).toHaveLength(1);
+    const trigger = within(nav).getByRole("button", {
+      name: /^Browse PyColors UI:/,
+    });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    const docsHref = active === "blocks" ? "/docs/blocks" : "/docs/ui";
+    expect(
+      within(nav).getByRole("link", { name: "Documentation" }),
+    ).toHaveAttribute("href", docsHref);
+    fireEvent.keyDown(trigger, { key: "ArrowDown" });
+    const menu = await screen.findByRole("menu");
+    const links = within(menu).getAllByRole("menuitem");
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "/ui",
       "/blocks",
       "/tools/theme-builder",
       "/ui/patterns",
       "/ui/examples",
-      active === "blocks" ? "/docs/blocks" : "/docs/ui",
+      docsHref,
     ]);
+    expect(links.every((link) => link.tagName === "A")).toBe(true);
     const current = links.filter(
       (link) => link.getAttribute("aria-current") === "page",
     );
     expect(current).toHaveLength(1);
     expect(current[0]).toHaveAttribute("href", href);
+    expect(await axe(menu)).toHaveNoViolations();
+    fireEvent.keyDown(menu, { key: "Escape" });
+    await waitFor(() => expect(screen.queryByRole("menu")).toBeNull());
+    await waitFor(() => expect(trigger).toHaveFocus());
   });
 });

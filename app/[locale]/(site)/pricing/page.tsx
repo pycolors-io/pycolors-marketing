@@ -1,5 +1,8 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
+import styles from "@/components/pricing/pricing-page.module.css";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { SiteText } from "@/components/site-text";
+import { STARTER_PRO_MOBILE_PREVIEW } from "@/lib/products/starter-pro-mobile-preview";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { localizedAlternates } from "@/lib/i18n/routes";
 import { Link } from "@/lib/i18n/navigation";
@@ -21,8 +24,9 @@ import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
-import { MarketingFaq } from "@/components/marketing/faq";
+import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
+import { ProductPreviewWindow } from "@/components/marketing/product-preview-window";
 import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
 import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
 import { PricingComparisonTable } from "@/components/pricing/pricing-comparison-table";
@@ -104,6 +108,8 @@ const starterProScreenshots = [
     width: 2880,
     height: 2000,
     title: "Sign-in screen",
+    guide: "/docs/starter-pro/auth",
+    guideLabel: "Explore auth flows",
     alt: "Starter Pro sign-in screen with email, password, Google and GitHub options",
     caption:
       "Start with an account entry screen: email and password fields, provider buttons, and a password recovery link.",
@@ -113,6 +119,8 @@ const starterProScreenshots = [
     width: 2880,
     height: 2000,
     title: "Project work",
+    guide: "/docs/starter-pro/what-is-included",
+    guideLabel: "Explore the included workflows",
     alt: "Starter Pro project with assigned tasks, due dates and a discussion",
     caption:
       "Adapt a persisted workspace workflow with assigned tasks, due dates, comments and archiving.",
@@ -180,6 +188,13 @@ const offers = [
     link: "Explore Starter Pro",
   },
 ] as const;
+
+// Decorative metaphors, kept distinct from the genuine product evidence below.
+const offerArtwork = {
+  "na-ai-landing": "/images/marketing/concepts/product-launch-v1.webp",
+  "starter-free": "/images/starters/pro/concepts/workflow-path-test-v1.png",
+  "starter-pro": "/images/marketing/concepts/modular-platform-v1.webp",
+} as const;
 
 const faqs = [
   {
@@ -260,23 +275,28 @@ export default function PricingPage() {
   const tSite = useCopy();
 
   return (
-    <Container className="pb-12 pt-20 sm:pb-16 sm:pt-24">
+    <Container
+      className={`marketing-page-intro ${styles.page} pb-12 pt-20 sm:pb-16 sm:pt-24`}
+    >
       <JsonLd id="pricing-products-jsonld" data={pricingJsonLd} />
       <main id="content" tabIndex={-1} className="w-full min-w-0">
+        <MarketingBreadcrumb route="/pricing" />
         <PageHero
           variant="compact"
-          maxWidth="4xl"
+          maxWidth="5xl"
+          align="left"
+          contentClassName={styles.heroContent}
           badges={[{ label: "Pricing", variant: "outline" }]}
           title={tSite("Choose your starting point.")}
           description={tSite(
             "Launch a landing page, validate a SaaS interface, or build on a connected app foundation. Compare what each PyColors product includes.",
           )}
-          className="pb-10 sm:pb-12"
+          className={`${styles.heroPanel} pb-10 sm:pb-12`}
         />
 
         <nav
           aria-label={tSite("Pricing sections")}
-          className="mb-8 flex flex-wrap justify-center gap-x-6 gap-y-2 border-y border-border-subtle py-3 text-sm"
+          className={`${styles.sectionNav} mb-8 flex flex-wrap justify-center gap-x-6 gap-y-2 py-3 text-sm`}
         >
           {[
             ["#pricing-offers", "Products"],
@@ -301,89 +321,122 @@ export default function PricingPage() {
         <section
           id="pricing-offers"
           aria-label={tSite("Choose a PyColors product")}
-          className="site-pro-surface scroll-mt-24"
+          className="scroll-mt-24"
         >
-          <div className="grid gap-4 lg:grid-cols-3">
+          <div className={cn("grid gap-4 lg:grid-cols-3", styles.offerGrid)}>
             {offers.map((offer) => (
               <article
                 key={offer.id}
                 aria-labelledby={`${offer.id}-heading`}
+                data-offer={offer.id}
                 className={cn(
-                  "flex min-w-0 flex-col rounded-lg border bg-surface p-6 sm:p-7",
+                  "flex min-w-0 flex-col border p-6 sm:p-7",
+                  styles.offer,
                   offer.id === "starter-pro"
                     ? "border-pro-border bg-pro-surface"
                     : "border-border-subtle",
                 )}
               >
-                <div className="flex min-h-6 items-center justify-between gap-2">
-                  <p className="text-xs font-medium text-muted-foreground">
-                    {tSite(offer.category)}
+                <header className={styles.offerSummary}>
+                  <div
+                    className={cn(
+                      "flex min-h-6 items-center justify-between gap-2",
+                      styles.offerEyebrow,
+                    )}
+                  >
+                    <p className="text-xs font-medium text-muted-foreground">
+                      {tSite(offer.category)}
+                    </p>
+                    {offer.id === "starter-pro" && (
+                      <Badge
+                        variant="outline"
+                        className="rounded-md border-pro-border text-xs"
+                      >
+                        {tSite("Pro")}
+                      </Badge>
+                    )}
+                  </div>
+                  <h2
+                    id={`${offer.id}-heading`}
+                    className={cn(
+                      "mt-4 font-brand text-2xl font-semibold tracking-heading",
+                      styles.offerTitle,
+                    )}
+                  >
+                    {tSite(offer.name)}
+                  </h2>
+                  <p
+                    className={cn(
+                      "mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18",
+                      styles.offerDescription,
+                    )}
+                  >
+                    {tSite(offer.description)}
                   </p>
-                  {offer.id === "starter-pro" && (
-                    <Badge
-                      variant="outline"
-                      className="rounded-md border-pro-border text-xs"
+                </header>
+                <div className={styles.offerPurchase}>
+                  <div className={cn("mt-6", styles.offerPrice)}>
+                    <p
+                      className={cn(
+                        "font-brand text-4xl font-semibold tracking-tight",
+                        styles.priceValue,
+                      )}
                     >
-                      {tSite("Pro")}
-                    </Badge>
-                  )}
+                      {tSite(offer.price)}
+                    </p>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      {tSite(offer.payment)}
+                    </p>
+                  </div>
+                  <div className={cn("mt-6", styles.offerAction)}>
+                    {offer.id === "starter-pro" ? (
+                      <BuyStarterProButton
+                        label={tSite("Buy Starter Pro — {value0}", {
+                          value0: PRICING.starterPro,
+                        })}
+                      />
+                    ) : offer.id === "na-ai-landing" ? (
+                      <BuyProductButton
+                        productSlug="na-ai-landing"
+                        label={tSite("Buy NA-AI Landing — {value0}", {
+                          value0: PRICING.naAiLanding,
+                        })}
+                        variant="outline"
+                        fullWidth
+                      />
+                    ) : (
+                      <Button
+                        size="lg"
+                        asChild
+                        variant="outline"
+                        className="w-full rounded-md"
+                      >
+                        <Link href={INTERNAL.starterFree}>
+                          {tSite("Open Starter Free")}
+                        </Link>
+                      </Button>
+                    )}
+                  </div>
                 </div>
-                <h2
-                  id={`${offer.id}-heading`}
-                  className="mt-4 font-brand text-2xl font-semibold tracking-heading"
-                >
-                  {tSite(offer.name)}
-                </h2>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18">
-                  {tSite(offer.description)}
-                </p>
-                <figure className="mt-5 min-w-0">
-                  <ProductPreviewMedia
-                    product={offer.id}
+                <div className={styles.offerArtwork} aria-hidden="true">
+                  <Image
+                    src={offerArtwork[offer.id]}
+                    alt=""
+                    fill
+                    loading="lazy"
                     sizes="(min-width: 1280px) 355px, (min-width: 1024px) 31vw, (min-width: 768px) 48vw, 90vw"
+                    className={cn(
+                      styles.conceptImage,
+                      offer.id === "starter-free" && styles.conceptCutout,
+                    )}
                   />
-                  <figcaption className="mt-2 text-xs leading-5 text-muted-foreground">
-                    {tSite(PRODUCT_PREVIEW_MEDIA[offer.id].caption)}
-                  </figcaption>
-                </figure>
-                <div className="mt-6">
-                  <p className="font-brand text-4xl font-semibold tracking-tight">
-                    {tSite(offer.price)}
-                  </p>
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    {tSite(offer.payment)}
-                  </p>
                 </div>
-                <div className="mt-6">
-                  {offer.id === "starter-pro" ? (
-                    <BuyStarterProButton
-                      label={tSite("Buy Starter Pro — {value0}", {
-                        value0: PRICING.starterPro,
-                      })}
-                    />
-                  ) : offer.id === "na-ai-landing" ? (
-                    <BuyProductButton
-                      productSlug="na-ai-landing"
-                      label={tSite("Buy NA-AI Landing — {value0}", {
-                        value0: PRICING.naAiLanding,
-                      })}
-                      variant="outline"
-                      fullWidth
-                    />
-                  ) : (
-                    <Button
-                      size="lg"
-                      asChild
-                      variant="outline"
-                      className="w-full rounded-md"
-                    >
-                      <Link href={INTERNAL.starterFree}>
-                        {tSite("Open Starter Free")}
-                      </Link>
-                    </Button>
+                <div
+                  className={cn(
+                    "mt-6 flex-1 border-t border-border-subtle pt-6",
+                    styles.offerFeatures,
                   )}
-                </div>
-                <div className="mt-6 flex-1 border-t border-border-subtle pt-6">
+                >
                   <p className="text-xs font-semibold text-foreground">
                     {tSite("What you get")}
                   </p>
@@ -395,19 +448,27 @@ export default function PricingPage() {
                     ))}
                   </ul>
                 </div>
-                <p className="mt-6 border-t border-border-subtle pt-5 text-xs leading-6 text-muted-foreground lg:min-h-18">
-                  {tSite(offer.scope)}
-                </p>
-                <Link
-                  href={offer.href}
-                  className={cn(
-                    "mt-3 inline-flex min-h-11 items-center gap-2 self-start text-sm font-medium hover:underline underline-offset-4",
-                    focusRing,
-                  )}
-                >
-                  {tSite(offer.link)}
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
+                <div className={styles.offerFoot}>
+                  <p
+                    className={cn(
+                      "mt-6 border-t border-border-subtle pt-5 text-xs leading-6 text-muted-foreground lg:min-h-18",
+                      styles.offerScope,
+                    )}
+                  >
+                    {tSite(offer.scope)}
+                  </p>
+                  <Link
+                    href={offer.href}
+                    className={cn(
+                      "mt-3 inline-flex min-h-11 items-center gap-2 self-start text-sm font-medium hover:underline underline-offset-4",
+                      styles.offerLink,
+                      focusRing,
+                    )}
+                  >
+                    {tSite(offer.link)}
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
@@ -432,15 +493,52 @@ export default function PricingPage() {
           </div>
         </section>
 
+        <section
+          aria-labelledby="pricing-mobile-heading"
+          className={styles.mobilePreview}
+        >
+          <div className={styles.mobileIntro}>
+            <span className={styles.mobileStatus}>
+              {tSite(STARTER_PRO_MOBILE_PREVIEW.status)}
+            </span>
+            <h2 id="pricing-mobile-heading">
+              {tSite(STARTER_PRO_MOBILE_PREVIEW.name)}
+            </h2>
+            <p>{tSite(STARTER_PRO_MOBILE_PREVIEW.description)}</p>
+          </div>
+          <div className={styles.mobileChoices}>
+            {[
+              STARTER_PRO_MOBILE_PREVIEW,
+              STARTER_PRO_MOBILE_PREVIEW.bundle,
+            ].map((option) => (
+              <article key={option.href} className={styles.mobileChoice}>
+                <h3>{tSite(option.name)}</h3>
+                <span className={styles.mobileStack}>
+                  {tSite(option.stack)}
+                </span>
+                <p>{tSite(option.priceLabel)}</p>
+                <p className={styles.mobileQualifier}>
+                  {tSite(option.priceQualifier)}
+                </p>
+                <Link href={option.href}>
+                  {tSite(option.action)}
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <MarketingSectionShell
           divider="pattern"
           id="pricing-comparison"
           width="full"
-          className="scroll-mt-20"
+          className={cn("scroll-mt-20", styles.comparisonSection)}
           aria-labelledby="pricing-comparison-heading"
         >
           <MarketingSectionHeader
             titleId="pricing-comparison-heading"
+            className={styles.chapterHeading}
             eyebrow={tSite("Side by side")}
             title={tSite("What’s included in each product")}
             description={tSite(
@@ -473,11 +571,15 @@ export default function PricingPage() {
         <MarketingSectionShell
           id="pricing-preview"
           width="full"
-          className="scroll-mt-20 border-t border-border-subtle"
+          className={cn(
+            "scroll-mt-20 border-t border-border-subtle",
+            styles.previewSection,
+          )}
           aria-labelledby="pricing-product-preview-heading"
         >
           <MarketingSectionHeader
             titleId="pricing-product-preview-heading"
+            className={styles.chapterHeading}
             eyebrow={tSite("Inside Starter Pro")}
             title={tSite("See the screens you can build on")}
             description={tSite(
@@ -489,9 +591,14 @@ export default function PricingPage() {
               </Button>
             }
           />
-          <div className="grid gap-6 md:grid-cols-2">
+          <div
+            className={cn("grid gap-6 md:grid-cols-2", styles.screenshotGrid)}
+          >
             {starterProScreenshots.map((screenshot) => (
-              <figure key={screenshot.src} className="min-w-0 space-y-4">
+              <figure
+                key={screenshot.src}
+                className={cn("min-w-0 space-y-4", styles.screenshotCard)}
+              >
                 <a
                   href={screenshot.src}
                   aria-label={tSite("View {value0} screenshot at full size", {
@@ -504,15 +611,17 @@ export default function PricingPage() {
                     focusRing,
                   )}
                 >
-                  <Image
-                    src={screenshot.src}
-                    alt={tSite(screenshot.alt)}
-                    quality={100}
-                    width={screenshot.width}
-                    height={screenshot.height}
-                    sizes="(min-width: 1440px) 680px, (min-width: 768px) calc(50vw - 32px), calc(100vw - 32px)"
-                    className="h-auto w-full"
-                  />
+                  <ProductPreviewWindow label={tSite(screenshot.title)}>
+                    <Image
+                      src={screenshot.src}
+                      alt={tSite(screenshot.alt)}
+                      quality={100}
+                      width={screenshot.width}
+                      height={screenshot.height}
+                      sizes="(min-width: 1440px) 680px, (min-width: 768px) calc(50vw - 32px), calc(100vw - 32px)"
+                      className="h-auto w-full"
+                    />
+                  </ProductPreviewWindow>
                 </a>
                 <figcaption className="space-y-2">
                   <h3 className="text-base font-semibold text-foreground">
@@ -521,6 +630,18 @@ export default function PricingPage() {
                   <p className="text-sm leading-6 text-muted-foreground">
                     {tSite(screenshot.caption)}
                   </p>
+                  <div className={styles.screenActions}>
+                    <Link
+                      href={screenshot.guide}
+                      className={styles.screenGuide}
+                    >
+                      {tSite(screenshot.guideLabel)}
+                      <ArrowRight className="size-3.5" aria-hidden="true" />
+                    </Link>
+                    <Link href="/demo" className={styles.screenDemo}>
+                      {tSite("Explore the demos")}
+                    </Link>
+                  </div>
                   <a
                     href={screenshot.src}
                     className={cn(
@@ -537,14 +658,76 @@ export default function PricingPage() {
                 </figcaption>
               </figure>
             ))}
+            <article
+              aria-labelledby="pricing-future-mobile-title"
+              className={styles.futureMobile}
+            >
+              <div className={styles.futureMobileArt} aria-hidden="true">
+                <Image
+                  src="/images/marketing/concepts/modular-platform-v1.webp"
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 400px, 90vw"
+                  className="object-contain"
+                />
+              </div>
+              <div className={styles.futureMobileContent}>
+                <Badge variant="outline">
+                  {tSite(STARTER_PRO_MOBILE_PREVIEW.status)}
+                </Badge>
+                <h3 id="pricing-future-mobile-title">
+                  {tSite(STARTER_PRO_MOBILE_PREVIEW.name)}
+                </h3>
+                <p className={styles.mobileStack}>
+                  {tSite(STARTER_PRO_MOBILE_PREVIEW.stack)}
+                </p>
+                <p>{tSite(STARTER_PRO_MOBILE_PREVIEW.description)}</p>
+                <Link
+                  href={STARTER_PRO_MOBILE_PREVIEW.href}
+                  className={styles.screenGuide}
+                >
+                  {tSite(STARTER_PRO_MOBILE_PREVIEW.action)}
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
+          </div>
+          <div
+            role="group"
+            aria-labelledby="pricing-all-products-preview-heading"
+            className={styles.productProof}
+          >
+            <h3 id="pricing-all-products-preview-heading">
+              {tSite("Product preview")}
+            </h3>
+            <div className={styles.productProofGrid}>
+              {offers.map((offer) => (
+                <figure
+                  key={offer.id}
+                  aria-labelledby={`pricing-proof-${offer.id}`}
+                  className={styles.productProofCard}
+                >
+                  <p id={`pricing-proof-${offer.id}`}>{tSite(offer.name)}</p>
+                  <ProductPreviewWindow label={tSite(offer.name)}>
+                    <ProductPreviewMedia
+                      product={offer.id}
+                      sizes="(min-width: 1280px) 355px, (min-width: 1024px) 31vw, (min-width: 768px) 48vw, 90vw"
+                    />
+                  </ProductPreviewWindow>
+                  <figcaption className="mt-2 text-xs leading-5 text-muted-foreground">
+                    {tSite(PRODUCT_PREVIEW_MEDIA[offer.id].caption)}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
         </MarketingSectionShell>
 
         <StarterProImplementation />
-        <MarketingSectionShell
+        <MarketingFaqSection
           id="pricing-faq"
           width="full"
-          className="scroll-mt-20 border-t border-border-subtle"
+          className="scroll-mt-20"
           aria-labelledby="pricing-faq-heading"
         >
           <MarketingFaq
@@ -556,11 +739,14 @@ export default function PricingPage() {
             )}
             items={faqs}
           />
-        </MarketingSectionShell>
+        </MarketingFaqSection>
 
         <section
           aria-labelledby="pricing-help-heading"
-          className="flex flex-col gap-6 border-t border-border-subtle py-8 sm:flex-row sm:items-center sm:justify-between"
+          className={cn(
+            "flex flex-col gap-6 border-t border-border-subtle py-8 sm:flex-row sm:items-center sm:justify-between",
+            styles.helpPanel,
+          )}
         >
           <div>
             <h2

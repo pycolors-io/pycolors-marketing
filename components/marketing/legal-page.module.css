@@ -1,10 +1,5 @@
 .page {
-  background: radial-gradient(
-      ellipse at 85% 0%,
-      color-mix(in oklab, var(--primary) 6%, transparent),
-      transparent 65%
-    )
-    0 0 / 100% 40rem no-repeat;
+  background: var(--background);
 }
 .heroLayout {
   display: grid;
@@ -12,8 +7,7 @@
   padding: 1rem 0 3rem;
 }
 .hero h1 {
-  font-size: clamp(2.75rem, 5vw, 4rem);
-  line-height: 1.05;
+  max-width: 22ch;
 }
 .breadcrumb a,
 .textLink {
@@ -37,8 +31,8 @@
 .documentInfo {
   padding: 1.5rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background: var(--background);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .documentInfo dt {
   font-size: 0.6875rem;
@@ -58,15 +52,15 @@
   flex-shrink: 0;
   border: 1px solid
     color-mix(in oklab, var(--primary) 12%, var(--border-subtle));
-  border-radius: 5px;
+  border-radius: 0.875rem;
   color: var(--primary);
-  background: color-mix(in oklab, var(--primary) 4%, var(--background));
+  background: var(--background);
 }
 .productNav {
   display: grid;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
+  border-radius: var(--marketing-card-radius, 1.5rem);
   background: var(--background);
 }
 .productLink {
@@ -90,19 +84,8 @@
   margin-top: 2rem;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background:
-    radial-gradient(
-      ellipse at 0% 0%,
-      color-mix(in oklab, var(--primary) 8%, transparent),
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse at 100% 100%,
-      color-mix(in oklab, var(--brand-platform) 4%, transparent),
-      transparent 70%
-    ),
-    var(--background);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .summaryIntro {
   padding: 1.5rem;
@@ -170,6 +153,7 @@
   font-size: 0.75rem;
   line-height: 1.25rem;
   color: var(--muted-foreground);
+  border-radius: 0.75rem;
 }
 .toc a > span:first-child {
   flex-shrink: 0;
@@ -234,14 +218,8 @@
   margin-block: 0.5rem 2rem;
   padding: 1.5rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background:
-    radial-gradient(
-      ellipse at 100% 0%,
-      color-mix(in oklab, var(--primary) 8%, transparent),
-      transparent 70%
-    ),
-    var(--background);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .contactPanel h2 {
   margin-top: 1.25rem;
@@ -267,8 +245,8 @@
   margin-block: 1.5rem;
   padding: 1.25rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background: color-mix(in oklab, var(--primary) 3%, var(--background));
+  border-radius: 1rem;
+  background: var(--marketing-canvas, var(--surface-muted));
   overflow-wrap: anywhere;
   font-size: 0.8125rem;
   line-height: 1.75rem;
@@ -352,14 +330,8 @@
   margin-top: 1.5rem;
   padding: 1rem 1.5rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background:
-    radial-gradient(
-      ellipse at 100% 0%,
-      color-mix(in oklab, var(--primary) 6%, transparent),
-      transparent 75%
-    ),
-    var(--background);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 .termsNote > p {
   flex: 1 1 24rem;

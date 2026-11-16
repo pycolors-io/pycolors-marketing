@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import type { Metadata } from "next";
@@ -10,6 +11,8 @@ import { StarterProFaqExplorer } from "@/components/starters/starter-pro-faq-exp
 const title = "Starter Pro FAQ";
 const description =
   "Find Starter Pro answers about setup, included features, purchase access, licensing and refunds, with links to documentation and support.";
+
+import styles from "@/components/starters/starter-pro-faq.module.css";
 
 const metadata: Metadata = {
   title,
@@ -57,8 +60,9 @@ export default function StarterProFaqPage() {
   const tSite = useCopy();
 
   return (
-    <main className="py-14 sm:py-20">
-      <Container>
+    <main className={`${styles.page} pb-14 sm:pb-20`}>
+      <Container className="marketing-page-intro">
+        <MarketingBreadcrumb route="/starters/pro/faq" />
         <PageHero
           variant="compact"
           align="left"

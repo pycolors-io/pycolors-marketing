@@ -50,6 +50,7 @@ const STATIC_ROUTES = [
    * Product ecosystem
    */
   "/starters",
+  "/starters/mobile",
   "/blocks",
   "/open-source",
 

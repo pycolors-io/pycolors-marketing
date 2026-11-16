@@ -1,0 +1,88 @@
+{
+  "tool": "Built-in image_gen.imagegen",
+  "intent": "Original decorative product illustrations for a local Starter Pro design experiment",
+  "prompts": [
+    {
+      "key": "source",
+      "prompt": "Use case: stylized-concept. Asset type: original transparent 3D product illustration for the Source & architecture card of PyColors Starter Pro. Create a sophisticated, photorealistic studio render of a compact stack of four thin, oversized rounded-square slabs, assembled with precise offsets as a metaphor for modular software foundations. Broad pearl-white faces, finely machined satin violet and cobalt-blue edges, one restrained warm-gold layer. The white upper face should be the clearest shape. Carefully chamfered corners, subtle brushed microtexture, realistic light and material reflections, elegant soft occlusion between the layers. A single coherent sculptural object, three-quarter front view from slightly above, complete silhouette, centred and occupying about 75 percent of a square canvas with safe space on every edge. Premium editorial product photography, calm, tactile, simple and meticulous, suitable for a spacious Apple-inspired marketing card while remaining an original PyColors composition. The page background will be deep violet, so retain clean luminous ivory edges. Genuinely transparent background, no floor or rectangular backdrop, no opaque vignette. No text, letters, code, numerals, logos, Apple products, screens, interface, people, watermarks, badges or extra props. Avoid cartoon clipart, an app icon tile, excessive gloss, neon glows, random floating ornaments and busy scenery."
+    },
+    {
+      "key": "delivery",
+      "prompt": "Use case: stylized-concept. Asset type: original transparent 3D product illustration for the Delivery & ownership card of PyColors Starter Pro. Create a sophisticated, photorealistic studio render of a small open archival case as a metaphor for a downloadable source package. A pearl-white case with softly rounded machined corners and a subtle frosted inner rim, its slim lid slightly raised; three immaculate thin document-like plates nested inside, with satin violet and cobalt-blue edges and one restrained warm-gold tab. No writing on any surface. One compact coherent sculptural object, three-quarter front view from slightly above, full silhouette, centred and occupying about 75 percent of a square canvas with safe space on every edge. Meticulous premium editorial product photography, broad softbox light, tactile ceramic-like white and anodised accents, natural reflections and soft occlusion between parts. Simple, calm, spacious Apple-inspired product presentation while remaining an original PyColors design; same visual family as a pearl-white stack of modular slabs with violet, cobalt and gold edges. This object will sit on a vivid golden-yellow marketing card. Genuinely transparent background, no floor or rectangular backdrop, no opaque vignette. No text, letters, code, numerals, logos, Apple products, screens, interfaces, people, watermarks, security seals or extra props. Avoid cartoon clipart, an app icon tile, gift bows, cheap plastic, neon glows, confetti and busy scenery."
+    },
+    {
+      "key": "billing",
+      "filename": "billing-loops-test-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: transparent illustration for a SaaS billing-workflow marketing card. A single original sculptural assembly of two broad pearl-white rounded loops joined in a precise interlocking connection, with one satin-violet inside edge, one cobalt inside edge and a small warm-gold connecting detail. Communicate recurring connection and orderly reconciliation through form alone. Balanced three-quarter front view, rounded contours, generous open space in the loops, tactile clean surfaces. Premium original PyColors product illustration, photorealistic editorial 3D studio render. Same visual family as pearl-white sculptural slabs and a white archival case with satin-violet, cobalt and restrained warm-gold edges. One compact sculptural object, full silhouette, centred on a square canvas with safe margins. Refined ceramic-like white faces, frosted glass, finely machined edges, credible broad-softbox light and realistic soft occlusion, calm and meticulous. A genuinely transparent background, no floor, no opaque rectangle or vignette. No text, numbers, letters, code, logos, screens, interface content, actual Apple hardware, people, badges, coins, currency signs, watermarks, random floating decorations, confetti or neon glow. Avoid cartoon icons and cheap glossy plastic."
+    },
+    {
+      "key": "workflow",
+      "filename": "workflow-path-test-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: transparent illustration for connected product workflows and configuration. Three softly rounded, thin pearl-white modules of ascending heights connected by one continuous, elegantly curved frosted-glass bridge. Violet and cobalt side surfaces with a single warm-gold connecting edge. A compact harmonious composition, clear visual progression, precise fit between parts, three-quarter front view from slightly above. No arrows, ticks or symbols. Premium original PyColors product illustration, photorealistic editorial 3D studio render. Same visual family as pearl-white sculptural slabs and a white archival case with satin-violet, cobalt and restrained warm-gold edges. One compact sculptural object, full silhouette, centred on a square canvas with safe margins. Refined ceramic-like white faces, frosted glass, finely machined edges, credible broad-softbox light and realistic soft occlusion, calm and meticulous. A genuinely transparent background, no floor, no opaque rectangle or vignette. No text, numbers, letters, code, logos, screens, interface content, actual Apple hardware, people, badges, coins, currency signs, watermarks, random floating decorations, confetti or neon glow. Avoid cartoon icons and cheap glossy plastic."
+    },
+    {
+      "key": "recovery",
+      "filename": "recovery-loop-test-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: transparent illustration for a SaaS operations and recovery-guide card. An elegant pearl-white capsule-shaped continuous ribbon bends into an open loop around one small frosted-glass rounded rectangular volume; a cobalt inner edge, a satin-violet side face and one fine warm-gold bridge create a visible return path. Compact sculptural form, three-quarter front view, mechanically plausible connections and softly rounded edges. No arrow symbol, shield, padlock, security seal or status badge. Premium original PyColors product illustration, photorealistic editorial 3D studio render. Same visual family as pearl-white sculptural slabs and a white archival case with satin-violet, cobalt and restrained warm-gold edges. One compact sculptural object, full silhouette, centred on a square canvas with safe margins. Refined ceramic-like white faces, frosted glass, finely machined edges, credible broad-softbox light and realistic soft occlusion, calm and meticulous. A genuinely transparent background, no floor, no opaque rectangle or vignette. No text, numbers, letters, code, logos, screens, interface content, actual Apple hardware, people, badges, coins, currency signs, watermarks, random floating decorations, confetti or neon glow. Avoid cartoon icons and cheap glossy plastic."
+    },
+    {
+      "key": "workspace",
+      "filename": "connected-workspace-test-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: transparent illustration for a connected-workspaces and collaboration marketing card. Three original tall rounded rectangular spatial frames arranged in a compact fan, with satin pearl-white outer rims, transparent frosted-glass centres, thin violet and cobalt side faces, and one warm-gold joint connecting them into a coherent object. Gentle perspective, visible space between frames, the central frame slightly forward. The frames contain no interface, marks or content; they are abstract sculptural metaphors for connected spaces. Full three-quarter front view. Premium original PyColors product illustration, photorealistic editorial 3D studio render. Same visual family as pearl-white sculptural slabs and a white archival case with satin-violet, cobalt and restrained warm-gold edges. One compact sculptural object, full silhouette, centred on a square canvas with safe margins. Refined ceramic-like white faces, frosted glass, finely machined edges, credible broad-softbox light and realistic soft occlusion, calm and meticulous. A genuinely transparent background, no floor, no opaque rectangle or vignette. No text, numbers, letters, code, logos, screens, interface content, actual Apple hardware, people, badges, coins, currency signs, watermarks, random floating decorations, confetti or neon glow. Avoid cartoon icons and cheap glossy plastic."
+    }
+  ],
+  "references": [
+    "https://www.apple.com/es/store",
+    "https://www.apple.com/es/ipad/"
+  ],
+  "assets": [
+    {
+      "key": "source",
+      "filename": "source-stack-test-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1583637,
+      "transparentCornerVerified": true
+    },
+    {
+      "key": "delivery",
+      "filename": "delivery-case-test-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1471782,
+      "transparentCornerVerified": true
+    },
+    {
+      "key": "billing",
+      "filename": "billing-loops-test-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 997368,
+      "transparentCornerVerified": true
+    },
+    {
+      "key": "workflow",
+      "filename": "workflow-path-test-v1.png",
+      "width": 1312,
+      "height": 1199,
+      "bytes": 939074,
+      "transparentCornerVerified": true
+    },
+    {
+      "key": "recovery",
+      "filename": "recovery-loop-test-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1071033,
+      "transparentCornerVerified": true
+    },
+    {
+      "key": "workspace",
+      "filename": "connected-workspace-test-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1349769,
+      "transparentCornerVerified": true
+    }
+  ]
+}

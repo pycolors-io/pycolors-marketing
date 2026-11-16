@@ -202,7 +202,7 @@ function RepositoryCard({
   return (
     <article
       aria-labelledby={`repo-${repository.slug}`}
-      className={`${styles.repoCard} ${featured ? styles.featuredRepo : ""}`}
+      className={`${styles.repoCard} ${featured ? styles.featuredRepo : ""} ${repository.slug === "pycolors-tokens" ? styles.tokenRepo : ""}`}
     >
       <div className={styles.repoHeader}>
         <span className={styles.repoIcon}>
@@ -251,7 +251,7 @@ export default function OpenSourcePage() {
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="pb-16 pt-24 sm:pb-24 sm:pt-28">
+      <Container className="marketing-page-intro pb-16 pt-24 sm:pb-24 sm:pt-28">
         <Breadcrumb
           className={styles.breadcrumb}
           items={[

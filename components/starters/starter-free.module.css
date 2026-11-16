@@ -1,0 +1,325 @@
+.page {
+  --free-action-cobalt: var(--marketing-action-fill, #6b2fd4);
+  --free-action-cobalt-ink: #ffffff;
+  --free-action-gold: #ffd43b;
+  --free-action-gold-ink: #35261b;
+  --free-action-fill: var(--free-action-cobalt);
+  --free-action-ink: var(--free-action-cobalt-ink);
+  background: var(--background);
+}
+
+.heroLayout {
+  display: grid;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+.hero {
+  max-width: 64rem;
+  margin-inline: auto;
+  padding-block: clamp(2rem, 5vw, 4rem) 0;
+}
+.hero h1 {
+  max-width: 16ch;
+  margin-inline: auto;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+.heroPreview {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background: linear-gradient(
+    140deg,
+    var(--background),
+    var(--marketing-canvas)
+  );
+  color: var(--foreground);
+}
+.heroPreview :global([data-product-preview]) {
+  border: 0;
+  border-radius: 1rem;
+  background: transparent;
+  box-shadow: 0 16px 36px rgb(0 0 0 / 16%);
+}
+
+.heroPreview figcaption {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.heroLayout :global([data-slot="button"]),
+.comparisonGrid :global([data-slot="button"]) {
+  border-radius: 100px;
+}
+
+.sectionNav {
+  padding: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+
+.sectionNav > a {
+  padding-inline: 0.875rem;
+  border-radius: 100px;
+}
+
+.sectionNav > a:hover {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.previewPanel {
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius, 2rem);
+}
+
+.previewPanel > :global([data-slot="tabs"]) {
+  border: 0;
+  border-radius: 0;
+}
+
+.screenStage {
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+
+.screenStage > div {
+  border-radius: 0.875rem;
+  box-shadow: 0 14px 32px rgb(0 0 0 / 10%);
+}
+
+.screenFigure figcaption {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.foundationCard {
+  border-radius: var(--marketing-card-radius, 1.5rem);
+}
+
+.foundationCard:nth-child(2) {
+  --background: #17181d;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #17181d;
+  --border-subtle: #36363e;
+  --ring: #d3c2ff;
+  background: var(--background);
+  color: var(--foreground);
+}
+.foundationCard:nth-child(3) {
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+.setupPanel,
+.comparisonGrid > div,
+.resourceGrid > a {
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+}
+
+.proCard {
+  --free-action-fill: var(--free-action-cobalt);
+  --free-action-ink: var(--free-action-cobalt-ink);
+  --background: var(--marketing-graphite, #17181d);
+  --foreground: var(--marketing-graphite-ink, #ffffff);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --brand-primary: var(--primary);
+  --brand-primary-hover: color-mix(
+    in srgb,
+    var(--primary) 88%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.page .cardAction,
+.page .resourceAction {
+  display: inline-flex;
+  min-height: 2.75rem;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 0.625rem 1.125rem;
+  border: 1px solid var(--free-action-edge, var(--free-action-fill));
+  border-radius: 100px;
+  background: var(--free-action-fill);
+  color: var(--free-action-ink);
+  box-shadow: none;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.page .cardAction:hover,
+.page .resourceGrid > a:hover .resourceAction {
+  border-color: var(
+    --free-action-edge,
+    color-mix(in srgb, var(--free-action-fill) 90%, var(--free-action-ink))
+  );
+  background: color-mix(
+    in srgb,
+    var(--free-action-fill) 90%,
+    var(--free-action-ink)
+  );
+  color: var(--free-action-ink);
+}
+
+.page .cardAction:focus-visible,
+.page .resourceGrid > a:focus-visible .resourceAction {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.page .foundationCard > div:last-child {
+  background: transparent;
+}
+
+.page .foundationCard .cardAction {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.page .proCard .secondaryAction {
+  --free-action-fill: var(--free-action-cobalt);
+  --free-action-ink: var(--free-action-cobalt-ink);
+}
+
+.page .resourceGrid > a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.page .resourceGrid > a > p {
+  flex: 1;
+}
+
+.page .resourceAction {
+  width: 2.75rem;
+  margin-top: 1.5rem;
+  padding: 0;
+}
+
+:global(html.dark) .page .cardAction,
+:global(html.dark) .page .resourceAction {
+  --free-action-edge: var(--marketing-graphite-ink, #ffffff);
+}
+
+:global(html[data-site-palette="monochrome"]) .page {
+  --free-action-cobalt: var(--primary);
+  --free-action-cobalt-ink: var(--primary-foreground);
+  --free-action-gold: var(--primary);
+  --free-action-gold-ink: var(--primary-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page .cardAction,
+  .page .resourceAction {
+    transition: none;
+  }
+}
+
+@media (min-width: 64rem) {
+  .heroLayout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (forced-colors: active) {
+  .heroPreview,
+  .foundationCard:nth-child(2),
+  .foundationCard:nth-child(3),
+  .proCard {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --border: CanvasText;
+    --ring: Highlight;
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .page .cardAction,
+  .page .resourceAction,
+  .page .cardAction:hover,
+  .page .resourceGrid > a:hover .resourceAction {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+
+  .page .cardAction:focus-visible,
+  .page .resourceGrid > a:focus-visible .resourceAction {
+    outline-color: Highlight;
+  }
+}
+
+.page section h2 {
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+}
+.page .foundationCard h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+.heroLayout :global(.site-primary-action) {
+  border-color: var(--free-action-fill);
+  background: var(--free-action-fill);
+  color: var(--free-action-ink);
+}
+.heroLayout :global(.site-primary-action):hover {
+  background: var(--marketing-action-hover, #5822ba);
+}
+@media (min-width: 64rem) {
+  .heroLayout {
+    gap: 3rem;
+  }
+  .heroPreview {
+    margin-top: 1rem;
+  }
+}
+@media (forced-colors: active) {
+  .heroLayout :global(.site-primary-action),
+  .heroLayout :global(.site-primary-action):hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}

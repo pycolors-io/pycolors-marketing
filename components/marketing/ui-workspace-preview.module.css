@@ -1,0 +1,401 @@
+.workspace {
+  min-width: 0;
+  background: var(--background);
+  color: var(--foreground);
+}
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  padding-bottom: 0;
+}
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.heading h2 {
+  margin-top: 0.75rem;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+}
+.intro {
+  max-width: 58ch;
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+.demoBadge {
+  min-height: 1.75rem;
+  border-color: var(--border);
+  border-radius: 100px;
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+.layout {
+  display: grid;
+  min-width: 0;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+.settings,
+.result {
+  min-width: 0;
+}
+.cardHeading,
+.cardHeading > div {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+.cardHeading {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.cardHeading h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.cardHeading svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+.caption {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+.settings > .caption {
+  margin-top: 0.375rem;
+}
+.reset {
+  min-height: 2.75rem;
+  gap: 0.5rem;
+  padding-inline: 0.5rem;
+  border-radius: 100px;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+.fields {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+.fields input {
+  min-height: 2.75rem;
+  border-radius: 0.75rem;
+}
+.notifications {
+  margin-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.notifications legend {
+  margin-bottom: 0.625rem;
+  padding-right: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.notification {
+  display: flex;
+  min-height: 4.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.notificationTitle {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.notification :global([data-slot="checkbox"]) {
+  flex-shrink: 0;
+}
+.saveRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.save {
+  min-height: 2.75rem;
+  max-width: 100%;
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  white-space: normal;
+}
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.6;
+}
+.feedback svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+.result {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  background: var(--muted);
+}
+.resultHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.sample {
+  color: var(--muted-foreground);
+  font-size: 0.625rem;
+}
+.tabs {
+  display: grid;
+  width: 100%;
+  height: auto;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--background);
+}
+.tabs :global([data-slot="tabs-trigger"]) {
+  min-height: 2.75rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+}
+.tabs :global([data-state="active"]) {
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: none;
+}
+.tabContent {
+  min-width: 0;
+  min-height: 20rem;
+  margin-top: 0;
+}
+.identity {
+  padding-block: 2rem 1.5rem;
+}
+.avatar {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  margin-bottom: 1.25rem;
+  border-radius: 1rem;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+.identity h3 {
+  overflow-wrap: anywhere;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+.identity p {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+.details > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.875rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+.details dt {
+  color: var(--muted-foreground);
+}
+.details dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
+  font-weight: 500;
+}
+.resultNote {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+}
+.activity {
+  display: grid;
+  gap: 1.5rem;
+  padding-block: 2rem;
+}
+.activity li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.activity svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  padding: 0.375rem;
+  border-radius: 100px;
+  background: var(--background);
+}
+@media (min-width: 56rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+}
+@media (max-width: 39.999rem) {
+  .save {
+    width: 100%;
+  }
+  .tabContent {
+    min-height: 18rem;
+  }
+  .details > div {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  .details dd {
+    text-align: left;
+  }
+}
+@media (forced-colors: active) {
+  .result,
+  .tabs {
+    border-color: CanvasText;
+    background: Canvas;
+  }
+  .avatar,
+  .tabs :global([data-state="active"]) {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
+.personalization {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin: 2rem clamp(1.5rem, 4vw, 3rem) 0;
+  padding-block: 1.25rem;
+  border-block: 1px solid var(--border);
+}
+.personalization > p {
+  max-width: 24ch;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+.accentPicker {
+  min-width: 0;
+}
+.accentPicker legend {
+  margin-bottom: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+.accentPicker > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.accentOption {
+  position: relative;
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  cursor: pointer;
+}
+.accentOption input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  clip-path: inset(50%);
+}
+.accentOption > span:first-of-type {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+}
+.accentOption:has(input:checked) {
+  border-color: var(--foreground);
+  color: var(--foreground);
+}
+.accentOption:has(input:focus-visible) {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.result {
+  background-image: radial-gradient(
+    ellipse at 100% 0,
+    color-mix(in srgb, var(--primary) 9%, transparent),
+    transparent 65%
+  );
+}
+.avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1.125rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.tabs :global([data-state="active"]) {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+@media (forced-colors: active) {
+  .result {
+    background-image: none;
+  }
+  .accentOption:has(input:checked) {
+    border-color: Highlight;
+  }
+  .avatar,
+  .tabs :global([data-state="active"]) {
+    background: Highlight;
+    color: HighlightText;
+  }
+}

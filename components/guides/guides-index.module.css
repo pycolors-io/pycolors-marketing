@@ -1,10 +1,21 @@
 .featuredGuide {
-  background: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--primary) 3%, var(--background)) 45%,
-    color-mix(in oklab, var(--primary) 7%, var(--background)) 45%
-  );
+  background: var(--background);
   transition: border-color 180ms ease;
+  --background: var(--marketing-graphite, #17181d);
+  --foreground: var(--marketing-graphite-ink, #ffffff);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  color: var(--foreground);
+  border-radius: var(--marketing-panel-radius, 2rem);
+  overflow: hidden;
 }
 
 .featuredGuide:hover {
@@ -12,20 +23,19 @@
 }
 
 .guideCard h4 {
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -0.025em;
 }
 
 .guideCard:hover {
-  background-color: color-mix(in oklab, var(--primary) 2%, var(--background));
+  background-color: var(--marketing-canvas, var(--surface-muted));
 }
 
 .nextStep {
-  background: radial-gradient(
-    ellipse at 100% 0%,
-    color-mix(in oklab, var(--primary) 6%, var(--background)),
-    var(--background) 80%
-  );
+  background: var(--marketing-canvas, var(--surface-muted));
+  border-radius: var(--marketing-card-radius, 1.5rem);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -35,5 +45,333 @@
   .guideCard svg {
     transition: none;
     transform: none;
+  }
+}
+
+.guideCard {
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--background);
+  min-height: 18rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+@media (forced-colors: active) {
+  .featuredGuide {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+  }
+}
+
+.featuredArt {
+  position: relative;
+  height: clamp(10rem, 16vw, 13rem);
+  background: var(--marketing-cobalt, var(--surface-muted));
+}
+
+.editorialArt {
+  object-fit: contain;
+  padding: 0.75rem;
+}
+
+.nextSteps {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.nextStepCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--background);
+}
+
+.nextSteps > .nextStepCard:first-child {
+  --background: var(
+    --marketing-peach,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-peach-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.nextSteps > .nextStepCard:last-child {
+  --background: var(
+    --marketing-gold,
+    var(--marketing-canvas, var(--surface-muted))
+  );
+  --foreground: var(--marketing-gold-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 82%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --ring: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@media (min-width: 64rem) {
+  .nextSteps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (forced-colors: active) {
+  .nextSteps > .nextStepCard {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --ring: Highlight;
+    --border-subtle: CanvasText;
+    border-color: CanvasText;
+  }
+  .featuredArt {
+    background: Canvas;
+  }
+}
+
+.page {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.heroContainer {
+  padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 4vw, 4rem));
+  padding-bottom: clamp(3rem, 5vw, 5rem);
+}
+
+.contentContainer {
+  padding-bottom: clamp(3rem, 5vw, 5rem);
+}
+
+.heroLayout {
+  display: grid;
+  min-width: 0;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.heroCopy {
+  min-width: 0;
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+}
+
+.heroCopy h1 {
+  max-width: 17ch;
+  font-size: clamp(2.75rem, 5.8vw, 5rem);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+}
+
+.heroCopy > div > p {
+  max-width: 48ch;
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.75;
+}
+
+.heroAction {
+  box-shadow: none;
+}
+
+.heroSecondary {
+  min-height: 3rem;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.heroSecondary:hover {
+  background: var(--marketing-canvas);
+  color: var(--foreground);
+}
+
+.page :global([data-slot="button"]) {
+  min-height: 3rem;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--primary);
+  border-radius: 100px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  line-height: 1.5;
+  white-space: normal;
+  box-shadow: none;
+}
+
+.page :global([data-slot="button"]):hover {
+  background: color-mix(in srgb, var(--primary) 88%, var(--background));
+  color: var(--primary-foreground);
+}
+
+.page a:focus-visible,
+.page :global([data-slot="button"]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.featuredGuide h2 {
+  font-size: clamp(1.625rem, 2.5vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.topicSection {
+  scroll-margin-top: calc(var(--site-header-height, 3.5rem) + 1.5rem);
+}
+
+.topicSection > div:first-child h3 {
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.topicSection[data-topic="foundations"] .guideCard:first-child {
+  --background: var(--marketing-lilac);
+  --foreground: var(--marketing-lilac-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 16%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.topicSection[data-topic="auth-and-billing"] .guideCard:last-child {
+  --background: var(--marketing-cobalt);
+  --foreground: var(--marketing-cobalt-ink);
+  --card-foreground: var(--foreground);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 88%,
+    var(--background)
+  );
+  --primary: var(--foreground);
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.nextChapter {
+  margin-block: 1rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-canvas);
+}
+
+.nextStepCard h3 {
+  font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.nextStepCard > div:last-of-type > a:first-child {
+  min-height: 2.75rem;
+  justify-content: center;
+  padding: 0.625rem 1.125rem;
+  border-radius: 100px;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.nextStepCard > div:last-of-type > a:first-child:hover {
+  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
+  color: var(--background);
+}
+
+@media (min-width: 64rem) {
+  .heroLayout {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+  }
+}
+
+@media (max-width: 39.999rem) {
+  .heroCopy h1 {
+    font-size: clamp(2rem, 8.5vw, 2.875rem);
+  }
+  .guideCard {
+    min-height: 0;
+  }
+  .nextChapter {
+    padding: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(html):has(.page) {
+    scroll-behavior: auto;
+  }
+  .page a {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .topicSection[data-topic="foundations"] .guideCard:first-child,
+  .topicSection[data-topic="auth-and-billing"] .guideCard:last-child {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --card-foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .heroSecondary,
+  .heroSecondary:hover,
+  .page :global([data-slot="button"]),
+  .page :global([data-slot="button"]):hover,
+  .nextStepCard > div:last-of-type > a:first-child,
+  .nextStepCard > div:last-of-type > a:first-child:hover {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .page a:focus-visible,
+  .page :global([data-slot="button"]):focus-visible {
+    outline-color: Highlight;
   }
 }

@@ -36,15 +36,21 @@ function BrandSignature() {
       aria-hidden="true"
       focusable="false"
       className={cn(
-        "h-[15px] w-auto shrink-0 text-foreground",
+        "h-[18px] w-auto shrink-0 text-foreground",
         "transition-opacity duration-300 ease-out motion-reduce:transition-none",
         "group-hover:opacity-90",
       )}
     >
-      <g transform={MARKETING_BRAND.mark.transform} className="text-primary">
-        <path d={MARKETING_BRAND.mark.path} fill="currentColor" />
+      <g transform={MARKETING_BRAND.mark.transform}>
+        <path d={MARKETING_BRAND.mark.signaturePath} fill="currentColor" />
       </g>
-      <g transform={MARKETING_BRAND.wordmark.transform} fill="currentColor">
+      <g
+        transform={MARKETING_BRAND.wordmark.transform}
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth={MARKETING_BRAND.wordmark.strokeWidth}
+        strokeLinejoin="round"
+      >
         {MARKETING_BRAND.wordmark.paths.map((path) => (
           <path key={path.transform} d={path.d} transform={path.transform} />
         ))}
@@ -74,7 +80,7 @@ export function Logo({
       )}
     >
       <BrandSignature />
-      <span className="sr-only">{tSite("PYCOLORS")}</span>
+      <span className="sr-only">{tSite("PyColors")}</span>
       {isDocs ? (
         <span className="inline-flex h-5 shrink-0 items-center rounded border border-border-subtle bg-transparent px-1.5 text-[11px] font-medium leading-none tracking-normal text-muted-foreground">
           {tSite("Docs")}

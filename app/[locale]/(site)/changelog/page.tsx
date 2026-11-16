@@ -1,5 +1,6 @@
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
+import { LATEST_MARKETING_RELEASE } from "@/lib/marketing-release";
 import type { Metadata } from "next";
 import { Link } from "@/lib/i18n/navigation";
 import {
@@ -17,7 +18,6 @@ import { Container } from "@/components/container";
 import { Badge, cn } from "@pycolors/ui";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import styles from "@/components/marketing/changelog.module.css";
-import disclosureStyles from "@/components/marketing/faq.module.css";
 
 const metadata: Metadata = {
   title: "Next.js SaaS Product Changelog",
@@ -65,11 +65,11 @@ type ChangelogItem = {
 
 const CHANGELOG: ChangelogItem[] = [
   {
-    version: "v1.33.0",
+    version: `v${LATEST_MARKETING_RELEASE.version}`,
     title:
       "PyColors Marketing v1.33.0: clearer reading paths, practical implementation guides",
-    dateLabel: "Fri 13 Nov 2026",
-    dateISO: "2026-11-13",
+    dateLabel: LATEST_MARKETING_RELEASE.dateLabel,
+    dateISO: LATEST_MARKETING_RELEASE.dateISO,
     status: "Stable",
     releaseWeekLabel: "Nov 2026 (weekly release)",
     summary:
@@ -2510,10 +2510,7 @@ function ReleaseEntry({
         </div>
       </header>
 
-      <details
-        open={latest}
-        className={cn(disclosureStyles.item, styles.notes)}
-      >
+      <details open={latest} className={styles.notes}>
         <summary className={styles.notesToggle}>
           <span>
             {tSite("Release notes")}
@@ -2529,10 +2526,10 @@ function ReleaseEntry({
           <ChevronDown
             size={15}
             aria-hidden="true"
-            className={disclosureStyles.indicator}
+            className={styles.notesIndicator}
           />
         </summary>
-        <div className={disclosureStyles.content}>
+        <div className={styles.notesContent}>
           <div className={styles.highlights}>
             <p className={styles.releasePeriod}>
               {tSite(entry.releaseWeekLabel)}
@@ -2559,7 +2556,7 @@ export default function ChangelogPage() {
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="pb-16 pt-20 sm:pb-24">
+      <Container className="marketing-page-intro pb-16 pt-6 sm:pb-24 sm:pt-8">
         <div className="w-full min-w-0">
           <div className={styles.breadcrumb}>
             <Breadcrumb

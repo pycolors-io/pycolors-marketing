@@ -39,13 +39,13 @@ export const baseMetadata: Metadata = {
   publisher: SITE_NAME,
   icons: {
     icon: [
-      { url: "/favicon.ico?v=2", sizes: "16x16 32x32 48x48" },
-      { url: "/favicon.svg?v=2", type: "image/svg+xml" },
-      { url: "/favicon.png?v=2", type: "image/png", sizes: "64x64" },
+      { url: "/favicon.ico?v=9", sizes: "16x16 32x32 48x48" },
+      { url: "/favicon.svg?v=9", type: "image/svg+xml" },
+      { url: "/favicon.png?v=9", type: "image/png", sizes: "64x64" },
     ],
-    apple: [{ url: "/apple-touch-icon.png?v=2", sizes: "180x180" }],
+    apple: [{ url: "/apple-touch-icon.png?v=9", sizes: "180x180" }],
   },
-  manifest: "/manifest.webmanifest?v=2",
+  manifest: "/manifest.webmanifest?v=9",
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
@@ -85,7 +85,7 @@ const siteJsonLd = {
       description: SITE_DESCRIPTION,
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/logo.png?v=2`,
+        url: `${SITE_URL}/logo.png?v=9`,
         width: 512,
         height: 512,
       },

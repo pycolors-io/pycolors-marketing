@@ -1,180 +1,70 @@
 ---
 title: PyColors Documentation
-description: Build with PyColors. Install the UI library, compose your first screen, or set up a starter with practical guides for each step.
+description: "Components, guides, and starters: find your starting point and build your product with PyColors."
 full: true
 hero: true
-lastUpdated: "2026-10-08"
+lastUpdated: "2026-11-14"
 appliesTo: PyColors
 ---
 
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 import {
-  Blocks,
-  Box,
-  CreditCard,
-  Layers3,
-  LayoutTemplate,
-  LockKeyhole,
-  Palette,
-  Rocket,
-  ShieldCheck,
-} from "lucide-react";
-import {
   DocsHome,
   DocsHomeHero,
-  DocsHomeSection,
+  DocsHomePaths,
+  DocsHomeExample,
+  DocsHomeQuickstart,
+  DocsHomeResources,
+  DocsHomeAI,
+  DocsHomeUpdates,
   DocsHomeHelp,
+  DocsHomeFeedback,
 } from "@/components/docs/docs-home";
-import { DocsLinks } from "@/components/docs/docs-links";
 
 <DocsHome>
   <DocsHomeHero>
-    <Tabs items={["Install UI", "First component"]}>
+  <DocsHomeQuickstart>
+    <Tabs items={["Install UI", "Run Starter Free", "Set up Pro"]}>
       <Tab value="Install UI">
 
 ```bash title="Terminal"
 pnpm add @pycolors/ui @pycolors/tokens
 ```
 
-Start in a React app with Tailwind CSS v4. Then [connect the styles](/docs/ui/installation#add-design-tokens).
+In a React app with Tailwind CSS v4, [connect the styles next](/docs/ui/installation#add-design-tokens).
 
       </Tab>
-      <Tab value="First component">
+      <Tab value="Run Starter Free">
 
-```tsx title="app/page.tsx"
-import { Button } from "@pycolors/ui";
-
-export default function Page() {
-  return <Button>Save changes</Button>;
-}
+```bash title="Terminal"
+git clone https://github.com/pycolors-io/pycolors-starter-free.git
+cd pycolors-starter-free
+pnpm install
+pnpm dev
 ```
 
-Load the token CSS before rendering. Follow the [complete installation guide](/docs/ui/installation).
+Explore the frontend with its demo data. [Follow the setup guide](/docs/starter/installation).
+
+      </Tab>
+      <Tab value="Set up Pro">
+
+```bash title="Terminal"
+cp .env.example .env
+pnpm install --frozen-lockfile
+```
+
+After downloading and unzipping your purchase, run these commands in its folder. [Continue setup](/docs/starter-pro/getting-started#setup-flow).
 
       </Tab>
     </Tabs>
 
+  </DocsHomeQuickstart>
   </DocsHomeHero>
-
-<DocsHomeSection
-  id="build-your-interface"
-  title="Build your interface"
-  description="Start with a component. Bring screens together with shared patterns and tokens."
->
-  <DocsLinks
-    variant="grid"
-    tone="neutral"
-    className="xl:grid-cols-3"
-    items={[
-      {
-        title: "UI Library",
-        href: "/docs/ui",
-        description:
-          "Accessible React components, API references, and working examples.",
-        icon: Box,
-      },
-      {
-        title: "Blocks",
-        href: "/docs/blocks",
-        description:
-          "Composed sections for forms, dashboards, and everyday product flows.",
-        icon: Blocks,
-      },
-      {
-        title: "Design system",
-        href: "/docs/design-system",
-        description:
-          "Colors, typography, and semantic tokens that keep your UI consistent.",
-        icon: Palette,
-      },
-    ]}
-  />
-</DocsHomeSection>
-
-<DocsHomeSection
-  id="start-with-an-application"
-  title="Start with an application"
-  description="Choose your foundation and follow its setup guide."
->
-  <DocsLinks
-    variant="grid"
-    tone="neutral"
-    className="xl:grid-cols-3"
-    items={[
-      {
-        title: "Starter Free",
-        href: "/docs/starter/installation",
-        description:
-          "Run a complete SaaS frontend with demo data and mocked product flows.",
-        icon: Layers3,
-        eyebrow: "Explore a frontend",
-      },
-      {
-        title: "Starter Pro",
-        href: "/docs/starter-pro/getting-started",
-        description:
-          "Set up your purchased starter with authentication, a database, and billing.",
-        icon: Rocket,
-        eyebrow: "Connect your backend",
-      },
-      {
-        title: "NA-AI Landing",
-        href: "/docs/templates/na-ai-landing/setup",
-        description:
-          "Run your purchased template and customize its content for your launch.",
-        icon: LayoutTemplate,
-        eyebrow: "Launch a landing page",
-      },
-    ]}
-  />
-</DocsHomeSection>
-
-<DocsHomeSection
-  id="connect-and-launch"
-  title="Connect and launch"
-  description="Configure real services in Starter Pro, then check the flows your customers will use."
->
-  <div className="grid gap-3 sm:grid-cols-2">
-    <DocsLinks
-      variant="list"
-      tone="neutral"
-      className="my-0"
-      items={[
-        {
-          title: "Authentication",
-          href: "/docs/starter-pro/auth",
-          description: "Sign-in, sessions, and protected routes.",
-          icon: LockKeyhole,
-        },
-        {
-          title: "Billing",
-          href: "/docs/starter-pro/billing",
-          description: "Stripe checkout, webhooks, and subscriptions.",
-          icon: CreditCard,
-        },
-      ]}
-    />
-    <DocsLinks
-      variant="list"
-      tone="neutral"
-      className="my-0"
-      items={[
-        {
-          title: "Production checklist",
-          href: "/docs/starter-pro/production-checklist",
-          description: "Configuration, security, and delivery checks.",
-          icon: ShieldCheck,
-        },
-        {
-          title: "Deployment",
-          href: "/docs/starter-pro/deployment",
-          description: "Prepare and deploy your Starter Pro app.",
-          icon: Rocket,
-        },
-      ]}
-    />
-  </div>
-</DocsHomeSection>
-
+  <DocsHomeAI />
+  <DocsHomeUpdates />
+  <DocsHomePaths />
+  <DocsHomeResources />
+  <DocsHomeExample />
   <DocsHomeHelp />
+  <DocsHomeFeedback />
 </DocsHome>

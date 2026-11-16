@@ -19,7 +19,7 @@ export function DocsPageShell({ children, full = false }: DocsPageShellProps) {
       <div
         className={cn(
           "mx-auto w-full min-w-0",
-          full ? "max-w-none" : "max-w-3xl",
+          full ? "max-w-none" : "max-w-5xl",
         )}
       >
         {tSite(children)}

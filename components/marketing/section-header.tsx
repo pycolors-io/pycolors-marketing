@@ -1,6 +1,7 @@
 import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
 import { Badge, cn } from "@pycolors/ui";
+import styles from "./presentation.module.css";
 
 export type MarketingSectionHeaderAlign = "left" | "center";
 
@@ -53,17 +54,14 @@ export function MarketingSectionHeader({
     >
       <div className="min-w-0 space-y-4">
         {eyebrow ? (
-          <Badge
-            variant="outline"
-            className="max-w-full rounded-md px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em]"
-          >
+          <Badge variant="outline" className={cn("max-w-full", styles.eyebrow)}>
             {tSite(eyebrow)}
           </Badge>
         ) : null}
 
         <h2
           id={titleId}
-          className="text-balance font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl"
+          className={cn("text-balance font-brand", styles.sectionHeading)}
         >
           {tSite(title)}
         </h2>
