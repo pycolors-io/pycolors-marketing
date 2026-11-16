@@ -18,7 +18,6 @@ import { Container } from "@/components/container";
 import { Badge, cn } from "@pycolors/ui";
 import { Breadcrumb } from "@/components/seo/breadcrumb";
 import styles from "@/components/marketing/changelog.module.css";
-import disclosureStyles from "@/components/marketing/faq.module.css";
 
 const metadata: Metadata = {
   title: "Next.js SaaS Product Changelog",
@@ -2464,10 +2463,7 @@ function ReleaseEntry({
         </div>
       </header>
 
-      <details
-        open={latest}
-        className={cn(disclosureStyles.item, styles.notes)}
-      >
+      <details open={latest} className={styles.notes}>
         <summary className={styles.notesToggle}>
           <span>
             {tSite("Release notes")}
@@ -2483,10 +2479,10 @@ function ReleaseEntry({
           <ChevronDown
             size={15}
             aria-hidden="true"
-            className={disclosureStyles.indicator}
+            className={styles.notesIndicator}
           />
         </summary>
-        <div className={disclosureStyles.content}>
+        <div className={styles.notesContent}>
           <div className={styles.highlights}>
             <p className={styles.releasePeriod}>
               {tSite(entry.releaseWeekLabel)}

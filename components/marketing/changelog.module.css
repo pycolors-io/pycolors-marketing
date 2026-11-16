@@ -150,14 +150,17 @@
   min-width: 0;
 }
 .releaseList {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
   list-style: none;
-}
-.releaseList > li + li {
-  margin-top: 0;
 }
 
 .release {
+  --release-padding: 1.25rem;
   min-width: 0;
+  overflow: hidden;
   scroll-margin-top: 6rem;
   border: 1px solid var(--border-subtle);
   border-radius: var(--marketing-card-radius, 1.5rem);
@@ -178,28 +181,11 @@
 }
 
 .latest {
-  background: var(--background);
-  overflow: hidden;
-}
-
-.release:not(.latest) {
-  border: 0;
-  border-bottom: 1px solid var(--border-subtle);
-  border-radius: 0;
-  background: transparent;
-}
-
-.release:not(.latest) .releaseHeader {
-  padding-top: 2rem;
-}
-
-.release:not(.latest) .notes {
-  border-top: 0;
-  padding-bottom: 0.625rem;
+  --release-padding: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .releaseHeader {
-  padding: 1.25rem 1.25rem 0.875rem;
+  padding: var(--release-padding);
 }
 
 .releaseMeta,
@@ -279,6 +265,7 @@
 }
 
 .summary {
+  max-width: 76ch;
   margin-top: 1rem;
   color: var(--muted-foreground);
   font-size: 0.8125rem;
@@ -291,7 +278,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-top: 0.75rem;
+  margin-top: 1.25rem;
 }
 
 .textLink {
@@ -317,17 +304,20 @@
   background: var(--surface-muted);
 }
 .notes {
+  --notes-duration: 280ms;
+  --notes-easing: cubic-bezier(0.22, 1, 0.36, 1);
   border-top: 1px solid var(--border-subtle);
+  background: var(--background);
 }
 
 .notesToggle {
   display: flex;
-  min-height: 3.25rem;
+  min-height: 4rem;
   align-items: center;
   gap: 0.75rem;
-  margin: 0.125rem;
-  padding: 0.625rem 1.125rem;
-  border-radius: 6px;
+  margin: 0;
+  padding: 1rem var(--release-padding);
+  color: var(--foreground);
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
@@ -339,11 +329,16 @@
   display: none;
 }
 .notesToggle:hover {
-  background: color-mix(in oklab, var(--primary) 3%, transparent);
+  background: var(--surface-muted);
 }
-.notesToggle > svg {
+.notesIndicator {
+  width: 1rem;
+  height: 1rem;
   flex-shrink: 0;
   color: var(--muted-foreground);
+}
+.notes[open] > .notesToggle .notesIndicator {
+  transform: rotate(180deg);
 }
 .notesToggle:focus-visible {
   outline-offset: -4px;
@@ -358,19 +353,19 @@
 }
 
 .highlights {
-  padding: 0 1.25rem 1.25rem;
+  padding: 0 var(--release-padding) var(--release-padding);
 }
 .releasePeriod {
-  padding-block: 0.75rem 1.25rem;
+  padding-block: 0.5rem 1.25rem;
   color: var(--muted-foreground);
   font-size: 0.6875rem;
 }
 .highlight {
-  padding-block: 1.25rem;
+  padding-block: 1.5rem;
   border-top: 1px solid var(--border-subtle);
 }
 .highlight:last-child {
-  padding-bottom: 0.25rem;
+  padding-bottom: 0;
 }
 .highlight h3 {
   font-size: 0.8125rem;
@@ -456,14 +451,8 @@
   .heroLayout {
     padding-bottom: 3.5rem;
   }
-  .releaseHeader {
-    padding: 1.75rem 2rem 1.125rem;
-  }
-  .notesToggle {
-    padding-inline: 1.875rem;
-  }
-  .highlights {
-    padding: 0 2rem 1.75rem;
+  .release:not(.latest) {
+    --release-padding: 2rem;
   }
   .summary {
     font-size: 0.875rem;
@@ -524,16 +513,10 @@
   .archiveNote .textLink {
     font-size: 0.6875rem;
   }
-  .releaseList > li + li {
-    margin-top: 0.75rem;
-  }
-  .release:not(.latest) .releaseHeader {
-    padding-top: 2rem;
-  }
   .highlight {
     display: grid;
-    grid-template-columns: 10rem minmax(0, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+    gap: 2rem;
   }
   .highlight ul {
     margin-top: 0;
@@ -597,14 +580,8 @@
   --primary: #fff;
   --primary-foreground: #17181d;
   --ring: #fff;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
   background: var(--background);
   color: var(--foreground);
-}
-
-.latest .notesToggle {
-  margin: 0.5rem;
-  border-radius: 1rem;
 }
 
 .nextStep {
@@ -642,11 +619,8 @@
 .status {
   border-radius: 100px;
 }
-.latest .notes {
-  padding-block: 0.5rem;
-}
 .latest .highlight h3 {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 .nextStep h2 {
@@ -657,5 +631,35 @@
 @media (max-width: 39.999rem) {
   .hero h1 {
     font-size: clamp(2.5rem, 10vw, 3rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .notesIndicator {
+    transition: transform var(--notes-duration) var(--notes-easing);
+  }
+
+  /* Native details remain usable without animation support or JavaScript. */
+  @supports selector(::details-content) and
+    (transition-behavior: allow-discrete) {
+    .notes::details-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition:
+        grid-template-rows var(--notes-duration) var(--notes-easing),
+        opacity 180ms ease-out,
+        content-visibility var(--notes-duration) allow-discrete;
+    }
+
+    .notes[open]::details-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .notesContent {
+      min-height: 0;
+      overflow: hidden;
+    }
   }
 }
