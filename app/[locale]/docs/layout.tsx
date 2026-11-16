@@ -16,6 +16,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import { DocsHeader } from "@/components/docs-header";
 import { DocsAssistant } from "@/components/docs/docs-assistant";
+import { DocsFrameworkProvider } from "@/components/docs/docs-framework-provider";
 import styles from "@/components/docs/docs-design.module.css";
 import {
   DocsSidebarItem,
@@ -104,31 +105,33 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
       <JsonLd id="docs-breadcrumb" data={breadcrumb} />
 
       <div className={`site-frame relative min-h-screen ${styles.frame}`}>
-        <DocsSidebarPublications dates={publicationDates}>
-          <DocsLayout
-            tree={docsTree}
-            {...baseOptions()}
-            slots={{ navTitle: DocsSidebarNavTitle }}
-            containerProps={{
-              style: {
-                "--fd-banner-height": "var(--fd-nav-height)",
-              } as CSSProperties,
-            }}
-            nav={{
-              enabled: true,
-              component: <DocsHeader />,
-            }}
-            sidebar={{
-              collapsible: false,
-              banner: <SidebarBanner />,
-              components: { Item: DocsSidebarItem },
-            }}
-          >
-            <ToastDocsProvider>
-              <div className="docs-shell contents">{tSite(children)}</div>
-            </ToastDocsProvider>
-          </DocsLayout>
-        </DocsSidebarPublications>
+        <DocsFrameworkProvider>
+          <DocsSidebarPublications dates={publicationDates}>
+            <DocsLayout
+              tree={docsTree}
+              {...baseOptions()}
+              slots={{ navTitle: DocsSidebarNavTitle }}
+              containerProps={{
+                style: {
+                  "--fd-banner-height": "var(--fd-nav-height)",
+                } as CSSProperties,
+              }}
+              nav={{
+                enabled: true,
+                component: <DocsHeader />,
+              }}
+              sidebar={{
+                collapsible: false,
+                banner: <SidebarBanner />,
+                components: { Item: DocsSidebarItem },
+              }}
+            >
+              <ToastDocsProvider>
+                <div className="docs-shell contents">{tSite(children)}</div>
+              </ToastDocsProvider>
+            </DocsLayout>
+          </DocsSidebarPublications>
+        </DocsFrameworkProvider>
         <DocsFooter />
       </div>
     </>
