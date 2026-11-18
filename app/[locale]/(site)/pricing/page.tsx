@@ -460,7 +460,7 @@ export default function PricingPage() {
                   <Link
                     href={offer.href}
                     className={cn(
-                      "mt-3 inline-flex min-h-11 items-center gap-2 self-start text-sm font-medium hover:underline underline-offset-4",
+                      "mt-3 inline-flex min-h-11 scroll-mt-24 items-center gap-2 self-start text-sm font-medium hover:underline underline-offset-4",
                       styles.offerLink,
                       focusRing,
                     )}

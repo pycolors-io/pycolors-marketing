@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "kind": "pricing-native-keyboard-ci-baseline",
+  "status": "failed",
+  "provenance": {
+    "repository": "pycolors-io/pycolors",
+    "pullRequest": 863,
+    "issue": 822,
+    "headCommit": "46c0dc7e3bd675a7efe4db4670a3cb40775ea2c8",
+    "baseCommit": "c5f70d4a2ba5dd07cf9aecf7cb25a34bc0853ddc",
+    "workflow": "CI",
+    "runId": 44286127425,
+    "jobId": 134739145699,
+    "jobUrl": "https://github.com/pycolors-io/pycolors/actions/runs/44286127425/job/134739145699",
+    "step": "Public demo browser journeys",
+    "command": "pnpm --filter @pycolors/starter-pro test:demo:browser",
+    "helper": "apps/marketing/tests/browser/pricing-focus.mjs",
+    "output": "Twelve [pricing-focus] JSON summaries copied from the completed job log. Individual passing geometries and screenshot files were not uploaded.",
+    "testedMergeCommit": "dfe48ce7e9560cc4b45f2d66241d81cb0c3aae62"
+  },
+  "environment": {
+    "os": "Ubuntu 26.04.1 LTS",
+    "runnerImage": "ubuntu-26.04",
+    "runnerImageVersion": "20261111.196.1",
+    "node": "24.22.2",
+    "pnpm": "10.32.1",
+    "chromium": "156.0.8078.4",
+    "playwrightChromiumRevision": "1248",
+    "build": "Production Next.js builds served with next start on loopback HTTP",
+    "viewportHeight": 1000,
+    "reducedMotion": "reduce",
+    "viewportRoundingToleranceCssPx": 1,
+    "observedFailureHeaderBottom": 56
+  },
+  "summary": {
+    "states": 12,
+    "observations": 144,
+    "failedStates": 4,
+    "failures": 6
+  },
+  "states": [
+    {
+      "state": "en-320-light",
+      "observations": 12,
+      "failures": [
+        {
+          "state": "en-320-light",
+          "direction": "backward",
+          "index": 3,
+          "offer": "starter-free",
+          "rect": {
+            "top": 35.625,
+            "right": 185,
+            "bottom": 79.625,
+            "left": 41,
+            "width": 144,
+            "height": 44
+          },
+          "headerBottom": 56,
+          "contained": false,
+          "unobscured": true,
+          "focusVisible": true,
+          "indicator": true,
+          "obstructedFragments": []
+        }
+      ]
+    },
+    {
+      "state": "en-320-dark",
+      "observations": 12,
+      "failures": [
+        {
+          "state": "en-320-dark",
+          "direction": "backward",
+          "index": 3,
+          "offer": "starter-free",
+          "rect": {
+            "top": 35.625,
+            "right": 185,
+            "bottom": 79.625,
+            "left": 41,
+            "width": 144,
+            "height": 44
+          },
+          "headerBottom": 56,
+          "contained": false,
+          "unobscured": true,
+          "focusVisible": true,
+          "indicator": true,
+          "obstructedFragments": []
+        }
+      ]
+    },
+    {
+      "state": "en-768-light",
+      "observations": 12,
+      "failures": []
+    },
+    {
+      "state": "en-768-dark",
+      "observations": 12,
+      "failures": []
+    },
+    {
+      "state": "en-1440-light",
+      "observations": 12,
+      "failures": []
+    },
+    {
+      "state": "en-1440-dark",
+      "observations": 12,
+      "failures": []
+    },
+    {
+      "state": "fr-320-light",
+      "observations": 12,
+      "failures": [
+        {
+          "state": "fr-320-light",
+          "direction": "backward",
+          "index": 3,
+          "offer": "starter-free",
+          "rect": {
+            "top": 0.3125,
+            "right": 198,
+            "bottom": 44.3125,
+            "left": 41,
+            "width": 157,
+            "height": 44
+          },
+          "headerBottom": 56,
+          "contained": false,
+          "unobscured": false,
+          "focusVisible": true,
+          "indicator": true,
+          "obstructedFragments": [
+            {
+              "top": 13.03125,
+              "right": 174,
+              "bottom": 30.03125,
+              "left": 41,
+              "width": 133,
+              "height": 17,
+              "unobscured": false
+            }
+          ]
+        },
+        {
+          "state": "fr-320-light",
+          "direction": "backward",
+          "index": 1,
+          "offer": "na-ai-landing",
+          "rect": {
+            "top": 31.171875,
+            "right": 217,
+            "bottom": 75.171875,
+            "left": 41,
+            "width": 176,
+            "height": 44
+          },
+          "headerBottom": 56,
+          "contained": false,
+          "unobscured": false,
+          "focusVisible": true,
+          "indicator": true,
+          "obstructedFragments": [
+            {
+              "top": 43.890625,
+              "right": 193,
+              "bottom": 60.890625,
+              "left": 41,
+              "width": 152,
+              "height": 17,
+              "unobscured": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state": "fr-320-dark",
+      "observations": 12,
+      "failures": [
+        {
+          "state": "fr-320-dark",
+          "direction": "backward",
+          "index": 3,
+          "offer": "starter-free",
+          "rect": {
+            "top": 0.3125,
+            "right": 198,
+            "bottom": 44.3125,
+            "left": 41,
+            "width": 157,
+            "height": 44
+          },
+          "headerBottom": 56,
+          "contained": false,
+          "unobscured": false,
+          "focusVisible": true,
+          "indicator": true,
+          "obstructedFragments": [
+            {
+              "top": 13.03125,
+              "right": 174,
+              "bottom": 30.03125,
+              "left": 41,
+              "width": 133,
+              "height": 17,
+              "unobscured": false
+            }
+          ]
+        },
+        {
+          "state": "fr-320-dark",
+          "direction": "backward",
+          "index": 1,
+          "offer": "na-ai-landing",
+          "rect": {
+            "top": 31.171875,
+            "right": 217,
+            "bottom": 75.171875,
+            "left": 41,
+            "width": 176,
+            "height": 44
+          },
+          "headerBottom": 56,
+          "contained": false,
+          "unobscured": false,
+          "focusVisible": true,
+          "indicator": true,
+          "obstructedFragments": [
+            {
+              "top": 43.890625,
+              "right": 193,
+              "bottom": 60.890625,
+              "left": 41,
+              "width": 152,
+              "height": 17,
+              "unobscured": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state": "fr-768-light",
+      "observations": 12,
+      "failures": []
+    },
+    {
+      "state": "fr-768-dark",
+      "observations": 12,
+      "failures": []
+    },
+    {
+      "state": "fr-1440-light",
+      "observations": 12,
+      "failures": []
+    },
+    {
+      "state": "fr-1440-dark",
+      "observations": 12,
+      "failures": []
+    }
+  ],
+  "limitations": [
+    "This baseline uses the unchanged presentation at the PR head; the PR head added the browser regression only.",
+    "The original historical 1440px obstruction did not reproduce in this run. New 320px backward-navigation failures are recorded instead.",
+    "The log summaries record all state counts and failures, not every passing rectangle.",
+    "The four French desktop screenshot files and full report.json stayed on the runner and were not uploaded.",
+    "Focus-indicator presence is checked; contrast, complete outline painting, screen readers, other browser engines and human visual approval are not certified."
+  ]
+}
