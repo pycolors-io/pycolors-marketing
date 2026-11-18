@@ -155,6 +155,7 @@ test("a downloaded config boots the actual standalone Starter Pro appearance mod
     }
     for (const name of [
       "appearance-contract",
+      "design-presets",
       "palette",
       "theme",
       "dashboard-preferences",
@@ -219,6 +220,7 @@ test("a downloaded config boots the actual standalone Starter Pro appearance mod
     ])
       vm.runInNewContext(script, environment);
     assert.equal(root.dataset.appPalette, "custom");
+    assert.equal(root.dataset.appDesign, "signature");
     assert.equal(root.dataset.appScale, "125");
     assert.equal(root.dataset.appRadius, "large");
     assert.equal(root.dataset.appSidebarCollapse, "icons");
@@ -233,9 +235,15 @@ test("a downloaded config boots the actual standalone Starter Pro appearance mod
       ...environment,
       localStorage: {
         getItem: () =>
-          JSON.stringify({ scale: "110", radius: "none", font: "system" }),
+          JSON.stringify({
+            design: "classic",
+            scale: "110",
+            radius: "none",
+            font: "system",
+          }),
       },
     });
+    assert.equal(root.dataset.appDesign, "classic");
     assert.equal(root.dataset.appScale, "110");
     assert.equal(root.dataset.appRadius, "none");
     assert.equal(root.dataset.appFont, "system");
