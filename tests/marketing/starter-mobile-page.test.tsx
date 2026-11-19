@@ -10,6 +10,7 @@ import StarterMobilePage, {
 } from "@/app/[locale]/(site)/starters/mobile/page";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { STARTER_PRO_MOBILE_PREVIEW as mobile } from "@/lib/products/starter-pro-mobile-preview";
+import { STARTER_PRO_ENQUIRIES } from "@/lib/products/starter-pro-enquiry";
 import { createCopy, messageKey } from "@/lib/i18n/copy-core";
 import { getMarketingBreadcrumbItems } from "@/components/marketing/breadcrumb";
 import sitemap from "@/app/sitemap";
@@ -83,9 +84,9 @@ describe("Starter Pro Mobile coming-soon page", () => {
         "href",
         locale === "fr" ? "/fr/starters/pro" : "/starters/pro",
       );
-      for (const [item, proposedPrice] of [
-        [mobile, "249 €"],
-        [mobile.bundle, "499 €"],
+      for (const [item, proposedPrice, enquiry] of [
+        [mobile, "249 €", STARTER_PRO_ENQUIRIES.mobile],
+        [mobile.bundle, "499 €", STARTER_PRO_ENQUIRIES.fullstack],
       ] as const) {
         const name = item.name;
         const preview = screen.getByRole("article", {
@@ -99,8 +100,26 @@ describe("Starter Pro Mobile coming-soon page", () => {
           within(preview).getByText(copy(locale, item.priceQualifier)),
         ).toBeVisible();
         expect(within(preview).queryByRole("button")).toBeNull();
-        expect(within(preview).queryByRole("link")).toBeNull();
+        expect(within(preview).getAllByRole("link")).toHaveLength(1);
+        expect(
+          within(preview).getByRole("link", {
+            name: copy(locale, enquiry.action),
+          }),
+        ).toHaveAttribute(
+          "href",
+          locale === "fr" ? `/fr${enquiry.href}` : enquiry.href,
+        );
+        expect(preview.querySelectorAll("dt")).toHaveLength(2);
       }
+      expect(
+        within(web).getByText(copy(locale, "Web and installable PWA")),
+      ).toBeVisible();
+      expect(
+        screen.getByText(copy(locale, "Native iOS and Android interface")),
+      ).toBeVisible();
+      expect(
+        screen.getByText(copy(locale, "Web and native iOS/Android")),
+      ).toBeVisible();
       expect(
         screen.getByText(copy(locale, "Web + Mobile + shared API")),
       ).toBeVisible();

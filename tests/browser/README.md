@@ -51,3 +51,37 @@ restart the local server and run into a different directory such as
 exact command and any limitations with selected before/after evidence under
 `tests/marketing/evidence/`. Never relabel a development-server run as a
 production-build result or infer human visual approval from this test.
+
+## Mobile offer and contextual contact
+
+`starter-mobile-contact.mjs` exports `verifyStarterMobileContact`. The existing
+public-demo suite invokes it after the pricing regression, reusing its Chromium
+instance, already built local Marketing production server and installed axe
+script. It starts no browser or service and adds no dependency. Run it through
+the existing `pnpm --filter @pycolors/starter-pro test:demo:browser` qualification
+with that suite's documented synthetic database and build prerequisites.
+
+The same 12 EN/FR, 320/768/1440, light/dark states verify the current Web price
+and proposed Mobile/Fullstack prices and qualifiers. Real Tab and Shift+Tab
+input visits both future-product card actions and each contextual email action.
+The checks measure settled focus geometry, text visibility, header obstruction,
+focus indicators and page overflow, using the same one-pixel viewport rounding
+allowance described above. They never call `focus()` or adjust scrolling to make
+a keyboard assertion pass.
+
+Each product card is then activated only to its allowed local Contact URL. The
+suite verifies the selected product, localized encoded mailto subject, constant
+recipient, address link, purchase support and recovery. It never activates a
+mailto link or starts checkout. Unknown and repeated interest values must keep
+the general-contact fallback. Axe scans only the changed platform comparison
+and general-contact regions. External requests, local API/payment requests and
+mutations are blocked; uncaught runtime errors fail the state.
+
+The evidence directory is the suite's `mobile-offer` subdirectory. It receives a
+bounded `report.json` and up to 36 public-region PNG captures, with names such as
+`fr-320-dark-mobile-options.png` and `fr-1440-light-contact-fullstack.png`. Every
+state emits a diagnostic log, and failures retain their phase and safe error
+name. Reports contain bounded geometry, counts and axe rule IDs, never arbitrary
+error messages, HTML, credentials, cookies, storage, traces or request URLs. The
+source CI job retains only this JSON/PNG allowlist for seven days. Captures support
+visual review; their existence alone is not human visual approval.

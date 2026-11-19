@@ -15,6 +15,7 @@ import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { STARTER_PRO_MOBILE_PREVIEW as mobile } from "@/lib/products/starter-pro-mobile-preview";
+import { STARTER_PRO_ENQUIRIES } from "@/lib/products/starter-pro-enquiry";
 import styles from "@/components/starters/starter-mobile.module.css";
 
 const title = "Starter Pro Mobile — Coming soon";
@@ -84,7 +85,9 @@ export default function StarterMobilePage() {
               actions={
                 <>
                   <SiteButton asChild size="lg" className="site-primary-action">
-                    <Link href="/contact">{tSite("Contact PyColors")}</Link>
+                    <Link href={STARTER_PRO_ENQUIRIES.mobile.href}>
+                      {tSite(STARTER_PRO_ENQUIRIES.mobile.action)}
+                    </Link>
                   </SiteButton>
                   <SiteButton asChild size="lg" variant="outline">
                     <Link href="/starters/pro">
@@ -155,6 +158,18 @@ export default function StarterMobilePage() {
                   "The existing Next.js foundation for accounts, workspaces, billing and your product workflow.",
                 )}
               </p>
+              <dl className={styles.optionDetails}>
+                <div>
+                  <dt>{tSite("Interface")}</dt>
+                  <dd>{tSite("Web and installable PWA")}</dd>
+                </div>
+                <div>
+                  <dt>{tSite("Backend")}</dt>
+                  <dd>
+                    {tSite("Starter Pro foundation to configure and deploy.")}
+                  </dd>
+                </div>
+              </dl>
               <SiteButton asChild size="lg" className={styles.webAction}>
                 <Link href="/starters/pro">
                   {tSite("Explore Starter Pro Web")}
@@ -173,6 +188,30 @@ export default function StarterMobilePage() {
               <p className={styles.price}>{tSite(mobile.priceLabel)}</p>
               <p className={styles.priceNote}>{tSite(mobile.priceQualifier)}</p>
               <p>{tSite(mobile.description)}</p>
+              <dl className={styles.optionDetails}>
+                <div>
+                  <dt>{tSite("Interface")}</dt>
+                  <dd>{tSite("Native iOS and Android interface")}</dd>
+                </div>
+                <div>
+                  <dt>{tSite("Backend")}</dt>
+                  <dd>
+                    {tSite(
+                      "Connects to Starter Pro; backend delivery scope is still to be confirmed.",
+                    )}
+                  </dd>
+                </div>
+              </dl>
+              <SiteButton
+                asChild
+                size="lg"
+                variant="outline"
+                className={styles.enquiryAction}
+              >
+                <Link href={STARTER_PRO_ENQUIRIES.mobile.href}>
+                  {tSite(STARTER_PRO_ENQUIRIES.mobile.action)}
+                </Link>
+              </SiteButton>
             </article>
             <article
               className={`${styles.option} ${styles.bundleOption}`}
@@ -189,6 +228,30 @@ export default function StarterMobilePage() {
               </p>
               <p className={styles.bundleScope}>{tSite(mobile.bundle.stack)}</p>
               <p>{tSite(mobile.bundle.description)}</p>
+              <dl className={styles.optionDetails}>
+                <div>
+                  <dt>{tSite("Interface")}</dt>
+                  <dd>{tSite("Web and native iOS/Android")}</dd>
+                </div>
+                <div>
+                  <dt>{tSite("Backend")}</dt>
+                  <dd>
+                    {tSite(
+                      "Proposed shared API; final delivery scope and terms to be confirmed.",
+                    )}
+                  </dd>
+                </div>
+              </dl>
+              <SiteButton
+                asChild
+                size="lg"
+                variant="outline"
+                className={styles.enquiryAction}
+              >
+                <Link href={STARTER_PRO_ENQUIRIES.fullstack.href}>
+                  {tSite(STARTER_PRO_ENQUIRIES.fullstack.action)}
+                </Link>
+              </SiteButton>
             </article>
           </div>
           <p className={styles.scopeNote}>
