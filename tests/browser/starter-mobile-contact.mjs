@@ -344,29 +344,47 @@ export async function verifyStarterMobileContact({
             // No HTML, storage, cookies, trace, arbitrary error text or private routes.
             assert.equal(record.runtimeErrorCount, 0);
             const filename = `${state}-${label}.png`;
-            await page.locator(selector).screenshot({
+            const target = page.locator(selector);
+            const options = {
               path: path.join(evidenceDirectory, filename),
               animations: "disabled",
-            });
+            };
+            const readBounds = () =>
+              target.evaluate((element) => {
+                const { top, right, bottom, left, width, height } =
+                  element.getBoundingClientRect();
+                return {
+                  top,
+                  right,
+                  bottom,
+                  left,
+                  width,
+                  height,
+                  headerBottom: globalThis.document
+                    .querySelector("header.site-frame")
+                    .getBoundingClientRect().bottom,
+                  viewportWidth: globalThis.innerWidth,
+                  viewportHeight: globalThis.innerHeight,
+                };
+              });
+            await target.screenshot(options);
+            let bounds = await readBounds();
+            let positioningKeys = 0;
+            // Element screenshots may align a visible article behind the fixed
+            // header. Frame the image using real page navigation only, after
+            // all keyboard assertions; never hide the header or scroll in JS.
+            while (bounds.top < bounds.headerBottom && positioningKeys < 4) {
+              await page.keyboard.press("ArrowUp");
+              await settledFocus(page, selector);
+              bounds = await readBounds();
+              positioningKeys++;
+            }
+            if (positioningKeys) {
+              await target.screenshot(options);
+              bounds = await readBounds();
+            }
             record.screenshots.push(filename);
-            const bounds = await page.locator(selector).evaluate((element) => {
-              const { top, right, bottom, left, width, height } =
-                element.getBoundingClientRect();
-              return {
-                top,
-                right,
-                bottom,
-                left,
-                width,
-                height,
-                headerBottom: globalThis.document
-                  .querySelector("header.site-frame")
-                  .getBoundingClientRect().bottom,
-                viewportWidth: globalThis.innerWidth,
-                viewportHeight: globalThis.innerHeight,
-              };
-            });
-            record.captures.push({ label, ...bounds });
+            record.captures.push({ label, positioningKeys, ...bounds });
             assert(
               bounds.top >= bounds.headerBottom &&
                 bounds.bottom <= bounds.viewportHeight + 1 &&

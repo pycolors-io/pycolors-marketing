@@ -89,9 +89,13 @@ bounded `report.json` and up to 60 public-region PNG captures, with names such a
 `fr-320-dark-option-mobile.png` and `fr-1440-light-contact-fullstack.png`. Each
 product article is captured separately after the keyboard assertions, avoiding
 the fixed header inside a screenshot of the entire tall comparison region.
-Screenshot capture retains Playwright's normal element positioning; the report
-also verifies that each captured region is fully within the viewport below the
-header. No screenshot scroll is used to satisfy a keyboard assertion. Every
+Screenshot capture starts with Playwright's normal element positioning. If this
+puts the article behind the fixed header, at most four real ArrowUp presses frame
+the image, waiting for each native scroll to settle before recapture. This runs
+only after the keyboard assertions and records its key count; it never hides the
+header, resizes the viewport or calls JavaScript focus/scroll methods. The report
+still requires every captured region to fit completely below the header within
+the viewport. No screenshot scroll is used to satisfy a keyboard assertion. Every
 state emits a diagnostic log, and failures retain their phase and safe error
 name. Reports contain bounded geometry, counts and axe rule IDs, never arbitrary
 error messages, HTML, credentials, cookies, storage, traces or request URLs. The
