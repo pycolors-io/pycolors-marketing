@@ -51,3 +51,53 @@ restart the local server and run into a different directory such as
 exact command and any limitations with selected before/after evidence under
 `tests/marketing/evidence/`. Never relabel a development-server run as a
 production-build result or infer human visual approval from this test.
+
+## Mobile offer and contextual contact
+
+`starter-mobile-contact.mjs` exports `verifyStarterMobileContact`. The existing
+public-demo suite invokes it after the pricing regression, reusing its Chromium
+instance, already built local Marketing production server and installed axe
+script. It starts no browser or service and adds no dependency. Run it through
+the existing `pnpm --filter @pycolors/starter-pro test:demo:browser` qualification
+with that suite's documented synthetic database and build prerequisites.
+
+The same 12 EN/FR, 320/768/1440, light/dark states verify the current Web price
+and proposed Mobile/Fullstack prices and qualifiers. Real Tab and Shift+Tab
+input visits both future-product card actions and each contextual email action.
+The checks measure settled focus geometry, text visibility, header obstruction,
+focus indicators (including their full outline bounds) and page overflow, using the same one-pixel viewport rounding
+allowance described above. They never call `focus()` or adjust scrolling to make
+a keyboard assertion pass.
+
+The root must honor reduced motion with computed `scroll-behavior: auto`. The
+observer also waits for the actual focus and scroll outside the target controls
+to settle before reversing direction, including the distant FAQ after Fullstack.
+The report records these boundaries using only tag names and geometry. A pending
+native scroll must not be mistaken for a settled return to a card; all target
+visibility, header and hit-test requirements remain strict.
+
+Each product card is then activated only to its allowed local Contact URL. The
+suite verifies the selected product, localized encoded mailto subject, constant
+recipient, address link, purchase support and recovery. It never activates a
+mailto link or starts checkout. Unknown and repeated interest values must keep
+the general-contact fallback. Axe scans only the changed platform comparison
+and general-contact regions. External requests, local API/payment requests and
+mutations are blocked; uncaught runtime errors fail the state.
+
+The evidence directory is the suite's `mobile-offer` subdirectory. It receives a
+bounded `report.json` and up to 60 public-region PNG captures, with names such as
+`fr-320-dark-option-mobile.png` and `fr-1440-light-contact-fullstack.png`. Each
+product article is captured separately after the keyboard assertions, avoiding
+the fixed header inside a screenshot of the entire tall comparison region.
+Screenshot capture starts with Playwright's normal element positioning. If this
+puts the article behind the fixed header, at most four real ArrowUp presses frame
+the image, waiting for each native scroll to settle before recapture. This runs
+only after the keyboard assertions and records its key count; it never hides the
+header, resizes the viewport or calls JavaScript focus/scroll methods. The report
+still requires every captured region to fit completely below the header within
+the viewport. No screenshot scroll is used to satisfy a keyboard assertion. Every
+state emits a diagnostic log, and failures retain their phase and safe error
+name. Reports contain bounded geometry, counts and axe rule IDs, never arbitrary
+error messages, HTML, credentials, cookies, storage, traces or request URLs. The
+source CI job retains only this JSON/PNG allowlist for seven days. Captures support
+visual review; their existence alone is not human visual approval.

@@ -469,6 +469,13 @@
   background: var(--primary);
   color: var(--primary-foreground);
   box-shadow: none;
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
+}
+
+.action > a:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
 }
 
 .action > a:hover {
@@ -480,6 +487,10 @@
 @media (forced-colors: active) {
   .heroArtwork {
     display: none;
+  }
+
+  .action > a:focus-visible {
+    outline-color: Highlight;
   }
 }
 

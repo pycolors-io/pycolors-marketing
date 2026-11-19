@@ -472,6 +472,10 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   #nd-sidebar :is(a, button) {
     transition: none;
   }

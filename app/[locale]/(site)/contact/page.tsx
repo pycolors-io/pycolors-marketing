@@ -1,6 +1,7 @@
 import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
-import { useCopy } from "@/lib/i18n/use-copy";
+import { getCopy } from "@/lib/i18n/server-copy";
+import { getStarterProEnquiry } from "@/lib/products/starter-pro-enquiry";
 import type { Metadata } from "next";
 import { Link } from "@/lib/i18n/navigation";
 import {
@@ -65,8 +66,14 @@ const resources = [
   },
 ] as const;
 
-export default function ContactPage() {
-  const tSite = useCopy();
+export default async function ContactPage({
+  searchParams,
+}: PageProps<"/[locale]/contact">) {
+  const [tSite, query] = await Promise.all([getCopy(), searchParams]);
+  const enquiry = getStarterProEnquiry(query.interest);
+  const emailHref = enquiry
+    ? `mailto:contact@pycolors.com?subject=${encodeURIComponent(tSite(enquiry.subject))}`
+    : "mailto:contact@pycolors.com?subject=PyColors%20enquiry";
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
@@ -110,15 +117,16 @@ export default function ContactPage() {
                 <Mail className="size-5" aria-hidden="true" />
               </span>
               <span className={styles.eyebrow}>
-                {tSite("Product & general enquiries")}
+                {tSite(enquiry?.product ?? "Product & general enquiries")}
               </span>
             </div>
             <h2 id="general-contact-heading">
-              {tSite("Find the right starting point.")}
+              {tSite(enquiry?.heading ?? "Find the right starting point.")}
             </h2>
             <p className={styles.description}>
               {tSite(
-                "Choosing a starter, checking a license or exploring PyColors? Tell us what you are building and what you would like to clarify.",
+                enquiry?.description ??
+                  "Choosing a starter, checking a license or exploring PyColors? Tell us what you are building and what you would like to clarify.",
               )}
             </p>
             <SupportEmail
@@ -128,9 +136,7 @@ export default function ContactPage() {
             />
             <div className={styles.action}>
               <MarketingLinkButton>
-                <a href="mailto:contact@pycolors.com?subject=PyColors%20enquiry">
-                  {tSite("Write to PyColors")}
-                </a>
+                <a href={emailHref}>{tSite("Write to PyColors")}</a>
               </MarketingLinkButton>
               <p className={styles.caption}>
                 {tSite(
