@@ -65,7 +65,7 @@ The same 12 EN/FR, 320/768/1440, light/dark states verify the current Web price
 and proposed Mobile/Fullstack prices and qualifiers. Real Tab and Shift+Tab
 input visits both future-product card actions and each contextual email action.
 The checks measure settled focus geometry, text visibility, header obstruction,
-focus indicators and page overflow, using the same one-pixel viewport rounding
+focus indicators (including their full outline bounds) and page overflow, using the same one-pixel viewport rounding
 allowance described above. They never call `focus()` or adjust scrolling to make
 a keyboard assertion pass.
 
@@ -85,8 +85,13 @@ and general-contact regions. External requests, local API/payment requests and
 mutations are blocked; uncaught runtime errors fail the state.
 
 The evidence directory is the suite's `mobile-offer` subdirectory. It receives a
-bounded `report.json` and up to 36 public-region PNG captures, with names such as
-`fr-320-dark-mobile-options.png` and `fr-1440-light-contact-fullstack.png`. Every
+bounded `report.json` and up to 60 public-region PNG captures, with names such as
+`fr-320-dark-option-mobile.png` and `fr-1440-light-contact-fullstack.png`. Each
+product article is captured separately after the keyboard assertions, avoiding
+the fixed header inside a screenshot of the entire tall comparison region.
+Screenshot capture retains Playwright's normal element positioning; the report
+also verifies that each captured region is fully within the viewport below the
+header. No screenshot scroll is used to satisfy a keyboard assertion. Every
 state emits a diagnostic log, and failures retain their phase and safe error
 name. Reports contain bounded geometry, counts and axe rule IDs, never arbitrary
 error messages, HTML, credentials, cookies, storage, traces or request URLs. The

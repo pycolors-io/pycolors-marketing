@@ -97,6 +97,13 @@ async function measureFocus(page, selector) {
       }
     }
     const style = globalThis.getComputedStyle(element);
+    const outlineExtent =
+      style.outlineStyle === "none"
+        ? 0
+        : Math.max(
+            0,
+            parseFloat(style.outlineWidth) + parseFloat(style.outlineOffset),
+          );
     return {
       index,
       rect,
@@ -113,6 +120,12 @@ async function measureFocus(page, selector) {
       indicator:
         (style.outlineStyle !== "none" && parseFloat(style.outlineWidth) > 0) ||
         style.boxShadow !== "none",
+      outlineExtent,
+      indicatorContained:
+        rect.top - outlineExtent >= headerBottom &&
+        rect.bottom + outlineExtent <= globalThis.innerHeight + 1 &&
+        rect.left - outlineExtent >= -1 &&
+        rect.right + outlineExtent <= globalThis.innerWidth + 1,
       unobscured: visibleAt(rect) && fragments.every((item) => item.unobscured),
       viewportTolerance: 1,
       contained:
@@ -167,7 +180,7 @@ async function verifyKeyboard(page, selector, count, region, record) {
       );
       assert(focus.fragmentCount > 0 && focus.fragmentCount <= 16);
       assert(focus.focusVisible && focus.indicator);
-      assert(focus.contained && focus.unobscured);
+      assert(focus.contained && focus.unobscured && focus.indicatorContained);
       visited.push(focus.index);
       if (direction === "backward" && visited.length === count) break;
     }
@@ -287,6 +300,7 @@ export async function verifyStarterMobileContact({
           boundaries: [],
           axe: [],
           screenshots: [],
+          captures: [],
           runtimeErrorCount: 0,
           runtimeErrors: [],
           blockedExternalRequests: 0,
@@ -335,6 +349,31 @@ export async function verifyStarterMobileContact({
               animations: "disabled",
             });
             record.screenshots.push(filename);
+            const bounds = await page.locator(selector).evaluate((element) => {
+              const { top, right, bottom, left, width, height } =
+                element.getBoundingClientRect();
+              return {
+                top,
+                right,
+                bottom,
+                left,
+                width,
+                height,
+                headerBottom: globalThis.document
+                  .querySelector("header.site-frame")
+                  .getBoundingClientRect().bottom,
+                viewportWidth: globalThis.innerWidth,
+                viewportHeight: globalThis.innerHeight,
+              };
+            });
+            record.captures.push({ label, ...bounds });
+            assert(
+              bounds.top >= bounds.headerBottom &&
+                bounds.bottom <= bounds.viewportHeight + 1 &&
+                bounds.left >= -1 &&
+                bounds.right <= bounds.viewportWidth + 1,
+              "Captured region must be fully visible below the fixed header",
+            );
           }
           record.phase = "mobile.consent";
           assert.equal((await page.goto(mobileUrl)).status(), 200);
@@ -407,7 +446,13 @@ export async function verifyStarterMobileContact({
           );
           await verifyKeyboard(page, cardControls, 2, "mobile", record);
           record.phase = "mobile.capture";
-          await capture("#platforms", "mobile-options");
+          for (const [id, label] of [
+            ["web-option-title", "option-web"],
+            ["mobile-option-title", "option-mobile"],
+            ["bundle-option-title", "option-fullstack"],
+          ]) {
+            await capture(`#platforms article[aria-labelledby="${id}"]`, label);
+          }
           record.phase = "mobile.axe";
           await verifyAxe(page, "#platforms", "mobile", axeScriptPath, record);
 
