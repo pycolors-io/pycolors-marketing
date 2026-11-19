@@ -30,7 +30,7 @@ export function BuyStarterProButton({
   fullWidth = true,
   size = "lg",
   variant = "default",
-  label = `Buy Starter Pro — ${STARTER_PRO.priceLabel}`,
+  label,
   loadingLabel = "Redirecting to secure checkout...",
   trustText = "One-time payment · Claim email shortly after purchase",
   showTrustText = false,
@@ -85,7 +85,10 @@ export function BuyStarterProButton({
             {tSite(loadingLabel)}
           </>
         ) : (
-          label
+          (label ??
+          tSite("Buy Starter Pro — {value0}", {
+            value0: STARTER_PRO.priceLabel,
+          }))
         )}
       </Button>
 

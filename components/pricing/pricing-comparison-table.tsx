@@ -196,13 +196,13 @@ export function PricingComparisonTable() {
                 [
                   "NA-AI Landing",
                   PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
-                  "One-time",
+                  "One-time payment",
                 ],
                 ["Starter Free", STARTER_FREE_PRICE_LABEL, "Public repository"],
                 [
                   "Starter Pro",
                   PRODUCT_DISPLAY["starter-pro"].priceLabel,
-                  "One-time",
+                  "One-time payment",
                 ],
               ].map(([name, price, payment]) => (
                 <th

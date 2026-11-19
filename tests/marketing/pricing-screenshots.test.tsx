@@ -150,9 +150,9 @@ describe("Starter Pro pricing screenshots", () => {
         .slice(1)
         .map((heading) => heading.textContent),
     ).toEqual([
-      `NA-AI Landing${PRODUCT_DISPLAY["na-ai-landing"].priceLabel}One-time`,
+      `NA-AI Landing${PRODUCT_DISPLAY["na-ai-landing"].priceLabel}One-time payment`,
       "Starter FreeFreePublic repository",
-      `Starter Pro${PRODUCT_DISPLAY["starter-pro"].priceLabel}One-time`,
+      `Starter Pro${PRODUCT_DISPLAY["starter-pro"].priceLabel}One-time payment`,
     ]);
     for (const [name, values] of [
       [
