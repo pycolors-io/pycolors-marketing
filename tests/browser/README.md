@@ -69,6 +69,13 @@ focus indicators and page overflow, using the same one-pixel viewport rounding
 allowance described above. They never call `focus()` or adjust scrolling to make
 a keyboard assertion pass.
 
+The root must honor reduced motion with computed `scroll-behavior: auto`. The
+observer also waits for the actual focus and scroll outside the target controls
+to settle before reversing direction, including the distant FAQ after Fullstack.
+The report records these boundaries using only tag names and geometry. A pending
+native scroll must not be mistaken for a settled return to a card; all target
+visibility, header and hit-test requirements remain strict.
+
 Each product card is then activated only to its allowed local Contact URL. The
 suite verifies the selected product, localized encoded mailto subject, constant
 recipient, address link, purchase support and recovery. It never activates a

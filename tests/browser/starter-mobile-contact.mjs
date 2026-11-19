@@ -54,7 +54,6 @@ async function measureFocus(page, selector) {
     const index = [...globalThis.document.querySelectorAll(target)].indexOf(
       element,
     );
-    if (index === -1) return { index };
     const rectangle = ({ top, right, bottom, left, width, height }) => ({
       top,
       right,
@@ -64,6 +63,11 @@ async function measureFocus(page, selector) {
       height,
     });
     const rect = rectangle(element.getBoundingClientRect());
+    const scroll = { x: globalThis.scrollX, y: globalThis.scrollY };
+    // Leaving the cards can focus the distant FAQ. Observe that native scroll
+    // too, before reversing direction; never cancel or reposition it in a test.
+    if (index === -1)
+      return { index, tag: element.tagName.toLowerCase(), rect, scroll };
     const headerBottom = globalThis.document
       .querySelector("header.site-frame")
       .getBoundingClientRect().bottom;
@@ -101,7 +105,7 @@ async function measureFocus(page, selector) {
         width: globalThis.innerWidth,
         height: globalThis.innerHeight,
       },
-      scroll: { x: globalThis.scrollX, y: globalThis.scrollY },
+      scroll,
       // Keep report geometry bounded; assert the full fragment count below.
       fragments: fragments.slice(0, 16),
       fragmentCount: fragments.length,
@@ -125,8 +129,12 @@ async function settledFocus(page, selector) {
   let stable = 0;
   for (let attempt = 0; attempt < 30; attempt++) {
     const current = await measureFocus(page, selector);
-    if (current.index === -1) return current;
-    const position = JSON.stringify([current.rect, current.scroll]);
+    const position = JSON.stringify([
+      current.index,
+      current.tag,
+      current.rect,
+      current.scroll,
+    ]);
     stable = position === previous ? stable + 1 : 0;
     if (stable === 3) return current;
     previous = position;
@@ -146,7 +154,10 @@ async function verifyKeyboard(page, selector, count, region, record) {
       await page.keyboard.press(key);
       const focus = await settledFocus(page, selector);
       if (focus.index === -1) {
-        if (visited.length === count) break;
+        if (visited.length === count) {
+          record.boundaries.push({ region, direction, ...focus });
+          break;
+        }
         continue;
       }
       record.focus.push({ region, direction, ...focus });
@@ -178,8 +189,15 @@ async function verifyView(page, locale, theme, view, record) {
   const dimensions = await page.evaluate(() => ({
     width: globalThis.document.documentElement.clientWidth,
     scrollWidth: globalThis.document.documentElement.scrollWidth,
+    reducedMotion: globalThis.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches,
+    scrollBehavior: globalThis.getComputedStyle(
+      globalThis.document.documentElement,
+    ).scrollBehavior,
   }));
   record.views.push({ view, ...dimensions });
+  assert.equal(dimensions.reducedMotion, true);
+  assert.equal(dimensions.scrollBehavior, "auto");
   assert(dimensions.scrollWidth <= dimensions.width + 1);
 }
 
@@ -266,6 +284,7 @@ export async function verifyStarterMobileContact({
           phase: "setup",
           views: [],
           focus: [],
+          boundaries: [],
           axe: [],
           screenshots: [],
           runtimeErrorCount: 0,
