@@ -48,9 +48,10 @@ diagnosable when screenshots are not uploaded by the enclosing workflow.
 For a correction, retain the unchanged baseline directory, rebuild the source,
 restart the local server and run into a different directory such as
 `/tmp/pycolors-pricing-after`. Record the source SHA, build mode, browser version,
-exact command and any limitations with selected before/after evidence under
-`tests/marketing/evidence/`. Never relabel a development-server run as a
-production-build result or infer human visual approval from this test.
+exact command and any limitations with selected before/after evidence. Internal
+QA evidence belongs outside public distribution; see the private maintainer
+guidance. Never relabel a development-server run as a production-build result
+or infer human visual approval from this test.
 
 ## Mobile offer and contextual contact
 

@@ -67,9 +67,58 @@ const CHANGELOG: ChangelogItem[] = [
   {
     version: `v${LATEST_MARKETING_RELEASE.version}`,
     title:
-      "PyColors Marketing v1.33.0: clearer reading paths, practical implementation guides",
+      "PyColors Marketing v1.34.0: clearer navigation, more useful documentation",
     dateLabel: LATEST_MARKETING_RELEASE.dateLabel,
-    dateISO: LATEST_MARKETING_RELEASE.dateISO,
+    dateISO: "2026-11-20",
+    status: "Stable",
+    releaseWeekLabel: "Nov 2026 (weekly release)",
+    summary:
+      "Find the right page, reuse documentation context and follow clearer purchase and form journeys in your language.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "Navigate product pages and documentation with clearer menus, breadcrumbs and links to related guidance.",
+          "Copy documentation context or read a Markdown version to bring the relevant public guidance into your own tools.",
+          "Read a bilingual guide to preventing overlapping save attempts, with a runnable example and clear limits.",
+          "Explore the Classic and Signature presentation styles in Starter Pro 1.5.0.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "Use the same documentation links and context actions across the product guides.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "Pricing offer links remain visible below the fixed header during keyboard navigation.",
+          "Continue purchase confirmation and access recovery in French when browsing in French.",
+          "The save guide distinguishes interface feedback from duplicate-operation protection and server-side guarantees.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Try the save example and use the documentation context to explain your implementation choices.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Compare presentation styles and review setup guidance before agreeing on an implementation scope.",
+        ],
+      },
+    ],
+    cta: { label: "Explore the documentation", href: "/docs" },
+  },
+  {
+    version: "v1.33.0",
+    title:
+      "PyColors Marketing v1.33.0: clearer reading paths, practical implementation guides",
+    dateLabel: "Fri 13 Nov 2026",
+    dateISO: "2026-11-13",
     status: "Stable",
     releaseWeekLabel: "Nov 2026 (weekly release)",
     summary:

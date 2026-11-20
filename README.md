@@ -53,14 +53,12 @@ mobile navigation and footer link to it. Starter Free keeps its existing
 `https://starter-demo.pycolors.io/` deployment; its screens use mock data and
 client-side interactions.
 
-Marketing defaults to the verified public Pro demo at
-`https://pro-demo.pycolors.io/demo`, hosted by the dedicated `pycolors-pro-demo`
-project. `/demo` leads with Pro, its actual workspace captures and three direct
+Marketing links to the public Pro demo at
+`https://pro-demo.pycolors.io/demo`. `/demo` leads with Pro, its actual workspace captures and three direct
 journey entry points: Dashboard, Members and the Free → Pro plan preview. Free
 has a separate frontend demo section. Captures follow the site's light/dark mode.
-The Pro `demo-dashboard-indigo-light-2x.png` / `demo-dashboard-indigo-dark-2x.png` captures come from
-the same English, Indigo Ledger workspace in local demo browser QA, with
-fictitious data. They use 2× device pixel ratio (2880 × 2000) and image quality 100. Keep the page, locale, palette and viewport consistent when refreshing the pair.
+The Pro workspace captures use fictitious data. They illustrate the product
+interface and do not represent a customer account or a completed payment.
 
 Override `NEXT_PUBLIC_STARTER_PRO_DEMO_URL` **at build time** to use another
 verified isolated deployment. Missing or empty values use the public PyColors
@@ -68,10 +66,9 @@ demo; invalid non-empty values hide outbound demo links and offer the clearly
 separate product tour. The Starter Free app retains its own opt-in configuration.
 The Marketing build does not need database credentials, auth or cleanup secrets.
 
-Deploy Pro separately in demo mode using the configuration in
-`apps/starter-pro/DEMO.md` in the canonical monorepo. Keep the marketing site and
-normal Starter Pro application out of demo mode. This change does not alter DNS,
-deploy an application or enable payments.
+The public demo is an evaluation environment with sample data. Operational
+configuration and deployment instructions remain in the private maintainer
+documentation.
 
 ## Homepage product preview
 
@@ -283,10 +280,8 @@ reference implementation. Existing Starter Pro setup/adaptation prices stay in
 
 `lib/products/project-services.ts` adds the `custom-product` enquiry option,
 quoted after scoping, without adding a fixed-price product to checkout. Its CTA
-preselects the same stable service ID in the quote form. The API validator and
-private enquiry email template support all three service IDs; older enquiries
-remain valid. Deploy the compatible API/email change before exposing the new
-Marketing entry point. No migration is required. Tests mock email delivery.
+preselects the same stable service ID in the quote form. A custom product is
+quoted after its scope is agreed; it is separate from fixed-price purchases.
 
 The service use cases focus on client portals, internal tools, document
 automation and custom SaaS applications. Sport is one possible sector alongside
