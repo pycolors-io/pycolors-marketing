@@ -57,7 +57,7 @@ export default function BlogCategoriesPage() {
 
   return (
     <main id="content" tabIndex={-1}>
-      <Container className="py-16 sm:py-20">
+      <Container className="marketing-page-intro py-16 sm:py-20">
         <div className="relative min-w-0">
           <div
             aria-hidden="true"

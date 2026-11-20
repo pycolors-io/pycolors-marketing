@@ -5,6 +5,7 @@ import * as React from "react";
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import { Check, Copy } from "lucide-react";
+import design from "./docs-article.module.css";
 
 type ClipboardWriter = Pick<Clipboard, "writeText">;
 
@@ -67,6 +68,7 @@ export function CopyableCommand({ command, className }: CopyableCommandProps) {
   return (
     <div
       className={cn(
+        design.commandBlock,
         "not-prose my-6 overflow-hidden rounded-lg border border-border-subtle bg-card",
         className,
       )}

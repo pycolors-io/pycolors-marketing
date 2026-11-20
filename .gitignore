@@ -47,7 +47,6 @@ prisma/*.db-journal
 
 # Generated Prisma client
 src/generated/prisma/
-packages/core-db/generated/
 
 # ==========================================================================
 # Logs

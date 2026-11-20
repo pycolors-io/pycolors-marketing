@@ -1,7 +1,9 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowDown,
   ArrowRight,
@@ -22,7 +24,7 @@ import { MarketingCheckItem } from "@/components/marketing/check-item";
 import { MarketingFeatureCard } from "@/components/marketing/feature-card";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
-import { MarketingFaq } from "@/components/marketing/faq";
+import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
 import { PageHero } from "@/components/marketing/page-hero";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { StarterComparisonTable } from "@/components/starters/starter-comparison-table";
@@ -179,8 +181,11 @@ export default function UpgradePage() {
         styles.page,
       )}
     >
-      <Container className="pb-16 pt-24 sm:pt-28">
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-14">
+      <Container className="marketing-page-intro pb-16 pt-24 sm:pt-28">
+        <MarketingBreadcrumb route="/upgrade" />
+        <div
+          className={`${styles.heroLayout} grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-14`}
+        >
           <PageHero
             variant="compact"
             align="left"
@@ -430,6 +435,15 @@ export default function UpgradePage() {
               <h3 className="mt-5 text-xl font-semibold tracking-subheading">
                 {tSite("Your product work comes with you.")}
               </h3>
+              <div className={styles.pathArtwork} aria-hidden="true">
+                <Image
+                  src="/images/starters/pro/concepts/workflow-path-test-v1.png"
+                  alt=""
+                  fill
+                  loading="lazy"
+                  sizes="(min-width: 1024px) 320px, 70vw"
+                />
+              </div>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">
                 {tSite(
                   "Free and Pro share the PyColors UI foundation. Reuse the parts you have shaped, then adapt them to real sessions and data.",
@@ -560,11 +574,11 @@ export default function UpgradePage() {
           </div>
         </MarketingSectionShell>
 
-        <MarketingSectionShell
+        <MarketingFaqSection
           id="upgrade-faq"
           aria-labelledby="upgrade-faq-heading"
           width="full"
-          className="scroll-mt-24 border-t border-border-subtle"
+          className="scroll-mt-24"
         >
           <MarketingFaq
             titleId="upgrade-faq-heading"
@@ -574,7 +588,7 @@ export default function UpgradePage() {
             )}
             items={faqs}
           />
-        </MarketingSectionShell>
+        </MarketingFaqSection>
 
         <section
           aria-labelledby="upgrade-purchase-title"

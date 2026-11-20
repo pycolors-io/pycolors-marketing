@@ -1,5 +1,7 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
-import { useCopy } from "@/lib/i18n/use-copy";
+import { getCopy } from "@/lib/i18n/server-copy";
+import { getStarterProEnquiry } from "@/lib/products/starter-pro-enquiry";
 import type { Metadata } from "next";
 import { Link } from "@/lib/i18n/navigation";
 import {
@@ -64,23 +66,46 @@ const resources = [
   },
 ] as const;
 
-export default function ContactPage() {
-  const tSite = useCopy();
+export default async function ContactPage({
+  searchParams,
+}: PageProps<"/[locale]/contact">) {
+  const [tSite, query] = await Promise.all([getCopy(), searchParams]);
+  const enquiry = getStarterProEnquiry(query.interest);
+  const emailHref = enquiry
+    ? `mailto:contact@pycolors.com?subject=${encodeURIComponent(tSite(enquiry.subject))}`
+    : "mailto:contact@pycolors.com?subject=PyColors%20enquiry";
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="pb-16 pt-24 sm:pb-24 sm:pt-28">
-        <PageHero
-          variant="compact"
-          align="left"
-          contentClassName="mx-0 max-w-4xl"
-          className={styles.hero}
-          badges={[{ label: "Get in touch" }]}
-          title={tSite("Contact PyColors.")}
-          description={tSite(
-            "Choose your next starting point, clarify a product detail or get help with a purchase. Let’s find the right next step.",
-          )}
-        />
+      <Container className="marketing-page-intro pb-16 pt-24 sm:pb-24 sm:pt-28">
+        <MarketingBreadcrumb route="/contact" />
+        <div className={styles.heroLayout}>
+          <PageHero
+            variant="compact"
+            align="left"
+            contentClassName="mx-0 max-w-4xl"
+            className={styles.hero}
+            badges={[{ label: "Get in touch" }]}
+            title={tSite("Contact PyColors.")}
+            description={tSite(
+              "Choose your next starting point, clarify a product detail or get help with a purchase. Let’s find the right next step.",
+            )}
+          />
+          <div className={styles.heroArtwork} aria-hidden="true">
+            <div className={styles.artworkOrbit} />
+            <div className={styles.artworkEnvelope}>
+              <Mail strokeWidth={1.1} />
+            </div>
+            <div className={styles.artworkMessage}>
+              <MessageSquareText strokeWidth={1.3} />
+              <span />
+              <span />
+            </div>
+            <span className={styles.artworkSupport}>
+              <LifeBuoy strokeWidth={1.4} />
+            </span>
+          </div>
+        </div>
 
         <div className={styles.contactGrid}>
           <section
@@ -92,15 +117,16 @@ export default function ContactPage() {
                 <Mail className="size-5" aria-hidden="true" />
               </span>
               <span className={styles.eyebrow}>
-                {tSite("Product & general enquiries")}
+                {tSite(enquiry?.product ?? "Product & general enquiries")}
               </span>
             </div>
             <h2 id="general-contact-heading">
-              {tSite("Find the right starting point.")}
+              {tSite(enquiry?.heading ?? "Find the right starting point.")}
             </h2>
             <p className={styles.description}>
               {tSite(
-                "Choosing a starter, checking a license or exploring PyColors? Tell us what you are building and what you would like to clarify.",
+                enquiry?.description ??
+                  "Choosing a starter, checking a license or exploring PyColors? Tell us what you are building and what you would like to clarify.",
               )}
             </p>
             <SupportEmail
@@ -110,9 +136,7 @@ export default function ContactPage() {
             />
             <div className={styles.action}>
               <MarketingLinkButton>
-                <a href="mailto:contact@pycolors.com?subject=PyColors%20enquiry">
-                  {tSite("Write to PyColors")}
-                </a>
+                <a href={emailHref}>{tSite("Write to PyColors")}</a>
               </MarketingLinkButton>
               <p className={styles.caption}>
                 {tSite(

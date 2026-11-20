@@ -5,6 +5,7 @@ import { axe } from "vitest-axe";
 import PricingPage, {
   generateMetadata as getLocalizedMetadata0,
 } from "../../app/[locale]/(site)/pricing/page";
+import { STARTER_PRO_MOBILE_PREVIEW } from "@/lib/products/starter-pro-mobile-preview";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
 
 const metadata = await getLocalizedMetadata0({
@@ -17,10 +18,44 @@ vi.mock("@/lib/api/client", () => ({
 }));
 
 describe("Starter Pro pricing screenshots", () => {
-  it("shows a distinct real product preview in all three pricing offers", () => {
+  it("presents both native source purchases with their own server-controlled checkout", () => {
+    render(<PricingPage />);
+    const future = screen.getByRole("region", {
+      name: STARTER_PRO_MOBILE_PREVIEW.name,
+    });
+    const offers = screen.getByRole("region", {
+      name: "Choose a PyColors product",
+    });
+    expect(future).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.status);
+    expect(future).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.priceLabel);
+    expect(within(future).getAllByRole("button")).toHaveLength(2);
+    expect(within(offers).getAllByRole("article")).toHaveLength(3);
+    for (const option of [
+      STARTER_PRO_MOBILE_PREVIEW,
+      STARTER_PRO_MOBILE_PREVIEW.bundle,
+    ]) {
+      expect(
+        within(future).getByRole("link", { name: option.action }),
+      ).toHaveAttribute("href", option.href);
+    }
+    const schema = JSON.parse(
+      document.getElementById("pricing-products-jsonld")!.textContent!,
+    );
+    expect(JSON.stringify(schema)).not.toContain(
+      STARTER_PRO_MOBILE_PREVIEW.name,
+    );
+    expect(JSON.stringify(schema)).not.toContain(
+      STARTER_PRO_MOBILE_PREVIEW.bundle.name,
+    );
+  });
+
+  it("keeps offer artwork decorative and product proof separately captioned", () => {
     render(<PricingPage />);
     const offers = screen.getByRole("region", {
       name: "Choose a PyColors product",
+    });
+    const preview = screen.getByRole("region", {
+      name: "See the screens you can build on",
     });
     for (const [name, product, caption] of [
       ["NA-AI Landing", "na-ai-landing", "Illustrative content"],
@@ -28,10 +63,21 @@ describe("Starter Pro pricing screenshots", () => {
       ["Starter Pro", "starter-pro", "Demo workspace"],
     ] as const) {
       const card = within(offers).getByRole("article", { name });
-      const media = card.querySelector(`[data-product-preview="${product}"]`);
+      expect(card.querySelector("[data-product-preview]")).toBeNull();
+      const artwork = card.querySelector("img");
+      expect(artwork).not.toBeNull();
+      expect(artwork).toHaveAttribute("alt", "");
+      expect(artwork?.closest('[aria-hidden="true"]')).not.toBeNull();
+      expect(within(card).queryByRole("img")).not.toBeInTheDocument();
+
+      const media = preview.querySelector(
+        `[data-product-preview="${product}"]`,
+      );
       expect(media).not.toBeNull();
-      expect(within(card).getByRole("img")).toHaveAccessibleName();
-      expect(card.querySelector("figcaption")).toHaveTextContent(caption);
+      expect(media).toHaveAccessibleName();
+      const figure = media?.closest("figure");
+      expect(figure).not.toBeNull();
+      expect(figure?.querySelector("figcaption")).toHaveTextContent(caption);
       expect(media?.querySelectorAll("img")).toHaveLength(2);
     }
   });
@@ -41,7 +87,7 @@ describe("Starter Pro pricing screenshots", () => {
     const preview = screen.getByRole("region", {
       name: "See the screens you can build on",
     });
-    expect(within(preview).getAllByRole("img")).toHaveLength(2);
+    expect(within(preview).getAllByRole("img")).toHaveLength(5);
     for (const [title, alt, file, caption] of [
       [
         "Sign-in screen",
@@ -74,7 +120,7 @@ describe("Starter Pro pricing screenshots", () => {
       );
     }
     expect(preview.previousElementSibling).toHaveAccessibleName(
-      "What’s included in each product",
+      "Compare the template and Web starting points",
     );
     expect(preview.nextElementSibling).toHaveAccessibleName(
       "An assisted start, scoped to your product.",
@@ -104,14 +150,14 @@ describe("Starter Pro pricing screenshots", () => {
         .slice(1)
         .map((heading) => heading.textContent),
     ).toEqual([
-      `NA-AI Landing${PRODUCT_DISPLAY["na-ai-landing"].priceLabel}One-time`,
+      `NA-AI Landing${PRODUCT_DISPLAY["na-ai-landing"].priceLabel}One-time payment`,
       "Starter FreeFreePublic repository",
-      `Starter Pro${PRODUCT_DISPLAY["starter-pro"].priceLabel}One-time`,
+      `Starter Pro${PRODUCT_DISPLAY["starter-pro"].priceLabel}One-time payment`,
     ]);
     for (const [name, values] of [
       [
         "Email & password sign-in",
-        ["Not included", "Mock screens only", "Auth.js credentials"],
+        ["Not included", "Mock screens only", "Better Auth credentials"],
       ],
       [
         "Stripe Checkout & portal",
@@ -186,6 +232,31 @@ describe("Starter Pro pricing screenshots", () => {
       expect(link).toHaveAttribute("href", "/demo");
     }
     expect(metadata.alternates?.canonical).toBe("/pricing");
+  });
+
+  it("connects screen previews to guides and labels the native concept honestly", () => {
+    render(<PricingPage />);
+    const preview = screen.getByRole("region", {
+      name: "See the screens you can build on",
+    });
+    expect(
+      within(preview).getByRole("link", { name: "Explore auth flows" }),
+    ).toHaveAttribute("href", "/docs/starter-pro/auth");
+    expect(
+      within(preview).getByRole("link", {
+        name: "Explore the included workflows",
+      }),
+    ).toHaveAttribute("href", "/docs/starter-pro/what-is-included");
+    const mobile = within(preview).getByRole("article", {
+      name: STARTER_PRO_MOBILE_PREVIEW.name,
+    });
+    expect(mobile).toHaveTextContent("Source licence");
+    expect(mobile).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.description);
+    expect(within(mobile).getByRole("link")).toHaveAttribute(
+      "href",
+      "/starters/mobile",
+    );
+    expect(within(mobile).queryByRole("button")).toBeNull();
   });
 
   it("keeps the preview section accessible", async () => {

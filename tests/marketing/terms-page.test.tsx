@@ -21,10 +21,10 @@ describe("Terms of Service page", () => {
     expect(screen.getByRole("main")).toHaveAttribute("tabindex", "-1");
     expect(
       screen.getByRole("complementary", { name: "Terms document information" }),
-    ).toHaveTextContent("November 5, 2026");
+    ).toHaveTextContent("November 20, 2026");
     expect(container.querySelector("time")).toHaveAttribute(
       "datetime",
-      "2026-11-05",
+      "2026-11-20",
     );
     const company = screen.getByRole("region", { name: "1. Who we are" });
     expect(company).toHaveTextContent(

@@ -23,11 +23,11 @@ describe("License page", () => {
     const info = screen.getByRole("complementary", {
       name: "License document information",
     });
-    expect(info).toHaveTextContent("November 5, 2026");
+    expect(info).toHaveTextContent("November 20, 2026");
     expect(info).toHaveTextContent("Py Colors SASU");
     expect(container.querySelector("time")).toHaveAttribute(
       "datetime",
-      "2026-11-05",
+      "2026-11-20",
     );
     const breadcrumb = JSON.parse(
       document.getElementById("breadcrumb-jsonld")!.textContent!,
@@ -67,7 +67,7 @@ describe("License page", () => {
       "5. Restrictions across paid products",
       "6. Updates, access, and support",
     ];
-    const counts = [5, 5, 6, 6, 6, 7];
+    const counts = [5, 5, 6, 8, 6, 7];
     names.forEach((name, i) => {
       const region = screen.getByRole("region", { name });
       expect(within(region).getAllByRole("listitem")).toHaveLength(counts[i]!);
@@ -123,10 +123,26 @@ describe("License page", () => {
       resolve("../na-ai-landing/LICENSE"),
       "utf8",
     );
-    const proLicense = readFileSync(resolve("../starter-pro/LICENSE"), "utf8");
+    const proLicense = readFileSync(
+      resolve("../../licenses/starter-pro-commercial/2026-11-20.md"),
+      "utf8",
+    ).replace(/\s+/g, " ");
+    const legacyLicense = readFileSync(
+      resolve(
+        "../../licenses/starter-pro-commercial/legacy-web-before-2026-11-20.txt",
+      ),
+      "utf8",
+    );
+    expect(legacyLicense).toBe(
+      readFileSync(resolve("../starter-pro/LICENSE"), "utf8"),
+    );
     expect(templateLicense).toContain("unlimited commercial end products");
-    expect(proLicense).toContain("Create unlimited end products");
-    expect(proLicense).toContain("Each client must obtain their own license");
+    expect(proLicense).toContain(
+      "create unlimited personal, commercial, internal and client end products",
+    );
+    expect(proLicense).toContain(
+      "A client who receives or needs access to Starter Pro source must hold their own appropriate licence",
+    );
     const template = screen.getByRole("region", {
       name: "3. Premium templates",
     });
@@ -137,7 +153,7 @@ describe("License page", () => {
     expect(template).not.toHaveTextContent("for one end product");
     expect(template).toHaveTextContent("same final project");
     expect(pro).toHaveTextContent(
-      "a client needs their own license to access the Starter Pro source code",
+      "a client needs their own licence to access that source code",
     );
     expect(pro).toHaveTextContent("outside the licensed entity");
   });
@@ -179,10 +195,15 @@ describe("License page", () => {
   it("aligns the published update promise with the delivered licence without adding a release schedule", () => {
     render(<LicensePage />);
     const licence = readFileSync(
-      resolve("../starter-pro/LICENSE"),
+      resolve("../../licenses/starter-pro-commercial/2026-11-20.md"),
       "utf8",
     ).replace(/\s+/g, " ");
-    expect(licence).toContain(STARTER_PRO_UPDATES_SUMMARY.replace(/\.$/, ""));
+    expect(licence).toContain(
+      "future updates to the products included in that purchase, at no additional product charge",
+    );
+    expect(licence).toContain(
+      "Earlier purchases retain their applicable terms and any more favorable existing rights",
+    );
     expect(licence).not.toContain(
       "Future updates may be provided at the discretion",
     );

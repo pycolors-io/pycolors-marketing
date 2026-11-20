@@ -1,6 +1,6 @@
-export const APP_VERSION = "1.33.0" as const;
+export const APP_VERSION = "1.34.0" as const;
 export const UI_VERSION = "1.7.1" as const;
-export const TOKENS_VERSION = "1.2.3" as const;
+export const TOKENS_VERSION = "1.3.0" as const;
 
 export const APP_VERSION_TAG = `v${APP_VERSION}` as const;
 export const APP_MAJOR = "v1" as const;

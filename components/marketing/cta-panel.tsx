@@ -1,4 +1,5 @@
 import { useCopy } from "@/lib/i18n/use-copy";
+import styles from "./presentation.module.css";
 import * as React from "react";
 import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
@@ -80,7 +81,8 @@ export function MarketingCtaPanel({
   return (
     <div
       className={cn(
-        "rounded-lg border px-6 py-10 shadow-soft sm:px-10",
+        "border",
+        styles.cta,
         marketingSurfaceToneClass[tone],
         isCentered ? "text-center" : "text-left",
         className,
@@ -88,7 +90,7 @@ export function MarketingCtaPanel({
     >
       <Heading
         id={titleId}
-        className="text-balance font-brand text-[28px] font-semibold leading-[1.2] tracking-heading sm:text-[32px] lg:text-4xl"
+        className={cn("text-balance font-brand", styles.sectionHeading)}
       >
         {tSite(title)}
       </Heading>
@@ -134,7 +136,7 @@ export function MarketingLinkButton({
       size="lg"
       variant={variant}
       className={cn(
-        "h-auto min-w-0 max-w-full shrink whitespace-normal rounded-md text-center",
+        "h-auto min-w-0 max-w-full shrink whitespace-normal rounded-full text-center",
         variant === "default" && "site-primary-action",
         className,
       )}

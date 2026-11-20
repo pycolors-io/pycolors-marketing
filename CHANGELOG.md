@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.34.0
+
+Release notes for 20 November 2026 (2026-11-20).
+
+Find the right page, reuse documentation context and follow clearer purchase and form journeys in your language.
+
+### Applications updated
+
+- Navigate product pages and documentation with clearer menus, breadcrumbs and links to related guidance.
+- Copy documentation context or read a Markdown version to bring the relevant public guidance into your own tools.
+- Read a bilingual guide to preventing overlapping save attempts, with a runnable example and clear limits.
+- Explore the Classic and Signature presentation styles in Starter Pro 1.5.0.
+
+### Platform and shared capabilities
+
+- Use the same documentation links and context actions across the product guides.
+
+### Reliability and maintenance
+
+- Pricing offer links remain visible below the fixed header during keyboard navigation.
+- Continue purchase confirmation and access recovery in French when browsing in French.
+- The save guide distinguishes interface feedback from duplicate-operation protection and server-side guarantees.
+
+### For developers and candidates
+
+- Try the save example and use the documentation context to explain your implementation choices.
+
+### For companies and recruiters
+
+- Compare presentation styles and review setup guidance before agreeing on an implementation scope.
+
+[Explore the documentation](https://pycolors.io/docs).
+
 ## 1.33.0
 
 Release notes for 13 November 2026 (2026-11-13).

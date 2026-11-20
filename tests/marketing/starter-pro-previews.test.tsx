@@ -30,6 +30,174 @@ function renderPreviews() {
 }
 
 describe("Starter Pro product page", () => {
+  it("introduces the real dashboard captures with their demonstration-data context and preview destination", () => {
+    render(<StarterProPage />);
+    const hero = screen.getByRole("figure", { name: "Dashboard" });
+    const images = within(hero).getAllByRole("img", { hidden: true });
+    expect(images).toHaveLength(2);
+    for (const [index, file] of [
+      "dashboard-pycolors-2x.png",
+      "dashboard-dark-pycolors-2x.png",
+    ].entries()) {
+      expect(images[index]?.getAttribute("src")).toContain(file);
+      expect(images[index]).toHaveAccessibleName(
+        /Starter Pro dashboard.*workspace team/u,
+      );
+    }
+    expect(hero).toHaveTextContent("seeded PostgreSQL workspace");
+    expect(hero).toHaveTextContent(
+      "These captures use demonstration data, not customer results.",
+    );
+    const destination = within(hero).getByRole("link", {
+      name: "Product preview",
+    });
+    expect(destination).toHaveAttribute("href", "#product-preview");
+    expect(document.getElementById("product-preview")).toBe(
+      screen.getByRole("region", {
+        name: "Inspect the screens you can build on",
+      }),
+    );
+  });
+
+  it("keeps repeated wave artwork decorative with unique, resolving gradient references", () => {
+    const { container } = render(<StarterProPage />);
+    const allIds = Array.from(
+      container.querySelectorAll("[id]"),
+      (node) => node.id,
+    );
+    expect(new Set(allIds).size).toBe(allIds.length);
+    const waves = container.querySelectorAll("[data-starter-pro-waves]");
+    expect(waves.length).toBeGreaterThan(1);
+    for (const wave of waves) {
+      expect(wave).toHaveAttribute("aria-hidden", "true");
+      expect(wave).toHaveAttribute("focusable", "false");
+      expect(
+        wave.querySelectorAll("a, button, image, foreignObject, text"),
+      ).toHaveLength(0);
+      for (const painted of wave.querySelectorAll('[fill^="url("]')) {
+        const target = painted.getAttribute("fill")!.slice(5, -1);
+        expect(
+          Array.from(wave.querySelectorAll("[id]"), (node) => node.id),
+        ).toContain(target);
+      }
+    }
+  });
+
+  it("keeps body illustrations decorative and preserves the six readiness guide destinations", () => {
+    const { container } = render(<StarterProPage />);
+    const readiness = screen.getByRole("region", {
+      name: "More of the product journey, already connected.",
+    });
+    const illustrations = readiness.querySelectorAll(
+      "[data-readiness-illustration]",
+    );
+    expect(illustrations).toHaveLength(6);
+    for (const illustration of illustrations) {
+      const image = illustration.querySelector("img");
+      expect(image).not.toBeNull();
+      expect(image).toHaveAttribute("alt", "");
+      expect(image).toHaveAttribute("loading", "lazy");
+      expect(decodeURIComponent(image?.getAttribute("src") ?? "")).toContain(
+        "/images/starters/pro/concepts/",
+      );
+    }
+    for (const artwork of [
+      ...illustrations,
+      ...container.querySelectorAll("[data-body-artwork]"),
+    ]) {
+      expect(artwork).toHaveAttribute("aria-hidden", "true");
+      expect(artwork.querySelectorAll("a, button, input, text")).toHaveLength(
+        0,
+      );
+    }
+    for (const guide of within(readiness).getAllByRole("link")) {
+      expect(guide.getAttribute("href")).toMatch(/^\/docs\/starter-pro\//u);
+    }
+    expect(within(readiness).getAllByRole("link")).toHaveLength(6);
+  });
+
+  it("keeps concept artwork decorative and separate from genuine interface previews", () => {
+    render(<StarterProPage />);
+    for (const [title, guide] of [
+      ["Source & architecture", "Included source"],
+      ["Delivery & ownership", "Delivery guide"],
+      ["Your downloadable package", "Review everything included"],
+      ["Claim email and purchase recovery", "Open purchase recovery"],
+      ["Updates and access support", "Review release history"],
+      ["Commercial license and setup", "Review the license"],
+    ] as const) {
+      const heading = screen.getByRole("heading", { name: title, level: 3 });
+      const card = heading.closest<HTMLElement>("[data-card-art]")!;
+      const art = card.querySelector("img");
+      expect(art).not.toBeNull();
+      expect(decodeURIComponent(art?.getAttribute("src") ?? "")).toContain(
+        "/images/starters/pro/concepts/",
+      );
+      expect(art).toHaveAttribute("alt", "");
+      expect(art).toHaveAttribute("loading", "lazy");
+      expect(art?.closest('[aria-hidden="true"]')).not.toBeNull();
+      expect(within(card).queryByRole("img")).not.toBeInTheDocument();
+      expect(within(card).getByRole("link", { name: guide })).toHaveAttribute(
+        "href",
+      );
+    }
+  });
+
+  it("keeps setup requirements visible beside decorative configuration artwork", () => {
+    render(<StarterProPage />);
+    const panel = screen.getByRole("heading", {
+      name: "Prepare the services your app will use.",
+      level: 3,
+    }).parentElement!;
+    const image = panel.querySelector("img");
+    expect(image).toHaveAttribute("alt", "");
+    expect(image).toHaveAttribute("loading", "lazy");
+    expect(image?.closest('[aria-hidden="true"]')).not.toBeNull();
+    for (const term of ["Runtime", "Database", "Auth & email", "Payments"]) {
+      expect(within(panel).getByText(term, { selector: "dt" })).toBeVisible();
+    }
+    expect(
+      within(panel).getByRole("link", { name: "Review setup" }),
+    ).toHaveAttribute("href");
+  });
+
+  it("keeps recurring-work cards conceptual and real screenshots in the product preview", () => {
+    render(<StarterProPage />);
+    const included = screen.getByRole("region", {
+      name: "The recurring work, already connected.",
+    });
+    const cards = included.querySelectorAll<HTMLElement>(
+      "[data-foundation-card]",
+    );
+    expect(cards).toHaveLength(6);
+    for (const card of cards) {
+      const image = card.querySelector("img");
+      expect(image).toHaveAttribute("alt", "");
+      expect(image).toHaveAttribute("loading", "lazy");
+      expect(image?.closest('[aria-hidden="true"]')).not.toBeNull();
+      expect(decodeURIComponent(image?.getAttribute("src") ?? "")).toContain(
+        "/images/starters/pro/concepts/",
+      );
+      expect(within(card).queryByRole("img")).not.toBeInTheDocument();
+    }
+    expect(within(included).queryByRole("figure")).not.toBeInTheDocument();
+    for (const [guide, href] of [
+      ["Authentication guide", "/docs/starter-pro/auth"],
+      ["Billing guide", "/docs/starter-pro/billing"],
+    ]) {
+      expect(
+        within(included).getByRole("link", { name: guide }),
+      ).toHaveAttribute("href", href);
+    }
+    const previews = screen.getByRole("region", {
+      name: "Inspect the screens you can build on",
+    });
+    expect(within(previews).getAllByRole("img", { hidden: true })).toHaveLength(
+      5,
+    );
+    expect(previews).toHaveTextContent("Demonstration data");
+  });
+
   it("keeps the source offer distinct from a scoped implementation and exposes the readiness guides", () => {
     render(<StarterProPage />);
     const readiness = screen.getByRole("region", {

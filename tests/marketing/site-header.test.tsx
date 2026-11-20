@@ -286,7 +286,7 @@ describe("Desktop navigation hover", () => {
 });
 
 describe("Marketing product discovery navigation", () => {
-  it("groups the six products by starting point and keeps two desktop shortcuts", () => {
+  it("groups the eight products by starting point and keeps two desktop shortcuts", () => {
     render(<Fixture />);
     const products = openProducts();
     expect(PRODUCT_MENU_GROUPS.map((group) => group.title)).toEqual([
@@ -300,6 +300,8 @@ describe("Marketing product discovery navigation", () => {
       "/tools/theme-builder",
       "/starters/free",
       "/starters/pro",
+      "/starters/mobile",
+      "/starters/fullstack",
       "/templates/na-ai-landing",
     ]);
     for (const item of [...items, ...PRODUCT_MENU_SECONDARY_ITEMS]) {
@@ -316,9 +318,9 @@ describe("Marketing product discovery navigation", () => {
       expect(links.map((link) => link.getAttribute("href"))).toEqual(
         group.items.map((item) => item.href),
       );
-      expect(links).toHaveLength(3);
+      expect(links).toHaveLength(group.items.length);
     }
-    expect(products.getAllByRole("link")).toHaveLength(8);
+    expect(products.getAllByRole("link")).toHaveLength(10);
     expect(
       products.queryByRole("link", { name: "Pricing" }),
     ).not.toBeInTheDocument();
@@ -326,7 +328,7 @@ describe("Marketing product discovery navigation", () => {
       products.queryByRole("link", { name: "UI examples" }),
     ).not.toBeInTheDocument();
     expect(items.find((item) => item.href === "/starters/pro")).toMatchObject({
-      label: "Starter Pro",
+      label: "Starter Pro Web",
       badge: PRODUCT_DISPLAY["starter-pro"].priceLabel,
     });
     expect(

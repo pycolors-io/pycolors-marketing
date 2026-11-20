@@ -1,0 +1,137 @@
+.band {
+  --hero-blue: #6e9fdf;
+  --hero-violet: #9368cc;
+  --hero-rose: #e8aad1;
+  --hero-sun: #f6d47d;
+  --hero-base: color-mix(in srgb, var(--primary) 3%, var(--background));
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  background: var(--hero-base);
+  box-shadow: 0 0 0 100vmax var(--hero-base);
+  clip-path: inset(0 -100vmax);
+}
+
+.band[data-marketing-hero="warm"] {
+  --hero-blue: #e8a271;
+  --hero-violet: #b679c5;
+  --hero-rose: #edb6a7;
+  --hero-sun: #f5ce68;
+}
+
+.atmosphere {
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto 0 50%;
+  width: 100vw;
+  overflow: hidden;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(
+      ellipse at 4% 100%,
+      color-mix(in srgb, var(--hero-sun) 40%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse at 95% 18%,
+      color-mix(in srgb, var(--hero-rose) 35%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(
+      115deg,
+      var(--hero-base) 5%,
+      color-mix(in srgb, var(--hero-blue) 15%, var(--background)) 48%,
+      color-mix(in srgb, var(--hero-violet) 32%, var(--background))
+    );
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Keep reading contrast independent of the decorative waves. */
+.atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    color-mix(in srgb, var(--background) 92%, transparent) 8%,
+    color-mix(in srgb, var(--background) 76%, transparent) 46%,
+    color-mix(in srgb, var(--background) 32%, transparent)
+  );
+}
+
+.waves {
+  position: absolute;
+  right: -10%;
+  bottom: -18%;
+  width: 120%;
+  height: 95%;
+  opacity: 0.5;
+  mask-image: linear-gradient(90deg, transparent 18%, black 70%);
+}
+
+.ribbon {
+  fill: color-mix(in srgb, var(--hero-violet) 45%, transparent);
+}
+
+.ribbonSoft {
+  fill: color-mix(in srgb, var(--hero-rose) 50%, transparent);
+}
+
+.contours {
+  fill: none;
+  stroke: var(--background);
+  stroke-opacity: 0.5;
+  stroke-width: 1;
+}
+
+.content {
+  position: relative;
+  min-width: 0;
+}
+
+:global(html.dark) .band {
+  --hero-base: color-mix(in srgb, var(--primary) 5%, var(--background));
+}
+
+:global(html.dark) .atmosphere {
+  opacity: 0.65;
+}
+
+:global(html.dark) .contours {
+  stroke: var(--foreground);
+  stroke-opacity: 0.14;
+}
+
+:global(html[data-site-palette="monochrome"]) .band {
+  --hero-blue: var(--foreground);
+  --hero-violet: var(--foreground);
+  --hero-rose: var(--foreground);
+  --hero-sun: var(--foreground);
+  --hero-base: var(--surface-muted);
+}
+
+:global(html[data-site-palette="monochrome"]) .atmosphere {
+  opacity: 0.15;
+}
+
+@media (max-width: 39.999rem) {
+  .atmosphere::after {
+    background: color-mix(in srgb, var(--background) 80%, transparent);
+  }
+}
+
+@media (forced-colors: active) {
+  .band,
+  :global(html.dark) .band,
+  :global(html[data-site-palette="monochrome"]) .band {
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+    clip-path: none;
+  }
+
+  .atmosphere {
+    display: none;
+  }
+}

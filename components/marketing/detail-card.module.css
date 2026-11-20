@@ -1,35 +1,22 @@
-/* Shared with Starter Pro's integration cards. All colors follow the site palette. */
 .surface {
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background-color: var(--background);
-  background-image: radial-gradient(
-    ellipse at 100% 0%,
-    color-mix(in oklab, var(--primary) 3%, transparent),
-    transparent 55%
-  );
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--background);
+}
+
+.surface h3 {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
 }
 
 .preview {
-  background-color: var(--background);
-  background-image:
-    radial-gradient(circle at 1px 1px, var(--border-subtle) 1px, transparent 0),
-    radial-gradient(
-      ellipse at 50% 100%,
-      color-mix(in oklab, var(--primary) 5%, var(--background)),
-      var(--background) 80%
-    );
-  background-size:
-    16px 16px,
-    auto;
+  border-radius: 1rem;
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .footer {
-  background: radial-gradient(
-    ellipse at 100% 0%,
-    color-mix(in oklab, var(--primary) 5%, var(--background)),
-    color-mix(in oklab, var(--primary) 1%, var(--background)) 55%,
-    var(--background) 100%
-  );
+  background: var(--marketing-canvas, var(--surface-muted));
 }

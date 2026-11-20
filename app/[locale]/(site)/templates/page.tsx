@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import Image from "next/image";
@@ -26,8 +27,9 @@ import {
 } from "@/components/marketing/pill-list";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import chapterStyles from "@/components/marketing/presentation.module.css";
 import { MarketingResourceCard } from "@/components/marketing/resource-card";
-import { MarketingFaq } from "@/components/marketing/faq";
+import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { TemplateColorPreview } from "@/components/templates/template-color-preview";
 import styles from "@/components/templates/templates-index.module.css";
@@ -292,9 +294,13 @@ export default function TemplatesPage() {
     <main
       id="content"
       tabIndex={-1}
-      className="bg-background text-foreground focus:outline-none"
+      className={cn(
+        "bg-background text-foreground focus:outline-none",
+        styles.page,
+      )}
     >
-      <Container className="pb-16 pt-24 sm:pt-28">
+      <Container className="marketing-page-intro pb-16 pt-24 sm:pt-28">
+        <MarketingBreadcrumb route="/templates" />
         <PageHero
           variant="compact"
           align="left"
@@ -353,11 +359,10 @@ export default function TemplatesPage() {
         />
 
         <MarketingSectionShell
-          divider="pattern"
           id="templates"
           aria-labelledby="templates-title"
           width="full"
-          className="scroll-mt-24"
+          className={`scroll-mt-24 ${chapterStyles.diagonalChapter} ${chapterStyles.diagonalWarm} ${chapterStyles.diagonalPanel}`}
         >
           <MarketingSectionHeader
             align="left"
@@ -374,7 +379,10 @@ export default function TemplatesPage() {
           />
           <article
             aria-labelledby="na-ai-template-title"
-            className="overflow-hidden rounded-[5px] border border-border-subtle bg-background"
+            className={cn(
+              "overflow-hidden border border-border-subtle bg-background",
+              styles.templateCard,
+            )}
           >
             <div className="grid lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
               <div
@@ -425,7 +433,12 @@ export default function TemplatesPage() {
                   }))}
                 />
               </div>
-              <div className="flex flex-col p-5 sm:p-7 lg:p-8">
+              <div
+                className={cn(
+                  "flex flex-col p-5 sm:p-7 lg:p-8",
+                  styles.offerCopy,
+                )}
+              >
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant="outline"
@@ -638,11 +651,7 @@ export default function TemplatesPage() {
           </div>
         </MarketingSectionShell>
 
-        <MarketingSectionShell
-          aria-labelledby="templates-faq-title"
-          width="full"
-          className="border-t border-border-subtle pb-0"
-        >
+        <MarketingFaqSection aria-labelledby="templates-faq-title" width="full">
           <MarketingFaq
             titleId="templates-faq-title"
             title={tSite("Before you choose.")}
@@ -651,7 +660,7 @@ export default function TemplatesPage() {
             )}
             items={templateFaqs}
           />
-        </MarketingSectionShell>
+        </MarketingFaqSection>
       </Container>
     </main>
   );

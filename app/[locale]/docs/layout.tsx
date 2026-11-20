@@ -2,6 +2,7 @@ import { useCopy } from "@/lib/i18n/use-copy";
 import type { CSSProperties, ReactNode } from "react";
 import type { Metadata } from "next";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { FullSearchTrigger } from "fumadocs-ui/layouts/shared/slots/search-trigger";
 import { Link } from "@/lib/i18n/navigation";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 
@@ -14,6 +15,9 @@ import { DocsFooter } from "@/components/docs-footer";
 import { JsonLd } from "@/components/seo/json-ld";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
 import { DocsHeader } from "@/components/docs-header";
+import { DocsAssistant } from "@/components/docs/docs-assistant";
+import { DocsFrameworkProvider } from "@/components/docs/docs-framework-provider";
+import styles from "@/components/docs/docs-design.module.css";
 import {
   DocsSidebarItem,
   DocsSidebarNavTitle,
@@ -55,27 +59,20 @@ function SidebarBanner() {
   const tSite = useCopy();
 
   return (
-    <Link
-      href="/docs"
-      className="group flex items-start gap-3 rounded-md border border-border-subtle bg-card p-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-    >
-      <BookOpen
-        className="mt-0.5 size-4 shrink-0 text-primary"
-        aria-hidden="true"
+    <div className={styles.sidebarStart}>
+      <FullSearchTrigger
+        className={styles.sidebarSearch}
+        aria-label={tSite("Search the documentation")}
       />
-      <span className="min-w-0 flex-1">
-        <span className="block text-sm font-medium text-foreground">
+      <Link href="/docs" className={styles.sidebarBanner}>
+        <BookOpen className="size-4 shrink-0" aria-hidden="true" />
+        <span className="flex-1 text-[13px] font-medium">
           {tSite("Documentation")}
         </span>
-        <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-          {tSite("Setup, components, and guides.")}
-        </span>
-      </span>
-      <ArrowUpRight
-        className="mt-0.5 size-3.5 shrink-0 text-muted-foreground group-hover:text-foreground"
-        aria-hidden="true"
-      />
-    </Link>
+        <ArrowUpRight className="size-3.5" aria-hidden="true" />
+      </Link>
+      <DocsAssistant className={styles.sidebarAssistant} />
+    </div>
   );
 }
 
@@ -107,32 +104,34 @@ export default function Layout({ children }: { readonly children: ReactNode }) {
     <>
       <JsonLd id="docs-breadcrumb" data={breadcrumb} />
 
-      <div className="site-frame relative min-h-screen">
-        <DocsSidebarPublications dates={publicationDates}>
-          <DocsLayout
-            tree={docsTree}
-            {...baseOptions()}
-            slots={{ navTitle: DocsSidebarNavTitle }}
-            containerProps={{
-              style: {
-                "--fd-banner-height": "var(--fd-nav-height)",
-              } as CSSProperties,
-            }}
-            nav={{
-              enabled: true,
-              component: <DocsHeader />,
-            }}
-            sidebar={{
-              collapsible: false,
-              banner: <SidebarBanner />,
-              components: { Item: DocsSidebarItem },
-            }}
-          >
-            <ToastDocsProvider>
-              <div className="docs-shell contents">{tSite(children)}</div>
-            </ToastDocsProvider>
-          </DocsLayout>
-        </DocsSidebarPublications>
+      <div className={`site-frame relative min-h-screen ${styles.frame}`}>
+        <DocsFrameworkProvider>
+          <DocsSidebarPublications dates={publicationDates}>
+            <DocsLayout
+              tree={docsTree}
+              {...baseOptions()}
+              slots={{ navTitle: DocsSidebarNavTitle }}
+              containerProps={{
+                style: {
+                  "--fd-banner-height": "var(--fd-nav-height)",
+                } as CSSProperties,
+              }}
+              nav={{
+                enabled: true,
+                component: <DocsHeader />,
+              }}
+              sidebar={{
+                collapsible: false,
+                banner: <SidebarBanner />,
+                components: { Item: DocsSidebarItem },
+              }}
+            >
+              <ToastDocsProvider>
+                <div className="docs-shell contents">{tSite(children)}</div>
+              </ToastDocsProvider>
+            </DocsLayout>
+          </DocsSidebarPublications>
+        </DocsFrameworkProvider>
         <DocsFooter />
       </div>
     </>

@@ -111,9 +111,10 @@ describe("Internal guide reading experience", () => {
           ),
         ).toBe(true);
       }
-      expect(
-        container.querySelector('main > div > header a[href^="/docs/"]'),
-      ).not.toBeNull();
+      const guideHeader = screen
+        .getByRole("heading", { level: 1 })
+        .closest("header");
+      expect(guideHeader?.querySelector('a[href^="/docs/"]')).not.toBeNull();
       expect(within(article).queryByRole("status")).toBeNull();
     });
 

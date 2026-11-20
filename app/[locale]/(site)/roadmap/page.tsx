@@ -127,7 +127,7 @@ const milestones: Array<{
     id: "Nov 2026",
     title: "November 2026",
     subtitle:
-      "PyColors Marketing v1.33.0, dated 13 November 2026, brings consistent blog topic browsing and bilingual mobile and pagination guides. Earlier November releases remain in the history below.",
+      "PyColors Marketing v1.34.0, dated 20 November 2026, brings clearer navigation, reusable documentation context and more consistent purchase and form guidance. Earlier November releases remain in the history below.",
   },
   {
     id: "Release Week",
@@ -203,6 +203,15 @@ const milestones: Array<{
 ];
 
 const items: RoadmapItem[] = [
+  {
+    title: "PyColors Marketing v1.34.0",
+    description:
+      "Release notes for 20 November 2026: clearer product and documentation navigation, copyable documentation context, an overlapping-save guide, keyboard-visible pricing links, French purchase recovery and Classic/Signature presentation choices in Starter Pro 1.5.0.",
+    status: "Shipped",
+    milestone: "Nov 2026",
+    tags: ["Marketing", "Docs", "Starter Pro"],
+    href: "/changelog",
+  },
   {
     title: "PyColors Marketing v1.33.0",
     description:
@@ -1215,7 +1224,7 @@ export default function RoadmapPage() {
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="pb-16 pt-24 sm:pb-24 sm:pt-28">
+      <Container className="marketing-page-intro pb-16 pt-6 sm:pb-24 sm:pt-8">
         <Breadcrumb
           className={styles.breadcrumb}
           items={[
@@ -1344,6 +1353,7 @@ export default function RoadmapPage() {
                 className={cn(
                   styles.priorityLane,
                   status === "Now" && styles.nowLane,
+                  status === "Next" && styles.nextLane,
                 )}
               >
                 <div className={styles.laneHeading}>

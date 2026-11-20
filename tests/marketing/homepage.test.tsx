@@ -1,5 +1,5 @@
 import * as React from "react";
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { renderToString } from "react-dom/server";
@@ -22,6 +22,7 @@ const headings = [
   "Choose the infrastructure your project needs.",
   "A working example. A foundation to adapt.",
   "Your brand. Your interface.",
+  "React Native Mobile App",
   "Inspect the project before you commit.",
   "Choose the foundation for your next step.",
 ];
@@ -32,6 +33,8 @@ const destinations = [
   ["Blocks", "/blocks"],
   ["PyColors Starter Free", "/starters/free"],
   [PRODUCT_DISPLAY["starter-pro"].name, "/starters/pro"],
+  [PRODUCT_DISPLAY["starter-pro-mobile"].name, "/starters/mobile"],
+  [PRODUCT_DISPLAY["starter-pro-fullstack"].name, "/starters/fullstack"],
 ];
 
 describe("product homepage", () => {
@@ -42,6 +45,26 @@ describe("product homepage", () => {
     ).toHaveAttribute("href", "/starters/pro#product-tour");
     expect(container.querySelector("video")).toBeNull();
     expect(container.querySelector("iframe")).toBeNull();
+  });
+
+  it("presents genuine light and dark product captures with their demonstration-data boundary", () => {
+    render(<HomePage />);
+    const images = screen.getAllByAltText(
+      "Starter Pro dashboard with saved project counts, weekly chart and workspace team",
+    );
+    expect(images).toHaveLength(2);
+    expect(images[0]!.getAttribute("src")).toContain(
+      "dashboard-pycolors-2x.png",
+    );
+    expect(images[1]!.getAttribute("src")).toContain(
+      "dashboard-dark-pycolors-2x.png",
+    );
+    const preview = images[0]!.closest("figure")!;
+    expect(preview).toContainElement(images[1]!);
+    expect(preview).toHaveTextContent(
+      "Project counts, weekly creation history and team roles come from a seeded PostgreSQL workspace. These captures use demonstration data, not customer results.",
+    );
+    expect(within(preview).queryByRole("button")).toBeNull();
   });
 
   it("prioritizes products and starters before the complementary Theme Builder", () => {
@@ -59,7 +82,7 @@ describe("product homepage", () => {
     const sections = Array.from(main.children).filter(
       (el) => el.tagName === "SECTION",
     );
-    expect(sections).toHaveLength(8);
+    expect(sections).toHaveLength(9);
     expect(sections[1]).toBe(screen.getByRole("region", { name: headings[0] }));
     expect(screen.queryByRole("table", { name: "Projects" })).toBeNull();
     expect(sections[4]).toBe(screen.getByRole("region", { name: headings[3] }));
@@ -101,7 +124,7 @@ describe("product homepage", () => {
     const rows = within(
       screen.getByRole("list", { name: "PyColors starting points" }),
     ).getAllByRole("listitem");
-    expect(rows).toHaveLength(5);
+    expect(rows).toHaveLength(7);
     destinations.forEach(([name, href], i) => {
       expect(
         within(rows[i]!).getByRole("heading", { level: 3, name }),
@@ -110,12 +133,74 @@ describe("product homepage", () => {
       expect(within(rows[i]!).getByRole("link")).toHaveAttribute("href", href);
     });
     expect(rows[0]).toHaveTextContent(PRODUCT_DISPLAY["na-ai-landing"].name);
-    const closing = screen.getByRole("region", { name: headings[6] });
+    const closing = screen.getByRole("region", { name: headings[7] });
     expect(
       within(closing)
         .getAllByRole("link")
         .map((a) => a.getAttribute("href")),
     ).toEqual(["#start-with-pycolors", "/starters/pro"]);
+  });
+
+  it("discovers Mobile and Fullstack as distinct source offers", () => {
+    render(<HomePage />);
+    const gallery = screen.getByRole("region", { name: headings[0] });
+    expect(gallery).toHaveTextContent("One system. Seven entry points.");
+    expect(within(gallery).getByText("01 / 07")).toBeVisible();
+    const mobile = within(gallery)
+      .getByRole("heading", {
+        level: 3,
+        name: PRODUCT_DISPLAY["starter-pro-mobile"].name,
+      })
+      .closest("li")!;
+    expect(mobile).toHaveTextContent(
+      PRODUCT_DISPLAY["starter-pro-mobile"].priceLabel,
+    );
+    expect(mobile).toHaveTextContent("React Native · Expo");
+    expect(mobile).toHaveTextContent(
+      "Native iOS and Android source with a compatible backend, configuration, database schema and setup guides. No Web purchase is required.",
+    );
+    expect(
+      within(mobile).getByRole("link", { name: "Explore Starter Pro Mobile" }),
+    ).toHaveAttribute("href", "/starters/mobile");
+    expect(within(mobile).getAllByRole("link")).toHaveLength(1);
+    expect(within(mobile).queryByRole("button")).toBeNull();
+  });
+
+  it("uses Starter Pro decorative artwork in the gallery and keeps real evidence in the infrastructure stories", () => {
+    const { container } = render(<HomePage />);
+    const gallery = screen.getByRole("region", { name: headings[0] });
+    const images = gallery.querySelectorAll("img");
+    expect(images).toHaveLength(7);
+    expect(
+      new Set(Array.from(images, (image) => image.getAttribute("src"))).size,
+    ).toBe(6);
+    for (const image of images) {
+      expect(image).toHaveAttribute("alt", "");
+      expect(image).toHaveAttribute("aria-hidden", "true");
+      expect(decodeURIComponent(image.getAttribute("src")!)).toContain(
+        "/images/starters/pro/concepts/",
+      );
+    }
+    const infrastructure = screen.getByRole("region", { name: headings[2] });
+    expect(infrastructure).toHaveAttribute("id", "infrastructure");
+    const stories = within(infrastructure).getAllByRole("article");
+    expect(stories).toHaveLength(2);
+    expect(stories[0]).toHaveAccessibleName("PyColors Starter Free");
+    expect(stories[1]).toHaveAccessibleName(
+      PRODUCT_DISPLAY["starter-pro"].name,
+    );
+    expect(
+      container.querySelectorAll("[data-product-preview=starter-free]"),
+    ).toHaveLength(1);
+    expect(
+      container.querySelectorAll("[data-product-preview=starter-pro]"),
+    ).toHaveLength(1);
+    expect(stories[0]).toHaveTextContent(
+      "Mock authentication, payments & data",
+    );
+    expect(stories[1]).toHaveTextContent(
+      "Validated ZIP, guides & operational checks",
+    );
   });
 
   it("offers one clear handoff to the complete Theme Builder without a second editor", () => {
@@ -140,6 +225,23 @@ describe("product homepage", () => {
     expect(
       screen.queryByText("Synthetic demo data.", { exact: false }),
     ).toBeNull();
+  });
+
+  it("explains the Mobile backend and links both commercial source offers", () => {
+    render(<HomePage />);
+    const mobile = screen.getByRole("region", {
+      name: "React Native Mobile App",
+    });
+    expect(mobile).toHaveTextContent("Source licence");
+    expect(mobile).toHaveTextContent("React Native · Expo");
+    expect(mobile).toHaveTextContent(
+      "Mobile includes a compatible backend. Fullstack adds the Web interface with the same accounts and data.",
+    );
+    expect(within(mobile).getAllByRole("link")).toHaveLength(2);
+    expect(
+      within(mobile).getByRole("link", { name: "Explore Starter Pro Mobile" }),
+    ).toHaveAttribute("href", "/starters/mobile");
+    expect(within(mobile).queryByRole("button")).toBeNull();
   });
 
   it("retains the documentation, product and trust handoffs", () => {
@@ -212,10 +314,23 @@ describe("product homepage", () => {
       name: "Implementation process",
     });
     expect(within(process).getAllByRole("listitem")).toHaveLength(3);
+    const details = implementation.querySelector("details")!;
+    const summary = within(implementation)
+      .getByText("Explore implementation services")
+      .closest("summary")!;
+    expect(details.open).toBe(true);
+    expect(
+      within(implementation).getByRole("region", { name: "Guided setup" }),
+    ).toBeVisible();
+    fireEvent.click(summary);
+    expect(details.open).toBe(false);
+    fireEvent.click(summary);
+    expect(details.open).toBe(true);
     for (const service of Object.values(STARTER_PRO_SERVICES)) {
       const offer = within(implementation).getByRole("region", {
         name: service.title,
       });
+      expect(offer).toBeVisible();
       expect(offer).toHaveTextContent(service.priceLabel);
       expect(offer).toHaveTextContent(service.description);
       expect(offer).toHaveTextContent(service.deliverable);
@@ -230,6 +345,32 @@ describe("product homepage", () => {
         name: "Review scope & support",
       }),
     ).toHaveAttribute("href", "/docs/starter-pro/implementation-support");
+  });
+
+  it("supports purchase decisions with public source, a real demo and delivery guidance", () => {
+    render(<HomePage />);
+    const trust = screen.getByRole("region", { name: headings[6] });
+    for (const [label, href] of [
+      ["Explore PyColors UI", "/ui"],
+      ["Open the Starter Free demo", "https://starter-demo.pycolors.io"],
+      ["Understand purchase and delivery", "/docs/starter-pro/delivery"],
+    ]) {
+      expect(within(trust).getByRole("link", { name: label })).toHaveAttribute(
+        "href",
+        href,
+      );
+    }
+    expect(trust).toHaveTextContent("mock authentication, payments and data");
+    expect(trust).toHaveTextContent(
+      "licence, included files, setup requirements and delivery process",
+    );
+    const infrastructure = screen.getByRole("region", { name: headings[2] });
+    for (const name of [
+      "Starter Free dashboard with example projects and metrics",
+      "Starter Pro dashboard with sample projects and workspace metrics",
+    ]) {
+      expect(within(infrastructure).getByRole("img", { name })).toBeVisible();
+    }
   });
 
   it("keeps metadata and breadcrumb identity and meaningful initial server markup", () => {
@@ -265,6 +406,7 @@ describe("product homepage", () => {
     const html = renderToString(<HomePage />);
     for (const text of [
       "Your brand. Your interface.",
+      "React Native Mobile App",
       "Open Theme Builder",
       "/tools/theme-builder",
       "CSS tokens",

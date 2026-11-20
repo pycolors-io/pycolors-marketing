@@ -28,7 +28,12 @@ afterEach(() => {
 
 describe("Contact page", () => {
   it("separates general enquiries from purchase help with accessible, working destinations", async () => {
-    const { container } = render(<ContactPage />);
+    const { container } = render(
+      await ContactPage({
+        params: Promise.resolve({ locale: "en" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
     expect(screen.getByRole("main")).toHaveAttribute("id", "content");
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
       "Contact PyColors.",
@@ -83,7 +88,12 @@ describe("Contact page", () => {
       value: { writeText },
     });
     vi.stubGlobal("fetch", vi.fn());
-    render(<ContactPage />);
+    render(
+      await ContactPage({
+        params: Promise.resolve({ locale: "en" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
 
     fireEvent.click(screen.getByRole("button", { name: "Copy contact email" }));
     expect(writeText).toHaveBeenCalledExactlyOnceWith("contact@pycolors.com");

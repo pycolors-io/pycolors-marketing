@@ -1,3 +1,4 @@
+import { getPublicProduct } from "@/lib/products/public-catalog";
 import { getCopy } from "@/lib/i18n/server-copy";
 import { Link } from "@/lib/i18n/navigation";
 import { containerClassName } from "@/components/container";
@@ -85,18 +86,27 @@ function formatAmount(amountTotal: number, currency: string) {
 }
 
 function getProductDocsHref(productSlug: string | null) {
-  switch (productSlug) {
-    case "starter-pro":
-      return "/docs/starter-pro/getting-started";
-    case "na-ai-landing":
-      return "/templates/na-ai-landing";
-    default:
-      return "/docs";
-  }
+  return getPublicProduct(productSlug)?.docsHref ?? "/docs";
 }
 
 function getProductGuidance(productSlug: string | null) {
   switch (productSlug) {
+    case "starter-pro-mobile":
+      return {
+        title: "Set up Starter Pro Mobile",
+        description:
+          "Open your purchased archive and follow the Mobile guide for the included backend and native source. Configure and validate your own services before deployment.",
+        href: "/docs/starter-pro/mobile",
+        cta: "Open the Mobile setup guide",
+      };
+    case "starter-pro-fullstack":
+      return {
+        title: "Set up Starter Pro Fullstack",
+        description:
+          "Follow the Fullstack guide to run Web and Mobile against the same backend, accounts and data. Configure and validate your own services before deployment.",
+        href: "/docs/starter-pro/fullstack",
+        cta: "Open the Fullstack setup guide",
+      };
     case "na-ai-landing":
       return {
         title: "A natural next step",

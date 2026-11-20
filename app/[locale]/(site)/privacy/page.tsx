@@ -856,7 +856,7 @@ export default function PrivacyPage() {
       tabIndex={-1}
       className={`${styles.page} ${privacyStyles.page}`}
     >
-      <Container className="pb-16 pt-24 sm:pb-20 sm:pt-28">
+      <Container className="marketing-page-intro pb-16 pt-24 sm:pb-20 sm:pt-28">
         <div className="w-full min-w-0">
           <Breadcrumb
             className={`mb-8 ${styles.breadcrumb}`}

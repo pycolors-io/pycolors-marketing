@@ -1,7 +1,9 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { getCopy } from "@/lib/i18n/server-copy";
 import { localizedAlternates } from "@/lib/i18n/routes";
 import type { Metadata } from "next";
+import { FileText, Workflow } from "lucide-react";
 import { Link } from "@/lib/i18n/navigation";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
@@ -38,18 +40,42 @@ export default async function QuoteRequestPage({
   const params = await searchParams;
   const initialService = quoteService(params.service);
   return (
-    <main id="content" tabIndex={-1} className="bg-background text-foreground">
-      <Container className="pb-12 pt-24 sm:pb-20 sm:pt-28">
-        <PageHero
-          variant="compact"
-          align="left"
-          contentClassName="mx-0 max-w-4xl"
-          badges={[{ label: "PyColors Services" }]}
-          title={tSite("A clear scope for your next product.")}
-          description={tSite(
-            "Tell us what you’re building. We’ll review your workflow, define the deliverables and prepare a written proposal.",
-          )}
-        />
+    <main id="content" tabIndex={-1} className={styles.page}>
+      <Container className={`marketing-page-intro ${styles.introContainer}`}>
+        <MarketingBreadcrumb route="/request-a-quote" />
+        <div className={styles.heroLayout}>
+          <PageHero
+            className={styles.hero}
+            variant="compact"
+            align="left"
+            contentClassName="mx-0 max-w-4xl"
+            badges={[{ label: "PyColors Services" }]}
+            title={tSite("A clear scope for your next product.")}
+            description={tSite(
+              "Tell us what you’re building. We’ll review your workflow, define the deliverables and prepare a written proposal.",
+            )}
+          />
+          <div className={styles.briefVisual} aria-hidden="true">
+            <div className={styles.briefBackdrop} />
+            <div className={styles.briefPaper}>
+              <span className={styles.briefIcon}>
+                <FileText strokeWidth={1.5} />
+              </span>
+              <span className={styles.briefRule} />
+              <span className={styles.briefLine} />
+              <span className={styles.briefLine} />
+              <span className={styles.briefLine} />
+              <div className={styles.briefTiles}>
+                <span />
+                <span />
+                <span />
+              </div>
+            </div>
+            <span className={styles.briefAccent}>
+              <Workflow strokeWidth={1.5} />
+            </span>
+          </div>
+        </div>
         <div className={styles.layout}>
           <aside
             className={styles.context}
@@ -70,6 +96,7 @@ export default async function QuoteRequestPage({
               {QUOTE_SERVICES.map((service) => (
                 <section
                   className={styles.service}
+                  data-service={service.id}
                   key={service.id}
                   aria-labelledby={`quote-${service.id}-title`}
                 >

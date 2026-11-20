@@ -13,6 +13,8 @@ export async function createCheckoutSession(
   input: {
     productSlug: string;
     email?: string;
+    upgradeToken?: string;
+    locale?: "en" | "fr";
   },
   options: { signal?: AbortSignal } = {},
 ) {
@@ -69,6 +71,16 @@ export async function createCheckoutSession(
     options.signal?.removeEventListener("abort", abort);
     controller.signal.removeEventListener("abort", onAbort);
   }
+}
+
+/** Public, non-personal readiness acknowledgement. Never returns provider configuration. */
+export async function getCheckoutAvailability(): Promise<unknown> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/checkout/availability`, {
+    cache: "no-store",
+    signal: AbortSignal.timeout(10_000),
+  });
+  if (!response.ok) throw new Error("Checkout availability is unavailable.");
+  return response.json();
 }
 
 /**

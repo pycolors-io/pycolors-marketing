@@ -1,4 +1,5 @@
 import { useCopy } from "@/lib/i18n/use-copy";
+import design from "./docs-article.module.css";
 import * as React from "react";
 import { Link } from "@/lib/i18n/navigation";
 import { ArrowRight } from "lucide-react";
@@ -126,10 +127,10 @@ function DocsDecisionCard({ item, tone }: DocsDecisionCardProps) {
 
   const card = (
     <article
+      data-tone={tone}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-[8px]",
-        "border p-4 shadow-soft transition-all duration-200 sm:p-5",
-        "hover:-translate-y-0.5 hover:border-border hover:shadow-medium",
+        design.decisionCard,
+        "group relative flex h-full flex-col overflow-hidden border",
         styles.card,
       )}
     >
@@ -208,7 +209,7 @@ function DocsDecisionCard({ item, tone }: DocsDecisionCardProps) {
             )}
           >
             {tSite(item.cta.replace(/\s*→$/, ""))}
-            <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight className="size-3.5" aria-hidden="true" />
           </span>
         </div>
       ) : null}
@@ -223,7 +224,8 @@ function DocsDecisionCard({ item, tone }: DocsDecisionCardProps) {
     <Link
       href={item.href}
       className={cn(
-        "block h-full rounded-[5px] no-underline",
+        design.decisionLink,
+        "block h-full no-underline",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "focus-visible:ring-offset-2 focus-visible:ring-offset-background",
       )}

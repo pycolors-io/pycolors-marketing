@@ -1,4 +1,5 @@
 import { useCopy } from "@/lib/i18n/use-copy";
+import design from "./docs-article.module.css";
 import * as React from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger, cn } from "@pycolors/ui";
@@ -28,12 +29,12 @@ export function DocsConceptTabs({
   return (
     <Tabs
       defaultValue={initialValue}
-      className={cn("not-prose my-8 w-full", className)}
+      className={cn(design.conceptTabs, "not-prose my-8 w-full", className)}
     >
       <TabsList
         className={cn(
-          "mb-0 h-auto w-full justify-start gap-0 overflow-x-auto rounded-none",
-          "border-b border-border-subtle bg-transparent p-0",
+          design.conceptList,
+          "mb-0 h-auto w-full justify-start overflow-x-auto rounded-none",
         )}
       >
         {items.map((item) => (
@@ -41,14 +42,16 @@ export function DocsConceptTabs({
             key={item.value}
             value={item.value}
             className={cn(
-              "relative rounded-none border-b border-transparent bg-transparent",
+              design.conceptTrigger,
+              "relative border-b border-transparent bg-transparent",
               "px-3 py-2 text-sm font-medium text-muted-foreground shadow-none",
               "transition-colors hover:text-foreground",
               "data-[state=active]:border-primary",
               "data-[state=active]:bg-transparent",
               "data-[state=active]:text-foreground",
               "data-[state=active]:shadow-none",
-              "focus-visible:ring-0 focus-visible:ring-offset-0",
+              "focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-ring",
+              "motion-reduce:transition-none",
             )}
           >
             {tSite(item.value)}
@@ -61,12 +64,7 @@ export function DocsConceptTabs({
 
         return (
           <TabsContent key={item.value} value={item.value} className="mt-0">
-            <section
-              className={cn(
-                "border-x border-b border-border-subtle bg-card",
-                "rounded-b-[8px] p-5 shadow-off sm:p-6",
-              )}
-            >
+            <section className={cn(design.conceptPanel)}>
               <div className="flex items-start gap-3">
                 {Icon ? (
                   <span

@@ -1,16 +1,5 @@
 .page {
-  background: radial-gradient(
-      ellipse at 75% 0%,
-      color-mix(in oklab, var(--primary) 5%, transparent),
-      transparent 65%
-    )
-    0 0 / 100% 38rem no-repeat;
-}
-
-.hero h1 {
-  font-size: clamp(2.125rem, 4vw, 3rem);
-  line-height: 1.08;
-  letter-spacing: -0.05em;
+  background: var(--background);
 }
 
 .hero p {
@@ -24,8 +13,8 @@
   margin-top: 2rem;
   padding: 1rem 1.25rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background: color-mix(in oklab, var(--background) 85%, transparent);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
   color: var(--muted-foreground);
   font-size: 0.75rem;
   line-height: 1.8;
@@ -73,18 +62,12 @@
   align-items: flex-start;
   padding: 1.5rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: var(--marketing-card-radius, 1.5rem);
   background: var(--background);
 }
 
 .supportOption {
-  background:
-    radial-gradient(
-      ellipse at 0% 0%,
-      color-mix(in oklab, var(--primary) 7%, transparent),
-      transparent 80%
-    ),
-    var(--background);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .optionHeader {
@@ -102,9 +85,9 @@
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: 1rem;
   background: var(--background);
-  box-shadow: 0 2px 3px color-mix(in oklab, var(--foreground) 3%, transparent);
+  box-shadow: none;
 }
 
 .supportOption .icon {
@@ -118,10 +101,10 @@
 }
 
 .option h3 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: var(--site-subheading-tracking);
-  line-height: 1.35;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
   text-wrap: balance;
 }
 
@@ -155,14 +138,8 @@
   margin-top: 2rem;
   padding: 1.5rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  background:
-    radial-gradient(
-      ellipse at 100% 100%,
-      color-mix(in oklab, var(--brand-platform) 4%, transparent),
-      transparent 72%
-    ),
-    var(--background);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .guideIcon {

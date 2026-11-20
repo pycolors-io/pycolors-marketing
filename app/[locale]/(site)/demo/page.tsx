@@ -1,3 +1,5 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
+import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import type { Metadata } from "next";
@@ -15,9 +17,14 @@ import {
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
+import { ProductPreviewWindow } from "@/components/marketing/product-preview-window";
+import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
+import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { ProDemoLink } from "@/components/marketing/pro-demo-link";
 import { SiteButton as Button } from "@/components/site-button";
 import { proDemoUrl } from "@/lib/pro-demo-url";
+import styles from "@/components/marketing/demo.module.css";
 
 const metadata: Metadata = {
   title: "SaaS starter demos",
@@ -75,31 +82,33 @@ function DemoCapture({
   const tSite = useCopy();
 
   return (
-    <div
-      className="relative overflow-hidden rounded-sm border border-border-subtle bg-background"
-      style={{ aspectRatio }}
-    >
-      <Image
-        src={light}
-        alt={tSite("{value0} dashboard with fictional data, light theme", {
-          value0: product,
-        })}
-        fill
-        quality={product === "Starter Pro" ? 100 : 75}
-        sizes={sizes}
-        className="object-contain dark:hidden"
-      />
-      <Image
-        src={dark}
-        alt={tSite("{value0} dashboard with fictional data, dark theme", {
-          value0: product,
-        })}
-        fill
-        quality={product === "Starter Pro" ? 100 : 75}
-        sizes={sizes}
-        className="hidden object-contain dark:block"
-      />
-    </div>
+    <ProductPreviewWindow label={product}>
+      <div
+        className={`${styles.capture} relative overflow-hidden bg-background`}
+        style={{ aspectRatio }}
+      >
+        <Image
+          src={light}
+          alt={tSite("{value0} dashboard with fictional data, light theme", {
+            value0: product,
+          })}
+          fill
+          quality={product === "Starter Pro" ? 100 : 75}
+          sizes={sizes}
+          className="object-contain dark:hidden"
+        />
+        <Image
+          src={dark}
+          alt={tSite("{value0} dashboard with fictional data, dark theme", {
+            value0: product,
+          })}
+          fill
+          quality={product === "Starter Pro" ? 100 : 75}
+          sizes={sizes}
+          className="hidden object-contain dark:block"
+        />
+      </div>
+    </ProductPreviewWindow>
   );
 }
 
@@ -108,33 +117,50 @@ export default function DemoPage() {
 
   const livePro = Boolean(proDemoUrl());
   return (
-    <main id="content" tabIndex={-1} className="bg-background text-foreground">
-      <Container className="pb-10 pt-24 sm:pb-12 sm:pt-28">
-        <PageHero
-          variant="compact"
-          align="left"
-          contentClassName="mx-0 max-w-4xl"
-          badges={[{ label: "Product demos", variant: "outline" }]}
-          title={tSite("See it work. Make it yours.")}
-          description={tSite(
-            "Open the demos, explore the workflows and find the right starting point for your product.",
-          )}
-        />
-      </Container>
+    <main id="content" tabIndex={-1} className={styles.page}>
+      <MarketingHeroBand tone="warm" className={styles.heroBand}>
+        <Container className={`marketing-page-intro ${styles.introContainer}`}>
+          <MarketingBreadcrumb route="/demo" />
+          <div className={styles.heroLayout}>
+            <PageHero
+              className={styles.heroPanel}
+              variant="compact"
+              align="left"
+              contentClassName="mx-0 max-w-4xl"
+              badges={[{ label: "Product demos", variant: "outline" }]}
+              title={tSite("See it work. Make it yours.")}
+              description={tSite(
+                "Open the demos, explore the workflows and find the right starting point for your product.",
+              )}
+            />
+            <div className={styles.heroArt} aria-hidden="true">
+              <Image
+                src="/images/starters/pro/concepts/connected-workspace-test-v1.png"
+                alt=""
+                fill
+                sizes="(min-width: 1536px) 440px, (min-width: 1024px) 32vw, 90vw"
+                quality={75}
+              />
+            </div>
+          </div>
+        </Container>
+      </MarketingHeroBand>
 
       <MarketingSectionShell
         width="full"
         spacing="compact"
-        divider="pattern"
+        className={styles.demoSection}
         aria-label={tSite("Choose a starter demo")}
       >
         <Container>
           <article
             aria-labelledby="demo-pro-title"
-            className="overflow-hidden rounded-md border border-border-subtle bg-surface"
+            className={`${styles.demoCard} overflow-hidden border border-border-subtle bg-surface`}
           >
             <div className="grid min-w-0 lg:grid-cols-[0.85fr_1.15fr]">
-              <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8 lg:p-10">
+              <div
+                className={`${styles.proCopy} flex min-w-0 flex-col justify-center p-6 sm:p-8 lg:p-10`}
+              >
                 <div className="flex flex-wrap items-center gap-2 text-[11px] font-medium text-muted-foreground">
                   <span className="font-mono uppercase tracking-widest">
                     {tSite("Connected workspace")}
@@ -187,7 +213,12 @@ export default function DemoPage() {
                       </Link>
                     </Button>
                   )}
-                  <Button asChild size="lg" variant="outline">
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className={styles.secondaryButton}
+                  >
                     <Link href="/starters/pro">
                       {tSite("Starter Pro details")}
                     </Link>
@@ -201,7 +232,9 @@ export default function DemoPage() {
                   )}
                 </p>
               </div>
-              <figure className="flex min-w-0 flex-col justify-center gap-3 border-t border-border-subtle bg-surface-muted/40 p-4 sm:p-6 lg:border-l lg:border-t-0">
+              <figure
+                className={`${styles.proStage} flex min-w-0 flex-col justify-center gap-3 border-t border-border-subtle p-4 sm:p-6 lg:border-l lg:border-t-0`}
+              >
                 <div
                   aria-hidden="true"
                   className="flex items-center justify-between gap-3 text-[10px] text-muted-foreground"
@@ -225,9 +258,9 @@ export default function DemoPage() {
 
             <section
               aria-labelledby="demo-journeys-title"
-              className="border-t border-border-subtle"
+              className={styles.journeySection}
             >
-              <div className="px-6 pt-6 sm:px-8 lg:px-10">
+              <div className={styles.journeyIntro}>
                 <h3 id="demo-journeys-title" className="text-sm font-semibold">
                   {tSite("Three ways to explore")}
                 </h3>
@@ -237,7 +270,7 @@ export default function DemoPage() {
                   )}
                 </p>
               </div>
-              <ol className="grid divide-y divide-border-subtle md:grid-cols-3 md:divide-x md:divide-y-0">
+              <ol className={`${styles.journeyGrid} grid md:grid-cols-3`}>
                 {journeys.map((journey, index) => (
                   <li
                     key={journey.destination}
@@ -277,9 +310,9 @@ export default function DemoPage() {
 
           <article
             aria-labelledby="demo-free-title"
-            className="mt-8 grid min-w-0 overflow-hidden rounded-md border border-border-subtle bg-surface lg:grid-cols-[1.15fr_0.85fr]"
+            className={`${styles.demoCard} ${styles.freeCard} grid min-w-0 overflow-hidden border border-border-subtle bg-surface lg:grid-cols-[1.15fr_0.85fr]`}
           >
-            <div className="p-6 sm:p-8 lg:p-10">
+            <div className={`${styles.freeCopy} p-6 sm:p-8 lg:p-10`}>
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                 {tSite("Frontend foundation")}
               </p>
@@ -327,7 +360,9 @@ export default function DemoPage() {
                 </Link>
               </div>
             </div>
-            <figure className="flex min-w-0 flex-col justify-center gap-3 border-t border-border-subtle bg-surface-muted/40 p-4 sm:p-6 lg:border-l lg:border-t-0">
+            <figure
+              className={`${styles.freeStage} flex min-w-0 flex-col justify-center gap-3 border-t border-border-subtle p-4 sm:p-6 lg:border-l lg:border-t-0`}
+            >
               <DemoCapture
                 product="Starter Free"
                 light="/images/starters/free/product-preview/dashboard-light.png"
@@ -341,7 +376,57 @@ export default function DemoPage() {
             </figure>
           </article>
 
-          <div className="mt-8 flex flex-col gap-5 border-t border-border-subtle pt-7 sm:flex-row sm:items-start sm:justify-between">
+          <article
+            aria-labelledby="demo-template-title"
+            className={`${styles.demoCard} ${styles.templateCard}`}
+          >
+            <div className={styles.templateCopy}>
+              <p className={styles.productEyebrow}>
+                {tSite("Landing page template")}
+              </p>
+              <h2 id="demo-template-title">{tSite("NA-AI Landing")}</h2>
+              <p className={styles.templateDescription}>
+                {tSite(
+                  "Give your AI, analytics or SaaS product a considered marketing page. NA-AI Landing brings the sections, visuals and editable Next.js source. Make it your own, then connect your services.",
+                )}
+              </p>
+              <p className={styles.templatePrice}>
+                {tSite(PRODUCT_DISPLAY["na-ai-landing"].priceLabel)}
+                <span>{tSite("One-time payment")}</span>
+              </p>
+              <div className={styles.templateActions}>
+                <Button asChild size="lg">
+                  <a href="https://na-ai.pycolors.io">
+                    {tSite("Open live demo")}
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className={styles.secondaryButton}
+                >
+                  <Link href="/templates/na-ai-landing">
+                    {tSite("Explore NA-AI Landing")}
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            <figure className={styles.templateStage}>
+              <ProductPreviewWindow label="NA-AI Landing">
+                <ProductPreviewMedia
+                  product="na-ai-landing"
+                  sizes="(min-width: 1440px) 720px, (min-width: 1024px) 55vw, 100vw"
+                />
+              </ProductPreviewWindow>
+              <figcaption>
+                {tSite(PRODUCT_PREVIEW_MEDIA["na-ai-landing"].caption)}
+              </figcaption>
+            </figure>
+          </article>
+
+          <div className={styles.safetyNote}>
             <div className="flex max-w-2xl items-start gap-3">
               <ShieldCheck
                 className="mt-1 size-4 shrink-0 text-muted-foreground"

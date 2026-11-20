@@ -1,0 +1,337 @@
+.page {
+  background: var(--background);
+}
+.heroContainer {
+  padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 4vw, 4rem));
+  padding-bottom: clamp(3.5rem, 6vw, 6rem);
+}
+.heroLayout {
+  display: grid;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.hero h1 {
+  max-width: 17ch;
+  font-size: clamp(2.875rem, 5.5vw, 5rem);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+}
+.hero p {
+  max-width: 48ch;
+}
+.availability {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.heroActions :global([data-slot="button"]),
+.webAction,
+.enquiryAction {
+  min-height: 2.75rem;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  border-radius: 100px;
+  white-space: normal;
+  text-align: center;
+}
+.heroActions :global([data-slot="button"]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.heroActions :global(.site-primary-action) {
+  border: 1px solid var(--marketing-cobalt);
+  background: var(--marketing-cobalt);
+  color: var(--marketing-cobalt-ink);
+}
+.heroActions :global(.site-primary-action):hover {
+  background: color-mix(
+    in srgb,
+    var(--marketing-cobalt) 88%,
+    var(--background)
+  );
+}
+.visual {
+  min-width: 0;
+  margin: 0;
+}
+.artwork {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--marketing-graphite);
+}
+.artwork img {
+  object-fit: cover;
+}
+.stack {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  gap: 0.625rem;
+  width: fit-content;
+  max-width: calc(100% - 2.5rem);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.visual figcaption {
+  margin-top: 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  text-align: right;
+}
+.options {
+  display: grid;
+  gap: 1.25rem;
+}
+.option {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: start;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--background);
+  color: var(--foreground);
+}
+.webOption {
+  --background: var(--marketing-graphite);
+  --foreground: var(--marketing-graphite-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+  --ring: var(--foreground);
+}
+.mobileOption {
+  --background: var(--marketing-lilac);
+  --foreground: var(--marketing-lilac-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+}
+.bundleOption {
+  --background: var(--marketing-peach);
+  --foreground: var(--marketing-peach-ink);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--foreground) 86%,
+    var(--background)
+  );
+  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
+}
+.optionTop {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.optionTop > svg {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.optionTop :global([data-slot="badge"]) {
+  border-color: var(--border-subtle);
+  color: var(--foreground);
+  background: transparent;
+  text-align: center;
+  white-space: normal;
+}
+.option h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+.option > p {
+  margin-top: 1.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+.option .price {
+  color: var(--foreground);
+  font-size: 3rem;
+  font-weight: 650;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.option .priceNote {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+.option .bundleScope {
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.optionDetails {
+  width: 100%;
+  margin: 1.5rem 0 2rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.optionDetails > div {
+  padding-top: 0.875rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.optionDetails > div + div {
+  margin-top: 0.875rem;
+}
+.optionDetails dt {
+  font-weight: 600;
+}
+.optionDetails dd {
+  margin-top: 0.25rem;
+  color: var(--muted-foreground);
+}
+.option .webAction {
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  margin-top: auto;
+  border: 1px solid var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+.option .webAction:hover {
+  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
+}
+.option .webAction:focus-visible,
+.option .enquiryAction:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.option .enquiryAction {
+  margin-top: auto;
+  border: 1px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+}
+.option .enquiryAction:hover {
+  background: color-mix(in srgb, var(--foreground) 8%, var(--background));
+}
+.option .enquiryAction:focus-visible {
+  outline-color: var(--foreground);
+}
+.scopeNote {
+  max-width: 70ch;
+  margin: 1.5rem auto 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+  text-align: center;
+}
+.foundations {
+  display: grid;
+  gap: 1.25rem;
+}
+.foundations article {
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-panel-radius);
+  background: var(--marketing-canvas);
+}
+.foundations svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+}
+.foundations h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.foundations p {
+  margin-top: 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+.page :global([id]) {
+  scroll-margin-top: calc(var(--site-header-height, 3.5rem) + 1.5rem);
+}
+@media (min-width: 48rem) {
+  .foundations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 64rem) {
+  .heroLayout {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+  .options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .option h3 {
+    min-height: 2.2em;
+  }
+}
+@media (max-width: 39.999rem) {
+  .hero h1 {
+    font-size: clamp(2rem, 8.5vw, 2.875rem);
+  }
+}
+@media (forced-colors: active) {
+  .visual {
+    display: none;
+  }
+  .heroLayout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .option,
+  .webOption,
+  .mobileOption,
+  .bundleOption,
+  .foundations article {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .heroActions :global([data-slot="button"]):focus-visible,
+  .option .webAction:focus-visible,
+  .option .enquiryAction:focus-visible {
+    outline-color: Highlight;
+  }
+  .heroActions :global(.site-primary-action),
+  .heroActions :global(.site-primary-action):hover,
+  .option .webAction,
+  .option .webAction:hover,
+  .option .enquiryAction,
+  .option .enquiryAction:hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}

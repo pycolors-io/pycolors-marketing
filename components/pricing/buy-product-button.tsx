@@ -8,6 +8,7 @@ import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 
 import { useProductCheckout } from "./use-product-checkout";
+import { useCheckoutAvailability } from "./use-checkout-availability";
 
 import { CheckoutFailureNotice } from "./checkout-failure-notice";
 
@@ -23,22 +24,28 @@ type BuyProductButtonProps = {
   trustText?: string;
   showTrustText?: boolean;
   customerEmail?: string;
+  upgradeToken?: string;
+  /** Only used with a server-verified original-order upgrade quote. */
+  upgradeAvailable?: boolean;
 };
 
 export function BuyProductButton({
   productSlug,
   className,
-  locale = "en",
+  locale: requestedLocale,
   fullWidth = true,
   size = "lg",
   variant = "default",
   label,
   loadingLabel = "Redirecting to secure checkout...",
-  trustText = "One-time payment · Instant access after purchase",
+  trustText = "One-time payment · Access after payment and order processing",
   showTrustText = false,
   customerEmail,
+  upgradeToken,
+  upgradeAvailable,
 }: Readonly<BuyProductButtonProps>) {
   const tSite = useCopy();
+  const locale = requestedLocale ?? tSite.locale;
 
   const productName =
     productSlug in PRODUCT_DISPLAY
@@ -49,14 +56,23 @@ export function BuyProductButton({
     productSlug,
     productName,
     email: customerEmail,
+    upgradeToken,
+    locale,
   });
+  const { status: productAvailability, retry: retryAvailability } =
+    useCheckoutAvailability(productSlug);
+  const availability = upgradeToken
+    ? upgradeAvailable === true
+      ? "available"
+      : "unavailable"
+    : productAvailability;
 
   return (
     <div className={cn("space-y-2", fullWidth && "w-full")}>
       <Button
         type="button"
         onClick={handleBuy}
-        disabled={isLoading}
+        disabled={isLoading || availability !== "available"}
         size={size}
         variant={variant}
         className={cn(
@@ -103,6 +119,23 @@ export function BuyProductButton({
       ) : null}
 
       {hasError ? <CheckoutFailureNotice locale={locale} /> : null}
+      {availability === "unavailable" ? (
+        <div role="status" className="text-xs text-muted-foreground">
+          <p>
+            {tSite(
+              "Checkout is currently unavailable. Please try again later or contact purchase support.",
+            )}
+          </p>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={retryAvailability}
+          >
+            {tSite("Check checkout availability")}
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 }

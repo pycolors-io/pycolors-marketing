@@ -1,4 +1,5 @@
 import { useCopy } from "@/lib/i18n/use-copy";
+import design from "./docs-article.module.css";
 import * as React from "react";
 
 import { cn } from "@pycolors/ui";
@@ -104,11 +105,8 @@ function DocsFeatureGridCard({ item, tone }: DocsFeatureGridCardProps) {
   return (
     <section
       className={cn(
-        "group relative overflow-hidden rounded-[8px]",
-        "border border-border-subtle bg-card p-4 ",
-        "transition-colors duration-200",
-        "hover:border-border hover:bg-muted/18",
-        "sm:p-5",
+        design.featureCard,
+        "relative overflow-hidden border border-border-subtle",
       )}
     >
       <div

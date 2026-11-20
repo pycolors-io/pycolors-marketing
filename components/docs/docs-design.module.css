@@ -1,0 +1,925 @@
+/* Scoped to the documentation: marketing pages and embedded UI previews retain
+   their own tokens, layout, and component behavior. */
+.frame {
+  /* Full-width shell, 300px sidebar, 1024px content, and a 256px TOC
+     column that includes its 16px trailing gutter on desktop. */
+  --site-frame-width: 100%;
+  --docs-content-width: 64rem;
+  --docs-radius: 0.75rem;
+  --docs-card-padding: 1.25rem;
+  --docs-section-gap: 2.75rem;
+  --docs-section-title-size: 1.375rem;
+  --docs-canvas: #fafafa;
+  --docs-card: #fff;
+  background: var(--docs-canvas);
+}
+
+:global(.dark) .frame {
+  --docs-canvas: var(--background);
+  --docs-card: var(--surface-muted);
+}
+
+.frame :global(#nd-sidebar) {
+  background: transparent;
+}
+
+.frame :global(#nd-docs-layout) {
+  --fd-layout-width: var(--site-frame-width);
+}
+
+.sidebarStart {
+  display: grid;
+  gap: 0.375rem;
+}
+.sidebarStart .sidebarSearch {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 2.75rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.5rem;
+  background: var(--docs-card, var(--background));
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+.sidebarSearch:hover {
+  color: var(--foreground);
+}
+.sidebarSearch:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.sidebarBanner {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 2rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.375rem;
+  color: var(--foreground);
+  text-decoration: none;
+}
+.sidebarBanner:hover {
+  background: var(--surface-muted);
+}
+
+.sidebarBanner:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.frame :global(#nd-sidebar) :is(a, button) {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  min-height: 2rem;
+  padding-block: 0.375rem;
+  border-radius: 0.375rem;
+}
+
+.frame :global(#nd-sidebar-mobile) :is(a, button) {
+  min-height: 2.75rem;
+}
+
+.frame :global(#nd-sidebar) [data-radix-scroll-area-viewport] {
+  padding-block: 0.625rem;
+}
+
+.frame :global(#nd-sidebar) a[data-active="true"] {
+  background: color-mix(in oklch, var(--primary) 8%, var(--background));
+  color: var(--primary);
+}
+
+.search {
+  border-radius: 999px;
+  background: transparent;
+}
+
+.articleHeader {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0;
+}
+
+.breadcrumb {
+  margin-bottom: 1.5rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.articleTitle {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.05em;
+  color: var(--foreground);
+  text-wrap: balance;
+}
+
+.articleDescription {
+  max-width: 65ch;
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+.articleMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem 1rem;
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.articleMeta > :first-child:not(:last-child) {
+  min-height: 1.75rem;
+  border-radius: 999px;
+  background: var(--surface-muted);
+}
+
+.linkCollection[data-docs-links]:not([data-docs-links="grid"]) {
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+}
+
+.linkCollection .linkEntry {
+  min-height: 2.75rem;
+  background: var(--docs-card, var(--background));
+}
+
+.linkCollection[data-docs-links="grid"] {
+  gap: 1rem;
+}
+
+.linkCollection[data-docs-links="grid"] .linkEntry {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: start;
+  gap: 1rem;
+  min-width: 0;
+  padding: var(--docs-card-padding, 1.25rem);
+  border-radius: var(--docs-radius, 0.75rem);
+}
+
+.linkCollection:not([data-docs-links="grid"]) .linkEntry {
+  padding-block: 0.75rem;
+  gap: 0.75rem;
+}
+.linkCollection .linkTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.linkCollection .linkDescription {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.linkCollection .linkEntry > span[aria-hidden="true"] {
+  border-radius: 0.375rem;
+  border-color: var(--border-subtle);
+  background: var(--docs-canvas, var(--surface-muted));
+  color: var(--foreground);
+}
+.linkCollection[data-docs-links="grid"] .linkEntry > .linkIcon {
+  grid-column: 1;
+  grid-row: 1;
+  justify-content: start;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.linkCollection[data-docs-links="grid"] .linkIcon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.linkCollection[data-docs-links="grid"] .linkText {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+.linkCollection[data-docs-links="grid"] .linkArrow {
+  grid-column: 2;
+  grid-row: 1;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: 0.125rem;
+}
+.linkCollection[data-docs-links="grid"] .linkEntry > span:first-child {
+  display: none;
+}
+.linkCollection .linkEntry:hover {
+  border-color: var(--border);
+  background: var(--docs-canvas, var(--surface-muted));
+}
+.linkCollection[data-docs-links="grid"] .linkEntry:hover {
+  background: var(--docs-card, var(--background));
+}
+
+.articleFooter {
+  width: 100%;
+  max-width: var(--docs-content-width);
+  margin: 3rem auto 0;
+  padding-top: 0;
+}
+
+.paginationCard {
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+}
+
+.continueCard {
+  margin-top: 1rem;
+  padding: var(--docs-card-padding, 1.25rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+}
+
+@media (min-width: 768px) {
+  .frame :global(#nd-docs-layout) {
+    --fd-sidebar-width: 15rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .frame :global(#nd-docs-layout) {
+    --fd-sidebar-width: 18.75rem;
+  }
+
+  .frame :global(#nd-sidebar) {
+    padding-inline-end: 0.75rem;
+  }
+
+  .frame :global(#nd-page) {
+    padding-top: 1.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .frame :global(#nd-toc) {
+    padding-top: 1.75rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .frame :global(#nd-docs-layout):has(:global(#nd-toc, #nd-toc-placeholder)) {
+    --fd-toc-width: 16rem;
+  }
+}
+
+@media (pointer: coarse) {
+  .frame :global(#nd-sidebar) :is(a, button) {
+    min-height: 2.75rem;
+  }
+}
+
+.headerLogo,
+.headerSection {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+/* The article navigation already names Documentation on small screens.
+   Reserve the header row for the brand, search and navigation controls. */
+@media (max-width: 479px) {
+  .headerSection {
+    display: none;
+  }
+}
+
+/* Fumadocs notes retain their status icon and accent color. Only their
+   reading surface and spacing follow the shared documentation design. */
+.frame :global(.docs-prose div[style*="--callout-color"][class*="bg-fd-card"]) {
+  padding: var(--docs-card-padding, 1.25rem);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+}
+
+.frame :global(.docs-prose [data-card]):not(:global(.docs-preview *)) {
+  padding: var(--docs-card-padding, 1.25rem);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+  box-shadow: none;
+}
+
+.frame :global(.docs-prose a[data-card]):not(:global(.docs-preview *)):hover {
+  border-color: var(--border);
+  background: var(--surface-muted);
+}
+
+/* Page utilities stay outside the prose and embedded product examples. */
+.articleHeader:has(+ .pageActions) {
+  margin-bottom: 1rem;
+}
+.pageActions {
+  margin-bottom: 2rem;
+}
+.pageActionLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.pageActionLinks :is(button, a) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 0.75rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.pageActionLinks :is(button, a):hover {
+  color: var(--foreground);
+  background: var(--surface-muted);
+}
+.pageActionLinks :is(button, a):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.pageActionLinks button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+.pageActionLinks svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.pageActionError {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.75;
+}
+
+/* Keep Fumadocs' named regions and mobile navigation. The main region has
+   the reference 24px top / 64px bottom spacing and open, borderless gutters. */
+.frame :global(#nd-page) {
+  max-width: none;
+  margin-inline: auto;
+  padding: 1.5rem 1.5rem 4rem;
+  justify-self: center;
+}
+@media (min-width: 768px) {
+  .frame :global(#nd-docs-layout) {
+    grid-template-columns:
+      0 var(--fd-sidebar-col) minmax(0, 1fr) var(--fd-toc-width)
+      0 !important;
+    padding-inline: 0;
+  }
+  .frame :global(#nd-sidebar) {
+    border-inline-end: 0;
+  }
+  .frame :global(#nd-toc) {
+    /* Fit the named grid area: a separate local width plus an outer margin
+       could exceed its track and cut off headings at the viewport edge. */
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-inline: 0;
+    justify-self: stretch;
+    border-inline-start: 0;
+    padding: 1.5rem 1rem 1rem 0;
+  }
+  .frame :global(#nd-toc) > div {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .frame :global(#nd-toc) a {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+@media (min-width: 961px) {
+  .frame :global(#nd-page) {
+    padding-inline: 0.75rem 3rem;
+  }
+}
+.frame :global(.docs-prose > p) {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.frame :global(.docs-prose > h2) {
+  margin-top: var(--docs-section-gap, 2.75rem);
+  margin-bottom: 1.25rem;
+  font-size: var(--docs-section-title-size, 1.375rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.035em;
+}
+.frame :global(.docs-prose > h3) {
+  margin-top: 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
+.assistantTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.assistantTrigger svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--primary);
+}
+.assistantTrigger:hover {
+  background: var(--surface-muted);
+}
+.sidebarAssistant {
+  width: 100%;
+  justify-content: flex-start;
+  min-height: 2rem;
+  padding: 0.375rem 0.5rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+}
+.headerAssistant {
+  display: none;
+}
+@media (min-width: 1280px) {
+  .headerAssistant {
+    display: inline-flex;
+  }
+}
+.assistantOverlay {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  background: rgb(0 0 0 / 28%);
+  backdrop-filter: blur(3px);
+}
+.assistantPanel {
+  position: fixed;
+  z-index: 51;
+  outline: none;
+  box-shadow: -16px 0 64px rgb(0 0 0 / 12%);
+  inset: 0 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: min(100vw, 32rem);
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow-y: auto;
+  padding: 1.5rem;
+  border: 0;
+  border-inline-start: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  transform: none;
+  translate: none;
+}
+.assistantPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.assistantEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+.assistantEyebrow svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary);
+}
+.assistantClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+}
+.assistantClose svg {
+  width: 1rem;
+  height: 1rem;
+}
+.assistantPanel .assistantTitle {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 1.875rem;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+.assistantPanel .assistantDescription {
+  margin: 1rem 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.assistantSuggestions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.assistantSuggestions button {
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--surface-muted);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.assistantLabel {
+  margin-bottom: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.assistantPanel textarea {
+  width: 100%;
+  min-height: 6rem;
+  padding: 0.875rem;
+  border-radius: 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.assistantCopy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 2.75rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.assistantCopy svg {
+  width: 1rem;
+  height: 1rem;
+}
+.assistantCopy:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.assistantStatus {
+  margin-block: 0.875rem 1.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+.assistantMarkdown {
+  display: inline-flex;
+  align-self: flex-start;
+  min-height: 2.75rem;
+  align-items: center;
+  margin-top: 1rem;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  text-underline-offset: 4px;
+}
+.assistantTrigger:focus-visible,
+.assistantPanel :is(button, a, summary, pre):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.feedback {
+  margin-block: 2rem;
+  padding: 1.5rem 0;
+  border-block: 1px solid var(--border-subtle);
+}
+.feedbackTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.feedbackTop h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.feedbackRatings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+.feedbackRatings button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.feedbackRatings button[aria-pressed="true"] {
+  border-color: var(--foreground);
+  background: var(--surface-muted);
+  color: var(--foreground);
+}
+.feedbackRatings button svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.feedbackForm {
+  display: grid;
+  gap: 0.875rem;
+  margin-top: 1.25rem;
+}
+.feedbackForm label {
+  font-size: 0.8125rem;
+  color: var(--foreground);
+}
+.feedbackForm textarea {
+  border-radius: 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.feedbackForm p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+.feedbackActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+}
+.feedbackActions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  text-underline-offset: 4px;
+}
+.feedbackActions a:first-child {
+  padding-inline: 1rem;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: var(--background);
+  text-decoration: none;
+}
+.feedbackActions svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.feedback :is(button, a):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.continueCard :global(a.site-primary-action) {
+  height: auto;
+  min-height: 2.75rem;
+  white-space: normal;
+}
+:global(html.dark) .assistantOverlay {
+  background: rgb(0 0 0 / 48%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .assistantPanel[data-state="open"] {
+    animation: assistant-panel-enter 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .assistantPanel[data-state="closed"] {
+    pointer-events: none;
+    animation: assistant-panel-exit 260ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+  .assistantOverlay[data-state="open"] {
+    animation: assistant-backdrop-enter 380ms ease-out both;
+  }
+  .assistantOverlay[data-state="closed"] {
+    animation: assistant-backdrop-exit 260ms ease-in both;
+  }
+}
+@keyframes assistant-panel-enter {
+  from {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0.7;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@keyframes assistant-panel-exit {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0.7;
+  }
+}
+@keyframes assistant-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes assistant-backdrop-exit {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .assistantPanel,
+  .assistantOverlay {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .frame :global(#nd-sidebar) > * {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+.assistantSource {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 0.875rem 1rem;
+  border-radius: 0.875rem;
+  background: var(--surface-muted);
+}
+.assistantSource > svg {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.125rem;
+  color: var(--muted-foreground);
+}
+.assistantSource > div {
+  min-width: 0;
+}
+.assistantSource div > span {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+.assistantSource a {
+  display: inline-block;
+  min-height: 1.75rem;
+  padding-top: 0.375rem;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+.assistantForm {
+  display: flex;
+  flex-direction: column;
+}
+.assistantSuggestions button[aria-pressed="true"] {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.assistantHint {
+  margin: 0.75rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+.assistantProject {
+  margin-block: 1rem 0.25rem;
+}
+.assistantProject summary {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  cursor: pointer;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.assistantProject summary::before {
+  content: "+";
+  margin-inline-end: 0.5rem;
+}
+.assistantProject[open] summary::before {
+  content: "−";
+}
+.assistantProject .assistantLabel {
+  display: block;
+  margin-top: 0.75rem;
+}
+.assistantProject textarea {
+  min-height: 5rem;
+}
+.assistantPanel .assistantPrompt {
+  min-height: 12rem;
+  max-height: 24rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.7;
+  background: var(--surface-muted);
+}
+.assistantStatus:empty {
+  display: none;
+}
+
+.assistantSourcePath {
+  margin-top: 0.25rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  overflow-wrap: anywhere;
+}
+.assistantReferences {
+  margin-top: 0.625rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+}
+.assistantContext {
+  border-block: 1px solid var(--border-subtle);
+}
+.assistantContext summary {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.assistantContext summary::before {
+  content: "+";
+}
+.assistantContext[open] summary::before {
+  content: "−";
+}
+.assistantContext .assistantLabel {
+  display: block;
+  margin-block: 0.5rem;
+}
+.assistantContext textarea {
+  margin-bottom: 1rem;
+}

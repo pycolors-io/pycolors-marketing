@@ -1,31 +1,48 @@
+.page {
+  background: var(--background);
+}
+
+.templateCard {
+  border-radius: var(--marketing-panel-radius, 2rem);
+}
+
 .previewStage {
-  background: linear-gradient(
-    135deg,
-    color-mix(in oklab, var(--primary) 3%, var(--background)) 45%,
-    color-mix(in oklab, var(--primary) 7%, var(--background)) 45%
-  );
+  background: var(--marketing-canvas, var(--surface-muted));
+}
+
+.previewLink {
+  border-radius: 1rem;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 10%);
+}
+
+.offerCopy h3 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  letter-spacing: -0.04em;
+}
+
+.page :global([data-slot="button"]) {
+  border-radius: 100px;
 }
 
 .nextSteps {
-  background: radial-gradient(
-    ellipse at 0% 0%,
-    color-mix(in oklab, var(--primary) 6%, var(--background)),
-    var(--background) 70%
-  );
+  border: 0;
+  border-radius: var(--marketing-panel-radius, 2rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .workflowGrid {
   display: grid;
-  overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  border-radius: 5px;
-  background: var(--background);
+  gap: 1.25rem;
 }
 
 .workflowStep {
   display: flex;
   min-width: 0;
   flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--marketing-card-radius, 1.5rem);
+  background: var(--marketing-canvas, var(--surface-muted));
 }
 
 .workflowStep + .workflowStep {
@@ -47,18 +64,14 @@
 
 .workflowPreview {
   padding: 1.5rem;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    color-mix(in oklab, var(--primary) 5%, transparent),
-    transparent 70%
-  );
+  background: transparent;
 }
 
 .previewWindow {
   overflow: hidden;
   height: 10rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 5px;
+  border-radius: 0.875rem;
   background: var(--background);
   box-shadow: 0 4px 16px -8px
     color-mix(in oklab, var(--foreground) 12%, transparent);
@@ -151,6 +164,7 @@
 .pathCard {
   position: relative;
   padding: 1.5rem;
+  border-radius: var(--marketing-card-radius, 1.5rem);
   transition: background-color 180ms ease;
 }
 

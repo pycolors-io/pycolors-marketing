@@ -316,12 +316,6 @@ span[data-slot="badge"] {
   }
 }
 
-@media (min-width: 1280px) {
-  #nd-docs-layout:has(#nd-toc, #nd-toc-placeholder) {
-    --fd-toc-width: 14rem;
-  }
-}
-
 /* Desktop docs shell */
 @media (min-width: 1024px) {
   #nd-docs-layout {
@@ -478,6 +472,10 @@ div[role="dialog"]:not([data-slot="responsive-sidebar-mobile"]) {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   #nd-sidebar :is(a, button) {
     transition: none;
   }

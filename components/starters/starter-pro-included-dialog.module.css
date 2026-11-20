@@ -1,0 +1,256 @@
+.trigger {
+  display: flex;
+  width: 100%;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+.plus {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--foreground);
+  color: var(--background);
+}
+.plus svg {
+  width: 1rem;
+  height: 1rem;
+}
+.trigger:hover .plus {
+  opacity: 0.75;
+}
+.trigger:focus-visible,
+.close:focus-visible,
+.footer a:focus-visible,
+.footer button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.overlay {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  background: rgb(0 0 0 / 55%);
+  backdrop-filter: blur(8px);
+}
+.dialog {
+  --starter-pro-soft: var(--surface-muted);
+  position: fixed;
+  z-index: 101;
+  top: 50%;
+  left: 50%;
+  width: calc(100% - 2rem);
+  max-width: 64rem;
+  max-height: calc(100svh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.25rem, 3vw, 2rem);
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: 0 32px 100px rgb(0 0 0 / 25%);
+  outline: none;
+}
+/* Animate the viewport modal without moving its source card. Radix Presence
+   keeps the closing surface mounted until its exit animation completes. */
+.overlay[data-state="open"] {
+  animation: overlayIn 320ms ease-out both;
+}
+.overlay[data-state="closed"] {
+  animation: overlayOut 240ms ease-in both;
+}
+.dialog[data-state="open"] {
+  animation: dialogIn 440ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.dialog[data-state="closed"] {
+  animation: dialogOut 240ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes overlayOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 20px)) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes dialogOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 12px)) scale(0.985);
+  }
+}
+.closeBar {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  height: 0;
+}
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--surface-muted);
+  color: var(--foreground);
+  cursor: pointer;
+}
+.close svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+.hero {
+  display: grid;
+  align-items: center;
+  gap: 1.5rem;
+  padding: clamp(3rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 4rem) 2rem;
+  background: var(--surface-muted);
+}
+.eyebrow {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+.title {
+  max-width: 18ch;
+  margin-top: 1rem;
+  font-size: clamp(2.25rem, 4.8vw, 3.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.05em;
+  font-weight: 650;
+}
+.description {
+  max-width: 42ch;
+  margin-top: 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: var(--muted-foreground);
+}
+.artwork {
+  position: relative;
+  height: 12rem;
+}
+.content {
+  padding: clamp(1.5rem, 5vw, 4rem);
+}
+.content > h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.content > ul {
+  display: grid;
+  gap: 1rem;
+}
+.content > ul > li {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--border-subtle);
+}
+.footer a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.footer button {
+  min-height: 2.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 100px;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+@media (min-width: 48rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+  .artwork {
+    height: 18rem;
+  }
+  .content > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overlay[data-state],
+  .dialog[data-state] {
+    animation: none;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .overlay {
+    background: rgb(0 0 0 / 85%);
+    backdrop-filter: none;
+  }
+}
+@media (forced-colors: active) {
+  .overlay {
+    background: Canvas;
+    backdrop-filter: none;
+    opacity: 0.8;
+  }
+  .dialog {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+  .plus,
+  .close,
+  .footer button {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}

@@ -1,0 +1,131 @@
+.section {
+  color: var(--foreground);
+}
+.implementationHeading h2 {
+  max-width: 22ch;
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+}
+.implementationHeading p {
+  max-width: 58ch;
+}
+.implementationGrid {
+  display: grid;
+  gap: 1.5rem;
+}
+.implementationCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+  background: var(--background);
+  color: var(--foreground);
+}
+.implementationCard[data-card-tone="ink"] {
+  --background: #000;
+  --foreground: #fff;
+  --muted-foreground: #c8c8d0;
+  --primary: #fff;
+  --primary-foreground: #000;
+  --border-subtle: #34343b;
+  --ring: #fff;
+}
+.implementationIdentity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+.implementationIdentity > span:first-child {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border-radius: 0.875rem;
+  background: color-mix(in srgb, var(--foreground) 7%, var(--background));
+  color: var(--foreground);
+}
+.implementationIdentity svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+.implementationOffer h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+.implementationPrice {
+  margin-top: 1.25rem;
+  font-size: clamp(2.25rem, 3.8vw, 3rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+}
+.implementationFeatures {
+  display: grid;
+  gap: 0;
+  margin-block: 1.5rem;
+}
+.implementationFeatures > li {
+  padding-block: 0.875rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.implementationFeatures svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.implementationDelivery {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--foreground) 5%, var(--background));
+}
+.section .implementationAction {
+  display: inline-flex;
+  min-height: 2.875rem;
+  justify-content: center;
+  margin-top: auto;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--foreground);
+  border-radius: 100px;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 0.8125rem;
+  white-space: normal;
+  text-align: center;
+}
+.section .implementationAction:hover {
+  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
+  color: var(--background);
+}
+@media (min-width: 48rem) {
+  .implementationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (forced-colors: active) {
+  .implementationCard[data-card-tone="ink"] {
+    --background: Canvas;
+    --foreground: CanvasText;
+    --muted-foreground: CanvasText;
+    --primary: LinkText;
+    --primary-foreground: Canvas;
+    --border-subtle: CanvasText;
+    --ring: Highlight;
+  }
+  .section .implementationAction,
+  .section .implementationAction:hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}

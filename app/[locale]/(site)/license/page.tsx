@@ -20,7 +20,7 @@ import { Breadcrumb } from "@/components/seo/breadcrumb";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
 import {
-  LEGAL_REVISION,
+  SOURCE_TERMS_REVISION as LEGAL_REVISION,
   LEGAL_COMPANY as COMPANY,
   NA_AI_USAGE_SUMMARY,
   STARTER_PRO_USAGE_SUMMARY,
@@ -112,6 +112,8 @@ const sections: LicenseSection[] = [
       "Starter Pro is a paid SaaS foundation that includes production-oriented auth, billing, protected app structure, and commercial source code access.",
     items: [
       STARTER_PRO_USAGE_SUMMARY,
+      "The 2026-11-20 revision covers three source offers: Web; Mobile with its compatible backend, configuration, schema and guides without a Web purchase; and Fullstack with Web, Mobile and a shared API for the same accounts and data. The delivered licence and order identify the products included in your purchase.",
+      "Hosting, third-party services and Apple/Google accounts are configured and paid by the buyer. The source licence does not include a managed service, signed native binary, store publication or custom implementation.",
       "You may build SaaS products, internal tools, and client applications. You may not transfer the Starter Pro source code as a standalone client deliverable or share it outside the licensed entity.",
       "You may modify the source code for your own product implementation.",
       "You may not resell, redistribute, sublicense, publish, share, or repackage Starter Pro as a competing starter, SaaS boilerplate, template kit, UI kit, private marketplace asset, or downloadable product.",
@@ -162,7 +164,7 @@ export default function LicensePage() {
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
-      <Container className="pb-16 pt-24 sm:pb-20 sm:pt-28">
+      <Container className="marketing-page-intro pb-16 pt-24 sm:pb-20 sm:pt-28">
         <div className="w-full min-w-0">
           <Breadcrumb
             className={`mb-8 ${styles.breadcrumb}`}

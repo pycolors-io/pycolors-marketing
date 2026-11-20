@@ -23,6 +23,7 @@ import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
 } from "@/lib/products/public-catalog";
+import { STARTER_PRO_MOBILE_PREVIEW } from "@/lib/products/starter-pro-mobile-preview";
 import { navigateToCheckout } from "@/lib/api/checkout-navigation";
 import { trackMoneyPathEvent } from "@/lib/analytics";
 
@@ -50,6 +51,28 @@ afterEach(() => {
 afterAll(() => vi.unstubAllEnvs());
 
 describe("Starter discovery page", () => {
+  it("announces Mobile separately from the two available Web starters", () => {
+    render(<StartersPage />);
+    const mobile = screen.getByRole("region", {
+      name: STARTER_PRO_MOBILE_PREVIEW.name,
+    });
+    expect(mobile).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.status);
+    expect(mobile).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.stack);
+    const link = within(mobile).getByRole("link", {
+      name: STARTER_PRO_MOBILE_PREVIEW.action,
+    });
+    expect(link).toHaveAttribute("href", STARTER_PRO_MOBILE_PREVIEW.href);
+    link.focus();
+    expect(link).toHaveFocus();
+    expect(within(mobile).queryByRole("button")).not.toBeInTheDocument();
+    expect(
+      within(mobile).queryByText(PRODUCT_DISPLAY["starter-pro"].priceLabel),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("article", { name: "Starter Free" })).toBeVisible();
+    expect(screen.getByRole("article", { name: "Starter Pro" })).toBeVisible();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
   it("preserves the public route and gives keyboard users a main target and valid section anchors", () => {
     render(<StartersPage />);
     expect(metadata.alternates?.canonical).toBe("/starters");
@@ -177,7 +200,7 @@ describe("Starter discovery page", () => {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productSlug: "starter-pro" }),
+        body: JSON.stringify({ productSlug: "starter-pro", locale: "en" }),
         signal: expect.any(AbortSignal),
       },
     );

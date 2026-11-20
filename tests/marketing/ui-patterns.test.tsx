@@ -22,11 +22,11 @@ const patterns = [
   ["Settings page", "settings", "/docs/blocks/account/settings-panel"],
   ["Team management", "team", "/docs/blocks/account/workspace-members"],
   [
-    "Protected app shell",
+    "Application navigation",
     "shell",
     "/docs/blocks/app-shells/responsive-sidebar",
   ],
-  ["Upgrade moment", "upgrade", "/docs/blocks/commerce/pricing-plans"],
+  ["Plan comparison", "upgrade", "/docs/blocks/commerce/pricing-plans"],
 ] as const;
 
 describe("UI Patterns page", () => {
@@ -36,18 +36,17 @@ describe("UI Patterns page", () => {
     expect(metadata.openGraph?.url).toBe("/ui/patterns");
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Give every screen a clear purpose.",
+      "The right structure for every SaaS screen.",
     );
     expect(screen.getByRole("main")).toHaveAttribute("id", "content");
     expect(screen.getByRole("main")).toHaveAttribute("tabindex", "-1");
     const nav = screen.getByRole("navigation", {
       name: "PyColors UI navigation",
     });
-    expect(within(nav).getByRole("link", { name: "Patterns" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
-    expect(nav.querySelectorAll('[aria-current="page"]')).toHaveLength(1);
+    expect(
+      within(nav).getByRole("button", { name: "Browse PyColors UI: Patterns" }),
+    ).toHaveAttribute("aria-expanded", "false");
+    expect(within(nav).getAllByRole("link")).toHaveLength(1);
     expect(
       screen.getByRole("link", { name: "Explore the patterns" }),
     ).toHaveAttribute("href", "#pattern-library");

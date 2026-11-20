@@ -6,7 +6,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import { Footer } from "@/components/footer";
+import { Footer, FooterPromotion } from "@/components/footer";
 import { FooterAppearance } from "@/components/footer-appearance";
 import { UI_VERSION, TOKENS_VERSION } from "@/lib/version";
 
@@ -40,14 +40,49 @@ afterEach(() => {
 
 describe("marketing footer", () => {
   it("keeps product discovery, comparison, support and legal destinations reachable", () => {
-    render(<Footer />);
+    render(
+      <>
+        <FooterPromotion />
+        <Footer />
+      </>,
+    );
     const footer = screen.getByRole("contentinfo", {
       name: "PyColors site footer",
     });
     expect(
       within(footer).getByRole("button", { name: "Language: English" }),
     ).toHaveTextContent("English");
-    for (const group of ["Products", "Resources", "Compare", "Company"]) {
+    const invitation = screen.getByRole("region", {
+      name: "Your next product starts here.",
+    });
+    expect(within(invitation).getByRole("heading", { level: 2 })).toBeVisible();
+    expect(footer).not.toContainElement(invitation);
+    expect(
+      invitation.compareDocumentPosition(footer) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    const startingPoints = within(invitation).getByRole("navigation", {
+      name: "Choose your starting point",
+    });
+    expect(
+      within(startingPoints)
+        .getAllByRole("link")
+        .map((link) => link.getAttribute("href")),
+    ).toEqual(["/ui", "/blocks", "/templates", "/starters"]);
+    for (const group of [
+      "Products",
+      "UI",
+      "Blocks",
+      "Design System",
+      "Starter Free",
+      "Starter Pro",
+      "Templates",
+      "Guides",
+      "Registry",
+      "Resources",
+      "Compare",
+      "Company",
+    ]) {
       const nav = within(footer).getByRole("navigation", {
         name: `Footer ${group}`,
       });
@@ -64,6 +99,7 @@ describe("marketing footer", () => {
       "/starters/pro",
       "/templates",
       "/templates/na-ai-landing",
+      "/starters/mobile",
       "/docs",
       "/demo",
       "/guides",
@@ -85,6 +121,25 @@ describe("marketing footer", () => {
       "/terms",
       "/privacy",
     ];
+    const ui = within(footer).getByRole("navigation", { name: "Footer UI" });
+    const uiLinks = within(ui).getAllByRole("link");
+    expect(uiLinks.at(-2)).toHaveTextContent("AI Composer");
+    expect(uiLinks.at(-1)).toHaveAccessibleName("View all components");
+    expect(uiLinks.at(-1)).toHaveAttribute("href", "/docs/ui");
+    const blocks = within(footer).getByRole("navigation", {
+      name: "Footer Blocks",
+    });
+    expect(
+      within(blocks).getByRole("link", { name: "View all blocks" }),
+    ).toHaveAttribute("href", "/blocks");
+    const products = within(footer).getByRole("navigation", {
+      name: "Footer Products",
+    });
+    expect(
+      within(products).getByRole("link", {
+        name: "Starter Pro Mobile",
+      }),
+    ).toHaveAttribute("href", "/starters/mobile");
     const links = within(footer).getAllByRole("link");
     const explorer = within(footer).getByRole("link", { name: "UI Explorer" });
     expect(explorer).toHaveAttribute("href", "https://ui.pycolors.io/");
@@ -105,10 +160,10 @@ describe("marketing footer", () => {
       expect(link.querySelector("a,button")).toBeNull();
     }
     expect(
-      within(footer).getByRole("link", { name: "Explore Starter Pro" }),
+      within(invitation).getByRole("link", { name: "Explore Starter Pro" }),
     ).toHaveAttribute("href", "/starters/pro");
     expect(
-      within(footer).getByRole("link", { name: "Compare products" }),
+      within(invitation).getByRole("link", { name: "Compare products" }),
     ).toHaveAttribute("href", "/pricing");
     expect(
       within(footer).getByRole("link", { name: "Contact" }),
@@ -234,7 +289,7 @@ describe("marketing footer", () => {
       matches: true,
     });
     render(<Footer />);
-    fireEvent.click(screen.getByRole("link", { name: "Compare products" }));
+    fireEvent.click(screen.getByRole("link", { name: "Pricing" }));
     expect(scroll).toHaveBeenCalledWith({
       top: 0,
       left: 0,
@@ -258,7 +313,12 @@ describe("marketing footer", () => {
   });
 
   it("has no automated accessibility violations", async () => {
-    const { container } = render(<Footer />);
+    const { container } = render(
+      <>
+        <FooterPromotion />
+        <Footer />
+      </>,
+    );
     expect(await axe(container)).toHaveNoViolations();
   });
 });

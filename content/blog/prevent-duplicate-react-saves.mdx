@@ -1,0 +1,300 @@
+---
+title: Prevent Duplicate React Saves Across Multiple Submit Paths
+description: Reproduce same-turn duplicate save attempts, use a synchronous in-flight guard, and connect truthful saving feedback to a source-copy Settings Panel.
+author: Patrice Parny
+date: "2026-11-16"
+category: React
+tags:
+  - React
+  - SaaS
+  - Forms
+  - UI Patterns
+featured: false
+readingTime: 9 min read
+cover: /seo/blog/og-blog-saas.png
+cta:
+  label: Explore Settings Panel
+  href: /docs/blocks/account/settings-panel
+  variant: blocks
+---
+
+## The save UI is not the mutation lock
+
+A settings form may expose a disabled **Save** button and a “Saving…” label while the request is in flight. That is useful feedback, but a different code path can call the same save operation before the pending state reaches a new render. If both calls read the same old `saving` value, both may begin work.
+
+**Separate the concerns:** use React state to render pending/error/success, and use a synchronous in-flight guard at the application-owned mutation boundary to reject a second _same-turn_ invocation. Release the guard on success **and** failure so a retry remains possible. A client guard is not server-side idempotency.
+
+This is a deliberately narrow case. React [processes separate intentional click events safely](https://react.dev/learn/queueing-a-series-of-state-updates), so a normal disabled button can prevent ordinary double-click submission. The experiment below instead models **two programmatic or alternate-entry calls before a render**, not a claim that React routinely allows a second click through a disabled control.
+
+The [PyColors Settings Panel](/docs/blocks/account/settings-panel) makes this boundary visible: its `submitting` prop controls the busy/disabled presentation, while the consuming application owns `onSubmit`, validation, persistence and permission checks. It is a **source-copy Block**, not a hosted save API, and it does not persist any value itself.
+
+## Reproduce an overlapping call without a server
+
+A render snapshot such as `saving === false` cannot act as a synchronous lock shared by two calls before that snapshot changes. In the runnable test below, the intentionally naive callback captures `renderedBusy = false`; invoking it twice in one turn increments the operation counter twice. This is a **pure JavaScript model**, not a simulated browser or React event test.
+
+The corrected contract needs only one small piece of state whose mutation is immediate. It should reject overlapping work instead of queuing it, expose pending status for diagnostics and always release itself in a `finally` block.
+
+Create `save-gate.mjs` in an empty directory:
+
+```js title="save-gate.mjs"
+/**
+ * One gate per form/mutation scope. A second invocation while pending is
+ * ignored, not queued, and cannot reach the operation.
+ */
+export function createSaveGate() {
+  let pending = false;
+
+  return {
+    get pending() {
+      return pending;
+    },
+    async run(operation) {
+      if (typeof operation !== "function") {
+        throw new TypeError("operation must be a function");
+      }
+      if (pending) return { started: false };
+      pending = true; // Synchronous: precedes the first await.
+
+      try {
+        await operation();
+        return { started: true };
+      } finally {
+        pending = false; // Release after both success and failure.
+      }
+    },
+  };
+}
+```
+
+The guard returns `{ started: false }` for an overlapping call. That caller does not wait for the first request, and does not receive its result. This “ignore while busy” policy is appropriate for a **Save settings** action whose in-flight inputs are frozen. It is not automatically appropriate for chat messages, payments, multiple queued edits or operations where every action must be processed.
+
+## Verify the lock and its failure paths
+
+Save this independent test file alongside the module. It uses only Node's built-in test and assertion APIs; there is no payment provider, customer dataset, package import or network access.
+
+```js title="save-gate.test.mjs"
+import assert from "node:assert/strict";
+import test from "node:test";
+import { createSaveGate } from "./save-gate.mjs";
+
+function deferred() {
+  let resolve;
+  let reject;
+  const promise = new Promise((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+}
+
+test("a captured render snapshot does not lock same-turn callers", () => {
+  const renderedBusy = false; // Synthetic snapshot, not a React browser test.
+  let calls = 0;
+  const naiveSave = () => {
+    if (renderedBusy) return;
+    calls++;
+    // A React setState call would request a future render, not mutate this snapshot.
+  };
+  naiveSave();
+  naiveSave();
+  assert.equal(calls, 2);
+});
+
+test("two same-turn submissions start just one operation", async () => {
+  const gate = createSaveGate();
+  const hold = deferred();
+  let calls = 0;
+  const work = async () => {
+    calls++;
+    await hold.promise;
+  };
+  const first = gate.run(work);
+  const secondPromise = gate.run(work);
+  const callsBeforeRelease = calls;
+  hold.resolve(); // Resolve even if the guard is deliberately removed.
+  assert.equal(callsBeforeRelease, 1);
+  assert.deepEqual(await secondPromise, { started: false });
+  assert.deepEqual(await first, { started: true });
+});
+
+test("pending is visible synchronously, then clears on success", async () => {
+  const gate = createSaveGate();
+  const hold = deferred();
+  const first = gate.run(() => hold.promise);
+  assert.equal(gate.pending, true);
+  hold.resolve();
+  await first;
+  assert.equal(gate.pending, false);
+});
+
+test("a failed save rejects and releases the gate", async () => {
+  const gate = createSaveGate();
+  await assert.rejects(
+    gate.run(async () => {
+      throw Error("offline");
+    }),
+    /offline/,
+  );
+  assert.equal(gate.pending, false);
+});
+
+test("a later retry can start after the failed save", async () => {
+  const gate = createSaveGate();
+  await assert.rejects(
+    gate.run(async () => {
+      throw Error("offline");
+    }),
+  );
+  assert.deepEqual(await gate.run(async () => {}), { started: true });
+});
+
+test("synchronous throws also release the gate", async () => {
+  const gate = createSaveGate();
+  await assert.rejects(
+    gate.run(() => {
+      throw Error("bad input");
+    }),
+    /bad input/,
+  );
+  assert.equal(gate.pending, false);
+});
+
+test("independent forms use independent gates", async () => {
+  const a = createSaveGate();
+  const b = createSaveGate();
+  const hold = deferred();
+  const first = a.run(() => hold.promise);
+  assert.deepEqual(await b.run(async () => {}), { started: true });
+  assert.equal(a.pending, true);
+  hold.resolve();
+  await first;
+});
+
+test("invalid callbacks do not acquire the gate", async () => {
+  const gate = createSaveGate();
+  await assert.rejects(gate.run(null), /operation must be a function/);
+  assert.equal(gate.pending, false);
+});
+```
+
+```sh
+node --test save-gate.test.mjs
+```
+
+**Observed isolated result (16 November 2026):** Node.js `22.16.0` passed **8/8** tests. The same-turn reproduction starts two naive operations, while the gate starts only one; failure, retry, synchronous throw and independent-form behavior are also covered. These are function-level tests. They do **not** prove any particular React render, browser keyboard behavior, installed PyColors package or network integration.
+
+The failure condition is meaningful: remove `pending = true` from the guard, rerun the test file, and the overlapping-call assertions fail. Restore the line before using the code.
+
+## Connect the gate to a real form boundary
+
+For a consumer application, the same invariant can live in a React ref. React's [useRef](https://react.dev/reference/react/useRef) maintains a value across renders, and changing `.current` does not itself render UI. Here the ref blocks a second invocation synchronously; `saving` supplies the UI truth to the existing source-copy Block.
+
+After [copying the Settings Panel source](/docs/blocks/account/settings-panel), an application-owned client component can look like this:
+
+```tsx title="profile-settings.tsx"
+"use client";
+
+import { useRef, useState, type FormEvent } from "react";
+import {
+  SettingsPanel,
+  type SettingsPanelFeedback,
+  type SettingsPanelSection,
+} from "./blocks/settings-panel";
+
+export function ProfileSettings({
+  persist,
+}: {
+  persist: (displayName: string) => Promise<void>;
+}) {
+  const [displayName, setDisplayName] = useState("Sample workspace");
+  const [saving, setSaving] = useState(false);
+  const [feedback, setFeedback] = useState<SettingsPanelFeedback>();
+  const inFlight = useRef(false);
+
+  async function save() {
+    // One synchronous gate shared by every save entry point.
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setSaving(true);
+    setFeedback(undefined);
+
+    try {
+      await persist(displayName);
+      setFeedback({ status: "success", title: "Settings saved" });
+    } catch {
+      setFeedback({ status: "error", title: "Save failed. Try again." });
+    } finally {
+      inFlight.current = false;
+      setSaving(false);
+    }
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void save();
+  }
+
+  const sections = [
+    {
+      id: "profile",
+      title: "Profile",
+      fields: [
+        {
+          id: "display-name",
+          name: "displayName",
+          label: "Display name",
+          value: displayName,
+          onValueChange: setDisplayName,
+        },
+      ],
+    },
+  ] satisfies readonly SettingsPanelSection[];
+
+  return (
+    <SettingsPanel
+      title="Profile settings"
+      sections={sections}
+      submitLabel="Save settings"
+      submitting={saving}
+      submittingLabel="Saving…"
+      feedback={feedback}
+      onSubmit={handleSubmit}
+    />
+  );
+}
+```
+
+`persist` is intentionally passed in by the application. It is **not** a PyColors service and the example does not claim to supply authentication, authorization or a backend. Both a form submit handler and any other Save entry point should call the same `save` function rather than duplicating the mutation. If a requirement allows changing values while a save runs, decide explicitly whether to queue the latest intent, cancel stale work or reject new edits; the sample's **ignore while busy** policy is deliberately simpler.
+
+The Block's documented implementation disables its submit button and fields while `submitting` is true, displays `aria-busy` on the form, and presents success or error feedback with a live region. None of that replaces a server-side permission check or idempotency guarantee. Verify actual semantics in the copied Block version and in the rendered consumer before launch.
+
+## Do not confuse a client lock with idempotency
+
+| Boundary                               | What this example establishes                      | What remains your responsibility                                   |
+| -------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------ |
+| Same mounted form                      | One synchronous in-flight attempt per guard        | Shared entry points must use the same guard                        |
+| UI feedback                            | Pass `saving` and `feedback` to a controlled Block | Review keyboard, error and focus behavior in a real browser        |
+| Network request                        | Caller may retry after completion/failure          | Timeout, disconnection and server-side validation                  |
+| Remount, another tab or another device | **Nothing**: the ref is local                      | Server deduplication/idempotency and appropriate transaction rules |
+| Payment or irreversible action         | **Not covered**                                    | Provider-specific idempotency, authorization and replay protection |
+
+A successful HTTP response can be lost after the server has committed. A second request from another tab or device will not encounter this ref. For state-changing backend operations, choose idempotency and transactional semantics appropriate to that operation. Do not treat a disabled control, a React ref or client-only tests as proof of exactly-once processing.
+
+## Verification checklist
+
+- Identify every Save entry point; route them through one application-owned mutation function.
+- Acquire a synchronous guard **before** the first `await`; release it in `finally`.
+- Decide whether overlap should be ignored, queued or replaced, and document the choice.
+- Render pending, failure and retry states through `submitting` and `feedback`.
+- Reproduce simultaneous calls, rejection and subsequent retry with independent tests.
+- In the real app, test keyboard submission, focus, error announcement and narrow layouts.
+- Validate authorization, payloads and appropriate idempotency on the server.
+- Treat remounts, refreshes, network retries and multi-device calls separately.
+
+For the broader validation and form architecture, use the [Forms with validation guide](/docs/guides/forms-with-validation). For a different race—an old field-validation response overwriting newer input—see [the async validation article](/blog/prevent-stale-async-validation-react-forms). This article covers **in-flight mutation admission**, not validation-response ordering.
+
+**Source and version context (checked 16 November 2026):** the public [React `useRef` reference](https://react.dev/reference/react/useRef), [React update batching guide](https://react.dev/learn/queueing-a-series-of-state-updates), [HTML `disabled` control reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled), [Node test runner](https://nodejs.org/api/test.html), and current [PyColors Settings Panel source-copy contract](/docs/blocks/account/settings-panel). The Marketing manifest declares Next.js `16.4.2`, React `^19.3.1`, Node `24.x`, and pnpm `10.32.1`. Those versions are **declared**, not versions installed in this isolated demonstration. Only Node.js `22.16.0` executed the eight function-level tests.
+
+## Next step: explore the controlled form surface
+
+**Explore Settings Panel** in the PyColors Blocks documentation to inspect its public source, the controlled `submitting` contract and the presentation of success/error feedback. Copy it into your app only after choosing the correct data and mutation ownership for your product. The Block does not save your data for you.

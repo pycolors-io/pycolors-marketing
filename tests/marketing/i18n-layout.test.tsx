@@ -84,7 +84,7 @@ describe("shared English and French Marketing layouts", () => {
     );
     expect(container).not.toHaveTextContent(STARTER_PRO_UPDATES_SUMMARY);
     expect(container).toHaveTextContent(
-      "Les futures mises à jour de Starter Pro sont incluses sans frais supplémentaires",
+      "Les futures mises à jour des produits inclus dans votre achat Starter Pro sont incluses sans coût supplémentaire",
     );
     expect(container).toHaveTextContent(
       "Les adaptations spécifiques font l’objet d’un devis distinct.",

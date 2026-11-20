@@ -1,5 +1,6 @@
 import { SiteText } from "@/components/site-text";
 import { useCopy } from "@/lib/i18n/use-copy";
+import design from "./docs-article.module.css";
 import * as React from "react";
 import { CheckCircle2, XCircle } from "lucide-react";
 
@@ -51,7 +52,8 @@ function Panel({ tone, title, items }: PanelProps) {
   return (
     <section
       className={cn(
-        "relative overflow-hidden rounded-[8px] border bg-card",
+        design.guidancePanel,
+        "relative overflow-hidden border",
         "border-border-subtle shadow-off",
       )}
     >
@@ -64,14 +66,14 @@ function Panel({ tone, title, items }: PanelProps) {
 
       <header
         className={cn(
-          "grid h-14 grid-cols-[20px_1fr] items-center gap-2",
+          "grid min-h-14 grid-cols-[20px_1fr] items-center gap-2 py-3",
           "border-b border-border-subtle",
           "bg-muted/20 px-3.5",
         )}
       >
         <StatusIcon tone={tone} icon={Icon} />
 
-        <h3 className="m-0 translate-y-px text-[14px] font-semibold tracking-tight text-foreground mt-2">
+        <h3 className="m-0 text-[14px] font-semibold tracking-tight text-foreground">
           {tSite(title)}
         </h3>
       </header>

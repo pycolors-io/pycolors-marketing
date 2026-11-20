@@ -11,9 +11,17 @@ export function useProductCheckout(input: {
   productSlug: string;
   productName: string | null;
   email?: string;
+  upgradeToken?: string;
+  locale?: "en" | "fr";
 }) {
   const pathname = usePathname();
-  const key = JSON.stringify([pathname, input.productSlug, input.email]);
+  const key = JSON.stringify([
+    pathname,
+    input.productSlug,
+    input.email,
+    input.upgradeToken,
+    input.locale,
+  ]);
   const active = React.useRef<{
     key: string;
     controller: AbortController;
@@ -74,6 +82,8 @@ export function useProductCheckout(input: {
         {
           productSlug: input.productSlug,
           email: input.email,
+          ...(input.upgradeToken ? { upgradeToken: input.upgradeToken } : {}),
+          ...(input.locale ? { locale: input.locale } : {}),
         },
         { signal: attempt.controller.signal },
       );

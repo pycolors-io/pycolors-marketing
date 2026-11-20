@@ -77,12 +77,12 @@ test("keeps discovery, docs links, and the CTA funnel on real routes", () => {
     navigation,
     /title: "UI system"[\s\S]*label: "Patterns"/u,
   );
-  for (const footerSource of [footer, docsFooter]) {
-    assert.match(
-      footerSource,
-      /label: "Theme Builder", href: "\/tools\/theme-builder"/u,
-    );
-  }
+  assert.match(
+    footer,
+    /label: "Theme Builder", href: "\/tools\/theme-builder"/u,
+  );
+  assert.match(docsFooter, /import \{ Footer \} from "\.\/footer"/u);
+  assert.match(docsFooter, /<Footer \/>/u);
   assert.match(sitemap, /["']\/tools\/theme-builder["']/u);
   for (const document of docs) {
     assert.match(document, /\/tools\/theme-builder/u);

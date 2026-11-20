@@ -2,6 +2,7 @@
 
 import { useCopy } from "@/lib/i18n/use-copy";
 import * as React from "react";
+import { ShieldCheck } from "lucide-react";
 import { Link } from "@/lib/i18n/navigation";
 
 import { cn } from "@pycolors/ui";
@@ -12,6 +13,8 @@ import {
   storePrivacyConsent,
   type PrivacyConsent,
 } from "@/lib/privacy-consent";
+
+import styles from "./privacy-consent-banner.module.css";
 
 export function PrivacyConsentSettings() {
   const tSite = useCopy();
@@ -95,26 +98,24 @@ export function PrivacyConsentBanner({
       aria-labelledby="privacy-consent-title"
       aria-describedby="privacy-consent-description"
       className={cn(
-        "fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 p-4 sm:inset-x-auto sm:bottom-4 sm:left-4 sm:w-96",
-        "max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-lg border border-border bg-background text-foreground shadow-soft",
+        styles.banner,
         "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200",
       )}
     >
-      <h2
-        id="privacy-consent-title"
-        className="text-[13px] font-semibold leading-5"
-      >
-        {fr ? "Préférences de confidentialité" : "Cookie preferences"}
-      </h2>
-      <p
-        id="privacy-consent-description"
-        className="mt-1.5 text-[13px] leading-5 text-muted-foreground"
-      >
+      <div className={styles.heading}>
+        <span className={styles.icon} aria-hidden="true">
+          <ShieldCheck focusable="false" />
+        </span>
+        <h2 id="privacy-consent-title">
+          {fr ? "Préférences de confidentialité" : "Cookie preferences"}
+        </h2>
+      </div>
+      <p id="privacy-consent-description" className={styles.description}>
         {fr
           ? "Le stockage essentiel assure le fonctionnement de PyColors. Les balises Google facultatives se chargent après votre accord. Vercel Web Analytics est distinct ; consultez notre politique de confidentialité pour les détails."
           : "Essential storage keeps PyColors working. Optional Google tags load only after acceptance. Vercel Web Analytics is separate; see Privacy for details."}
       </p>
-      <div className="mt-1 flex items-center gap-4 text-xs text-muted-foreground">
+      <div className={styles.policies}>
         {[
           { label: fr ? "Confidentialité" : "Privacy", href: "/privacy" },
           { label: fr ? "Conditions" : "Terms", href: "/terms" },
@@ -128,10 +129,11 @@ export function PrivacyConsentBanner({
           </Link>
         ))}
       </div>
-      <div className="mt-2 grid grid-cols-2 gap-2">
+      <div className={styles.actions}>
         <Button
           type="button"
           variant="outline"
+          className={styles.choice}
           ref={rejectRef}
           onClick={() => saveConsent("denied")}
         >
@@ -140,6 +142,7 @@ export function PrivacyConsentBanner({
         <Button
           type="button"
           variant="outline"
+          className={styles.choice}
           onClick={() => saveConsent("accepted")}
         >
           {fr ? "Accepter les facultatifs" : "Accept optional"}

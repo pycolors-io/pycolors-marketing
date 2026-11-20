@@ -1,0 +1,134 @@
+.frame {
+  --marketing-panel-radius: clamp(1.25rem, 2.5vw, 2rem);
+  --marketing-card-radius: 1.5rem;
+  --marketing-canvas: #f5f5f7;
+  --marketing-graphite: #17181d;
+  --marketing-graphite-ink: #ffffff;
+  --marketing-cobalt: #2059bf;
+  --marketing-action-fill: #6b2fd4;
+  --marketing-action-ink: #ffffff;
+  --marketing-action-hover: #5822ba;
+  --marketing-cobalt-ink: #ffffff;
+  --marketing-gold: #ffd43b;
+  --marketing-gold-ink: #35261b;
+  --marketing-lilac: #ece5ff;
+  --marketing-lilac-ink: #35215e;
+  --marketing-peach: #ffe1cd;
+  --marketing-peach-ink: #49291b;
+  --site-radius-panel: var(--marketing-panel-radius);
+}
+
+:global(html.dark) .frame {
+  --marketing-canvas: #121217;
+  --marketing-graphite: #191b23;
+  --marketing-cobalt: #204694;
+  --marketing-gold: #594519;
+  --marketing-gold-ink: #ffffff;
+  --marketing-lilac: #35264e;
+  --marketing-lilac-ink: #ede2ff;
+  --marketing-peach: #48312a;
+  --marketing-peach-ink: #ffe8dc;
+}
+
+:global(html[data-site-palette="monochrome"]) .frame {
+  --marketing-canvas: var(--surface-muted);
+  --marketing-graphite: var(--surface-muted);
+  --marketing-graphite-ink: var(--foreground);
+  --marketing-cobalt: var(--surface-muted);
+  --marketing-cobalt-ink: var(--foreground);
+  --marketing-action-fill: var(--primary);
+  --marketing-action-ink: var(--primary-foreground);
+  --marketing-action-hover: var(--brand-primary-hover);
+  --marketing-gold: var(--surface-muted);
+  --marketing-gold-ink: var(--foreground);
+  --marketing-lilac: var(--surface-muted);
+  --marketing-lilac-ink: var(--foreground);
+  --marketing-peach: var(--surface-muted);
+  --marketing-peach-ink: var(--foreground);
+}
+
+.frame::after,
+.frame > :global(header.site-frame)::after {
+  display: none;
+}
+
+.frame :global(.marketing-section) {
+  border-image: none;
+}
+
+.frame :global(.marketing-section-pattern)::before,
+.frame :global(.marketing-section-pattern)::after {
+  display: none;
+}
+
+.frame :global(.marketing-section-pattern) > div {
+  padding-top: 0;
+}
+
+@media (forced-colors: active) {
+  .frame,
+  :global(html.dark) .frame,
+  :global(html[data-site-palette="monochrome"]) .frame {
+    --marketing-canvas: Canvas;
+    --marketing-graphite: Canvas;
+    --marketing-graphite-ink: CanvasText;
+    --marketing-cobalt: Canvas;
+    --marketing-cobalt-ink: CanvasText;
+    --marketing-gold: Canvas;
+    --marketing-gold-ink: CanvasText;
+    --marketing-lilac: Canvas;
+    --marketing-lilac-ink: CanvasText;
+    --marketing-peach: Canvas;
+    --marketing-peach-ink: CanvasText;
+  }
+}
+
+.frame :global(main#content) {
+  scroll-margin-top: 5rem;
+}
+
+/* Starter discovery actions follow the selected palette, independently of panel color. */
+.frame
+  :global(a[data-slot="button"]):is(
+    [href$="/starters/pro"],
+    [href$="/starters/free"],
+    [href^="https://starter-demo.pycolors.io"]
+  ) {
+  border-color: var(--marketing-action-fill);
+  background: var(--marketing-action-fill);
+  color: var(--marketing-action-ink);
+}
+.frame
+  :global(a[data-slot="button"]):is(
+    [href$="/starters/pro"],
+    [href$="/starters/free"],
+    [href^="https://starter-demo.pycolors.io"]
+  ):hover {
+  border-color: var(--marketing-action-hover);
+  background: var(--marketing-action-hover);
+  color: var(--marketing-action-ink);
+}
+@media (forced-colors: active) {
+  .frame,
+  :global(html[data-site-palette="monochrome"]) .frame {
+    --marketing-action-fill: ButtonFace;
+    --marketing-action-ink: ButtonText;
+    --marketing-action-hover: ButtonFace;
+  }
+  .frame
+    :global(a[data-slot="button"]):is(
+      [href$="/starters/pro"],
+      [href$="/starters/free"],
+      [href^="https://starter-demo.pycolors.io"]
+    ) {
+    border-color: ButtonText;
+  }
+}
+
+/* The header is fixed: reserve its height once, then a compact reading gutter. */
+.frame :global(.marketing-page-intro) {
+  padding-top: calc(var(--site-header-height, 3.5rem) + 1rem);
+}
+.frame :global([data-marketing-breadcrumb]) {
+  margin-bottom: 1.25rem;
+}

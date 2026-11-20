@@ -1,0 +1,206 @@
+/* Article chrome only. Embedded UI examples keep the actual product tokens,
+   component variants, syntax highlighting, and native interactions. */
+.decisionCard,
+.featureCard,
+.guidancePanel,
+.catalogCard {
+  min-width: 0;
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+  box-shadow: none;
+}
+
+.decisionCard,
+.featureCard {
+  padding: var(--docs-card-padding, 1.25rem);
+}
+
+.decisionCard h3,
+.featureCard h3 {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+}
+
+.decisionCard > div:first-child > div > span {
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  border-color: var(--border-subtle);
+  background: var(--docs-canvas, var(--surface-muted));
+  color: var(--muted-foreground);
+  letter-spacing: 0;
+}
+
+.decisionCard > div:first-child > span[aria-hidden="true"],
+.featureCard > div[aria-hidden="true"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-bottom: 0.75rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  box-shadow: none;
+}
+
+.decisionCard > div:first-child > span[aria-hidden="true"] svg,
+.featureCard > div[aria-hidden="true"] svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.featureCard > h3 + div {
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.decisionLink {
+  border-radius: var(--docs-radius, 0.75rem);
+}
+
+.decisionLink:hover .decisionCard {
+  border-color: color-mix(in srgb, var(--foreground) 25%, var(--border-subtle));
+  background: var(--docs-card, var(--background));
+}
+
+.decisionCard[data-tone="pro"] {
+  border-color: var(--border-subtle);
+}
+
+.upgradeCard {
+  padding: var(--docs-card-padding, 1.25rem);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+}
+
+.upgradeCard h3 {
+  max-width: 35ch;
+  font-family: var(--font-brand);
+  font-size: 1.125rem;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
+
+.upgradeCard a,
+.upgradeCard button {
+  min-height: 2.75rem;
+  border-radius: 999px;
+}
+
+.conceptTabs {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+}
+
+.conceptTabs .conceptList {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.25rem;
+  max-width: 100%;
+  padding: 0.375rem 0.625rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--docs-canvas, var(--surface-muted));
+}
+
+.conceptList .conceptTrigger {
+  flex: none;
+  min-height: 2.75rem;
+  padding-inline: 0.75rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  font-size: 0.8125rem;
+}
+
+.conceptPanel {
+  padding: var(--docs-card-padding, 1.25rem);
+  border: 0;
+  background: var(--docs-card, var(--background));
+}
+
+.conceptPanel span[aria-hidden="true"] {
+  border-radius: 0.75rem;
+}
+
+.sectionLinks a {
+  min-height: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: 999px;
+  background: var(--docs-card, var(--background));
+  line-height: 1.5;
+}
+
+.sectionLinks a:hover {
+  background: var(--docs-canvas, var(--surface-muted));
+}
+
+.guidancePanel > header {
+  padding-inline: var(--docs-card-padding, 1.25rem);
+  background: var(--docs-card, var(--background));
+}
+
+.guidancePanel > ul > li {
+  padding: 0.875rem 1.25rem;
+  line-height: 1.7;
+}
+
+.catalogCard > div:first-child {
+  padding: var(--docs-card-padding, 1.25rem);
+  background: var(--docs-card, var(--background));
+}
+
+.catalogCard ul {
+  padding: 0.5rem;
+}
+
+.codeBlock,
+.commandBlock {
+  overflow: hidden;
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+}
+
+.codeBlock > div:has(> figcaption),
+.commandBlock > div:first-child {
+  min-height: 3rem;
+  background: var(--docs-canvas, var(--surface-muted));
+}
+
+.tableFrame {
+  border-radius: var(--docs-radius, 0.75rem);
+  background: var(--docs-card, var(--background));
+}
+
+.tableFrame th {
+  background: var(--docs-canvas, var(--surface-muted));
+}
+
+.quote {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-inline-start: 3px solid var(--foreground);
+  border-radius: 0 var(--docs-radius, 0.75rem) var(--docs-radius, 0.75rem) 0;
+  background: var(--docs-canvas, var(--surface-muted));
+  font-style: normal;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .decisionLink .decisionCard {
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+}
+
+@media (forced-colors: active) {
+  .decisionCard,
+  .featureCard,
+  .guidancePanel,
+  .catalogCard,
+  .upgradeCard {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+}

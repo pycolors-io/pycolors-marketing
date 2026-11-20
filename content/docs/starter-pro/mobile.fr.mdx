@@ -1,0 +1,88 @@
+---
+title: Starter Pro Mobile
+description: Installer le code natif acheté et son backend compatible inclus, sans achat Web distinct.
+lastUpdated: "2026-11-20"
+appliesTo: Acheteurs Starter Pro Mobile
+---
+
+Starter Pro Mobile est une licence de code source à paiement unique : application **Expo / React Native iOS et Android**, backend compatible, configuration, schéma de base de données et guides. Aucun achat Web n’est nécessaire. L’interface complète de l’application Web appartient aux offres Web et Fullstack.
+
+Le [prix TTC figure sur la page Mobile](/starters/mobile). Comparez les [licences Web, Mobile et Fullstack](/pricing#source-licences). Hébergement, services tiers, comptes Apple/Google et prestations d’intégration sont séparés.
+
+## Achat et accès
+
+Utilisez le bouton d’achat de la page produit. Le serveur commerce choisit le prix configuré ; une redirection du navigateur ne donne pas de droits. Après vérification du paiement et traitement de la commande, ouvrez le lien privé reçu à l’adresse utilisée au paiement et vérifiez le produit avant de télécharger le ZIP.
+
+Pour un e-mail absent ou un lien expiré, utilisez la [récupération d’achat](/orders/recover), en sélectionnant **PyColors Starter Pro Mobile**. La récupération ne termine pas un achat impayé. Si le paiement est incertain, contactez l’[assistance achat](/orders/support) avant de payer à nouveau.
+
+## Contenu de l’archive
+
+La racine est `pycolors-starter-pro-mobile/` :
+
+- `README.md` : installation et responsabilités d’exploitation de cette version.
+- `LICENSE` : licence commerciale et droits des composants tiers.
+- `PYCOLORS_RELEASE.json` : produit acheté, produits inclus, chemins des composants, version des conditions, révision source et empreintes des fichiers.
+- `mobile/` : application Expo autonome, client API conservé et tokens natifs.
+- `backend/` : backend HTTP Next.js compatible, configuration, schéma, migrations et guides. Il inclut l’inscription, la récupération de compte et la configuration d’espace nécessaires au Mobile ; ce n’est pas le dashboard ou l’interface métier Web complète.
+
+Lisez d’abord le manifeste et le README reçus. Conservez les révisions, empreintes et preuves de qualification avec votre copie. Le storefront commerce PyColors, les comptes de services hébergés et leur exploitation ne font pas partie de votre application livrée.
+
+## Lancer le backend
+
+Utilisez les versions Node/pnpm déclarées dans les paquets reçus et leurs lockfiles figés. Préparez PostgreSQL et les variables du backend d’après l’exemple et le README fournis. Utilisez des identifiants de test pour qualifier vos intégrations.
+
+Depuis `backend/` :
+
+```sh
+pnpm install --frozen-lockfile
+pnpm db:generate
+pnpm exec prisma migrate deploy
+pnpm build
+pnpm start
+```
+
+Configurez les origines Better Auth, l’e-mail et la facturation selon vos besoins et les guides inclus. Gardez les secrets sur le backend. Son origine HTTPS doit être accessible à l’appareil ou à l’émulateur : son `localhost` peut désigner l’appareil lui-même.
+
+<span id="native-source" />
+
+## Lancer le code natif
+
+Depuis `mobile/`, installez les dépendances figées et configurez l’endpoint public reçu :
+
+```dotenv
+EXPO_PUBLIC_STARTER_PRO_API_URL=https://your-backend.example/api/rpc/v1
+```
+
+Il s’agit du backend de votre application, **pas de l’API commerce PyColors**. L’authentification utilise la même origine. Suivez le guide natif pour les callbacks, les identifiants et le développement local.
+
+```sh
+pnpm install --frozen-lockfile
+pnpm api:check
+pnpm lint
+pnpm types:check
+pnpm test
+pnpm config:check
+pnpm dependencies:check
+pnpm bundle:ios
+pnpm bundle:android
+```
+
+Le code inclut navigation native, anglais/français, parcours de compte et de projets, et préférences de présentation de l’appareil. Configurez votre modèle métier et vos services avant lancement.
+
+## Validation native et distribution
+
+Lisez les preuves exactes de la version reçue. Un test source, un pont natif contrôlé ou un export Metro/Hermes ne prouve ni une application signée installée, ni le comportement sur appareil, ni l’acceptation par un store. L’archive n’est pas un `.ipa` ou `.apk`.
+
+Utilisez les outils natifs de votre plateforme, votre signature et vos propres comptes Apple/Google. Validez connexion/restauration, backend, comportement sur appareil et exigences de distribution sur vos propres builds. La licence n’inclut ni publication en store ni service hébergé.
+
+## Passer à Fullstack
+
+Fullstack ajoute le Web complet et une API commune pour les mêmes comptes et données. Ouvrez votre lien privé d’accès à l’achat d’origine pour voir l’upgrade proposé à cette commande vérifiée. La [récupération](/orders/recover) peut fournir un nouveau lien. Une adresse e-mail seule n’autorise pas un upgrade.
+
+Après vérification du paiement de l’upgrade, réclamez Fullstack depuis son propre e-mail d’accès. L’accès à l’achat d’origine reste disponible. Consultez le [guide Fullstack](/docs/starter-pro/fullstack).
+
+## Licence, mises à jour et assistance
+
+La révision actuelle de licence est **2026-11-20**. Un particulier ou une personne morale peut créer des produits finaux illimités. Un client doit posséder sa propre licence pour accéder au code source. Redistribution, revente et reconditionnement en kit concurrent sont interdits ; les licences tierces restent applicables.
+
+Mises à jour et assistance raisonnable pour achat/installation concernent les produits inclus dans l’achat, sous réserve de disponibilité et des conditions applicables. Les achats antérieurs conservent leurs droits plus favorables. Consultez le `LICENSE` reçu, la [licence](/license) et les [conditions](/terms). Aucun SLA, déploiement ou service d’exploitation n’est inclus.

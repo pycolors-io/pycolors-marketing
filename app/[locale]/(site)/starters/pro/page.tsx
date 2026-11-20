@@ -1,3 +1,4 @@
+import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { localizedAlternates } from "@/lib/i18n/routes";
@@ -17,6 +18,7 @@ import {
   Download,
   ExternalLink,
   FileText,
+  Info,
   Lock,
   KeyRound,
   Layers3,
@@ -34,6 +36,8 @@ import { STARTER_PRO_UPDATES_SUMMARY } from "@/lib/products/commercial-policy";
 import { Container } from "@/components/container";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PageHero } from "@/components/marketing/page-hero";
+import { ProductPreviewWindow } from "@/components/marketing/product-preview-window";
+import effects from "@/components/marketing/product-light.module.css";
 import {
   MarketingCheckItem,
   type MarketingCheckItemProps,
@@ -46,17 +50,18 @@ import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingFaq } from "@/components/marketing/faq";
 import { JsonLd, generateProductOfferJsonLd } from "@/components/seo/json-ld";
+import { StarterProIncludedDialog } from "@/components/starters/starter-pro-included-dialog";
 import { StarterProCarousel } from "@/components/starters/starter-pro-carousel";
 import { StarterProTour } from "@/components/starters/starter-pro-tour";
 import { StarterProFoundations } from "@/components/starters/starter-pro-foundations";
+import { StarterProSectionNav } from "@/components/starters/starter-pro-section-nav";
 import {
   StarterProReadiness,
   StarterProImplementation,
 } from "@/components/starters/starter-pro-readiness";
 import { StarterComparisonTable } from "@/components/starters/starter-comparison-table";
 import styles from "@/components/starters/starter-pro.module.css";
-import detailStyles from "@/components/marketing/detail-card.module.css";
-import { ProductStudioReference } from "@/components/marketing/product-studio-reference";
+import { StarterProReference } from "@/components/starters/starter-pro-reference";
 import { SiteText } from "@/components/site-text";
 
 const metadata: Metadata = {
@@ -139,6 +144,8 @@ const stackItems = [
 const postPurchaseDetails = [
   {
     title: "Your downloadable package",
+    tone: "gold",
+    artwork: "/images/starters/pro/concepts/delivery-case-test-v1.png",
     description:
       "Your secure access link unlocks a Starter Pro ZIP with the full source code, documentation, and production checklist.",
     icon: Download,
@@ -155,6 +162,8 @@ const postPurchaseDetails = [
   },
   {
     title: "Claim email and purchase recovery",
+    tone: "neutral",
+    artwork: "/images/starters/pro/concepts/recovery-loop-test-v1.png",
     description:
       "Missing the purchase email or using an expired link? Request a fresh access link with the email used at checkout. Eligible purchases can be recovered without creating an account or buying again.",
     icon: Mail,
@@ -171,6 +180,8 @@ const postPurchaseDetails = [
   },
   {
     title: "Updates and access support",
+    tone: "lilac",
+    artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
     description: (
       <>
         <SiteText text={STARTER_PRO_UPDATES_SUMMARY} />{" "}
@@ -191,6 +202,8 @@ const postPurchaseDetails = [
   },
   {
     title: "Commercial license and setup",
+    tone: "neutral",
+    artwork: "/images/starters/pro/concepts/workflow-path-test-v1.png",
     description:
       "Use Starter Pro for personal and commercial applications and modify the source for your own products. Redistribution, resale, sublicensing, or repackaging as a competing template or product is not permitted. The repository license remains authoritative. Setup requires dependencies, PostgreSQL, and environment variables for auth, billing, and email.",
     icon: FileText,
@@ -210,6 +223,7 @@ const postPurchaseDetails = [
 const setupSteps = [
   {
     title: "Prepare your local environment",
+    tone: "neutral",
     description:
       "Download and unzip the source, install dependencies and connect a local PostgreSQL database. Follow the requirements in your downloaded release.",
     href: INTERNAL.docsGettingStarted,
@@ -217,6 +231,7 @@ const setupSteps = [
   },
   {
     title: "Configure your integrations",
+    tone: "gold",
     description:
       "Set up your authentication providers, email sender and Stripe test environment. Check sign-in, checkout and webhook handling with your own configuration.",
     href: INTERNAL.docsBillingTesting,
@@ -224,6 +239,7 @@ const setupSteps = [
   },
   {
     title: "Build and validate your product",
+    tone: "neutral",
     description:
       "Adapt the screens, connect your domain data and complete the production checklist before you deploy. You own the product logic and operation of your app.",
     href: INTERNAL.docsProductionChecklist,
@@ -234,6 +250,7 @@ const setupSteps = [
 const docResourceCards = [
   {
     title: "See what is included",
+    tone: "ink",
     description: "Review the complete Starter Pro package before buying.",
     href: INTERNAL.docsWhatIsIncluded,
     cta: "Review scope",
@@ -241,6 +258,7 @@ const docResourceCards = [
   },
   {
     title: "Review setup",
+    tone: "neutral",
     description:
       "Check local installation, environment setup, and the first run.",
     href: INTERNAL.docsGettingStarted,
@@ -249,6 +267,7 @@ const docResourceCards = [
   },
   {
     title: "Production checklist",
+    tone: "gold",
     description:
       "Confirm auth, billing, backend, delivery, and release readiness.",
     href: INTERNAL.docsProductionChecklist,
@@ -257,6 +276,7 @@ const docResourceCards = [
   },
   {
     title: "Deployment guide",
+    tone: "neutral",
     description:
       "Prepare the Starter Pro foundation for a production deployment.",
     href: INTERNAL.docsDeployment,
@@ -265,6 +285,7 @@ const docResourceCards = [
   },
   {
     title: "Billing guide",
+    tone: "cobalt",
     description:
       "Understand subscriptions, checkout, customer portal, and billing states.",
     href: INTERNAL.docsBilling,
@@ -273,6 +294,7 @@ const docResourceCards = [
   },
   {
     title: "Authentication guide",
+    tone: "neutral",
     description:
       "Review sign-in, sessions, OAuth, reset password, and protected access.",
     href: INTERNAL.docsAuth,
@@ -337,6 +359,8 @@ const heroScreenshots = [
 const includedGroups = [
   {
     title: "Authentication & access",
+    tone: "neutral",
+    artwork: "/images/starters/pro/concepts/recovery-loop-test-v1.png",
     icon: Lock,
     technology: "Auth.js",
     flow: [
@@ -359,6 +383,8 @@ const includedGroups = [
   },
   {
     title: "Billing & subscriptions",
+    tone: "cobalt",
+    artwork: "/images/starters/pro/concepts/billing-loops-test-v1.png",
     icon: CreditCard,
     technology: "Stripe",
     flow: [
@@ -382,6 +408,8 @@ const includedGroups = [
   },
   {
     title: "Application & mobile",
+    tone: "ink",
+    artwork: "/images/starters/pro/concepts/connected-workspace-test-v1.png",
     icon: Smartphone,
     technology: "Responsive + PWA",
     description: "Build on a responsive product interface.",
@@ -395,20 +423,9 @@ const includedGroups = [
     ],
   },
   {
-    title: "Source & architecture",
-    icon: Code2,
-    technology: "Next.js + TypeScript",
-    description: "Inspect the code and adapt it to your product.",
-    href: INTERNAL.docsWhatIsIncluded,
-    link: "Included source",
-    items: [
-      "Full Next.js App Router source code and guided onboarding",
-      "Strict TypeScript configuration",
-      "Tailwind CSS foundation",
-    ],
-  },
-  {
     title: "Data & configuration",
+    tone: "gold",
+    artwork: "/images/starters/pro/concepts/workflow-path-test-v1.png",
     icon: Database,
     technology: "Prisma + PostgreSQL",
     description: "Organize persistence, forms and configuration.",
@@ -422,7 +439,24 @@ const includedGroups = [
     ],
   },
   {
+    title: "Source & architecture",
+    tone: "ink",
+    artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
+    icon: Code2,
+    technology: "Next.js + TypeScript",
+    description: "Inspect the code and adapt it to your product.",
+    href: INTERNAL.docsWhatIsIncluded,
+    link: "Included source",
+    items: [
+      "Full Next.js App Router source code and guided onboarding",
+      "Strict TypeScript configuration",
+      "Tailwind CSS foundation",
+    ],
+  },
+  {
     title: "Delivery & ownership",
+    tone: "neutral",
+    artwork: "/images/starters/pro/concepts/delivery-case-test-v1.png",
     icon: Download,
     technology: "Source + License",
     description: "Understand your package and access path.",
@@ -437,8 +471,7 @@ const includedGroups = [
   },
 ] as const;
 
-const textLink =
-  "inline-flex min-h-11 items-center gap-2 rounded-[5px] text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring";
+const textLink = `${styles.textLink} inline-flex min-h-11 items-center gap-2 rounded-[5px] text-sm font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring`;
 const sectionClass = "scroll-mt-24 border-t border-border-subtle";
 
 function StarterProPreviews() {
@@ -448,10 +481,11 @@ function StarterProPreviews() {
     <MarketingSectionShell
       id="product-preview"
       width="full"
-      className="scroll-mt-24"
+      className={`${styles.mediaSection} ${styles.previewSection} scroll-mt-24`}
       aria-labelledby="starter-pro-previews-title"
     >
       <MarketingSectionHeader
+        className={styles.showcaseHeader}
         titleId="starter-pro-previews-title"
         align="left"
         eyebrow={tSite("Inside Starter Pro")}
@@ -474,54 +508,152 @@ function StarterProPreviews() {
       />
       <StarterProCarousel
         slides={heroScreenshots.map((screenshot, index) => ({
-          title: screenshot.title,
+          title: tSite(screenshot.title),
           content: (
-            <figure className="grid h-full min-w-0 lg:grid-cols-[minmax(0,1fr)_19rem]">
-              <div
-                className={`${styles.stage} flex min-w-0 items-center border-b border-border-subtle p-3 sm:p-6 lg:border-b-0 lg:border-r`}
-              >
-                <div className="relative aspect-16/10 w-full overflow-hidden rounded-[3px] border border-border-subtle bg-white shadow-sm">
-                  <Image
-                    src={screenshot.image}
-                    alt={tSite(screenshot.alt)}
-                    fill
-                    priority={index === 0}
-                    quality={100}
-                    sizes="(min-width: 1440px) 1024px, (min-width: 1024px) calc(100vw - 416px), 95vw"
-                    className={`${styles.media} object-cover object-top`}
-                  />
-                </div>
+            <figure className={styles.previewFigure}>
+              <div className={styles.previewStage}>
+                <ProductPreviewWindow label={tSite(screenshot.title)}>
+                  <div className={styles.previewScreen}>
+                    <Image
+                      src={screenshot.image}
+                      alt={tSite(screenshot.alt)}
+                      fill
+                      loading="lazy"
+                      quality={100}
+                      sizes="(min-width: 1440px) 1200px, (min-width: 1024px) 83vw, 92vw"
+                      className={`${styles.media} object-cover object-top`}
+                    />
+                  </div>
+                </ProductPreviewWindow>
               </div>
-              <figcaption className="overflow-hidden bg-background p-5 sm:p-7">
-                <div className={`${styles.caption} flex h-full flex-col`}>
-                  <p className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
-                    <span className="font-mono">0{tSite(index + 1)} / 05</span>
+              <figcaption
+                className={`${styles.previewCaption} ${styles.caption}`}
+              >
+                <div className={styles.previewTitle}>
+                  <p className={styles.previewEyebrow}>
+                    <span className={styles.previewNumber}>
+                      {tSite(String(index + 1).padStart(2, "0"))}
+                    </span>
                     <span>{tSite(screenshot.palette)}</span>
                   </p>
-                  <h3 className="mt-6 text-xl font-semibold tracking-subheading">
-                    {tSite(screenshot.title)}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-foreground">
-                    {tSite(screenshot.description)}
-                  </p>
-                  <p className="mt-5 border-t border-border-subtle pt-5 text-xs leading-6 text-muted-foreground">
-                    {tSite(screenshot.annotation)}
-                  </p>
-                  <p className="mt-auto pt-6 text-[11px] text-muted-foreground">
+                  <h3>{tSite(screenshot.title)}</h3>
+                </div>
+                <div className={styles.previewExplanation}>
+                  <p>{tSite(screenshot.description)}</p>
+                  <p className={styles.previewTheme}>
                     {tSite("Light theme · Demonstration data")}
                   </p>
                 </div>
+                <p className={styles.previewAnnotation}>
+                  <Info className="size-4 shrink-0" aria-hidden="true" />
+                  <span>{tSite(screenshot.annotation)}</span>
+                </p>
               </figcaption>
             </figure>
           ),
         }))}
       />
-      <p className="mt-4 max-w-4xl text-xs leading-6 text-muted-foreground">
+      <p className={styles.previewDisclaimer}>
         {tSite(
           "Existing Starter Pro captures in the light theme, including demonstration data. These interface previews do not demonstrate a completed payment, a verified integration, or a live production deployment.",
         )}
       </p>
     </MarketingSectionShell>
+  );
+}
+
+/** Static, local SVG artwork; each placement owns its gradient references. */
+function StarterProWaves({ id }: Readonly<{ id: string }>) {
+  return (
+    <svg
+      data-starter-pro-waves=""
+      className={styles.waves}
+      viewBox="0 0 1440 560"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient id={`${id}-spectrum`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="var(--starter-pro-wave-start)" />
+          <stop offset="0.16" stopColor="var(--starter-pro-sun)" />
+          <stop offset="0.38" stopColor="var(--starter-pro-wave-middle)" />
+          <stop offset="0.58" stopColor="var(--primary)" />
+          <stop offset="1" stopColor="var(--starter-pro-wave-end)" />
+        </linearGradient>
+        <clipPath id={`${id}-ribbon-clip`}>
+          <path d="M-140 490C160 520 350 290 670 295S1120 450 1580 130L1580 620H-140Z" />
+        </clipPath>
+      </defs>
+      <path
+        d="M-140 490C160 520 350 290 670 295S1120 450 1580 130L1580 620H-140Z"
+        fill={`url(#${id}-spectrum)`}
+      />
+      <g clipPath={`url(#${id}-ribbon-clip)`} className={styles.waveContours}>
+        {Array.from({ length: 12 }, (_, index) => (
+          <path
+            key={index}
+            d={`M-140 ${490 + index * 13}C160 ${520 + index * 11} 350 ${290 + index * 10} 670 ${295 + index * 10}S1120 ${450 + index * 7} 1580 ${130 + index * 12}`}
+          />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+function StarterProHeroPreview() {
+  const tSite = useCopy();
+  const dashboard = heroScreenshots[0];
+
+  return (
+    <figure
+      className={`${styles.heroShowcase} ${effects.glassSurface} ${effects.previewEntry}`}
+      aria-labelledby="starter-pro-hero-preview-title"
+    >
+      <div className={`${styles.heroChrome} ${effects.glassChrome}`}>
+        <span className="flex items-center gap-2 font-medium">
+          <Layers3 className="size-4 text-primary" aria-hidden="true" />
+          {tSite("Starter Pro")}
+        </span>
+        <span className={styles.previewLocation}>
+          <span className={styles.windowDots} aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span id="starter-pro-hero-preview-title">{tSite("Dashboard")}</span>
+        </span>
+      </div>
+      <div className={styles.heroImage}>
+        <Image
+          src={dashboard.image}
+          alt={tSite(dashboard.alt)}
+          fill
+          loading="eager"
+          fetchPriority="high"
+          quality={100}
+          sizes="(min-width: 1280px) 660px, (min-width: 1024px) 55vw, 90vw"
+          className={`${styles.heroLight} object-contain object-top`}
+        />
+        <Image
+          src="/images/starters/pro/dashboard-dark-pycolors-2x.png"
+          alt={tSite(dashboard.alt)}
+          fill
+          loading="eager"
+          fetchPriority="high"
+          quality={100}
+          sizes="(min-width: 1280px) 660px, (min-width: 1024px) 55vw, 90vw"
+          className={`${styles.heroDark} object-contain object-top`}
+        />
+      </div>
+      <figcaption className={styles.heroCaption}>
+        <p>{tSite(dashboard.annotation)}</p>
+        <a href="#product-preview" className={`${textLink} text-xs`}>
+          {tSite("Product preview")}
+          <ArrowRight className="size-3.5" aria-hidden="true" />
+        </a>
+      </figcaption>
+    </figure>
   );
 }
 
@@ -539,133 +671,118 @@ export default function StarterProPage() {
   const tSite = useCopy();
 
   return (
-    <main id="content" tabIndex={-1} className="bg-background text-foreground">
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`${styles.productPage} bg-background text-foreground`}
+    >
       <JsonLd id="starter-pro-product-jsonld" data={starterProJsonLd} />
-      <Container className="pb-16 pt-24 sm:pt-28">
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16">
-          <PageHero
-            variant="compact"
-            align="left"
-            contentClassName="mx-0 max-w-3xl"
-            badges={[{ label: "Starter Pro", variant: "outline" }]}
-            title={tSite("The foundation for your next SaaS.")}
-            description={tSite(
-              "Accounts, workspaces, billing and a real project workflow in one Next.js codebase. Start with connected foundations, inspect their checks and adapt the product to your market.",
-            )}
-            actions={
-              <>
-                <div className="lg:hidden">
-                  <ProDemoLink />
-                  <BuyStarterProButton
-                    fullWidth={false}
-                    className="w-full sm:w-auto"
-                  />
-                </div>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="rounded-[5px]"
-                >
-                  <a href="#product-tour">
-                    {tSite("Watch the product tour")}
-                    {tSite(" ")}
-                    <ArrowDown className="size-4" aria-hidden="true" />
-                  </a>
-                </Button>
-                <Link
-                  href={INTERNAL.docsStarterPro}
-                  className={`${textLink} justify-center sm:px-2`}
-                >
-                  {tSite("Read the docs")}
-                  {tSite(" ")}
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </Link>
-              </>
-            }
-            extra={
-              <ul className="flex flex-wrap gap-x-6 gap-y-3">
-                <StarterProCheckItem>
-                  {tSite("Full source code")}
-                </StarterProCheckItem>
-                <StarterProCheckItem>
-                  {tSite("Commercial usage rights")}
-                </StarterProCheckItem>
-              </ul>
-            }
+      <div className={styles.productBar}>
+        <Container className={styles.productBarInner}>
+          <span className={styles.productIdentity}>
+            <Layers3 className="size-4 text-primary" aria-hidden="true" />
+            {tSite("Starter Pro")}
+          </span>
+          <StarterProSectionNav
+            items={[
+              ["#product-tour", "Product tour"],
+              ["#product-preview", "Product preview"],
+              ["#built-with-pycolors", "Built with Starter Pro"],
+              ["#readiness", "Validation & workflows"],
+              ["#implementation", "Scoped implementation"],
+              ["#included", "What’s included"],
+              ["#purchase", "Purchase & delivery"],
+              ["#free-vs-pro", "Free vs Pro"],
+              ["#setup", "Getting started"],
+              ["#buyer-faq", "FAQ"],
+            ].map(([href, label]) => ({ href, label: tSite(label) }))}
           />
-          <section
-            aria-labelledby="starter-pro-offer-heading"
-            className={`${styles.stage} overflow-hidden rounded-[5px] border border-border-subtle`}
-          >
-            <div className="p-6 sm:p-7">
-              <div className="flex items-center justify-between gap-3">
-                <h2
-                  id="starter-pro-offer-heading"
-                  className="text-sm font-semibold"
-                >
-                  {tSite("Starter Pro")}
-                </h2>
-                <span className="text-xs text-muted-foreground">
-                  {tSite("Source code license")}
-                </span>
+        </Container>
+      </div>
+      <Container className={styles.pageFrame}>
+        <div className={styles.hero}>
+          <div className={styles.heroAtmosphere} aria-hidden="true">
+            <StarterProWaves id="starter-pro-atmosphere-waves" />
+          </div>
+          <MarketingBreadcrumb route="/starters/pro" />
+          <div className={styles.heroGrid}>
+            <PageHero
+              variant="compact"
+              align="left"
+              maxWidth="3xl"
+              className={`${styles.heroCopy} ${effects.copyEntry}`}
+              contentClassName={styles.heroContent}
+              actionsClassName={styles.heroActions}
+              extraClassName={styles.heroExtra}
+              badges={[{ label: "Starter Pro", variant: "outline" }]}
+              title={tSite("The foundation for your next SaaS.")}
+              description={tSite(
+                "Accounts, workspaces, billing and a real project workflow in one Next.js codebase. Start with connected foundations, inspect their checks and adapt the product to your market.",
+              )}
+              actions={
+                <>
+                  <div className="flex flex-wrap items-center gap-3 sm:col-span-2">
+                    <BuyStarterProButton
+                      fullWidth={false}
+                      className={`${effects.primaryAction} w-full sm:w-auto`}
+                    />
+                    <span className={styles.demoAction}>
+                      <ProDemoLink />
+                    </span>
+                  </div>
+                  <div className={styles.heroSecondary}>
+                    <a href="#product-tour" className={textLink}>
+                      {tSite("Watch the product tour")}
+                      <ArrowDown className="size-3.5" aria-hidden="true" />
+                    </a>
+                    <Link href={INTERNAL.docsStarterPro} className={textLink}>
+                      {tSite("Read the docs")}
+                      <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </>
+              }
+              extra={
+                <ul className="flex flex-wrap gap-x-6 gap-y-3">
+                  <StarterProCheckItem>
+                    {tSite("Full source code")}
+                  </StarterProCheckItem>
+                  <StarterProCheckItem>
+                    {tSite("Commercial usage rights")}
+                  </StarterProCheckItem>
+                </ul>
+              }
+            />
+            <div className={`${styles.heroVisual} ${effects.visual}`}>
+              <div className={styles.heroArtwork} aria-hidden="true">
+                <StarterProWaves id="starter-pro-hero-waves" />
               </div>
-              <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                <span className="font-brand text-5xl font-semibold tracking-tight">
-                  {tSite(sourcePrice)}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {tSite("One-time payment")}
-                </span>
-              </p>
-              <p className="mt-3 text-xs leading-6 text-muted-foreground">
-                {tSite(
-                  "Complete source licence. Provider costs and implementation services are separate.",
-                )}
-              </p>
-              <ul className="my-6 space-y-3">
-                <StarterProCheckItem>
-                  {tSite("Accounts, workspaces, billing and project workflows")}
-                </StarterProCheckItem>
-                <StarterProCheckItem>
-                  {tSite("Validated ZIP, setup guides and operational checks")}
-                </StarterProCheckItem>
-                <StarterProCheckItem>
-                  {tSite("ZIP access through your claim email")}
-                </StarterProCheckItem>
-              </ul>
-              <BuyStarterProButton />
-              <ProDemoLink />
-              {proDemoUrl() ? (
-                <p className="mt-3 text-xs leading-6 text-muted-foreground">
-                  {tSite(
-                    "Try projects, tasks, discussions, a workspace dashboard and simulated member invitations. Each visitor gets a private, temporary workspace.",
-                  )}
-                </p>
-              ) : null}
-              <p className="mt-3 text-xs leading-6 text-muted-foreground">
-                {tSite(
-                  "Access follows payment confirmation and delivery processing.",
-                )}
-              </p>
+              <StarterProHeroPreview />
+              <div className={styles.heroCompanion} aria-hidden="true">
+                <div className={styles.heroCompanionTitle}>
+                  <Code2 focusable="false" />
+                  <span>{tSite("Full source code")}</span>
+                </div>
+                <div className={styles.heroConnections}>
+                  {[
+                    { label: "Auth.js", icon: Lock },
+                    { label: "Prisma", icon: Database },
+                    { label: "Stripe", icon: CreditCard },
+                  ].map(({ label, icon: Icon }) => (
+                    <span key={label}>
+                      <Icon focusable="false" />
+                      {tSite(label)}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-x-4 border-t border-border-subtle px-6 py-2 sm:px-7">
-              <a href="#purchase" className={`${textLink} text-xs`}>
-                {tSite("Purchase & delivery")}
-                {tSite(" ")}
-                <ArrowRight className="size-3.5" aria-hidden="true" />
-              </a>
-              <Link
-                href={INTERNAL.license}
-                className={`${textLink} text-xs text-muted-foreground`}
-              >
-                {tSite("License terms")}
-              </Link>
-            </div>
-          </section>
+          </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-border-subtle pt-5 sm:flex-row sm:items-center sm:justify-between">
+        <div
+          className={`${styles.stackStrip} flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between`}
+        >
           <MarketingPillList aria-label={tSite("Starter Pro technology stack")}>
             {stackItems.map((item) => (
               <MarketingPill
@@ -685,50 +802,39 @@ export default function StarterProPage() {
             <ArrowRight className="size-3.5" aria-hidden="true" />
           </Link>
         </div>
-        <nav
-          aria-label={tSite("Starter Pro sections")}
-          className="mt-3 flex flex-wrap gap-x-6 gap-y-1 border-b border-border-subtle pb-3"
-        >
-          {[
-            ["#product-tour", "Product tour"],
-            ["#product-preview", "Product preview"],
-            ["#built-with-pycolors", "Built with Starter Pro"],
-            ["#readiness", "Validation & workflows"],
-            ["#implementation", "Scoped implementation"],
-            ["#included", "What’s included"],
-            ["#purchase", "Purchase & delivery"],
-            ["#free-vs-pro", "Free vs Pro"],
-            ["#setup", "Getting started"],
-            ["#buyer-faq", "FAQ"],
-          ].map(([href, label]) => (
-            <a
-              key={href}
-              href={href}
-              className={`${textLink} text-xs text-muted-foreground`}
-            >
-              {tSite(label)}
-            </a>
-          ))}
-        </nav>
 
-        <StarterProTour />
-        <StarterProPreviews />
-        <ProductStudioReference />
-        <StarterProReadiness />
-        <StarterProImplementation />
+        <div className={styles.waveDivider} aria-hidden="true">
+          <StarterProWaves id="starter-pro-tour-waves" />
+        </div>
+
+        <div className={styles.softBand}>
+          <StarterProTour />
+          <StarterProPreviews />
+        </div>
+        <div className={styles.referenceBand}>
+          <StarterProReference />
+        </div>
+        <div className={styles.workflowBand}>
+          <StarterProReadiness />
+        </div>
+        <div className={styles.servicesBand}>
+          <StarterProImplementation />
+        </div>
 
         <MarketingSectionShell
           id="included"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.includedSection}`}
           aria-labelledby="included-heading"
         >
           <StarterProFoundations
+            labels={includedGroups.map((group) => tSite(group.title))}
             introduction={
               <>
                 <MarketingSectionHeader
                   titleId="included-heading"
-                  align="left"
+                  align="center"
+                  className={styles.bodyHeading}
                   eyebrow={tSite("What’s included")}
                   title={tSite("The recurring work, already connected.")}
                   description={tSite(
@@ -743,7 +849,6 @@ export default function StarterProPage() {
                       <ArrowRight className="size-4" aria-hidden="true" />
                     </Link>
                   }
-                  className="mb-8"
                 />
                 <nav
                   aria-label={tSite("Review Starter Pro before buying")}
@@ -796,182 +901,70 @@ export default function StarterProPage() {
               </>
             }
           >
-            {includedGroups
-              .filter((group) => "flow" in group)
-              .map(
-                (
-                  {
-                    title,
-                    description,
-                    icon: Icon,
-                    items,
-                    href,
-                    link,
-                    technology,
-                    flow,
-                    setupNote,
-                  },
-                  index,
-                ) => (
-                  <article
-                    key={title}
-                    data-foundation-card=""
-                    className={`${styles.featuredFoundation} ${detailStyles.surface} flex min-w-0 flex-col`}
+            {includedGroups.map((group, index) => {
+              const Icon = group.icon;
+              return (
+                <article
+                  key={group.title}
+                  data-foundation-card=""
+                  data-card-art=""
+                  data-card-tone={group.tone}
+                  aria-labelledby={`foundation-${index}-title`}
+                  className={styles.foundationTile}
+                >
+                  <div className={styles.foundationTileHeader}>
+                    <span
+                      aria-hidden="true"
+                      className={styles.foundationTileNumber}
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className={styles.foundationTileTechnology}>
+                      <Icon className="size-3.5 shrink-0" aria-hidden="true" />
+                      {tSite(group.technology)}
+                    </span>
+                  </div>
+                  <div
+                    className={`${styles.foundationConcept} ${styles.foundationArtConcept}`}
+                    aria-hidden="true"
                   >
-                    <div className={styles.foundationReveal}>
-                      <div className="px-5 pt-6 sm:px-8 sm:pt-8">
-                        <div className="flex items-center justify-between gap-4">
-                          <span className="inline-flex items-center gap-3">
-                            <span className="grid size-10 place-items-center rounded-[5px] border border-border-subtle bg-background text-foreground">
-                              <Icon className="size-4" aria-hidden="true" />
-                            </span>
-                            <span className="font-mono text-[10px] tracking-[0.12em] text-muted-foreground">
-                              {tSite("CORE INTEGRATION")}
-                            </span>
-                          </span>
-                          <span
-                            className="font-mono text-[11px] text-muted-foreground"
-                            aria-hidden="true"
-                          >
-                            0{tSite(index + 1)}
-                          </span>
-                        </div>
-                        <h3 className="mt-6 text-[22px] font-semibold tracking-subheading sm:text-2xl">
-                          {tSite(title)}
-                        </h3>
-                        <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                          {tSite(description)}
-                        </p>
-                      </div>
-                      <div
-                        className={`${detailStyles.preview} mx-5 mt-6 rounded-[5px] border border-border-subtle sm:mx-8`}
-                      >
-                        <div className="flex items-center justify-between gap-3 border-b border-border-subtle px-4 py-3">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                            {tSite("Integration overview")}
-                          </span>
-                          <span className="font-mono text-[11px] text-foreground">
-                            {tSite(technology)}
-                          </span>
-                        </div>
-                        <ol
-                          aria-label={tSite("{value0} flow overview", {
-                            value0: title,
-                          })}
-                          className={styles.foundationFlow}
-                        >
-                          {flow.map(
-                            ({ title: step, detail, icon: StepIcon }) => (
-                              <li
-                                key={step}
-                                className="relative min-w-0 text-center"
-                              >
-                                <span className={styles.foundationNode}>
-                                  <StepIcon
-                                    className="size-[18px]"
-                                    aria-hidden="true"
-                                  />
-                                </span>
-                                <span className="mt-3 block text-xs font-medium">
-                                  {tSite(step)}
-                                </span>
-                                <span className="mt-1 block text-[10px] leading-4 text-muted-foreground sm:text-[11px]">
-                                  {tSite(detail)}
-                                </span>
-                              </li>
-                            ),
-                          )}
-                        </ol>
-                      </div>
-                      <div className="px-5 pb-6 pt-7 sm:px-8 sm:pb-8">
-                        <p className="mb-4 text-[11px] font-medium text-foreground">
-                          {tSite("Included in the source")}
-                        </p>
-                        <ul className={styles.foundationPoints}>
-                          {items.map((item) => (
-                            <StarterProCheckItem
-                              key={item}
-                              className="text-[13px]"
-                            >
-                              {tSite(item)}
-                            </StarterProCheckItem>
-                          ))}
-                        </ul>
-                      </div>
-                      <div
-                        className={`${detailStyles.footer} mt-auto border-t border-border-subtle px-5 py-4 sm:px-8`}
-                      >
-                        <p className="text-xs leading-6 text-muted-foreground">
-                          <span className="font-medium text-foreground">
-                            {tSite("Your setup.")}
-                          </span>
-                          {tSite(" ")}
-                          {tSite(setupNote)}
-                        </p>
-                        <Link
-                          href={href}
-                          className={`${textLink} group mt-1 w-full justify-between text-xs`}
-                        >
-                          {tSite(link)}
-                          <ArrowUpRight
-                            className="size-4 text-muted-foreground transition-colors group-hover:text-foreground"
-                            aria-hidden="true"
-                          />
-                        </Link>
-                      </div>
+                    <div className={styles.foundationSculpture}>
+                      <Image
+                        src={group.artwork}
+                        alt=""
+                        fill
+                        loading="lazy"
+                        quality={75}
+                        sizes="(min-width: 1024px) 360px, (min-width: 640px) 420px, 80vw"
+                        className={styles.productIllustration}
+                      />
                     </div>
-                  </article>
-                ),
-              )}
-
-            {includedGroups
-              .filter((group) => !("flow" in group))
-              .map(
-                (
-                  {
-                    title,
-                    description,
-                    icon: Icon,
-                    items,
-                    href,
-                    link,
-                    technology,
-                  },
-                  index,
-                ) => (
-                  <article
-                    key={title}
-                    data-foundation-card=""
-                    className={`${styles.supportingFoundation} flex min-w-0 flex-col bg-background`}
-                  >
-                    <div className={`${styles.foundationReveal} p-5 sm:p-8`}>
-                      <div className="mb-6 flex items-center justify-between gap-4">
-                        <span className="grid size-10 place-items-center rounded-[5px] border border-border-subtle bg-surface-muted/20">
-                          <Icon
-                            className="size-4 text-muted-foreground"
-                            aria-hidden="true"
-                          />
-                        </span>
-                        <span
-                          className="font-mono text-[11px] text-muted-foreground"
-                          aria-hidden="true"
-                        >
-                          0{tSite(index + 3)}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-                        <h3 className="text-lg font-semibold tracking-normal">
-                          {tSite(title)}
-                        </h3>
-                        <span className="font-mono text-[10px] text-muted-foreground">
-                          {tSite(technology)}
-                        </span>
-                      </div>
-                      <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                        {tSite(description)}
-                      </p>
-                      <ul className="mb-6 mt-6 space-y-3">
-                        {items.map((item) => (
+                  </div>
+                  <div className={styles.foundationTileCopy}>
+                    <h3 id={`foundation-${index}-title`}>
+                      {tSite(group.title)}
+                    </h3>
+                    <p>{tSite(group.description)}</p>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className={styles.foundationTileAction}
+                    >
+                      <Link href={group.href}>
+                        {tSite(group.link)}
+                        <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                      </Link>
+                    </Button>
+                    <StarterProIncludedDialog
+                      title={tSite(group.title)}
+                      description={tSite(group.description)}
+                      technology={tSite(group.technology)}
+                      artwork={group.artwork}
+                      href={group.href}
+                      guide={tSite(group.link)}
+                    >
+                      <ul className="space-y-3">
+                        {group.items.map((item) => (
                           <StarterProCheckItem
                             key={item}
                             className="text-[13px]"
@@ -980,20 +973,42 @@ export default function StarterProPage() {
                           </StarterProCheckItem>
                         ))}
                       </ul>
-                      <Link
-                        href={href}
-                        className={`${textLink} group mt-auto justify-between border-t border-border-subtle pt-4 text-xs`}
-                      >
-                        {tSite(link)}
-                        <ArrowUpRight
-                          className="size-3.5 text-muted-foreground transition-colors group-hover:text-foreground"
-                          aria-hidden="true"
-                        />
-                      </Link>
-                    </div>
-                  </article>
-                ),
-              )}
+                      {"flow" in group ? (
+                        <>
+                          <p className={styles.foundationFlowLabel}>
+                            {tSite("Integration overview")}
+                          </p>
+                          <ol
+                            className={styles.foundationTileFlow}
+                            aria-label={tSite("{value0} flow overview", {
+                              value0: group.title,
+                            })}
+                          >
+                            {group.flow.map(
+                              ({ title, detail, icon: StepIcon }) => (
+                                <li key={title}>
+                                  <StepIcon
+                                    className="size-4"
+                                    aria-hidden="true"
+                                  />
+                                  <span>{tSite(title)}</span>
+                                  <span>{tSite(detail)}</span>
+                                </li>
+                              ),
+                            )}
+                          </ol>
+                          <p className={styles.foundationTileSetup}>
+                            <strong>{tSite("Your setup.")}</strong>
+                            {tSite(" ")}
+                            {tSite(group.setupNote)}
+                          </p>
+                        </>
+                      ) : null}
+                    </StarterProIncludedDialog>
+                  </div>
+                </article>
+              );
+            })}
           </StarterProFoundations>
           <p className="mt-4 max-w-4xl text-xs leading-6 text-muted-foreground">
             {tSite(
@@ -1018,7 +1033,7 @@ export default function StarterProPage() {
             {tSite(" ")}
             {tSite("for your environment.")}
           </p>
-          <div className="mt-8 grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-2">
+          <div className={`${styles.productFit} mt-8 grid lg:grid-cols-2`}>
             <div className="p-6 sm:p-7">
               <h3 className="text-sm font-semibold">
                 {tSite("A fit for products with accounts and billing.")}
@@ -1063,22 +1078,106 @@ export default function StarterProPage() {
         <MarketingSectionShell
           id="purchase"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.purchaseSection}`}
           aria-labelledby="purchase-heading"
         >
           <MarketingSectionHeader
             titleId="purchase-heading"
-            align="left"
+            align="center"
+            className={styles.bodyHeading}
             eyebrow={tSite("Purchase & delivery")}
             title={tSite("What you receive after purchase")}
             description={tSite(
               "A source package you can inspect and adapt, with a clear path to download it and recover access.",
             )}
           />
-          <div className="overflow-hidden rounded-[5px] border border-border-subtle">
+          <section
+            aria-labelledby="starter-pro-offer-heading"
+            className={styles.offer}
+          >
+            <div className={styles.offerBody}>
+              <div className={styles.offerIntro}>
+                <div className="flex items-center justify-between gap-3">
+                  <h3
+                    id="starter-pro-offer-heading"
+                    className="text-sm font-semibold"
+                  >
+                    {tSite("Starter Pro")}
+                  </h3>
+                  <span className="text-xs text-muted-foreground">
+                    {tSite("Source code license")}
+                  </span>
+                </div>
+                <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                  <span className="font-brand text-5xl font-semibold tracking-tight">
+                    {tSite(sourcePrice)}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {tSite("One-time payment")}
+                  </span>
+                </p>
+                <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                  {tSite(
+                    "Complete source licence. Provider costs and implementation services are separate.",
+                  )}
+                </p>
+              </div>
+              <div className={styles.offerDetails}>
+                <ul className="space-y-3">
+                  <StarterProCheckItem>
+                    {tSite(
+                      "Accounts, workspaces, billing and project workflows",
+                    )}
+                  </StarterProCheckItem>
+                  <StarterProCheckItem>
+                    {tSite(
+                      "Validated ZIP, setup guides and operational checks",
+                    )}
+                  </StarterProCheckItem>
+                  <StarterProCheckItem>
+                    {tSite("ZIP access through your claim email")}
+                  </StarterProCheckItem>
+                </ul>
+              </div>
+              <div className={styles.offerActions}>
+                <BuyStarterProButton className={effects.primaryAction} />
+                <span className={styles.demoAction}>
+                  <ProDemoLink />
+                </span>
+                {proDemoUrl() ? (
+                  <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                    {tSite(
+                      "Try projects, tasks, discussions, a workspace dashboard and simulated member invitations. Each visitor gets a private, temporary workspace.",
+                    )}
+                  </p>
+                ) : null}
+                <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                  {tSite(
+                    "Access follows payment confirmation and delivery processing.",
+                  )}
+                </p>
+              </div>
+            </div>
+            <div
+              className={`${styles.offerFooter} flex flex-wrap items-center justify-between gap-x-4 border-t border-border-subtle`}
+            >
+              <a href="#purchase" className={`${textLink} text-xs`}>
+                {tSite("Purchase & delivery")}
+                {tSite(" ")}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </a>
+              <Link
+                href={INTERNAL.license}
+                className={`${textLink} text-xs text-muted-foreground`}
+              >
+                {tSite("License terms")}
+              </Link>
+            </div>
+          </section>
+          <div className={styles.purchasePanel}>
             <div className="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.7fr)]">
               <div
-                className={`${styles.stage} flex flex-col border-b border-border-subtle p-6 sm:p-8 lg:border-b-0 lg:border-r`}
+                className={`${styles.deliveryPath} flex flex-col border-b border-border-subtle p-6 sm:p-8 lg:border-b-0 lg:border-r`}
               >
                 <div className="mb-7 flex items-center justify-between gap-4">
                   <Download
@@ -1092,7 +1191,7 @@ export default function StarterProPage() {
                 <h3 className="text-xl font-semibold tracking-subheading">
                   {tSite("From checkout to your code.")}
                 </h3>
-                <ol className="mt-7 space-y-6">
+                <ol className={`${styles.deliveryTimeline} mt-7 space-y-6`}>
                   {[
                     {
                       title: "Payment confirmed",
@@ -1139,15 +1238,38 @@ export default function StarterProPage() {
                   </Link>
                 </div>
               </div>
-              <div className="grid gap-px bg-border-subtle md:grid-cols-2">
+              <div className={`${styles.purchaseGrid} grid md:grid-cols-2`}>
                 {postPurchaseDetails.map(
-                  ({ title, description, icon: Icon, links }) => (
+                  ({
+                    title,
+                    tone,
+                    artwork,
+                    description,
+                    icon: Icon,
+                    links,
+                  }) => (
                     <div
                       key={title}
-                      className="flex flex-col bg-background p-6 sm:p-7"
+                      data-card-tone={tone}
+                      data-card-art=""
+                      className={`${styles.purchaseCard} flex flex-col bg-background p-6 sm:p-7`}
                     >
+                      <div
+                        className={styles.purchaseCardArtwork}
+                        aria-hidden="true"
+                      >
+                        <Image
+                          src={artwork}
+                          alt=""
+                          fill
+                          loading="lazy"
+                          quality={75}
+                          sizes="(min-width: 1024px) 280px, (min-width: 768px) 40vw, 86vw"
+                          className={styles.productIllustration}
+                        />
+                      </div>
                       <Icon
-                        className="mb-5 size-4 text-muted-foreground"
+                        className={`${styles.purchaseFallbackIcon} mb-5 size-4 text-muted-foreground`}
                         aria-hidden="true"
                       />
                       <h3 className="text-sm font-semibold leading-6">
@@ -1177,7 +1299,9 @@ export default function StarterProPage() {
                 )}
               </div>
             </div>
-            <div className="flex flex-col gap-3 border-t border-border-subtle px-6 py-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
+            <div
+              className={`${styles.purchaseFooter} flex flex-col gap-3 border-t border-border-subtle px-6 py-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between`}
+            >
               <p className="text-sm">
                 {tSite(sourcePrice)}{" "}
                 {tSite(" · One-time payment · Full source code")}
@@ -1209,20 +1333,23 @@ export default function StarterProPage() {
         <MarketingSectionShell
           id="free-vs-pro"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.comparisonSection}`}
           aria-labelledby="comparison-heading"
         >
           <MarketingSectionHeader
             titleId="comparison-heading"
-            align="left"
+            align="center"
+            className={styles.comparisonHeading}
             eyebrow={tSite("Free vs Pro")}
             title={tSite("Choose the starting point your product needs.")}
             description={tSite(
               "Explore the interface with Free. Move to Pro when authentication, billing and database integration become the next implementation step.",
             )}
           />
-          <StarterComparisonTable />
-          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-1">
+          <div className={styles.comparisonSurface}>
+            <StarterComparisonTable />
+          </div>
+          <div className={styles.comparisonResources}>
             <Link href={INTERNAL.pricing} className={textLink}>
               {tSite("Compare all products")}
               {tSite(" ")}
@@ -1239,24 +1366,28 @@ export default function StarterProPage() {
         <MarketingSectionShell
           id="setup"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.setupSection}`}
           aria-labelledby="setup-heading"
         >
           <MarketingSectionHeader
             titleId="setup-heading"
-            align="left"
+            align="center"
+            className={styles.bodyHeading}
             eyebrow={tSite("Getting started")}
             title={tSite("Your source. Your environment. Your product.")}
             description={tSite(
               "Follow the documentation from your first local run to a validated customer flow. Setup depends on your environment and the providers you choose.",
             )}
           />
-          <div className="grid overflow-hidden rounded-[5px] border border-border-subtle lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
-            <ol className="divide-y divide-border-subtle">
+          <div
+            className={`${styles.setupPanel} grid lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]`}
+          >
+            <ol className={styles.setupSteps}>
               {setupSteps.map((step, index) => (
                 <li
                   key={step.title}
-                  className="flex items-start gap-4 p-6 sm:gap-5 sm:p-7"
+                  data-card-tone={step.tone}
+                  className={`${styles.setupStep} flex items-start gap-4 p-6 sm:gap-5 sm:p-7`}
                 >
                   <span className="grid size-8 shrink-0 place-items-center rounded-[5px] border border-border-subtle font-mono text-xs text-muted-foreground">
                     0{tSite(index + 1)}
@@ -1281,8 +1412,36 @@ export default function StarterProPage() {
               ))}
             </ol>
             <div
-              className={`${styles.stage} flex flex-col border-t border-border-subtle p-6 sm:p-8 lg:border-l lg:border-t-0`}
+              data-card-tone="cobalt"
+              data-card-art=""
+              className={`${styles.configurationPanel} flex flex-col p-6 sm:p-8`}
             >
+              <div className={styles.configurationArtwork} aria-hidden="true">
+                <Image
+                  src="/images/starters/pro/concepts/workflow-path-test-v1.png"
+                  alt=""
+                  fill
+                  loading="lazy"
+                  quality={75}
+                  sizes="(min-width: 1024px) 400px, 86vw"
+                  className={styles.productIllustration}
+                />
+              </div>
+              <div className={styles.serviceOrbit} aria-hidden="true">
+                <svg
+                  className={styles.orbitConnections}
+                  viewBox="0 0 400 130"
+                  preserveAspectRatio="none"
+                  focusable="false"
+                >
+                  <path d="M20 85C110 20 250 110 380 45" />
+                </svg>
+                {[Code2, Database, Lock, CreditCard].map((Icon, index) => (
+                  <span key={index}>
+                    <Icon focusable="false" />
+                  </span>
+                ))}
+              </div>
               <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
                 {tSite("Configuration checklist")}
               </p>
@@ -1331,45 +1490,52 @@ export default function StarterProPage() {
         <MarketingSectionShell
           id="starter-pro-docs"
           width="full"
-          className={sectionClass}
+          className={`${sectionClass} ${styles.docsSection}`}
           aria-labelledby="docs-heading"
         >
           <MarketingSectionHeader
             titleId="docs-heading"
-            align="left"
+            align="center"
+            className={styles.bodyHeading}
             eyebrow={tSite("Documentation")}
             title={tSite("Inspect the details before you decide.")}
             description={tSite(
               "Review the scope, understand the integrations and prepare your first deployment.",
             )}
           />
-          <div className="grid gap-px overflow-hidden rounded-[5px] border border-border-subtle bg-border-subtle md:grid-cols-2 lg:grid-cols-3">
+          <div
+            className={`${styles.resourceGrid} grid md:grid-cols-2 lg:grid-cols-3`}
+          >
             {docResourceCards.map(
-              ({ title, description, href, icon: Icon }) => (
+              ({ title, tone, description, href, cta, icon: Icon }, index) => (
                 <Link
                   key={href}
+                  data-card-tone={tone}
                   href={href}
-                  className="group flex items-start gap-4 bg-background p-6 transition-colors hover:bg-surface-muted/40 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-ring sm:p-7"
+                  className={`${styles.resourceCard} group flex items-start gap-4 p-6 transition-colors focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring sm:p-7`}
                 >
                   <Icon
                     className="mt-1 size-4 shrink-0 text-muted-foreground"
                     aria-hidden="true"
                   />
+                  <span className={styles.resourceIndex} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   <div className="min-w-0 flex-1">
                     <h3 className="text-sm font-semibold">{tSite(title)}</h3>
                     <p className="mt-2 text-sm leading-7 text-muted-foreground">
                       {tSite(description)}
                     </p>
                   </div>
-                  <ArrowUpRight
-                    className="mt-1 size-4 shrink-0 text-muted-foreground"
-                    aria-hidden="true"
-                  />
+                  <span className={styles.resourceCta}>
+                    {tSite(cta)}
+                    <ArrowUpRight aria-hidden="true" />
+                  </span>
                 </Link>
               ),
             )}
           </div>
-          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-1">
+          <div className={styles.docsResources}>
             <Link href={INTERNAL.changelog} className={`${textLink} text-xs`}>
               {tSite("View changelog")}
               {tSite(" ")}
@@ -1386,10 +1552,11 @@ export default function StarterProPage() {
         <section
           id="buyer-faq"
           aria-labelledby="buyer-faq-heading"
-          className="scroll-mt-24 border-t border-border-subtle py-14 sm:py-16"
+          className={styles.faqSection}
         >
           <MarketingFaq
             titleId="buyer-faq-heading"
+            className={styles.buyerFaqLayout}
             title={tSite("Questions buyers ask before paying")}
             description={tSite(
               "Check setup, access, usage terms and the steps you still own before buying.",
@@ -1400,8 +1567,11 @@ export default function StarterProPage() {
 
         <section
           aria-labelledby="starter-pro-next-step"
-          className={`${styles.stage} flex flex-col gap-6 rounded-[5px] border border-border-subtle p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between`}
+          className={`${styles.closingCta} flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between`}
         >
+          <div className={styles.closingArtwork} aria-hidden="true">
+            <StarterProWaves id="starter-pro-closing-waves" />
+          </div>
           <div className="max-w-2xl">
             <h2
               id="starter-pro-next-step"
@@ -1418,7 +1588,7 @@ export default function StarterProPage() {
           <div className="shrink-0">
             <BuyStarterProButton
               fullWidth={false}
-              className="w-full lg:w-auto"
+              className={`${effects.primaryAction} w-full lg:w-auto`}
             />
           </div>
         </section>
