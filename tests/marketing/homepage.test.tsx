@@ -33,7 +33,8 @@ const destinations = [
   ["Blocks", "/blocks"],
   ["PyColors Starter Free", "/starters/free"],
   [PRODUCT_DISPLAY["starter-pro"].name, "/starters/pro"],
-  ["React Native Mobile App", "/starters/mobile"],
+  [PRODUCT_DISPLAY["starter-pro-mobile"].name, "/starters/mobile"],
+  [PRODUCT_DISPLAY["starter-pro-fullstack"].name, "/starters/fullstack"],
 ];
 
 describe("product homepage", () => {
@@ -123,7 +124,7 @@ describe("product homepage", () => {
     const rows = within(
       screen.getByRole("list", { name: "PyColors starting points" }),
     ).getAllByRole("listitem");
-    expect(rows).toHaveLength(6);
+    expect(rows).toHaveLength(7);
     destinations.forEach(([name, href], i) => {
       expect(
         within(rows[i]!).getByRole("heading", { level: 3, name }),
@@ -140,21 +141,23 @@ describe("product homepage", () => {
     ).toEqual(["#start-with-pycolors", "/starters/pro"]);
   });
 
-  it("adds a sixth Mobile entry with coming-soon status and an informational handoff", () => {
+  it("discovers Mobile and Fullstack as distinct source offers", () => {
     render(<HomePage />);
     const gallery = screen.getByRole("region", { name: headings[0] });
-    expect(gallery).toHaveTextContent("One system. Six entry points.");
-    expect(within(gallery).getByText("01 / 06")).toBeVisible();
+    expect(gallery).toHaveTextContent("One system. Seven entry points.");
+    expect(within(gallery).getByText("01 / 07")).toBeVisible();
     const mobile = within(gallery)
       .getByRole("heading", {
         level: 3,
-        name: "React Native Mobile App",
+        name: PRODUCT_DISPLAY["starter-pro-mobile"].name,
       })
       .closest("li")!;
-    expect(mobile).toHaveTextContent("Coming soon");
+    expect(mobile).toHaveTextContent(
+      PRODUCT_DISPLAY["starter-pro-mobile"].priceLabel,
+    );
     expect(mobile).toHaveTextContent("React Native · Expo");
     expect(mobile).toHaveTextContent(
-      "Mobile is not on sale. No release date has been announced.",
+      "Native iOS and Android source with a compatible backend, configuration, database schema and setup guides. No Web purchase is required.",
     );
     expect(
       within(mobile).getByRole("link", { name: "Explore Starter Pro Mobile" }),
@@ -167,7 +170,7 @@ describe("product homepage", () => {
     const { container } = render(<HomePage />);
     const gallery = screen.getByRole("region", { name: headings[0] });
     const images = gallery.querySelectorAll("img");
-    expect(images).toHaveLength(6);
+    expect(images).toHaveLength(7);
     expect(
       new Set(Array.from(images, (image) => image.getAttribute("src"))).size,
     ).toBe(6);
@@ -224,17 +227,17 @@ describe("product homepage", () => {
     ).toBeNull();
   });
 
-  it("presents Mobile as coming soon with an information link and no purchase action", () => {
+  it("explains the Mobile backend and links both commercial source offers", () => {
     render(<HomePage />);
     const mobile = screen.getByRole("region", {
       name: "React Native Mobile App",
     });
-    expect(mobile).toHaveTextContent("Coming soon");
+    expect(mobile).toHaveTextContent("Source licence");
     expect(mobile).toHaveTextContent("React Native · Expo");
     expect(mobile).toHaveTextContent(
-      "Mobile is not on sale. No release date has been announced.",
+      "Mobile includes a compatible backend. Fullstack adds the Web interface with the same accounts and data.",
     );
-    expect(within(mobile).getAllByRole("link")).toHaveLength(1);
+    expect(within(mobile).getAllByRole("link")).toHaveLength(2);
     expect(
       within(mobile).getByRole("link", { name: "Explore Starter Pro Mobile" }),
     ).toHaveAttribute("href", "/starters/mobile");

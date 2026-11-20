@@ -4,15 +4,15 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const cardControls =
-  '#platforms article[aria-labelledby="mobile-option-title"] a[href], #platforms article[aria-labelledby="bundle-option-title"] a[href]';
+  '#platforms article[aria-labelledby="mobile-option-title"] button, #platforms article[aria-labelledby="bundle-option-title"] button';
 const contactRegion = 'section[aria-labelledby="general-contact-heading"]';
 const contactControl = `${contactRegion} a[href^="mailto:contact@pycolors.com?subject="]`;
 const products = [
   {
     id: "mobile",
-    name: "Starter Pro Mobile",
+    name: "PyColors Starter Pro Mobile",
     price: "249 €",
-    qualifier: "Proposed extension",
+    qualifier: "One-time payment · VAT included",
     en: {
       action: "Discuss your Mobile project",
       heading: "Let's discuss your Mobile project.",
@@ -26,9 +26,9 @@ const products = [
   },
   {
     id: "fullstack",
-    name: "Starter Pro Fullstack",
+    name: "PyColors Starter Pro Fullstack",
     price: "499 €",
-    qualifier: "Bundle to test",
+    qualifier: "One-time payment · VAT included",
     en: {
       action: "Discuss your Web and Mobile project",
       heading: "Let's discuss your Web and Mobile project.",
@@ -315,6 +315,29 @@ export async function verifyStarterMobileContact({
           await context.route("**/*", (route) => {
             const request = route.request();
             const url = new URL(request.url());
+            // Synthetic read-only acknowledgement for geometry/accessibility only.
+            // No checkout or payment request is sent by this browser matrix.
+            if (
+              request.method() === "GET" &&
+              url.pathname === "/api/v1/checkout/availability"
+            ) {
+              return route.fulfill({
+                status: 200,
+                contentType: "application/json",
+                headers: { "Access-Control-Allow-Origin": origin.origin },
+                body: JSON.stringify({
+                  ok: true,
+                  products: Object.fromEntries(
+                    [
+                      "starter-pro",
+                      "starter-pro-mobile",
+                      "starter-pro-fullstack",
+                      "na-ai-landing",
+                    ].map((slug) => [slug, { available: true }]),
+                  ),
+                }),
+              });
+            }
             if (url.origin !== origin.origin) {
               record.blockedExternalRequests++;
               return route.abort();
@@ -431,18 +454,18 @@ export async function verifyStarterMobileContact({
             );
             assert.equal(
               await card
-                .getByText(copy("Coming soon", locale), { exact: true })
+                .getByText(copy("Source licence", locale), { exact: true })
                 .count(),
               1,
             );
-            assert.equal(await card.getByRole("button").count(), 0);
-            assert.equal(await card.getByRole("link").count(), 1);
+            assert.equal(await card.getByRole("button").count(), 1);
+            assert.equal(await card.getByRole("link").count(), 0);
           }
           assert.equal(
             await page
               .getByText(
                 copy(
-                  "Mobile is not on sale. No release date has been announced.",
+                  "Mobile includes a backend without the Web interface. Fullstack includes Web, Mobile and the shared API. These are source licences; implementation services and provider costs are separate.",
                   locale,
                 ),
                 { exact: true },
@@ -451,6 +474,13 @@ export async function verifyStarterMobileContact({
             1,
           );
           assert.equal(await page.locator("main form").count(), 0);
+          await page.waitForFunction(() =>
+            [
+              ...globalThis.document.querySelectorAll(
+                "#platforms article button",
+              ),
+            ].every((button) => !button.disabled),
+          );
           record.phase = "mobile.keyboard";
           await page.keyboard.press("Tab");
           assert.equal(
@@ -476,14 +506,11 @@ export async function verifyStarterMobileContact({
 
           for (const product of products) {
             record.phase = `contact.${product.id}.navigation`;
-            assert.equal((await page.goto(mobileUrl)).status(), 200);
-            const action = page
-              .getByRole("article", { name: product.name, exact: true })
-              .getByRole("link", { name: product[locale].action, exact: true });
             const target = `${prefix}/contact?interest=starter-pro-${product.id}`;
-            assert.equal(await action.getAttribute("href"), target);
-            await action.click();
-            await page.waitForURL(`${origin.origin}${target}`);
+            assert.equal(
+              (await page.goto(`${origin.origin}${target}`)).status(),
+              200,
+            );
             const general = page.getByRole("region", {
               name: product[locale].heading,
               exact: true,

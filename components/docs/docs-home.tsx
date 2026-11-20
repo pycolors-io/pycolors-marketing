@@ -269,8 +269,12 @@ export function DocsHomeResources() {
           {tSite("Explore all guides")}
           <ArrowRight aria-hidden="true" />
         </Link>
-        <Link href="/roadmap">
-          {tSite("React Native mobile app · Coming soon")}
+        <Link href="/docs/starter-pro/mobile">
+          {tSite("Starter Pro Mobile")}
+          <ArrowRight aria-hidden="true" />
+        </Link>
+        <Link href="/docs/starter-pro/fullstack">
+          {tSite("Starter Pro Fullstack")}
           <ArrowRight aria-hidden="true" />
         </Link>
       </div>

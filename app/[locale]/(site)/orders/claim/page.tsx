@@ -1,3 +1,6 @@
+import { parseClaimResponse } from "@/lib/api/claim-contract";
+import { getPublicProduct } from "@/lib/products/public-catalog";
+import { PurchaseUpgrade } from "@/components/orders/purchase-upgrade";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { getCopy } from "@/lib/i18n/server-copy";
 import { Link } from "@/lib/i18n/navigation";
@@ -21,26 +24,10 @@ type ClaimOrderPageProps = {
   }>;
 };
 
-type ClaimResponse = {
-  ok: true;
-  claim: {
-    productSlug: string | null;
-    productName: string;
-    orderReference: string;
-    customerEmail: string;
-    paidAt: string | null;
-  };
-};
+type ClaimResponse = NonNullable<ReturnType<typeof parseClaimResponse>>;
 
 function getProductPageHref(productSlug: string | null) {
-  switch (productSlug) {
-    case "starter-pro":
-      return "/starters/pro";
-    case "na-ai-landing":
-      return "/templates/na-ai-landing";
-    default:
-      return "/pricing";
-  }
+  return getPublicProduct(productSlug)?.href ?? "/pricing";
 }
 
 function StatusShell({
@@ -91,15 +78,17 @@ async function getClaim(token: string): Promise<ClaimResponse | null> {
   }
 
   try {
-    const response = await fetch(`${apiBaseUrl}/api/v1/claims/${token}`, {
-      cache: "no-store",
-    });
+    const response = await fetch(
+      `${apiBaseUrl}/api/v1/claims/${encodeURIComponent(token)}`,
+      {
+        cache: "no-store",
+        signal: AbortSignal.timeout(10_000),
+      },
+    );
 
     if (!response.ok) return null;
 
-    const data = (await response.json()) as ClaimResponse;
-
-    return data.ok ? data : null;
+    return parseClaimResponse(await response.json());
   } catch {
     if (process.env.NODE_ENV === "development") {
       console.info("[orders/claim] claim API unavailable.");
@@ -113,7 +102,8 @@ export default async function ClaimOrderPage({
 }: ClaimOrderPageProps) {
   const tSite = await getCopy();
 
-  const { token } = await searchParams;
+  const params = await searchParams;
+  const token = typeof params.token === "string" ? params.token : undefined;
 
   if (!token) {
     return (
@@ -282,7 +272,9 @@ export default async function ClaimOrderPage({
                   size="lg"
                   className="rounded-xl font-medium"
                 >
-                  <Link href="/docs/starter-pro/getting-started">
+                  <Link
+                    href={getPublicProduct(productSlug)?.docsHref ?? "/docs"}
+                  >
                     {tSite("Start setup")}
                   </Link>
                 </Button>
@@ -298,6 +290,10 @@ export default async function ClaimOrderPage({
                   </Link>
                 </Button>
               </div>
+
+              {result.claim.upgrade ? (
+                <PurchaseUpgrade upgrade={result.claim.upgrade} token={token} />
+              ) : null}
 
               <p className="text-xs leading-6 text-muted-foreground">
                 {tSite(

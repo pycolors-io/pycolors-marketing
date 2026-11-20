@@ -7,6 +7,7 @@ import { cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { useProductCheckout } from "./use-product-checkout";
+import { useCheckoutAvailability } from "./use-checkout-availability";
 
 import { CheckoutFailureNotice } from "./checkout-failure-notice";
 
@@ -32,7 +33,7 @@ export function BuyStarterProButton({
   variant = "default",
   label,
   loadingLabel = "Redirecting to secure checkout...",
-  trustText = "One-time payment · Claim email shortly after purchase",
+  trustText = "One-time payment · Claim email after order processing",
   showTrustText = false,
 }: BuyStarterProButtonProps) {
   const tSite = useCopy();
@@ -41,14 +42,17 @@ export function BuyStarterProButton({
   const { handleBuy, isLoading, hasError } = useProductCheckout({
     productSlug: STARTER_PRO.slug,
     productName: STARTER_PRO.name,
+    locale,
   });
+  const { status: availability, retry: retryAvailability } =
+    useCheckoutAvailability(STARTER_PRO.slug);
 
   return (
     <div className={cn("space-y-2", fullWidth && "w-full")}>
       <Button
         type="button"
         onClick={handleBuy}
-        disabled={isLoading}
+        disabled={isLoading || availability !== "available"}
         size={size}
         variant={variant}
         className={cn(
@@ -97,6 +101,23 @@ export function BuyStarterProButton({
       ) : null}
 
       {hasError ? <CheckoutFailureNotice locale={locale} /> : null}
+      {availability === "unavailable" ? (
+        <div role="status" className="text-xs text-muted-foreground">
+          <p>
+            {tSite(
+              "Checkout is currently unavailable. Please try again later or contact purchase support.",
+            )}
+          </p>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={retryAvailability}
+          >
+            {tSite("Check checkout availability")}
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 }

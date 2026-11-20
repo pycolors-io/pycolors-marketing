@@ -17,7 +17,7 @@ import { Breadcrumb } from "@/components/seo/breadcrumb";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
 import {
-  LEGAL_REVISION,
+  SOURCE_TERMS_REVISION as LEGAL_REVISION,
   LEGAL_COMPANY as COMPANY,
   NA_AI_USAGE_SUMMARY,
   STARTER_PRO_USAGE_SUMMARY,
@@ -359,6 +359,9 @@ const sections = [
               "Starter Pro is a source-code foundation for building a SaaS product, with authentication, billing, database, protected routes, and setup documentation as described on its product page. It is not a hosted service or a finished SaaS business."
             }
           />
+        </p>
+        <p>
+          <SiteText text="The 2026-11-20 source offers are Web; Mobile with its compatible backend, configuration, schema and guides without a Web purchase; and Fullstack with Web, Mobile and a shared API for the same accounts and data. The purchased order and delivered licence identify the included products. Prices shown for these offers are the one-time totals including VAT; third-party service and store-account costs are separate." />
         </p>
         <p>{<SiteText text={STARTER_PRO_USAGE_SUMMARY} />}</p>
         <p>{<SiteText text={STARTER_PRO_UPDATES_SUMMARY} />}</p>

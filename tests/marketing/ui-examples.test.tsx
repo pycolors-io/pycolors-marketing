@@ -236,7 +236,7 @@ describe("UI Examples page", () => {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productSlug: "starter-pro" }),
+        body: JSON.stringify({ productSlug: "starter-pro", locale: "en" }),
         signal: expect.any(AbortSignal),
       },
     );

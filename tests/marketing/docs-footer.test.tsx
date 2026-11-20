@@ -164,7 +164,7 @@ describe("documentation footer", () => {
     });
     expect(
       within(products).getByRole("link", {
-        name: "Application mobile React Native · Bientôt disponible",
+        name: "Starter Pro Mobile",
       }),
     ).toHaveAttribute("href", "/starters/mobile");
   });

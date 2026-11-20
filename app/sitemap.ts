@@ -51,6 +51,7 @@ const STATIC_ROUTES = [
    */
   "/starters",
   "/starters/mobile",
+  "/starters/fullstack",
   "/blocks",
   "/open-source",
 

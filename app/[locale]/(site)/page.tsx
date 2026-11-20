@@ -34,6 +34,7 @@ import {
 } from "@/components/marketing/cta-panel";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { STARTER_PRO_MOBILE_PREVIEW as mobile } from "@/lib/products/starter-pro-mobile-preview";
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
 import { UI_VERSION } from "@/lib/version";
 import { generateBreadcrumbJsonLd } from "@/lib/seo/breadcrumb";
@@ -155,13 +156,22 @@ const startingPoints = [
     action: "View Starter Pro",
   },
   {
-    product: "React Native Mobile App",
+    product: mobile.name,
     image: "connected-workspace",
     situation: "React Native · Expo",
-    value: "Mobile is not on sale. No release date has been announced.",
-    detail: "Coming soon",
+    value: mobile.description,
+    detail: mobile.priceLabel,
     href: "/starters/mobile",
     action: "Explore Starter Pro Mobile",
+  },
+  {
+    product: mobile.bundle.name,
+    image: "connected-workspace",
+    situation: "Web + Mobile + shared API",
+    value: mobile.bundle.description,
+    detail: mobile.bundle.priceLabel,
+    href: mobile.bundle.href,
+    action: mobile.bundle.action,
   },
 ] as const;
 
@@ -405,7 +415,7 @@ export default function HomePage() {
               introduction={
                 <MarketingSectionHeader
                   titleId="home-start-heading"
-                  eyebrow={tSite("One system. Six entry points.")}
+                  eyebrow={tSite("One system. Seven entry points.")}
                   title={tSite("Start with what your project needs now.")}
                   description={tSite(
                     "From a single component to a complete application foundation. Choose the scope that fits your next step.",
@@ -440,18 +450,7 @@ export default function HomePage() {
                   >
                     <div className={styles.productHeading}>
                       <h3>{tSite(point.product)}</h3>
-                      <p>
-                        {point.detail === "Coming soon" ? (
-                          <Badge
-                            variant="outline"
-                            className="rounded-full border-current/25 bg-transparent text-inherit"
-                          >
-                            {tSite(point.detail)}
-                          </Badge>
-                        ) : (
-                          tSite(point.detail)
-                        )}
-                      </p>
+                      <p>{tSite(point.detail)}</p>
                     </div>
                     <div className={styles.productDescription}>
                       <p className="text-[13px] font-medium leading-6">
@@ -986,15 +985,13 @@ export default function HomePage() {
                     <Smartphone className="size-4" aria-hidden="true" />
                     {tSite("Starter Pro Mobile")}
                   </span>
-                  <Badge variant="outline">{tSite("Coming soon")}</Badge>
+                  <Badge variant="outline">{tSite(mobile.status)}</Badge>
                 </div>
                 <h2 id="home-mobile-heading">
                   {tSite("React Native Mobile App")}
                 </h2>
                 <p className={styles.mobileDescription}>
-                  {tSite(
-                    "A proposed native extension for Starter Pro, built with React Native and Expo. Final scope, availability and terms are to be announced.",
-                  )}
+                  {tSite(mobile.description)}
                 </p>
                 <p className={styles.mobileStack}>
                   {tSite("React Native · Expo")}
@@ -1005,9 +1002,13 @@ export default function HomePage() {
                   {tSite("Explore Starter Pro Mobile")}
                   <ArrowUpRight className="size-3.5" aria-hidden="true" />
                 </Link>
+                <Link href={mobile.bundle.href} className={linkClass}>
+                  {tSite(mobile.bundle.action)}
+                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                </Link>
                 <p className={styles.mobileAvailability}>
                   {tSite(
-                    "Mobile is not on sale. No release date has been announced.",
+                    "Mobile includes a compatible backend. Fullstack adds the Web interface with the same accounts and data.",
                   )}
                 </p>
               </div>

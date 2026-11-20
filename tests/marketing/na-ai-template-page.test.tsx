@@ -321,7 +321,7 @@ describe("NA-AI Landing product page", () => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ productSlug: "na-ai-landing" }),
+          body: JSON.stringify({ productSlug: "na-ai-landing", locale: "en" }),
           signal: expect.any(AbortSignal),
         },
       );

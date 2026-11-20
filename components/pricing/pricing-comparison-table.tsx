@@ -46,7 +46,7 @@ const comparisonGroups = [
         feature: "Email & password sign-in",
         template: false,
         free: "Mock screens only",
-        pro: "Auth.js credentials",
+        pro: "Better Auth credentials",
       },
       {
         feature: "Google & GitHub OAuth",

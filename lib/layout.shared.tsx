@@ -11,6 +11,7 @@ import {
   Map,
   Rocket,
   Sparkles,
+  Smartphone,
   type LucideIcon,
 } from "lucide-react";
 import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
@@ -96,7 +97,7 @@ const PRODUCT_FAMILIES: ProductMenuGroup[] = [
         },
       },
       {
-        label: "Starter Pro",
+        label: "Starter Pro Web",
         href: "/starters/pro",
         description: "Better Auth and Stripe foundations.",
         icon: Rocket,
@@ -105,6 +106,28 @@ const PRODUCT_FAMILIES: ProductMenuGroup[] = [
           label: "Starter Pro",
           href: "/docs/starter-pro",
           description: "Configure auth, billing and backend services.",
+        },
+      },
+      {
+        label: "Starter Pro Mobile",
+        href: "/starters/mobile",
+        description: "Native app and compatible backend source.",
+        icon: Smartphone,
+        badge: PRODUCT_DISPLAY["starter-pro-mobile"].priceLabel,
+        documentation: {
+          href: "/docs/starter-pro/mobile",
+          description: "Set up native source and its backend.",
+        },
+      },
+      {
+        label: "Starter Pro Fullstack",
+        href: "/starters/fullstack",
+        description: "Web, Mobile and shared API source.",
+        icon: Layers3,
+        badge: PRODUCT_DISPLAY["starter-pro-fullstack"].priceLabel,
+        documentation: {
+          href: "/docs/starter-pro/fullstack",
+          description: "Connect Web and Mobile to one backend.",
         },
       },
     ],
@@ -152,9 +175,13 @@ export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
   {
     title: "Launch your product",
     items: products.filter((item) =>
-      ["/starters/free", "/starters/pro", "/templates/na-ai-landing"].includes(
-        item.href,
-      ),
+      [
+        "/starters/free",
+        "/starters/pro",
+        "/starters/mobile",
+        "/starters/fullstack",
+        "/templates/na-ai-landing",
+      ].includes(item.href),
     ),
   },
 ];

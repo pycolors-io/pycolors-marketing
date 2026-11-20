@@ -28,7 +28,7 @@ const cases = [
     locale: "en",
     action: `Buy Starter Pro — ${price}`,
     loading: "Redirecting to secure checkout...",
-    trust: "One-time payment · Claim email shortly after purchase",
+    trust: "One-time payment · Claim email after order processing",
     failure: "Checkout could not be opened.",
     support: "Contact purchase support",
     supportHref: "/orders/support",
@@ -38,8 +38,7 @@ const cases = [
     locale: "fr",
     action: `Acheter Starter Pro — ${price}`,
     loading: "Chargement en cours...",
-    trust:
-      "Paiement unique — Réclamation par e-mail peu de temps après l'achat",
+    trust: "Paiement unique · E-mail d’accès après traitement de la commande",
     failure: "Le paiement n’a pas pu être ouvert.",
     support: "Contacter l’assistance achat",
     supportHref: "/fr/orders/support",
@@ -85,7 +84,7 @@ describe.each(cases)("$locale purchase copy", (copy) => {
     expect(button).toHaveAttribute("aria-live", "polite");
     fireEvent.click(button);
     expect(createCheckoutSession).toHaveBeenCalledExactlyOnceWith(
-      { productSlug: "starter-pro", email: undefined },
+      { productSlug: "starter-pro", email: undefined, locale: copy.locale },
       { signal: expect.any(AbortSignal) },
     );
     expect(navigateToCheckout).not.toHaveBeenCalled();

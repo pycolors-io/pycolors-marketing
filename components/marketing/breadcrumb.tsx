@@ -35,6 +35,11 @@ const trails = {
     starters,
     { label: "Starter Pro Mobile", href: "/starters/mobile" },
   ],
+
+  "/starters/fullstack": [
+    { label: "Starters", href: "/starters" },
+    { label: "Starter Pro Fullstack", href: "/starters/fullstack" },
+  ],
   "/starters/pro": [starters, pro],
   "/starters/pro/faq": [
     starters,

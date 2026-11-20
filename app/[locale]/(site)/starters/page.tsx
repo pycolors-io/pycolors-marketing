@@ -1,3 +1,4 @@
+import { StarterSourceComparison } from "@/components/starters/starter-source-comparison";
 import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
@@ -401,6 +402,11 @@ export default function StartersPage() {
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </Button>
+            <Button asChild variant="outline" className={styles.mobileAction}>
+              <Link href={STARTER_PRO_MOBILE_PREVIEW.bundle.href}>
+                {tSite(STARTER_PRO_MOBILE_PREVIEW.bundle.action)}
+              </Link>
+            </Button>
           </div>
           <div className={styles.mobileVisual} aria-hidden="true">
             <Image
@@ -413,6 +419,8 @@ export default function StartersPage() {
             />
           </div>
         </section>
+
+        <StarterSourceComparison />
 
         <MarketingSectionShell
           id="compare-starters"

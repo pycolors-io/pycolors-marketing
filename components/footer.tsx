@@ -30,9 +30,10 @@ const GROUPS = [
       { label: "Starter Free", href: "/starters/free" },
       { label: "Starter Pro", href: "/starters/pro" },
       {
-        label: "React Native mobile app · Coming soon",
+        label: "Starter Pro Mobile",
         href: "/starters/mobile",
       },
+      { label: "Starter Pro Fullstack", href: "/starters/fullstack" },
       { label: "Templates", href: "/templates" },
       { label: "NA-AI Landing", href: "/templates/na-ai-landing" },
     ],

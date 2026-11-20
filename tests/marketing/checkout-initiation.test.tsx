@@ -217,8 +217,12 @@ describe.each(["product", "starter"])(
         JSON.parse(String(vi.mocked(fetch).mock.calls[0]?.[1]?.body)),
       ).toEqual(
         variant === "starter"
-          ? { productSlug: "starter-pro" }
-          : { productSlug: "na-ai-landing", email: "synthetic@example.com" },
+          ? { productSlug: "starter-pro", locale: "en" }
+          : {
+              productSlug: "na-ai-landing",
+              email: "synthetic@example.com",
+              locale: "en",
+            },
       );
       await act(async () => pending.resolve(Response.json({ url })));
       expect(navigateToCheckout).toHaveBeenCalledExactlyOnceWith(url);

@@ -1,6 +1,6 @@
 import { STARTER_PRO_MOBILE_PREVIEW } from "./starter-pro-mobile-preview";
 
-/** Discussion context only: these destinations do not create a purchase offer. */
+/** Project discussion remains separate from purchasing a source licence. */
 export const STARTER_PRO_ENQUIRIES = {
   mobile: {
     id: "starter-pro-mobile",
@@ -10,7 +10,7 @@ export const STARTER_PRO_ENQUIRIES = {
     heading: "Let's discuss your Mobile project.",
     subject: "Starter Pro Mobile enquiry",
     description:
-      "Tell us about the native app you want to build and the scope you would like to discuss. Mobile is not on sale; availability and final terms are still to be announced.",
+      "Tell us about the native app you want to build. Starter Pro Mobile includes native source and a compatible backend; tailored implementation is a separate service.",
   },
   fullstack: {
     id: "starter-pro-fullstack",
@@ -20,7 +20,7 @@ export const STARTER_PRO_ENQUIRIES = {
     heading: "Let's discuss your Web and Mobile project.",
     subject: "Starter Pro Fullstack enquiry",
     description:
-      "Tell us about your Web and native app needs. Fullstack is a proposed bundle, not a purchase offer; final scope, availability and terms are still to be announced.",
+      "Tell us about your Web and native app needs. Starter Pro Fullstack includes Web, Mobile and a shared API source; tailored implementation is a separate service.",
   },
 } as const;
 

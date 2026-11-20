@@ -138,13 +138,13 @@ describe("documentation home", () => {
     expect(container).not.toHaveTextContent("Components and API references.");
     expect(container).not.toHaveTextContent("Sign-in, sessions");
   });
-  it("provides real product and guide destinations while marking mobile as coming soon", () => {
+  it("provides real product and guide destinations for native source", () => {
     render(<Home />);
     expect(
       screen.getByRole("link", {
-        name: /React Native mobile app · Coming soon/,
+        name: /Starter Pro Mobile/,
       }),
-    ).toHaveAttribute("href", "/roadmap");
+    ).toHaveAttribute("href", "/docs/starter-pro/mobile");
     for (const link of screen.getAllByRole("link")) {
       const href = link.getAttribute("href")!;
       expect(link).toHaveAccessibleName();

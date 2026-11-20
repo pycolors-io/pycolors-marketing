@@ -137,7 +137,7 @@ describe("marketing footer", () => {
     });
     expect(
       within(products).getByRole("link", {
-        name: "React Native mobile app · Coming soon",
+        name: "Starter Pro Mobile",
       }),
     ).toHaveAttribute("href", "/starters/mobile");
     const links = within(footer).getAllByRole("link");

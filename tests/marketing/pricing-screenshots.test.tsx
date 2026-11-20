@@ -18,7 +18,7 @@ vi.mock("@/lib/api/client", () => ({
 }));
 
 describe("Starter Pro pricing screenshots", () => {
-  it("keeps Mobile and Web + Mobile informational and outside purchasable offers", () => {
+  it("presents both native source purchases with their own server-controlled checkout", () => {
     render(<PricingPage />);
     const future = screen.getByRole("region", {
       name: STARTER_PRO_MOBILE_PREVIEW.name,
@@ -28,7 +28,7 @@ describe("Starter Pro pricing screenshots", () => {
     });
     expect(future).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.status);
     expect(future).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.priceLabel);
-    expect(within(future).queryByRole("button")).not.toBeInTheDocument();
+    expect(within(future).getAllByRole("button")).toHaveLength(2);
     expect(within(offers).getAllByRole("article")).toHaveLength(3);
     for (const option of [
       STARTER_PRO_MOBILE_PREVIEW,
@@ -120,7 +120,7 @@ describe("Starter Pro pricing screenshots", () => {
       );
     }
     expect(preview.previousElementSibling).toHaveAccessibleName(
-      "What’s included in each product",
+      "Compare the template and Web starting points",
     );
     expect(preview.nextElementSibling).toHaveAccessibleName(
       "An assisted start, scoped to your product.",
@@ -157,7 +157,7 @@ describe("Starter Pro pricing screenshots", () => {
     for (const [name, values] of [
       [
         "Email & password sign-in",
-        ["Not included", "Mock screens only", "Auth.js credentials"],
+        ["Not included", "Mock screens only", "Better Auth credentials"],
       ],
       [
         "Stripe Checkout & portal",
@@ -234,7 +234,7 @@ describe("Starter Pro pricing screenshots", () => {
     expect(metadata.alternates?.canonical).toBe("/pricing");
   });
 
-  it("connects screen previews to useful guides and keeps mobile informational", () => {
+  it("connects screen previews to guides and labels the native concept honestly", () => {
     render(<PricingPage />);
     const preview = screen.getByRole("region", {
       name: "See the screens you can build on",
@@ -248,12 +248,10 @@ describe("Starter Pro pricing screenshots", () => {
       }),
     ).toHaveAttribute("href", "/docs/starter-pro/what-is-included");
     const mobile = within(preview).getByRole("article", {
-      name: "Starter Pro Mobile",
+      name: STARTER_PRO_MOBILE_PREVIEW.name,
     });
-    expect(mobile).toHaveTextContent("Coming soon");
-    expect(mobile).toHaveTextContent(
-      "Final scope, availability and terms are to be announced.",
-    );
+    expect(mobile).toHaveTextContent("Source licence");
+    expect(mobile).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.description);
     expect(within(mobile).getByRole("link")).toHaveAttribute(
       "href",
       "/starters/mobile",

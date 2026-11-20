@@ -62,8 +62,10 @@ the existing `pnpm --filter @pycolors/starter-pro test:demo:browser` qualificati
 with that suite's documented synthetic database and build prerequisites.
 
 The same 12 EN/FR, 320/768/1440, light/dark states verify the current Web price
-and proposed Mobile/Fullstack prices and qualifiers. Real Tab and Shift+Tab
-input visits both future-product card actions and each contextual email action.
+and the approved Mobile/Fullstack TTC prices and qualifiers. A read-only
+availability fixture enables the purchase controls; it is not evidence of
+configured Stripe prices or successful payment. Real Tab and Shift+Tab input
+visits both purchase card actions and each contextual email action.
 The checks measure settled focus geometry, text visibility, header obstruction,
 focus indicators (including their full outline bounds) and page overflow, using the same one-pixel viewport rounding
 allowance described above. They never call `focus()` or adjust scrolling to make
@@ -76,13 +78,16 @@ The report records these boundaries using only tag names and geometry. A pending
 native scroll must not be mistaken for a settled return to a card; all target
 visibility, header and hit-test requirements remain strict.
 
-Each product card is then activated only to its allowed local Contact URL. The
-suite verifies the selected product, localized encoded mailto subject, constant
+The purchase controls are never activated. The legacy contextual Contact URLs
+are visited directly to preserve enquiry coverage. The suite verifies the selected product, localized encoded mailto subject, constant
 recipient, address link, purchase support and recovery. It never activates a
 mailto link or starts checkout. Unknown and repeated interest values must keep
 the general-contact fallback. Axe scans only the changed platform comparison
-and general-contact regions. External requests, local API/payment requests and
-mutations are blocked; uncaught runtime errors fail the state.
+and general-contact regions. External requests, local API/payment requests (apart from the synthetic
+availability read) and mutations are blocked; uncaught runtime errors fail the state.
+
+These checks cover presentation, accessibility and contextual enquiries; they
+do not qualify Stripe checkout, payment, webhook persistence or delivery.
 
 The evidence directory is the suite's `mobile-offer` subdirectory. It receives a
 bounded `report.json` and up to 60 public-region PNG captures, with names such as

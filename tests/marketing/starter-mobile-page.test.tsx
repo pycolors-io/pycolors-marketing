@@ -1,16 +1,22 @@
 import * as React from "react";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import StarterMobilePage, {
   generateMetadata,
 } from "@/app/[locale]/(site)/starters/mobile/page";
-import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import StarterFullstackPage, {
+  generateMetadata as fullstackMetadata,
+} from "@/app/[locale]/(site)/starters/fullstack/page";
+import {
+  PRODUCT_DISPLAY,
+  UPGRADE_DISPLAY,
+} from "@/lib/products/public-catalog";
 import { STARTER_PRO_MOBILE_PREVIEW as mobile } from "@/lib/products/starter-pro-mobile-preview";
-import { STARTER_PRO_ENQUIRIES } from "@/lib/products/starter-pro-enquiry";
+import { createCheckoutSession } from "@/lib/api/client";
 import { createCopy, messageKey } from "@/lib/i18n/copy-core";
 import { getMarketingBreadcrumbItems } from "@/components/marketing/breadcrumb";
 import sitemap from "@/app/sitemap";
@@ -20,6 +26,11 @@ import fr from "@/messages/fr.json";
 vi.unmock("next-intl");
 vi.unmock("@/lib/i18n/use-copy");
 vi.unmock("@/lib/i18n/navigation");
+vi.mock("@/lib/api/client", () => ({ createCheckoutSession: vi.fn() }));
+vi.mock("@/lib/api/checkout-navigation", () => ({
+  navigateToCheckout: vi.fn(),
+}));
+vi.mock("next/navigation", () => ({ usePathname: () => "/starters/mobile" }));
 vi.mock("@/lib/i18n/server-copy", () => ({
   getCopy: async (locale: "en" | "fr" = "en") => {
     const messages = locale === "fr" ? fr.site : en.site;
@@ -50,21 +61,30 @@ function copy(locale: "en" | "fr", value: string) {
     ? (fr.site[messageKey(value) as keyof typeof fr.site] ?? value)
     : value;
 }
-function renderPage(locale: "en" | "fr" = "en") {
+function renderPage(locale: "en" | "fr" = "en", fullstack = false) {
   return render(
     <NextIntlClientProvider
       locale={locale}
       timeZone="UTC"
       messages={locale === "fr" ? fr : en}
     >
-      <StarterMobilePage />
+      {fullstack ? <StarterFullstackPage /> : <StarterMobilePage />}
     </NextIntlClientProvider>,
   );
 }
+function buyLabel(
+  locale: "en" | "fr",
+  product: typeof mobile | typeof mobile.bundle,
+) {
+  return copy(locale, "Buy {value0} — {value1}")
+    .replace("{value0}", copy(locale, product.name))
+    .replace("{value1}", product.priceLabel);
+}
+beforeEach(() => vi.clearAllMocks());
 
-describe("Starter Pro Mobile coming-soon page", () => {
+describe("Starter Pro Mobile and Fullstack source offers", () => {
   it.each(["en", "fr"] as const)(
-    "separates the existing Web offer from proposed Mobile and Fullstack prices in %s",
+    "distinguishes Web, autonomous Mobile and Fullstack with canonical TTC prices in %s",
     async (locale) => {
       const { container } = renderPage(locale);
       expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
@@ -76,71 +96,80 @@ describe("Starter Pro Mobile coming-soon page", () => {
       expect(
         within(web).getByText(PRODUCT_DISPLAY["starter-pro"].priceLabel),
       ).toBeVisible();
-      expect(
-        within(web).getByRole("link", {
-          name: copy(locale, "Explore Starter Pro Web"),
-        }),
-      ).toHaveAttribute(
-        "href",
-        locale === "fr" ? "/fr/starters/pro" : "/starters/pro",
-      );
-      for (const [item, proposedPrice, enquiry] of [
-        [mobile, "249 €", STARTER_PRO_ENQUIRIES.mobile],
-        [mobile.bundle, "499 €", STARTER_PRO_ENQUIRIES.fullstack],
-      ] as const) {
-        const name = item.name;
-        const preview = screen.getByRole("article", {
-          name: copy(locale, name),
+      for (const product of [mobile, mobile.bundle]) {
+        const card = screen.getByRole("article", {
+          name: copy(locale, product.name),
         });
+        expect(within(card).getByText(product.priceLabel)).toBeVisible();
         expect(
-          within(preview).getByText(copy(locale, mobile.status)),
+          within(card).getByText(copy(locale, product.priceQualifier)),
         ).toBeVisible();
-        expect(within(preview).getByText(proposedPrice)).toBeVisible();
         expect(
-          within(preview).getByText(copy(locale, item.priceQualifier)),
-        ).toBeVisible();
-        expect(within(preview).queryByRole("button")).toBeNull();
-        expect(within(preview).getAllByRole("link")).toHaveLength(1);
-        expect(
-          within(preview).getByRole("link", {
-            name: copy(locale, enquiry.action),
-          }),
-        ).toHaveAttribute(
-          "href",
-          locale === "fr" ? `/fr${enquiry.href}` : enquiry.href,
-        );
-        expect(preview.querySelectorAll("dt")).toHaveLength(2);
+          within(card).getByRole("button", { name: buyLabel(locale, product) }),
+        ).toBeEnabled();
+        expect(card.querySelectorAll("dt")).toHaveLength(2);
       }
-      expect(
-        within(web).getByText(copy(locale, "Web and installable PWA")),
-      ).toBeVisible();
-      expect(
-        screen.getByText(copy(locale, "Native iOS and Android interface")),
-      ).toBeVisible();
-      expect(
-        screen.getByText(copy(locale, "Web and native iOS/Android")),
-      ).toBeVisible();
-      expect(
-        screen.getByText(copy(locale, "Web + Mobile + shared API")),
-      ).toBeVisible();
       expect(
         screen.getByText(
           copy(
             locale,
-            "Mobile is not on sale. No release date has been announced.",
+            "Compatible backend source included. No Web purchase required.",
           ),
         ),
       ).toBeVisible();
-      for (const link of container.querySelectorAll("a"))
-        expect(link.href).not.toMatch(/checkout|stripe\.com|\/api\//i);
+      expect(
+        screen.getByText(
+          copy(locale, "Shared backend source for the same accounts and data."),
+        ),
+      ).toBeVisible();
+      expect(container).not.toHaveTextContent(copy(locale, "Coming soon"));
       expect((await axe(container)).violations).toEqual([]);
     },
   );
 
-  it("keeps conceptual art honest and exposes the availability answers without a form", () => {
+  it.each(["en", "fr"] as const)(
+    "hands the selected SKU and locale to the existing checkout without sending a price in %s",
+    async (locale) => {
+      vi.mocked(createCheckoutSession).mockResolvedValue(
+        "https://checkout.example.com/pay/synthetic",
+      );
+      renderPage(locale);
+      const card = screen.getByRole("article", {
+        name: copy(locale, mobile.name),
+      });
+      await act(async () =>
+        fireEvent.click(
+          within(card).getByRole("button", { name: buyLabel(locale, mobile) }),
+        ),
+      );
+      expect(createCheckoutSession).toHaveBeenCalledExactlyOnceWith(
+        { productSlug: "starter-pro-mobile", email: undefined, locale },
+        { signal: expect.any(AbortSignal) },
+      );
+    },
+  );
+
+  it("has an explicit Fullstack product entry with shared-backend guidance", () => {
+    renderPage("en", true);
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: "One foundation for Web and native apps.",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: "Fullstack setup guide" }),
+    ).toHaveAttribute("href", "/docs/starter-pro/fullstack");
+    expect(
+      getMarketingBreadcrumbItems(mobile.bundle.href)?.map(({ href }) => href),
+    ).toEqual(["/", "/starters", "/starters/fullstack"]);
+  });
+
+  it("keeps concept artwork honest and exposes purchase, upgrade and native boundaries", () => {
     const { container } = renderPage();
-    const art = container.querySelector('img[alt=""]');
-    expect(art?.closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(
+      container.querySelector('img[alt=""]')?.closest('[aria-hidden="true"]'),
+    ).not.toBeNull();
     expect(screen.getByText("Concept illustration")).toBeVisible();
     expect(
       existsSync(
@@ -152,62 +181,55 @@ describe("Starter Pro Mobile coming-soon page", () => {
     ).toBe(true);
     expect(container.querySelector("form")).toBeNull();
     const faq = screen.getByRole("region", {
-      name: "Before the Mobile launch.",
+      name: "Before you choose your source licence.",
     });
     const rows = Array.from(faq.querySelectorAll("details"));
-    expect(rows).toHaveLength(3);
+    expect(rows).toHaveLength(6);
     for (const row of rows) {
       expect(row.open).toBe(false);
       fireEvent.click(row.querySelector("summary")!);
       expect(row.open).toBe(true);
     }
-    expect(
-      within(faq).getByText(
-        /The current Starter Pro purchase covers the Web source licence/,
-      ),
-    ).toBeVisible();
+    expect(faq).toHaveTextContent(
+      UPGRADE_DISPLAY["web-to-fullstack"].priceLabel,
+    );
+    expect(faq).toHaveTextContent(
+      UPGRADE_DISPLAY["mobile-to-fullstack"].priceLabel,
+    );
+    expect(faq).toHaveTextContent(
+      "an email address alone is not proof of purchase",
+    );
+    expect(faq).toHaveTextContent(
+      "A Hermes export is not an installed-device or store-approval result",
+    );
   });
 
-  it("publishes a breadcrumb, never a saleable Product or Offer schema", () => {
-    const { container } = renderPage();
-    const data = Array.from(
-      container.querySelectorAll('script[type="application/ld+json"]'),
-    ).map((node) => JSON.parse(node.textContent!));
-    expect(data).toHaveLength(1);
-    expect(data[0]["@type"]).toBe("BreadcrumbList");
-    expect(JSON.stringify(data)).not.toMatch(/"@type":"(?:Product|Offer)"/);
-    expect(
-      getMarketingBreadcrumbItems(mobile.href)?.map(({ href }) => href),
-    ).toEqual(["/", "/starters", "/starters/mobile"]);
-  });
-
-  it("provides localized metadata and exactly one sitemap entry per locale without invented dates", async () => {
-    const english = await generateMetadata({
-      params: Promise.resolve({ locale: "en" }),
-    });
-    const french = await generateMetadata({
-      params: Promise.resolve({ locale: "fr" }),
-    });
-    expect(english.alternates?.canonical).toBe("/starters/mobile");
-    expect(french.alternates?.canonical).toBe(
-      "https://pycolors.io/fr/starters/mobile",
-    );
-    expect(french.title).toBe("Starter Pro Mobile — Bientôt disponible");
-    expect(french.description).toContain(
-      "conditions définitives restent à annoncer",
-    );
-    const entries = sitemap().filter(({ url }) =>
-      ["/starters/mobile", "/fr/starters/mobile"].includes(
-        new URL(url).pathname,
-      ),
-    );
-    expect(entries).toHaveLength(2);
-    expect(entries.every((entry) => entry.lastModified === undefined)).toBe(
-      true,
-    );
-    expect(french.alternates?.languages).toMatchObject({
-      en: "https://pycolors.io/starters/mobile",
-      fr: "https://pycolors.io/fr/starters/mobile",
-    });
-  });
+  it.each([
+    ["mobile", generateMetadata],
+    ["fullstack", fullstackMetadata],
+  ] as const)(
+    "provides localized %s metadata and sitemap entries without invented dates",
+    async (kind, metadata) => {
+      const english = await metadata({
+        params: Promise.resolve({ locale: "en" }),
+      });
+      const french = await metadata({
+        params: Promise.resolve({ locale: "fr" }),
+      });
+      expect(english.alternates?.canonical).toBe(`/starters/${kind}`);
+      expect(french.alternates?.canonical).toBe(
+        `https://pycolors.io/fr/starters/${kind}`,
+      );
+      expect(String(french.title)).not.toMatch(/Bientôt|Coming soon/);
+      const entries = sitemap().filter(({ url }) =>
+        [`/starters/${kind}`, `/fr/starters/${kind}`].includes(
+          new URL(url).pathname,
+        ),
+      );
+      expect(entries).toHaveLength(2);
+      expect(entries.every((entry) => entry.lastModified === undefined)).toBe(
+        true,
+      );
+    },
+  );
 });

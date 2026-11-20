@@ -32,12 +32,13 @@ import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
 import { PricingComparisonTable } from "@/components/pricing/pricing-comparison-table";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
+import { StarterSourceComparison } from "@/components/starters/starter-source-comparison";
 import { StarterProImplementation } from "@/components/starters/starter-pro-readiness";
 
 const metadata: Metadata = {
   title: "Next.js SaaS Pricing",
   description:
-    "Compare PyColors products for modern Next.js SaaS applications: premium templates, Starter Free for UX validation, and Starter Pro with Auth.js, secure Stripe checkout, Prisma, purchase recovery, and production-ready foundations.",
+    "Compare templates, Starter Free and Starter Pro Web, Mobile and Fullstack source licences, with secure checkout and purchase recovery.",
   alternates: {
     canonical: "/pricing",
     languages: localizedAlternates("pricing", "en").languages,
@@ -520,6 +521,15 @@ export default function PricingPage() {
                 <p className={styles.mobileQualifier}>
                   {tSite(option.priceQualifier)}
                 </p>
+                <BuyProductButton
+                  productSlug={option.slug}
+                  locale={tSite.locale}
+                  variant="outline"
+                  label={tSite("Buy {value0} — {value1}", {
+                    value0: tSite(option.name),
+                    value1: option.priceLabel,
+                  })}
+                />
                 <Link href={option.href}>
                   {tSite(option.action)}
                   <ArrowRight className="size-3.5" aria-hidden="true" />
@@ -528,6 +538,8 @@ export default function PricingPage() {
             ))}
           </div>
         </section>
+
+        <StarterSourceComparison />
 
         <MarketingSectionShell
           divider="pattern"
@@ -540,9 +552,9 @@ export default function PricingPage() {
             titleId="pricing-comparison-heading"
             className={styles.chapterHeading}
             eyebrow={tSite("Side by side")}
-            title={tSite("What’s included in each product")}
+            title={tSite("Compare the template and Web starting points")}
             description={tSite(
-              "The same criteria for every offer, with demo screens and integrated foundations clearly identified.",
+              "Compare the landing template, frontend demonstration and Web foundation. The source-licence comparison above distinguishes Web, Mobile and Fullstack.",
             )}
           />
           <PricingComparisonTable />

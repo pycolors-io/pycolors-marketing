@@ -148,6 +148,29 @@ export async function verifyPricingOfferFocus({
         page.on("pageerror", (error) => errors.push(error.name));
         await context.route("**/*", (route) => {
           const url = new URL(route.request().url());
+          // Synthetic read-only acknowledgement for geometry/accessibility only.
+          // No checkout or payment request is sent by this browser matrix.
+          if (
+            route.request().method() === "GET" &&
+            url.pathname === "/api/v1/checkout/availability"
+          ) {
+            return route.fulfill({
+              status: 200,
+              contentType: "application/json",
+              headers: { "Access-Control-Allow-Origin": origin.origin },
+              body: JSON.stringify({
+                ok: true,
+                products: Object.fromEntries(
+                  [
+                    "starter-pro",
+                    "starter-pro-mobile",
+                    "starter-pro-fullstack",
+                    "na-ai-landing",
+                  ].map((slug) => [slug, { available: true }]),
+                ),
+              }),
+            });
+          }
           if (url.origin !== origin.origin) {
             externalRequests.push(url.origin);
             return route.abort();
@@ -180,6 +203,13 @@ export async function verifyPricingOfferFocus({
             theme === "dark",
           );
 
+          await page.waitForFunction(() =>
+            [
+              ...globalThis.document.querySelectorAll(
+                "#pricing-offers [data-offer] button",
+              ),
+            ].every((button) => !button.disabled),
+          );
           const count = await page.locator(controls).count();
           assert(count > 0, `${state}: pricing offers exist`);
           await page.keyboard.press("Tab");

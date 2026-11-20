@@ -21,6 +21,14 @@ afterEach(() => {
   cleanup();
 });
 
+// Layout/copy unit tests do not contact the commerce service. The availability
+// contract suite explicitly unmocks this module and exercises the real hook,
+// including missing products, unavailable checkout and failed responses.
+vi.mock("@/components/pricing/use-checkout-availability", () => ({
+  useCheckoutAvailability: () => ({ status: "available", retry: () => {} }),
+  resetCheckoutAvailability: () => {},
+}));
+
 vi.mock("@/lib/i18n/use-copy", () => ({
   useCopy: () =>
     Object.assign(
