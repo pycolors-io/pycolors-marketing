@@ -98,7 +98,7 @@ const PRODUCT_FAMILIES: ProductMenuGroup[] = [
       {
         label: "Starter Pro",
         href: "/starters/pro",
-        description: "Auth.js and Stripe foundations.",
+        description: "Better Auth and Stripe foundations.",
         icon: Rocket,
         badge: PRODUCT_DISPLAY["starter-pro"].priceLabel,
         documentation: {
