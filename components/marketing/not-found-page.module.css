@@ -1,0 +1,294 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.main {
+  flex: 1;
+  padding-block: calc(var(--site-header-height, 3.5rem) + 4rem) 4rem;
+  outline: none;
+}
+
+.frame {
+  max-width: 76rem;
+}
+
+.hero {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+.intro {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.intro h1 {
+  max-width: 13ch;
+  margin: 1.25rem 0 0;
+  font-family: var(--font-brand), sans-serif;
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 29rem;
+  margin: 1.5rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.primaryAction,
+.secondaryAction {
+  min-height: 2.75rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+}
+
+.primaryAction {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.primaryAction:hover {
+  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
+}
+
+.visual {
+  display: none;
+  min-width: 0;
+  min-height: 20rem;
+  align-content: center;
+  justify-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.75rem;
+  background: var(--surface-muted, var(--card));
+}
+
+.errorCode {
+  color: var(--muted-foreground);
+  font-family: var(--font-brand), sans-serif;
+  font-size: clamp(7rem, 12vw, 11rem);
+  font-weight: 500;
+  letter-spacing: -0.08em;
+  line-height: 1;
+}
+
+.signature {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.destinations {
+  margin-top: 4rem;
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+
+.destinations h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.5;
+}
+
+.destinationGrid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.destination {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: var(--card);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.destination:hover {
+  border-color: var(--border-strong, var(--border));
+  background: var(--surface-muted, var(--muted));
+}
+
+.destinationIcon {
+  flex: 0 0 auto;
+  margin-top: 0.125rem;
+  color: var(--muted-foreground);
+}
+
+.destinationIcon svg,
+.destinationArrow {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.destinationCopy {
+  display: grid;
+  min-width: 0;
+  gap: 0.5rem;
+}
+
+.destinationTitle {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.5;
+}
+
+.destinationDescription {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.75;
+}
+
+.destinationArrow {
+  flex: 0 0 auto;
+  margin-top: 0.125rem;
+  margin-left: auto;
+  color: var(--muted-foreground);
+}
+
+.support {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  margin-top: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.support p {
+  margin: 0;
+}
+
+.support > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+
+.support a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: var(--foreground);
+  text-underline-offset: 0.25rem;
+}
+
+.support a:hover {
+  text-decoration: underline;
+}
+
+.main a {
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
+}
+
+.destination:focus-visible,
+.support a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding-block: calc(var(--site-header-height, 3.5rem) + 5rem) 5rem;
+  }
+
+  .destinationGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .destination {
+    flex-wrap: wrap;
+    gap: 1.125rem;
+  }
+
+  .destinationCopy {
+    order: 1;
+    flex-basis: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 5rem;
+  }
+
+  .visual {
+    display: grid;
+  }
+
+  .destinations {
+    margin-top: 4.5rem;
+  }
+}
+
+@media (max-width: 399px) {
+  .actions > a {
+    width: 100%;
+  }
+
+  .destination {
+    gap: 0.75rem;
+    padding: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .destination {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .visual,
+  .destination {
+    border-color: CanvasText;
+  }
+
+  .primaryAction {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+}

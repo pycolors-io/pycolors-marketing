@@ -56,3 +56,9 @@ export const UPGRADE_DISPLAY = {
 } as const;
 
 export const STARTER_FREE_PRICE_LABEL = "Free" as const;
+
+export const PRODUCT_COMPONENT_VERSIONS = {
+  web: "1.5.0",
+  mobile: "0.0.0",
+  naAi: "1.1.22",
+} as const;

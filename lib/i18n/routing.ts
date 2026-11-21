@@ -3,6 +3,10 @@ export const locales = ["en", "fr"] as const;
 export type SiteLocale = (typeof locales)[number];
 export const localizedPathnames: Record<string, { en: string; fr: string }> = {
   "/pricing": { en: "/pricing", fr: "/tarifs" },
+  "/product-releases": {
+    en: "/product-releases",
+    fr: "/versions-produits",
+  },
   "/request-a-quote": { en: "/request-a-quote", fr: "/demande-de-devis" },
   "/request-a-quote/template": {
     en: "/request-a-quote/template",

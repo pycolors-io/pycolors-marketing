@@ -51,19 +51,30 @@ afterEach(() => {
 afterAll(() => vi.unstubAllEnvs());
 
 describe("Starter discovery page", () => {
-  it("presents Mobile and Fullstack source purchases alongside the Web starters", () => {
+  it("presents Web, Mobile and Fullstack as primary source purchases with lighter alternatives", () => {
     render(<StartersPage />);
-    const mobile = screen.getByRole("region", {
-      name: "Starter Pro Mobile and Fullstack",
+    const choices = screen.getByRole("region", {
+      name: "Choose the source your product needs.",
     });
-    expect(mobile).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.status);
-    expect(mobile).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.stack);
+    expect(within(choices).getAllByRole("article")).toHaveLength(3);
+    expect(
+      within(choices).getByRole("article", { name: "Starter Pro Web" }),
+    ).toBeVisible();
     for (const offer of [
       STARTER_PRO_MOBILE_PREVIEW,
       STARTER_PRO_MOBILE_PREVIEW.bundle,
     ]) {
-      const card = within(mobile).getByRole("article", { name: offer.name });
-      expect(card).toHaveTextContent(offer.description);
+      const card = within(choices).getByRole("article", {
+        name:
+          offer.slug === "starter-pro-mobile"
+            ? "Starter Pro Mobile"
+            : "Starter Pro Fullstack",
+      });
+      expect(card).toHaveTextContent(
+        offer.slug === "starter-pro-mobile"
+          ? "Native iOS and Android, with a compatible backend."
+          : "Web and Mobile, built around the same accounts and data.",
+      );
       expect(within(card).getByText(offer.priceLabel)).toBeVisible();
       expect(card).toHaveTextContent(offer.priceQualifier);
       expect(
@@ -84,9 +95,22 @@ describe("Starter discovery page", () => {
         }),
       ).toHaveAttribute("href", offer.docsHref);
     }
-    expect(mobile).toHaveTextContent("provider costs are separate");
-    expect(screen.getByRole("article", { name: "Starter Free" })).toBeVisible();
-    expect(screen.getByRole("article", { name: "Starter Pro" })).toBeVisible();
+    expect(choices).toHaveTextContent("provider costs are separate");
+    const alternatives = screen.getByRole("region", {
+      name: "Explore lighter starting points.",
+    });
+    expect(within(alternatives).getAllByRole("article")).toHaveLength(2);
+    expect(
+      within(alternatives).getByRole("article", { name: "Starter Free" }),
+    ).toBeVisible();
+    const landing = within(alternatives).getByRole("article", {
+      name: "NA-AI Landing",
+    });
+    expect(
+      within(landing).getByRole("button", {
+        name: `Buy NA-AI Landing — ${PRODUCT_DISPLAY["na-ai-landing"].priceLabel}`,
+      }),
+    ).toBeEnabled();
     expect(fetch).not.toHaveBeenCalled();
   });
 
@@ -107,55 +131,44 @@ describe("Starter discovery page", () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
-  it("distinguishes mock UI from integration foundations and takes prices from the catalog", () => {
+  it("distinguishes mock UI, frontend templates and integration foundations", () => {
     render(<StartersPage />);
     const free = screen.getByRole("article", { name: "Starter Free" });
-    const pro = screen.getByRole("article", { name: "Starter Pro" });
+    const web = screen.getByRole("article", { name: "Starter Pro Web" });
+    const landing = screen.getByRole("article", { name: "NA-AI Landing" });
     expect(within(free).getByText(STARTER_FREE_PRICE_LABEL)).toBeVisible();
     expect(free).toHaveTextContent("No real accounts, payments or database.");
     expect(free).toHaveTextContent("Public repository");
     expect(
-      within(pro).getByText(PRODUCT_DISPLAY["starter-pro"].priceLabel),
+      within(web).getByText(PRODUCT_DISPLAY["starter-pro"].priceLabel),
     ).toBeVisible();
-    expect(pro).toHaveTextContent(
-      "Complete source licence. Implementation services are quoted separately.",
+    expect(web).toHaveTextContent("One-time payment · VAT included");
+    expect(web).toHaveTextContent("Web and installable PWA");
+    expect(landing).toHaveTextContent(
+      "No auth, billing or database integration",
     );
-    expect(pro).toHaveTextContent("One-time payment");
-    expect(pro).toHaveTextContent(
-      "Configure your providers, database and Stripe",
-    );
-    expect(pro).toHaveTextContent("Source ZIP delivered by claim email.");
-    expect(pro).toHaveTextContent(
-      "Better Auth email/password and Google/GitHub OAuth",
-    );
-    expect(pro).not.toHaveTextContent("Auth.js");
     expect(
       within(free).getByRole("link", { name: "Explore Starter Free" }),
     ).toHaveAttribute("href", "/starters/free");
     expect(
-      within(pro).getByRole("link", { name: "Explore Starter Pro" }),
+      within(web).getByRole("link", { name: "Explore Starter Pro Web" }),
     ).toHaveAttribute("href", "/starters/pro");
   });
 
-  it("labels both screenshots as sample data and opens their product pages instead of full-size assets", () => {
+  it("keeps illustrative landing content distinct from the mocked frontend preview", () => {
     render(<StartersPage />);
-    for (const name of ["Starter Free", "Starter Pro"]) {
+    for (const [name, href, caption] of [
+      ["Starter Free", "/starters/free", "Dashboard preview · Sample data"],
+      ["NA-AI Landing", "/templates/na-ai-landing", "Illustrative content"],
+    ]) {
       const article = screen.getByRole("article", { name });
       const preview = within(article).getByRole("link", {
         name: `Explore the ${name} preview`,
       });
-      expect(preview).toHaveAttribute(
-        "href",
-        name === "Starter Free" ? "/starters/free" : "/starters/pro",
-      );
+      expect(preview).toHaveAttribute("href", href);
       expect(within(preview).getByRole("img")).toHaveAccessibleName();
-      const captures = preview.querySelectorAll("img");
-      expect(captures).toHaveLength(2);
-      expect(captures[0]?.getAttribute("src")).toContain("dashboard");
-      expect(captures[1]?.getAttribute("src")).toContain("dashboard-dark");
-      expect(article.querySelector("figcaption")).toHaveTextContent(
-        "Dashboard preview · Sample data",
-      );
+      expect(preview.querySelectorAll("img")).toHaveLength(2);
+      expect(article.querySelector("figcaption")).toHaveTextContent(caption);
     }
   });
 

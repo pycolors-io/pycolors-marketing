@@ -98,7 +98,12 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
       ).toBeVisible();
       for (const product of [mobile, mobile.bundle]) {
         const card = screen.getByRole("article", {
-          name: copy(locale, product.name),
+          name: copy(
+            locale,
+            product.slug === "starter-pro-mobile"
+              ? "Starter Pro Mobile"
+              : "Starter Pro Fullstack",
+          ),
         });
         expect(within(card).getByText(product.priceLabel)).toBeVisible();
         expect(
@@ -135,7 +140,7 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
       );
       renderPage(locale);
       const card = screen.getByRole("article", {
-        name: copy(locale, mobile.name),
+        name: copy(locale, "Starter Pro Mobile"),
       });
       await act(async () =>
         fireEvent.click(
@@ -157,9 +162,11 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
         name: "One foundation for Web and native apps.",
       }),
     ).toBeVisible();
-    expect(
-      screen.getByRole("link", { name: "Fullstack setup guide" }),
-    ).toHaveAttribute("href", "/docs/starter-pro/fullstack");
+    for (const link of screen.getAllByRole("link", {
+      name: "Fullstack setup guide",
+    })) {
+      expect(link).toHaveAttribute("href", "/docs/starter-pro/fullstack");
+    }
     expect(
       getMarketingBreadcrumbItems(mobile.bundle.href)?.map(({ href }) => href),
     ).toEqual(["/", "/starters", "/starters/fullstack"]);

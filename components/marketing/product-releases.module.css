@@ -1,0 +1,285 @@
+.page {
+  padding-block: 5rem 4rem;
+}
+
+.hero {
+  padding-bottom: 3.5rem;
+}
+
+.sectionHeading {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 31rem);
+  gap: 1.5rem;
+  align-items: end;
+  margin-bottom: 1.75rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.7rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sectionHeading h2,
+.accessPanel h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-brand), sans-serif;
+  font-size: clamp(1.7rem, 3.3vw, 2.5rem);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.sectionHeading > p,
+.accessPanel > div > p:last-child {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.productCard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.75rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--card);
+}
+
+.productIntro {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.artwork {
+  flex: 0 0 5rem;
+  width: 5rem;
+  height: 5rem;
+  overflow: hidden;
+  border-radius: 5px;
+  background: var(--muted);
+}
+
+.artwork img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.productIntro h3 {
+  margin: 0 0 0.5rem;
+  color: var(--foreground);
+  font-size: 1.25rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.productIntro p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.versionDetails {
+  display: grid;
+  gap: 1rem;
+  margin: 0 0 2rem;
+}
+
+.versionDetails dt {
+  margin-bottom: 0.4rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.versionDetails dd {
+  margin: 0;
+  color: var(--foreground);
+}
+
+.packageVersion dd {
+  font-family: var(--font-brand), sans-serif;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.includedComponents dd {
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.productLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.productLinks a,
+.notes a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  font-weight: 500;
+  text-underline-offset: 4px;
+}
+
+.productLinks a:hover,
+.notes a:hover {
+  text-decoration: underline;
+}
+
+.productLinks a:focus-visible,
+.notes a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.productLinks svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: var(--muted-foreground);
+}
+
+.updateSection {
+  margin-top: 4.5rem;
+  border-top: 1px solid var(--border);
+  padding-top: 3.5rem;
+}
+
+.updateSteps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.updateSteps > li > svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-bottom: 1.1rem;
+  color: var(--muted-foreground);
+}
+
+.updateSteps h3 {
+  margin: 0 0 0.7rem;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.updateSteps p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+.accessPanel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3.5rem;
+  padding: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--card);
+}
+
+.accessPanel > div {
+  max-width: 46rem;
+}
+
+.accessPanel > div > p:last-child {
+  margin-top: 1rem;
+}
+
+.accessPanel > a {
+  flex-shrink: 0;
+}
+
+.notes {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem 2rem;
+  margin-top: 1.5rem;
+}
+
+.notes p {
+  max-width: 50rem;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+
+.notes > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  .sectionHeading {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .productGrid,
+  .updateSteps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .productCard {
+    padding: 1.5rem;
+  }
+
+  .accessPanel {
+    align-items: start;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .notes {
+    flex-direction: column;
+  }
+
+  .productLinks a,
+  .notes a {
+    min-height: 2.75rem;
+  }
+}

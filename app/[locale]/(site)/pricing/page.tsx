@@ -12,7 +12,7 @@ import {
 } from "@/lib/products/commercial-policy";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowRight, Check, PackageCheck, ShieldCheck } from "lucide-react";
 import { Badge, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import {
@@ -92,6 +92,16 @@ const pricingJsonLd = {
       canonicalPath: "/starters/pro",
       description:
         "Production-ready Next.js SaaS starter with authentication, Stripe billing, Prisma, PostgreSQL, protected routes, and launch-ready SaaS architecture.",
+    }),
+    generateProductOfferJsonLd({
+      product: PRODUCT_DISPLAY["starter-pro-mobile"],
+      canonicalPath: "/starters/mobile",
+      description: STARTER_PRO_MOBILE_PREVIEW.description,
+    }),
+    generateProductOfferJsonLd({
+      product: PRODUCT_DISPLAY["starter-pro-fullstack"],
+      canonicalPath: "/starters/fullstack",
+      description: STARTER_PRO_MOBILE_PREVIEW.bundle.description,
     }),
     generateProductOfferJsonLd({
       product: PRODUCT_DISPLAY["na-ai-landing"],
@@ -177,7 +187,7 @@ const offers = [
     payment: "One-time payment · Complete source licence",
     features: [
       "Full Starter Pro source code",
-      "Auth.js, revocable sessions and profile editing",
+      "Better Auth, revocable sessions and profile editing",
       "Stripe billing and tested webhook reconciliation",
       "Workspaces, project tasks and discussions",
       "FR/EN, Customize and browser regressions",
@@ -187,6 +197,51 @@ const offers = [
       "Personal billing; configurable quotas are uncapped by default. Configure providers and operations for your deployment.",
     href: INTERNAL.starterPro,
     link: "Explore Starter Pro",
+  },
+] as const;
+
+const sourceOffers = [
+  {
+    id: "starter-pro",
+    name: "Starter Pro Web",
+    stack: "Next.js · Web",
+    description: "A connected foundation for your Web application.",
+    artwork: "/images/starters/pro/concepts/delivery-case-test-v1.png",
+    features: [
+      "Web application interface",
+      "Better Auth, revocable sessions and profile editing",
+      "Stripe billing and tested webhook reconciliation",
+      "Configuration, schema and setup guides",
+    ],
+    action: "Explore Starter Pro",
+  },
+  {
+    id: "starter-pro-mobile",
+    name: "Starter Pro Mobile",
+    stack: STARTER_PRO_MOBILE_PREVIEW.stack,
+    description: "Native iOS and Android, with a compatible backend.",
+    artwork: "/images/starters/pro/concepts/connected-workspace-test-v1.png",
+    features: [
+      "Native iOS and Android source",
+      "React Native · Expo",
+      "Compatible backend source",
+      "Configuration, schema and setup guides",
+    ],
+    action: STARTER_PRO_MOBILE_PREVIEW.action,
+  },
+  {
+    id: "starter-pro-fullstack",
+    name: "Starter Pro Fullstack",
+    stack: STARTER_PRO_MOBILE_PREVIEW.bundle.stack,
+    description: "Web and Mobile, built around the same accounts and data.",
+    artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
+    features: [
+      "Web application interface",
+      "Native iOS and Android source",
+      "Same accounts and data",
+      "Configuration, schema and setup guides",
+    ],
+    action: STARTER_PRO_MOBILE_PREVIEW.bundle.action,
   },
 ] as const;
 
@@ -251,7 +306,7 @@ const faqs = [
   {
     question: "Do I get future Starter Pro updates?",
     answer:
-      "Yes. Your one-time Starter Pro purchase includes future product releases. Major changes follow semantic versioning, with release notes in the changelog and docs.",
+      "Your purchase includes the delivered version and future releases of the included products, subject to continued product availability. Release notes and setup guides explain the changes; you apply updates to your own application.",
   },
   {
     question: "What support is included with Starter Pro?",
@@ -288,9 +343,9 @@ export default function PricingPage() {
           align="left"
           contentClassName={styles.heroContent}
           badges={[{ label: "Pricing", variant: "outline" }]}
-          title={tSite("Choose your starting point.")}
+          title={tSite("One foundation. Your next product.")}
           description={tSite(
-            "Launch a landing page, validate a SaaS interface, or build on a connected app foundation. Compare what each PyColors product includes.",
+            "Choose Web, native Mobile, or both. Get the source code, keep control of your application, and build on a connected foundation.",
           )}
           className={`${styles.heroPanel} pb-10 sm:pb-12`}
         />
@@ -300,8 +355,9 @@ export default function PricingPage() {
           className={`${styles.sectionNav} mb-8 flex flex-wrap justify-center gap-x-6 gap-y-2 py-3 text-sm`}
         >
           {[
-            ["#pricing-offers", "Products"],
-            ["#pricing-comparison", "Compare features"],
+            ["#pricing-offers", "Starter Pro"],
+            ["#source-licences", "Compare source licences"],
+            ["#other-products", "Other starting points"],
             ["#pricing-preview", "Product preview"],
             ["#implementation", "Services"],
             ["#pricing-faq", "FAQ"],
@@ -322,81 +378,156 @@ export default function PricingPage() {
         <section
           id="pricing-offers"
           aria-label={tSite("Choose a PyColors product")}
-          className="scroll-mt-24"
+          className={styles.sourceOffers}
         >
-          <div className={cn("grid gap-4 lg:grid-cols-3", styles.offerGrid)}>
-            {offers.map((offer) => (
-              <article
-                key={offer.id}
-                aria-labelledby={`${offer.id}-heading`}
-                data-offer={offer.id}
-                className={cn(
-                  "flex min-w-0 flex-col border p-6 sm:p-7",
-                  styles.offer,
-                  offer.id === "starter-pro"
-                    ? "border-pro-border bg-pro-surface"
-                    : "border-border-subtle",
-                )}
-              >
-                <header className={styles.offerSummary}>
-                  <div
-                    className={cn(
-                      "flex min-h-6 items-center justify-between gap-2",
-                      styles.offerEyebrow,
-                    )}
-                  >
-                    <p className="text-xs font-medium text-muted-foreground">
-                      {tSite(offer.category)}
-                    </p>
-                    {offer.id === "starter-pro" && (
-                      <Badge
-                        variant="outline"
-                        className="rounded-md border-pro-border text-xs"
-                      >
-                        {tSite("Pro")}
-                      </Badge>
-                    )}
+          <div className={styles.purchaseDetails}>
+            <span>
+              <PackageCheck aria-hidden="true" />
+              {tSite("Complete source licence")}
+            </span>
+            <span>
+              <Check aria-hidden="true" />
+              {tSite("One-time payment · VAT included")}
+            </span>
+            <span>
+              <ShieldCheck aria-hidden="true" />
+              {tSite("Secure Stripe checkout")}
+            </span>
+          </div>
+          <div className={styles.sourceGrid}>
+            {sourceOffers.map((offer) => {
+              const product = PRODUCT_DISPLAY[offer.id];
+              return (
+                <article
+                  key={offer.id}
+                  data-offer={offer.id}
+                  aria-labelledby={`source-${offer.id}-heading`}
+                  className={styles.sourceCard}
+                >
+                  <div className={styles.sourceArtwork} aria-hidden="true">
+                    <Image
+                      src={offer.artwork}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 360px, (min-width: 768px) 44vw, 90vw"
+                      className={styles.conceptImage}
+                    />
                   </div>
-                  <h2
-                    id={`${offer.id}-heading`}
-                    className={cn(
-                      "mt-4 font-brand text-2xl font-semibold tracking-heading",
-                      styles.offerTitle,
-                    )}
-                  >
-                    {tSite(offer.name)}
-                  </h2>
-                  <p
-                    className={cn(
-                      "mt-3 text-sm leading-6 text-muted-foreground lg:min-h-18",
-                      styles.offerDescription,
-                    )}
-                  >
-                    {tSite(offer.description)}
-                  </p>
-                </header>
-                <div className={styles.offerPurchase}>
-                  <div className={cn("mt-6", styles.offerPrice)}>
-                    <p
-                      className={cn(
-                        "font-brand text-4xl font-semibold tracking-tight",
-                        styles.priceValue,
-                      )}
-                    >
-                      {tSite(offer.price)}
+                  <header className={styles.sourceSummary}>
+                    <p className={styles.sourceStack}>{tSite(offer.stack)}</p>
+                    <h2 id={`source-${offer.id}-heading`}>
+                      {tSite(offer.name)}
+                    </h2>
+                    <p className={styles.sourceDescription}>
+                      {tSite(offer.description)}
                     </p>
-                    <p className="mt-2 text-xs text-muted-foreground">
-                      {tSite(offer.payment)}
-                    </p>
+                  </header>
+                  <div className={styles.sourcePrice}>
+                    <p>{product.priceLabel}</p>
+                    <span>{tSite("One-time payment · VAT included")}</span>
                   </div>
-                  <div className={cn("mt-6", styles.offerAction)}>
+                  <ul className={styles.sourceFeatures}>
+                    {offer.features.map((feature) => (
+                      <MarketingCheckItem key={feature}>
+                        {tSite(feature)}
+                      </MarketingCheckItem>
+                    ))}
+                  </ul>
+                  <div className={styles.sourceAction}>
                     {offer.id === "starter-pro" ? (
                       <BuyStarterProButton
                         label={tSite("Buy Starter Pro — {value0}", {
-                          value0: PRICING.starterPro,
+                          value0: product.priceLabel,
                         })}
                       />
-                    ) : offer.id === "na-ai-landing" ? (
+                    ) : (
+                      <BuyProductButton
+                        productSlug={offer.id}
+                        locale={tSite.locale}
+                        label={tSite("Buy {value0} — {value1}", {
+                          value0: tSite(product.name),
+                          value1: product.priceLabel,
+                        })}
+                      />
+                    )}
+                    <Link
+                      href={product.href}
+                      className={cn(styles.sourceLink, focusRing)}
+                    >
+                      {tSite(offer.action)}
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+          <p className={styles.sourceNote}>
+            {tSite(
+              "Source code for your own deployment. Hosting and third-party services are configured and paid by you.",
+            )}
+          </p>
+        </section>
+
+        <div className={styles.sourceComparison}>
+          <StarterSourceComparison />
+        </div>
+
+        <section
+          id="other-products"
+          aria-labelledby="other-products-heading"
+          className={styles.otherProducts}
+        >
+          <header className={styles.otherHeading}>
+            <p>{tSite("Other starting points")}</p>
+            <h2 id="other-products-heading">
+              {tSite("Start with a page. Or explore for free.")}
+            </h2>
+            <span>
+              {tSite(
+                "A focused landing template or a frontend to try before choosing your app foundation.",
+              )}
+            </span>
+          </header>
+          <div className={styles.otherGrid}>
+            {offers
+              .filter((offer) => offer.id !== "starter-pro")
+              .map((offer) => (
+                <article
+                  key={offer.id}
+                  aria-labelledby={`${offer.id}-heading`}
+                  data-offer={offer.id}
+                  className={styles.offer}
+                >
+                  <div className={styles.offerArtwork} aria-hidden="true">
+                    <Image
+                      src={offerArtwork[offer.id]}
+                      alt=""
+                      fill
+                      loading="lazy"
+                      sizes="(min-width: 1024px) 200px, (min-width: 768px) 44vw, 90vw"
+                      className={styles.conceptImage}
+                    />
+                  </div>
+                  <header className={styles.offerSummary}>
+                    <p className={styles.offerEyebrow}>
+                      {tSite(offer.category)}
+                    </p>
+                    <h3
+                      id={`${offer.id}-heading`}
+                      className={styles.offerTitle}
+                    >
+                      {tSite(offer.name)}
+                    </h3>
+                    <p className={styles.offerDescription}>
+                      {tSite(offer.description)}
+                    </p>
+                  </header>
+                  <div className={styles.offerPrice}>
+                    <p className={styles.priceValue}>{tSite(offer.price)}</p>
+                    <p>{tSite(offer.payment)}</p>
+                  </div>
+                  <div className={styles.offerAction}>
+                    {offer.id === "na-ai-landing" ? (
                       <BuyProductButton
                         productSlug="na-ai-landing"
                         label={tSite("Buy NA-AI Landing — {value0}", {
@@ -418,128 +549,17 @@ export default function PricingPage() {
                       </Button>
                     )}
                   </div>
-                </div>
-                <div className={styles.offerArtwork} aria-hidden="true">
-                  <Image
-                    src={offerArtwork[offer.id]}
-                    alt=""
-                    fill
-                    loading="lazy"
-                    sizes="(min-width: 1280px) 355px, (min-width: 1024px) 31vw, (min-width: 768px) 48vw, 90vw"
-                    className={cn(
-                      styles.conceptImage,
-                      offer.id === "starter-free" && styles.conceptCutout,
-                    )}
-                  />
-                </div>
-                <div
-                  className={cn(
-                    "mt-6 flex-1 border-t border-border-subtle pt-6",
-                    styles.offerFeatures,
-                  )}
-                >
-                  <p className="text-xs font-semibold text-foreground">
-                    {tSite("What you get")}
-                  </p>
-                  <ul className="mt-4 space-y-3">
-                    {offer.features.map((feature) => (
-                      <MarketingCheckItem key={feature}>
-                        {tSite(feature)}
-                      </MarketingCheckItem>
-                    ))}
-                  </ul>
-                </div>
-                <div className={styles.offerFoot}>
-                  <p
-                    className={cn(
-                      "mt-6 border-t border-border-subtle pt-5 text-xs leading-6 text-muted-foreground lg:min-h-18",
-                      styles.offerScope,
-                    )}
-                  >
-                    {tSite(offer.scope)}
-                  </p>
+                  <p className={styles.offerScope}>{tSite(offer.scope)}</p>
                   <Link
                     href={offer.href}
-                    className={cn(
-                      "mt-3 inline-flex min-h-11 scroll-mt-24 items-center gap-2 self-start text-sm font-medium hover:underline underline-offset-4",
-                      styles.offerLink,
-                      focusRing,
-                    )}
+                    className={cn(styles.offerLink, focusRing)}
                   >
                     {tSite(offer.link)}
-                    <ArrowRight className="size-4" aria-hidden="true" />
                   </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-          <div className="mt-5 flex flex-col gap-3 text-xs leading-6 text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-            <p>
-              {tSite(
-                "Paid products are one-time purchases. The complete Starter Pro source licence is ",
-              )}
-              {tSite(PRICING.starterPro)}
-              {tSite(". Implementation services are quoted separately.")}
-            </p>
-            <a
-              href="#pricing-comparison"
-              className={cn(
-                "inline-flex min-h-11 shrink-0 items-center gap-2 font-medium text-foreground hover:underline underline-offset-4",
-                focusRing,
-              )}
-            >
-              {tSite("Compare every feature")}
-              <ArrowDown className="size-4" aria-hidden="true" />
-            </a>
+                </article>
+              ))}
           </div>
         </section>
-
-        <section
-          aria-labelledby="pricing-mobile-heading"
-          className={styles.mobilePreview}
-        >
-          <div className={styles.mobileIntro}>
-            <span className={styles.mobileStatus}>
-              {tSite(STARTER_PRO_MOBILE_PREVIEW.status)}
-            </span>
-            <h2 id="pricing-mobile-heading">
-              {tSite(STARTER_PRO_MOBILE_PREVIEW.name)}
-            </h2>
-            <p>{tSite(STARTER_PRO_MOBILE_PREVIEW.description)}</p>
-          </div>
-          <div className={styles.mobileChoices}>
-            {[
-              STARTER_PRO_MOBILE_PREVIEW,
-              STARTER_PRO_MOBILE_PREVIEW.bundle,
-            ].map((option) => (
-              <article key={option.href} className={styles.mobileChoice}>
-                <h3>{tSite(option.name)}</h3>
-                <span className={styles.mobileStack}>
-                  {tSite(option.stack)}
-                </span>
-                <p>{tSite(option.priceLabel)}</p>
-                <p className={styles.mobileQualifier}>
-                  {tSite(option.priceQualifier)}
-                </p>
-                <BuyProductButton
-                  productSlug={option.slug}
-                  locale={tSite.locale}
-                  variant="outline"
-                  label={tSite("Buy {value0} — {value1}", {
-                    value0: tSite(option.name),
-                    value1: option.priceLabel,
-                  })}
-                />
-                <Link href={option.href}>
-                  {tSite(option.action)}
-                  <ArrowRight className="size-3.5" aria-hidden="true" />
-                </Link>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <StarterSourceComparison />
 
         <MarketingSectionShell
           divider="pattern"

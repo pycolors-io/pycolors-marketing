@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { Layers3, Monitor, Smartphone, Workflow } from "lucide-react";
-import { Badge } from "@pycolors/ui";
+import { Layers3, Smartphone, Workflow } from "lucide-react";
 import { Container } from "@/components/container";
 import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
@@ -11,12 +10,10 @@ import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { SiteButton } from "@/components/site-button";
 import { Link } from "@/lib/i18n/navigation";
 import { useCopy } from "@/lib/i18n/use-copy";
-import {
-  PRODUCT_DISPLAY,
-  UPGRADE_DISPLAY,
-} from "@/lib/products/public-catalog";
+import { UPGRADE_DISPLAY } from "@/lib/products/public-catalog";
 import { STARTER_PRO_MOBILE_PREVIEW as mobile } from "@/lib/products/starter-pro-mobile-preview";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
+import { StarterSourceOffers } from "./starter-source-offers";
 import styles from "@/components/starters/starter-mobile.module.css";
 
 const faqs = [
@@ -60,6 +57,8 @@ export function StarterProPlatformPage({
 }: Readonly<{ productSlug?: "starter-pro-mobile" | "starter-pro-fullstack" }>) {
   const tSite = useCopy();
   const offer = productSlug === "starter-pro-mobile" ? mobile : mobile.bundle;
+  const PlatformIcon =
+    productSlug === "starter-pro-mobile" ? Smartphone : Layers3;
   const localizedFaqs = faqs.map((item) => ({
     ...item,
     answer: tSite(item.answer, {
@@ -118,15 +117,19 @@ export function StarterProPlatformPage({
             <figure className={styles.visual}>
               <div className={styles.artwork} aria-hidden="true">
                 <Image
-                  src="/images/marketing/concepts/modular-platform-v1.webp"
+                  src={
+                    productSlug === "starter-pro-mobile"
+                      ? "/images/starters/pro/concepts/connected-workspace-test-v1.png"
+                      : "/images/starters/pro/concepts/source-stack-test-v1.png"
+                  }
                   alt=""
                   fill
                   priority
                   sizes="(min-width: 1440px) 600px, (min-width: 1024px) 44vw, (min-width: 640px) 70vw, 92vw"
                 />
                 <span className={styles.stack}>
-                  <Smartphone className="size-4" />
-                  {tSite(mobile.stack)}
+                  <PlatformIcon className="size-4" aria-hidden="true" />
+                  {tSite(offer.stack)}
                 </span>
               </div>
               <figcaption>{tSite("Concept illustration")}</figcaption>
@@ -148,128 +151,7 @@ export function StarterProPlatformPage({
               "Web, native Mobile or both with a shared API. Each offer includes its own setup guides; provider and operating costs are separate.",
             )}
           />
-          <div className={styles.options}>
-            <article
-              className={`${styles.option} ${styles.webOption}`}
-              aria-labelledby="web-option-title"
-            >
-              <div className={styles.optionTop}>
-                <Monitor aria-hidden="true" />
-                <Badge variant="outline">{tSite("Source licence")}</Badge>
-              </div>
-              <h3 id="web-option-title">{tSite("Starter Pro Web")}</h3>
-              <p className={styles.price}>
-                {tSite(PRODUCT_DISPLAY["starter-pro"].priceLabel)}
-              </p>
-              <p className={styles.priceNote}>
-                {tSite("One-time source licence · VAT included")}
-              </p>
-              <p>
-                {tSite(
-                  "The existing Next.js foundation for accounts, workspaces, billing and your product workflow.",
-                )}
-              </p>
-              <dl className={styles.optionDetails}>
-                <div>
-                  <dt>{tSite("Interface")}</dt>
-                  <dd>{tSite("Web and installable PWA")}</dd>
-                </div>
-                <div>
-                  <dt>{tSite("Backend")}</dt>
-                  <dd>
-                    {tSite("Starter Pro foundation to configure and deploy.")}
-                  </dd>
-                </div>
-              </dl>
-              <SiteButton asChild size="lg" className={styles.webAction}>
-                <Link href="/starters/pro">
-                  {tSite("Explore Starter Pro Web")}
-                </Link>
-              </SiteButton>
-            </article>
-            <article
-              className={`${styles.option} ${styles.mobileOption}`}
-              aria-labelledby="mobile-option-title"
-            >
-              <div className={styles.optionTop}>
-                <Smartphone aria-hidden="true" />
-                <Badge variant="outline">{tSite(mobile.status)}</Badge>
-              </div>
-              <h3 id="mobile-option-title">{tSite(mobile.name)}</h3>
-              <p className={styles.price}>{tSite(mobile.priceLabel)}</p>
-              <p className={styles.priceNote}>{tSite(mobile.priceQualifier)}</p>
-              <p>{tSite(mobile.description)}</p>
-              <dl className={styles.optionDetails}>
-                <div>
-                  <dt>{tSite("Interface")}</dt>
-                  <dd>{tSite("Native iOS and Android interface")}</dd>
-                </div>
-                <div>
-                  <dt>{tSite("Backend")}</dt>
-                  <dd>
-                    {tSite(
-                      "Compatible backend source included. No Web purchase required.",
-                    )}
-                  </dd>
-                </div>
-              </dl>
-              <BuyProductButton
-                productSlug={mobile.slug}
-                locale={tSite.locale}
-                variant="outline"
-                className={styles.enquiryAction}
-                label={tSite("Buy {value0} — {value1}", {
-                  value0: tSite(mobile.name),
-                  value1: mobile.priceLabel,
-                })}
-              />
-            </article>
-            <article
-              className={`${styles.option} ${styles.bundleOption}`}
-              aria-labelledby="bundle-option-title"
-            >
-              <div className={styles.optionTop}>
-                <Layers3 aria-hidden="true" />
-                <Badge variant="outline">{tSite(mobile.bundle.status)}</Badge>
-              </div>
-              <h3 id="bundle-option-title">{tSite(mobile.bundle.name)}</h3>
-              <p className={styles.price}>{tSite(mobile.bundle.priceLabel)}</p>
-              <p className={styles.priceNote}>
-                {tSite(mobile.bundle.priceQualifier)}
-              </p>
-              <p className={styles.bundleScope}>{tSite(mobile.bundle.stack)}</p>
-              <p>{tSite(mobile.bundle.description)}</p>
-              <dl className={styles.optionDetails}>
-                <div>
-                  <dt>{tSite("Interface")}</dt>
-                  <dd>{tSite("Web and native iOS/Android")}</dd>
-                </div>
-                <div>
-                  <dt>{tSite("Backend")}</dt>
-                  <dd>
-                    {tSite(
-                      "Shared backend source for the same accounts and data.",
-                    )}
-                  </dd>
-                </div>
-              </dl>
-              <BuyProductButton
-                productSlug={mobile.bundle.slug}
-                locale={tSite.locale}
-                variant="outline"
-                className={styles.enquiryAction}
-                label={tSite("Buy {value0} — {value1}", {
-                  value0: tSite(mobile.bundle.name),
-                  value1: mobile.bundle.priceLabel,
-                })}
-              />
-            </article>
-          </div>
-          <p className={styles.scopeNote}>
-            {tSite(
-              "Mobile includes a backend without the Web interface. Fullstack includes Web, Mobile and the shared API. These are source licences; implementation services and provider costs are separate.",
-            )}
-          </p>
+          <StarterSourceOffers currentProduct={productSlug} />
         </MarketingSectionShell>
 
         <MarketingSectionShell

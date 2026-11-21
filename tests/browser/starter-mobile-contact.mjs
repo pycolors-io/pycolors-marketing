@@ -4,15 +4,21 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const cardControls =
-  '#platforms article[aria-labelledby="mobile-option-title"] button, #platforms article[aria-labelledby="bundle-option-title"] button';
+  '#platforms article:is([aria-labelledby="web-option-title"], [aria-labelledby="mobile-option-title"], [aria-labelledby="bundle-option-title"]) :is(button, a)';
 const contactRegion = 'section[aria-labelledby="general-contact-heading"]';
 const contactControl = `${contactRegion} a[href^="mailto:contact@pycolors.com?subject="]`;
 const products = [
   {
     id: "mobile",
-    name: "PyColors Starter Pro Mobile",
+    name: "Starter Pro Mobile",
     price: "249 €",
     qualifier: "One-time payment · VAT included",
+    purchase: "Buy {value0} — {value1}",
+    purchaseName: "PyColors Starter Pro Mobile",
+    action: "Explore Starter Pro Mobile",
+    href: "/starters/mobile",
+    guide: "Mobile setup guide",
+    docsHref: "/docs/starter-pro/mobile",
     en: {
       action: "Discuss your Mobile project",
       heading: "Let's discuss your Mobile project.",
@@ -26,9 +32,15 @@ const products = [
   },
   {
     id: "fullstack",
-    name: "PyColors Starter Pro Fullstack",
+    name: "Starter Pro Fullstack",
     price: "499 €",
     qualifier: "One-time payment · VAT included",
+    purchase: "Buy {value0} — {value1}",
+    purchaseName: "PyColors Starter Pro Fullstack",
+    action: "Explore Starter Pro Fullstack",
+    href: "/starters/fullstack",
+    guide: "Fullstack setup guide",
+    docsHref: "/docs/starter-pro/fullstack",
     en: {
       action: "Discuss your Web and Mobile project",
       heading: "Let's discuss your Web and Mobile project.",
@@ -40,6 +52,19 @@ const products = [
       subject: "Demande concernant Starter Pro Fullstack",
     },
   },
+];
+const sourceOffers = [
+  {
+    name: "Starter Pro Web",
+    price: "299 €",
+    qualifier: "One-time payment · VAT included",
+    purchase: "Buy Starter Pro",
+    action: "Explore Starter Pro Web",
+    href: "/starters/pro",
+    guide: "Open Getting Started",
+    docsHref: "/docs/starter-pro/getting-started",
+  },
+  ...products,
 ];
 
 function safeErrorName(value) {
@@ -429,17 +454,9 @@ export async function verifyStarterMobileContact({
           assert.equal((await page.goto(mobileUrl)).status(), 200);
           record.phase = "mobile.offers";
           await verifyView(page, locale, theme, "mobile", record);
-          const web = page.getByRole("article", {
-            name: "Starter Pro Web",
-            exact: true,
-          });
-          assert.equal(
-            await web.getByText("299 €", { exact: true }).count(),
-            1,
-          );
-          for (const product of products) {
+          for (const product of sourceOffers) {
             const card = page.getByRole("article", {
-              name: product.name,
+              name: copy(product.name, locale),
               exact: true,
             });
             assert.equal(
@@ -459,7 +476,31 @@ export async function verifyStarterMobileContact({
               1,
             );
             assert.equal(await card.getByRole("button").count(), 1);
-            assert.equal(await card.getByRole("link").count(), 0);
+            assert.equal(
+              await card
+                .getByRole("button", {
+                  name: product.purchaseName
+                    ? copy(product.purchase, locale)
+                        .replace("{value0}", copy(product.purchaseName, locale))
+                        .replace("{value1}", product.price)
+                    : copy(product.purchase, locale),
+                  exact: true,
+                })
+                .count(),
+              1,
+            );
+            assert.equal(await card.getByRole("link").count(), 2);
+            for (const [label, href] of [
+              [product.action, product.href],
+              [product.guide, product.docsHref],
+            ]) {
+              assert.equal(
+                await card
+                  .getByRole("link", { name: copy(label, locale), exact: true })
+                  .getAttribute("href"),
+                `${prefix}${href}`,
+              );
+            }
           }
           assert.equal(
             await page
@@ -492,7 +533,7 @@ export async function verifyStarterMobileContact({
             await page.locator(":focus").getAttribute("id"),
             "content",
           );
-          await verifyKeyboard(page, cardControls, 2, "mobile", record);
+          await verifyKeyboard(page, cardControls, 9, "mobile", record);
           record.phase = "mobile.capture";
           for (const [id, label] of [
             ["web-option-title", "option-web"],

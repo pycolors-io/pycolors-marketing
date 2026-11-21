@@ -78,6 +78,7 @@ const STATIC_ROUTES = [
    */
   "/roadmap",
   "/changelog",
+  "/product-releases",
 
   /**
    * Trust / legal
@@ -176,6 +177,7 @@ function getPriority(route: string): number {
     [
       "/roadmap",
       "/changelog",
+      "/product-releases",
       "/about",
       "/contact",
       "/license",
@@ -212,6 +214,7 @@ function getChangeFrequency(
       "/pricing",
       "/roadmap",
       "/changelog",
+      "/product-releases",
       "/blog",
       "/open-source",
     ].includes(route)

@@ -24,7 +24,7 @@ const comparisonRows = [
   {
     label: "Authentication",
     free: "Mocked auth screens; no real account or session is created.",
-    pro: "Auth.js credentials, Google/GitHub OAuth, verification, and password reset; configure your providers.",
+    pro: "Better Auth email/password and Google/GitHub OAuth; configure your providers.",
   },
   {
     label: "Session and access checks",

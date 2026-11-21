@@ -26,9 +26,7 @@
   font-size: 0.8125rem;
   line-height: 1.7;
 }
-.heroActions :global([data-slot="button"]),
-.webAction,
-.enquiryAction {
+.heroActions :global([data-slot="button"]) {
   min-height: 2.75rem;
   height: auto;
   padding: 0.75rem 1.25rem;
@@ -63,10 +61,11 @@
   overflow: hidden;
   border: 1px solid var(--border-subtle);
   border-radius: clamp(1.5rem, 3vw, 2.5rem);
-  background: var(--marketing-graphite);
+  background: var(--marketing-canvas);
 }
 .artwork img {
-  object-fit: cover;
+  object-fit: contain;
+  padding: clamp(1.5rem, 4vw, 3rem);
 }
 .stack {
   position: absolute;
@@ -94,157 +93,6 @@
   font-size: 0.75rem;
   line-height: 1.5;
   text-align: right;
-}
-.options {
-  display: grid;
-  gap: 1.25rem;
-}
-.option {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  align-items: start;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--marketing-panel-radius);
-  background: var(--background);
-  color: var(--foreground);
-}
-.webOption {
-  --background: var(--marketing-graphite);
-  --foreground: var(--marketing-graphite-ink);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
-  --ring: var(--foreground);
-}
-.mobileOption {
-  --background: var(--marketing-lilac);
-  --foreground: var(--marketing-lilac-ink);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
-}
-.bundleOption {
-  --background: var(--marketing-peach);
-  --foreground: var(--marketing-peach-ink);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
-}
-.optionTop {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-}
-.optionTop > svg {
-  flex-shrink: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-.optionTop :global([data-slot="badge"]) {
-  border-color: var(--border-subtle);
-  color: var(--foreground);
-  background: transparent;
-  text-align: center;
-  white-space: normal;
-}
-.option h3 {
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
-  font-weight: 650;
-  line-height: 1.1;
-  letter-spacing: -0.035em;
-}
-.option > p {
-  margin-top: 1.25rem;
-  color: var(--muted-foreground);
-  font-size: 0.9375rem;
-  line-height: 1.7;
-}
-.option .price {
-  color: var(--foreground);
-  font-size: 3rem;
-  font-weight: 650;
-  line-height: 1.05;
-  letter-spacing: -0.05em;
-  font-variant-numeric: tabular-nums;
-}
-.option .priceNote {
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-}
-.option .bundleScope {
-  color: var(--foreground);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-.optionDetails {
-  width: 100%;
-  margin: 1.5rem 0 2rem;
-  font-size: 0.8125rem;
-  line-height: 1.6;
-}
-.optionDetails > div {
-  padding-top: 0.875rem;
-  border-top: 1px solid var(--border-subtle);
-}
-.optionDetails > div + div {
-  margin-top: 0.875rem;
-}
-.optionDetails dt {
-  font-weight: 600;
-}
-.optionDetails dd {
-  margin-top: 0.25rem;
-  color: var(--muted-foreground);
-}
-.option .webAction {
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  margin-top: auto;
-  border: 1px solid var(--foreground);
-  background: var(--foreground);
-  color: var(--background);
-}
-.option .webAction:hover {
-  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
-}
-.option .webAction:focus-visible,
-.option .enquiryAction:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 4px;
-}
-.option .enquiryAction {
-  margin-top: auto;
-  border: 1px solid var(--foreground);
-  background: transparent;
-  color: var(--foreground);
-}
-.option .enquiryAction:hover {
-  background: color-mix(in srgb, var(--foreground) 8%, var(--background));
-}
-.option .enquiryAction:focus-visible {
-  outline-color: var(--foreground);
-}
-.scopeNote {
-  max-width: 70ch;
-  margin: 1.5rem auto 0;
-  color: var(--muted-foreground);
-  font-size: 0.875rem;
-  line-height: 1.8;
-  text-align: center;
 }
 .foundations {
   display: grid;
@@ -285,12 +133,6 @@
 @media (min-width: 64rem) {
   .heroLayout {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  }
-  .options {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .option h3 {
-    min-height: 2.2em;
   }
 }
 @media (max-width: 39.999rem) {

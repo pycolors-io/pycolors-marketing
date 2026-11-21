@@ -106,6 +106,7 @@ describe("marketing footer", () => {
       "/ui/examples",
       "/ui/patterns",
       "/blog",
+      "/product-releases",
       "/changelog",
       "/roadmap",
       "/pricing",

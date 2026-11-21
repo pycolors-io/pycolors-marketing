@@ -1,11 +1,11 @@
 import { StarterSourceComparison } from "@/components/starters/starter-source-comparison";
+import { StarterSourceOffers } from "@/components/starters/starter-source-offers";
 import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
 import type { Metadata } from "next";
-import Image from "next/image";
 import {
   ArrowDown,
   ArrowRight,
@@ -22,8 +22,6 @@ import {
   STARTER_FREE_PRICE_LABEL,
 } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
-import { STARTER_PRO_MOBILE_PREVIEW } from "@/lib/products/starter-pro-mobile-preview";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
@@ -67,7 +65,6 @@ const metadata: Metadata = {
   },
 };
 
-const sourcePrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 const demoUrl = "https://starter-demo.pycolors.io";
 const repositoryUrl = "https://github.com/pycolors-io/pycolors-starter-free";
 
@@ -93,25 +90,23 @@ const offers = [
       "No real accounts, payments or database. Add those integrations when your product needs them.",
   },
   {
-    slug: "pro",
-    name: "Starter Pro",
-    label: "Connect your product",
+    slug: "na-ai",
+    name: "NA-AI Landing",
+    label: "Launch a landing page",
     description:
-      "Build on authentication, billing and database foundations. Focus on your product logic.",
-    price: sourcePrice,
-    access: "One-time payment",
-    priceNote:
-      "Complete source licence. Implementation services are quoted separately.",
-    previewId: "starter-pro",
-    scope: "Auth, billing & data foundations",
+      "A focused AI/SaaS marketing template to present your product and validate your offer.",
+    price: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
+    access: "One-time payment · VAT included",
+    priceNote: "Full landing page source code",
+    previewId: "na-ai-landing",
+    scope: "Frontend template. No auth, billing or database integration.",
     highlights: [
-      "Better Auth email/password and Google/GitHub OAuth",
-      "Stripe Checkout, portal and webhooks",
-      "Prisma + PostgreSQL foundations",
-      "Protected routes and installable PWA",
+      "Next.js, React and Tailwind CSS",
+      "Responsive marketing sections",
+      "SEO-ready frontend page",
+      "Commercial usage rights",
     ],
-    setup:
-      "Configure your providers, database and Stripe, then validate before deployment. Source ZIP delivered by claim email.",
+    setup: "Frontend template. No auth, billing or database integration.",
   },
 ] as const;
 
@@ -120,23 +115,17 @@ type StarterOffer = (typeof offers)[number];
 function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
   const tSite = useCopy();
 
-  const isPro = offer.slug === "pro";
+  const isFree = offer.slug === "free";
+  const href = isFree ? "/starters/free" : "/templates/na-ai-landing";
   return (
     <article
       aria-labelledby={`starter-${offer.slug}-title`}
       className={cn(
         "flex min-w-0 flex-col overflow-hidden border border-border-subtle bg-background md:row-span-3 md:grid md:grid-rows-subgrid",
         styles.offerCard,
-        isPro && styles.proOffer,
       )}
     >
-      <div
-        className={cn(
-          "p-5 sm:p-7",
-          styles.offerHeader,
-          isPro ? styles.proHeader : styles.freeHeader,
-        )}
-      >
+      <div className={cn("p-5 sm:p-7", styles.offerHeader, styles.freeHeader)}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-xs font-medium text-muted-foreground">
             {tSite(offer.label)}
@@ -148,7 +137,7 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
               styles.offerBadge,
             )}
           >
-            {tSite(isPro ? "Integration foundations" : "Frontend starter")}
+            {tSite(isFree ? "Frontend starter" : "Landing page template")}
           </Badge>
         </div>
         <h3
@@ -175,11 +164,11 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
         className={cn(
           "border-y border-border-subtle px-5 pt-5 sm:px-7 sm:pt-7",
           styles.previewStage,
-          isPro ? styles.proPreviewStage : styles.freePreviewStage,
+          styles.freePreviewStage,
         )}
       >
         <Link
-          href={`/starters/${offer.slug}`}
+          href={href}
           className={cn(
             "group relative block overflow-hidden rounded-t-[4px] border border-b-0 border-border-subtle bg-background focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
             styles.previewLink,
@@ -204,7 +193,13 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
           <span className="font-medium text-foreground">
             {tSite(offer.scope)}
           </span>
-          <span>{tSite("Dashboard preview · Sample data")}</span>
+          <span>
+            {tSite(
+              isFree
+                ? "Dashboard preview · Sample data"
+                : "Illustrative content",
+            )}
+          </span>
         </figcaption>
       </figure>
 
@@ -239,16 +234,18 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
               styles.exploreAction,
             )}
           >
-            <Link href={`/starters/${offer.slug}`}>
+            <Link href={href}>
               {tSite("Explore ")}
               {tSite(offer.name)}
             </Link>
           </Button>
-          {isPro ? (
-            <BuyStarterProButton
-              label={tSite("Buy Starter Pro")}
-              loadingLabel={tSite("Opening checkout…")}
-              className="shadow-none hover:shadow-none"
+          {!isFree ? (
+            <BuyProductButton
+              productSlug="na-ai-landing"
+              label={tSite("Buy NA-AI Landing — {value0}", {
+                value0: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
+              })}
+              variant="outline"
             />
           ) : (
             <Button asChild variant="ghost" className="h-auto rounded-[5px]">
@@ -292,7 +289,7 @@ export default function StartersPage() {
               badges={[{ label: "SaaS starters", variant: "outline" }]}
               title={tSite("A head start for your next SaaS.")}
               description={tSite(
-                "Start with a considered interface. Choose Free to validate your screens, or Pro when you're ready to connect real accounts, billing and data. Both start with Next.js and PyColors UI.",
+                "Choose Web, native Mobile or Fullstack. Explore the free frontend or a landing template when you need a lighter starting point.",
               )}
               actions={
                 <>
@@ -360,7 +357,7 @@ export default function StartersPage() {
           <MarketingSectionHeader
             align="left"
             titleId="choose-starter-title"
-            title={tSite("Two starting points. One design foundation.")}
+            title={tSite("Choose the source your product needs.")}
             description={tSite("Choose by what you need to build next.")}
             action={
               <Link href="#compare-starters" className={styles.textLink}>
@@ -369,103 +366,32 @@ export default function StartersPage() {
               </Link>
             }
           />
+          <StarterSourceOffers />
+        </MarketingSectionShell>
+
+        <div className={styles.sourceComparison}>
+          <StarterSourceComparison />
+        </div>
+
+        <MarketingSectionShell
+          id="explore-starters"
+          aria-labelledby="explore-starters-title"
+          width="full"
+        >
+          <MarketingSectionHeader
+            align="left"
+            titleId="explore-starters-title"
+            title={tSite("Explore lighter starting points.")}
+            description={tSite(
+              "Starter Free to validate your screens. NA-AI Landing to present your product.",
+            )}
+          />
           <div className="grid items-stretch gap-5 md:grid-cols-2 md:grid-rows-[auto_auto_1fr] md:gap-y-0">
             {offers.map((offer) => (
               <StarterOfferCard key={offer.slug} offer={offer} />
             ))}
           </div>
-          <p className="mt-5 flex items-start gap-2.5 text-xs leading-6 text-muted-foreground">
-            <Code2 className="mt-1 size-4 shrink-0" aria-hidden="true" />
-            {tSite(
-              "Both starters share PyColors UI and design tokens. Pro adds integration foundations; you own the configuration, product logic and deployment.",
-            )}
-          </p>
         </MarketingSectionShell>
-
-        <section
-          aria-labelledby="starter-mobile-preview-title"
-          className={styles.mobilePreview}
-        >
-          <div className={styles.mobileCopy}>
-            <div className={styles.mobileMeta}>
-              <Badge variant="outline">
-                {tSite(STARTER_PRO_MOBILE_PREVIEW.status)}
-              </Badge>
-              <span>{tSite(STARTER_PRO_MOBILE_PREVIEW.stack)}</span>
-            </div>
-            <h2 id="starter-mobile-preview-title">
-              {tSite("Starter Pro Mobile and Fullstack")}
-            </h2>
-            <p>
-              {tSite(
-                "Mobile includes a backend without the Web interface. Fullstack includes Web, Mobile and the shared API. These are source licences; implementation services and provider costs are separate.",
-              )}
-            </p>
-          </div>
-          <div className={styles.mobileVisual} aria-hidden="true">
-            <Image
-              src="/images/marketing/concepts/modular-platform-v1.webp"
-              alt=""
-              width={1254}
-              height={1254}
-              sizes="(min-width: 1024px) 380px, (min-width: 768px) 36vw, 85vw"
-              loading="lazy"
-            />
-          </div>
-          <div className="col-span-full grid gap-5 border-t border-border-subtle p-5 sm:p-7 lg:grid-cols-2">
-            {[
-              STARTER_PRO_MOBILE_PREVIEW,
-              STARTER_PRO_MOBILE_PREVIEW.bundle,
-            ].map((offer) => (
-              <article
-                key={offer.slug}
-                aria-labelledby={`${offer.slug}-source-title`}
-                className="flex min-w-0 flex-col rounded-md border border-border-subtle bg-background p-5 sm:p-6"
-              >
-                <h3
-                  id={`${offer.slug}-source-title`}
-                  className="font-brand text-xl font-semibold tracking-tight"
-                >
-                  {tSite(offer.name)}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                  {tSite(offer.description)}
-                </p>
-                <p className="mt-5 text-3xl font-semibold tracking-tight">
-                  {offer.priceLabel}
-                </p>
-                <p className="mb-5 mt-2 text-xs leading-6 text-muted-foreground">
-                  {tSite(offer.priceQualifier)}
-                </p>
-                <div className="mt-auto">
-                  <BuyProductButton
-                    productSlug={offer.slug}
-                    locale={tSite.locale}
-                    label={tSite("Buy {value0} — {value1}", {
-                      value0: tSite(offer.name),
-                      value1: offer.priceLabel,
-                    })}
-                  />
-                </div>
-                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
-                  <Link href={offer.href} className={styles.textLink}>
-                    {tSite(offer.action)}
-                    <ArrowRight className="size-3.5" aria-hidden="true" />
-                  </Link>
-                  <Link href={offer.docsHref} className={styles.textLink}>
-                    {tSite(
-                      offer.slug === "starter-pro-mobile"
-                        ? "Mobile setup guide"
-                        : "Fullstack setup guide",
-                    )}
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <StarterSourceComparison />
 
         <MarketingSectionShell
           id="compare-starters"
@@ -476,9 +402,9 @@ export default function StartersPage() {
           <MarketingSectionHeader
             align="left"
             titleId="compare-starters-title"
-            title={tSite("Know exactly what you're starting with.")}
+            title={tSite("Compare Free with the Web foundation.")}
             description={tSite(
-              "The screens, integrations and setup work, side by side.",
+              "Free frontend and Web integration foundations, side by side.",
             )}
             action={
               <Link href="/pricing" className={styles.textLink}>

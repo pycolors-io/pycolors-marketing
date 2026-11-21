@@ -85,12 +85,10 @@ function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
   const tSite = useCopy();
 
   return (
-    <div className="grid gap-5 sm:grid-cols-2 sm:gap-3">
+    <div className={styles.productGroups}>
       {PRODUCT_MENU_GROUPS.map((group) => (
-        <div key={group.title} className="min-w-0">
-          <p className="mb-2 px-2.5 text-[11px] leading-4 font-medium tracking-[0.06em] text-muted-foreground uppercase">
-            {tSite(group.title)}
-          </p>
+        <div key={group.title} className={styles.productGroup}>
+          <p className={styles.productGroupTitle}>{tSite(group.title)}</p>
           <ul aria-label={tSite(group.title)} className="space-y-0.5">
             {group.items.map((item) => {
               const Icon = item.icon;
@@ -103,6 +101,7 @@ function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
                     aria-current={current ? "page" : undefined}
                     className={cn(
                       "group/product-link flex min-h-11 items-start gap-2.5 rounded-md px-2.5 py-2.5 text-[13px] leading-5 transition-colors motion-reduce:transition-none hover:bg-surface-muted/60",
+                      styles.productLink,
                       current && "bg-surface-muted/60",
                       focusRing,
                     )}
@@ -126,7 +125,7 @@ function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
                           </span>
                         ) : null}
                       </span>
-                      <span className="mt-0.5 block text-xs leading-5 font-normal text-muted-foreground">
+                      <span className={styles.productDescription}>
                         {tSite(item.description)}
                       </span>
                     </span>
@@ -249,7 +248,7 @@ function DesktopNavigationMenu({
         hidden={!open}
         className={cn(
           "absolute left-0 top-full mt-2 max-h-[calc(100dvh-var(--site-header-height)-1rem)] max-w-[calc(100vw-2rem)] overflow-y-auto overscroll-contain rounded-md border border-border-subtle bg-background shadow-soft",
-          menu === "products" ? "w-[45rem]" : "w-[22rem]",
+          menu === "products" ? styles.productPanel : "w-[22rem]",
           styles.panel,
         )}
       >
@@ -516,7 +515,7 @@ export function SiteHeader({
                   size="default"
                   className="site-primary-action rounded-md font-medium"
                 >
-                  <Link href="/starters/pro">{tSite("Explore Pro")}</Link>
+                  <Link href="/starters">{tSite("Explore Pro")}</Link>
                 </Button>
               </div>
               <div className="ml-auto flex shrink-0 items-center gap-2 lg:hidden">
@@ -601,7 +600,7 @@ export function SiteHeader({
             asChild
             className="site-primary-action h-auto w-full whitespace-normal rounded-md text-center"
           >
-            <Link href="/starters/pro" onClick={onNavigate}>
+            <Link href="/starters" onClick={onNavigate}>
               {tSite("Explore Pro")}
             </Link>
           </Button>

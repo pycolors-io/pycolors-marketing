@@ -181,6 +181,7 @@ const GROUPS = [
       { label: "UI examples", href: "/ui/examples" },
       { label: "Patterns", href: "/ui/patterns" },
       { label: "Blog", href: "/blog" },
+      { label: "Product releases", href: "/product-releases" },
       { label: "Changelog", href: "/changelog" },
       { label: "Roadmap", href: "/roadmap" },
     ],
