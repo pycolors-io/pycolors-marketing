@@ -24,6 +24,7 @@ import {
 import { Container } from "@/components/container";
 import { STARTER_PRO_MOBILE_PREVIEW } from "@/lib/products/starter-pro-mobile-preview";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
 import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
@@ -104,7 +105,7 @@ const offers = [
     previewId: "starter-pro",
     scope: "Auth, billing & data foundations",
     highlights: [
-      "Auth.js credentials and Google/GitHub OAuth",
+      "Better Auth email/password and Google/GitHub OAuth",
       "Stripe Checkout, portal and webhooks",
       "Prisma + PostgreSQL foundations",
       "Protected routes and installable PWA",
@@ -393,20 +394,13 @@ export default function StartersPage() {
               <span>{tSite(STARTER_PRO_MOBILE_PREVIEW.stack)}</span>
             </div>
             <h2 id="starter-mobile-preview-title">
-              {tSite(STARTER_PRO_MOBILE_PREVIEW.name)}
+              {tSite("Starter Pro Mobile and Fullstack")}
             </h2>
-            <p>{tSite(STARTER_PRO_MOBILE_PREVIEW.description)}</p>
-            <Button asChild className={styles.mobileAction}>
-              <Link href={STARTER_PRO_MOBILE_PREVIEW.href}>
-                {tSite(STARTER_PRO_MOBILE_PREVIEW.action)}
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className={styles.mobileAction}>
-              <Link href={STARTER_PRO_MOBILE_PREVIEW.bundle.href}>
-                {tSite(STARTER_PRO_MOBILE_PREVIEW.bundle.action)}
-              </Link>
-            </Button>
+            <p>
+              {tSite(
+                "Mobile includes a backend without the Web interface. Fullstack includes Web, Mobile and the shared API. These are source licences; implementation services and provider costs are separate.",
+              )}
+            </p>
           </div>
           <div className={styles.mobileVisual} aria-hidden="true">
             <Image
@@ -417,6 +411,57 @@ export default function StartersPage() {
               sizes="(min-width: 1024px) 380px, (min-width: 768px) 36vw, 85vw"
               loading="lazy"
             />
+          </div>
+          <div className="col-span-full grid gap-5 border-t border-border-subtle p-5 sm:p-7 lg:grid-cols-2">
+            {[
+              STARTER_PRO_MOBILE_PREVIEW,
+              STARTER_PRO_MOBILE_PREVIEW.bundle,
+            ].map((offer) => (
+              <article
+                key={offer.slug}
+                aria-labelledby={`${offer.slug}-source-title`}
+                className="flex min-w-0 flex-col rounded-md border border-border-subtle bg-background p-5 sm:p-6"
+              >
+                <h3
+                  id={`${offer.slug}-source-title`}
+                  className="font-brand text-xl font-semibold tracking-tight"
+                >
+                  {tSite(offer.name)}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                  {tSite(offer.description)}
+                </p>
+                <p className="mt-5 text-3xl font-semibold tracking-tight">
+                  {offer.priceLabel}
+                </p>
+                <p className="mb-5 mt-2 text-xs leading-6 text-muted-foreground">
+                  {tSite(offer.priceQualifier)}
+                </p>
+                <div className="mt-auto">
+                  <BuyProductButton
+                    productSlug={offer.slug}
+                    locale={tSite.locale}
+                    label={tSite("Buy {value0} — {value1}", {
+                      value0: tSite(offer.name),
+                      value1: offer.priceLabel,
+                    })}
+                  />
+                </div>
+                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
+                  <Link href={offer.href} className={styles.textLink}>
+                    {tSite(offer.action)}
+                    <ArrowRight className="size-3.5" aria-hidden="true" />
+                  </Link>
+                  <Link href={offer.docsHref} className={styles.textLink}>
+                    {tSite(
+                      offer.slug === "starter-pro-mobile"
+                        ? "Mobile setup guide"
+                        : "Fullstack setup guide",
+                    )}
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 

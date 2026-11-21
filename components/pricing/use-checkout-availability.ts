@@ -1,23 +1,53 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { getCheckoutAvailability } from "@/lib/api/client";
 import { getPublicProduct } from "@/lib/products/public-catalog";
 
 type Availability = "checking" | "available" | "unavailable";
 type PublicAvailability = Record<string, { available: boolean }>;
+type Snapshot =
+  | { status: "checking" | "unavailable" }
+  | { status: "ready"; products: PublicAvailability };
 
-// This cache is filled only in browser effects. It deduplicates public,
-// non-personal availability reads across purchase controls, never orders/tokens.
+const checking: Snapshot = { status: "checking" };
+const unavailable: Snapshot = { status: "unavailable" };
+let snapshot: Snapshot = checking;
+const listeners = new Set<() => void>();
+
+// Browser effects and retries share only public, non-personal availability.
+// Every control observes the same acknowledgement, never orders or tokens.
 let pending:
   { expiresAt: number; request: Promise<PublicAvailability> } | undefined;
 
-export function resetCheckoutAvailability() {
-  pending = undefined;
+function publish(value: Snapshot) {
+  if (snapshot === value) return;
+  snapshot = value;
+  for (const listener of listeners) listener();
 }
 
-async function readAvailability(): Promise<PublicAvailability> {
-  if (pending && pending.expiresAt > Date.now()) return pending.request;
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+function getSnapshot() {
+  return snapshot;
+}
+
+function getServerSnapshot() {
+  return checking;
+}
+
+export function resetCheckoutAvailability() {
+  pending = undefined;
+  publish(checking);
+}
+
+function readAvailability() {
+  if (pending && pending.expiresAt > Date.now()) return;
   const request = (async () => {
     const value = await getCheckoutAvailability();
     if (
@@ -45,43 +75,40 @@ async function readAvailability(): Promise<PublicAvailability> {
     }
     return result;
   })();
-  pending = { expiresAt: Date.now() + 20_000, request };
-  return request;
+  const current = { expiresAt: Date.now() + 20_000, request };
+  pending = current;
+  publish(checking);
+  void request.then(
+    (products) => {
+      // A superseded request must not reopen an offer closed by a newer read.
+      if (pending === current) publish({ status: "ready", products });
+    },
+    () => {
+      if (pending === current) publish(unavailable);
+    },
+  );
 }
 
-export function useCheckoutAvailability(productSlug: string) {
-  const [revision, setRevision] = useState(0);
-  const [state, setState] = useState<{ slug: string; status: Availability }>({
-    slug: productSlug,
-    status: "checking",
-  });
+function retryAvailability() {
+  resetCheckoutAvailability();
+  readAvailability();
+}
+
+export function useCheckoutAvailability(productSlug: string): {
+  status: Availability;
+  retry: () => void;
+} {
+  const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   useEffect(() => {
-    let active = true;
-    readAvailability().then(
-      (products) => {
-        if (active)
-          setState({
-            slug: productSlug,
-            status:
-              products[productSlug]?.available === true
-                ? "available"
-                : "unavailable",
-          });
-      },
-      () => {
-        if (active) setState({ slug: productSlug, status: "unavailable" });
-      },
-    );
-    return () => {
-      active = false;
-    };
-  }, [productSlug, revision]);
+    readAvailability();
+  }, [productSlug]);
   return {
-    status: state.slug === productSlug ? state.status : "checking",
-    retry: () => {
-      resetCheckoutAvailability();
-      setState({ slug: productSlug, status: "checking" });
-      setRevision((value) => value + 1);
-    },
+    status:
+      state.status === "ready"
+        ? state.products[productSlug]?.available === true
+          ? "available"
+          : "unavailable"
+        : state.status,
+    retry: retryAvailability,
   };
 }

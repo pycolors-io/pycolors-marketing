@@ -51,23 +51,40 @@ afterEach(() => {
 afterAll(() => vi.unstubAllEnvs());
 
 describe("Starter discovery page", () => {
-  it("announces Mobile separately from the two available Web starters", () => {
+  it("presents Mobile and Fullstack source purchases alongside the Web starters", () => {
     render(<StartersPage />);
     const mobile = screen.getByRole("region", {
-      name: STARTER_PRO_MOBILE_PREVIEW.name,
+      name: "Starter Pro Mobile and Fullstack",
     });
     expect(mobile).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.status);
     expect(mobile).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.stack);
-    const link = within(mobile).getByRole("link", {
-      name: STARTER_PRO_MOBILE_PREVIEW.action,
-    });
-    expect(link).toHaveAttribute("href", STARTER_PRO_MOBILE_PREVIEW.href);
-    link.focus();
-    expect(link).toHaveFocus();
-    expect(within(mobile).queryByRole("button")).not.toBeInTheDocument();
-    expect(
-      within(mobile).queryByText(PRODUCT_DISPLAY["starter-pro"].priceLabel),
-    ).not.toBeInTheDocument();
+    for (const offer of [
+      STARTER_PRO_MOBILE_PREVIEW,
+      STARTER_PRO_MOBILE_PREVIEW.bundle,
+    ]) {
+      const card = within(mobile).getByRole("article", { name: offer.name });
+      expect(card).toHaveTextContent(offer.description);
+      expect(within(card).getByText(offer.priceLabel)).toBeVisible();
+      expect(card).toHaveTextContent(offer.priceQualifier);
+      expect(
+        within(card).getByRole("button", {
+          name: `Buy ${offer.name} — ${offer.priceLabel}`,
+        }),
+      ).toBeEnabled();
+      const link = within(card).getByRole("link", { name: offer.action });
+      expect(link).toHaveAttribute("href", offer.href);
+      link.focus();
+      expect(link).toHaveFocus();
+      expect(
+        within(card).getByRole("link", {
+          name:
+            offer.slug === "starter-pro-mobile"
+              ? "Mobile setup guide"
+              : "Fullstack setup guide",
+        }),
+      ).toHaveAttribute("href", offer.docsHref);
+    }
+    expect(mobile).toHaveTextContent("provider costs are separate");
     expect(screen.getByRole("article", { name: "Starter Free" })).toBeVisible();
     expect(screen.getByRole("article", { name: "Starter Pro" })).toBeVisible();
     expect(fetch).not.toHaveBeenCalled();
@@ -108,6 +125,10 @@ describe("Starter discovery page", () => {
       "Configure your providers, database and Stripe",
     );
     expect(pro).toHaveTextContent("Source ZIP delivered by claim email.");
+    expect(pro).toHaveTextContent(
+      "Better Auth email/password and Google/GitHub OAuth",
+    );
+    expect(pro).not.toHaveTextContent("Auth.js");
     expect(
       within(free).getByRole("link", { name: "Explore Starter Free" }),
     ).toHaveAttribute("href", "/starters/free");
