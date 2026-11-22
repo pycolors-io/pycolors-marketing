@@ -8,6 +8,7 @@ if (!API_BASE_URL) {
 
 // Initial UX bound, not a payment cancellation guarantee or measured SLA.
 export const CHECKOUT_TIMEOUT_MS = 30_000;
+export const CHECKOUT_AVAILABILITY_TIMEOUT_MS = 10_000;
 
 export async function createCheckoutSession(
   input: {
@@ -75,12 +76,33 @@ export async function createCheckoutSession(
 
 /** Public, non-personal readiness acknowledgement. Never returns provider configuration. */
 export async function getCheckoutAvailability(): Promise<unknown> {
-  const response = await fetch(`${API_BASE_URL}/api/v1/checkout/availability`, {
-    cache: "no-store",
-    signal: AbortSignal.timeout(10_000),
+  const controller = new AbortController();
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  const expired = new Promise<never>((_, reject) => {
+    timeout = setTimeout(() => {
+      controller.abort();
+      reject(new Error("Checkout availability is unavailable."));
+    }, CHECKOUT_AVAILABILITY_TIMEOUT_MS);
   });
-  if (!response.ok) throw new Error("Checkout availability is unavailable.");
-  return response.json();
+  try {
+    return await Promise.race([
+      expired,
+      (async () => {
+        const response = await fetch(
+          `${API_BASE_URL}/api/v1/checkout/availability`,
+          {
+            cache: "no-store",
+            signal: controller.signal,
+          },
+        );
+        if (!response.ok)
+          throw new Error("Checkout availability is unavailable.");
+        return response.json();
+      })(),
+    ]);
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 /**

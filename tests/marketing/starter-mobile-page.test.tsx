@@ -1,7 +1,8 @@
 import * as React from "react";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { renderToString } from "react-dom/server";
 import { NextIntlClientProvider } from "next-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
@@ -83,6 +84,212 @@ function buyLabel(
 beforeEach(() => vi.clearAllMocks());
 
 describe("Starter Pro Mobile and Fullstack source offers", () => {
+  it.each([
+    ["en", false],
+    ["fr", false],
+    ["en", true],
+    ["fr", true],
+  ] as const)(
+    "keeps the %s hero focused on its own purchase and setup guide (Fullstack: %s)",
+    (locale, fullstack) => {
+      renderPage(locale, fullstack);
+      const product = fullstack ? mobile.bundle : mobile;
+      const hero = screen
+        .getByRole("heading", { level: 1 })
+        .closest("section")!;
+      const actions = within(hero);
+      expect(actions.getAllByRole("button")).toHaveLength(1);
+      expect(
+        actions.getByRole("button", { name: buyLabel(locale, product) }),
+      ).toBeEnabled();
+      const prefix = locale === "fr" ? "/fr" : "";
+      const guide = actions.getByRole("link", {
+        name: copy(
+          locale,
+          fullstack ? "Fullstack setup guide" : "Mobile setup guide",
+        ),
+      });
+      expect(guide).toHaveAttribute("href", `${prefix}${product.docsHref}`);
+      expect(guide).toHaveAttribute("data-slot", "button");
+      const compare = actions.getByRole("link", {
+        name: copy(locale, "Compare source licences"),
+      });
+      expect(compare).toHaveAttribute("href", "#platforms");
+      expect(compare).not.toHaveAttribute("data-slot", "button");
+      const web = actions.getByRole("link", {
+        name: copy(locale, "Explore Starter Pro Web"),
+      });
+      expect(web).toHaveAttribute("href", `${prefix}/starters/pro`);
+      expect(web).not.toHaveAttribute("data-slot", "button");
+      const stack = actions.getByRole("link", {
+        name: copy(locale, "Explore the stack"),
+      });
+      expect(stack).toHaveAttribute("href", "#technology");
+      expect(stack).not.toHaveAttribute("data-slot", "button");
+      expect(actions.getAllByRole("link")).toHaveLength(4);
+      for (const link of [guide, stack, compare, web]) {
+        link.focus();
+        expect(link).toHaveFocus();
+      }
+      expect(createCheckoutSession).not.toHaveBeenCalled();
+    },
+  );
+
+  it.each([
+    ["en", false],
+    ["fr", false],
+    ["en", true],
+    ["fr", true],
+  ] as const)(
+    "documents the delivered technology layers and local setup links in %s (Fullstack: %s)",
+    async (locale, fullstack) => {
+      renderPage(locale, fullstack);
+      const stack = screen.getByRole("region", {
+        name: copy(locale, "Your stack, from interface to data."),
+      });
+      const region = within(stack);
+      const prefix = locale === "fr" ? "/fr" : "";
+      expect(
+        region
+          .getAllByRole("article")
+          .map(
+            (article) =>
+              within(article).getByRole("heading", { level: 3 }).textContent,
+          ),
+      ).toEqual([
+        ...(fullstack ? ["Next.js + React"] : []),
+        "React Native + Expo",
+        "Next.js + PostgreSQL",
+      ]);
+
+      const native = region.getByRole("article", {
+        name: "React Native + Expo",
+      });
+      expect(
+        within(native)
+          .getAllByRole("listitem")
+          .map((item) => item.textContent),
+      ).toEqual(["TypeScript", "Expo Router", "Expo SecureStore"]);
+      expect(
+        within(native).getByRole("link", {
+          name: copy(locale, "Explore the native architecture"),
+        }),
+      ).toHaveAttribute(
+        "href",
+        `${prefix}/docs/starter-pro/mobile#native-source`,
+      );
+
+      const backend = region.getByRole("article", {
+        name: "Next.js + PostgreSQL",
+      });
+      expect(
+        within(backend)
+          .getAllByRole("listitem")
+          .map((item) => item.textContent),
+      ).toEqual(["Better Auth", "oRPC", "Prisma"]);
+      expect(
+        within(backend).getByText(
+          copy(locale, fullstack ? "Shared backend" : "Included backend"),
+        ),
+      ).toBeVisible();
+      expect(
+        within(backend).getByRole("link", {
+          name: copy(locale, "Explore the backend architecture"),
+        }),
+      ).toHaveAttribute(
+        "href",
+        `${prefix}/docs/starter-pro/backend#architecture`,
+      );
+
+      const integrations = region.getByRole("complementary", {
+        name: copy(locale, "Integrations to configure"),
+      });
+      expect(
+        within(integrations).getByRole("link", {
+          name: copy(
+            locale,
+            fullstack ? "Resend · Email" : "Resend · Authentication emails",
+          ),
+        }),
+      ).toHaveAttribute(
+        "href",
+        `${prefix}/docs/starter-pro/environment-variables#email-delivery`,
+      );
+
+      if (fullstack) {
+        const web = region.getByRole("article", { name: "Next.js + React" });
+        expect(
+          within(web)
+            .getAllByRole("listitem")
+            .map((item) => item.textContent),
+        ).toEqual(["TypeScript", "Tailwind CSS", "PyColors UI"]);
+        expect(
+          within(web).getByRole("link", {
+            name: copy(locale, "Explore the Web architecture"),
+          }),
+        ).toHaveAttribute("href", `${prefix}/docs/starter-pro/architecture`);
+        expect(
+          within(integrations).getByRole("link", {
+            name: copy(locale, "Stripe · Web billing"),
+          }),
+        ).toHaveAttribute("href", `${prefix}/docs/starter-pro/billing`);
+        expect((await axe(stack)).violations).toEqual([]);
+      } else {
+        expect(
+          region.queryByRole("article", { name: "Next.js + React" }),
+        ).toBeNull();
+        expect(stack).not.toHaveTextContent("Stripe");
+        expect(stack).not.toHaveTextContent("Tailwind CSS");
+      }
+      expect(region.queryByRole("button")).toBeNull();
+      expect(createCheckoutSession).not.toHaveBeenCalled();
+    },
+  );
+
+  it.each([false, true])(
+    "renders the source stack in server HTML without adding a client boundary (Fullstack: %s)",
+    (fullstack) => {
+      const source = readFileSync(
+        resolve(
+          process.cwd(),
+          "components/starters/starter-technology-stack.tsx",
+        ),
+        "utf8",
+      );
+      expect(source).not.toMatch(/^\s*["']use client["']/m);
+      const server = document.createElement("div");
+      server.innerHTML = renderToString(
+        <NextIntlClientProvider locale="en" timeZone="UTC" messages={en}>
+          {fullstack ? <StarterFullstackPage /> : <StarterMobilePage />}
+        </NextIntlClientProvider>,
+      );
+      document.body.append(server);
+      try {
+        const stack = within(server).getByRole("region", {
+          name: "Your stack, from interface to data.",
+        });
+        expect(within(stack).getAllByRole("article")).toHaveLength(
+          fullstack ? 3 : 2,
+        );
+        expect(stack).toHaveTextContent("React Native + Expo");
+        expect(stack).toHaveTextContent("Next.js + PostgreSQL");
+        const sourceCards = server.querySelectorAll<HTMLElement>(
+          "[data-source-offer]",
+        );
+        expect(sourceCards).toHaveLength(3);
+        for (const card of sourceCards) {
+          expect(card.querySelectorAll("figure img")).toHaveLength(1);
+          expect(card.querySelector("img")).toHaveAttribute("alt", "");
+          expect(
+            within(card).getByText("Concept illustration"),
+          ).toBeInTheDocument();
+        }
+      } finally {
+        server.remove();
+      }
+    },
+  );
+
   it.each(["en", "fr"] as const)(
     "distinguishes Web, autonomous Mobile and Fullstack with canonical TTC prices in %s",
     async (locale) => {
@@ -96,6 +303,31 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
       expect(
         within(web).getByText(PRODUCT_DISPLAY["starter-pro"].priceLabel),
       ).toBeVisible();
+      for (const [name, illustration] of [
+        ["Starter Pro Web", "workflow-path"],
+        ["Starter Pro Mobile", "connected-workspace"],
+        ["Starter Pro Fullstack", "source-stack"],
+      ] as const) {
+        const card = screen.getByRole("article", { name: copy(locale, name) });
+        const image = card.querySelector("img")!;
+        expect(card.querySelectorAll("figure")).toHaveLength(1);
+        expect(card.querySelectorAll("img")).toHaveLength(1);
+        expect(image).toHaveAttribute("alt", "");
+        expect(image.closest('[aria-hidden="true"]')).not.toBeNull();
+        const imageUrl = new URL(
+          image.getAttribute("src")!,
+          "https://marketing.example",
+        );
+        expect(imageUrl.searchParams.get("url") ?? imageUrl.pathname).toBe(
+          `/images/starters/pro/concepts/${illustration}-test-v1.png`,
+        );
+        expect(
+          within(card).getByText(copy(locale, "Concept illustration")),
+        ).toBeVisible();
+        expect(card.querySelector("a img, button img")).toBeNull();
+        expect(within(card).getAllByRole("button")).toHaveLength(1);
+        expect(within(card).getAllByRole("link")).toHaveLength(2);
+      }
       for (const product of [mobile, mobile.bundle]) {
         const card = screen.getByRole("article", {
           name: copy(
@@ -177,7 +409,10 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
     expect(
       container.querySelector('img[alt=""]')?.closest('[aria-hidden="true"]'),
     ).not.toBeNull();
-    expect(screen.getByText("Concept illustration")).toBeVisible();
+    const hero = screen
+      .getByRole("heading", { level: 1 })
+      .closest<HTMLElement>('[data-marketing-hero="cool"]')!;
+    expect(within(hero).getByText("Concept illustration")).toBeVisible();
     expect(
       existsSync(
         resolve(

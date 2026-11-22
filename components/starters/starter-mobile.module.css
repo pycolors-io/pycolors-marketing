@@ -26,29 +26,82 @@
   font-size: 0.8125rem;
   line-height: 1.7;
 }
-.heroActions :global([data-slot="button"]) {
-  min-height: 2.75rem;
+.heroActions {
+  align-items: flex-start;
+}
+.heroActions > div {
+  max-width: 100%;
+}
+.heroActions > div > :global([data-slot="button"]),
+.guideAction {
+  min-height: 2.125rem;
   height: auto;
-  padding: 0.75rem 1.25rem;
+  padding: 0.375rem 1rem;
   border-radius: 100px;
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
   white-space: normal;
   text-align: center;
 }
-.heroActions :global([data-slot="button"]):focus-visible {
+.heroActions :global([data-slot="button"]):focus-visible,
+.guideAction:focus-visible,
+.contextLinks a:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 4px;
 }
 .heroActions :global(.site-primary-action) {
-  border: 1px solid var(--marketing-cobalt);
-  background: var(--marketing-cobalt);
-  color: var(--marketing-cobalt-ink);
+  border: 1px solid var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
 }
 .heroActions :global(.site-primary-action):hover {
-  background: color-mix(
-    in srgb,
-    var(--marketing-cobalt) 88%,
-    var(--background)
-  );
+  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
+}
+.guideAction {
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+}
+.guideAction:hover {
+  border-color: var(--foreground);
+  background: var(--surface-muted);
+}
+.heroDetails {
+  display: grid;
+  gap: 0.75rem;
+}
+.contextLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+.contextLinks a {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-underline-offset: 4px;
+}
+.contextLinks a:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+.guideLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+}
+.heroActions :is(a, button),
+.contextLinks a,
+.guideLinks a {
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
 }
 .visual {
   min-width: 0;
@@ -94,43 +147,191 @@
   line-height: 1.5;
   text-align: right;
 }
-.foundations {
+.technologyGrid {
   display: grid;
   gap: 1.25rem;
 }
-.foundations article {
+.technologyCard {
+  display: flex;
   min-width: 0;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid color-mix(in srgb, var(--foreground) 9%, var(--background));
+  border-radius: clamp(1.5rem, 3vw, 2rem);
+  background: linear-gradient(
+    150deg,
+    var(--background),
+    color-mix(in srgb, var(--surface-muted) 36%, var(--background))
+  );
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--foreground) 3%, transparent),
+    0 22px 52px -38px color-mix(in srgb, var(--foreground) 20%, transparent);
+}
+.technologyCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.technologyIcon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--marketing-panel-radius);
-  background: var(--marketing-canvas);
+  border-radius: 1rem;
+  background: var(--background);
+  box-shadow: 0 4px 12px -8px
+    color-mix(in srgb, var(--foreground) 18%, transparent);
+  color: var(--foreground);
 }
-.foundations svg {
-  width: 1.75rem;
-  height: 1.75rem;
-  margin-bottom: 1.5rem;
-  color: var(--primary);
+.technologyIcon svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }
-.foundations h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.35;
-}
-.foundations p {
-  margin-top: 0.75rem;
+.technologyIndex {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
   color: var(--muted-foreground);
-  font-size: 0.9375rem;
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+}
+.technologyLabel {
+  margin-bottom: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+.technologyCard h3 {
+  font-size: clamp(1.375rem, 2.1vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+.technologyDescription {
+  flex: 1;
+  max-width: 52ch;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
   line-height: 1.7;
+}
+.technologyNames {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+.technologyNames li {
+  padding: 0.25rem 0.625rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  background: color-mix(in srgb, var(--foreground) 5%, var(--background));
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.technologyLink {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0.25rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-underline-offset: 0.25rem;
+}
+.technologyLink svg {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--background);
+}
+.technologyServices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: 1.25rem;
+  padding: 1.5rem 0.25rem 0;
+  border-top: 1px solid var(--border-subtle);
+}
+.technologyServices h3 {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.technologyServices p {
+  max-width: 68ch;
+  margin-top: 0.375rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.technologyServiceLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+.technologyServiceLinks a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-underline-offset: 0.25rem;
+}
+.technologyLink:hover,
+.technologyServiceLinks a:hover {
+  text-decoration: underline;
+}
+.technologyLink:focus-visible,
+.technologyServiceLinks a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.technologyLink,
+.technologyServiceLinks a {
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
 }
 .page :global([id]) {
   scroll-margin-top: calc(var(--site-header-height, 3.5rem) + 1.5rem);
 }
 @media (min-width: 48rem) {
-  .foundations {
+  .technologyGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+@media (min-width: 48rem) and (max-width: 63.999rem) {
+  .technologyGrid[data-layers="3"] .technologyCard:last-child {
+    grid-column: 1 / -1;
+  }
+}
 @media (min-width: 64rem) {
+  .technologyGrid[data-layers="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .heroLayout {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   }
@@ -138,6 +339,13 @@
 @media (max-width: 39.999rem) {
   .hero h1 {
     font-size: clamp(2rem, 8.5vw, 2.875rem);
+  }
+}
+@media (max-width: 39.999rem), (pointer: coarse) {
+  .heroActions > div > :global([data-slot="button"]),
+  .guideAction,
+  .contextLinks a {
+    min-height: 2.75rem;
   }
 }
 @media (forced-colors: active) {
@@ -151,7 +359,8 @@
   .webOption,
   .mobileOption,
   .bundleOption,
-  .foundations article {
+  .technologyCard,
+  .technologyServices {
     --background: Canvas;
     --foreground: CanvasText;
     --muted-foreground: CanvasText;
@@ -160,14 +369,19 @@
     border-color: CanvasText;
     background: Canvas;
     color: CanvasText;
+    box-shadow: none;
   }
   .heroActions :global([data-slot="button"]):focus-visible,
+  .guideAction:focus-visible,
+  .contextLinks a:focus-visible,
   .option .webAction:focus-visible,
   .option .enquiryAction:focus-visible {
     outline-color: Highlight;
   }
   .heroActions :global(.site-primary-action),
   .heroActions :global(.site-primary-action):hover,
+  .guideAction,
+  .guideAction:hover,
   .option .webAction,
   .option .webAction:hover,
   .option .enquiryAction,
@@ -175,5 +389,8 @@
     border-color: ButtonText;
     background: ButtonFace;
     color: ButtonText;
+  }
+  .contextLinks a {
+    color: LinkText;
   }
 }

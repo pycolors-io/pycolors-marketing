@@ -1,7 +1,7 @@
 "use client";
 
 import { useCopy } from "@/lib/i18n/use-copy";
-import type { ReactNode } from "react";
+import { type ReactNode, useSyncExternalStore } from "react";
 import { useTheme } from "fumadocs-ui/provider/base";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@pycolors/ui";
 
@@ -13,14 +13,25 @@ type TemplateColorPreviewProps = Readonly<{
   }>[];
 }>;
 
+const subscribe = () => () => undefined;
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 /** The page owns the screenshots; only color-mode selection runs on the client. */
 export function TemplateColorPreview({ previews }: TemplateColorPreviewProps) {
   const { resolvedTheme } = useTheme();
+  const hydrated = useSyncExternalStore(
+    subscribe,
+    getClientSnapshot,
+    getServerSnapshot,
+  );
+  // The server cannot know the visitor's preference. Hydrate its default first.
+  const previewTheme = hydrated ? resolvedTheme : undefined;
   return (
     <PreviewTabs
-      key={resolvedTheme ?? "system"}
+      key={previewTheme ?? "system"}
       previews={previews}
-      defaultMode={resolvedTheme === "light" ? "light" : "dark"}
+      defaultMode={previewTheme === "light" ? "light" : "dark"}
     />
   );
 }

@@ -20,12 +20,17 @@ vi.mock("@/lib/api/checkout-navigation", () => ({
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
 import { resetCheckoutAvailability } from "@/components/pricing/use-checkout-availability";
+import {
+  CHECKOUT_AVAILABILITY_TIMEOUT_MS,
+  getCheckoutAvailability,
+} from "@/lib/api/client";
 
 beforeEach(() => {
   resetCheckoutAvailability();
   vi.stubGlobal("fetch", vi.fn());
 });
 afterEach(() => {
+  vi.useRealTimers();
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
@@ -37,6 +42,179 @@ function Buyer() {
 }
 
 describe("server-controlled purchase availability", () => {
+  it("recovers all mounted controls on reconnect after an HTTP failure, without reloading or starting checkout", async () => {
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(Response.json({}, { status: 500 }))
+      .mockResolvedValueOnce(
+        Response.json({
+          ok: true,
+          products: {
+            "starter-pro": { available: true },
+            "starter-pro-mobile": { available: true },
+          },
+        }),
+      );
+    render(
+      <>
+        <Buyer />
+        <BuyStarterProButton label="Buy Web" />
+      </>,
+    );
+    await screen.findAllByRole("button", {
+      name: "Check checkout availability",
+    });
+    await act(async () => {
+      window.dispatchEvent(new Event("online"));
+    });
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: "Buy Mobile" })).toBeEnabled(),
+    );
+    expect(screen.getByRole("button", { name: "Buy Web" })).toBeEnabled();
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(
+      vi
+        .mocked(fetch)
+        .mock.calls.every(([, options]) => options?.method !== "POST"),
+    ).toBe(true);
+  });
+
+  it("revalidates an expired acknowledgement on focus and deduplicates simultaneous visibility changes", async () => {
+    const now = vi.spyOn(Date, "now").mockReturnValue(1_000);
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(
+        Response.json({
+          ok: true,
+          products: { "starter-pro-mobile": { available: true } },
+        }),
+      )
+      .mockResolvedValueOnce(
+        Response.json({
+          ok: true,
+          products: { "starter-pro-mobile": { available: false } },
+        }),
+      );
+    render(<Buyer />);
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: "Buy Mobile" })).toBeEnabled(),
+    );
+    now.mockReturnValue(22_000);
+    await act(async () => {
+      window.dispatchEvent(new Event("focus"));
+      document.dispatchEvent(new Event("visibilitychange"));
+    });
+    expect(screen.getByRole("button", { name: "Buy Mobile" })).toBeDisabled();
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+
+  it("automatically recovers a transient transport failure while preserving disabled controls until a valid acknowledgement", async () => {
+    vi.useFakeTimers();
+    vi.mocked(fetch)
+      .mockRejectedValueOnce(new Error("offline"))
+      .mockResolvedValueOnce(
+        Response.json({
+          ok: true,
+          products: { "starter-pro-mobile": { available: true } },
+        }),
+      );
+    render(<Buyer />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    expect(screen.getByRole("button", { name: "Buy Mobile" })).toBeDisabled();
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(20_000);
+    });
+    expect(screen.getByRole("button", { name: "Buy Mobile" })).toBeEnabled();
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+
+  it("bounds automatic retries and removes timers and browser listeners when controls unmount", async () => {
+    vi.useFakeTimers();
+    vi.mocked(fetch).mockRejectedValue(new Error("offline"));
+    const view = render(<Buyer />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(120_000);
+    });
+    expect(fetch).toHaveBeenCalledTimes(4);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(300_000);
+    });
+    expect(fetch).toHaveBeenCalledTimes(4);
+    view.unmount();
+    window.dispatchEvent(new Event("online"));
+    window.dispatchEvent(new Event("focus"));
+    document.dispatchEvent(new Event("visibilitychange"));
+    expect(fetch).toHaveBeenCalledTimes(4);
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("keeps an explicitly closed offer disabled without treating it as a retryable network error", async () => {
+    vi.useFakeTimers();
+    vi.mocked(fetch).mockResolvedValue(
+      Response.json({
+        ok: true,
+        products: { "starter-pro-mobile": { available: false } },
+      }),
+    );
+    render(<Buyer />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(300_000);
+    });
+    expect(screen.getByRole("button", { name: "Buy Mobile" })).toBeDisabled();
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("waits until the document is visible before recovering an interrupted background retry", async () => {
+    vi.useFakeTimers();
+    const visibility = vi
+      .spyOn(document, "visibilityState", "get")
+      .mockReturnValue("visible");
+    vi.mocked(fetch)
+      .mockRejectedValueOnce(new Error("offline"))
+      .mockResolvedValueOnce(
+        Response.json({
+          ok: true,
+          products: { "starter-pro-mobile": { available: true } },
+        }),
+      );
+    render(<Buyer />);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    visibility.mockReturnValue("hidden");
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(20_000);
+    });
+    expect(fetch).toHaveBeenCalledTimes(1);
+    visibility.mockReturnValue("visible");
+    await act(async () => {
+      document.dispatchEvent(new Event("visibilitychange"));
+    });
+    expect(screen.getByRole("button", { name: "Buy Mobile" })).toBeEnabled();
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+
+  it.each(["fetch", "body"])(
+    "bounds a stalled availability %s even when abort is ignored",
+    async (phase) => {
+      vi.useFakeTimers();
+      const unresolved = new Promise<never>(() => {});
+      const response = Response.json({});
+      vi.spyOn(response, "json").mockReturnValue(unresolved);
+      vi.mocked(fetch).mockReturnValue(
+        phase === "fetch" ? unresolved : Promise.resolve(response),
+      );
+      const pending = getCheckoutAvailability();
+      const rejected = expect(pending).rejects.toThrow(
+        "Checkout availability is unavailable.",
+      );
+      await vi.advanceTimersByTimeAsync(CHECKOUT_AVAILABILITY_TIMEOUT_MS);
+      await rejected;
+      expect(vi.mocked(fetch).mock.calls[0]?.[1]?.signal?.aborted).toBe(true);
+      expect(vi.getTimerCount()).toBe(0);
+    },
+  );
+
   it("keeps purchase disabled until availability is acknowledged and deduplicates public reads", async () => {
     let resolve!: (value: Response) => void;
     vi.mocked(fetch).mockReturnValue(
@@ -58,6 +236,10 @@ describe("server-controlled purchase availability", () => {
       screen.getByRole("button", { name: "Buy Fullstack" }),
     ).toBeDisabled();
     expect(fetch).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("button", { name: "Buy Mobile" })).toHaveAttribute(
+      "aria-busy",
+      "true",
+    );
     resolve(
       Response.json({
         ok: true,
@@ -73,6 +255,10 @@ describe("server-controlled purchase availability", () => {
     expect(
       screen.getByRole("button", { name: "Buy Fullstack" }),
     ).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Buy Mobile" })).toHaveAttribute(
+      "aria-busy",
+      "false",
+    );
     expect(fetch).toHaveBeenCalledWith(
       "https://api.example.com/api/v1/checkout/availability",
       expect.objectContaining({ cache: "no-store" }),

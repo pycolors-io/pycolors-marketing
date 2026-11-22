@@ -31,7 +31,7 @@ export function DocsUpgradeCTA({
   buyLabel,
   secondaryHref,
   secondaryLabel,
-  trustText = "One-time payment · Instant access after purchase",
+  trustText = "One-time payment · Claim email after order processing",
   showTrustText = true,
   className,
 }: DocsUpgradeCTAProps) {

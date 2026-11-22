@@ -18,7 +18,54 @@ const listeners = new Set<() => void>();
 // Browser effects and retries share only public, non-personal availability.
 // Every control observes the same acknowledgement, never orders or tokens.
 let pending:
-  { expiresAt: number; request: Promise<PublicAvailability> } | undefined;
+  | {
+      expiresAt: number;
+      request: Promise<PublicAvailability>;
+      settled: boolean;
+    }
+  | undefined;
+let retryTimer: ReturnType<typeof setTimeout> | undefined;
+let automaticRetries = 0;
+const RETRY_DELAYS = [20_000, 40_000, 60_000] as const;
+
+function clearAutomaticRetry() {
+  clearTimeout(retryTimer);
+  retryTimer = undefined;
+}
+
+function canRefresh() {
+  return document.visibilityState !== "hidden" && navigator.onLine !== false;
+}
+
+function scheduleAutomaticRetry() {
+  clearAutomaticRetry();
+  const delay = RETRY_DELAYS[automaticRetries];
+  if (
+    snapshot.status !== "unavailable" ||
+    !listeners.size ||
+    !canRefresh() ||
+    delay === undefined
+  )
+    return;
+  retryTimer = setTimeout(() => {
+    retryTimer = undefined;
+    if (!canRefresh()) return;
+    automaticRetries += 1;
+    readAvailability(true);
+  }, delay);
+}
+
+function refreshOnResume() {
+  if (!canRefresh() || (pending && !pending.settled)) return;
+  if (snapshot.status === "unavailable") automaticRetries = 0;
+  readAvailability(snapshot.status === "unavailable");
+}
+
+function refreshOnReconnect() {
+  if (!canRefresh() || (pending && !pending.settled)) return;
+  automaticRetries = 0;
+  readAvailability(true);
+}
 
 function publish(value: Snapshot) {
   if (snapshot === value) return;
@@ -28,8 +75,21 @@ function publish(value: Snapshot) {
 
 function subscribe(listener: () => void) {
   listeners.add(listener);
+  if (listeners.size === 1) {
+    automaticRetries = 0;
+    window.addEventListener("focus", refreshOnResume);
+    window.addEventListener("online", refreshOnReconnect);
+    document.addEventListener("visibilitychange", refreshOnResume);
+    scheduleAutomaticRetry();
+  }
   return () => {
     listeners.delete(listener);
+    if (!listeners.size) {
+      clearAutomaticRetry();
+      window.removeEventListener("focus", refreshOnResume);
+      window.removeEventListener("online", refreshOnReconnect);
+      document.removeEventListener("visibilitychange", refreshOnResume);
+    }
   };
 }
 
@@ -42,12 +102,15 @@ function getServerSnapshot() {
 }
 
 export function resetCheckoutAvailability() {
+  clearAutomaticRetry();
+  automaticRetries = 0;
   pending = undefined;
   publish(checking);
 }
 
-function readAvailability() {
-  if (pending && pending.expiresAt > Date.now()) return;
+function readAvailability(force = false) {
+  if (!force && pending && pending.expiresAt > Date.now()) return;
+  clearAutomaticRetry();
   const request = (async () => {
     const value = await getCheckoutAvailability();
     if (
@@ -75,16 +138,30 @@ function readAvailability() {
     }
     return result;
   })();
-  const current = { expiresAt: Date.now() + 20_000, request };
+  const current = {
+    expiresAt: Date.now() + 20_000,
+    request,
+    settled: false,
+  };
   pending = current;
-  publish(checking);
+  // Keep a visible failure steady during a background recovery attempt.
+  // A closed offer is never changed to available without a new server response.
+  if (snapshot.status !== "unavailable") publish(checking);
   void request.then(
     (products) => {
+      current.settled = true;
       // A superseded request must not reopen an offer closed by a newer read.
-      if (pending === current) publish({ status: "ready", products });
+      if (pending === current) {
+        automaticRetries = 0;
+        publish({ status: "ready", products });
+      }
     },
     () => {
-      if (pending === current) publish(unavailable);
+      current.settled = true;
+      if (pending === current) {
+        publish(unavailable);
+        scheduleAutomaticRetry();
+      }
     },
   );
 }

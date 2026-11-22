@@ -146,7 +146,7 @@ describe("NA-AI Landing product page", () => {
     expect(
       within(visibleBar).getByText(`· ${product.priceLabel}`),
     ).toBeVisible();
-    expect(visibleBar).toHaveTextContent("Instant access");
+    expect(visibleBar).toHaveTextContent("Email delivery");
     expect(visibleBar).toHaveTextContent("Commercial usage");
     expect(visibleBar).toHaveTextContent(
       "Production-ready landing page template built for AI and SaaS launches.",

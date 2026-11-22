@@ -13,9 +13,13 @@ import {
   BookOpen,
   Code2,
   FileCode2,
+  Layers3,
+  Monitor,
+  Smartphone,
 } from "lucide-react";
 
 import { Badge, cn } from "@pycolors/ui";
+import Image from "next/image";
 import { SiteButton as Button } from "@/components/site-button";
 import {
   PRODUCT_DISPLAY,
@@ -67,6 +71,33 @@ const metadata: Metadata = {
 
 const demoUrl = "https://starter-demo.pycolors.io";
 const repositoryUrl = "https://github.com/pycolors-io/pycolors-starter-free";
+
+const sourceOverview = [
+  {
+    slug: "starter-pro",
+    name: "Starter Pro Web",
+    scope: "Web and installable PWA",
+    guide: "Open Getting Started",
+    image: "/images/starters/pro/concepts/workflow-path-test-v1.png",
+    icon: Monitor,
+  },
+  {
+    slug: "starter-pro-mobile",
+    name: "Starter Pro Mobile",
+    scope: "Native iOS and Android source",
+    guide: "Mobile setup guide",
+    image: "/images/starters/pro/concepts/connected-workspace-test-v1.png",
+    icon: Smartphone,
+  },
+  {
+    slug: "starter-pro-fullstack",
+    name: "Starter Pro Fullstack",
+    scope: "Web and native iOS/Android",
+    guide: "Fullstack setup guide",
+    image: "/images/starters/pro/concepts/source-stack-test-v1.png",
+    icon: Layers3,
+  },
+] as const;
 
 const offers = [
   {
@@ -286,10 +317,11 @@ export default function StartersPage() {
               variant="compact"
               align="left"
               contentClassName="mx-0 max-w-3xl"
+              actionsClassName={styles.heroActions}
               badges={[{ label: "SaaS starters", variant: "outline" }]}
-              title={tSite("A head start for your next SaaS.")}
+              title={tSite("The foundation for your next product.")}
               description={tSite(
-                "Choose Web, native Mobile or Fullstack. Explore the free frontend or a landing template when you need a lighter starting point.",
+                "Build for the Web, iOS or Android. Choose your source, inspect the guides and make it your product.",
               )}
               actions={
                 <>
@@ -308,7 +340,7 @@ export default function StartersPage() {
                     size="lg"
                     asChild
                     variant="outline"
-                    className="rounded-[5px] shadow-none"
+                    className={styles.heroSecondary}
                   >
                     <a href={demoUrl} target="_blank" rel="noreferrer noopener">
                       {tSite("Try the Starter Free demo")}
@@ -323,27 +355,76 @@ export default function StartersPage() {
                 </>
               }
               extra={
-                <MarketingPillList aria-label={tSite("Shared starter stack")}>
-                  {["Next.js", "React", "TypeScript", "Tailwind CSS"].map(
-                    (technology) => (
-                      <MarketingPill key={technology} className="bg-background">
-                        {tSite(technology)}
-                      </MarketingPill>
-                    ),
-                  )}
+                <MarketingPillList
+                  aria-label={tSite("Target platforms")}
+                  className={styles.heroPlatforms}
+                >
+                  {["Web", "iOS", "Android"].map((technology) => (
+                    <MarketingPill key={technology} className="bg-background">
+                      {technology}
+                    </MarketingPill>
+                  ))}
                 </MarketingPillList>
               }
             />
-            <figure className={styles.heroPreview}>
-              <ProductPreviewMedia
-                product="starter-free"
-                priority
-                sizes="(min-width: 1024px) 560px, 92vw"
-              />
-              <figcaption>
-                {tSite("Dashboard preview · Sample data")}
-              </figcaption>
-            </figure>
+            <section
+              aria-labelledby="starter-source-overview-title"
+              className={styles.sourceOverview}
+            >
+              <p className={styles.sourceOverviewEyebrow}>
+                {tSite("Source licences")}
+              </p>
+              <h2 id="starter-source-overview-title">
+                {tSite("Web, Mobile, or both.")}
+              </h2>
+              <ul className={styles.sourceOverviewList}>
+                {sourceOverview.map((option) => {
+                  const product = PRODUCT_DISPLAY[option.slug];
+                  const Icon = option.icon;
+                  return (
+                    <li key={option.slug}>
+                      <Link
+                        href={product.href}
+                        className={styles.sourceOverviewProduct}
+                      >
+                        <span
+                          className={styles.sourceOverviewArt}
+                          aria-hidden="true"
+                        >
+                          <Image
+                            src={option.image}
+                            alt=""
+                            fill
+                            sizes="(min-width: 640px) 80px, 56px"
+                          />
+                        </span>
+                        <div>
+                          <h3>{tSite(option.name)}</h3>
+                          <p className={styles.sourceOverviewScope}>
+                            <Icon aria-hidden="true" />
+                            {tSite(option.scope)}
+                          </p>
+                        </div>
+                        <span className={styles.sourceOverviewPrice}>
+                          {product.priceLabel}
+                        </span>
+                      </Link>
+                      <Link
+                        href={product.docsHref}
+                        className={styles.sourceOverviewGuide}
+                      >
+                        {tSite(option.guide)}
+                        <ArrowRight className="size-3" aria-hidden="true" />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className={styles.sourceOverviewNote}>
+                <p>{tSite("One-time payment · VAT included")}</p>
+                <p>{tSite("Concept illustrations")}</p>
+              </div>
+            </section>
           </div>
         </Container>
       </MarketingHeroBand>
@@ -360,8 +441,8 @@ export default function StartersPage() {
             title={tSite("Choose the source your product needs.")}
             description={tSite("Choose by what you need to build next.")}
             action={
-              <Link href="#compare-starters" className={styles.textLink}>
-                {tSite("Compare every capability")}{" "}
+              <Link href="#source-licences" className={styles.textLink}>
+                {tSite("Compare source licences")}{" "}
                 <ArrowDown className="size-3.5" aria-hidden="true" />
               </Link>
             }
@@ -371,6 +452,10 @@ export default function StartersPage() {
 
         <div className={styles.sourceComparison}>
           <StarterSourceComparison />
+          <Link href="#compare-starters" className={styles.textLink}>
+            {tSite("Compare Free with the Web foundation.")}
+            <ArrowDown className="size-3.5" aria-hidden="true" />
+          </Link>
         </div>
 
         <MarketingSectionShell
@@ -421,12 +506,7 @@ export default function StartersPage() {
           width="full"
           className="border-t border-border-subtle pb-0"
         >
-          <div
-            className={cn(
-              "rounded-[5px] border border-border-subtle p-5 sm:p-8",
-              styles.resources,
-            )}
-          >
+          <div className={styles.resources}>
             <MarketingSectionHeader
               align="left"
               titleId="starter-next-steps-title"
@@ -448,7 +528,7 @@ export default function StartersPage() {
                     {tSite("Getting started")}
                   </span>
                 }
-                className="bg-background shadow-none hover:shadow-none"
+                className={styles.resourceCard}
               />
               <MarketingResourceCard
                 href="/docs/starter/upgrade"
@@ -462,10 +542,7 @@ export default function StartersPage() {
                     {tSite("Free → Pro")}
                   </span>
                 }
-                className={cn(
-                  "bg-background shadow-none hover:shadow-none",
-                  styles.transitionResource,
-                )}
+                className={styles.resourceCard}
               />
               <MarketingResourceCard
                 href="/tools/theme-builder"
@@ -479,10 +556,7 @@ export default function StartersPage() {
                     {tSite("Theme Builder")}
                   </span>
                 }
-                className={cn(
-                  "bg-background shadow-none hover:shadow-none",
-                  styles.themeResource,
-                )}
+                className={styles.resourceCard}
               />
             </div>
           </div>

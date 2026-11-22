@@ -1,4 +1,11 @@
-import { Layers3, Monitor, Smartphone } from "lucide-react";
+import Image from "next/image";
+import {
+  ArrowRight,
+  BookOpen,
+  Layers3,
+  Monitor,
+  Smartphone,
+} from "lucide-react";
 import { Link } from "@/lib/i18n/navigation";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
@@ -13,6 +20,7 @@ const sourceOffers = [
     headingId: "web-option-title",
     name: "Starter Pro Web",
     icon: Monitor,
+    illustration: "workflow-path",
     stack: "Next.js · Web",
     description: "A connected foundation for your Web application.",
     interface: "Web and installable PWA",
@@ -25,6 +33,7 @@ const sourceOffers = [
     headingId: "mobile-option-title",
     name: "Starter Pro Mobile",
     icon: Smartphone,
+    illustration: "connected-workspace",
     stack: mobile.stack,
     description: "Native iOS and Android, with a compatible backend.",
     interface: "Native iOS and Android interface",
@@ -37,6 +46,7 @@ const sourceOffers = [
     headingId: "bundle-option-title",
     name: "Starter Pro Fullstack",
     icon: Layers3,
+    illustration: "source-stack",
     stack: mobile.bundle.stack,
     description: "Web and Mobile, built around the same accounts and data.",
     interface: "Web and native iOS/Android",
@@ -68,6 +78,20 @@ export function StarterSourceOffers({
               data-current={currentProduct === offer.slug || undefined}
               className={styles.card}
             >
+              <figure className={styles.visual}>
+                <div className={styles.artwork} aria-hidden="true">
+                  <Image
+                    src={`/images/starters/pro/concepts/${offer.illustration}-test-v1.png`}
+                    alt=""
+                    width={1280}
+                    height={1280}
+                    sizes="(min-width: 1440px) 400px, (min-width: 1024px) 32vw, (min-width: 640px) 560px, 90vw"
+                    loading="lazy"
+                    className={styles.illustration}
+                  />
+                </div>
+                <figcaption>{tSite("Concept illustration")}</figcaption>
+              </figure>
               <header className={styles.summary}>
                 <div className={styles.topline}>
                   <span className={styles.icon}>
@@ -75,8 +99,8 @@ export function StarterSourceOffers({
                   </span>
                   <span>{tSite("Source licence")}</span>
                 </div>
-                <p className={styles.stack}>{tSite(offer.stack)}</p>
                 <h3 id={offer.headingId}>{tSite(offer.name)}</h3>
+                <p className={styles.stack}>{tSite(offer.stack)}</p>
                 <p className={styles.description}>{tSite(offer.description)}</p>
               </header>
               <div className={styles.priceBlock}>
@@ -113,8 +137,10 @@ export function StarterSourceOffers({
                 )}
                 <Link href={product.href} className={styles.productLink}>
                   {tSite(offer.action)}
+                  <ArrowRight aria-hidden="true" />
                 </Link>
                 <Link href={product.docsHref} className={styles.guideLink}>
+                  <BookOpen aria-hidden="true" />
                   {tSite(offer.guide)}
                 </Link>
               </div>

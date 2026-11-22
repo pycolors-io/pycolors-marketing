@@ -1,5 +1,11 @@
 import Image from "next/image";
-import { Layers3, Smartphone, Workflow } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  BookOpen,
+  Layers3,
+  Smartphone,
+} from "lucide-react";
 import { Container } from "@/components/container";
 import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
@@ -14,6 +20,7 @@ import { UPGRADE_DISPLAY } from "@/lib/products/public-catalog";
 import { STARTER_PRO_MOBILE_PREVIEW as mobile } from "@/lib/products/starter-pro-mobile-preview";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { StarterSourceOffers } from "./starter-source-offers";
+import { StarterTechnologyStack } from "./starter-technology-stack";
 import styles from "@/components/starters/starter-mobile.module.css";
 
 const faqs = [
@@ -57,6 +64,14 @@ export function StarterProPlatformPage({
 }: Readonly<{ productSlug?: "starter-pro-mobile" | "starter-pro-fullstack" }>) {
   const tSite = useCopy();
   const offer = productSlug === "starter-pro-mobile" ? mobile : mobile.bundle;
+  const guideLabel =
+    productSlug === "starter-pro-mobile"
+      ? "Mobile setup guide"
+      : "Fullstack setup guide";
+  const otherGuide =
+    productSlug === "starter-pro-mobile"
+      ? { href: mobile.bundle.docsHref, label: "Fullstack setup guide" }
+      : { href: mobile.docsHref, label: "Mobile setup guide" };
   const PlatformIcon =
     productSlug === "starter-pro-mobile" ? Smartphone : Layers3;
   const localizedFaqs = faqs.map((item) => ({
@@ -99,19 +114,43 @@ export function StarterProPlatformPage({
                       value1: offer.priceLabel,
                     })}
                   />
-                  <SiteButton asChild size="lg" variant="outline">
-                    <Link href="/starters/pro">
-                      {tSite("Explore Starter Pro Web")}
+                  <SiteButton
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className={styles.guideAction}
+                  >
+                    <Link href={offer.docsHref}>
+                      <BookOpen
+                        className="size-4 shrink-0"
+                        aria-hidden="true"
+                      />
+                      {tSite(guideLabel)}
                     </Link>
                   </SiteButton>
                 </>
               }
               extra={
-                <p className={styles.availability}>
-                  {tSite(
-                    "One-time source licence · VAT included. Hosting, third-party services and Apple/Google accounts are configured by you.",
-                  )}
-                </p>
+                <div className={styles.heroDetails}>
+                  <p className={styles.availability}>
+                    {tSite(
+                      "One-time source licence · VAT included. Hosting, third-party services and Apple/Google accounts are configured by you.",
+                    )}
+                  </p>
+                  <div className={styles.contextLinks}>
+                    <Link href="#technology">{tSite("Explore the stack")}</Link>
+                    <Link href="#platforms">
+                      {tSite("Compare source licences")}
+                      <ArrowDown
+                        className="size-3.5 shrink-0"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                    <Link href="/starters/pro">
+                      {tSite("Explore Starter Pro Web")}
+                    </Link>
+                  </div>
+                </div>
               }
             />
             <figure className={styles.visual}>
@@ -129,7 +168,9 @@ export function StarterProPlatformPage({
                 />
                 <span className={styles.stack}>
                   <PlatformIcon className="size-4" aria-hidden="true" />
-                  {tSite(offer.stack)}
+                  {productSlug === "starter-pro-fullstack"
+                    ? "Next.js · React Native · Expo"
+                    : offer.stack}
                 </span>
               </div>
               <figcaption>{tSite("Concept illustration")}</figcaption>
@@ -139,6 +180,7 @@ export function StarterProPlatformPage({
       </MarketingHeroBand>
 
       <Container>
+        <StarterTechnologyStack productSlug={productSlug} />
         <MarketingSectionShell
           id="platforms"
           width="full"
@@ -156,36 +198,6 @@ export function StarterProPlatformPage({
 
         <MarketingSectionShell
           width="full"
-          aria-labelledby="native-direction-title"
-        >
-          <MarketingSectionHeader
-            titleId="native-direction-title"
-            title={tSite("A native interface. A connected direction.")}
-          />
-          <div className={styles.foundations}>
-            <article>
-              <Smartphone aria-hidden="true" />
-              <h3>{tSite("React Native and Expo")}</h3>
-              <p>
-                {tSite(
-                  "The Mobile project uses its own native interface and navigation for iOS and Android.",
-                )}
-              </p>
-            </article>
-            <article>
-              <Workflow aria-hidden="true" />
-              <h3>{tSite("Built around Starter Pro")}</h3>
-              <p>
-                {tSite(
-                  "Mobile connects to its included compatible backend. Fullstack connects Web and Mobile to one shared backend. You configure the database, authentication, email, billing and deployment for your application.",
-                )}
-              </p>
-            </article>
-          </div>
-        </MarketingSectionShell>
-
-        <MarketingSectionShell
-          width="full"
           aria-labelledby="source-guides-title"
         >
           <MarketingSectionHeader
@@ -195,18 +207,27 @@ export function StarterProPlatformPage({
               "Read the archive layout, installation steps, licence and validation boundaries before you buy.",
             )}
           />
-          <div className="flex flex-wrap gap-3">
-            <SiteButton asChild variant="outline">
-              <Link href={mobile.docsHref}>{tSite("Mobile setup guide")}</Link>
-            </SiteButton>
-            <SiteButton asChild variant="outline">
-              <Link href={mobile.bundle.docsHref}>
-                {tSite("Fullstack setup guide")}
+          <div className={styles.guideLinks}>
+            <SiteButton
+              asChild
+              variant="outline"
+              className={styles.guideAction}
+            >
+              <Link href={offer.docsHref}>
+                <BookOpen className="size-4 shrink-0" aria-hidden="true" />
+                {tSite(guideLabel)}
               </Link>
             </SiteButton>
-            <SiteButton asChild variant="outline">
+            <div className={styles.contextLinks}>
+              <Link href={otherGuide.href}>
+                {tSite(otherGuide.label)}
+                <ArrowUpRight
+                  className="size-3.5 shrink-0"
+                  aria-hidden="true"
+                />
+              </Link>
               <Link href="/license">{tSite("Review the license")}</Link>
-            </SiteButton>
+            </div>
           </div>
         </MarketingSectionShell>
 

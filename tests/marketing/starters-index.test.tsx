@@ -15,6 +15,7 @@ import {
   vi,
 } from "vitest";
 import { axe } from "vitest-axe";
+import { renderToString } from "react-dom/server";
 
 import StartersPage, {
   generateMetadata as getLocalizedMetadata0,
@@ -51,12 +52,120 @@ afterEach(() => {
 afterAll(() => vi.unstubAllEnvs());
 
 describe("Starter discovery page", () => {
+  it("makes the three source choices and setup guides discoverable before purchase", () => {
+    render(<StartersPage />);
+    const hero = screen
+      .getByRole("heading", {
+        level: 1,
+        name: "The foundation for your next product.",
+      })
+      .closest<HTMLElement>('[data-marketing-hero="cool"]')!;
+    expect(hero).toHaveTextContent(
+      "Build for the Web, iOS or Android. Choose your source, inspect the guides and make it your product.",
+    );
+    const platforms = within(hero).getByRole("list", {
+      name: "Target platforms",
+    });
+    expect(
+      within(platforms)
+        .getAllByRole("listitem")
+        .map((item) => item.textContent),
+    ).toEqual(["Web", "iOS", "Android"]);
+    expect(within(hero).queryByText("Tailwind CSS")).not.toBeInTheDocument();
+    expect(
+      within(hero).getByRole("link", { name: "Find your starting point" }),
+    ).toHaveAttribute("href", "#choose-starter");
+    const overview = screen.getByRole("region", {
+      name: "Web, Mobile, or both.",
+    });
+    const options = within(overview).getAllByRole("listitem");
+    expect(options).toHaveLength(3);
+    for (const [index, slug, name, guide] of [
+      [0, "starter-pro", "Starter Pro Web", "Open Getting Started"],
+      [1, "starter-pro-mobile", "Starter Pro Mobile", "Mobile setup guide"],
+      [
+        2,
+        "starter-pro-fullstack",
+        "Starter Pro Fullstack",
+        "Fullstack setup guide",
+      ],
+    ] as const) {
+      const option = options[index]!;
+      const product = PRODUCT_DISPLAY[slug];
+      expect(
+        within(option).getByRole("heading", { name, level: 3 }),
+      ).toBeVisible();
+      expect(within(option).getByText(product.priceLabel)).toBeVisible();
+      expect(
+        within(option).getByRole("link", { name: new RegExp(name) }),
+      ).toHaveAttribute("href", product.href);
+      const setup = within(option).getByRole("link", { name: guide });
+      expect(setup).toHaveAttribute("href", product.docsHref);
+      const image = option.querySelector("img")!;
+      expect(option.querySelectorAll("img")).toHaveLength(1);
+      expect(image).toHaveAttribute("alt", "");
+      expect(image.closest('[aria-hidden="true"]')).not.toBeNull();
+      const imageUrl = new URL(
+        image.getAttribute("src")!,
+        "https://marketing.example",
+      );
+      const illustration = [
+        "workflow-path",
+        "connected-workspace",
+        "source-stack",
+      ][index];
+      expect(imageUrl.searchParams.get("url") ?? imageUrl.pathname).toBe(
+        `/images/starters/pro/concepts/${illustration}-test-v1.png`,
+      );
+      setup.focus();
+      expect(setup).toHaveFocus();
+    }
+    expect(within(overview).getAllByRole("link")).toHaveLength(6);
+    expect(within(overview).queryByRole("button")).not.toBeInTheDocument();
+    expect(overview).toHaveTextContent("One-time payment · VAT included");
+    expect(overview).toHaveTextContent("Concept illustrations");
+    expect(
+      screen.getByRole("link", { name: "Compare source licences" }),
+    ).toHaveAttribute("href", "#source-licences");
+    expect(
+      screen.getByRole("link", {
+        name: "Compare Free with the Web foundation.",
+      }),
+    ).toHaveAttribute("href", "#compare-starters");
+    expect(document.getElementById("source-licences")).toBeInTheDocument();
+    expect(document.getElementById("compare-starters")).toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("includes all six decorative source concepts in server HTML", () => {
+    const server = document.createElement("div");
+    server.innerHTML = renderToString(<StartersPage />);
+    expect(server.querySelector("h1")).toHaveTextContent(
+      "The foundation for your next product.",
+    );
+    const illustrations = server.querySelectorAll<HTMLImageElement>(
+      '[aria-labelledby="starter-source-overview-title"] img, [data-source-offer] figure img',
+    );
+    expect(illustrations).toHaveLength(6);
+    for (const image of illustrations) {
+      expect(image).toHaveAttribute("alt", "");
+      expect(image.closest('[aria-hidden="true"]')).not.toBeNull();
+    }
+  });
+
   it("presents Web, Mobile and Fullstack as primary source purchases with lighter alternatives", () => {
     render(<StartersPage />);
     const choices = screen.getByRole("region", {
       name: "Choose the source your product needs.",
     });
     expect(within(choices).getAllByRole("article")).toHaveLength(3);
+    for (const card of within(choices).getAllByRole("article")) {
+      expect(card.querySelectorAll("figure img")).toHaveLength(1);
+      expect(within(card).getByText("Concept illustration")).toBeVisible();
+      expect(card.querySelector("a img, button img")).toBeNull();
+      expect(within(card).getAllByRole("button")).toHaveLength(1);
+      expect(within(card).getAllByRole("link")).toHaveLength(2);
+    }
     expect(
       within(choices).getByRole("article", { name: "Starter Pro Web" }),
     ).toBeVisible();

@@ -112,7 +112,7 @@ export function TemplateStickyCta({
                       variant="outline"
                       className="site-success-surface rounded-[5px] border-success-border-subtle bg-success-muted text-[11px]"
                     >
-                      {tSite("Instant access")}
+                      {tSite("Email delivery")}
                     </Badge>
 
                     <Badge
