@@ -24,6 +24,7 @@ import {
 import { productStudio } from "@/lib/showcase/product-studio";
 import { CUSTOM_SOFTWARE_SERVICE } from "@/lib/products/project-services";
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
+import { StarterSourceDocs } from "@/components/starters/starter-source-docs";
 import styles from "./services.module.css";
 
 const metadata: Metadata = {
@@ -380,6 +381,38 @@ export default function ServicesPage() {
                 </Link>
               ))}
             </div>
+          </div>
+        </MarketingSectionShell>
+
+        <MarketingSectionShell
+          id="source-foundations"
+          width="full"
+          className={styles.sourceChapter}
+          aria-labelledby="services-source-foundations-title"
+        >
+          <MarketingSectionHeader
+            titleId="services-source-foundations-title"
+            align="left"
+            eyebrow={tSite("Source licences")}
+            title={tSite("Choose the source for your project.")}
+            description={tSite(
+              "Explore Web, Mobile and Fullstack source, then follow the setup guide for the foundation you choose.",
+            )}
+          />
+          <StarterSourceDocs />
+          <div className={styles.sourceScope}>
+            <p className={styles.scopeNote}>
+              {tSite(
+                "Mobile includes a backend without the Web interface. Fullstack includes Web, Mobile and the shared API. These are source licences; implementation services and provider costs are separate.",
+              )}
+            </p>
+            <Link
+              href="/docs/starter-pro/implementation-support"
+              className={styles.textLink}
+            >
+              {tSite("Review scope and support")}
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
+            </Link>
           </div>
         </MarketingSectionShell>
 

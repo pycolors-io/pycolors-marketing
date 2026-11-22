@@ -415,6 +415,25 @@
   text-decoration: underline;
   text-underline-offset: 4px;
 }
+.sourceChapter :is(a, button) {
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
+}
+.sourceScope {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: 1.25rem;
+}
+.sourceScope .scopeNote {
+  flex: 1 1 32rem;
+  margin-top: 0;
+}
+.sourceScope .textLink {
+  margin-top: 0;
+}
 .closing {
   display: flex;
   flex-direction: column;

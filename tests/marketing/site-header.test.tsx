@@ -290,7 +290,7 @@ describe("Marketing product discovery navigation", () => {
     render(<Fixture />);
     const products = openProducts();
     expect(PRODUCT_MENU_GROUPS.map((group) => group.title)).toEqual([
-      "Starter Pro source licences",
+      "Starter Pro",
       "Build your interface",
       "Other starting points",
     ]);

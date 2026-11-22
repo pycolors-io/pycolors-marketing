@@ -1002,15 +1002,19 @@
 .publicFooter .groups {
   min-width: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(2.5rem, 5vw, 4rem) 1.5rem;
+  gap: 1rem 1.5rem;
 }
 
 .publicFooter .groups nav {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   min-width: 0;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  row-gap: 1rem;
 }
 
 .publicFooter .groups h2 {
-  margin: 0 0 1rem;
+  margin: 0;
   font-size: 0.8125rem;
   font-weight: 600;
   line-height: 1.125rem;
@@ -1033,7 +1037,7 @@
   align-items: center;
   gap: 0.375rem;
   min-height: 2.75rem;
-  margin-top: 0.5rem;
+  margin-top: 0;
   padding-block: 0.375rem;
   border-radius: 0.375rem;
   color: var(--foreground);
@@ -1048,6 +1052,13 @@
   width: 0.75rem;
   height: 0.75rem;
   flex-shrink: 0;
+}
+
+@supports (grid-template-rows: subgrid) {
+  .publicFooter .groups nav {
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+  }
 }
 
 .publicFooter .bottomBar {

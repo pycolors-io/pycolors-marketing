@@ -374,6 +374,105 @@ describe("editorial discovery", () => {
     ).toHaveAttribute("href", contracts.guides.guides[0]!.href);
   });
 
+  it("connects the editorial library to canonical platform docs before purchase next steps", () => {
+    render(<GuidesPage />);
+    const documentation = screen.getByRole("region", {
+      name: "Follow the setup guide for your platform.",
+    });
+    expectBefore(
+      screen.getByRole("region", {
+        name: "Find the guide for your next decision.",
+      }),
+      documentation,
+    );
+    expectBefore(
+      documentation,
+      screen.getByRole("region", { name: "Put the ideas to work." }),
+    );
+    expect(within(documentation).getAllByRole("article")).toHaveLength(3);
+    expect(
+      within(documentation).getAllByRole("heading", { level: 3 }),
+    ).toHaveLength(3);
+    for (const slug of [
+      "starter-pro",
+      "starter-pro-mobile",
+      "starter-pro-fullstack",
+    ] as const) {
+      const product = PRODUCT_DISPLAY[slug];
+      expect(
+        documentation.querySelector(`a[href="${product.docsHref}"]`),
+      ).toHaveAccessibleName();
+      expect(
+        documentation.querySelector(`a[href="${product.href}"]`),
+      ).toHaveAccessibleName();
+    }
+    expect(within(documentation).queryByRole("button")).toBeNull();
+    expect(
+      documentation.querySelector('a[href="/docs/starter-pro/architecture"]'),
+    ).toHaveAccessibleName();
+    expect(
+      documentation.querySelector('a[href="/product-releases"]'),
+    ).toHaveAccessibleName();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("distinguishes three implementation paths with factual capabilities and intact actions", () => {
+    render(<GuidesPage />);
+    const nextSteps = screen.getByRole("region", {
+      name: "Put the ideas to work.",
+    });
+    expect(within(nextSteps).getAllByRole("article")).toHaveLength(3);
+    const paths = [
+      {
+        title: "Build the interface.",
+        capabilities: ["PyColors UI", "Blocks", "Examples"],
+        action: "Browse UI patterns",
+        href: "/ui/patterns",
+      },
+      {
+        title: "Explore a full product.",
+        capabilities: ["Dashboards", "Settings", "Team workflows"],
+        action: "Start with Starter Free",
+        href: "/starters/free",
+      },
+      {
+        title: "Connect the foundations.",
+        capabilities: ["Better Auth", "Stripe", "Prisma"],
+        action: "Explore Starter Pro",
+        href: "/starters/pro",
+      },
+    ] as const;
+    for (const path of paths) {
+      const card = within(nextSteps).getByRole("article", {
+        name: path.title,
+      });
+      expect(within(card).getByRole("heading", { level: 3 })).toHaveTextContent(
+        path.title,
+      );
+      expect(
+        within(card)
+          .getAllByRole("listitem")
+          .map((item) => item.textContent),
+      ).toEqual(path.capabilities);
+      expect(
+        within(card).getByRole("link", { name: path.action }),
+      ).toHaveAttribute("href", path.href);
+    }
+    expect(
+      within(nextSteps).getByRole("article", { name: paths[1].title }),
+    ).toHaveTextContent("mocked auth, billing and data");
+    const pro = within(nextSteps).getByRole("article", {
+      name: paths[2].title,
+    });
+    expect(pro).toHaveTextContent(
+      "Configure your providers and validate before launch.",
+    );
+    expect(within(nextSteps).getAllByRole("button")).toHaveLength(1);
+    expect(within(pro).getByRole("button")).toHaveAccessibleName(
+      `Starter Pro — ${PRODUCT_DISPLAY["starter-pro"].priceLabel}`,
+    );
+  });
+
   const commerceCases = [
     {
       route: "blog",

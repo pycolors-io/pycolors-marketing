@@ -167,7 +167,7 @@ const products = PRODUCT_FAMILIES.flatMap((group) => group.items);
 
 export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
   {
-    title: "Starter Pro source licences",
+    title: "Starter Pro",
     items: products.filter((item) =>
       ["/starters/pro", "/starters/mobile", "/starters/fullstack"].includes(
         item.href,

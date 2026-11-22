@@ -1,10 +1,8 @@
 ---
 title: Architecture
-description: Comprenez comment Starter Pro est structuré afin que vous puissiez
-  mettre à l'échelle les fonctionnalités, l'authentification, la facturation et
-  les flux de travail des produits sans perdre la maintenabilité.
-lastUpdated: "2026-05-29"
-appliesTo: Starter Pro
+description: Comprenez l’architecture Web de Starter Pro et la connexion du Mobile natif à un backend compatible dans Mobile et Fullstack.
+lastUpdated: "2026-11-22"
+appliesTo: Architecture Starter Pro Web, Mobile et Fullstack
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
@@ -37,6 +35,14 @@ import { DocsLinks } from "@/components/docs/docs-links";
   <Badge variant="outline">Starter Pro</Badge>
   <Badge>Architecture</Badge>
 </div>
+
+## Séparer les interfaces Web et natives [#web-and-native-application-boundaries]
+
+L’architecture ci-dessous décrit l’**application Web** : routes Next.js, limites serveur et interface React. [Starter Pro Mobile](/docs/starter-pro/mobile) utilise une interface Expo / React Native autonome et son backend compatible inclus. Le dashboard Web et les composants DOM ne s’exécutent pas dans l’app native.
+
+[Fullstack](/docs/starter-pro/fullstack) réunit les deux interfaces autour du backend de `web/`. Vous configurez un système commun de comptes et de données ; chaque interface utilise le parcours d’authentification prévu et le serveur contrôle les accès aux espaces. Partager un backend ne copie pas la session du navigateur dans l’app native et ne configure pas automatiquement l’intégration.
+
+Suivez le [démarrage Web](/docs/starter-pro/getting-started), le [modèle backend](/docs/starter-pro/backend) et les [variables d’environnement](/docs/starter-pro/environment-variables) pour les fondations Web. Les guides Mobile et Fullstack expliquent leurs chemins d’archive et leur configuration native. Pour l’installation depuis un navigateur, consultez le [guide PWA](/docs/starter-pro/pwa).
 
 ## Architecture adaptées à la production [#production-shaped-architecture]
 
@@ -129,7 +135,7 @@ shared UI system
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="plan">Auth.js</Badge>
+            <Badge variant="plan">Better Auth</Badge>
             <Badge variant="plan">Stripe</Badge>
             <Badge variant="plan">Prisma</Badge>
             <Badge variant="plan">Server actions</Badge>

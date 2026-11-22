@@ -89,7 +89,7 @@ function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
       {PRODUCT_MENU_GROUPS.map((group) => (
         <div key={group.title} className={styles.productGroup}>
           <p className={styles.productGroupTitle}>{tSite(group.title)}</p>
-          <ul aria-label={tSite(group.title)} className="space-y-0.5">
+          <ul aria-label={tSite(group.title)} className={styles.productList}>
             {group.items.map((item) => {
               const Icon = item.icon;
               const current = activeHref === item.href;
@@ -100,27 +100,22 @@ function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
                     onClick={onNavigate}
                     aria-current={current ? "page" : undefined}
                     className={cn(
-                      "group/product-link flex min-h-11 items-start gap-2.5 rounded-md px-2.5 py-2.5 text-[13px] leading-5 transition-colors motion-reduce:transition-none hover:bg-surface-muted/60",
+                      "group/product-link rounded-md text-[13px] leading-5 transition-colors motion-reduce:transition-none hover:bg-surface-muted/60",
                       styles.productLink,
                       current && "bg-surface-muted/60",
                       focusRing,
                     )}
                   >
-                    <Icon
-                      aria-hidden="true"
-                      strokeWidth={1.5}
-                      className={cn(
-                        "mt-0.5 size-4 shrink-0 text-muted-foreground transition-colors group-hover/product-link:text-primary motion-reduce:transition-none",
-                        current && "text-primary",
-                      )}
-                    />
-                    <span className="min-w-0 flex-1">
-                      <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="font-medium text-foreground">
+                    <span className={styles.productIcon} aria-hidden="true">
+                      <Icon strokeWidth={1.5} className="size-4" />
+                    </span>
+                    <span className={styles.productCopy}>
+                      <span className={styles.productHeading}>
+                        <span className={styles.productName}>
                           {tSite(item.label)}
                         </span>
                         {item.badge ? (
-                          <span className="ml-auto shrink-0 text-[11px] leading-4 font-normal text-muted-foreground tabular-nums">
+                          <span className={styles.productPrice}>
                             {tSite(item.badge)}
                           </span>
                         ) : null}
@@ -129,6 +124,11 @@ function ProductGroups({ activeHref, onNavigate }: NavigationContentProps) {
                         {tSite(item.description)}
                       </span>
                     </span>
+                    <ArrowUpRight
+                      className={styles.productDirection}
+                      aria-hidden="true"
+                      strokeWidth={1.5}
+                    />
                   </Link>
                 </li>
               );

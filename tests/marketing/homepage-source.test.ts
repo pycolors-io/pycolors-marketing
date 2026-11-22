@@ -21,6 +21,8 @@ const approved = new Set([
   "lib/i18n/routing.ts",
   "components/marketing/home.module.css",
   "components/marketing/home-product-journey.tsx",
+  "components/starters/starter-source-docs.tsx",
+  "components/starters/starter-source-docs.module.css",
   "components/marketing/fibonacci-background.tsx",
   "components/marketing/fibonacci-background.module.css",
   "components/marketing/presentation.module.css",
