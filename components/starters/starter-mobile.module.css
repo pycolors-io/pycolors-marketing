@@ -1,6 +1,56 @@
 .page {
   background: var(--background);
 }
+.page[data-starter-product="starter-pro-mobile"] {
+  --starter-feature-surface: #e1eeff;
+  --starter-feature-depth: #c5dcff;
+  --starter-feature-ink: #172c50;
+  --starter-feature-muted: #344d70;
+}
+.page[data-starter-product="starter-pro-fullstack"] {
+  --starter-feature-surface: #eee5ff;
+  --starter-feature-depth: #dac8fa;
+  --starter-feature-ink: #2f214a;
+  --starter-feature-muted: #514269;
+}
+:global(html[data-site-palette="monochrome"]) .page {
+  --starter-feature-surface: var(--surface-muted);
+  --starter-feature-depth: var(--background);
+  --starter-feature-ink: var(--foreground);
+  --starter-feature-muted: var(--muted-foreground);
+}
+.page .bodyHeader {
+  display: block;
+  max-width: none;
+  margin-inline: 0;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  text-align: left;
+}
+.bodyHeader > div:first-child {
+  display: grid;
+  align-items: end;
+  gap: 1.25rem;
+}
+.bodyHeader > div:first-child > * {
+  margin-block: 0;
+}
+.bodyHeader :global([data-slot="badge"]) {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+.bodyHeader h2 {
+  max-width: 20ch;
+  font-size: clamp(2.125rem, 4.4vw, 3.75rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+}
+.bodyHeader p {
+  max-width: 52ch;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
 .heroContainer {
   padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 4vw, 4rem));
   padding-bottom: clamp(3.5rem, 6vw, 6rem);
@@ -158,22 +208,15 @@
   min-width: 0;
   border: 1px solid color-mix(in srgb, var(--foreground) 14%, var(--background));
   border-radius: clamp(1.75rem, 3vw, 2.5rem);
-  background:
-    radial-gradient(
-      ellipse at 90% 0%,
-      color-mix(in srgb, var(--primary) 5%, transparent),
-      transparent 65%
-    ),
-    linear-gradient(
-      150deg,
-      var(--background) 15%,
-      color-mix(in srgb, var(--foreground) 3%, var(--background))
-    );
+  background: linear-gradient(
+    150deg,
+    var(--background) 15%,
+    color-mix(in srgb, var(--foreground) 3%, var(--background))
+  );
   box-shadow:
     0 2px 4px -2px color-mix(in srgb, var(--foreground) 6%, transparent),
     0 24px 50px -42px color-mix(in srgb, var(--foreground) 24%, transparent);
 }
-.scopeCard::after,
 .archivePanel::after,
 .purchasePanel::after {
   position: absolute;
@@ -186,14 +229,33 @@
 .scopeCard {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: clamp(1.75rem, 3vw, 2.5rem);
+  gap: 1.25rem;
+  padding: clamp(1.75rem, 3.5vw, 3rem);
+  border-color: color-mix(in srgb, var(--foreground) 8%, var(--background));
+  box-shadow: none;
+}
+.scopeCard[data-editorial-accent] {
+  --background: var(--starter-feature-surface);
+  --foreground: var(--starter-feature-ink);
+  --muted-foreground: var(--starter-feature-muted);
+  --border-subtle: color-mix(
+    in srgb,
+    var(--starter-feature-ink) 15%,
+    transparent
+  );
+  border-color: transparent;
+  background: linear-gradient(
+    145deg,
+    var(--starter-feature-surface),
+    var(--starter-feature-depth)
+  );
+  color: var(--foreground);
 }
 .scopeCardHeading {
   display: flex;
   align-items: center;
   gap: 0.875rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1rem, 2.5vw, 2.5rem);
 }
 .scopeIcon {
   display: grid;
@@ -212,6 +274,11 @@
   width: 1.125rem;
   height: 1.125rem;
 }
+.scopeCard[data-editorial-accent] .scopeIcon {
+  border-color: var(--border-subtle);
+  background: color-mix(in srgb, white 60%, var(--background));
+  box-shadow: none;
+}
 .cardEyebrow {
   color: var(--muted-foreground);
   font-size: 0.75rem;
@@ -219,8 +286,8 @@
   line-height: 1.5;
 }
 .scopeCard h3 {
-  max-width: 22ch;
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  max-width: 20ch;
+  font-size: clamp(1.625rem, 2.6vw, 2.25rem);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.04em;
@@ -228,7 +295,7 @@
 .cardDescription {
   max-width: 54ch;
   color: var(--muted-foreground);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   line-height: 1.8;
 }
 .scopeFeatures {
@@ -244,7 +311,7 @@
   align-items: flex-start;
   gap: 0.625rem;
   color: var(--foreground);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.7;
 }
 .scopeFeatures svg {
@@ -691,6 +758,10 @@
   }
 }
 @media (min-width: 64rem) {
+  .bodyHeader > div:first-child {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: clamp(3rem, 5vw, 5rem);
+  }
   .scopeGrid[data-layers="3"] {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -732,6 +803,7 @@
   .mobileOption,
   .bundleOption,
   .scopeCard,
+  .scopeCard[data-editorial-accent],
   .archivePanel,
   .purchasePanel,
   .technologyCard,
@@ -768,10 +840,13 @@
   .contextLinks a {
     color: LinkText;
   }
-  .scopeCard::after,
   .archivePanel::after,
   .purchasePanel::after {
     border-color: CanvasText;
+  }
+  .scopeCard[data-editorial-accent] .scopeIcon {
+    border-color: CanvasText;
+    background: Canvas;
   }
   .contentLink,
   .alternative {

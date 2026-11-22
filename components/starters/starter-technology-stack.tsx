@@ -60,6 +60,8 @@ export function StarterTechnologyStack({
     >
       <MarketingSectionHeader
         titleId="technology-title"
+        align="left"
+        className={styles.bodyHeader}
         title={tSite("Your stack, from interface to data.")}
         description={tSite(
           fullstack

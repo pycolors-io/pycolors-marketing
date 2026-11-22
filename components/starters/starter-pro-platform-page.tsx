@@ -81,7 +81,12 @@ export function StarterProPlatformPage({
     }),
   }));
   return (
-    <main id="content" tabIndex={-1} className={styles.page}>
+    <main
+      id="content"
+      tabIndex={-1}
+      className={styles.page}
+      data-starter-product={productSlug}
+    >
       <MarketingHeroBand tone="cool">
         <Container className={`marketing-page-intro ${styles.heroContainer}`}>
           <MarketingBreadcrumb route={offer.href} />

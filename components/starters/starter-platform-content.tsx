@@ -86,6 +86,8 @@ export function StarterPlatformOverview({ productSlug }: PlatformProps) {
     >
       <MarketingSectionHeader
         titleId="included-title"
+        align="left"
+        className={styles.bodyHeader}
         eyebrow={tSite("Inside the source")}
         title={tSite(
           fullstack
@@ -105,6 +107,11 @@ export function StarterPlatformOverview({ productSlug }: PlatformProps) {
               key={id}
               className={styles.scopeCard}
               aria-labelledby={`scope-${id}-title`}
+              data-editorial-accent={
+                id === (fullstack ? "backend" : "native")
+                  ? productSlug
+                  : undefined
+              }
             >
               <div className={styles.scopeCardHeading}>
                 <span className={styles.scopeIcon} aria-hidden="true">
@@ -201,6 +208,8 @@ export function StarterPlatformSetup({ productSlug }: PlatformProps) {
     >
       <MarketingSectionHeader
         titleId="source-guides-title"
+        align="left"
+        className={styles.bodyHeader}
         eyebrow={tSite("From download to your product")}
         title={tSite("Open the source. Make it yours.")}
         description={tSite(
