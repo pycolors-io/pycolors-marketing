@@ -1263,24 +1263,75 @@
   }
 }
 .trust > div {
+  display: grid;
+  min-width: 0;
+  gap: clamp(2rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 4.5vw, 4rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.75rem, 3vw, 2.5rem);
+  background: linear-gradient(145deg, var(--background), var(--surface-muted));
+}
+.trust .sectionHeader {
   display: block;
+  max-width: none;
+  margin: 0;
+}
+.trust .sectionHeader > div {
+  display: grid;
+  align-items: end;
+  gap: 1.25rem;
+}
+.trust .sectionHeader > div > * {
+  margin-block: 0;
+}
+.trust .sectionHeader :global([data-slot="badge"]) {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+.trust .sectionHeader h2 {
+  max-width: 20ch;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+.trust .sectionHeader p {
+  max-width: 48ch;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+.trust a {
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
 }
 .buyingProof {
   display: grid;
-  gap: 2rem;
-  margin-block: 2.5rem;
+  min-width: 0;
+  border-block: 1px solid var(--border-subtle);
 }
 .buyingProof article {
-  display: flex;
+  display: grid;
   min-width: 0;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-top: 1.5rem;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  column-gap: 1rem;
+  row-gap: 0.75rem;
+  padding-block: 1.75rem;
+}
+.buyingProof article + article {
   border-top: 1px solid var(--border-subtle);
 }
 .buyingProof article > svg {
-  margin-bottom: 1.25rem;
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.125rem;
   color: var(--foreground);
+}
+.buyingProof h3,
+.buyingProof p,
+.buyingProof a {
+  grid-column: 2;
 }
 .buyingProof h3 {
   font-size: clamp(1.25rem, 2vw, 1.5rem);
@@ -1289,17 +1340,23 @@
   font-weight: 600;
 }
 .buyingProof p {
-  max-width: 38ch;
-  margin-top: 0.75rem;
+  max-width: 48ch;
+  margin: 0;
   color: var(--muted-foreground);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   line-height: 1.75;
 }
 .buyingProof a {
-  margin-top: auto;
-  padding-top: 1rem;
-  color: var(--primary);
+  align-self: start;
+  justify-self: start;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 2.75rem;
+  margin: 0;
+  padding-block: 0.5rem;
+  color: var(--foreground);
   font-size: 0.8125rem;
+  line-height: 1.6;
   text-decoration: none;
 }
 .buyingProof a:hover {
@@ -1308,20 +1365,82 @@
 .trustLinks {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-subtle);
+  gap: 0.25rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 .trustLinks a {
   gap: 0.5rem;
   min-width: 0;
-  font-size: 0.75rem;
+  min-height: 2.75rem;
+  font-size: 0.8125rem;
   text-decoration: none;
 }
-@media (min-width: 48rem) {
+@media (min-width: 64rem) {
+  .trust .sectionHeader > div {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: clamp(2rem, 5vw, 5rem);
+  }
   .buyingProof {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(1.5rem, 4vw, 4rem);
+  }
+  .buyingProof article {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 2.25rem clamp(1.5rem, 3vw, 3rem);
+  }
+  .buyingProof article:first-child {
+    padding-left: 0;
+  }
+  .buyingProof article:last-child {
+    padding-right: 0;
+  }
+  .buyingProof article + article {
+    border-top: 0;
+    border-left: 1px solid var(--border-subtle);
+  }
+  .buyingProof article > svg {
+    margin: 0 0 0.5rem;
+  }
+  .buyingProof a {
+    margin-top: auto;
+  }
+  @supports (grid-template-rows: subgrid) {
+    .buyingProof article {
+      display: grid;
+      grid-row: span 4;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: subgrid;
+      align-items: start;
+    }
+    .buyingProof article > svg,
+    .buyingProof h3,
+    .buyingProof p,
+    .buyingProof a {
+      grid-column: 1;
+      grid-row: auto;
+    }
+    .buyingProof a {
+      align-self: stretch;
+      margin-top: 0;
+    }
+  }
+}
+@media (forced-colors: active) {
+  .trust > div {
+    border-color: CanvasText;
+    background: Canvas;
+  }
+  .buyingProof,
+  .buyingProof article + article {
+    border-color: CanvasText;
+  }
+  .buyingProof a,
+  .trustLinks a {
+    color: LinkText;
   }
 }
 .closing {

@@ -337,7 +337,7 @@ export function FooterPromotion() {
                     </p>
                   </div>
                   <span className={styles.startingPointAction}>
-                    {tSite(action)}
+                    <span className="sr-only">{tSite(action)}</span>
                     <ArrowRight aria-hidden="true" />
                   </span>
                 </Link>

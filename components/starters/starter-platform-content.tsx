@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   ArrowRight,
   Check,
@@ -277,15 +278,22 @@ export function StarterPlatformAlternatives({ productSlug }: PlatformProps) {
   const alternatives = [
     {
       ...PRODUCT_DISPLAY["starter-pro"],
+      artwork: "/images/starters/pro/concepts/workflow-path-test-v1.png",
+      label: "Web application",
       description: "The complete Web application and its backend.",
     },
     productSlug === "starter-pro-mobile"
       ? {
           ...PRODUCT_DISPLAY["starter-pro-fullstack"],
+          artwork: "/images/starters/pro/concepts/source-stack-test-v1.png",
+          label: "Web + Mobile + shared API",
           description: "Web and native Mobile with one shared backend.",
         }
       : {
           ...PRODUCT_DISPLAY["starter-pro-mobile"],
+          artwork:
+            "/images/starters/pro/concepts/connected-workspace-test-v1.png",
+          label: "Native application",
           description: "Native iOS and Android source with its backend.",
         },
   ];
@@ -296,41 +304,73 @@ export function StarterPlatformAlternatives({ productSlug }: PlatformProps) {
       spacing="compact"
       aria-labelledby="platforms-title"
     >
-      <MarketingSectionHeader
-        titleId="platforms-title"
-        align="left"
-        title={tSite("A different starting point?")}
-        description={tSite(
-          "Explore the other source licences, or compare all starters side by side.",
-        )}
-        action={
-          <Link href="/starters#source-licences" className={styles.contentLink}>
-            {tSite("Compare all starters")}
-            <ArrowRight aria-hidden="true" />
-          </Link>
-        }
-      />
-      <nav aria-label={tSite("Explore other source licences")}>
-        <ul className={styles.alternatives} role="list">
-          {alternatives.map(({ slug, href, name, priceLabel, description }) => (
-            <li key={slug}>
-              <Link href={href} className={styles.alternative}>
-                <div>
-                  <h3>{tSite(name)}</h3>
-                  <p>{tSite(description)}</p>
-                </div>
-                <span className={styles.alternativePrice}>
-                  {priceLabel}
-                  <ArrowRight aria-hidden="true" />
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <p className={styles.alternativesNote}>
-        {tSite("One-time payment · VAT included")}
-      </p>
+      <div className={styles.alternativesPanel}>
+        <MarketingSectionHeader
+          titleId="platforms-title"
+          align="left"
+          className={styles.alternativesHeader}
+          eyebrow={tSite("Source licences")}
+          title={tSite("A different starting point?")}
+          description={tSite(
+            "Explore the other source licences, or compare all starters side by side.",
+          )}
+          action={
+            <Link
+              href="/starters#source-licences"
+              className={styles.contentLink}
+            >
+              {tSite("Compare all starters")}
+              <ArrowRight aria-hidden="true" />
+            </Link>
+          }
+        />
+        <nav aria-label={tSite("Explore other source licences")}>
+          <ul className={styles.alternatives} role="list">
+            {alternatives.map(
+              ({
+                slug,
+                href,
+                name,
+                priceLabel,
+                description,
+                artwork,
+                label,
+              }) => (
+                <li key={slug}>
+                  <Link href={href} className={styles.alternative}>
+                    <span
+                      className={styles.alternativeArtwork}
+                      aria-hidden="true"
+                    >
+                      <Image
+                        src={artwork}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1024px) 128px, 80px"
+                      />
+                    </span>
+                    <div className={styles.alternativeCopy}>
+                      <span className={styles.alternativeLabel}>
+                        {tSite(label)}
+                      </span>
+                      <h3>{tSite(name)}</h3>
+                      <p>{tSite(description)}</p>
+                    </div>
+                    <span className={styles.alternativePrice}>
+                      {priceLabel}
+                      <ArrowRight aria-hidden="true" />
+                    </span>
+                  </Link>
+                </li>
+              ),
+            )}
+          </ul>
+        </nav>
+        <p className={styles.alternativesNote}>
+          <span>{tSite("One-time payment · VAT included")}</span>
+          <span>{tSite("Concept illustration")}</span>
+        </p>
+      </div>
     </MarketingSectionShell>
   );
 }
