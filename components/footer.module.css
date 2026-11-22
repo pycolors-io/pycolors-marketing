@@ -648,6 +648,10 @@
   font-family: var(--font-sans);
 }
 
+.publicFooter a {
+  scroll-margin-block-end: 1rem;
+}
+
 :global(.dark) .publicFooter {
   --footer-surface: var(--background);
 }
@@ -731,8 +735,12 @@
 }
 
 .publicFooter .startingPoint {
-  --discovery-fill: #050505;
-  --discovery-ink: #f5f5f7;
+  --discovery-fill: var(--background);
+  --discovery-ink: var(--foreground);
+  --discovery-tint: var(--foreground);
+  --discovery-radius: 2.5rem;
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
@@ -743,21 +751,59 @@
   min-height: 17.5rem;
   padding: clamp(1.5rem, 2.5vw, 2rem);
   border: 1px solid
-    color-mix(in srgb, var(--discovery-ink) 10%, var(--discovery-fill));
-  border-radius: 1.5rem;
-  background: var(--discovery-fill);
+    color-mix(in srgb, var(--discovery-ink) 14%, var(--discovery-fill));
+  border-radius: var(--discovery-radius);
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      color-mix(in srgb, var(--discovery-tint) 6%, transparent),
+      transparent 72%
+    ),
+    linear-gradient(155deg, var(--discovery-fill) 8%, var(--surface-muted));
   color: var(--discovery-ink);
   text-align: center;
+  box-shadow:
+    inset 0 1px 0 var(--discovery-fill),
+    var(--shadow-soft);
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
+}
+
+.publicFooter .startingPoint::before {
+  content: "";
+  position: absolute;
+  inset: 0.5rem;
+  border: 1px solid
+    color-mix(in srgb, var(--discovery-ink) 7%, var(--discovery-fill));
+  border-radius: calc(var(--discovery-radius) - 0.5rem);
+  pointer-events: none;
+}
+
+.publicFooter .startingPoint[data-discovery-tone="blue"] {
+  --discovery-tint: var(--brand-platform, var(--primary));
+}
+
+.publicFooter .startingPoint[data-discovery-tone="violet"] {
+  --discovery-tint: var(--primary);
+}
+
+.publicFooter .startingPoint[data-discovery-tone="dark"] {
+  --discovery-fill: var(--surface-muted);
+}
+
+:global(html[data-site-palette="monochrome"]) .publicFooter .startingPoint {
+  --discovery-tint: var(--foreground);
 }
 
 .publicFooter .startingPointIcon {
   width: 2.75rem;
   height: 2.75rem;
-  border: 1px solid transparent;
+  border: 1px solid
+    color-mix(in srgb, var(--discovery-ink) 9%, var(--discovery-fill));
   border-radius: 1rem;
   background: color-mix(
     in srgb,
-    var(--discovery-ink) 8%,
+    var(--discovery-tint) 5%,
     var(--discovery-fill)
   );
 }
@@ -831,11 +877,9 @@
       var(--discovery-ink) 28%,
       var(--discovery-fill)
     );
-    background: color-mix(
-      in srgb,
-      var(--discovery-fill) 95%,
-      var(--discovery-ink)
-    );
+    box-shadow:
+      inset 0 1px 0 var(--discovery-fill),
+      var(--shadow-medium);
   }
 
   .publicFooter .startingPoint:hover .startingPointTitle {
@@ -853,7 +897,8 @@
     transition:
       background-color 180ms ease,
       border-color 180ms ease,
-      color 180ms ease;
+      color 180ms ease,
+      box-shadow 180ms ease;
   }
 
   .publicFooter .startingPointAction svg {
@@ -890,6 +935,8 @@
   text-align: center;
   white-space: normal;
   box-shadow: none;
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
 }
 
 .publicFooter .actions :global(.site-primary-action) {
@@ -1299,6 +1346,13 @@
     border-color: CanvasText;
     background: Canvas;
     color: CanvasText;
+    box-shadow: none;
+  }
+  .publicFooter .startingPoint::before {
+    border-color: CanvasText;
+  }
+  .publicFooter .startingPoint:focus-visible {
+    outline-color: Highlight;
   }
   .publicFooter .startingPointDescription,
   .publicFooter .startingPointLabel {

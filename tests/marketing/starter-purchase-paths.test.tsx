@@ -131,8 +131,12 @@ afterEach(() => vi.unstubAllGlobals());
 const purchaseCases = locales.flatMap((locale) =>
   pages.flatMap((page) =>
     products.flatMap((product) => {
-      // The matching product detail page has a hero and a comparison-card CTA.
-      const expectedButtons = page.route === product.href ? 2 : 1;
+      const dedicated =
+        page.route === "/starters/mobile" ||
+        page.route === "/starters/fullstack";
+      if (dedicated && page.route !== product.href) return [];
+      // Dedicated pages repeat their own offer; alternatives remain plain links.
+      const expectedButtons = dedicated ? 2 : 1;
       return Array.from({ length: expectedButtons }, (_, buttonIndex) => ({
         locale,
         page,
@@ -155,6 +159,17 @@ describe("Mobile and Fullstack purchase entry points", () => {
         name: label(locale, product),
       });
       expect(buttons).toHaveLength(expectedButtons);
+      if (page.route === product.href) {
+        const otherProduct = products.find(
+          (offer) => offer.slug !== product.slug,
+        )!;
+        expect(
+          screen.queryByRole("button", { name: label(locale, otherProduct) }),
+        ).not.toBeInTheDocument();
+        expect(
+          document.querySelectorAll('main button[aria-live="polite"]'),
+        ).toHaveLength(2);
+      }
       for (const button of buttons) expect(button).toBeDisabled();
       expect(checkoutRequests()).toHaveLength(0);
 
@@ -201,7 +216,12 @@ describe("Mobile and Fullstack purchase entry points", () => {
           "Checkout is currently unavailable. Please try again later or contact purchase support.",
         ),
       );
-      for (const product of products) {
+      const dedicated =
+        page.route === "/starters/mobile" ||
+        page.route === "/starters/fullstack";
+      for (const product of products.filter(
+        (offer) => !dedicated || page.route === offer.href,
+      )) {
         const buttons = screen.getAllByRole("button", {
           name: label(locale, product),
         });
@@ -209,6 +229,14 @@ describe("Mobile and Fullstack purchase entry points", () => {
           expect(button).toBeDisabled();
           fireEvent.click(button);
         }
+      }
+      if (dedicated) {
+        const otherProduct = products.find(
+          (offer) => page.route !== offer.href,
+        )!;
+        expect(
+          screen.queryByRole("button", { name: label(locale, otherProduct) }),
+        ).not.toBeInTheDocument();
       }
       expect(checkoutRequests()).toHaveLength(0);
       expect(navigateToCheckout).not.toHaveBeenCalled();

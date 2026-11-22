@@ -1,17 +1,10 @@
 import Image from "next/image";
-import {
-  ArrowDown,
-  ArrowUpRight,
-  BookOpen,
-  Layers3,
-  Smartphone,
-} from "lucide-react";
+import { ArrowDown, BookOpen, Layers3, Smartphone } from "lucide-react";
 import { Container } from "@/components/container";
 import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { MarketingFaq, MarketingFaqSection } from "@/components/marketing/faq";
 import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { PageHero } from "@/components/marketing/page-hero";
-import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { SiteButton } from "@/components/site-button";
 import { Link } from "@/lib/i18n/navigation";
@@ -19,11 +12,21 @@ import { useCopy } from "@/lib/i18n/use-copy";
 import { UPGRADE_DISPLAY } from "@/lib/products/public-catalog";
 import { STARTER_PRO_MOBILE_PREVIEW as mobile } from "@/lib/products/starter-pro-mobile-preview";
 import { BuyProductButton } from "@/components/pricing/buy-product-button";
-import { StarterSourceOffers } from "./starter-source-offers";
+import {
+  StarterPlatformAlternatives,
+  StarterPlatformOverview,
+  StarterPlatformSetup,
+} from "./starter-platform-content";
 import { StarterTechnologyStack } from "./starter-technology-stack";
 import styles from "@/components/starters/starter-mobile.module.css";
 
 const faqs = [
+  {
+    question: "Which native journeys are included?",
+    answer:
+      "The native app supports verified email/password sign-in, session restoration, workspace selection, project creation, project details, task lists and account information. Registration and password recovery open in the browser on your configured backend. Native social login, native signup, task editing and offline replay are not included in these journeys.",
+    links: [{ href: "/docs/starter-pro/mobile", label: "Mobile setup guide" }],
+  },
   {
     question: "Can I buy Mobile without the Web product?",
     answer:
@@ -68,10 +71,6 @@ export function StarterProPlatformPage({
     productSlug === "starter-pro-mobile"
       ? "Mobile setup guide"
       : "Fullstack setup guide";
-  const otherGuide =
-    productSlug === "starter-pro-mobile"
-      ? { href: mobile.bundle.docsHref, label: "Fullstack setup guide" }
-      : { href: mobile.docsHref, label: "Mobile setup guide" };
   const PlatformIcon =
     productSlug === "starter-pro-mobile" ? Smartphone : Layers3;
   const localizedFaqs = faqs.map((item) => ({
@@ -138,16 +137,16 @@ export function StarterProPlatformPage({
                     )}
                   </p>
                   <div className={styles.contextLinks}>
+                    <Link href="#included">
+                      {tSite("Explore the included source")}
+                    </Link>
                     <Link href="#technology">{tSite("Explore the stack")}</Link>
-                    <Link href="#platforms">
-                      {tSite("Compare source licences")}
+                    <Link href="#source-guides">
+                      {tSite("Explore the setup")}
                       <ArrowDown
                         className="size-3.5 shrink-0"
                         aria-hidden="true"
                       />
-                    </Link>
-                    <Link href="/starters/pro">
-                      {tSite("Explore Starter Pro Web")}
                     </Link>
                   </div>
                 </div>
@@ -180,53 +179,51 @@ export function StarterProPlatformPage({
       </MarketingHeroBand>
 
       <Container>
+        <StarterPlatformOverview productSlug={productSlug} />
         <StarterTechnologyStack productSlug={productSlug} />
+        <StarterPlatformSetup productSlug={productSlug} />
         <MarketingSectionShell
-          id="platforms"
+          id="purchase"
           width="full"
-          aria-labelledby="platforms-title"
+          aria-labelledby="purchase-title"
         >
-          <MarketingSectionHeader
-            titleId="platforms-title"
-            title={tSite("Choose the source your product needs.")}
-            description={tSite(
-              "Web, native Mobile or both with a shared API. Each offer includes its own setup guides; provider and operating costs are separate.",
-            )}
-          />
-          <StarterSourceOffers currentProduct={productSlug} />
-        </MarketingSectionShell>
-
-        <MarketingSectionShell
-          width="full"
-          aria-labelledby="source-guides-title"
-        >
-          <MarketingSectionHeader
-            titleId="source-guides-title"
-            title={tSite("Start with the included guides.")}
-            description={tSite(
-              "Read the archive layout, installation steps, licence and validation boundaries before you buy.",
-            )}
-          />
-          <div className={styles.guideLinks}>
-            <SiteButton
-              asChild
-              variant="outline"
-              className={styles.guideAction}
-            >
-              <Link href={offer.docsHref}>
-                <BookOpen className="size-4 shrink-0" aria-hidden="true" />
-                {tSite(guideLabel)}
-              </Link>
-            </SiteButton>
-            <div className={styles.contextLinks}>
-              <Link href={otherGuide.href}>
-                {tSite(otherGuide.label)}
-                <ArrowUpRight
-                  className="size-3.5 shrink-0"
-                  aria-hidden="true"
-                />
-              </Link>
-              <Link href="/license">{tSite("Review the license")}</Link>
+          <div className={styles.purchasePanel}>
+            <div className={styles.purchaseCopy}>
+              <p className={styles.cardEyebrow}>{tSite(offer.name)}</p>
+              <h2 id="purchase-title">
+                {tSite(
+                  productSlug === "starter-pro-mobile"
+                    ? "Build your next native product."
+                    : "Build across Web and Mobile.",
+                )}
+              </h2>
+              <p className={styles.cardDescription}>
+                {tSite(offer.description)}
+              </p>
+              <div className={styles.contextLinks}>
+                <Link href={offer.docsHref}>{tSite(guideLabel)}</Link>
+                <Link href="/license">{tSite("Review the license")}</Link>
+                <Link href="/orders/support">{tSite("Purchase support")}</Link>
+              </div>
+            </div>
+            <div className={styles.purchaseActions}>
+              <p className={styles.purchasePrice}>{offer.priceLabel}</p>
+              <p className={styles.purchaseQualifier}>
+                {tSite("One-time payment · VAT included")}
+              </p>
+              <BuyProductButton
+                productSlug={offer.slug}
+                locale={tSite.locale}
+                label={tSite("Buy {value0} — {value1}", {
+                  value0: tSite(offer.name),
+                  value1: offer.priceLabel,
+                })}
+              />
+              <p className={styles.purchaseNote}>
+                {tSite(
+                  "Source code and setup guides. Hosting, provider accounts and native distribution are configured by you.",
+                )}
+              </p>
             </div>
           </div>
         </MarketingSectionShell>
@@ -241,6 +238,7 @@ export function StarterProPlatformPage({
             items={localizedFaqs}
           />
         </MarketingFaqSection>
+        <StarterPlatformAlternatives productSlug={productSlug} />
       </Container>
     </main>
   );

@@ -32,9 +32,9 @@
 .heroActions > div {
   max-width: 100%;
 }
-.heroActions > div > :global([data-slot="button"]),
+.heroActions :global([data-slot="button"]),
 .guideAction {
-  min-height: 2.125rem;
+  min-height: 2.75rem;
   height: auto;
   padding: 0.375rem 1rem;
   border-radius: 100px;
@@ -97,7 +97,7 @@
   align-items: center;
   gap: 0.75rem 1.5rem;
 }
-.heroActions :is(a, button),
+.heroContainer :is(a, button),
 .contextLinks a,
 .guideLinks a {
   scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
@@ -146,6 +146,361 @@
   font-size: 0.75rem;
   line-height: 1.5;
   text-align: right;
+}
+.scopeGrid {
+  display: grid;
+  gap: 1.25rem;
+}
+.scopeCard,
+.archivePanel,
+.purchasePanel {
+  position: relative;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--foreground) 14%, var(--background));
+  border-radius: clamp(1.75rem, 3vw, 2.5rem);
+  background:
+    radial-gradient(
+      ellipse at 90% 0%,
+      color-mix(in srgb, var(--primary) 5%, transparent),
+      transparent 65%
+    ),
+    linear-gradient(
+      150deg,
+      var(--background) 15%,
+      color-mix(in srgb, var(--foreground) 3%, var(--background))
+    );
+  box-shadow:
+    0 2px 4px -2px color-mix(in srgb, var(--foreground) 6%, transparent),
+    0 24px 50px -42px color-mix(in srgb, var(--foreground) 24%, transparent);
+}
+.scopeCard::after,
+.archivePanel::after,
+.purchasePanel::after {
+  position: absolute;
+  inset: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
+  border-radius: calc(clamp(1.75rem, 3vw, 2.5rem) - 0.5rem);
+  content: "";
+  pointer-events: none;
+}
+.scopeCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+}
+.scopeCardHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+.scopeIcon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.875rem;
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: 0 4px 12px -8px
+    color-mix(in srgb, var(--foreground) 18%, transparent);
+}
+.scopeIcon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+.cardEyebrow {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.scopeCard h3 {
+  max-width: 22ch;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+.cardDescription {
+  max-width: 54ch;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.scopeFeatures {
+  display: grid;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  list-style: none;
+}
+.scopeFeatures li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.scopeFeatures svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.1875rem;
+  color: var(--muted-foreground);
+}
+.scopeNote,
+.alternativesNote {
+  margin-top: 1.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+.scopeNote {
+  text-align: center;
+}
+.setupLayout {
+  display: grid;
+  align-items: start;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.archivePanel {
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+}
+.archiveHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.archiveHeading svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+.archiveHeading h3,
+.setupSteps h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+}
+.archiveRoot {
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--background);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.archiveFiles {
+  margin-top: 0.75rem;
+}
+.archiveFiles > div {
+  display: grid;
+  gap: 0.375rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.archiveFiles dt {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.archiveFiles dd,
+.archiveNote {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.archiveNote {
+  margin-top: 1.25rem;
+}
+.contentLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.7;
+  text-underline-offset: 0.25rem;
+}
+.contentLink svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+.contentLink:hover {
+  text-decoration: underline;
+}
+.contentLink:focus-visible,
+.alternative:focus-visible,
+.purchaseActions :global([data-slot="button"]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.contentLink,
+.alternative,
+.purchaseActions :is(a, button) {
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
+}
+.setupSteps {
+  display: grid;
+  gap: 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.setupSteps li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.25rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.setupSteps li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.setupStepNumber {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--background), var(--surface-muted));
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+.setupSteps p {
+  max-width: 50ch;
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.setupSteps .contentLink {
+  margin-top: 0.25rem;
+}
+.purchasePanel {
+  display: grid;
+  align-items: center;
+  gap: 2.5rem;
+  padding: clamp(1.75rem, 4vw, 4rem);
+}
+.purchaseCopy h2 {
+  max-width: 20ch;
+  margin-top: 1rem;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+.purchaseCopy .cardDescription {
+  margin-top: 1.25rem;
+}
+.purchaseCopy .contextLinks {
+  margin-top: 1rem;
+}
+.purchaseActions {
+  display: grid;
+  min-width: 0;
+  gap: 0.75rem;
+}
+.purchasePrice {
+  font-size: clamp(2.75rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.purchaseQualifier,
+.purchaseNote {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+.purchaseActions > div {
+  margin-top: 0.75rem;
+}
+.purchaseActions :global([data-slot="button"]) {
+  min-height: 2.75rem;
+  height: auto;
+  border-radius: 100px;
+  white-space: normal;
+}
+.purchaseActions :global(.site-primary-action) {
+  border: 1px solid var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+.purchaseActions :global(.site-primary-action):hover {
+  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
+}
+.alternatives {
+  display: grid;
+  gap: 1rem 2rem;
+  padding: 0;
+  list-style: none;
+}
+.alternatives li {
+  min-width: 0;
+}
+.alternative {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0.25rem;
+  color: var(--foreground);
+  text-underline-offset: 0.25rem;
+}
+.alternative h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+.alternative p {
+  margin-top: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.alternativePrice {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.alternativePrice svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.alternative:hover h3 {
+  text-decoration: underline;
 }
 .technologyGrid {
   display: grid;
@@ -319,16 +674,33 @@
   scroll-margin-top: calc(var(--site-header-height, 3.5rem) + 1.5rem);
 }
 @media (min-width: 48rem) {
+  .scopeGrid,
+  .alternatives {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .technologyGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (min-width: 48rem) and (max-width: 63.999rem) {
+  .scopeGrid[data-layers="3"] .scopeCard:last-child {
+    grid-column: 1 / -1;
+  }
   .technologyGrid[data-layers="3"] .technologyCard:last-child {
     grid-column: 1 / -1;
   }
 }
 @media (min-width: 64rem) {
+  .scopeGrid[data-layers="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .setupLayout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .purchasePanel {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: clamp(3rem, 6vw, 6rem);
+  }
   .technologyGrid[data-layers="3"] {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -359,6 +731,9 @@
   .webOption,
   .mobileOption,
   .bundleOption,
+  .scopeCard,
+  .archivePanel,
+  .purchasePanel,
   .technologyCard,
   .technologyServices {
     --background: Canvas;
@@ -392,5 +767,25 @@
   }
   .contextLinks a {
     color: LinkText;
+  }
+  .scopeCard::after,
+  .archivePanel::after,
+  .purchasePanel::after {
+    border-color: CanvasText;
+  }
+  .contentLink,
+  .alternative {
+    color: LinkText;
+  }
+  .contentLink:focus-visible,
+  .alternative:focus-visible,
+  .purchaseActions :global([data-slot="button"]):focus-visible {
+    outline-color: Highlight;
+  }
+  .purchaseActions :global(.site-primary-action),
+  .purchaseActions :global(.site-primary-action):hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
   }
 }

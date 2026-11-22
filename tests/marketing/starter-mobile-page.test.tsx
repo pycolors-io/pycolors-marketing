@@ -19,6 +19,7 @@ import {
 import { STARTER_PRO_MOBILE_PREVIEW as mobile } from "@/lib/products/starter-pro-mobile-preview";
 import { createCheckoutSession } from "@/lib/api/client";
 import { createCopy, messageKey } from "@/lib/i18n/copy-core";
+import { localizedHref } from "@/lib/i18n/routing";
 import { getMarketingBreadcrumbItems } from "@/components/marketing/breadcrumb";
 import sitemap from "@/app/sitemap";
 import en from "@/messages/en.json";
@@ -111,23 +112,20 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
       });
       expect(guide).toHaveAttribute("href", `${prefix}${product.docsHref}`);
       expect(guide).toHaveAttribute("data-slot", "button");
-      const compare = actions.getByRole("link", {
-        name: copy(locale, "Compare source licences"),
+      const included = actions.getByRole("link", {
+        name: copy(locale, "Explore the included source"),
       });
-      expect(compare).toHaveAttribute("href", "#platforms");
-      expect(compare).not.toHaveAttribute("data-slot", "button");
-      const web = actions.getByRole("link", {
-        name: copy(locale, "Explore Starter Pro Web"),
-      });
-      expect(web).toHaveAttribute("href", `${prefix}/starters/pro`);
-      expect(web).not.toHaveAttribute("data-slot", "button");
+      expect(included).toHaveAttribute("href", "#included");
       const stack = actions.getByRole("link", {
         name: copy(locale, "Explore the stack"),
       });
       expect(stack).toHaveAttribute("href", "#technology");
-      expect(stack).not.toHaveAttribute("data-slot", "button");
+      const setup = actions.getByRole("link", {
+        name: copy(locale, "Explore the setup"),
+      });
+      expect(setup).toHaveAttribute("href", "#source-guides");
       expect(actions.getAllByRole("link")).toHaveLength(4);
-      for (const link of [guide, stack, compare, web]) {
+      for (const link of [guide, included, stack, setup]) {
         link.focus();
         expect(link).toHaveFocus();
       }
@@ -257,6 +255,15 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
         "utf8",
       );
       expect(source).not.toMatch(/^\s*["']use client["']/m);
+      expect(
+        readFileSync(
+          resolve(
+            process.cwd(),
+            "components/starters/starter-platform-content.tsx",
+          ),
+          "utf8",
+        ),
+      ).not.toMatch(/^\s*["']use client["']/m);
       const server = document.createElement("div");
       server.innerHTML = renderToString(
         <NextIntlClientProvider locale="en" timeZone="UTC" messages={en}>
@@ -273,16 +280,17 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
         );
         expect(stack).toHaveTextContent("React Native + Expo");
         expect(stack).toHaveTextContent("Next.js + PostgreSQL");
-        const sourceCards = server.querySelectorAll<HTMLElement>(
-          "[data-source-offer]",
-        );
-        expect(sourceCards).toHaveLength(3);
-        for (const card of sourceCards) {
-          expect(card.querySelectorAll("figure img")).toHaveLength(1);
-          expect(card.querySelector("img")).toHaveAttribute("alt", "");
-          expect(
-            within(card).getByText("Concept illustration"),
-          ).toBeInTheDocument();
+        expect(server.querySelector("[data-source-offer]")).toBeNull();
+        expect(
+          server.querySelectorAll('button[aria-live="polite"]'),
+        ).toHaveLength(2);
+        for (const id of [
+          "included",
+          "source-guides",
+          "purchase",
+          "platforms",
+        ]) {
+          expect(server.querySelector(`#${id}`)).not.toBeNull();
         }
       } finally {
         server.remove();
@@ -290,76 +298,169 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
     },
   );
 
-  it.each(["en", "fr"] as const)(
-    "distinguishes Web, autonomous Mobile and Fullstack with canonical TTC prices in %s",
-    async (locale) => {
-      const { container } = renderPage(locale);
+  it.each([
+    ["en", false],
+    ["fr", false],
+    ["en", true],
+    ["fr", true],
+  ] as const)(
+    "keeps %s dedicated to its own source licence and secondary alternatives (Fullstack: %s)",
+    async (locale, fullstack) => {
+      const { container } = renderPage(locale, fullstack);
+      const product = fullstack ? mobile.bundle : mobile;
+      const other = fullstack ? mobile : mobile.bundle;
+      const prefix = locale === "fr" ? "/fr" : "";
+      const main = screen.getByRole("main");
+      expect(main).toHaveAttribute("id", "content");
+      expect(main).toHaveAttribute("tabindex", "-1");
       expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-      expect(screen.getByRole("main")).toHaveAttribute("id", "content");
-      expect(screen.getByRole("main")).toHaveAttribute("tabindex", "-1");
-      const web = screen.getByRole("article", {
-        name: copy(locale, "Starter Pro Web"),
+      const ownButtons = within(main).getAllByRole("button", {
+        name: buyLabel(locale, product),
       });
+      expect(ownButtons).toHaveLength(2);
+      expect(main.querySelectorAll('button[aria-live="polite"]')).toHaveLength(
+        2,
+      );
+      for (const button of ownButtons) expect(button).toBeEnabled();
       expect(
-        within(web).getByText(PRODUCT_DISPLAY["starter-pro"].priceLabel),
+        within(main).queryByRole("button", { name: buyLabel(locale, other) }),
+      ).toBeNull();
+      expect(main.querySelector("[data-source-offer]")).toBeNull();
+
+      const included = screen.getByRole("region", {
+        name: copy(
+          locale,
+          fullstack
+            ? "Two experiences. One product foundation."
+            : "A native foundation. The backend included.",
+        ),
+      });
+      expect(within(included).getAllByRole("article")).toHaveLength(
+        fullstack ? 3 : 2,
+      );
+      expect(
+        within(included).getByRole("article", {
+          name: copy(locale, "A native path into your product."),
+        }),
       ).toBeVisible();
-      for (const [name, illustration] of [
-        ["Starter Pro Web", "workflow-path"],
-        ["Starter Pro Mobile", "connected-workspace"],
-        ["Starter Pro Fullstack", "source-stack"],
-      ] as const) {
-        const card = screen.getByRole("article", { name: copy(locale, name) });
-        const image = card.querySelector("img")!;
-        expect(card.querySelectorAll("figure")).toHaveLength(1);
-        expect(card.querySelectorAll("img")).toHaveLength(1);
-        expect(image).toHaveAttribute("alt", "");
-        expect(image.closest('[aria-hidden="true"]')).not.toBeNull();
-        const imageUrl = new URL(
-          image.getAttribute("src")!,
-          "https://marketing.example",
-        );
-        expect(imageUrl.searchParams.get("url") ?? imageUrl.pathname).toBe(
-          `/images/starters/pro/concepts/${illustration}-test-v1.png`,
-        );
-        expect(
-          within(card).getByText(copy(locale, "Concept illustration")),
-        ).toBeVisible();
-        expect(card.querySelector("a img, button img")).toBeNull();
-        expect(within(card).getAllByRole("button")).toHaveLength(1);
-        expect(within(card).getAllByRole("link")).toHaveLength(2);
-      }
-      for (const product of [mobile, mobile.bundle]) {
-        const card = screen.getByRole("article", {
+      expect(
+        within(included).getByRole("article", {
           name: copy(
             locale,
-            product.slug === "starter-pro-mobile"
-              ? "Starter Pro Mobile"
-              : "Starter Pro Fullstack",
+            fullstack
+              ? "The same accounts. The same data."
+              : "The backend comes with it.",
           ),
-        });
-        expect(within(card).getByText(product.priceLabel)).toBeVisible();
+        }),
+      ).toBeVisible();
+      expect(included).toHaveTextContent(
+        copy(
+          locale,
+          "Native registration and password recovery open in a browser on your configured backend.",
+        ),
+      );
+      if (fullstack) {
         expect(
-          within(card).getByText(copy(locale, product.priceQualifier)),
+          within(included).getByRole("article", {
+            name: copy(locale, "Your product, in the browser."),
+          }),
+        ).toHaveTextContent(
+          copy(locale, "Web billing interfaces and Stripe integration."),
+        );
+      } else {
+        expect(included).not.toHaveTextContent("Stripe");
+        expect(included).not.toHaveTextContent("Tailwind CSS");
+      }
+
+      const setup = screen.getByRole("region", {
+        name: copy(locale, "Open the source. Make it yours."),
+      });
+      expect(within(setup).getAllByRole("listitem")).toHaveLength(3);
+      expect(
+        [...setup.querySelectorAll("dt")].map((node) => node.textContent),
+      ).toEqual([
+        fullstack ? "web/" : "backend/",
+        "mobile/",
+        "README.md · LICENSE",
+        "PYCOLORS_RELEASE.json",
+      ]);
+      expect(
+        within(setup).getByRole("link", {
+          name: copy(
+            locale,
+            fullstack ? "Fullstack setup guide" : "Mobile setup guide",
+          ),
+        }),
+      ).toHaveAttribute("href", `${prefix}${product.docsHref}`);
+      expect(
+        within(setup).getByRole("link", {
+          name: copy(locale, "Configure the native source"),
+        }),
+      ).toHaveAttribute(
+        "href",
+        `${prefix}/docs/starter-pro/mobile#native-source`,
+      );
+      expect(
+        within(setup).getByRole("link", {
+          name: copy(locale, "Review native validation"),
+        }),
+      ).toHaveAttribute(
+        "href",
+        `${prefix}/docs/starter-pro/mobile#native-validation-and-distribution`,
+      );
+
+      const purchase = document.getElementById("purchase")!;
+      expect(within(purchase).getByText(product.priceLabel)).toBeVisible();
+      expect(
+        within(purchase).getByRole("button", {
+          name: buyLabel(locale, product),
+        }),
+      ).toBeEnabled();
+      for (const [label, href] of [
+        [
+          fullstack ? "Fullstack setup guide" : "Mobile setup guide",
+          product.docsHref,
+        ],
+        ["Review the license", "/license"],
+        ["Purchase support", "/orders/support"],
+      ]) {
+        expect(
+          within(purchase).getByRole("link", { name: copy(locale, label!) }),
+        ).toHaveAttribute("href", localizedHref(href!, locale));
+      }
+      const alternatives = screen.getByRole("region", {
+        name: copy(locale, "A different starting point?"),
+      });
+      expect(within(alternatives).queryByRole("button")).toBeNull();
+      const alternativeNav = within(alternatives).getByRole("navigation", {
+        name: copy(locale, "Explore other source licences"),
+      });
+      expect(
+        within(alternativeNav)
+          .getAllByRole("link")
+          .map((link) => link.getAttribute("href")),
+      ).toEqual([`${prefix}/starters/pro`, `${prefix}${other.href}`]);
+      for (const alternative of [
+        PRODUCT_DISPLAY["starter-pro"],
+        PRODUCT_DISPLAY[other.slug],
+      ]) {
+        expect(
+          within(alternativeNav).getByText(alternative.priceLabel),
         ).toBeVisible();
-        expect(
-          within(card).getByRole("button", { name: buyLabel(locale, product) }),
-        ).toBeEnabled();
-        expect(card.querySelectorAll("dt")).toHaveLength(2);
       }
       expect(
-        screen.getByText(
-          copy(
-            locale,
-            "Compatible backend source included. No Web purchase required.",
-          ),
-        ),
-      ).toBeVisible();
+        within(alternatives).getByRole("link", {
+          name: copy(locale, "Compare all starters"),
+        }),
+      ).toHaveAttribute("href", `${prefix}/starters#source-licences`);
+      const faq = screen.getByRole("region", {
+        name: copy(locale, "Before you choose your source licence."),
+      });
       expect(
-        screen.getByText(
-          copy(locale, "Shared backend source for the same accounts and data."),
-        ),
-      ).toBeVisible();
-      expect(container).not.toHaveTextContent(copy(locale, "Coming soon"));
+        faq.compareDocumentPosition(alternatives) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBeTruthy();
+      expect(container.querySelector("form")).toBeNull();
       expect((await axe(container)).violations).toEqual([]);
     },
   );
@@ -371,9 +472,7 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
         "https://checkout.example.com/pay/synthetic",
       );
       renderPage(locale);
-      const card = screen.getByRole("article", {
-        name: copy(locale, "Starter Pro Mobile"),
-      });
+      const card = document.getElementById("purchase")!;
       await act(async () =>
         fireEvent.click(
           within(card).getByRole("button", { name: buyLabel(locale, mobile) }),
@@ -426,7 +525,8 @@ describe("Starter Pro Mobile and Fullstack source offers", () => {
       name: "Before you choose your source licence.",
     });
     const rows = Array.from(faq.querySelectorAll("details"));
-    expect(rows).toHaveLength(6);
+    expect(rows).toHaveLength(7);
+    expect(within(faq).getByText("What happens after payment?")).toBeVisible();
     for (const row of rows) {
       expect(row.open).toBe(false);
       fireEvent.click(row.querySelector("summary")!);
