@@ -137,7 +137,7 @@ describe("Marketing v1.34.0 localized release contract", () => {
           status,
         })),
     );
-    expect(pending).toHaveLength(8);
+    expect(pending).toHaveLength(7);
 
     cleanup();
     localeState.value = "fr";

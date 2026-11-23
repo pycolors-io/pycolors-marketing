@@ -1,7 +1,7 @@
 ---
 title: Deployment
 description: Deploy Starter Pro with production-ready infrastructure, secure environment management, Stripe billing, authentication, and scalable SaaS delivery practices.
-lastUpdated: "2026-05-29"
+lastUpdated: "2026-11-23"
 appliesTo: Starter Pro
 ---
 
@@ -38,6 +38,11 @@ import { DocsLinks } from "@/components/docs/docs-links";
 
 Starter Pro is designed to move from local development to production without rebuilding the infrastructure layer.
 
+This guide describes the current Better Auth source. Check the README and
+release manifest included in your download before applying deployment
+configuration or migrations. Earlier archives may differ; follow their bundled
+instructions and compare the documented [product releases](/product-releases).
+
 The deployment model focuses on:
 
 - predictable infrastructure
@@ -48,7 +53,8 @@ The deployment model focuses on:
 - production-safe defaults
 
 <Callout title="Core principle">
-  Deployment should accelerate launch confidence, not become another engineering project.
+  Deployment should accelerate launch confidence, not become another engineering
+  project.
 </Callout>
 
 ### Recommended stack
@@ -58,27 +64,27 @@ The deployment model focuses on:
   tone="platform"
   items={[
     {
-      title: 'Frontend deployment',
+      title: "Frontend deployment",
       description:
-        'Deploy the Next.js application to Vercel for optimized App Router hosting, edge delivery, and fast iteration.',
+        "Deploy the Next.js application to Vercel for optimized App Router hosting, edge delivery, and fast iteration.",
       icon: Cloud,
     },
     {
-      title: 'Database',
+      title: "Database",
       description:
-        'Use PostgreSQL with managed backups, connection pooling, and production-grade persistence.',
+        "Use PostgreSQL with managed backups, connection pooling, and production-grade persistence.",
       icon: Database,
     },
     {
-      title: 'Authentication',
+      title: "Authentication",
       description:
-        'Secure sessions, OAuth providers, environment secrets, and production-safe auth configuration.',
+        "Secure sessions, OAuth providers, environment secrets, and production-safe auth configuration.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing',
+      title: "Billing",
       description:
-        'Stripe handles subscriptions, Checkout, webhooks, invoices, and billing synchronization.',
+        "Stripe handles subscriptions, Checkout, webhooks, invoices, and billing synchronization.",
       icon: CreditCard,
     },
   ]}
@@ -131,7 +137,7 @@ PostgreSQL + Stripe + Email provider
 
           <div className="mt-4 flex flex-wrap gap-2">
             <Badge variant="outline">Server actions</Badge>
-            <Badge variant="outline">Auth.js</Badge>
+            <Badge variant="outline">Better Auth</Badge>
             <Badge variant="outline">Stripe webhooks</Badge>
             <Badge variant="outline">Protected APIs</Badge>
           </div>
@@ -176,7 +182,8 @@ PostgreSQL + Stripe + Email provider
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ## Recommended deployment flow
@@ -186,30 +193,35 @@ PostgreSQL + Stripe + Email provider
     ### Configure infrastructure
 
     Provision PostgreSQL, configure production domains, and prepare environment variables.
+
   </Step>
 
   <Step>
     ### Configure authentication
 
     Set production auth secrets, OAuth providers, and trusted host configuration.
+
   </Step>
 
   <Step>
     ### Configure Stripe
 
     Create products, prices, webhooks, and production billing configuration.
+
   </Step>
 
   <Step>
     ### Deploy the application
 
     Push the application to production and validate environment configuration.
+
   </Step>
 
   <Step>
     ### Validate production flows
 
     Test authentication, billing sync, route protection, checkout, and subscription access.
+
   </Step>
 </Steps>
 
@@ -221,37 +233,38 @@ Starter Pro separates infrastructure concerns clearly.
   columns={2}
   items={[
     {
-      eyebrow: 'Infrastructure',
-      title: 'Core application variables',
+      eyebrow: "Infrastructure",
+      title: "Core application variables",
       icon: Database,
       description:
-        'These variables are required for database access, application URLs, and production hosting.',
+        "These variables are required for database access, application URLs, and production hosting.",
       items: [
-        'DATABASE_URL',
-        'NEXT_PUBLIC_APP_URL',
-        'APP_BASE_URL',
-        'production domains',
+        "DATABASE_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "APP_BASE_URL",
+        "production domains",
       ],
     },
     {
-      eyebrow: 'Authentication',
-      title: 'Security variables',
+      eyebrow: "Authentication",
+      title: "Security variables",
       icon: LockKeyhole,
-      tone: 'primary',
+      tone: "primary",
       description:
-        'Authentication and billing rely on secure secrets that should never be exposed publicly.',
+        "Authentication and billing rely on secure secrets that should never be exposed publicly.",
       items: [
-        'AUTH_SECRET',
-        'OAuth secrets',
-        'Stripe secret keys',
-        'Webhook signing secrets',
+        "AUTH_SECRET",
+        "OAuth secrets",
+        "Stripe secret keys",
+        "Webhook signing secrets",
       ],
     },
   ]}
 />
 
 <Callout type="info" title="Production rule">
-  Never expose server-side secrets to the client. Public environment variables should only contain values safe for browsers.
+  Never expose server-side secrets to the client. Public environment variables
+  should only contain values safe for browsers.
 </Callout>
 
 ## Stripe production checklist
@@ -309,7 +322,9 @@ This allows you to:
 - maintain long-term product velocity
 
 <Callout title="Why this matters">
-  Most SaaS launches slow down because infrastructure and product logic become tightly coupled. Starter Pro keeps those concerns separated from the beginning.
+  Most SaaS launches slow down because infrastructure and product logic become
+  tightly coupled. Starter Pro keeps those concerns separated from the
+  beginning.
 </Callout>
 
 ## What you should customize
@@ -340,21 +355,21 @@ You usually keep:
   tone="platform"
   items={[
     {
-      title: 'Infrastructure ready',
+      title: "Infrastructure ready",
       description:
-        'Database, domains, environment variables, and hosting infrastructure are configured correctly.',
+        "Database, domains, environment variables, and hosting infrastructure are configured correctly.",
       icon: CheckCircle2,
     },
     {
-      title: 'Billing ready',
+      title: "Billing ready",
       description:
-        'Stripe Checkout, subscriptions, Billing Portal, and webhook synchronization are validated.',
+        "Stripe Checkout, subscriptions, Billing Portal, and webhook synchronization are validated.",
       icon: CreditCard,
     },
     {
-      title: 'Launch ready',
+      title: "Launch ready",
       description:
-        'Protected routes, authentication, upgrade flows, and production delivery are stable.',
+        "Protected routes, authentication, upgrade flows, and production delivery are stable.",
       icon: Rocket,
     },
   ]}
@@ -373,31 +388,31 @@ You usually keep:
   tone="platform"
   items={[
     {
-      title: 'Architecture',
-      href: '/docs/starter-pro/architecture',
+      title: "Architecture",
+      href: "/docs/starter-pro/architecture",
       description:
-        'Understand the production-shaped architecture behind Starter Pro.',
+        "Understand the production-shaped architecture behind Starter Pro.",
       icon: Server,
     },
     {
-      title: 'Authentication',
-      href: '/docs/starter-pro/auth',
+      title: "Authentication",
+      href: "/docs/starter-pro/auth",
       description:
-        'Learn how sessions, OAuth, and protected routes are structured.',
+        "Learn how sessions, OAuth, and protected routes are structured.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing',
-      href: '/docs/starter-pro/billing',
+      title: "Billing",
+      href: "/docs/starter-pro/billing",
       description:
-        'Explore Stripe Checkout, subscriptions, and billing-aware access.',
+        "Explore Stripe Checkout, subscriptions, and billing-aware access.",
       icon: CreditCard,
     },
     {
-      title: 'Production checklist',
-      href: '/docs/starter-pro/production-checklist',
+      title: "Production checklist",
+      href: "/docs/starter-pro/production-checklist",
       description:
-        'Validate launch readiness before shipping your SaaS publicly.',
+        "Validate launch readiness before shipping your SaaS publicly.",
       icon: Sparkles,
     },
   ]}

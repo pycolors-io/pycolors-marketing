@@ -7966,6 +7966,14 @@
     "m4776f1bf": "Source code and setup guides. Hosting, provider accounts and native distribution are configured by you.",
     "m3cadad": "Which native journeys are included?",
     "m920e61bd": "The native app supports verified email/password sign-in, session restoration, workspace selection, project creation, project details, task lists and account information. Registration and password recovery open in the browser on your configured backend. Native social login, native signup, task editing and offline replay are not included in these journeys.",
+    "m8a97a4de": "Next.js SaaS source with workspaces, project tasks, Better Auth and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
+    "m91025aba": "These pages describe the current Starter Pro source. Follow the README and release manifest included in your download for its version and setup instructions; earlier archives may differ.",
+    "mca3bda60": "Compare product versions",
+    "ma3ddcf35": "Starter Pro buyer delivery alignment",
+    "m8ef468bf": "Keep downloadable source and setup guidance aligned with the workspace experience. The hosted demo and product tour are available; the downloaded manifest identifies the version supplied to each purchase.",
+    "m593eea68": "Explore the hosted Starter Pro demo in a private, temporary workspace. Use the product tour and documentation to evaluate the interface before purchase.",
+    "m2558d9ee": "Purchase-to-first-run video tutorial",
+    "mb8770221": "The Starter Pro product tour is available. A dedicated tutorial covering purchase, download and the first local run remains under consideration.",
     "m35394740": "Explore components",
     "m25e4b36b": "Try {value0} in UI Explorer"
   }

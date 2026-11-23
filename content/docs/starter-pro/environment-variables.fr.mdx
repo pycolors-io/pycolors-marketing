@@ -4,7 +4,7 @@ description: Configurez Starter Pro en toute sécurité avec des variables
   d'environnement prêtes pour la production pour l'authentification, la
   facturation, l'accès à la base de données, la livraison de courriels et
   l'infrastructure de déploiement.
-lastUpdated: "2026-05-29"
+lastUpdated: "2026-11-23"
 appliesTo: Starter Pro
 ---
 
@@ -38,6 +38,11 @@ import { DocsLinks } from "@/components/docs/docs-links";
 ## Vue d’ensemble [#overview]
 
 Starter Pro utilise des variables d'environnement pour séparer les problèmes d'infrastructure, d'authentification, de facturation, de livraison des e-mails et de déploiement en toute sécurité.
+
+Ce guide décrit le code source actuel. Utilisez le `.env.example` et le README
+fournis avec votre archive téléchargée, puis vérifiez son manifeste avant de
+modifier la configuration. Les archives antérieures peuvent différer ; comparez
+les versions documentées dans les [versions produits](/product-releases).
 
 Ceci garde :
 
@@ -236,7 +241,9 @@ Pratiques de production recommandées :
 
 ## Variables d'authentification [#authentication-variables]
 
-Starter Pro utilise Auth.js pour l'authentification.
+Le code source actuel de Starter Pro utilise Better Auth pour l'authentification.
+Gardez les noms de variables `AUTH_*` documentés dans le `.env.example` et le
+README fournis avec votre archive.
 
 ```text title=".env.local"
 AUTH_SECRET=

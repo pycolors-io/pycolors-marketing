@@ -1,7 +1,7 @@
 ---
 title: Auth system (PRO)
 description: Production-ready authentication with real flows, OAuth, session handling, and security foundations for real SaaS products.
-lastUpdated: "2026-05-18"
+lastUpdated: "2026-11-23"
 appliesTo: Starter Pro
 ---
 
@@ -33,6 +33,12 @@ import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 </div>
 
 ## Authentication that actually ships
+
+This guide describes the current Starter Pro source, which uses **self-hosted
+Better Auth** with Prisma-backed database sessions. The README and release
+manifest included in your download identify the implementation supplied with
+your purchase; earlier archives may differ. Compare the documented versions in
+[product releases](/product-releases).
 
 Starter Free gives you **auth screens and UX states**.
 
@@ -213,14 +219,15 @@ Starter Pro auth is designed around the structures a serious SaaS usually needs.
 
 Typical auth responsibilities include:
 
-| Area              | Purpose                                            |
-| ----------------- | -------------------------------------------------- |
-| User              | Identity, email, profile image, verification state |
-| Account           | OAuth provider accounts and account linking        |
-| Session           | Active user sessions                               |
-| VerificationToken | Auth.js-compatible verification flows              |
-| UserToken         | Email verification and password reset lifecycle    |
-| AuthAttempt       | Audit and rate-limiting foundation                 |
+| Area              | Purpose                                                      |
+| ----------------- | ------------------------------------------------------------ |
+| User              | Identity, email, profile image, verification state           |
+| Account           | Provider identities, credential accounts and account linking |
+| Session           | Active, revocable database sessions                          |
+| Verification      | Better Auth verification records                             |
+| VerificationToken | Legacy Auth.js verification model retained in the schema     |
+| UserToken         | Email verification and password reset lifecycle              |
+| AuthAttempt       | Audit and rate-limiting foundation                           |
 
 <Callout type="info" title="Why this matters">
   Production auth is not only about signing in. It is about storing enough state
