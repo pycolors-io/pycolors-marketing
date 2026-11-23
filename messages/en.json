@@ -7965,6 +7965,8 @@
     "m6a9b0f0f": "Build across Web and Mobile.",
     "m4776f1bf": "Source code and setup guides. Hosting, provider accounts and native distribution are configured by you.",
     "m3cadad": "Which native journeys are included?",
-    "m920e61bd": "The native app supports verified email/password sign-in, session restoration, workspace selection, project creation, project details, task lists and account information. Registration and password recovery open in the browser on your configured backend. Native social login, native signup, task editing and offline replay are not included in these journeys."
+    "m920e61bd": "The native app supports verified email/password sign-in, session restoration, workspace selection, project creation, project details, task lists and account information. Registration and password recovery open in the browser on your configured backend. Native social login, native signup, task editing and offline replay are not included in these journeys.",
+    "m35394740": "Explore components",
+    "m25e4b36b": "Try {value0} in UI Explorer"
   }
 }

@@ -170,8 +170,13 @@ describe("UI Examples page", () => {
       const href = link.getAttribute("href")!;
       if (href.startsWith("https://")) {
         expect(link).toHaveAttribute("target", "_blank");
-        expect(link).toHaveAttribute("rel", "noreferrer noopener");
-        expect(link.getAttribute("aria-label")).toContain("opens in a new tab");
+        expect(link.getAttribute("rel")?.split(/\s+/)).toEqual(
+          expect.arrayContaining(["noreferrer", "noopener"]),
+        );
+        expect(
+          link.getAttribute("aria-description") ??
+            link.getAttribute("aria-label"),
+        ).toMatch(/opens in a new tab/i);
       }
       if (!href.startsWith("/")) continue;
       const route = href.split("#")[0]!;

@@ -7965,6 +7965,8 @@
     "m6a9b0f0f": "Créez pour le Web et le Mobile.",
     "m4776f1bf": "Code source et guides d’installation. Vous configurez l’hébergement, les comptes des services et la distribution native.",
     "m3cadad": "Quels parcours natifs sont inclus ?",
-    "m920e61bd": "L’application native propose la connexion par email vérifié et mot de passe, la restauration de session, le choix d’un espace de travail, la création de projets, les détails des projets, les listes de tâches et les informations du compte. L’inscription et la récupération du mot de passe s’ouvrent dans le navigateur sur votre backend configuré. La connexion sociale native, l’inscription native, la modification des tâches et la reprise hors ligne ne font pas partie de ces parcours."
+    "m920e61bd": "L’application native propose la connexion par email vérifié et mot de passe, la restauration de session, le choix d’un espace de travail, la création de projets, les détails des projets, les listes de tâches et les informations du compte. L’inscription et la récupération du mot de passe s’ouvrent dans le navigateur sur votre backend configuré. La connexion sociale native, l’inscription native, la modification des tâches et la reprise hors ligne ne font pas partie de ces parcours.",
+    "m35394740": "Explorer les composants",
+    "m25e4b36b": "Essayer {value0} dans UI Explorer"
   }
 }
