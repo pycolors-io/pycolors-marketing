@@ -2,7 +2,7 @@
 title: Authentification (PRO)
 description: Authentification prête pour la production avec des flux réels,
   OAuth, gestion de session et bases de sécurité pour de vrais produits SaaS.
-lastUpdated: "2026-05-18"
+lastUpdated: "2026-11-23"
 appliesTo: Starter Pro
 ---
 
@@ -34,6 +34,12 @@ import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 </div>
 
 ## Authentification qui expédie réellement [#authentication-that-actually-ships]
+
+Ce guide décrit le code source actuel de Starter Pro, qui utilise **Better Auth
+auto-hébergé** avec des sessions en base de données via Prisma. Le README et le
+manifeste inclus dans votre téléchargement identifient l'implémentation fournie
+avec votre achat ; les archives antérieures peuvent différer. Comparez les
+versions documentées dans les [versions produits](/product-releases).
 
 Starter Free vous donne **auth écrans et états UX**.
 
@@ -216,14 +222,15 @@ Starter Pro auth est conçu autour des structures dont un SaaS sérieux a géné
 
 Les responsabilités typiques de l'auth comprennent:
 
-| Zone              | Objet                                                                     |
-| ----------------- | ------------------------------------------------------------------------- |
-| Utilisateur       | Identité, email, image de profil, état de vérification                    |
-| Compte            | Comptes fournisseurs OAuth et liens de compte                             |
-| Session           | Sessions utilisateur actives                                              |
-| VerificationToken | Flux de vérification compatibles avec Auth.js                             |
-| UserToken         | Cycle de vie de la vérification et de la réinitialisation du mot de passe |
-| AuthAttempt       | Audit et base de limitation de taux                                       |
+| Zone              | Objet                                                                           |
+| ----------------- | ------------------------------------------------------------------------------- |
+| Utilisateur       | Identité, email, image de profil, état de vérification                          |
+| Compte            | Identités des fournisseurs, comptes avec mot de passe et association de comptes |
+| Session           | Sessions actives et révocables en base de données                               |
+| Verification      | Enregistrements de vérification de Better Auth                                  |
+| VerificationToken | Ancien modèle de vérification Auth.js conservé dans le schéma                   |
+| UserToken         | Cycle de vie de la vérification et de la réinitialisation du mot de passe       |
+| AuthAttempt       | Audit et base de limitation de taux                                             |
 
 <Callout type="info" title="Pourquoi cela compte">
   Production auth ne consiste pas seulement à se connecter. Il s'agit de stocker

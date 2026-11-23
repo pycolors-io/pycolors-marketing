@@ -7965,6 +7965,14 @@
     "m6a9b0f0f": "Créez pour le Web et le Mobile.",
     "m4776f1bf": "Code source et guides d’installation. Vous configurez l’hébergement, les comptes des services et la distribution native.",
     "m3cadad": "Quels parcours natifs sont inclus ?",
-    "m920e61bd": "L’application native propose la connexion par email vérifié et mot de passe, la restauration de session, le choix d’un espace de travail, la création de projets, les détails des projets, les listes de tâches et les informations du compte. L’inscription et la récupération du mot de passe s’ouvrent dans le navigateur sur votre backend configuré. La connexion sociale native, l’inscription native, la modification des tâches et la reprise hors ligne ne font pas partie de ces parcours."
+    "m920e61bd": "L’application native propose la connexion par email vérifié et mot de passe, la restauration de session, le choix d’un espace de travail, la création de projets, les détails des projets, les listes de tâches et les informations du compte. L’inscription et la récupération du mot de passe s’ouvrent dans le navigateur sur votre backend configuré. La connexion sociale native, l’inscription native, la modification des tâches et la reprise hors ligne ne font pas partie de ces parcours.",
+    "m8a97a4de": "Code source SaaS Next.js avec espaces de travail, tâches de projet, Better Auth et Stripe, validation isolée du ZIP, contrôles opérationnels et guides acheteur.",
+    "m91025aba": "Ces pages décrivent le code source actuel de Starter Pro. Consultez le README et le manifeste de version inclus dans votre téléchargement pour connaître sa version et ses instructions d’installation ; les archives antérieures peuvent différer.",
+    "mca3bda60": "Comparer les versions des produits",
+    "ma3ddcf35": "Starter Pro : cohérence de la livraison",
+    "m8ef468bf": "Garder le code téléchargeable et les instructions d’installation en phase avec l’espace de travail. La démo hébergée et le tour produit sont disponibles ; le manifeste téléchargé indique la version fournie avec chaque achat.",
+    "m593eea68": "Explorez la démo hébergée de Starter Pro dans un espace de travail privé et temporaire. Utilisez le tour produit et la documentation pour évaluer l’interface avant l’achat.",
+    "m2558d9ee": "De l’achat au premier lancement : tutoriel vidéo",
+    "mb8770221": "Le tour produit de Starter Pro est disponible. Un tutoriel dédié à l’achat, au téléchargement et au premier lancement local reste à l’étude."
   }
 }

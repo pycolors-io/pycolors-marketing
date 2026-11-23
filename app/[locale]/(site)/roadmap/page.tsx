@@ -249,9 +249,9 @@ const items: RoadmapItem[] = [
     href: "/changelog",
   },
   {
-    title: "Starter Pro persistent workspace and isolated demo",
+    title: "Starter Pro buyer delivery alignment",
     description:
-      "Prepare a more complete Starter Pro evaluation, with projects, team collaboration and a useful workspace overview. A hosted demo and matching buyer delivery remain in preparation.",
+      "Keep downloadable source and setup guidance aligned with the workspace experience. The hosted demo and product tour are available; the downloaded manifest identifies the version supplied to each purchase.",
     status: "Now",
     milestone: "Oct 2026",
     tags: ["Starter Pro", "Trust"],
@@ -997,8 +997,8 @@ const items: RoadmapItem[] = [
   {
     title: "Starter Pro hosted demo",
     description:
-      "Publish a hosted Starter Pro demo so buyers can evaluate the production-shaped product surface before purchase.",
-    status: "Next",
+      "Explore the hosted Starter Pro demo in a private, temporary workspace. Use the product tour and documentation to evaluate the interface before purchase.",
+    status: "Shipped",
     milestone: "Jun 2026",
     tags: ["Starter PRO", "Demo", "Trust"],
     href: "/starters/pro",
@@ -1058,9 +1058,9 @@ const items: RoadmapItem[] = [
     href: "/changelog",
   },
   {
-    title: "Starter Pro video walkthrough",
+    title: "Purchase-to-first-run video tutorial",
     description:
-      "Publish a concise walkthrough from purchase to first local run so buyers understand delivery, setup, and next steps faster.",
+      "The Starter Pro product tour is available. A dedicated tutorial covering purchase, download and the first local run remains under consideration.",
     status: "Next",
     milestone: "Jun 2026",
     tags: ["Starter PRO", "Trust", "Onboarding"],

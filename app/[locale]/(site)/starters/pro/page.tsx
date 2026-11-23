@@ -67,7 +67,7 @@ import { SiteText } from "@/components/site-text";
 const metadata: Metadata = {
   title: "Next.js SaaS Starter with Auth & Billing",
   description:
-    "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
+    "Next.js SaaS source with workspaces, project tasks, Better Auth and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
   alternates: {
     canonical: "/starters/pro",
     languages: localizedAlternates("starterPro", "en").languages,
@@ -78,7 +78,7 @@ const metadata: Metadata = {
     alternateLocale: "fr_FR",
     title: "Next.js SaaS Starter with Auth & Billing — PyColors",
     description:
-      "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
+      "Next.js SaaS source with workspaces, project tasks, Better Auth and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
     url: "/starters/pro",
     siteName: "PyColors",
     type: "website",
@@ -89,7 +89,7 @@ const metadata: Metadata = {
     card: "summary_large_image",
     title: "Next.js SaaS Starter with Auth & Billing — PyColors",
     description:
-      "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
+      "Next.js SaaS source with workspaces, project tasks, Better Auth and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
     images: ["/seo/twitter-main.png"],
   },
 };
@@ -100,7 +100,7 @@ const starterProJsonLd = generateProductOfferJsonLd({
   product: PRODUCT_DISPLAY["starter-pro"],
   canonicalPath: "/starters/pro",
   description:
-    "Next.js SaaS source with workspaces, project tasks, Auth.js and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
+    "Next.js SaaS source with workspaces, project tasks, Better Auth and Stripe, plus isolated ZIP validation, operational checks and buyer guides.",
 });
 
 const INTERNAL = {
@@ -111,6 +111,7 @@ const INTERNAL = {
   docsGettingStarted: "/docs/starter-pro/getting-started",
   docsWhatIsIncluded: "/docs/starter-pro/what-is-included",
   docsDelivery: "/docs/starter-pro/delivery",
+  productReleases: "/product-releases",
   docsPurchaseRecovery: "/docs/starter-pro/purchase-recovery",
   docsBillingTesting: "/docs/starter-pro/billing-testing",
   docsProductionChecklist: "/docs/starter-pro/production-checklist",
@@ -133,7 +134,7 @@ const stackItems = [
   "React",
   "TypeScript",
   "Tailwind CSS",
-  "Auth.js",
+  "Better Auth",
   "Prisma",
   "PostgreSQL",
   "Stripe",
@@ -362,10 +363,10 @@ const includedGroups = [
     tone: "neutral",
     artwork: "/images/starters/pro/concepts/recovery-loop-test-v1.png",
     icon: Lock,
-    technology: "Auth.js",
+    technology: "Better Auth",
     flow: [
       { title: "Sign in", detail: "Email or OAuth", icon: KeyRound },
-      { title: "Session", detail: "Auth.js", icon: UserRound },
+      { title: "Session", detail: "Better Auth", icon: UserRound },
       { title: "Access", detail: "Protected routes", icon: ShieldCheck },
     ],
     setupNote: "Configure your OAuth credentials and email sender.",
@@ -765,7 +766,7 @@ export default function StarterProPage() {
                 </div>
                 <div className={styles.heroConnections}>
                   {[
-                    { label: "Auth.js", icon: Lock },
+                    { label: "Better Auth", icon: Lock },
                     { label: "Prisma", icon: Database },
                     { label: "Stripe", icon: CreditCard },
                   ].map(({ label, icon: Icon }) => (
@@ -1298,6 +1299,17 @@ export default function StarterProPage() {
                   ),
                 )}
               </div>
+            </div>
+            <div className="border-t border-border-subtle px-6 py-5 sm:px-8">
+              <p className="text-sm leading-7 text-muted-foreground">
+                {tSite(
+                  "These pages describe the current Starter Pro source. Follow the README and release manifest included in your download for its version and setup instructions; earlier archives may differ.",
+                )}
+              </p>
+              <Link href={INTERNAL.productReleases} className={textLink}>
+                {tSite("Compare product versions")}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </Link>
             </div>
             <div
               className={`${styles.purchaseFooter} flex flex-col gap-3 border-t border-border-subtle px-6 py-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between`}

@@ -3,7 +3,7 @@ title: Déploiement
 description: Déployez Starter Pro avec une infrastructure prête pour la
   production, une gestion d'environnement sécurisée, la facturation Stripe,
   l'authentification et des pratiques de livraison SaaS évolutives.
-lastUpdated: "2026-05-29"
+lastUpdated: "2026-11-23"
 appliesTo: Starter Pro
 ---
 
@@ -39,6 +39,12 @@ import { DocsLinks } from "@/components/docs/docs-links";
 ## Déploiement prêt pour la production [#production-ready-deployment]
 
 Starter Pro est conçu pour passer du développement local à la production sans reconstruire la couche d'infrastructure.
+
+Ce guide décrit le code source actuel utilisant Better Auth. Vérifiez le README
+et le manifeste inclus dans votre téléchargement avant d'appliquer une
+configuration de déploiement ou des migrations. Les archives antérieures peuvent
+différer ; suivez leurs instructions et comparez les
+[versions produits](/product-releases) documentées.
 
 Le modèle de déploiement se concentre sur :
 
@@ -135,7 +141,7 @@ PostgreSQL + Stripe + Email provider
 
           <div className="mt-4 flex flex-wrap gap-2">
             <Badge variant="plan">Server actions</Badge>
-            <Badge variant="plan">Auth.js</Badge>
+            <Badge variant="plan">Better Auth</Badge>
             <Badge variant="plan">Stripe webhooks</Badge>
             <Badge variant="plan">Protected APIs</Badge>
           </div>

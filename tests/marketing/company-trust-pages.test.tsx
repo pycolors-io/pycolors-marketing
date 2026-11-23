@@ -257,7 +257,7 @@ describe("company and trust pages", () => {
     expect(totals).toHaveLength(4);
     ["Now", "Next", "Later", "Shipped"].forEach((status, index) => {
       expect(totals[index]).toHaveTextContent(status);
-      expect(totals[index]).toHaveTextContent(String([4, 4, 0, 94][index]));
+      expect(totals[index]).toHaveTextContent(String([4, 3, 0, 95][index]));
       const href = within(totals[index]!)
         .getByRole("link")
         .getAttribute("href")!;
@@ -295,7 +295,7 @@ describe("company and trust pages", () => {
     const historyRows = groups.flatMap((name) =>
       Array.from(screen.getByRole("list", { name }).children),
     );
-    expect(historyRows).toHaveLength(94);
+    expect(historyRows).toHaveLength(95);
     historyRows.forEach((row) =>
       expect(
         within(row as HTMLElement).getByText("Shipped", { exact: true }),
@@ -324,6 +324,12 @@ describe("company and trust pages", () => {
       expect(within(card).getByText(status, { exact: true })).toBeVisible();
       expect(within(card).queryByText("Shipped", { exact: true })).toBeNull();
     }
+    const hostedDemo = within(screen.getByRole("list", { name: "June 2026" }))
+      .getByRole("heading", { level: 3, name: "Starter Pro hosted demo" })
+      .closest("li")!;
+    expect(
+      within(hostedDemo).getByText("Shipped", { exact: true }),
+    ).toBeVisible();
     expect(
       screen.getByText(/Package-based distribution remains planned/),
     ).toBeVisible();
@@ -434,7 +440,7 @@ const roadmapTitles = [
   "PyColors Marketing v1.32.0",
   "PyColors Marketing v1.31.0",
   "PyColors Marketing v1.30.0",
-  "Starter Pro persistent workspace and isolated demo",
+  "Starter Pro buyer delivery alignment",
   "Ship v1.0 — UI Core",
   "Docs quality pass",
   "Release hygiene",
@@ -483,7 +489,7 @@ const roadmapTitles = [
   "Starter Pro conversion instrumentation",
   "Starter Pro buyer trust and purchase-flow clarity",
   "Starter Pro hosted demo",
-  "Starter Pro video walkthrough",
+  "Purchase-to-first-run video tutorial",
   "Traffic-readiness trust cleanup",
   "Starter Pro demo visibility and conversion proof",
   "@pycolors/ui v1.1.2 accessibility hardening",
@@ -533,10 +539,9 @@ const roadmapTitles = [
   "Documentation-to-product conversion loop",
 ] as const;
 const pendingRoadmap = [
-  ["Starter Pro persistent workspace and isolated demo", "Now"],
+  ["Starter Pro buyer delivery alignment", "Now"],
   ["Authority engineering content engine", "Now"],
-  ["Starter Pro hosted demo", "Next"],
-  ["Starter Pro video walkthrough", "Next"],
+  ["Purchase-to-first-run video tutorial", "Next"],
   ["Template #2", "Next"],
   ["@pycolors/blocks", "Next"],
   ["Starter Pro sales proof and trust content", "Now"],

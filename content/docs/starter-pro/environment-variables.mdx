@@ -1,7 +1,7 @@
 ---
 title: Environment Variables
 description: Configure Starter Pro securely with production-ready environment variables for authentication, billing, database access, email delivery, and deployment infrastructure.
-lastUpdated: "2026-05-29"
+lastUpdated: "2026-11-23"
 appliesTo: Starter Pro
 ---
 
@@ -36,6 +36,11 @@ import { DocsLinks } from "@/components/docs/docs-links";
 
 Starter Pro uses environment variables to separate infrastructure, authentication, billing, email delivery, and deployment concerns safely.
 
+This guide describes the current source. Use the `.env.example` and README
+supplied with your downloaded archive, and check its release manifest before
+applying configuration changes. Earlier archives may differ; compare the
+documented versions in [product releases](/product-releases).
+
 This keeps:
 
 - secrets outside the repository
@@ -45,7 +50,8 @@ This keeps:
 - authentication production-safe
 
 <Callout title="Core principle">
-  Environment variables define infrastructure boundaries between your codebase and production systems.
+  Environment variables define infrastructure boundaries between your codebase
+  and production systems.
 </Callout>
 
 ## Production mindset
@@ -67,21 +73,21 @@ That means environment variables should support:
   tone="platform"
   items={[
     {
-      title: 'Secure by default',
+      title: "Secure by default",
       description:
-        'Sensitive infrastructure secrets remain server-side and never reach the browser.',
+        "Sensitive infrastructure secrets remain server-side and never reach the browser.",
       icon: ShieldCheck,
     },
     {
-      title: 'Deployment ready',
+      title: "Deployment ready",
       description:
-        'Variables are structured for Vercel, CI pipelines, staging, and production environments.',
+        "Variables are structured for Vercel, CI pipelines, staging, and production environments.",
       icon: Rocket,
     },
     {
-      title: 'Infrastructure separation',
+      title: "Infrastructure separation",
       description:
-        'Database, auth, billing, and email systems remain isolated and configurable.',
+        "Database, auth, billing, and email systems remain isolated and configurable.",
       icon: Server,
     },
   ]}
@@ -163,7 +169,8 @@ That means environment variables should support:
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ### Application variables
@@ -179,29 +186,21 @@ APP_BASE_URL=http://localhost:3000
   columns={2}
   items={[
     {
-      eyebrow: 'Frontend',
-      title: 'NEXT_PUBLIC_APP_URL',
+      eyebrow: "Frontend",
+      title: "NEXT_PUBLIC_APP_URL",
       icon: Globe,
       description:
-        'Public URL exposed to the browser for redirects, navigation, and frontend references.',
-      items: [
-        'safe for frontend',
-        'used client-side',
-        'production domain',
-      ],
+        "Public URL exposed to the browser for redirects, navigation, and frontend references.",
+      items: ["safe for frontend", "used client-side", "production domain"],
     },
     {
-      eyebrow: 'Server',
-      title: 'APP_BASE_URL',
+      eyebrow: "Server",
+      title: "APP_BASE_URL",
       icon: Server,
-      tone: 'primary',
+      tone: "primary",
       description:
-        'Server-side application URL used internally for backend flows and protected infrastructure.',
-      items: [
-        'server-only usage',
-        'auth redirects',
-        'internal references',
-      ],
+        "Server-side application URL used internally for backend flows and protected infrastructure.",
+      items: ["server-only usage", "auth redirects", "internal references"],
     },
   ]}
 />
@@ -223,12 +222,15 @@ Recommended production practices:
 - restricted database access
 
 <Callout type="info" title="Production rule">
-  Never share production database credentials across local environments or public repositories.
+  Never share production database credentials across local environments or
+  public repositories.
 </Callout>
 
 ## Authentication variables
 
-Starter Pro uses Auth.js for authentication.
+The current Starter Pro source uses Better Auth for authentication. Keep the
+`AUTH_*` variable names documented in the `.env.example` and README supplied
+with your archive.
 
 ```text title=".env.local"
 AUTH_SECRET=
@@ -241,17 +243,17 @@ AUTH_TRUST_HOST=true
 
 ### Required
 
-| Variable | Purpose |
-| --- | --- |
+| Variable      | Purpose                                  |
+| ------------- | ---------------------------------------- |
 | `AUTH_SECRET` | Signs sessions and authentication tokens |
 
 ### Optional providers
 
-| Variable | Purpose |
-| --- | --- |
-| `AUTH_GOOGLE_ID` | Google OAuth client ID |
+| Variable             | Purpose                    |
+| -------------------- | -------------------------- |
+| `AUTH_GOOGLE_ID`     | Google OAuth client ID     |
 | `AUTH_GOOGLE_SECRET` | Google OAuth client secret |
-| `AUTH_GITHUB_ID` | GitHub OAuth client ID |
+| `AUTH_GITHUB_ID`     | GitHub OAuth client ID     |
 | `AUTH_GITHUB_SECRET` | GitHub OAuth client secret |
 
 ### Notes
@@ -281,15 +283,15 @@ Email flows include:
   tone="platform"
   items={[
     {
-      title: 'Verification flows',
+      title: "Verification flows",
       description:
-        'Email verification helps secure account ownership and onboarding.',
+        "Email verification helps secure account ownership and onboarding.",
       icon: Mail,
     },
     {
-      title: 'Recovery flows',
+      title: "Recovery flows",
       description:
-        'Password reset and account recovery flows rely on secure email delivery.',
+        "Password reset and account recovery flows rely on secure email delivery.",
       icon: KeyRound,
     },
   ]}
@@ -310,13 +312,13 @@ STRIPE_PRICE_PRO_MONTHLY=
 
 ### Core billing variables
 
-| Variable | Purpose |
-| --- | --- |
-| `STRIPE_SECRET_KEY` | Server-side Stripe access |
+| Variable                             | Purpose                     |
+| ------------------------------------ | --------------------------- |
+| `STRIPE_SECRET_KEY`                  | Server-side Stripe access   |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Frontend Stripe integration |
-| `STRIPE_WEBHOOK_SECRET` | Webhook validation |
-| `STRIPE_PRODUCT_PRO` | Stripe Product ID |
-| `STRIPE_PRICE_PRO_MONTHLY` | Stripe Price ID |
+| `STRIPE_WEBHOOK_SECRET`              | Webhook validation          |
+| `STRIPE_PRODUCT_PRO`                 | Stripe Product ID           |
+| `STRIPE_PRICE_PRO_MONTHLY`           | Stripe Price ID             |
 
 ### Important rules
 
@@ -330,7 +332,8 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ```
 
 <Callout title="Billing principle">
-  Billing reliability depends more on correct Stripe configuration than on frontend implementation.
+  Billing reliability depends more on correct Stripe configuration than on
+  frontend implementation.
 </Callout>
 
 ## Seed variables
@@ -355,29 +358,21 @@ These variables allow:
   columns={2}
   items={[
     {
-      eyebrow: 'Development',
-      title: 'Local environment',
+      eyebrow: "Development",
+      title: "Local environment",
       icon: Sparkles,
       description:
-        'Use test Stripe keys, local PostgreSQL, and development-safe auth configuration.',
-      items: [
-        'test Stripe mode',
-        'local database',
-        'seed fixtures',
-      ],
+        "Use test Stripe keys, local PostgreSQL, and development-safe auth configuration.",
+      items: ["test Stripe mode", "local database", "seed fixtures"],
     },
     {
-      eyebrow: 'Production',
-      title: 'Production environment',
+      eyebrow: "Production",
+      title: "Production environment",
       icon: ShieldCheck,
-      tone: 'primary',
+      tone: "primary",
       description:
-        'Use live Stripe infrastructure, secure secrets, HTTPS domains, and production-safe deployment settings.',
-      items: [
-        'live Stripe keys',
-        'managed database',
-        'HTTPS domains',
-      ],
+        "Use live Stripe infrastructure, secure secrets, HTTPS domains, and production-safe deployment settings.",
+      items: ["live Stripe keys", "managed database", "HTTPS domains"],
     },
   ]}
 />
@@ -438,7 +433,8 @@ Avoid these deployment mistakes:
 - sharing production credentials
 
 <Callout type="info" title="Security rule">
-  Environment variables are part of your infrastructure security model, not only application configuration.
+  Environment variables are part of your infrastructure security model, not only
+  application configuration.
 </Callout>
 
 ### Recommended workflow
@@ -465,31 +461,30 @@ Avoid these deployment mistakes:
   tone="platform"
   items={[
     {
-      title: 'Deployment',
-      href: '/docs/starter-pro/deployment',
+      title: "Deployment",
+      href: "/docs/starter-pro/deployment",
       description:
-        'Deploy Starter Pro with production-ready infrastructure and billing setup.',
+        "Deploy Starter Pro with production-ready infrastructure and billing setup.",
       icon: Rocket,
     },
     {
-      title: 'Authentication',
-      href: '/docs/starter-pro/auth',
+      title: "Authentication",
+      href: "/docs/starter-pro/auth",
       description:
-        'Understand sessions, OAuth, verification, and protected access.',
+        "Understand sessions, OAuth, verification, and protected access.",
       icon: LockKeyhole,
     },
     {
-      title: 'Billing',
-      href: '/docs/starter-pro/billing',
+      title: "Billing",
+      href: "/docs/starter-pro/billing",
       description:
-        'Explore Stripe Checkout, subscriptions, and billing synchronization.',
+        "Explore Stripe Checkout, subscriptions, and billing synchronization.",
       icon: CreditCard,
     },
     {
-      title: 'Architecture',
-      href: '/docs/starter-pro/architecture',
-      description:
-        'Review the production-shaped structure behind Starter Pro.',
+      title: "Architecture",
+      href: "/docs/starter-pro/architecture",
+      description: "Review the production-shaped structure behind Starter Pro.",
       icon: Database,
     },
   ]}
