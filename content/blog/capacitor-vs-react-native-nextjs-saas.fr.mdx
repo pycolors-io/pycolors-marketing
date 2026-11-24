@@ -1,6 +1,6 @@
 ---
 title: "Capacitor vs React Native : quel choix pour un SaaS Next.js ?"
-description: "PWA, Capacitor ou React Native pour un SaaS Next.js : comparez les compromis et découvrez pourquoi PyColors a choisi React Native avec Expo."
+description: "PWA, Capacitor ou React Native pour un SaaS Next.js : comparez les compromis et découvrez pourquoi j’ai choisi React Native avec Expo pour PyColors."
 author: Patrice Parny
 date: "2026-11-08"
 category: SaaS Architecture
@@ -33,9 +33,9 @@ contraintes qu’une application utilisée toute la journée pour scanner,
 manipuler des listes et naviguer par gestes. Partez de ces parcours, puis
 évaluez la réutilisation du code, l’authentification et la maintenance.
 
-Chez PyColors, nous avons retenu **React Native avec Expo pour Starter Pro Mobile**.
-La [section consacrée à ce choix](#pycolors-choice) explique comment nous
-associons une interface mobile dédiée au socle serveur de Starter Pro.
+Pour PyColors, j’ai choisi **React Native avec Expo pour Starter Pro Mobile**.
+La [section consacrée à ce choix](#pycolors-choice) explique comment je relie
+une interface mobile dédiée au socle serveur de Starter Pro.
 
 ## Commencer par la situation du produit [#first-decision]
 
@@ -149,16 +149,16 @@ production. Le faire pointer vers le SaaS hébergé ne constitue donc pas une
 stratégie de distribution validée. Vérifiez le
 [contrat de configuration Capacitor](https://capacitorjs.com/docs/config).
 
-## Pourquoi PyColors a choisi React Native [#pycolors-choice]
+## Pourquoi j’ai choisi React Native pour PyColors [#pycolors-choice]
 
-**Nous avons retenu React Native avec Expo pour Starter Pro Mobile.** Notre
-priorité est de proposer une interface dédiée à iOS et Android, tout en
+**J’ai choisi React Native avec Expo pour Starter Pro Mobile.** Mon objectif
+est de proposer une interface dédiée à iOS et Android, tout en
 conservant les fondations de Starter Pro Web. Ce choix porte sur la manière de
 construire les parcours mobiles et de les faire évoluer avec le produit.
 
 **Une présentation adaptée au téléphone.** L’application mobile dispose de ses
 propres écrans et d’une navigation avec Expo Router. React Native permet de
-les composer avec des vues natives ; nous pouvons ainsi travailler la
+les composer avec des vues natives ; je peux ainsi travailler la
 navigation, les formulaires et les interactions dans leur contexte mobile.
 Les zones sûres, le clavier, le retour Android et l’accessibilité restent des
 comportements à concevoir et à vérifier. Expo fournit le cadre applicatif et
@@ -174,7 +174,7 @@ mobile ne demande pas de recopier les règles d’accès dans une seconde
 implémentation métier. Cette organisation est décrite dans la
 [documentation Web et Mobile avec backend partagé](/docs/starter-pro/fullstack).
 
-**Un partage de code ciblé.** Nous réutilisons les contrats de données et le
+**Un partage de code ciblé.** Je réutilise les contrats de données et le
 client API compatibles avec les deux environnements. Les tokens adaptés au
 natif prolongent l’identité visuelle de PyColors. Les écrans et les
 adaptateurs de session restent propres à leur plateforme ; les composants
@@ -182,16 +182,16 @@ HTML, CSS et Radix de `@pycolors/ui` ne deviennent pas des composants React
 Native. Cette frontière permet de faire évoluer les présentations tout en
 gardant des échanges cohérents avec le serveur.
 
-Le compromis est explicite : nous maintenons une interface supplémentaire,
+Le compromis est explicite : je maintiens une interface supplémentaire,
 ses dépendances et ses intégrations. Il faut valider les parcours sur iOS et
 Android, gérer la compatibilité du client avec l’API, puis construire, signer
 et distribuer les applications. Le choix du framework ne prouve ni un gain
-de performance ni la validation d’un produit sur appareil. Nous ne présentons
+de performance ni la validation d’un produit sur appareil. Je ne présente
 ici aucun benchmark comparatif ou gain de coût mesuré.
 
 Capacitor reste pertinent lorsqu’une interface web existante répond déjà aux
 usages mobiles et que sa réutilisation est prioritaire. Il donne lui aussi
-accès aux capacités natives par ses plugins. Pour PyColors, nous privilégions
+accès aux capacités natives par ses plugins. Pour PyColors, je privilégie
 une couche de présentation mobile dédiée, reliée au même socle applicatif.
 Le bon arbitrage pour une autre équipe dépendra de ses parcours, de son
 existant et de sa capacité à entretenir chaque interface.
