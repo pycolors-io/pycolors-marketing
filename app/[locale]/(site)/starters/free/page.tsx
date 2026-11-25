@@ -720,7 +720,7 @@ export default function StarterFreePage() {
               </p>
               <ul className="my-6 space-y-3">
                 {[
-                  "Auth.js sessions and protected routes",
+                  "Better Auth sessions and protected routes",
                   "Stripe Checkout, portal and webhooks",
                   "Prisma and PostgreSQL foundations",
                 ].map((point) => (

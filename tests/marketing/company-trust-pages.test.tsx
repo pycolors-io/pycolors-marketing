@@ -257,7 +257,7 @@ describe("company and trust pages", () => {
     expect(totals).toHaveLength(4);
     ["Now", "Next", "Later", "Shipped"].forEach((status, index) => {
       expect(totals[index]).toHaveTextContent(status);
-      expect(totals[index]).toHaveTextContent(String([4, 3, 0, 95][index]));
+      expect(totals[index]).toHaveTextContent(String([4, 3, 0, 97][index]));
       const href = within(totals[index]!)
         .getByRole("link")
         .getAttribute("href")!;
@@ -295,7 +295,7 @@ describe("company and trust pages", () => {
     const historyRows = groups.flatMap((name) =>
       Array.from(screen.getByRole("list", { name }).children),
     );
-    expect(historyRows).toHaveLength(95);
+    expect(historyRows).toHaveLength(97);
     historyRows.forEach((row) =>
       expect(
         within(row as HTMLElement).getByText("Shipped", { exact: true }),
@@ -307,7 +307,7 @@ describe("company and trust pages", () => {
       ).getAllByRole("listitem"),
     );
     const rows = [...activeRows, ...historyRows];
-    expect(rows).toHaveLength(102);
+    expect(rows).toHaveLength(104);
     expect(
       rows
         .map(
@@ -435,12 +435,14 @@ describe("company and trust pages", () => {
 
 // Public data frozen before the #631 composition migration. Update only with an intentional content change.
 const roadmapTitles = [
+  "Versioned archive preparation",
+  "Engineering articles in English and French",
   "PyColors Marketing v1.34.0",
   "PyColors Marketing v1.33.0",
   "PyColors Marketing v1.32.0",
   "PyColors Marketing v1.31.0",
   "PyColors Marketing v1.30.0",
-  "Starter Pro buyer delivery alignment",
+  "Verify the Starter Pro download",
   "Ship v1.0 — UI Core",
   "Docs quality pass",
   "Release hygiene",
@@ -479,7 +481,7 @@ const roadmapTitles = [
   "Scalable token foundation",
   "Trusted Publishing infrastructure",
   "Commercial upgrade clarity",
-  "Starter Pro sales proof and trust content",
+  "Review Starter Pro buyer guidance",
   "Starter Pro PWA foundation",
   "Public shell and safe-area layout system",
   "Local validation and billing testing docs",
@@ -533,19 +535,19 @@ const roadmapTitles = [
   "Upgrade Gate monetization patterns",
   "Starter Pro product-surface refinement",
   "Documentation modularity and decision systems",
-  "Authority engineering content engine",
+  "Review the engineering blog pilot",
   "Template #2",
   "@pycolors/blocks",
-  "Documentation-to-product conversion loop",
+  "Measure the path from docs to purchase",
 ] as const;
 const pendingRoadmap = [
-  ["Starter Pro buyer delivery alignment", "Now"],
-  ["Authority engineering content engine", "Now"],
+  ["Verify the Starter Pro download", "Now"],
+  ["Review the engineering blog pilot", "Now"],
   ["Purchase-to-first-run video tutorial", "Next"],
   ["Template #2", "Next"],
   ["@pycolors/blocks", "Next"],
-  ["Starter Pro sales proof and trust content", "Now"],
-  ["Documentation-to-product conversion loop", "Now"],
+  ["Review Starter Pro buyer guidance", "Now"],
+  ["Measure the path from docs to purchase", "Now"],
 ] as const;
 const releases = [
   [

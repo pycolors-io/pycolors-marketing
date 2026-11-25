@@ -204,6 +204,24 @@ const milestones: Array<{
 
 const items: RoadmapItem[] = [
   {
+    title: "Versioned archive preparation",
+    description:
+      "The November preparation verified and sealed four candidate archives for Starter Pro Web, Mobile, Fullstack and NA-AI Landing. Each includes a manifest identifying its source version.",
+    status: "Shipped",
+    milestone: "Nov 2026",
+    tags: ["Starter Pro", "Trust"],
+    href: "/product-releases",
+  },
+  {
+    title: "Engineering articles in English and French",
+    description:
+      "By 24 November, the blog had published 13 articles in both languages. The updated mobile comparison explains why PyColors chose React Native over Capacitor.",
+    status: "Shipped",
+    milestone: "Nov 2026",
+    tags: ["Blog", "Docs"],
+    href: "/blog/capacitor-vs-react-native-nextjs-saas#pycolors-choice",
+  },
+  {
     title: "PyColors Marketing v1.34.0",
     description:
       "Release notes for 20 November 2026: clearer product and documentation navigation, copyable documentation context, an overlapping-save guide, keyboard-visible pricing links, French purchase recovery and Classic/Signature presentation choices in Starter Pro 1.5.0.",
@@ -249,13 +267,13 @@ const items: RoadmapItem[] = [
     href: "/changelog",
   },
   {
-    title: "Starter Pro buyer delivery alignment",
+    title: "Verify the Starter Pro download",
     description:
-      "Keep downloadable source and setup guidance aligned with the workspace experience. The hosted demo and product tour are available; the downloaded manifest identifies the version supplied to each purchase.",
+      "Identify the archive buyers receive for each Starter Pro edition. Check its manifest and follow its README alongside the current setup guide through the first local run.",
     status: "Now",
     milestone: "Oct 2026",
     tags: ["Starter Pro", "Trust"],
-    href: "/starters/pro",
+    href: "/docs/starter-pro/getting-started",
   },
   {
     title: "PyColors Marketing v1.29.0",
@@ -350,7 +368,7 @@ const items: RoadmapItem[] = [
   {
     title: "Starter Pro evaluation and FAQ clarity",
     description:
-      "Compare Free and Pro boundaries and search setup, purchase, delivery, and recovery guidance without implying automatic migration or unlock behavior.",
+      "Compare Free and Pro, explore the hosted demo and product tour, and consult the FAQ, architecture guide and launch checklist before buying.",
     status: "Shipped",
     milestone: "Oct 2026",
     tags: ["Starter Pro", "Trust", "Docs"],
@@ -649,11 +667,11 @@ const items: RoadmapItem[] = [
   {
     title: "PRO upgrade funnel",
     description:
-      "Dedicated upgrade page clarifying the value of moving from validation surfaces to production-ready wiring.",
+      "Follow the upgrade guide from Starter Free to Pro, compare what each edition includes and check the price before continuing to checkout.",
     status: "Shipped",
     milestone: "Mar 2026",
     tags: ["PRO", "Upgrade", "Sales"],
-    href: "/upgrade",
+    href: "/docs/starter/upgrade",
   },
   {
     title: "Billing system v1",
@@ -968,9 +986,9 @@ const items: RoadmapItem[] = [
     href: "/starters/pro",
   },
   {
-    title: "Authority engineering content engine",
+    title: "Review the engineering blog pilot",
     description:
-      "Publish high-value engineering articles around SaaS infrastructure, monorepos, CI/CD, npm publishing, release workflows, and production-ready developer systems.",
+      "Record what ships each week and review search visibility and reader adoption after 30, 60 and 90 days. The editorial review on 21 December 2026 will decide the future publishing cadence.",
     status: "Now",
     milestone: "H1 2026",
     tags: ["Blog", "Authority", "SEO"],
@@ -1085,22 +1103,22 @@ const items: RoadmapItem[] = [
     href: "/blocks",
   },
   {
-    title: "Starter Pro sales proof and trust content",
+    title: "Review Starter Pro buyer guidance",
     description:
-      "Add implementation comparisons, real architecture explanations, buyer reassurance, launch checklists, and authority content.",
+      "Check the buyer FAQ against the support, refund and licence terms. Verify which production checks are covered by the starter and which ones buyers must run on their own installation.",
     status: "Now",
     milestone: "May 2026",
     tags: ["Trust", "Content", "Starter PRO"],
-    href: "/starters/pro",
+    href: "/starters/pro/faq",
   },
   {
-    title: "Documentation-to-product conversion loop",
+    title: "Measure the path from docs to purchase",
     description:
-      "Keep guides, patterns, Starter Free, Starter Pro, pricing, and checkout paths aligned so public product journeys stay clear.",
+      "Measure how often readers move from the guides to Starter Free or Pro, then on to pricing and checkout. Use consented data to identify where readers stop.",
     status: "Now",
     milestone: "H1 2026",
     tags: ["Docs", "Conversion", "SEO"],
-    href: "/docs",
+    href: "/docs/starter/upgrade",
   },
   {
     title: "Traffic-readiness trust cleanup",
@@ -1340,7 +1358,7 @@ export default function RoadmapPage() {
             titleId="roadmap-priorities-heading"
             title={tSite("Active priorities. Clear next steps.")}
             description={tSite(
-              "Now reflects active work. Next describes planned scope. Original milestone labels provide context; they are not new delivery dates.",
+              "Now lists the remaining work on current priorities. Next lists planned improvements. Milestones show when each item was first planned.",
             )}
           />
           <div className={styles.priorityGrid}>
@@ -1365,7 +1383,7 @@ export default function RoadmapPage() {
                 <p className={styles.laneDescription}>
                   {tSite(
                     status === "Now"
-                      ? "Work receiving attention today."
+                      ? "What remains to verify or measure."
                       : "The next improvements under consideration.",
                   )}
                 </p>

@@ -299,7 +299,7 @@ export default function BlogPage() {
               </div>
               <p className="mb-6 mt-3 max-w-md text-sm leading-7 text-muted-foreground">
                 {tSite(
-                  "Build from the connected foundation: Auth.js, Prisma and Stripe, with setup guides for your own services.",
+                  "Build on Better Auth, Prisma and Stripe. Follow the setup guides to connect your own services.",
                 )}
               </p>
               <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2">

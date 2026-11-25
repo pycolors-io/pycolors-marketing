@@ -153,7 +153,7 @@ describe("ArticleCTA presentation", () => {
       href: "/starters/pro",
       title: "Start with the connected foundation.",
       description:
-        "Explore the Auth.js, Prisma and Stripe foundation, with documentation to configure the services for your own product.",
+        "Explore the Better Auth, Prisma and Stripe integrations and learn how to configure them for your product.",
     },
     {
       variant: "blocks",
