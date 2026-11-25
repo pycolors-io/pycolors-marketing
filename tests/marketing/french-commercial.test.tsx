@@ -1,4 +1,6 @@
 import * as React from "react";
+import { renderToString } from "react-dom/server";
+import { StarterProFaqExplorer } from "@/components/starters/starter-pro-faq-explorer";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { NextIntlClientProvider } from "next-intl";
@@ -16,6 +18,22 @@ afterEach(() => {
   window.history.replaceState(null, "", "/");
 });
 describe("whole-site locale foundations", () => {
+  it("hydrates the French buyer FAQ and enables its search", async () => {
+    const faq = (
+      <NextIntlClientProvider locale="fr" timeZone="UTC" messages={fr}>
+        <StarterProFaqExplorer />
+      </NextIntlClientProvider>
+    );
+    const container = document.createElement("div");
+    container.innerHTML = renderToString(faq);
+    document.body.append(container);
+    expect(container.querySelector("fieldset")).toBeDisabled();
+    const onRecoverableError = vi.fn();
+    render(faq, { container, hydrate: true, onRecoverableError });
+    await waitFor(() => expect(screen.getByRole("searchbox")).toBeEnabled());
+    expect(onRecoverableError).not.toHaveBeenCalled();
+  });
+
   it("preserves route identity, query and anchors in each language", () => {
     expect(localizedHref("/pricing?view=pro#implementation", "fr")).toBe(
       "/fr/tarifs?view=pro#implementation",

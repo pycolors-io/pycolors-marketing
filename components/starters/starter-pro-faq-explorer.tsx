@@ -120,9 +120,11 @@ export function StarterProFaqExplorer() {
         </fieldset>
 
         <noscript>
-          {tSite(
-            "All answers are available below without JavaScript. Search and topic filters require JavaScript; open any question to read its answer.",
-          )}
+          <p>
+            {tSite(
+              "All answers are available below without JavaScript. Search and topic filters require JavaScript; open any question to read its answer.",
+            )}
+          </p>
         </noscript>
 
         <p
