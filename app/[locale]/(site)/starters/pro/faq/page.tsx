@@ -60,7 +60,11 @@ export default function StarterProFaqPage() {
   const tSite = useCopy();
 
   return (
-    <main className={`${styles.page} pb-14 sm:pb-20`}>
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`${styles.page} pb-14 sm:pb-20`}
+    >
       <Container className="marketing-page-intro">
         <MarketingBreadcrumb route="/starters/pro/faq" />
         <PageHero
