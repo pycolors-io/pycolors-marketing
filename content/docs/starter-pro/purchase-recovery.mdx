@@ -1,11 +1,9 @@
 ---
 title: Purchase recovery
 description: Recover access to your Starter Pro purchase when the email is missing or the download link has expired.
-lastUpdated: "2026-11-20"
+lastUpdated: "2026-11-26"
 appliesTo: Starter Pro buyers
 ---
-
-For Mobile and Fullstack, choose the product actually purchased. A recovered original Web or Mobile claim link can show a Fullstack upgrade only after the server verifies that original order; the recovery email address alone does not grant upgrade eligibility.
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Download, LifeBuoy, RefreshCcw } from "lucide-react";
@@ -42,11 +40,14 @@ not send card details or access links.
 
 1. Check the inbox and spam folder for the email address used at checkout.
 2. Open [purchase recovery](/orders/recover), enter that same email address, and
-   choose **PyColors Starter Pro**, then select **Resend access link**.
+   select the product named on your order. For a paid Fullstack upgrade,
+   choose **PyColors Starter Pro Fullstack** to recover the upgraded purchase.
+   Choose the original Web or Mobile product to recover its separate access.
+   Select **Resend access link**.
 3. If eligible access is found and the request can be processed, PyColors sends
    a new claim email. Open its access link, check the product name, and download
    the ZIP from the claim page.
-4. Unzip the package and continue with [Getting started](/docs/starter-pro/getting-started).
+4. Unzip the package and [match the manifest to your order](/docs/starter-pro/delivery#match-your-archive). Follow the Web, Mobile or Fullstack setup guide in that table.
 
 Access links currently expire 24 hours after they are issued. If a link expires
 before you download, request a fresh one. Keep claim links private: they grant
@@ -78,7 +79,7 @@ and the error you see.
 
 ### The email points to another PyColors product
 
-Choose **PyColors Starter Pro** on the recovery form. Recovery targets the
+Check the product on your order against the [names on the recovery form](/docs/starter-pro/delivery#match-your-archive). Recovery targets the
 selected product only. If the new email still points to another product,
 contact support before purchasing again.
 
@@ -96,7 +97,7 @@ Open [purchase support](/orders/support) for the email contact and instructions
 if your email app does not open. Include:
 
 - the email address used at checkout;
-- the product name, **Starter Pro**;
+- the full product name on your order;
 - the approximate purchase date and order reference, if available;
 - what happened and the steps you already tried.
 
@@ -116,9 +117,9 @@ no response-time or resolution-time guarantee is promised.
       icon: RefreshCcw,
     },
     {
-      title: "Getting started",
-      href: "/docs/starter-pro/getting-started",
-      description: "Set up Starter Pro after downloading your ZIP.",
+      title: "Check your downloaded archive",
+      href: "/docs/starter-pro/delivery#match-your-archive",
+      description: "Find the setup instructions for the offer on your order.",
       icon: Download,
     },
     {

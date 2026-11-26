@@ -1,112 +1,92 @@
 ---
-title: Livraison (PRO)
-description: Suivez votre achat Starter Pro à partir de la confirmation de
-  paiement pour réclamer le courrier électronique et le téléchargement ZIP, avec
-  des étapes de récupération lorsque l'accès est manquant.
-lastUpdated: "2026-11-20"
-appliesTo: Starter Pro buyers
+title: Livraison de Starter Pro
+description: Retrouvez le lien de votre achat, vérifiez l’archive reçue et démarrez avec le guide Web, Mobile ou Fullstack correspondant.
+lastUpdated: "2026-11-26"
+appliesTo: Starter Pro Web, Mobile et Fullstack
 ---
 
-Pour Mobile ou Fullstack, sélectionnez le produit indiqué dans la commande et suivez le guide d’archive [Mobile](/docs/starter-pro/mobile) ou [Fullstack](/docs/starter-pro/fullstack). Un upgrade possède son paiement vérifié, sa commande et son e-mail d’accès ; l’accès à l’achat d’origine reste disponible.
-
 import { Callout } from "fumadocs-ui/components/callout";
-import { Download, FileText, RefreshCcw } from "lucide-react";
+import { FileText, RefreshCcw } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
 
-Ce guide explique comment vous recevez **Starter Pro ZIP acheté à partir de PyColors**. Vous n'avez pas besoin d'un compte PyColors pour réclamer ou récupérer votre achat. Il ne configure pas les abonnements ou la livraison de produits numériques pour une application que vous créez avec Starter Pro. Pour la fondation d'abonnement de cette application, voir le [guide de facturation](/docs/starter-pro/billing).
+Vous pouvez télécharger le code source acheté chez PyColors et récupérer votre accès sans créer de compte. Pour configurer les abonnements de votre propre application, consultez le [guide de facturation](/docs/starter-pro/billing).
 
-<Callout title="Déjà payé mais ne peut pas accéder au ZIP?">
-  Vérifiez la boîte de réception et le dossier de spam pour l'e-mail utilisé à
-  le paiement, puis utilisez [récupération d’achat](/orders/recover). Si vous ne
-  savez pas si le paiement a été effectué, contactez [Aide à
-  l'achat](/orders/support) avant de payer à nouveau. La récupération ne
-  complète pas un paiement impayé.
-
+<Callout title="Vous avez payé et le téléchargement reste inaccessible ?">
+  Vérifiez la boîte de réception et les courriers indésirables de l’adresse
+  utilisée lors du paiement. Si celui-ci est confirmé, [demandez un nouveau lien
+  d’accès](/orders/recover). En cas de doute sur le paiement, [contactez
+  l’assistance](/orders/support) avant de payer à nouveau.
 </Callout>
 
-## Du paiement à votre ZIP [#from-payment-to-your-zip]
+## Du paiement au téléchargement [#from-payment-to-your-zip]
 
-1. **Compléter le paiement et vérifier la confirmation.**
+1. **Vérifiez la confirmation du paiement.** PyColors crée l’accès après confirmation du paiement par le serveur. Une redirection du navigateur ne suffit pas à confirmer le paiement, l’arrivée de l’e-mail ou le téléchargement.
+2. **Retrouvez l’e-mail d’accès.** Il est envoyé à l’adresse utilisée lors de la commande. Un accès peut exister même si le message n’est pas arrivé. Le [reçu ou la facture](/docs/starter-pro/purchase-documents) se récupère séparément.
+3. **Ouvrez le lien de cet e-mail.** Vérifiez que la page affiche le produit commandé. Une mise à niveau Fullstack payée possède son propre e-mail d’accès. L’ancien lien Web ou Mobile ouvre toujours l’achat d’origine. Chaque lien d’accès expire 24 heures après son émission. Gardez-le privé.
+4. **Sélectionnez « Télécharger le paquet ».** Attendez la fin du téléchargement, conservez le ZIP et décompressez-le. Lisez le `README.md` à la racine et suivez le [guide correspondant à votre archive](#match-your-archive). À ce stade, l’hébergement et les services de votre application restent à configurer.
 
-   Payez via Stripe Checkout en utilisant une adresse e-mail à laquelle vous pouvez accéder. PyColors traite la confirmation de paiement sur le serveur avant de créer l'accès à l'achat. Une redirection de navigateur seule ne prouve pas que le paiement ou la livraison a réussi. La confirmation de paiement, la livraison par e-mail d'accès et un téléchargement terminé sont des étapes distinctes.
+## Vérifier l’archive reçue [#match-your-archive]
 
-2. **Trouvez le email d’accès.**
+Dans le formulaire de récupération, choisissez le nom exact du produit figurant sur votre commande. Après le téléchargement, ouvrez `PYCOLORS_RELEASE.json` dans le dossier extrait. Le format actuel indique l’offre dans `productSlug` et la révision du code source dans `sourceCommit`.
 
-   PyColors envoie un e-mail d'accès à l'adresse utilisée lors du paiement après la création de l'accès à l'achat. La livraison par e-mail peut échouer même lorsque votre accès à l'achat existe. Vérifiez le spam s'il est manquant; ni la page de confirmation ni l'envoi d'e-mail ne prouvent qu'un message est arrivé dans votre boîte de réception. Aucune heure exacte d'arrivée ou de téléchargement n'est garantie par ce guide.
+| Produit sur la commande et dans le formulaire | Valeur attendue de `productSlug` | Point de départ                                                                |
+| --------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------ |
+| PyColors Starter Pro                          | `starter-pro`                    | [Installation Web](/docs/starter-pro/getting-started) depuis la racine         |
+| PyColors Starter Pro Mobile                   | `starter-pro-mobile`             | [Installation Mobile](/docs/starter-pro/mobile) avec `backend/` et `mobile/`   |
+| PyColors Starter Pro Fullstack                | `starter-pro-fullstack`          | [Installation Fullstack](/docs/starter-pro/fullstack) avec `web/` et `mobile/` |
 
-   L'email d’accès est pour l'accès au produit. Les reçus et les factures sont séparés; voir [reçus et factures d'achat](/docs/starter-pro/purchase-documents).
+Certaines anciennes archives Web indiquent la version et la révision du code sans champ d’offre. Suivez le README livré avec cette version. Si le produit ou les fichiers diffèrent de votre commande, conservez le ZIP et [contactez l’assistance](/orders/support) avant l’installation. L’[historique des versions](/product-releases) permet de situer les mises à jour. Les fichiers reçus identifient votre exemplaire.
 
-3. **Ouvrez le lien d'accès original.**
+Pour les droits d’utilisation, consultez le fichier `LICENSE` fourni et les [conditions de licence](/license). Avant de mettre votre application Web ou Fullstack en production, validez vos services avec la [checklist de production](/docs/starter-pro/production-checklist). Pour une distribution native, suivez les vérifications sur appareil et les étapes de signature du guide Mobile ou Fullstack.
 
-   Utilisez le lien dans l'email d’accès plutôt que d'ouvrir le chemin de réclamation manuellement. Le lien contient le token d'accès privé nécessaire pour vérifier l'accès à votre achat. En **Votre accès est prêt.**Vérifiez que le produit est **Starter Pro** et conservez la référence de la commande pour le support.
-
-   Les liens d'accès expirent actuellement 24 heures après leur émission. Si le vôtre a expiré, demandez un nouveau lien via [récupération d’achat](/orders/recover). Gardez les liens de réclamation et de téléchargement privés; ne les mettez pas dans des problèmes publics, des captures d'écran ou de la documentation partagée.
-
-4. **Téléchargez, enregistrez et démarrez la configuration.**
-
-   Sélectionner **Télécharger le paquet** sur la page de réclamation. PyColors valide le lien et l'accès à l'achat actif sur le serveur avant de servir le ZIP privé. Une page prête pour l'accès ne prouve pas que le téléchargement du fichier est terminé. Vérifiez que le téléchargement est terminé, enregistrez l'archive en toute sécurité et décompressez-la.
-
-   Continuer avec [Premiers pas](/docs/starter-pro/getting-started), y compris ses points de contrôle de première session. Le téléchargement du code source ne fournit ni ne déploie votre SaaS. Configurez et validez votre propre environnement et vos propres intégrations avant de [Liste de contrôle de production](/docs/starter-pro/production-checklist).
-
-## Lorsqu'une étape de livraison échoue [#when-a-delivery-step-fails]
+## En cas de problème [#when-a-delivery-step-fails]
 
 ### Le paiement est en attente ou incertain [#payment-is-pending-or-uncertain]
 
-N'achetez pas à nouveau juste pour obtenir un autre e-mail d'accès. Contact [Aide à l'achat](/orders/support) avec votre e-mail de paiement, le nom du produit et la date d'achat approximative. Les [page de paiement interrompue](/checkout/cancel) ne vérifie pas l'état du paiement ou n'annule pas un paiement existant. Suivez le [guide de récupération d'achat](/docs/starter-pro/purchase-recovery) pour la distinction entre réessayer un paiement impayé et récupérer un achat existant.
+La [page de paiement interrompu](/checkout/cancel) ne vérifie pas le statut de votre paiement. En cas de doute, [contactez l’assistance](/orders/support) avec l’adresse utilisée, le nom du produit et la date approximative. Une demande de récupération ne termine pas un paiement en attente.
 
-### Aucune réclamation email arrive [#no-claim-email-arrives]
+### L’e-mail d’accès n’arrive pas [#no-claim-email-arrives]
 
-Vérifiez le dossier de courrier électronique et de spam, puis ouvrez [récupération d’achat](/orders/recover) et sélectionnez **Renvoyer le lien d'accès** Avec le même email. L'accès à l'achat actif admissible peut recevoir un nouvel email d’accès.
+Vérifiez les courriers indésirables. Dans le [formulaire de récupération](/orders/recover), saisissez l’adresse utilisée lors du paiement, choisissez le produit commandé et sélectionnez **Renvoyer le lien d'accès**. Le formulaire affiche une confirmation générique. Les demandes répétées peuvent être temporairement limitées. Si l’e-mail manque toujours, suivez le [guide de récupération](/docs/starter-pro/purchase-recovery).
 
-Une confirmation de récupération ne prouve pas qu'un achat existe ou qu'un e-mail a atteint votre boîte de réception. Les demandes répétées peuvent être temporairement limitées. Suivez le [guide de récupération d'achat](/docs/starter-pro/purchase-recovery) pour les étapes de réessayer; contactez le support si l'accès est toujours manquant plutôt que de faire un autre achat.
+### La page indique que le lien est invalide [#the-page-says-invalid-access-link]
 
-### La page indique "Lien d'accès non valide" [#the-page-says-invalid-access-link]
+Ouvrez le lien complet depuis l’e-mail. Si vous ne le retrouvez plus, demandez-en un nouveau. Évitez de reconstituer l’adresse à la main.
 
-Cela peut se produire lorsque le lien de réclamation manque son token. Ouvrez le lien d'origine à partir de votre email d’accès. Ne construisez pas un token ou ne copiez pas un exemple d'URL. Si vous ne trouvez pas de lien utilisable, demandez-en un nouveau via la récupération d'achat.
+### La page indique que le lien est indisponible [#the-page-says-access-link-unavailable]
 
-### La page indique "Lien d'accès non disponible" [#the-page-says-access-link-unavailable]
+Le lien a pu expirer ou le service être temporairement indisponible. Réessayez un peu plus tard ou demandez un nouveau lien. Si le problème persiste, contactez l’assistance.
 
-La page de réclamation n'a pas pu vérifier le lien. Il peut être expiré ou invalide, ou le service peut être temporairement indisponible; ce message n'identifie pas la cause ou ne prouve pas que le paiement a échoué. Réessayez sous peu ou demandez un nouveau lien d'accès. Si le nouveau lien échoue également, contactez le support à l'achat.
+### Le téléchargement échoue après la vérification d’accès [#the-download-fails-after-access-is-ready]
 
-### Le téléchargement échoue lorsque l'accès est prêt [#the-download-fails-after-access-is-ready]
+Vérifiez votre connexion et relancez le téléchargement. Si le lien a expiré, demandez-en un nouveau. Si le ZIP reste indisponible ou illisible, transmettez le nom du produit et le message d’erreur à l’assistance. Vous n’avez pas besoin de racheter le produit pour réessayer.
 
-Vérifiez votre connexion et réessayez le téléchargement. Si le lien a expiré, demandez-en un nouveau. Si le fichier reste indisponible ou que le ZIP ne peut pas être ouvert, contactez le support technique avec le nom du produit et l'erreur que vous voyez. La vérification de l'accès et la livraison réussie des fichiers sont des vérifications distinctes; ne payez pas à nouveau pour réessayer.
+### Le lien ouvre un autre produit ou vous avez perdu l’accès à votre messagerie [#the-link-is-for-another-product-or-the-checkout-email-is-inaccessible]
 
-### Le lien est pour un autre produit ou l'e-mail de paiement est inaccessible [#the-link-is-for-another-product-or-the-checkout-email-is-inaccessible]
+Comparez le produit sélectionné avec le [tableau des offres](#match-your-archive). Seul l’accès actif du produit sélectionné peut être récupéré. Si le nouveau message ouvre toujours un autre produit ou si la boîte de réception est inaccessible, contactez l’assistance. Le formulaire ne peut pas changer l’adresse de la commande.
 
-Choisir **PyColors Starter Pro** sur la forme de récupération. La récupération cible uniquement le produit sélectionné. Si le nouvel e-mail pointe toujours vers un autre produit ou si vous ne pouvez pas accéder à la boîte de réception de paiement, contactez le support d'achat avant de payer à nouveau. La récupération ne peut pas modifier l'e-mail de paiement et ne peut pas restaurer l'accès à l'achat inactif. Les [guide de récupération d'achat](/docs/starter-pro/purchase-recovery) explique ces limites et le transfert de soutien.
+## Contacter l’assistance [#ask-for-purchase-support-safely]
 
-## Demander une assistance à l'achat en toute sécurité [#ask-for-purchase-support-safely]
+Ouvrez l’[assistance achat](/orders/support). Indiquez l’adresse utilisée lors du paiement, le nom exact du produit, la date approximative, la référence de commande si vous l’avez et l’étape qui a échoué. Si votre application de messagerie ne s’ouvre pas, la page fournit l’adresse à copier.
 
-Ouvrir [Aide à l'achat](/orders/support) pour les instructions de contact par e-mail et de repli si votre application de messagerie ne s'ouvre pas. Inclure l'e-mail de paiement, **Starter Pro**, date d'achat approximative, référence de commande si disponible, l'étape échouée et ce que vous avez déjà essayé.
+Gardez les mots de passe, informations de carte, clés API et liens privés hors de votre message et de vos captures d’écran. Aucun délai de réponse ou de résolution n’est garanti. Pour une rétractation ou une demande de remboursement, consultez les [conditions et coordonnées prévues](/orders/support#refunds).
 
-N'envoyez pas de mots de passe, de détails de carte de paiement, de clés API ou de liens de réclamation / téléchargement. Supprimez également ces détails des captures d'écran. Le support peut examiner le problème d'achat ou d'accès; aucun temps de réponse ou garantie de temps de résolution n'est promis. Demander un nouveau lien d'accès ne renvoie pas de reçus ou de factures.
-
-## Poursuivre [#continue]
+## Pour continuer [#continue]
 
 <DocsLinks
   variant="list"
   items={[
     {
-      title: "Récupérer l'accès d'achat",
+      title: "Récupérer un accès",
       href: "/docs/starter-pro/purchase-recovery",
-      description:
-        "Suivez les étapes de récupération des e-mails manquants et des liens expirés.",
+      description: "Retrouver un e-mail manquant ou remplacer un lien expiré.",
       icon: RefreshCcw,
     },
     {
-      title: "Reçus d'achat et factures",
+      title: "Reçus et factures",
       href: "/docs/starter-pro/purchase-documents",
-      description:
-        "Trouvez des conseils sur les documents de paiement séparément de l'accès ZIP.",
+      description: "Retrouver les justificatifs de paiement de votre commande.",
       icon: FileText,
-    },
-    {
-      title: "Premiers pas",
-      href: "/docs/starter-pro/getting-started",
-      description:
-        "Configurez la source téléchargée et vérifiez votre première exécution locale.",
-      icon: Download,
     },
   ]}
 />
