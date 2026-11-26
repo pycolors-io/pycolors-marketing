@@ -269,7 +269,7 @@ const items: RoadmapItem[] = [
   {
     title: "Verify the Starter Pro download",
     description:
-      "Identify the archive buyers receive for each Starter Pro edition. Check its manifest and follow its README alongside the current setup guide through the first local run.",
+      "The stored Web, Mobile and Fullstack ZIPs have been checked against their manifests and setup guides. Confirm that a current buyer download returns the same ZIP for each edition.",
     status: "Now",
     milestone: "Oct 2026",
     tags: ["Starter Pro", "Trust"],
@@ -988,7 +988,7 @@ const items: RoadmapItem[] = [
   {
     title: "Review the engineering blog pilot",
     description:
-      "Record what ships each week and review search visibility and reader adoption after 30, 60 and 90 days. The editorial review on 21 December 2026 will decide the future publishing cadence.",
+      "The weekly publication record and first search and readership figures are available. Review each article at 30, 60 and 90 days and decide the publishing cadence on 21 December 2026.",
     status: "Now",
     milestone: "H1 2026",
     tags: ["Blog", "Authority", "SEO"],
@@ -1103,10 +1103,10 @@ const items: RoadmapItem[] = [
     href: "/blocks",
   },
   {
-    title: "Review Starter Pro buyer guidance",
+    title: "Starter Pro buyer FAQ and launch responsibilities",
     description:
-      "Check the buyer FAQ against the support, refund and licence terms. Verify which production checks are covered by the starter and which ones buyers must run on their own installation.",
-    status: "Now",
+      "The buyer FAQ explains support, refunds and source licensing. The production checklist identifies the provider, deployment and payment checks to run on your own installation.",
+    status: "Shipped",
     milestone: "May 2026",
     tags: ["Trust", "Content", "Starter PRO"],
     href: "/starters/pro/faq",
@@ -1114,7 +1114,7 @@ const items: RoadmapItem[] = [
   {
     title: "Measure the path from docs to purchase",
     description:
-      "Measure how often readers move from the guides to Starter Free or Pro, then on to pricing and checkout. Use consented data to identify where readers stop.",
+      "Guide, product and pricing page views are recorded. Verify the consented checkout events and measure how many readers reach each step in the same session.",
     status: "Now",
     milestone: "H1 2026",
     tags: ["Docs", "Conversion", "SEO"],

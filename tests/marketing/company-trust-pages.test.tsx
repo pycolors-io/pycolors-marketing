@@ -317,12 +317,14 @@ describe("company and trust pages", () => {
         )
         .sort(),
     ).toEqual([...roadmapTitles].sort());
-    for (const [title, status] of pendingRoadmap) {
+    for (const [title, status] of reviewedRoadmap) {
       const card = screen
         .getByRole("heading", { level: 3, name: title })
         .closest("li")!;
       expect(within(card).getByText(status, { exact: true })).toBeVisible();
-      expect(within(card).queryByText("Shipped", { exact: true })).toBeNull();
+      expect(
+        within(card).getAllByText(/^(Now|Next|Later|Shipped)$/),
+      ).toHaveLength(1);
     }
     const hostedDemo = within(screen.getByRole("list", { name: "June 2026" }))
       .getByRole("heading", { level: 3, name: "Starter Pro hosted demo" })
@@ -481,7 +483,7 @@ const roadmapTitles = [
   "Scalable token foundation",
   "Trusted Publishing infrastructure",
   "Commercial upgrade clarity",
-  "Review Starter Pro buyer guidance",
+  "Starter Pro buyer FAQ and launch responsibilities",
   "Starter Pro PWA foundation",
   "Public shell and safe-area layout system",
   "Local validation and billing testing docs",
@@ -540,13 +542,13 @@ const roadmapTitles = [
   "@pycolors/blocks",
   "Measure the path from docs to purchase",
 ] as const;
-const pendingRoadmap = [
+const reviewedRoadmap = [
   ["Verify the Starter Pro download", "Now"],
   ["Review the engineering blog pilot", "Now"],
   ["Purchase-to-first-run video tutorial", "Next"],
   ["Template #2", "Next"],
   ["@pycolors/blocks", "Next"],
-  ["Review Starter Pro buyer guidance", "Now"],
+  ["Starter Pro buyer FAQ and launch responsibilities", "Shipped"],
   ["Measure the path from docs to purchase", "Now"],
 ] as const;
 const releases = [
