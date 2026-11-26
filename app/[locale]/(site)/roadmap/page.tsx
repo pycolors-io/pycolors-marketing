@@ -1107,7 +1107,7 @@ const items: RoadmapItem[] = [
     description:
       "The buyer FAQ explains support, refunds and source licensing. The production checklist identifies the provider, deployment and payment checks to run on your own installation.",
     status: "Shipped",
-    milestone: "May 2026",
+    milestone: "Nov 2026",
     tags: ["Trust", "Content", "Starter PRO"],
     href: "/starters/pro/faq",
   },
