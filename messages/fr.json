@@ -7979,6 +7979,16 @@
     "m9aa7fbce": "Partez de Better Auth, Stripe et Prisma/PostgreSQL. Configurez vos services, ajoutez la logique de votre produit et testez le tout avant le lancement.",
     "m90d73d9": "Better Auth prend en charge la connexion par mot de passe ou via Google et GitHub, la vérification des adresses e-mail, la réinitialisation des mots de passe et les sessions.",
     "m72bb494f": "Sessions Better Auth et routes protégées",
-    "mea48f0e7": "Découvrez les intégrations Better Auth, Prisma et Stripe et apprenez à les configurer pour votre produit."
+    "mea48f0e7": "Découvrez les intégrations Better Auth, Prisma et Stripe et apprenez à les configurer pour votre produit.",
+    "m34edb57b": "Les écrans de connexion simulent le parcours, sans créer de compte ni ouvrir de session.",
+    "m3c7cf5df": "Les écrans sont fournis. Les contrôles de session et d’autorisation restent à implémenter.",
+    "m7ed9cfc5": "Les sessions peuvent être révoquées côté serveur. Les rôles et la gestion des comptes tiennent compte des propriétaires d’espace de travail. Vous pouvez adapter les permissions à votre produit.",
+    "m90ec48ec": "Les offres et les factures sont simulées. Stripe Checkout et le portail client restent à intégrer.",
+    "m79976eae": "Paiement individuel via Stripe Checkout, portail client, historique des factures et rapprochement des événements webhook. Configurez et testez votre compte Stripe.",
+    "mdf4d414f": "Les projets sont conservés dans le stockage local du navigateur lorsqu’il est disponible. Aucune base partagée ne synchronise ces données entre appareils.",
+    "m69e1762e": "Prisma et PostgreSQL gèrent les comptes, les espaces de travail, les projets, les tâches assignées, les échéances et les commentaires. Vous y raccordez vos données métier.",
+    "m79978f26": "L’interface s’adapte aux écrans mobiles et fournit les bases d’une PWA installable. La connexion au compte et la facturation nécessitent un accès réseau.",
+    "m1c441ba9": "Téléchargez le ZIP grâce au lien reçu par e-mail après l’achat. Vous pouvez demander un nouveau lien si nécessaire.",
+    "m68b21d1e": "Le devis précise le parcours métier et les intégrations incluses. Les missions de plus grande ampleur peuvent dépasser 10 000 €. L’hébergement et l’exploitation courante sont distincts de cette prestation."
   }
 }

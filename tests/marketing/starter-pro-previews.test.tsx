@@ -9,6 +9,8 @@ import StarterProPage, {
 } from "../../app/[locale]/(site)/starters/pro/page";
 import { PRODUCT_DISPLAY } from "../../lib/products/public-catalog";
 import { STARTER_PRO_SERVICES } from "../../lib/products/starter-pro-services";
+import { messageKey } from "../../lib/i18n/copy-core";
+import fr from "../../messages/fr.json";
 
 const metadata = await getLocalizedMetadata0({
   params: Promise.resolve({ locale: "en" }),
@@ -30,6 +32,22 @@ function renderPreviews() {
 }
 
 describe("Starter Pro product page", () => {
+  it("provides French copy for the comparison cells and service scope shown to buyers", () => {
+    render(<StarterProPage />);
+    const comparison = screen.getByRole("region", {
+      name: "Starter comparison, scroll horizontally for all columns",
+    });
+    const messages = [
+      ...within(comparison)
+        .getAllByRole("cell")
+        .map((cell) => cell.textContent!),
+      ...Object.values(STARTER_PRO_SERVICES).map((service) => service.scope),
+    ];
+    for (const message of messages) {
+      expect(fr.site, message).toHaveProperty(messageKey(message));
+    }
+  });
+
   it("introduces the real dashboard captures with their demonstration-data context and preview destination", () => {
     render(<StarterProPage />);
     const hero = screen.getByRole("figure", { name: "Dashboard" });

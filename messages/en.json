@@ -7979,6 +7979,16 @@
     "m9aa7fbce": "Better Auth, Stripe and Prisma/PostgreSQL foundations. Configure your services, add product logic and validate before launch.",
     "m90d73d9": "Better Auth supports password sign-in, Google and GitHub OAuth, email verification, password resets and sessions.",
     "m72bb494f": "Better Auth sessions and protected routes",
-    "mea48f0e7": "Explore the Better Auth, Prisma and Stripe integrations and learn how to configure them for your product."
+    "mea48f0e7": "Explore the Better Auth, Prisma and Stripe integrations and learn how to configure them for your product.",
+    "m34edb57b": "Mocked auth screens; no real account or session is created.",
+    "m3c7cf5df": "UI structure only; add real session checks and authorization.",
+    "m7ed9cfc5": "Server-revocable sessions, workspace roles and ownership-aware account lifecycle; extend permissions for your product.",
+    "m90ec48ec": "Mock plans and invoices; no Stripe Checkout or customer portal integration.",
+    "m79976eae": "Personal Checkout, portal, invoice history and reconciled webhooks; configure and test your Stripe account.",
+    "mdf4d414f": "Projects persist in this browser's localStorage when available; no shared database or cross-device synchronization.",
+    "m69e1762e": "Prisma + PostgreSQL foundations for accounts, workspaces, projects, assigned tasks, due dates and comments; wire your own domain data.",
+    "m79978f26": "Responsive UI plus installable PWA foundations; auth and billing stay online-first.",
+    "m1c441ba9": "Download the ZIP through your purchase claim email; access recovery is available.",
+    "m68b21d1e": "The quote defines the workflow and integration boundaries. Larger engagements can exceed 10,000 €; hosting and ongoing operation are separate."
   }
 }
