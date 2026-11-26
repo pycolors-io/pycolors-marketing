@@ -42,7 +42,11 @@ function StatusShell({
   const tSite = useCopy();
 
   return (
-    <main className={`${containerClassName} mt-10 py-16 sm:py-20`}>
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`${containerClassName} mt-10 py-16 sm:py-20`}
+    >
       <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
         <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8">
           <Badge
@@ -179,7 +183,11 @@ export default async function ClaimOrderPage({
   const supportSubject = encodeURIComponent(`${productName} support`);
 
   return (
-    <main className={`${containerClassName} mt-10 py-16 sm:py-20`}>
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`${containerClassName} mt-10 py-16 sm:py-20`}
+    >
       <MoneyPathPageEvent
         event="claim_page_viewed"
         productSlug={productSlug}

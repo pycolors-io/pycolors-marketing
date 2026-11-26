@@ -175,6 +175,8 @@ export function PaginationBasicExample() {
 
 `PaginationLink`, `PaginationPrevious`et `PaginationNext` Soutenez le `asChild` modèle de composition. Passer une ancre réelle (ou un cadre) `Link`) comme l'enfant et le contrôle le rend comme élément racine tout en préservant tous les styles, `data-slot`, étiquettes accessibles, et - pour `PaginationPrevious` et `PaginationNext` - l'icône intégrée et le texte visible.
 
+Dans cet exemple, les pages 1 à 3 ouvrent les guides Table, Pagination et Separator.
+
 <Tabs items={["Aperçu", "Code"]}>
   <Tab value="Aperçu">
     <Preview>
@@ -182,30 +184,27 @@ export function PaginationBasicExample() {
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious asChild>
-              <a href="#previous" />
+              <a href="/docs/ui/table" />
             </PaginationPrevious>
           </PaginationItem>
           <PaginationItem>
             <PaginationLink asChild>
-              <a href="#page-1">1</a>
+              <a href="/docs/ui/table">1</a>
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>
             <PaginationLink asChild isActive>
-              <a href="#page-2">2</a>
+              <a href="/docs/ui/pagination">2</a>
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>
             <PaginationLink asChild>
-              <a href="#page-3">3</a>
+              <a href="/docs/ui/separator">3</a>
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
             <PaginationNext asChild>
-              <a href="#next" />
+              <a href="/docs/ui/separator" />
             </PaginationNext>
           </PaginationItem>
         </PaginationContent>

@@ -96,6 +96,7 @@ Use a horizontal Separator to divide related content blocks.
         </div>
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -107,9 +108,7 @@ export function BasicSeparator() {
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
       <div>
-        <div className="text-sm font-medium text-foreground">
-          Account
-        </div>
+        <div className="text-sm font-medium text-foreground">Account</div>
         <div className="mt-1 text-sm text-muted-foreground">
           Manage profile settings and preferences.
         </div>
@@ -118,9 +117,7 @@ export function BasicSeparator() {
       <Separator className="my-4" />
 
       <div>
-        <div className="text-sm font-medium text-foreground">
-          Billing
-        </div>
+        <div className="text-sm font-medium text-foreground">Billing</div>
         <div className="mt-1 text-sm text-muted-foreground">
           Review invoices, plan status, and payment settings.
         </div>
@@ -134,7 +131,8 @@ export function BasicSeparator() {
 </Tabs>
 
 <Callout type="info" title="Default behavior">
-  Separator is decorative by default. It renders without separator semantics unless you explicitly set `decorative={false}`.
+  Separator is decorative by default. It renders without separator semantics
+  unless you explicitly set `decorative={false}`.
 </Callout>
 
 ## When to use Separator
@@ -146,21 +144,21 @@ Use Separator when spacing alone is not enough to communicate grouping.
   tone="platform"
   items={[
     {
-      title: 'Sections',
+      title: "Sections",
       description:
-        'Separate related content groups inside cards, panels, and forms.',
+        "Separate related content groups inside cards, panels, and forms.",
       icon: Rows3,
     },
     {
-      title: 'Toolbars',
+      title: "Toolbars",
       description:
-        'Divide compact action groups without introducing heavy borders.',
+        "Divide compact action groups without introducing heavy borders.",
       icon: Columns3,
     },
     {
-      title: 'Hierarchy',
+      title: "Hierarchy",
       description:
-        'Make dense information easier to scan while keeping the layout calm.',
+        "Make dense information easier to scan while keeping the layout calm.",
       icon: ListTree,
     },
   ]}
@@ -194,6 +192,7 @@ Horizontal is the default orientation.
         </div>
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -204,11 +203,10 @@ import { Badge, Separator } from "@pycolors/ui";
 export function HorizontalSeparator() {
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
-      <div className="text-sm font-medium text-foreground">
-        Starter Pro
-      </div>
+      <div className="text-sm font-medium text-foreground">Starter Pro</div>
       <div className="mt-1 text-sm leading-6 text-muted-foreground">
-        Production-ready SaaS starter with authentication, billing, and protected app foundations.
+        Production-ready SaaS starter with authentication, billing, and
+        protected app foundations.
       </div>
 
       <Separator className="my-4" />
@@ -251,6 +249,7 @@ Use a vertical Separator inside a flex row. Give the parent a height or use `sel
         </div>
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -261,21 +260,15 @@ import { Separator } from "@pycolors/ui";
 export function VerticalSeparator() {
   return (
     <div className="flex h-12 items-center rounded-2xl border border-border/60 bg-card px-4">
-      <div className="text-sm font-medium text-foreground">
-        Free
-      </div>
+      <div className="text-sm font-medium text-foreground">Free</div>
 
       <Separator orientation="vertical" className="mx-4" />
 
-      <div className="text-sm font-medium text-foreground">
-        Pro
-      </div>
+      <div className="text-sm font-medium text-foreground">Pro</div>
 
       <Separator orientation="vertical" className="mx-4" />
 
-      <div className="text-sm font-medium text-foreground">
-        Enterprise
-      </div>
+      <div className="text-sm font-medium text-foreground">Enterprise</div>
     </div>
   );
 }
@@ -285,7 +278,8 @@ export function VerticalSeparator() {
 </Tabs>
 
 <Callout title="Vertical rule">
-  Vertical separators need layout height. Use them inside rows, toolbars, navs, or compact metadata groups.
+  Vertical separators need layout height. Use them inside rows, toolbars, navs,
+  or compact metadata groups.
 </Callout>
 
 ## Decorative vs semantic
@@ -319,6 +313,7 @@ Set `decorative={false}` when the separator communicates a meaningful boundary f
         </section>
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -357,7 +352,8 @@ export function SemanticSeparator() {
 </Tabs>
 
 <Callout type="info" title="Semantic rule">
-  Most separators should stay decorative. Use semantic separators only when the boundary itself helps describe the structure.
+  Most separators should stay decorative. Use semantic separators only when the
+  boundary itself helps describe the structure.
 </Callout>
 
 ### Settings card
@@ -406,6 +402,7 @@ export function SemanticSeparator() {
         </div>
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -417,9 +414,7 @@ export function SettingsCardSeparators() {
   return (
     <div className="rounded-2xl border border-border/60 bg-card">
       <div className="p-5">
-        <div className="text-sm font-medium text-foreground">
-          Notifications
-        </div>
+        <div className="text-sm font-medium text-foreground">Notifications</div>
         <div className="mt-1 text-sm text-muted-foreground">
           Choose how PyColors should contact you.
         </div>
@@ -505,56 +500,60 @@ export function MetadataSeparator() {
     #### Start with spacing
 
     Use spacing first. Add Separator only when visual grouping is still unclear.
+
   </Step>
 
   <Step>
     #### Keep dividers subtle
 
     Use semantic border tokens. Avoid strong colors unless the divider is part of a very specific branded surface.
+
   </Step>
 
   <Step>
     #### Pick the right orientation
 
     Use horizontal dividers for stacked content and vertical dividers for compact rows.
+
   </Step>
 
   <Step>
     #### Avoid over-fragmenting the page
 
     Too many separators make the UI feel heavy and harder to scan.
+
   </Step>
 </Steps>
 
 ## Separator vs Border vs Card
 
-| Situation | Use |
-| --- | --- |
-| Split content inside the same surface | Separator |
-| Define the edge of a surface | Border |
-| Group content into a distinct object | Card |
-| Divide toolbar action groups | Separator |
-| Separate unrelated page regions | Section spacing or Card |
-| Emphasize a critical state | Alert or semantic color |
+| Situation                             | Use                     |
+| ------------------------------------- | ----------------------- |
+| Split content inside the same surface | Separator               |
+| Define the edge of a surface          | Border                  |
+| Group content into a distinct object  | Card                    |
+| Divide toolbar action groups          | Separator               |
+| Separate unrelated page regions       | Section spacing or Card |
+| Emphasize a critical state            | Alert or semantic color |
 
 <Callout title="Decision rule">
-  Use Separator inside a surface. Use Card when the content deserves its own surface.
+  Use Separator inside a surface. Use Card when the content deserves its own
+  surface.
 </Callout>
 
 ## API
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Divider direction |
-| `decorative` | `boolean` | `true` | Removes separator semantics when true |
-| `className` | `string` | — | Additional Tailwind classes |
-| `...props` | `React.HTMLAttributes<HTMLDivElement>` | — | Standard div attributes |
+| Prop          | Type                                   | Default        | Description                           |
+| ------------- | -------------------------------------- | -------------- | ------------------------------------- |
+| `orientation` | `"horizontal" \| "vertical"`           | `"horizontal"` | Divider direction                     |
+| `decorative`  | `boolean`                              | `true`         | Removes separator semantics when true |
+| `className`   | `string`                               | —              | Additional Tailwind classes           |
+| `...props`    | `React.HTMLAttributes<HTMLDivElement>` | —              | Standard div attributes               |
 
 ### TypeScript types
 
 ```ts title="separator-types.ts"
-export interface SeparatorProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation?: "horizontal" | "vertical";
   decorative?: boolean;
 }
@@ -570,25 +569,26 @@ export interface SeparatorProps
 - Do not rely on a divider alone to explain hierarchy.
 
 <Callout title="Accessibility rule">
-  If the separator does not add meaning for screen reader users, keep it decorative.
+  If the separator does not add meaning for screen reader users, keep it
+  decorative.
 </Callout>
 
 ## Prefer / avoid
 
 <PreferAvoid
   prefer={[
-    'subtle dividers inside cards and panels',
-    'horizontal separators for stacked sections',
-    'vertical separators for compact rows',
-    'decorative separators by default',
-    'spacing before adding extra lines',
+    "subtle dividers inside cards and panels",
+    "horizontal separators for stacked sections",
+    "vertical separators for compact rows",
+    "decorative separators by default",
+    "spacing before adding extra lines",
   ]}
   avoid={[
-    'using separators as decoration',
-    'too many dividers in dense layouts',
-    'strong colors for neutral separation',
-    'semantic separators without structural value',
-    'replacing headings with divider lines',
+    "using separators as decoration",
+    "too many dividers in dense layouts",
+    "strong colors for neutral separation",
+    "semantic separators without structural value",
+    "replacing headings with divider lines",
   ]}
 />
 
@@ -599,13 +599,15 @@ export interface SeparatorProps
     No. Most separators are visual only. PyColors keeps them decorative by default to avoid unnecessary screen reader noise.
   </Accordion>
 
-  <Accordion title="Why does vertical Separator sometimes not appear?">
-    Vertical separators need height from the parent layout. Use them inside a row with a fixed height, `items-stretch`, or an explicit height class.
-  </Accordion>
+<Accordion title="Why does vertical Separator sometimes not appear?">
+  Vertical separators need height from the parent layout. Use them inside a row
+  with a fixed height, `items-stretch`, or an explicit height class.
+</Accordion>
 
-  <Accordion title="Should I use Separator between every list item?">
-    Usually no. Use spacing, row backgrounds, or borders only when density requires stronger grouping.
-  </Accordion>
+<Accordion title="Should I use Separator between every list item?">
+  Usually no. Use spacing, row backgrounds, or borders only when density
+  requires stronger grouping.
+</Accordion>
 
   <Accordion title="Can Separator use custom colors?">
     Yes through `className`, but prefer semantic tokens like `bg-border`, `bg-border-subtle`, or theme-specific tokens when available.
@@ -619,31 +621,30 @@ export interface SeparatorProps
   tone="platform"
   items={[
     {
-      title: 'Card',
-      href: '/docs/ui/card',
-      description:
-        'Use Card when content needs its own surface and boundary.',
+      title: "Card",
+      href: "/docs/ui/card",
+      description: "Use Card when content needs its own surface and boundary.",
       icon: PanelsTopLeft,
     },
     {
-      title: 'Colors',
-      href: '/docs/design-system/colors',
+      title: "Colors",
+      href: "/docs/design-system/colors",
       description:
-        'Semantic tokens for borders, surfaces, and layout dividers.',
+        "Semantic tokens for borders, surfaces, and layout dividers.",
       icon: Palette,
     },
     {
-      title: 'Badge',
-      href: '/docs/ui/badge',
+      title: "Badge",
+      href: "/docs/ui/badge",
       description:
-        'Pair badges with separators in metadata and compact status rows.',
+        "Pair badges with separators in metadata and compact status rows.",
       icon: Tags,
     },
     {
-      title: 'Layout pattern',
-      href: '/docs/patterns/layout',
+      title: "Layout pattern",
+      href: "/docs/guides/building-a-saas-layout",
       description:
-        'Build clearer page structure with spacing, surfaces, and dividers.',
+        "Build clearer page structure with spacing, surfaces, and dividers.",
       icon: LayoutTemplate,
     },
   ]}

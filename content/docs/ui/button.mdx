@@ -9,13 +9,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tabs, Tab } from "fumadocs-ui/components/tabs";
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@pycolors/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle } from "@pycolors/ui";
 import {
   Accessibility,
   ArrowRight,
@@ -33,7 +27,7 @@ import {
   Tags,
   XCircle,
 } from "lucide-react";
-import { PreferAvoid } from '@/components/docs/prefer-avoid';
+import { PreferAvoid } from "@/components/docs/prefer-avoid";
 import { DocsLinks } from "@/components/docs/docs-links";
 import { DocsFeatureGrid } from "@/components/docs/docs-feature-grid";
 import { DocsConceptTabs } from "@/components/docs/docs-concept-tabs";
@@ -61,7 +55,8 @@ Use it for:
 This implementation extends the **shadcn/ui Button primitive** and is aligned with the PyColors design system: semantic color tokens, radius, shadows, and focus rings.
 
 <Callout title="Core idea">
-  Buttons communicate intent. Choose the variant based on action priority, not decoration.
+  Buttons communicate intent. Choose the variant based on action priority, not
+  decoration.
 </Callout>
 
 ### Import
@@ -119,28 +114,26 @@ Use Button when the user is taking an action.
   tone="platform"
   items={[
     {
-      title: 'Primary actions',
+      title: "Primary actions",
       description:
-        'Use for submit, save, continue, checkout, create, or upgrade actions.',
+        "Use for submit, save, continue, checkout, create, or upgrade actions.",
       icon: MousePointerClick,
     },
     {
-      title: 'Secondary actions',
+      title: "Secondary actions",
       description:
-        'Use for cancel, view details, learn more, or alternative paths.',
+        "Use for cancel, view details, learn more, or alternative paths.",
       icon: Sparkles,
     },
     {
-      title: 'Risky actions',
+      title: "Risky actions",
       description:
-        'Use destructive styling only for dangerous or irreversible actions.',
+        "Use destructive styling only for dangerous or irreversible actions.",
       icon: ShieldAlert,
-      tone: 'danger',
+      tone: "danger",
     },
   ]}
 />
-
-
 
 ### Decision model
 
@@ -200,9 +193,9 @@ Use Button when the user is taking an action.
         </>
       ),
     },
-  ]}
-/>
 
+]}
+/>
 
 ### Variants
 
@@ -246,17 +239,18 @@ export function ButtonVariants() {
 
 ### Available variants
 
-| Variant | Purpose |
-| --- | --- |
-| `default` | Primary action, highest emphasis |
-| `secondary` | Neutral alternative action |
-| `outline` | Medium-emphasis action |
-| `ghost` | Low-emphasis action in dense UI |
+| Variant       | Purpose                          |
+| ------------- | -------------------------------- |
+| `default`     | Primary action, highest emphasis |
+| `secondary`   | Neutral alternative action       |
+| `outline`     | Medium-emphasis action           |
+| `ghost`       | Low-emphasis action in dense UI  |
 | `destructive` | Dangerous or irreversible action |
-| `link` | Text-style inline action |
+| `link`        | Text-style inline action         |
 
 <Callout type="info" title="Variant rule">
-  A page should usually have one clear primary action. Use secondary, outline, or ghost for supporting actions.
+  A page should usually have one clear primary action. Use secondary, outline,
+  or ghost for supporting actions.
 </Callout>
 
 ### Sizes
@@ -284,6 +278,7 @@ Button supports standard sizes and icon-only sizes.
       </Button>
     </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -335,17 +330,18 @@ export function ButtonSizes() {
 
 ### Available sizes
 
-| Size | Purpose |
-| --- | --- |
-| `sm` | Compact buttons for dense product UIs |
-| `default` | Standard button size |
-| `lg` | Stronger visual weight |
-| `icon` | Square icon-only button |
-| `icon-sm` | Compact icon-only button |
-| `icon-lg` | Larger icon-only button |
+| Size      | Purpose                               |
+| --------- | ------------------------------------- |
+| `sm`      | Compact buttons for dense product UIs |
+| `default` | Standard button size                  |
+| `lg`      | Stronger visual weight                |
+| `icon`    | Square icon-only button               |
+| `icon-sm` | Compact icon-only button              |
+| `icon-lg` | Larger icon-only button               |
 
 <Callout title="Size rule">
-  Keep button sizes consistent inside the same section. Use `lg` for major CTAs and `sm` for dense product actions.
+  Keep button sizes consistent inside the same section. Use `lg` for major CTAs
+  and `sm` for dense product actions.
 </Callout>
 
 ### Disabled state
@@ -372,8 +368,12 @@ export function ButtonDisabled() {
   return (
     <div className="flex flex-wrap gap-4">
       <Button disabled>Disabled</Button>
-      <Button variant="secondary" disabled>Disabled</Button>
-      <Button variant="outline" disabled>Disabled</Button>
+      <Button variant="secondary" disabled>
+        Disabled
+      </Button>
+      <Button variant="outline" disabled>
+        Disabled
+      </Button>
     </div>
   );
 }
@@ -385,7 +385,8 @@ export function ButtonDisabled() {
 Disabled buttons use reduced opacity and remove pointer interaction.
 
 <Callout type="info" title="UX rule">
-  When disabling a button, make sure the user can understand what is required to enable it.
+  When disabling a button, make sure the user can understand what is required to
+  enable it.
 </Callout>
 
 ### With icon
@@ -433,7 +434,8 @@ export function ButtonTrailingIcon() {
 </Tabs>
 
 <Callout title="Icon rule">
-  Icons should support the label. For icon-only buttons, always provide an `aria-label`.
+  Icons should support the label. For icon-only buttons, always provide an
+  `aria-label`.
 </Callout>
 
 ### Validation state
@@ -484,7 +486,7 @@ This is commonly used for links and router components.
   <Tab value="Preview">
     <Preview>
     <Button asChild>
-      <a href="#docs">Go to docs</a>
+      <a href="/docs">Go to docs</a>
     </Button>
     </Preview>
   </Tab>
@@ -497,7 +499,7 @@ import { Button } from "@pycolors/ui";
 export function ButtonAsChild() {
   return (
     <Button asChild>
-      <a href="#docs">Go to docs</a>
+      <a href="/docs">Go to docs</a>
     </Button>
   );
 }
@@ -507,7 +509,8 @@ export function ButtonAsChild() {
 </Tabs>
 
 <Callout type="info" title="Semantics rule">
-  If the action navigates, render an anchor or router link. If it submits or mutates state, render a button.
+  If the action navigates, render an anchor or router link. If it submits or
+  mutates state, render a button.
 </Callout>
 
 ### Usage patterns
@@ -517,30 +520,35 @@ export function ButtonAsChild() {
     #### Choose the action priority
 
     Use `default` for the main action, then choose secondary, outline, or ghost for supporting actions.
+
   </Step>
 
   <Step>
     #### Use semantic intent
 
     Use `destructive` only when the action is dangerous or irreversible.
+
   </Step>
 
   <Step>
     #### Keep labels action-oriented
 
     Prefer clear verbs such as Save, Continue, Create project, Upgrade, Delete.
+
   </Step>
 
   <Step>
     #### Pair loading with state
 
     During async work, disable the button and update the label to show progress.
+
   </Step>
 
   <Step>
     #### Keep icon-only buttons accessible
 
     Always provide `aria-label` and mark decorative icons as `aria-hidden`.
+
   </Step>
 </Steps>
 
@@ -550,47 +558,46 @@ export function ButtonAsChild() {
   columns={2}
   items={[
     {
-      eyebrow: 'Mutation',
-      title: 'Use Button',
+      eyebrow: "Mutation",
+      title: "Use Button",
       icon: MousePointerClick,
       description:
-        'Buttons should trigger actions, mutations, submissions, confirmations, or workflow progression.',
+        "Buttons should trigger actions, mutations, submissions, confirmations, or workflow progression.",
       items: [
-        'save data',
-        'submit forms',
-        'open overlays',
-        'trigger async actions',
+        "save data",
+        "submit forms",
+        "open overlays",
+        "trigger async actions",
       ],
     },
     {
-      eyebrow: 'Navigation',
-      title: 'Use Link',
+      eyebrow: "Navigation",
+      title: "Use Link",
       icon: ExternalLink,
-      tone: 'primary',
+      tone: "primary",
       description:
-        'Links should navigate between pages, routes, or external resources.',
+        "Links should navigate between pages, routes, or external resources.",
       items: [
-        'page navigation',
-        'external docs',
-        'route changes',
-        'resource links',
+        "page navigation",
+        "external docs",
+        "route changes",
+        "resource links",
       ],
     },
   ]}
 />
 
-
 ## Button vs link vs badge
 
-| Situation | Use |
-| --- | --- |
-| Submit a form | Button |
-| Trigger a mutation | Button |
-| Open a Dialog or Sheet | Button |
+| Situation               | Use                               |
+| ----------------------- | --------------------------------- |
+| Submit a form           | Button                            |
+| Trigger a mutation      | Button                            |
+| Open a Dialog or Sheet  | Button                            |
 | Navigate to another URL | Link styled with `Button asChild` |
-| Show metadata or status | Badge |
-| Inline text navigation | Link |
-| Compact row actions | DropdownMenu trigger button |
+| Show metadata or status | Badge                             |
+| Inline text navigation  | Link                              |
+| Compact row actions     | DropdownMenu trigger button       |
 
 <Callout title="Decision rule">
   Button is for intent. Link is for navigation. Badge is for metadata.
@@ -598,38 +605,28 @@ export function ButtonAsChild() {
 
 ## API
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `ButtonVariant` | `"default"` | Visual style |
-| `size` | `ButtonSize` | `"default"` | Button size |
-| `asChild` | `boolean` | `false` | Render using Radix Slot |
-| `disabled` | `boolean` | `false` | Disable interaction |
-| `className` | `string` | — | Additional Tailwind classes |
+| Prop        | Type            | Default     | Description                 |
+| ----------- | --------------- | ----------- | --------------------------- |
+| `variant`   | `ButtonVariant` | `"default"` | Visual style                |
+| `size`      | `ButtonSize`    | `"default"` | Button size                 |
+| `asChild`   | `boolean`       | `false`     | Render using Radix Slot     |
+| `disabled`  | `boolean`       | `false`     | Disable interaction         |
+| `className` | `string`        | —           | Additional Tailwind classes |
 
 Button extends standard HTML button props.
 
 ```ts title="button-props.ts"
-React.ComponentProps<"button">
+React.ComponentProps<"button">;
 ```
 
 ### TypeScript types
 
 ```ts title="button-types.ts"
 export type ButtonVariant =
-  | "default"
-  | "secondary"
-  | "outline"
-  | "ghost"
-  | "destructive"
-  | "link";
+  "default" | "secondary" | "outline" | "ghost" | "destructive" | "link";
 
 export type ButtonSize =
-  | "default"
-  | "sm"
-  | "lg"
-  | "icon"
-  | "icon-sm"
-  | "icon-lg";
+  "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg";
 ```
 
 ### Accessibility
@@ -643,25 +640,26 @@ export type ButtonSize =
 - Use links for navigation and buttons for actions.
 
 <Callout title="Accessibility rule">
-  Every button must have an accessible name. Visible text is best; `aria-label` is required for icon-only buttons.
+  Every button must have an accessible name. Visible text is best; `aria-label`
+  is required for icon-only buttons.
 </Callout>
 
 ## Prefer / avoid
 
 <PreferAvoid
   prefer={[
-    'one clear primary action per section',
-    'short verb-first labels',
-    'consistent sizes in the same view',
-    '`asChild` for links that look like buttons',
-    'accessible labels for icon-only buttons',
+    "one clear primary action per section",
+    "short verb-first labels",
+    "consistent sizes in the same view",
+    "`asChild` for links that look like buttons",
+    "accessible labels for icon-only buttons",
   ]}
   avoid={[
-    'multiple competing primary buttons',
-    'destructive styling for non-destructive actions',
-    'icon-only buttons without labels',
-    'buttons used as navigation without link semantics',
-    'vague labels like “OK” or “Submit” when context is unclear',
+    "multiple competing primary buttons",
+    "destructive styling for non-destructive actions",
+    "icon-only buttons without labels",
+    "buttons used as navigation without link semantics",
+    "vague labels like “OK” or “Submit” when context is unclear",
   ]}
 />
 
@@ -711,7 +709,8 @@ Button labels should communicate intent clearly and reduce hesitation.
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ## Common questions
@@ -721,13 +720,14 @@ Button labels should communicate intent clearly and reduce hesitation.
     Navigation should use links. Use `Button asChild` to style an anchor or router link as a button.
   </Accordion>
 
-  <Accordion title="How many primary buttons should a page have?">
-    Usually one per major section. Too many primary buttons weaken the hierarchy.
-  </Accordion>
+<Accordion title="How many primary buttons should a page have?">
+  Usually one per major section. Too many primary buttons weaken the hierarchy.
+</Accordion>
 
-  <Accordion title="When should I use destructive?">
-    Use `destructive` for dangerous or irreversible actions, such as delete, revoke, remove, or cancel subscription.
-  </Accordion>
+<Accordion title="When should I use destructive?">
+  Use `destructive` for dangerous or irreversible actions, such as delete,
+  revoke, remove, or cancel subscription.
+</Accordion>
 
   <Accordion title="Should disabled buttons explain why they are disabled?">
     Yes. Use nearby helper text, validation messages, or state copy to explain what is required.
@@ -741,31 +741,29 @@ Button labels should communicate intent clearly and reduce hesitation.
   tone="platform"
   items={[
     {
-      title: 'Badge',
-      href: '/docs/ui/badge',
-      description:
-        'Use badges for metadata and status, not actions.',
+      title: "Badge",
+      href: "/docs/ui/badge",
+      description: "Use badges for metadata and status, not actions.",
       icon: Tags,
     },
     {
-      title: 'Dialog',
-      href: '/docs/ui/dialog',
+      title: "Dialog",
+      href: "/docs/ui/dialog",
       description:
-        'Use buttons to trigger focused modal tasks and confirmations.',
+        "Use buttons to trigger focused modal tasks and confirmations.",
       icon: PanelTop,
     },
     {
-      title: 'Colors',
-      href: '/docs/design-system/colors',
-      description:
-        'Semantic color roles used by button variants.',
+      title: "Colors",
+      href: "/docs/design-system/colors",
+      description: "Semantic color roles used by button variants.",
       icon: Palette,
     },
     {
-      title: 'Accessibility',
-      href: '/docs/ui/accessibility',
+      title: "Accessibility",
+      href: "/docs/ui/accessibility",
       description:
-        'Build accessible actions with clear labels and keyboard support.',
+        "Build accessible actions with clear labels and keyboard support.",
       icon: Accessibility,
     },
   ]}
