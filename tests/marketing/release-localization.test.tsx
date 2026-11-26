@@ -137,7 +137,7 @@ describe("Marketing v1.34.0 localized release contract", () => {
           status,
         })),
     );
-    expect(pending).toHaveLength(7);
+    expect(pending).toHaveLength(6);
 
     cleanup();
     localeState.value = "fr";
@@ -154,6 +154,15 @@ describe("Marketing v1.34.0 localized release contract", () => {
       "/fr/changelog",
     );
     const copy = copyFor("fr");
+    const buyerGuidance = screen
+      .getByRole("heading", {
+        level: 3,
+        name: frenchFor("Starter Pro buyer FAQ and launch responsibilities"),
+      })
+      .closest("li")!;
+    expect(
+      within(buyerGuidance).getByText(copy("Shipped"), { exact: true }),
+    ).toBeVisible();
     for (const item of pending) {
       const activeRow = screen
         .getByRole("heading", {
