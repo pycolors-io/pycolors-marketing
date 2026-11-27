@@ -23,7 +23,7 @@ export async function OrderInvoice({
   }
   if (status === "available")
     return (
-      <SiteButton asChild variant="outline">
+      <SiteButton asChild variant="outline" className="min-h-11 px-3">
         <a
           href={endpoint + "?download=1&locale=" + tSite.locale}
           referrerPolicy="no-referrer"
@@ -47,14 +47,17 @@ export async function OrderInvoice({
             : tSite("Your invoice is temporarily unavailable.")}
       </p>
       {status !== "legacy" && (
-        <a className="underline underline-offset-4" href={retryHref}>
+        <a
+          className="inline-flex min-h-11 items-center underline underline-offset-4"
+          href={retryHref}
+        >
           {tSite("Check invoice again")}
         </a>
       )}
       {status !== "legacy" && <span aria-hidden="true"> · </span>}
       <Link
         href={status === "legacy" ? "/orders/support" : "/orders/recover"}
-        className="underline underline-offset-4"
+        className="inline-flex min-h-11 items-center underline underline-offset-4"
       >
         {status === "legacy"
           ? tSite("Purchase support")

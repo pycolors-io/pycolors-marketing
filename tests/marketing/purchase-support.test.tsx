@@ -10,7 +10,7 @@ import { axe } from "vitest-axe";
 
 import PurchaseSupportPage from "../../app/[locale]/(site)/orders/support/page";
 vi.mock("@/components/orders/order-invoice", () => ({
-  OrderInvoice: () => null,
+  OrderInvoice: () => <span>Invoice action</span>,
 }));
 import ClaimOrderPage from "../../app/[locale]/(site)/orders/claim/page";
 import CheckoutCancelPage from "../../app/[locale]/(site)/checkout/cancel/page";
@@ -262,6 +262,21 @@ describe("Purchase support", () => {
     expect(
       screen.getByRole("link", { name: "Contact support" }),
     ).toHaveAttribute("href", "/orders/support");
+    const invoice = screen.getByText("Invoice action");
+    expect(invoice.closest("#invoice")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Purchase confirmed",
+    );
+    expect(
+      screen
+        .getByRole("link", { name: "Download Starter Pro" })
+        .compareDocumentPosition(invoice) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      invoice.compareDocumentPosition(
+        screen.getByRole("heading", { name: "Order summary" }),
+      ) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
     expect(
       screen.getByRole("link", { name: "Download Starter Pro" }),
     ).toHaveAttribute(

@@ -314,7 +314,7 @@ export default async function CheckoutSuccessPage({
           </p>
           <p className={styles.description}>
             {tSite(
-              "Open the secure link in your purchase email to download your product and find your invoice in the order summary.",
+              "Open the secure link in your purchase email to download your product and access its invoice.",
             )}
           </p>
           <div className={styles.actions}>

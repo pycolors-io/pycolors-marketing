@@ -6,7 +6,7 @@ import { getCopy } from "@/lib/i18n/server-copy";
 import { Link } from "@/lib/i18n/navigation";
 import { containerClassName } from "@/components/container";
 import { Suspense } from "react";
-import { BadgeCheck, Download } from "lucide-react";
+import { CircleCheck, Download } from "lucide-react";
 import { Badge, Card, CardContent } from "@pycolors/ui";
 import { OrderInvoice } from "@/components/orders/order-invoice";
 import { SiteButton as Button } from "@/components/site-button";
@@ -182,7 +182,7 @@ export default async function ClaimOrderPage({
     <main
       id="content"
       tabIndex={-1}
-      className={`${containerClassName} py-6 sm:py-12`}
+      className={`${containerClassName} pb-12 pt-[calc(var(--site-header-height)+2rem)] sm:pb-16 sm:pt-[calc(var(--site-header-height)+3rem)] lg:pt-[calc(var(--site-header-height)+3.5rem)]`}
     >
       <MoneyPathPageEvent
         event="claim_page_viewed"
@@ -191,23 +191,24 @@ export default async function ClaimOrderPage({
         page="/orders/claim"
         status="ready"
       />
-      <div className="mx-auto max-w-3xl space-y-6">
-        <header className="flex items-center gap-2">
-          <BadgeCheck aria-hidden="true" className="size-5 text-primary" />
-          <h1 className="text-lg font-semibold">
+      <div className="mx-auto max-w-2xl space-y-6 sm:space-y-8">
+        <header className="space-y-2">
+          <h1 className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+            <CircleCheck
+              aria-hidden="true"
+              className="size-5 shrink-0 text-success"
+            />
             {tSite("Purchase confirmed")}
           </h1>
+          <p className="break-words text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+            {productName}
+          </p>
         </header>
-        <Card className="gap-0 overflow-hidden border-primary/35 bg-card py-0">
-          <CardContent className="space-y-5 p-5 sm:p-8">
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                {tSite("Your download")}
-              </p>
-              <h2 className="break-words text-2xl font-semibold tracking-tight sm:text-4xl">
-                {productName}
-              </h2>
-            </div>
+        <Card className="gap-0 overflow-hidden border-primary/25 bg-card py-0">
+          <CardContent className="space-y-4 p-5 sm:p-7">
+            <h2 className="text-lg font-semibold tracking-tight">
+              {tSite("Your download")}
+            </h2>
             {downloadAvailable ? (
               <Button
                 size="lg"
@@ -230,12 +231,25 @@ export default async function ClaimOrderPage({
               </div>
             )}
           </CardContent>
+          <div
+            id="invoice"
+            className="scroll-mt-[calc(var(--site-header-height)+1rem)] border-t border-border bg-surface-muted/30 px-5 py-3 sm:px-7"
+          >
+            <Suspense
+              fallback={
+                <p role="status" className="text-sm text-muted-foreground">
+                  {tSite("Checking your invoice…")}
+                </p>
+              }
+            >
+              <OrderInvoice
+                endpoint={invoiceEndpoint}
+                retryHref={retryHref + "#invoice"}
+              />
+            </Suspense>
+          </div>
         </Card>
-        <section
-          id="invoice"
-          aria-labelledby="order-summary-title"
-          className="scroll-mt-20 space-y-4 border-b pb-6"
-        >
+        <section aria-labelledby="order-summary-title" className="space-y-4">
           <h2 id="order-summary-title" className="text-lg font-semibold">
             {tSite("Order summary")}
           </h2>
@@ -257,22 +271,10 @@ export default async function ClaimOrderPage({
               </div>
             )}
           </dl>
-          <Suspense
-            fallback={
-              <p role="status" className="text-sm text-muted-foreground">
-                {tSite("Checking your invoice…")}
-              </p>
-            }
-          >
-            <OrderInvoice
-              endpoint={invoiceEndpoint}
-              retryHref={retryHref + "#invoice"}
-            />
-          </Suspense>
         </section>
         <nav
           aria-label={tSite("Purchase resources")}
-          className="flex flex-wrap gap-x-6 gap-y-3 text-sm underline underline-offset-4"
+          className="flex flex-wrap gap-x-6 gap-y-1 border-t pt-3 text-sm underline underline-offset-4 [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center"
         >
           <Link href={getPublicProduct(productSlug)?.docsHref ?? "/docs"}>
             {tSite("Start setup")}
