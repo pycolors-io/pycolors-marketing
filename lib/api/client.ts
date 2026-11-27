@@ -120,6 +120,7 @@ export const RECOVERY_FAILURE_MESSAGE =
 
 export async function recoverCommerceAccess(input: {
   email: string;
+  orderReference?: string;
   productSlug?: PublicProductSlug;
 }): Promise<{ ok: true }> {
   try {

@@ -7989,6 +7989,22 @@
     "m69e1762e": "Prisma + PostgreSQL foundations for accounts, workspaces, projects, assigned tasks, due dates and comments; wire your own domain data.",
     "m79978f26": "Responsive UI plus installable PWA foundations; auth and billing stay online-first.",
     "m1c441ba9": "Download the ZIP through your purchase claim email; access recovery is available.",
-    "m68b21d1e": "The quote defines the workflow and integration boundaries. Larger engagements can exceed 10,000 €; hosting and ongoing operation are separate."
+    "m68b21d1e": "The quote defines the workflow and integration boundaries. Larger engagements can exceed 10,000 €; hosting and ongoing operation are separate.",
+    "m1e52be27": "Purchase confirmed",
+    "ma0c35526": "Your download",
+    "m803cb676": "Download {product}",
+    "m53de2c0b": "Your product download is temporarily unavailable.",
+    "mabe6f0e1": "Check download again",
+    "m3c099d5f": "Checking your invoice…",
+    "m41951ab7": "Purchase resources",
+    "me060710c": "Download invoice PDF",
+    "mb6c49cd5": "This order has no linked invoice. Contact purchase support if you need a billing document.",
+    "ma969188e": "Your invoice is being prepared. You can already download your product.",
+    "m559d6cfd": "Your invoice is temporarily unavailable.",
+    "mc3ac0c1c": "Check invoice again",
+    "m46e23a6f": "Recover access",
+    "m4ea578fd": "Open the secure link in your purchase email to download your product and find your invoice in the order summary.",
+    "m3e9d0ff9": "Order reference (optional)",
+    "m455f9e66": "For a specific invoice, enter the order reference from your purchase email."
   }
 }

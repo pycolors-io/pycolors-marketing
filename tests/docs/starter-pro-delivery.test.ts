@@ -44,7 +44,7 @@ describe("Starter Pro purchase delivery guidance", () => {
       "3. Open the original access link.",
       "4. Download, save, and start setup.",
     ]);
-    expect(journey).toContain("**Download package**");
+    expect(journey).toContain("**Download [product name]**");
     expect(journey).toContain("(#match-your-archive)");
   });
 

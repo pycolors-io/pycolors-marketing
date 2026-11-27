@@ -9,6 +9,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
 import PurchaseSupportPage from "../../app/[locale]/(site)/orders/support/page";
+vi.mock("@/components/orders/order-invoice", () => ({
+  OrderInvoice: () => null,
+}));
 import ClaimOrderPage from "../../app/[locale]/(site)/orders/claim/page";
 import CheckoutCancelPage from "../../app/[locale]/(site)/checkout/cancel/page";
 import { SupportEmail } from "../../components/marketing/support-email";
@@ -244,6 +247,7 @@ describe("Purchase support", () => {
           productSlug: "starter-pro",
           productName: "Starter Pro",
           orderReference: "test-order-reference",
+          downloadAvailable: true,
           customerEmail: "buyer@example.com",
           paidAt: null,
         },
@@ -259,7 +263,7 @@ describe("Purchase support", () => {
       screen.getByRole("link", { name: "Contact support" }),
     ).toHaveAttribute("href", "/orders/support");
     expect(
-      screen.getByRole("link", { name: /Download package/ }),
+      screen.getByRole("link", { name: "Download Starter Pro" }),
     ).toHaveAttribute(
       "href",
       "https://api.example.com/api/v1/downloads/valid-test-token",

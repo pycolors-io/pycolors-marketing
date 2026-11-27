@@ -7989,6 +7989,22 @@
     "m69e1762e": "Prisma et PostgreSQL gèrent les comptes, les espaces de travail, les projets, les tâches assignées, les échéances et les commentaires. Vous y raccordez vos données métier.",
     "m79978f26": "L’interface s’adapte aux écrans mobiles et fournit les bases d’une PWA installable. La connexion au compte et la facturation nécessitent un accès réseau.",
     "m1c441ba9": "Téléchargez le ZIP grâce au lien reçu par e-mail après l’achat. Vous pouvez demander un nouveau lien si nécessaire.",
-    "m68b21d1e": "Le devis précise le parcours métier et les intégrations incluses. Les missions de plus grande ampleur peuvent dépasser 10 000 €. L’hébergement et l’exploitation courante sont distincts de cette prestation."
+    "m68b21d1e": "Le devis précise le parcours métier et les intégrations incluses. Les missions de plus grande ampleur peuvent dépasser 10 000 €. L’hébergement et l’exploitation courante sont distincts de cette prestation.",
+    "m1e52be27": "Achat confirmé",
+    "ma0c35526": "Votre téléchargement",
+    "m803cb676": "Télécharger {product}",
+    "m53de2c0b": "Le téléchargement de votre produit est temporairement indisponible.",
+    "mabe6f0e1": "Réessayer le téléchargement",
+    "m3c099d5f": "Vérification de votre facture…",
+    "m41951ab7": "Ressources pour votre achat",
+    "me060710c": "Télécharger ma facture PDF",
+    "mb6c49cd5": "Aucune facture n’est associée à cette commande. Si vous avez besoin d’un document de facturation, contactez l’assistance.",
+    "ma969188e": "Votre facture est en préparation. Vous pouvez déjà télécharger votre produit.",
+    "m559d6cfd": "Votre facture est temporairement indisponible.",
+    "mc3ac0c1c": "Vérifier à nouveau la facture",
+    "m46e23a6f": "Récupérer mon accès",
+    "m4ea578fd": "Ouvrez le lien sécurisé de votre email d’achat pour télécharger votre produit et retrouver votre facture dans le récapitulatif de commande.",
+    "m3e9d0ff9": "Référence de commande (facultatif)",
+    "m455f9e66": "Pour retrouver une facture précise, saisissez la référence figurant dans votre email d’achat."
   }
 }
