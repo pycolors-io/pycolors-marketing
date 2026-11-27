@@ -65,14 +65,14 @@ function releaseHistory() {
     }));
 }
 
-describe("Marketing v1.34.0 localized release contract", () => {
+describe("Marketing v1.35.0 localized release contract", () => {
   it("renders every new release benefit in French with the same dates, history and guide destination", () => {
     localeState.value = "en";
     render(<ChangelogPage />);
     const history = releaseHistory();
     const latest = history[0]!.article;
     const guideLink = within(latest).getByRole("link", {
-      name: "Explore the documentation",
+      name: "Compare Starter Pro editions",
     });
     const messages = [
       within(latest).getByRole("heading", { level: 2 }).textContent!,
@@ -83,9 +83,11 @@ describe("Marketing v1.34.0 localized release contract", () => {
       ),
       guideLink.textContent!,
     ].map(frenchFor);
-    expect(history[0]!.date).toBe("2026-11-20");
-    expect(within(latest).getByText("v1.34.0", { exact: true })).toBeVisible();
-    expect(guideLink).toHaveAttribute("href", "/docs");
+    expect(history[1]?.id).toBe("release-v1-34-0");
+    expect(history[1]?.date).toBe("2026-11-20");
+    expect(history[0]!.date).toBe("2026-11-27");
+    expect(within(latest).getByText("v1.35.0", { exact: true })).toBeVisible();
+    expect(guideLink).toHaveAttribute("href", "/starters/pro");
 
     cleanup();
     localeState.value = "fr";
@@ -105,24 +107,24 @@ describe("Marketing v1.34.0 localized release contract", () => {
         year: "numeric",
         weekday: "short",
         timeZone: "UTC",
-      }).format(new Date("2026-11-20T00:00:00Z")),
+      }).format(new Date("2026-11-27T00:00:00Z")),
     );
     expect(
       within(localizedLatest).getByRole("link", {
-        name: frenchFor("Explore the documentation"),
+        name: frenchFor("Compare Starter Pro editions"),
       }),
-    ).toHaveAttribute("href", "/fr/docs");
+    ).toHaveAttribute("href", "/fr/starters/pro");
   });
 
   it("translates the November milestone and release row while preserving pending work", () => {
     localeState.value = "en";
     render(<RoadmapPage />);
-    const title = "PyColors Marketing v1.34.0";
+    const title = "PyColors Marketing v1.35.0";
     const row = screen
       .getByRole("heading", { level: 3, name: title })
       .closest("li")!;
     const milestone = screen.getByText(
-      /PyColors Marketing v1\.34\.0, dated 20 November 2026/,
+      /PyColors Marketing v1\.35\.0, dated 27 November 2026/,
     );
     const messages = [
       title,

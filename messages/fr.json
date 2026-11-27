@@ -8005,6 +8005,21 @@
     "m46e23a6f": "Récupérer mon accès",
     "mfe89a35": "Ouvrez le lien sécurisé de votre email d’achat pour télécharger votre produit et accéder à sa facture.",
     "m3e9d0ff9": "Référence de commande (facultatif)",
-    "m455f9e66": "Pour retrouver une facture précise, saisissez la référence figurant dans votre email d’achat."
+    "m455f9e66": "Pour retrouver une facture précise, saisissez la référence figurant dans votre email d’achat.",
+    "m6e1f5766": "Choisir une édition de Starter Pro et suivre son guide d’installation",
+    "m18c97a1c": "Comparez Web, Mobile et Fullstack, puis suivez le guide de l’édition achetée. L’explorateur UI permet aussi d’essayer un composant avant de copier un exemple.",
+    "m7256b875": "Le guide Mobile commence par l’application mobile et son backend. Le guide Fullstack relie les applications web et mobile au même backend.",
+    "mf40819a5": "Le comparatif mobile explique le choix de React Native par PyColors et les cas où Capacitor convient mieux à une application web existante.",
+    "mec93b207": "Dans l’explorateur PyColors UI, essayez les différents états des composants à votre rythme et copiez des exemples qui utilisent le package public.",
+    "m15bad79d": "En environnement de test, les acheteurs ont pu télécharger leur produit et ouvrir séparément leur facture PDF en français depuis la page de confirmation. La facturation commerciale reste soumise à approbation avant son activation.",
+    "m8c5c3fd2": "Le guide de votre édition indique la première commande à exécuter et le backend auquel chaque application doit se connecter.",
+    "me84f88b0": "La FAQ acheteur vous aide à préciser les conditions d’assistance et de licence ainsi que les vérifications de production à prévoir avant le lancement.",
+    "m683abe7b": "Comparer les éditions de Starter Pro",
+    "m97b314ff": "PyColors Marketing v1.35.0, en date du 27 novembre 2026, propose des guides d’installation par édition, des exemples UI interactifs et des informations plus précises pour les acheteurs.",
+    "m5d7274f5": "PyColors Marketing v1.35.0",
+    "m99d3a3c9": "La version du 27 novembre 2026 oriente les acheteurs Web, Mobile et Fullstack vers le guide de leur édition et explique le choix du framework mobile.",
+    "mba87469f": "Vérification des achats et des téléchargements en environnement de test",
+    "m32f54d2e": "Les achats et les mises à niveau de test ont donné accès aux téléchargements attendus. Les acheteurs ont pu ouvrir séparément une facture PDF en français depuis la page de confirmation.",
+    "m72b856b9": "En environnement de test, les téléchargements Web, Mobile et Fullstack correspondaient aux archives vérifiées. Après la publication commerciale, vérifier la version servie pour chaque édition et tester la récupération d’accès."
   }
 }

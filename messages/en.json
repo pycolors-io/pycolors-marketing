@@ -8005,6 +8005,21 @@
     "m46e23a6f": "Recover access",
     "mfe89a35": "Open the secure link in your purchase email to download your product and access its invoice.",
     "m3e9d0ff9": "Order reference (optional)",
-    "m455f9e66": "For a specific invoice, enter the order reference from your purchase email."
+    "m455f9e66": "For a specific invoice, enter the order reference from your purchase email.",
+    "m6e1f5766": "Choose a Starter Pro edition and follow its setup guide",
+    "m18c97a1c": "Compare Web, Mobile and Fullstack, then follow the guide for the edition you buy. The UI Explorer also lets you try components before copying an example.",
+    "m7256b875": "The Mobile guide starts with the mobile client and its backend. The Fullstack guide connects the web and mobile clients to the same backend.",
+    "mf40819a5": "The mobile comparison explains why PyColors chose React Native and when Capacitor is a better fit for an existing web app.",
+    "mec93b207": "In the PyColors UI Explorer, try component states at your own pace and copy examples that use the public package.",
+    "m15bad79d": "Sandbox buyers could download their product and open a separate French PDF invoice from the confirmation page. Commercial invoicing still requires approval before activation.",
+    "m8c5c3fd2": "Use the edition guide to find the first command for your project and check which client should connect to which backend.",
+    "me84f88b0": "Use the buyer FAQ to agree on the support, licence and production checks your team will need before launch.",
+    "m683abe7b": "Compare Starter Pro editions",
+    "m97b314ff": "PyColors Marketing v1.35.0, dated 27 November 2026, brings edition-specific setup guides, hands-on UI examples and clearer buyer guidance.",
+    "m5d7274f5": "PyColors Marketing v1.35.0",
+    "m99d3a3c9": "The 27 November 2026 release connects Web, Mobile and Fullstack buyers to the matching setup guide and documents the choice of mobile framework.",
+    "mba87469f": "Sandbox purchase and download checks",
+    "m32f54d2e": "Test purchases and upgrades delivered the expected downloads. Buyers could open a separate French PDF invoice from the confirmation page.",
+    "m72b856b9": "Web, Mobile and Fullstack downloads matched the qualified archives in the sandbox. After commercial publication, verify the version served to buyers for each edition and test access recovery."
   }
 }

@@ -257,7 +257,7 @@ describe("company and trust pages", () => {
     expect(totals).toHaveLength(4);
     ["Now", "Next", "Later", "Shipped"].forEach((status, index) => {
       expect(totals[index]).toHaveTextContent(status);
-      expect(totals[index]).toHaveTextContent(String([3, 3, 0, 98][index]));
+      expect(totals[index]).toHaveTextContent(String([3, 3, 0, 100][index]));
       const href = within(totals[index]!)
         .getByRole("link")
         .getAttribute("href")!;
@@ -295,7 +295,7 @@ describe("company and trust pages", () => {
     const historyRows = groups.flatMap((name) =>
       Array.from(screen.getByRole("list", { name }).children),
     );
-    expect(historyRows).toHaveLength(98);
+    expect(historyRows).toHaveLength(100);
     historyRows.forEach((row) =>
       expect(
         within(row as HTMLElement).getByText("Shipped", { exact: true }),
@@ -307,7 +307,7 @@ describe("company and trust pages", () => {
       ).getAllByRole("listitem"),
     );
     const rows = [...activeRows, ...historyRows];
-    expect(rows).toHaveLength(104);
+    expect(rows).toHaveLength(106);
     expect(
       rows
         .map(
@@ -437,6 +437,8 @@ describe("company and trust pages", () => {
 
 // Public data frozen before the #631 composition migration. Update only with an intentional content change.
 const roadmapTitles = [
+  "PyColors Marketing v1.35.0",
+  "Sandbox purchase and download checks",
   "Versioned archive preparation",
   "Engineering articles in English and French",
   "PyColors Marketing v1.34.0",
@@ -552,6 +554,12 @@ const reviewedRoadmap = [
   ["Measure the path from docs to purchase", "Now"],
 ] as const;
 const releases = [
+  [
+    "v1.35.0",
+    "2026-11-27",
+    "Choose a Starter Pro edition and follow its setup guide",
+    "/starters/pro",
+  ],
   [
     "v1.34.0",
     "2026-11-20",

@@ -67,8 +67,53 @@ const CHANGELOG: ChangelogItem[] = [
   {
     version: `v${LATEST_MARKETING_RELEASE.version}`,
     title:
-      "PyColors Marketing v1.34.0: clearer navigation, more useful documentation",
+      "PyColors Marketing v1.35.0: choose a Starter Pro edition and follow its setup guide",
     dateLabel: LATEST_MARKETING_RELEASE.dateLabel,
+    dateISO: "2026-11-27",
+    status: "Stable",
+    releaseWeekLabel: "Nov 2026 (weekly release)",
+    summary:
+      "Compare Web, Mobile and Fullstack, then follow the guide for the edition you buy. The UI Explorer also lets you try components before copying an example.",
+    highlights: [
+      {
+        title: "Applications updated",
+        items: [
+          "The Mobile guide starts with the mobile client and its backend. The Fullstack guide connects the web and mobile clients to the same backend.",
+          "The mobile comparison explains why PyColors chose React Native and when Capacitor is a better fit for an existing web app.",
+        ],
+      },
+      {
+        title: "Platform and shared capabilities",
+        items: [
+          "In the PyColors UI Explorer, try component states at your own pace and copy examples that use the public package.",
+        ],
+      },
+      {
+        title: "Reliability and maintenance",
+        items: [
+          "Sandbox buyers could download their product and open a separate French PDF invoice from the confirmation page. Commercial invoicing still requires approval before activation.",
+        ],
+      },
+      {
+        title: "For developers and candidates",
+        items: [
+          "Use the edition guide to find the first command for your project and check which client should connect to which backend.",
+        ],
+      },
+      {
+        title: "For companies and recruiters",
+        items: [
+          "Use the buyer FAQ to agree on the support, licence and production checks your team will need before launch.",
+        ],
+      },
+    ],
+    cta: { label: "Compare Starter Pro editions", href: "/starters/pro" },
+  },
+  {
+    version: "v1.34.0",
+    title:
+      "PyColors Marketing v1.34.0: clearer navigation, more useful documentation",
+    dateLabel: "Fri 20 Nov 2026",
     dateISO: "2026-11-20",
     status: "Stable",
     releaseWeekLabel: "Nov 2026 (weekly release)",

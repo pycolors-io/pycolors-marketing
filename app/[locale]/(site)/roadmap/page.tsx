@@ -127,7 +127,7 @@ const milestones: Array<{
     id: "Nov 2026",
     title: "November 2026",
     subtitle:
-      "PyColors Marketing v1.34.0, dated 20 November 2026, brings clearer navigation, reusable documentation context and more consistent purchase and form guidance. Earlier November releases remain in the history below.",
+      "PyColors Marketing v1.35.0, dated 27 November 2026, brings edition-specific setup guides, hands-on UI examples and clearer buyer guidance.",
   },
   {
     id: "Release Week",
@@ -204,6 +204,24 @@ const milestones: Array<{
 
 const items: RoadmapItem[] = [
   {
+    title: "PyColors Marketing v1.35.0",
+    description:
+      "The 27 November 2026 release connects Web, Mobile and Fullstack buyers to the matching setup guide and documents the choice of mobile framework.",
+    status: "Shipped",
+    milestone: "Nov 2026",
+    tags: ["Marketing", "Docs"],
+    href: "/changelog",
+  },
+  {
+    title: "Sandbox purchase and download checks",
+    description:
+      "Test purchases and upgrades delivered the expected downloads. Buyers could open a separate French PDF invoice from the confirmation page.",
+    status: "Shipped",
+    milestone: "Nov 2026",
+    tags: ["Starter Pro", "Trust"],
+    href: "/docs/starter-pro/getting-started",
+  },
+  {
     title: "Versioned archive preparation",
     description:
       "The November preparation verified and sealed four candidate archives for Starter Pro Web, Mobile, Fullstack and NA-AI Landing. Each includes a manifest identifying its source version.",
@@ -269,7 +287,7 @@ const items: RoadmapItem[] = [
   {
     title: "Verify the Starter Pro download",
     description:
-      "The stored Web, Mobile and Fullstack ZIPs have been checked against their manifests and setup guides. Confirm that a current buyer download returns the same ZIP for each edition.",
+      "Web, Mobile and Fullstack downloads matched the qualified archives in the sandbox. After commercial publication, verify the version served to buyers for each edition and test access recovery.",
     status: "Now",
     milestone: "Oct 2026",
     tags: ["Starter Pro", "Trust"],

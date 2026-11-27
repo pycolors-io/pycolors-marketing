@@ -103,7 +103,7 @@ describe("documentation home", () => {
         LATEST_MARKETING_RELEASE.dateISO,
       );
       expect(release.querySelector("time")).toHaveTextContent(
-        locale === "fr" ? "20 nov. 2026" : "Nov 20, 2026",
+        locale === "fr" ? "27 nov. 2026" : "Nov 27, 2026",
       );
       expect(links.map((link) => link.getAttribute("href"))).toEqual([
         "/changelog",
