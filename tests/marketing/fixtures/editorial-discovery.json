@@ -24,21 +24,21 @@
   },
   "guides": {
     "metadata": {
-      "title": "Next.js SaaS Architecture Guides",
-      "description": "Guides for building modern Next.js SaaS products with stronger architecture, authentication systems, billing flows, admin panels, UI patterns, and production-ready product foundations.",
+      "title": "SaaS Guides for Next.js, Expo and Shared APIs",
+      "description": "Practical SaaS guides for Next.js Web, React Native with Expo, and shared APIs. Explore architecture, authentication and billing, then follow the Starter Pro setup docs.",
       "alternates": {
         "canonical": "/guides"
       },
       "openGraph": {
-        "title": "Next.js SaaS Architecture Guides",
-        "description": "Learn how modern SaaS products are structured across dashboards, authentication, billing systems, admin workflows, product UX, and production-ready Next.js architecture.",
+        "title": "SaaS Guides for Next.js, Expo and Shared APIs",
+        "description": "Practical SaaS guides for Next.js Web, React Native with Expo, and shared APIs. Explore architecture, authentication and billing, then follow the Starter Pro setup docs.",
         "url": "/guides",
         "images": ["/seo/og-main.png"]
       },
       "twitter": {
         "card": "summary_large_image",
-        "title": "Next.js SaaS Architecture Guides",
-        "description": "Guides for SaaS architecture, billing, authentication, UI systems, and modern Next.js product engineering.",
+        "title": "SaaS Guides for Next.js, Expo and Shared APIs",
+        "description": "Practical SaaS guides for Next.js Web, React Native with Expo, and shared APIs. Explore architecture, authentication and billing, then follow the Starter Pro setup docs.",
         "images": ["/seo/twitter-main.png"]
       }
     },

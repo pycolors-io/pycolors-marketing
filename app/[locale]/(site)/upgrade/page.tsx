@@ -61,7 +61,7 @@ const foundations = [
     icon: LockKeyhole,
     label: "01 / Identity",
     description:
-      "Auth.js credentials, Google and GitHub OAuth, verification, password reset and sessions.",
+      "Better Auth supports password sign-in, Google and GitHub OAuth, email verification, password resets and sessions.",
     href: "/docs/starter-pro/auth",
     link: "Review authentication",
   },

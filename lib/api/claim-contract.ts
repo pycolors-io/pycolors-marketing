@@ -24,6 +24,7 @@ const responseSchema = z.object({
   claim: z.object({
     productSlug: z.string().nullable(),
     productName: z.string().min(1),
+    downloadAvailable: z.boolean().default(false),
     orderReference: z.string().min(1),
     customerEmail: z.string(),
     paidAt: z.string().nullable(),

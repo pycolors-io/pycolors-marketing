@@ -29,29 +29,30 @@ import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { MarketingSectionShell } from "@/components/marketing/section-shell";
 import { MarketingSectionHeader } from "@/components/marketing/section-header";
 import { MarketingResourceCard } from "@/components/marketing/resource-card";
+import { StarterSourceDocs } from "@/components/starters/starter-source-docs";
 import styles from "@/components/guides/guides-index.module.css";
 
 const metadata: Metadata = {
-  title: "Next.js SaaS Architecture Guides",
+  title: "SaaS Guides for Next.js, Expo and Shared APIs",
   description:
-    "Guides for building modern Next.js SaaS products with stronger architecture, authentication systems, billing flows, admin panels, UI patterns, and production-ready product foundations.",
+    "Practical SaaS guides for Next.js Web, React Native with Expo, and shared APIs. Explore architecture, authentication and billing, then follow the Starter Pro setup docs.",
   alternates: {
     canonical: "/guides",
   },
 
   openGraph: {
-    title: "Next.js SaaS Architecture Guides",
+    title: "SaaS Guides for Next.js, Expo and Shared APIs",
     description:
-      "Learn how modern SaaS products are structured across dashboards, authentication, billing systems, admin workflows, product UX, and production-ready Next.js architecture.",
+      "Practical SaaS guides for Next.js Web, React Native with Expo, and shared APIs. Explore architecture, authentication and billing, then follow the Starter Pro setup docs.",
     url: "/guides",
     images: ["/seo/og-main.png"],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Next.js SaaS Architecture Guides",
+    title: "SaaS Guides for Next.js, Expo and Shared APIs",
     description:
-      "Guides for SaaS architecture, billing, authentication, UI systems, and modern Next.js product engineering.",
+      "Practical SaaS guides for Next.js Web, React Native with Expo, and shared APIs. Explore architecture, authentication and billing, then follow the Starter Pro setup docs.",
     images: ["/seo/twitter-main.png"],
   },
 };
@@ -184,7 +185,7 @@ export default function GuidesPage() {
               badges={[{ label: "Guides", variant: "outline" }]}
               title={tSite("SaaS building guides for developers.")}
               description={tSite(
-                "Make the architecture and product decisions behind a better SaaS. Practical guides to dashboards, authentication, billing and the systems that connect them.",
+                "Make the architecture and product decisions behind your SaaS. Explore Web, native Mobile and shared APIs, from product design to setup documentation.",
               )}
               actions={
                 <>
@@ -351,7 +352,7 @@ export default function GuidesPage() {
                   )}
                 </p>
                 <Link
-                  href="/docs/starter"
+                  href="/docs/starter-pro"
                   className={`${textLink} mt-2 text-xs`}
                 >
                   {tSite("Starter docs")}
@@ -413,6 +414,37 @@ export default function GuidesPage() {
         </MarketingSectionShell>
 
         <MarketingSectionShell
+          id="starter-pro-docs"
+          width="full"
+          className={styles.nextChapter}
+          aria-labelledby="guides-source-docs-title"
+        >
+          <MarketingSectionHeader
+            titleId="guides-source-docs-title"
+            align="left"
+            eyebrow={tSite("Starter Pro documentation")}
+            title={tSite("Follow the setup guide for your platform.")}
+            description={tSite(
+              "Start with the source layout, prerequisites and backend configuration for Web, Mobile or Fullstack. These docs explain what to configure before launch.",
+            )}
+          />
+          <StarterSourceDocs />
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-1">
+            <Link href="/docs/starter-pro/architecture" className={textLink}>
+              {tSite("Explore architecture")}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+            <Link
+              href="/product-releases"
+              className={`${textLink} text-muted-foreground`}
+            >
+              {tSite("Product releases")}
+              <ArrowUpRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </MarketingSectionShell>
+
+        <MarketingSectionShell
           width="full"
           className={styles.nextChapter}
           aria-labelledby="guides-next-title"
@@ -427,29 +459,45 @@ export default function GuidesPage() {
             )}
           />
           <div className={styles.nextSteps}>
-            <div className={styles.nextStepCard}>
-              <PanelTop
-                className="size-5 text-muted-foreground"
-                aria-hidden="true"
-              />
-              <p className="mt-5 text-xs text-muted-foreground">
-                {tSite("Components & patterns")}
-              </p>
-              <h3 className="mt-2 text-xl font-semibold tracking-subheading">
-                {tSite("Build the interface.")}
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                {tSite(
-                  "Turn product decisions into screens with PyColors UI, composed blocks and working examples.",
-                )}
-              </p>
-              <div className="mt-auto pt-5">
-                <Link href="/ui/patterns" className={textLink}>
-                  {tSite("Browse UI patterns")}
-                  {tSite(" ")}
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
-                <div className="flex flex-wrap gap-x-5">
+            <article
+              className={styles.nextStepCard}
+              aria-labelledby="guides-next-interface-title"
+            >
+              <header className={styles.nextStepHeader}>
+                <span className={styles.nextStepNumber} aria-hidden="true">
+                  01
+                </span>
+                <span className={styles.nextStepIcon}>
+                  <PanelTop className="size-5" aria-hidden="true" />
+                </span>
+              </header>
+              <div className={styles.nextStepSummary}>
+                <p className={styles.nextStepEyebrow}>
+                  {tSite("Components & patterns")}
+                </p>
+                <h3 id="guides-next-interface-title">
+                  {tSite("Build the interface.")}
+                </h3>
+                <p className={styles.nextStepDescription}>
+                  {tSite(
+                    "Compose screens with public components, reusable layouts and working examples.",
+                  )}
+                </p>
+              </div>
+              <ul className={styles.nextStepCapabilities}>
+                {["PyColors UI", "Blocks", "Examples"].map((capability) => (
+                  <li key={capability}>{tSite(capability)}</li>
+                ))}
+              </ul>
+              <Link
+                href="/ui/patterns"
+                className={`${textLink} ${styles.nextStepAction}`}
+              >
+                {tSite("Browse UI patterns")}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <div className={styles.nextStepFollowup}>
+                <div className={styles.nextStepSecondaryLinks}>
                   <Link
                     href="/blocks"
                     className={`${textLink} text-xs text-muted-foreground`}
@@ -464,56 +512,88 @@ export default function GuidesPage() {
                   </Link>
                 </div>
               </div>
-            </div>
-            <div className={styles.nextStepCard}>
-              <LayoutDashboard
-                className="size-5 text-muted-foreground"
-                aria-hidden="true"
-              />
-              <p className="mt-5 text-xs text-muted-foreground">
-                {tSite("Starter Free")}
-              </p>
-              <h3 className="mt-2 text-xl font-semibold tracking-subheading">
-                {tSite("Explore a full product.")}
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                {tSite(
-                  "Validate dashboards, settings and workflows in a complete SaaS frontend, with mocked auth and billing.",
+            </article>
+            <article
+              className={styles.nextStepCard}
+              aria-labelledby="guides-next-free-title"
+            >
+              <header className={styles.nextStepHeader}>
+                <span className={styles.nextStepNumber} aria-hidden="true">
+                  02
+                </span>
+                <span className={styles.nextStepIcon}>
+                  <LayoutDashboard className="size-5" aria-hidden="true" />
+                </span>
+              </header>
+              <div className={styles.nextStepSummary}>
+                <p className={styles.nextStepEyebrow}>
+                  {tSite("Starter Free")}
+                </p>
+                <h3 id="guides-next-free-title">
+                  {tSite("Explore a full product.")}
+                </h3>
+                <p className={styles.nextStepDescription}>
+                  {tSite(
+                    "Explore dashboards, settings and team workflows with mocked auth, billing and data.",
+                  )}
+                </p>
+              </div>
+              <ul className={styles.nextStepCapabilities}>
+                {["Dashboards", "Settings", "Team workflows"].map(
+                  (capability) => (
+                    <li key={capability}>{tSite(capability)}</li>
+                  ),
                 )}
-              </p>
-              <div className="mt-auto pt-5">
-                <Link href="/starters/free" className={textLink}>
-                  {tSite("Start with Starter Free")}
-                  {tSite(" ")}
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
-                <p className="mt-2 text-xs leading-6 text-muted-foreground">
+              </ul>
+              <Link
+                href="/starters/free"
+                className={`${textLink} ${styles.nextStepAction}`}
+              >
+                {tSite("Start with Starter Free")}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <div className={styles.nextStepFollowup}>
+                <p className={styles.nextStepNote}>
                   {tSite("Public source code · Free to explore")}
                 </p>
               </div>
-            </div>
-            <div className={`${styles.nextStep} ${styles.nextStepCard}`}>
-              <Boxes
-                className="size-5 text-muted-foreground"
-                aria-hidden="true"
-              />
-              <p className="mt-5 text-xs text-muted-foreground">
-                {tSite("Starter Pro")}
-              </p>
-              <h3 className="mt-2 text-xl font-semibold tracking-subheading">
-                {tSite("Connect the foundations.")}
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                {tSite(
-                  "Start with Auth.js, Stripe and Prisma foundations. Configure your providers and validate the integrations before launch.",
-                )}
-              </p>
-              <div className="mt-auto pt-5">
-                <Link href="/starters/pro" className={`${textLink} mb-3`}>
-                  {tSite("Explore Starter Pro")}
-                  {tSite(" ")}
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
+            </article>
+            <article
+              className={`${styles.nextStep} ${styles.nextStepCard}`}
+              aria-labelledby="guides-next-pro-title"
+            >
+              <header className={styles.nextStepHeader}>
+                <span className={styles.nextStepNumber} aria-hidden="true">
+                  03
+                </span>
+                <span className={styles.nextStepIcon}>
+                  <Boxes className="size-5" aria-hidden="true" />
+                </span>
+              </header>
+              <div className={styles.nextStepSummary}>
+                <p className={styles.nextStepEyebrow}>{tSite("Starter Pro")}</p>
+                <h3 id="guides-next-pro-title">
+                  {tSite("Connect the foundations.")}
+                </h3>
+                <p className={styles.nextStepDescription}>
+                  {tSite(
+                    "Start with Better Auth, Stripe and Prisma. Configure your providers and validate before launch.",
+                  )}
+                </p>
+              </div>
+              <ul className={styles.nextStepCapabilities}>
+                {["Better Auth", "Stripe", "Prisma"].map((capability) => (
+                  <li key={capability}>{tSite(capability)}</li>
+                ))}
+              </ul>
+              <Link
+                href="/starters/pro"
+                className={`${textLink} ${styles.nextStepAction}`}
+              >
+                {tSite("Explore Starter Pro")}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <div className={styles.nextStepFollowup}>
                 <BuyStarterProButton
                   fullWidth
                   label={tSite("Starter Pro — {value0}", {
@@ -521,11 +601,11 @@ export default function GuidesPage() {
                   })}
                   variant="outline"
                 />
-                <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                <p className={styles.nextStepNote}>
                   {tSite("One-time payment · Source code license")}
                 </p>
               </div>
-            </div>
+            </article>
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-1">
             <Link href="/pricing" className={textLink}>

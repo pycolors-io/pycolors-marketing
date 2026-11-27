@@ -18,6 +18,7 @@ import {
 import { SiteButton as Button } from "@/components/site-button";
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import { Container } from "@/components/container";
 import { NpmBadges } from "@/components/npm-badges";
 import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
@@ -531,6 +532,16 @@ export default function StarterFreePage() {
                 "PyColors UI · Versioned · documented · tested · actively maintained",
               )}
             </p>
+            <a
+              href={UI_EXPLORER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-description={tSite("Opens in a new tab")}
+              className={`${textLink} shrink-0 text-xs`}
+            >
+              {tSite("Open UI Explorer")}
+              <ArrowUpRight className="size-3.5" aria-hidden="true" />
+            </a>
           </div>
         </MarketingSectionShell>
 
@@ -709,7 +720,7 @@ export default function StarterFreePage() {
               </p>
               <ul className="my-6 space-y-3">
                 {[
-                  "Auth.js sessions and protected routes",
+                  "Better Auth sessions and protected routes",
                   "Stripe Checkout, portal and webhooks",
                   "Prisma and PostgreSQL foundations",
                 ].map((point) => (

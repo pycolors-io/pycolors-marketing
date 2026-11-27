@@ -36,6 +36,7 @@ import { UiLivePreview } from "@/components/marketing/ui-live-preview";
 import { CopyableCommand } from "@/components/docs/copyable-command";
 import { createThemeBuilderState } from "@/components/theme-builder/theme-builder-state";
 import { UI_VERSION, formatVersion } from "@/lib/version";
+import { UI_EXPLORER_URL } from "@/lib/docs/ui-explorer";
 import styles from "@/components/marketing/catalogue-hub.module.css";
 
 const description =
@@ -247,8 +248,19 @@ export default function UiPage() {
                 variant="outline"
                 className={primaryAction}
               >
-                <a href="#ui-preview">{tSite("Try the components")}</a>
+                <a
+                  href={UI_EXPLORER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-description={tSite("Opens in a new tab")}
+                >
+                  {tSite("Explore components")}
+                  <ArrowUpRight className="size-4" aria-hidden="true" />
+                </a>
               </Button>
+              <a href="#ui-preview" className={`${textLink} justify-center`}>
+                {tSite("Try the components")}
+              </a>
             </>
           }
         />

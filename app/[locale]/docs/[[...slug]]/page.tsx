@@ -10,6 +10,7 @@ import { DocsBody, DocsPage } from "fumadocs-ui/page";
 import { getPageImage, source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 import { DocsPageShell } from "@/components/shells/docs-page-shell";
+import { DocsCommercialLinks } from "@/components/analytics/docs-commercial-links";
 import { DocsPageFooter } from "@/components/docs/docs-page-footer";
 import { DocsPageHeader } from "@/components/docs/docs-page-header";
 import { DocsPageActions } from "@/components/docs/docs-page-actions";
@@ -22,18 +23,15 @@ type MDXContentProps = {
   components?: ReturnType<typeof getMDXComponents>;
 };
 
-function getBreadcrumbs(slug?: string[]) {
-  const items = [{ label: "Docs", href: "/docs" }];
-
-  if (!slug || slug.length === 0) {
-    return items;
-  }
-
-  let currentPath = "/docs";
-
-  for (const segment of slug) {
-    currentPath += `/${segment}`;
-
+function getBreadcrumbs(locale: string, slug: string[] = []) {
+  const items: { label: string; href?: string }[] = [
+    { label: "Docs", href: "/docs" },
+  ];
+  for (const [index, segment] of slug.entries()) {
+    const parent =
+      index < slug.length - 1
+        ? source.getPage(slug.slice(0, index + 1), locale)
+        : undefined;
     items.push({
       label:
         segment === "ui"
@@ -41,14 +39,10 @@ function getBreadcrumbs(slug?: string[]) {
           : segment
               .replaceAll("-", " ")
               .replace(/\b\w/g, (char) => char.toUpperCase()),
-      href: currentPath,
+      href: parent?.url,
     });
   }
-
-  return items.map((item, index) => ({
-    ...item,
-    href: index === items.length - 1 ? undefined : item.href,
-  }));
+  return items;
 }
 
 function getFooterCta(slug?: string[]) {
@@ -110,7 +104,7 @@ export default async function Page(
 
   const params = await props.params;
   const page = source.getPage(params.slug, params.locale);
-  const breadcrumbs = getBreadcrumbs(params.slug);
+  const breadcrumbs = getBreadcrumbs(params.locale, params.slug);
 
   if (!page) notFound();
 
@@ -152,6 +146,7 @@ export default async function Page(
         ),
       }}
     >
+      <DocsCommercialLinks page={page.url} locale={tSite.locale} />
       <DocsPageShell full={page.data.full}>
         {showDefaultHeader ? (
           <DocsPageHeader

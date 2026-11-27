@@ -88,7 +88,7 @@ const options = [
     description:
       "Start with auth, billing and data foundations already structured together when the stack fits the product you want to build.",
     items: [
-      "Next.js, Auth.js, Stripe and Prisma fit your needs.",
+      "Next.js, Better Auth, Stripe and Prisma fit your needs.",
       "Recurring integration work is your next bottleneck.",
       "You are ready to review and adapt an existing codebase.",
     ],
@@ -113,7 +113,7 @@ const comparisonRows = [
     scratch: "Assemble the account lifecycle.",
     scratchDetail:
       "Implement providers, sessions, verification, recovery and route protection.",
-    pro: "Start with Auth.js flows.",
+    pro: "Start with Better Auth sign-in.",
     proDetail:
       "Credentials, Google/GitHub OAuth, verification and reset flows. Configure your providers and email.",
   },
@@ -169,7 +169,7 @@ const foundations = [
     title: "Authentication",
     icon: Lock,
     description:
-      "Account flows, sessions and protected routes built around Auth.js.",
+      "Better Auth handles sign-in and sessions for protected routes.",
     href: "/docs/starter-pro/auth",
     link: "Explore auth flows",
   },

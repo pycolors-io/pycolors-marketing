@@ -18,35 +18,42 @@ vi.mock("@/lib/api/client", () => ({
 }));
 
 describe("Starter Pro pricing screenshots", () => {
-  it("presents both native source purchases with their own server-controlled checkout", () => {
+  it("compares the three source licences together with distinct checkout actions", () => {
     render(<PricingPage />);
-    const future = screen.getByRole("region", {
-      name: STARTER_PRO_MOBILE_PREVIEW.name,
-    });
     const offers = screen.getByRole("region", {
       name: "Choose a PyColors product",
     });
-    expect(future).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.status);
-    expect(future).toHaveTextContent(STARTER_PRO_MOBILE_PREVIEW.priceLabel);
-    expect(within(future).getAllByRole("button")).toHaveLength(2);
     expect(within(offers).getAllByRole("article")).toHaveLength(3);
+    expect(
+      within(offers)
+        .getAllByRole("heading", { level: 2 })
+        .map((heading) => heading.textContent),
+    ).toEqual([
+      "Starter Pro Web",
+      "Starter Pro Mobile",
+      "Starter Pro Fullstack",
+    ]);
+    expect(within(offers).getAllByRole("button")).toHaveLength(3);
     for (const option of [
       STARTER_PRO_MOBILE_PREVIEW,
       STARTER_PRO_MOBILE_PREVIEW.bundle,
     ]) {
       expect(
-        within(future).getByRole("link", { name: option.action }),
+        within(offers).getByRole("button", {
+          name: `Buy ${option.name} — ${option.priceLabel}`,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        within(offers).getByRole("link", { name: option.action }),
       ).toHaveAttribute("href", option.href);
     }
     const schema = JSON.parse(
       document.getElementById("pricing-products-jsonld")!.textContent!,
     );
-    expect(JSON.stringify(schema)).not.toContain(
-      STARTER_PRO_MOBILE_PREVIEW.name,
-    );
-    expect(JSON.stringify(schema)).not.toContain(
-      STARTER_PRO_MOBILE_PREVIEW.bundle.name,
-    );
+    expect(schema["@graph"]).toHaveLength(4);
+    for (const product of Object.values(PRODUCT_DISPLAY)) {
+      expect(JSON.stringify(schema)).toContain(product.name);
+    }
   });
 
   it("keeps offer artwork decorative and product proof separately captioned", () => {
@@ -57,12 +64,17 @@ describe("Starter Pro pricing screenshots", () => {
     const preview = screen.getByRole("region", {
       name: "See the screens you can build on",
     });
+    const otherProducts = screen.getByRole("region", {
+      name: "Start with a page. Or explore for free.",
+    });
     for (const [name, product, caption] of [
       ["NA-AI Landing", "na-ai-landing", "Illustrative content"],
       ["Starter Free", "starter-free", "Mock data"],
-      ["Starter Pro", "starter-pro", "Demo workspace"],
+      ["Starter Pro Web", "starter-pro", "Demo workspace"],
     ] as const) {
-      const card = within(offers).getByRole("article", { name });
+      const card = within(
+        product === "starter-pro" ? offers : otherProducts,
+      ).getByRole("article", { name });
       expect(card.querySelector("[data-product-preview]")).toBeNull();
       const artwork = card.querySelector("img");
       expect(artwork).not.toBeNull();
@@ -131,7 +143,7 @@ describe("Starter Pro pricing screenshots", () => {
     expect(preview).toHaveTextContent("shown in the light theme");
   });
 
-  it("compares the same products in offer order and distinguishes demo from integrated flows", () => {
+  it("keeps lighter starting points separate from the source licences and distinguishes their scope", () => {
     render(<PricingPage />);
     const offers = screen.getByRole("region", {
       name: "Choose a PyColors product",
@@ -140,7 +152,18 @@ describe("Starter Pro pricing screenshots", () => {
       within(offers)
         .getAllByRole("heading", { level: 2 })
         .map((heading) => heading.textContent),
-    ).toEqual(["NA-AI Landing", "Starter Free", "Starter Pro"]);
+    ).toEqual([
+      "Starter Pro Web",
+      "Starter Pro Mobile",
+      "Starter Pro Fullstack",
+    ]);
+    const otherProducts = screen.getByRole("region", {
+      name: "Start with a page. Or explore for free.",
+    });
+    expect(within(otherProducts).getAllByRole("article")).toHaveLength(2);
+    expect(
+      within(otherProducts).queryByRole("heading", { name: "Starter Pro Web" }),
+    ).not.toBeInTheDocument();
     const table = screen.getByRole("table", {
       name: "Compare NA-AI Landing, Starter Free and Starter Pro features",
     });

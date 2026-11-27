@@ -18,11 +18,11 @@ vi.mock("@/lib/api/client", () => ({ createStarterProCheckout: vi.fn() }));
 
 const headings = [
   "Start with what your project needs now.",
+  "Your next application. Web, Mobile, or both.",
   "From the interface to your implementation.",
   "Choose the infrastructure your project needs.",
   "A working example. A foundation to adapt.",
   "Your brand. Your interface.",
-  "React Native Mobile App",
   "Inspect the project before you commit.",
   "Choose the foundation for your next step.",
 ];
@@ -38,6 +38,39 @@ const destinations = [
 ];
 
 describe("product homepage", () => {
+  it("connects source evaluation to the three setup guides before implementation services", () => {
+    render(<HomePage />);
+    const documentation = screen.getByRole("region", {
+      name: "Choose your Starter Pro documentation.",
+    });
+    expect(within(documentation).getAllByRole("article")).toHaveLength(3);
+    expect(
+      within(documentation).getAllByRole("heading", { level: 4 }),
+    ).toHaveLength(3);
+    expect(within(documentation).getAllByRole("link")).toHaveLength(6);
+    for (const slug of [
+      "starter-pro",
+      "starter-pro-mobile",
+      "starter-pro-fullstack",
+    ] as const) {
+      const product = PRODUCT_DISPLAY[slug];
+      expect(
+        documentation.querySelector(`a[href="${product.docsHref}"]`),
+      ).toHaveAccessibleName();
+      expect(
+        documentation.querySelector(`a[href="${product.href}"]`),
+      ).toHaveAccessibleName();
+    }
+    expect(within(documentation).queryByRole("button")).toBeNull();
+    const services = screen.getByRole("complementary", {
+      name: "Custom software, built around your business.",
+    });
+    expect(
+      documentation.compareDocumentPosition(services) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
   it("hands off to the product tour without embedding a video on the homepage", () => {
     const { container } = render(<HomePage />);
     expect(
@@ -85,13 +118,13 @@ describe("product homepage", () => {
     expect(sections).toHaveLength(9);
     expect(sections[1]).toBe(screen.getByRole("region", { name: headings[0] }));
     expect(screen.queryByRole("table", { name: "Projects" })).toBeNull();
-    expect(sections[4]).toBe(screen.getByRole("region", { name: headings[3] }));
     expect(sections[5]).toBe(screen.getByRole("region", { name: headings[4] }));
+    expect(sections[6]).toBe(screen.getByRole("region", { name: headings[5] }));
     expect(screen.getByRole("region", { name: headings[0] })).toHaveAttribute(
       "id",
       "start-with-pycolors",
     );
-    expect(screen.getByRole("region", { name: headings[1] })).toHaveAttribute(
+    expect(screen.getByRole("region", { name: headings[2] })).toHaveAttribute(
       "id",
       "what-you-get",
     );
@@ -181,9 +214,16 @@ describe("product homepage", () => {
         "/images/starters/pro/concepts/",
       );
     }
-    const infrastructure = screen.getByRole("region", { name: headings[2] });
+    const infrastructure = screen.getByRole("region", { name: headings[3] });
     expect(infrastructure).toHaveAttribute("id", "infrastructure");
-    const stories = within(infrastructure).getAllByRole("article");
+    const stories = [
+      within(infrastructure).getByRole("article", {
+        name: "PyColors Starter Free",
+      }),
+      within(infrastructure).getByRole("article", {
+        name: PRODUCT_DISPLAY["starter-pro"].name,
+      }),
+    ];
     expect(stories).toHaveLength(2);
     expect(stories[0]).toHaveAccessibleName("PyColors Starter Free");
     expect(stories[1]).toHaveAccessibleName(
@@ -205,7 +245,7 @@ describe("product homepage", () => {
 
   it("offers one clear handoff to the complete Theme Builder without a second editor", () => {
     render(<HomePage />);
-    const section = screen.getByRole("region", { name: headings[4] });
+    const section = screen.getByRole("region", { name: headings[5] });
     expect(within(section).getAllByRole("link")).toHaveLength(1);
     expect(
       within(section).getByRole("link", { name: "Open Theme Builder" }),
@@ -227,21 +267,54 @@ describe("product homepage", () => {
     ).toBeNull();
   });
 
-  it("explains the Mobile backend and links both commercial source offers", () => {
+  it("features Mobile and Fullstack before implementation with distinct product and setup actions", () => {
     render(<HomePage />);
-    const mobile = screen.getByRole("region", {
-      name: "React Native Mobile App",
+    const products = screen.getByRole("region", {
+      name: "Your next application. Web, Mobile, or both.",
     });
-    expect(mobile).toHaveTextContent("Source licence");
-    expect(mobile).toHaveTextContent("React Native · Expo");
-    expect(mobile).toHaveTextContent(
+    const gallery = screen.getByRole("region", { name: headings[0] });
+    const foundations = screen.getByRole("region", { name: headings[2] });
+    expect(
+      gallery.compareDocumentPosition(products) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      products.compareDocumentPosition(foundations) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(products).toHaveAttribute("id", "starter-pro-mobile");
+    expect(within(products).getAllByRole("article")).toHaveLength(2);
+    for (const slug of [
+      "starter-pro-mobile",
+      "starter-pro-fullstack",
+    ] as const) {
+      const product = PRODUCT_DISPLAY[slug];
+      const card = within(products).getByRole("article", {
+        name: product.name,
+      });
+      expect(within(card).getByRole("heading", { level: 3 })).toHaveTextContent(
+        product.name,
+      );
+      expect(card).toHaveTextContent(product.priceLabel);
+      expect(card).toHaveTextContent("One-time payment · VAT included");
+      expect(card).toHaveTextContent("Source licence");
+      expect(
+        card.querySelector(`a[href="${product.href}"]`),
+      ).toHaveAccessibleName();
+      expect(
+        card.querySelector(`a[href="${product.docsHref}"]`),
+      ).toHaveAccessibleName();
+      expect(within(card).getAllByRole("link")).toHaveLength(2);
+      expect(within(card).getByText("Concept illustration")).toBeVisible();
+    }
+    expect(products).toHaveTextContent(
       "Mobile includes a compatible backend. Fullstack adds the Web interface with the same accounts and data.",
     );
-    expect(within(mobile).getAllByRole("link")).toHaveLength(2);
     expect(
-      within(mobile).getByRole("link", { name: "Explore Starter Pro Mobile" }),
-    ).toHaveAttribute("href", "/starters/mobile");
-    expect(within(mobile).queryByRole("button")).toBeNull();
+      within(products).getByRole("link", { name: "Compare source licences" }),
+    ).toHaveAttribute("href", "/pricing#source-licences");
+    expect(within(products).queryByRole("button")).toBeNull();
+    expect(products.textContent).not.toMatch(/Coming soon|Now available/);
   });
 
   it("retains the documentation, product and trust handoffs", () => {
@@ -273,7 +346,7 @@ describe("product homepage", () => {
     ]) {
       expect(document.querySelector(`main a[href="${href}"]`)).not.toBeNull();
     }
-    const production = screen.getByRole("region", { name: headings[2] });
+    const production = screen.getByRole("region", { name: headings[3] });
     expect(
       within(production).getByRole("link", {
         name: "Open the Starter Free demo",
@@ -297,7 +370,7 @@ describe("product homepage", () => {
 
   it("provides a clear project-quote handoff alongside the starters", () => {
     render(<HomePage />);
-    const production = screen.getByRole("region", { name: headings[2] });
+    const production = screen.getByRole("region", { name: headings[3] });
     const implementation = within(production).getByRole("complementary", {
       name: "Custom software, built around your business.",
     });
@@ -364,7 +437,7 @@ describe("product homepage", () => {
     expect(trust).toHaveTextContent(
       "licence, included files, setup requirements and delivery process",
     );
-    const infrastructure = screen.getByRole("region", { name: headings[2] });
+    const infrastructure = screen.getByRole("region", { name: headings[3] });
     for (const name of [
       "Starter Free dashboard with example projects and metrics",
       "Starter Pro dashboard with sample projects and workspace metrics",
@@ -406,7 +479,7 @@ describe("product homepage", () => {
     const html = renderToString(<HomePage />);
     for (const text of [
       "Your brand. Your interface.",
-      "React Native Mobile App",
+      "Your next application. Web, Mobile, or both.",
       "Open Theme Builder",
       "/tools/theme-builder",
       "CSS tokens",

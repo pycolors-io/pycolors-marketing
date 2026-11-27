@@ -3,7 +3,7 @@ title: Storybook
 description: Rendez PyColors dans votre propre Storybook React/Vite avec des
   tokens, Tailwind CSS, une barre d'outils thématique et une première histoire
   interactive.
-lastUpdated: "2026-09-24"
+lastUpdated: "2026-11-23"
 publishedAt: "2026-09-25"
 appliesTo: UI
 ---
@@ -12,7 +12,81 @@ import { Callout } from "fumadocs-ui/components/callout";
 
 ## Explorez d'abord, intégrez quand prêt [#explore-first-integrate-when-ready]
 
-[PyColors UI Explorer](https://ui.pycolors.io) est le catalogue public interactif. Utilisez ses contrôles, ses thèmes et ses états de composants sans rien installer. Les **UI Explorer** le menu des ressources renvoie au guide des composants correspondants, à l'installation et à la page produit de l'interface utilisateur. Ces pages Fumadocs restent la documentation canonique d'utilisation et d'accessibilité.
+[PyColors UI Explorer](https://ui.pycolors.io) est le catalogue public interactif.
+Utilisez ses contrôles, ses thèmes et ses états de composants sans rien installer.
+Commencez par l’accueil éditorial pour parcourir six familles de composants,
+trouver les guides d’installation et de tokens, ou essayer le formulaire
+d’espace de travail. Ses champs, la confirmation d’enregistrement et la
+réinitialisation restent dans l’aperçu ; aucun backend n’est connecté.
+
+L’en-tête compact **PyColors UI / Component explorer** identifie le package de
+composants sous licence MIT. Choisissez [Components](https://ui.pycolors.io/?path=/story/components-button--default),
+**Appearance** (`foundations-tokens--appearance`)
+ou [Compositions](https://ui.pycolors.io/?path=/story/compositions-settings-form--default)
+pour examiner les primitives, les palettes et rayons partagés, ou un formulaire composé.
+
+Appearance, les nouvelles compositions et Release information décrites ci-dessous
+se consultent dans le build Storybook local jusqu’à leur publication dans
+l’Explorer public.
+
+L’accueil présente les composants React/TypeScript, les interactions fondées sur
+Radix et les tokens partagés en clair et sombre. Essayez le formulaire local,
+puis suivez le lien vers les [états de validation](https://ui.pycolors.io/?path=/story/compositions-settings-form--validation-error)
+pour examiner les messages d’erreur.
+
+L’accueil porte un fond dégradé continu sur toute la page avec un fondu progressif,
+inspiré de la home marketing publique. Le hero partage ce fond, sans dégradé local.
+Le formulaire local conserve son cadre **UI preview** et une courte bande diagonale introduit
+les trois parcours. Cette présentation s’adapte aux préférences d’accessibilité ;
+les aperçus de composants conservent leurs styles fondés sur les tokens.
+
+Les autres stories utilisent un fond plus discret autour d’une surface d’aperçu
+unie. L’en-tête indique la catégorie, la famille de composants et l’état
+sélectionné ; la barre d’aperçu rappelle le thème actif. Cet habillage conserve
+les styles et les interactions des composants.
+
+Les exemples Dialog et Sheet sont fermés à l’arrivée. Activez leurs boutons
+visibles pour les ouvrir et essayer leurs interactions à votre rythme.
+
+Lors d’une visite publique, vous gardez le contrôle des exemples : les saisies,
+clics et déplacements du focus automatiques sont réservés aux tests. Les états
+nommés, comme une erreur de validation ou des préférences enregistrées, sont
+accessibles directement, sans rejouer de script.
+
+Ouvrez **Code example** sous un composant ou une composition pour consulter un
+exemple React/TypeScript complet avec des imports publics. Les exemples couvrent
+les 22 familles de composants publics et les compositions. Utilisez **Copy example**,
+ou copiez manuellement le code sélectionné si le presse-papiers est indisponible.
+Le guide d’utilisation lié reste la documentation Fumadocs canonique.
+
+Trois compositions locales ajoutent huit états au formulaire Settings existant :
+
+- **Invitation d’équipe** (`compositions-team-invitation--default`), avec validation (`compositions-team-invitation--validation-error`) et confirmation locale (`compositions-team-invitation--local-success`). Aucun email n’est envoyé.
+- **Liste filtrable** (`compositions-filtered-list--default`), avec résultats vides (`compositions-filtered-list--empty-results`) et deuxième page (`compositions-filtered-list--second-page`), sur des données locales fictives.
+- **Préférences de notification** (`compositions-notification-preferences--default`) et leur état enregistré (`compositions-notification-preferences--saved`), avec sauvegarde et réinitialisation en mémoire uniquement.
+
+**Release information** (`foundations-maintenance--default`)
+présente la version du package, les plages de versions React/React DOM et la licence
+déclarées dans son manifeste, ainsi que son changelog. Ces informations intégrées
+au build identifient le package utilisé par l’Explorer ; une plage déclarée ne
+signifie pas que toutes les configurations correspondantes ont été testées.
+La configuration autonome ci-dessous indique les versions vérifiées ensemble.
+
+Le panneau de ressources **UI Explorer** présente Docs, Install, PyColors UI et
+Starter Free avec une courte description. Docs ouvre le guide du composant
+sélectionné. À 360px de largeur ou moins, le libellé visible devient **UI**, mais
+son nom accessible reste **UI Explorer**. Les ressources s’ouvrent dans un nouvel
+onglet. Ces pages Fumadocs restent la documentation canonique d’utilisation et
+d’accessibilité.
+
+Atteignez la barre d’outils avec **Tab**, puis utilisez ses flèches pour
+sélectionner **UI Explorer**. **Entrée** ou **Espace** ouvre les ressources avec
+le focus sur Docs. Parcourez les liens avec **Tab** et **Maj+Tab** ; **Échap** ferme
+le panneau et ramène le focus sur son déclencheur.
+
+L’interface Storybook suit la préférence claire ou sombre de votre système. La
+barre **Light / Dark** de l’aperçu contrôle les composants indépendamment : une
+interface sombre peut donc afficher un aperçu clair, et inversement.
 
 Ce guide met **publié les paquets PyColors dans votre propre Storybook**. Il ne nécessite pas le clonage du monorepo, d'un fournisseur PyColors ou d'alias de paquets privés.
 

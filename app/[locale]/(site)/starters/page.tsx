@@ -1,11 +1,11 @@
 import { StarterSourceComparison } from "@/components/starters/starter-source-comparison";
+import { StarterSourceOffers } from "@/components/starters/starter-source-offers";
 import { MarketingBreadcrumb } from "@/components/marketing/breadcrumb";
 import { MarketingHeroBand } from "@/components/marketing/hero-band";
 import { localizePageMetadata } from "@/lib/i18n/metadata";
 import { useCopy } from "@/lib/i18n/use-copy";
 import { Link } from "@/lib/i18n/navigation";
 import type { Metadata } from "next";
-import Image from "next/image";
 import {
   ArrowDown,
   ArrowRight,
@@ -13,17 +13,20 @@ import {
   BookOpen,
   Code2,
   FileCode2,
+  Layers3,
+  Monitor,
+  Smartphone,
 } from "lucide-react";
 
 import { Badge, cn } from "@pycolors/ui";
+import Image from "next/image";
 import { SiteButton as Button } from "@/components/site-button";
 import {
   PRODUCT_DISPLAY,
   STARTER_FREE_PRICE_LABEL,
 } from "@/lib/products/public-catalog";
 import { Container } from "@/components/container";
-import { STARTER_PRO_MOBILE_PREVIEW } from "@/lib/products/starter-pro-mobile-preview";
-import { BuyStarterProButton } from "@/components/pricing/buy-starter-pro-button";
+import { BuyProductButton } from "@/components/pricing/buy-product-button";
 import { PageHero } from "@/components/marketing/page-hero";
 import { MarketingCheckItem } from "@/components/marketing/check-item";
 import { ProductPreviewMedia } from "@/components/marketing/product-preview-media";
@@ -66,9 +69,35 @@ const metadata: Metadata = {
   },
 };
 
-const sourcePrice = PRODUCT_DISPLAY["starter-pro"].priceLabel;
 const demoUrl = "https://starter-demo.pycolors.io";
 const repositoryUrl = "https://github.com/pycolors-io/pycolors-starter-free";
+
+const sourceOverview = [
+  {
+    slug: "starter-pro",
+    name: "Starter Pro Web",
+    scope: "Web and installable PWA",
+    guide: "Open Getting Started",
+    image: "/images/starters/pro/concepts/workflow-path-test-v1.png",
+    icon: Monitor,
+  },
+  {
+    slug: "starter-pro-mobile",
+    name: "Starter Pro Mobile",
+    scope: "Native iOS and Android source",
+    guide: "Mobile setup guide",
+    image: "/images/starters/pro/concepts/connected-workspace-test-v1.png",
+    icon: Smartphone,
+  },
+  {
+    slug: "starter-pro-fullstack",
+    name: "Starter Pro Fullstack",
+    scope: "Web and native iOS/Android",
+    guide: "Fullstack setup guide",
+    image: "/images/starters/pro/concepts/source-stack-test-v1.png",
+    icon: Layers3,
+  },
+] as const;
 
 const offers = [
   {
@@ -92,25 +121,23 @@ const offers = [
       "No real accounts, payments or database. Add those integrations when your product needs them.",
   },
   {
-    slug: "pro",
-    name: "Starter Pro",
-    label: "Connect your product",
+    slug: "na-ai",
+    name: "NA-AI Landing",
+    label: "Launch a landing page",
     description:
-      "Build on authentication, billing and database foundations. Focus on your product logic.",
-    price: sourcePrice,
-    access: "One-time payment",
-    priceNote:
-      "Complete source licence. Implementation services are quoted separately.",
-    previewId: "starter-pro",
-    scope: "Auth, billing & data foundations",
+      "A focused AI/SaaS marketing template to present your product and validate your offer.",
+    price: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
+    access: "One-time payment · VAT included",
+    priceNote: "Full landing page source code",
+    previewId: "na-ai-landing",
+    scope: "Frontend template. No auth, billing or database integration.",
     highlights: [
-      "Auth.js credentials and Google/GitHub OAuth",
-      "Stripe Checkout, portal and webhooks",
-      "Prisma + PostgreSQL foundations",
-      "Protected routes and installable PWA",
+      "Next.js, React and Tailwind CSS",
+      "Responsive marketing sections",
+      "SEO-ready frontend page",
+      "Commercial usage rights",
     ],
-    setup:
-      "Configure your providers, database and Stripe, then validate before deployment. Source ZIP delivered by claim email.",
+    setup: "Frontend template. No auth, billing or database integration.",
   },
 ] as const;
 
@@ -119,23 +146,17 @@ type StarterOffer = (typeof offers)[number];
 function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
   const tSite = useCopy();
 
-  const isPro = offer.slug === "pro";
+  const isFree = offer.slug === "free";
+  const href = isFree ? "/starters/free" : "/templates/na-ai-landing";
   return (
     <article
       aria-labelledby={`starter-${offer.slug}-title`}
       className={cn(
         "flex min-w-0 flex-col overflow-hidden border border-border-subtle bg-background md:row-span-3 md:grid md:grid-rows-subgrid",
         styles.offerCard,
-        isPro && styles.proOffer,
       )}
     >
-      <div
-        className={cn(
-          "p-5 sm:p-7",
-          styles.offerHeader,
-          isPro ? styles.proHeader : styles.freeHeader,
-        )}
-      >
+      <div className={cn("p-5 sm:p-7", styles.offerHeader, styles.freeHeader)}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-xs font-medium text-muted-foreground">
             {tSite(offer.label)}
@@ -147,7 +168,7 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
               styles.offerBadge,
             )}
           >
-            {tSite(isPro ? "Integration foundations" : "Frontend starter")}
+            {tSite(isFree ? "Frontend starter" : "Landing page template")}
           </Badge>
         </div>
         <h3
@@ -174,11 +195,11 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
         className={cn(
           "border-y border-border-subtle px-5 pt-5 sm:px-7 sm:pt-7",
           styles.previewStage,
-          isPro ? styles.proPreviewStage : styles.freePreviewStage,
+          styles.freePreviewStage,
         )}
       >
         <Link
-          href={`/starters/${offer.slug}`}
+          href={href}
           className={cn(
             "group relative block overflow-hidden rounded-t-[4px] border border-b-0 border-border-subtle bg-background focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
             styles.previewLink,
@@ -203,7 +224,13 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
           <span className="font-medium text-foreground">
             {tSite(offer.scope)}
           </span>
-          <span>{tSite("Dashboard preview · Sample data")}</span>
+          <span>
+            {tSite(
+              isFree
+                ? "Dashboard preview · Sample data"
+                : "Illustrative content",
+            )}
+          </span>
         </figcaption>
       </figure>
 
@@ -238,16 +265,18 @@ function StarterOfferCard({ offer }: Readonly<{ offer: StarterOffer }>) {
               styles.exploreAction,
             )}
           >
-            <Link href={`/starters/${offer.slug}`}>
+            <Link href={href}>
               {tSite("Explore ")}
               {tSite(offer.name)}
             </Link>
           </Button>
-          {isPro ? (
-            <BuyStarterProButton
-              label={tSite("Buy Starter Pro")}
-              loadingLabel={tSite("Opening checkout…")}
-              className="shadow-none hover:shadow-none"
+          {!isFree ? (
+            <BuyProductButton
+              productSlug="na-ai-landing"
+              label={tSite("Buy NA-AI Landing — {value0}", {
+                value0: PRODUCT_DISPLAY["na-ai-landing"].priceLabel,
+              })}
+              variant="outline"
             />
           ) : (
             <Button asChild variant="ghost" className="h-auto rounded-[5px]">
@@ -288,10 +317,11 @@ export default function StartersPage() {
               variant="compact"
               align="left"
               contentClassName="mx-0 max-w-3xl"
+              actionsClassName={styles.heroActions}
               badges={[{ label: "SaaS starters", variant: "outline" }]}
-              title={tSite("A head start for your next SaaS.")}
+              title={tSite("The foundation for your next product.")}
               description={tSite(
-                "Start with a considered interface. Choose Free to validate your screens, or Pro when you're ready to connect real accounts, billing and data. Both start with Next.js and PyColors UI.",
+                "Build for the Web, iOS or Android. Choose your source, inspect the guides and make it your product.",
               )}
               actions={
                 <>
@@ -310,7 +340,7 @@ export default function StartersPage() {
                     size="lg"
                     asChild
                     variant="outline"
-                    className="rounded-[5px] shadow-none"
+                    className={styles.heroSecondary}
                   >
                     <a href={demoUrl} target="_blank" rel="noreferrer noopener">
                       {tSite("Try the Starter Free demo")}
@@ -325,27 +355,76 @@ export default function StartersPage() {
                 </>
               }
               extra={
-                <MarketingPillList aria-label={tSite("Shared starter stack")}>
-                  {["Next.js", "React", "TypeScript", "Tailwind CSS"].map(
-                    (technology) => (
-                      <MarketingPill key={technology} className="bg-background">
-                        {tSite(technology)}
-                      </MarketingPill>
-                    ),
-                  )}
+                <MarketingPillList
+                  aria-label={tSite("Target platforms")}
+                  className={styles.heroPlatforms}
+                >
+                  {["Web", "iOS", "Android"].map((technology) => (
+                    <MarketingPill key={technology} className="bg-background">
+                      {technology}
+                    </MarketingPill>
+                  ))}
                 </MarketingPillList>
               }
             />
-            <figure className={styles.heroPreview}>
-              <ProductPreviewMedia
-                product="starter-free"
-                priority
-                sizes="(min-width: 1024px) 560px, 92vw"
-              />
-              <figcaption>
-                {tSite("Dashboard preview · Sample data")}
-              </figcaption>
-            </figure>
+            <section
+              aria-labelledby="starter-source-overview-title"
+              className={styles.sourceOverview}
+            >
+              <p className={styles.sourceOverviewEyebrow}>
+                {tSite("Source licences")}
+              </p>
+              <h2 id="starter-source-overview-title">
+                {tSite("Web, Mobile, or both.")}
+              </h2>
+              <ul className={styles.sourceOverviewList}>
+                {sourceOverview.map((option) => {
+                  const product = PRODUCT_DISPLAY[option.slug];
+                  const Icon = option.icon;
+                  return (
+                    <li key={option.slug}>
+                      <Link
+                        href={product.href}
+                        className={styles.sourceOverviewProduct}
+                      >
+                        <span
+                          className={styles.sourceOverviewArt}
+                          aria-hidden="true"
+                        >
+                          <Image
+                            src={option.image}
+                            alt=""
+                            fill
+                            sizes="(min-width: 640px) 80px, 56px"
+                          />
+                        </span>
+                        <div>
+                          <h3>{tSite(option.name)}</h3>
+                          <p className={styles.sourceOverviewScope}>
+                            <Icon aria-hidden="true" />
+                            {tSite(option.scope)}
+                          </p>
+                        </div>
+                        <span className={styles.sourceOverviewPrice}>
+                          {product.priceLabel}
+                        </span>
+                      </Link>
+                      <Link
+                        href={product.docsHref}
+                        className={styles.sourceOverviewGuide}
+                      >
+                        {tSite(option.guide)}
+                        <ArrowRight className="size-3" aria-hidden="true" />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className={styles.sourceOverviewNote}>
+                <p>{tSite("One-time payment · VAT included")}</p>
+                <p>{tSite("Concept illustrations")}</p>
+              </div>
+            </section>
           </div>
         </Container>
       </MarketingHeroBand>
@@ -359,68 +438,45 @@ export default function StartersPage() {
           <MarketingSectionHeader
             align="left"
             titleId="choose-starter-title"
-            title={tSite("Two starting points. One design foundation.")}
+            title={tSite("Choose the source your product needs.")}
             description={tSite("Choose by what you need to build next.")}
             action={
-              <Link href="#compare-starters" className={styles.textLink}>
-                {tSite("Compare every capability")}{" "}
+              <Link href="#source-licences" className={styles.textLink}>
+                {tSite("Compare source licences")}{" "}
                 <ArrowDown className="size-3.5" aria-hidden="true" />
               </Link>
             }
+          />
+          <StarterSourceOffers />
+        </MarketingSectionShell>
+
+        <div className={styles.sourceComparison}>
+          <StarterSourceComparison />
+          <Link href="#compare-starters" className={styles.textLink}>
+            {tSite("Compare Free with the Web foundation.")}
+            <ArrowDown className="size-3.5" aria-hidden="true" />
+          </Link>
+        </div>
+
+        <MarketingSectionShell
+          id="explore-starters"
+          aria-labelledby="explore-starters-title"
+          width="full"
+        >
+          <MarketingSectionHeader
+            align="left"
+            titleId="explore-starters-title"
+            title={tSite("Explore lighter starting points.")}
+            description={tSite(
+              "Starter Free to validate your screens. NA-AI Landing to present your product.",
+            )}
           />
           <div className="grid items-stretch gap-5 md:grid-cols-2 md:grid-rows-[auto_auto_1fr] md:gap-y-0">
             {offers.map((offer) => (
               <StarterOfferCard key={offer.slug} offer={offer} />
             ))}
           </div>
-          <p className="mt-5 flex items-start gap-2.5 text-xs leading-6 text-muted-foreground">
-            <Code2 className="mt-1 size-4 shrink-0" aria-hidden="true" />
-            {tSite(
-              "Both starters share PyColors UI and design tokens. Pro adds integration foundations; you own the configuration, product logic and deployment.",
-            )}
-          </p>
         </MarketingSectionShell>
-
-        <section
-          aria-labelledby="starter-mobile-preview-title"
-          className={styles.mobilePreview}
-        >
-          <div className={styles.mobileCopy}>
-            <div className={styles.mobileMeta}>
-              <Badge variant="outline">
-                {tSite(STARTER_PRO_MOBILE_PREVIEW.status)}
-              </Badge>
-              <span>{tSite(STARTER_PRO_MOBILE_PREVIEW.stack)}</span>
-            </div>
-            <h2 id="starter-mobile-preview-title">
-              {tSite(STARTER_PRO_MOBILE_PREVIEW.name)}
-            </h2>
-            <p>{tSite(STARTER_PRO_MOBILE_PREVIEW.description)}</p>
-            <Button asChild className={styles.mobileAction}>
-              <Link href={STARTER_PRO_MOBILE_PREVIEW.href}>
-                {tSite(STARTER_PRO_MOBILE_PREVIEW.action)}
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className={styles.mobileAction}>
-              <Link href={STARTER_PRO_MOBILE_PREVIEW.bundle.href}>
-                {tSite(STARTER_PRO_MOBILE_PREVIEW.bundle.action)}
-              </Link>
-            </Button>
-          </div>
-          <div className={styles.mobileVisual} aria-hidden="true">
-            <Image
-              src="/images/marketing/concepts/modular-platform-v1.webp"
-              alt=""
-              width={1254}
-              height={1254}
-              sizes="(min-width: 1024px) 380px, (min-width: 768px) 36vw, 85vw"
-              loading="lazy"
-            />
-          </div>
-        </section>
-
-        <StarterSourceComparison />
 
         <MarketingSectionShell
           id="compare-starters"
@@ -431,9 +487,9 @@ export default function StartersPage() {
           <MarketingSectionHeader
             align="left"
             titleId="compare-starters-title"
-            title={tSite("Know exactly what you're starting with.")}
+            title={tSite("Compare Free with the Web foundation.")}
             description={tSite(
-              "The screens, integrations and setup work, side by side.",
+              "Free frontend and Web integration foundations, side by side.",
             )}
             action={
               <Link href="/pricing" className={styles.textLink}>
@@ -450,12 +506,7 @@ export default function StartersPage() {
           width="full"
           className="border-t border-border-subtle pb-0"
         >
-          <div
-            className={cn(
-              "rounded-[5px] border border-border-subtle p-5 sm:p-8",
-              styles.resources,
-            )}
-          >
+          <div className={styles.resources}>
             <MarketingSectionHeader
               align="left"
               titleId="starter-next-steps-title"
@@ -477,7 +528,7 @@ export default function StartersPage() {
                     {tSite("Getting started")}
                   </span>
                 }
-                className="bg-background shadow-none hover:shadow-none"
+                className={styles.resourceCard}
               />
               <MarketingResourceCard
                 href="/docs/starter/upgrade"
@@ -491,10 +542,7 @@ export default function StartersPage() {
                     {tSite("Free → Pro")}
                   </span>
                 }
-                className={cn(
-                  "bg-background shadow-none hover:shadow-none",
-                  styles.transitionResource,
-                )}
+                className={styles.resourceCard}
               />
               <MarketingResourceCard
                 href="/tools/theme-builder"
@@ -508,10 +556,7 @@ export default function StartersPage() {
                     {tSite("Theme Builder")}
                   </span>
                 }
-                className={cn(
-                  "bg-background shadow-none hover:shadow-none",
-                  styles.themeResource,
-                )}
+                className={styles.resourceCard}
               />
             </div>
           </div>

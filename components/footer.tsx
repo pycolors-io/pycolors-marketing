@@ -34,8 +34,6 @@ const GROUPS = [
         href: "/starters/mobile",
       },
       { label: "Starter Pro Fullstack", href: "/starters/fullstack" },
-      { label: "Templates", href: "/templates" },
-      { label: "NA-AI Landing", href: "/templates/na-ai-landing" },
     ],
     more: { label: "Explore the ecosystem", href: "/" },
   },
@@ -85,6 +83,8 @@ const GROUPS = [
       { label: "Colors", href: "/docs/design-system/colors" },
       { label: "Typography", href: "/docs/design-system/typography" },
       { label: "Theming", href: "/docs/ui/theming" },
+      { label: "UI examples", href: "/ui/examples" },
+      { label: "Patterns", href: "/ui/patterns" },
     ],
     more: { label: "Explore the design system", href: "/docs/design-system" },
   },
@@ -124,8 +124,9 @@ const GROUPS = [
   {
     title: "Templates",
     links: [
+      { label: "NA-AI Landing", href: "/templates/na-ai-landing" },
       { label: "Overview", href: "/docs/templates" },
-      { label: "NA-AI Landing", href: "/docs/templates/na-ai-landing" },
+      { label: "NA-AI guides", href: "/docs/templates/na-ai-landing" },
       { label: "Setup", href: "/docs/templates/na-ai-landing/setup" },
       {
         label: "Customization",
@@ -178,9 +179,8 @@ const GROUPS = [
       { label: "Documentation", href: "/docs" },
       { label: "UI Explorer", href: UI_EXPLORER_URL },
       { label: "Guides", href: "/guides" },
-      { label: "UI examples", href: "/ui/examples" },
-      { label: "Patterns", href: "/ui/patterns" },
       { label: "Blog", href: "/blog" },
+      { label: "Product releases", href: "/product-releases" },
       { label: "Changelog", href: "/changelog" },
       { label: "Roadmap", href: "/roadmap" },
     ],
@@ -337,7 +337,7 @@ export function FooterPromotion() {
                     </p>
                   </div>
                   <span className={styles.startingPointAction}>
-                    {tSite(action)}
+                    <span className="sr-only">{tSite(action)}</span>
                     <ArrowRight aria-hidden="true" />
                   </span>
                 </Link>

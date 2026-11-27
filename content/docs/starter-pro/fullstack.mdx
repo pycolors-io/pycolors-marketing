@@ -1,7 +1,7 @@
 ---
 title: Starter Pro Fullstack
-description: Run the purchased Web and native Mobile source against one shared backend, accounts and data.
-lastUpdated: "2026-11-20"
+description: Set up Starter Pro Fullstack, with Web and native iOS and Android source sharing one backend, then follow installation and update guides.
+lastUpdated: "2026-11-22"
 appliesTo: Starter Pro Fullstack buyers
 ---
 
@@ -25,6 +25,13 @@ The archive root is `pycolors-starter-pro-fullstack/`:
 - `mobile/` is the independent Expo source, retained API client and native tokens.
 
 There is no second backend fork to synchronize. Use one configured Web backend for both interfaces. The PyColors commerce storefront and hosted provider accounts are not application modules supplied in this archive.
+
+## Follow one setup path
+
+1. Inspect the received manifest and read the archive README. Configure the Web application from `web/` using [Web getting started](/docs/starter-pro/getting-started).
+2. Review the [Web architecture](/docs/starter-pro/architecture), [backend boundaries](/docs/starter-pro/backend) and [server environment](/docs/starter-pro/environment-variables). Keep one database and a compatible API for both interfaces.
+3. Install the independent `mobile/` source with the [Mobile guide](/docs/starter-pro/mobile#native-source), pointing it at that same backend. The [Web PWA](/docs/starter-pro/pwa) is a separate browser capability, not a substitute for native setup.
+4. Configure your native identity and backend trust, then validate both interfaces against your own test environment. Owning both sources does not configure provider accounts or deploy either application automatically.
 
 ## Configure Web and the shared backend
 
@@ -65,3 +72,9 @@ Hermes exports are JavaScript/bytecode, not signed store binaries. Qualify insta
 The current licence revision is **2026-11-20**. One individual or legal entity may create unlimited end products using the included Web, Mobile and API source. Clients need their own licence to access that source. Redistribution as a competing kit is prohibited and third-party licences remain applicable.
 
 Updates and reasonable-effort purchase/setup support concern the products included in the order, subject to continued availability and the applicable terms. Earlier purchases retain more favourable rights from their original terms. Read the received `LICENSE`, [licence page](/license) and [terms](/terms). Deployment, custom implementation and ongoing operation are separate engagements.
+
+## Keep Web and Mobile compatible
+
+Compare [documented product versions](/product-releases) with the manifest in your downloaded package. Follow [customization and upgrades](/docs/starter-pro/customization-and-upgrades) for the Web baseline and backend migrations, and review the included Mobile README before refreshing its retained API client. Recheck authentication, workspace permissions and the affected project journeys from both interfaces after an update. Your customized application does not update automatically.
+
+For help defining a Web/Mobile adaptation or deployment scope, read [implementation and support](/docs/starter-pro/implementation-support) and the [service options](/services). Return to the [Fullstack product page](/starters/fullstack) or [compare all source licences](/pricing#source-licences) when choosing an offer.

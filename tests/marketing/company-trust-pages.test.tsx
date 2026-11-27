@@ -257,7 +257,7 @@ describe("company and trust pages", () => {
     expect(totals).toHaveLength(4);
     ["Now", "Next", "Later", "Shipped"].forEach((status, index) => {
       expect(totals[index]).toHaveTextContent(status);
-      expect(totals[index]).toHaveTextContent(String([4, 4, 0, 94][index]));
+      expect(totals[index]).toHaveTextContent(String([3, 3, 0, 100][index]));
       const href = within(totals[index]!)
         .getByRole("link")
         .getAttribute("href")!;
@@ -295,7 +295,7 @@ describe("company and trust pages", () => {
     const historyRows = groups.flatMap((name) =>
       Array.from(screen.getByRole("list", { name }).children),
     );
-    expect(historyRows).toHaveLength(94);
+    expect(historyRows).toHaveLength(100);
     historyRows.forEach((row) =>
       expect(
         within(row as HTMLElement).getByText("Shipped", { exact: true }),
@@ -307,7 +307,7 @@ describe("company and trust pages", () => {
       ).getAllByRole("listitem"),
     );
     const rows = [...activeRows, ...historyRows];
-    expect(rows).toHaveLength(102);
+    expect(rows).toHaveLength(106);
     expect(
       rows
         .map(
@@ -317,13 +317,21 @@ describe("company and trust pages", () => {
         )
         .sort(),
     ).toEqual([...roadmapTitles].sort());
-    for (const [title, status] of pendingRoadmap) {
+    for (const [title, status] of reviewedRoadmap) {
       const card = screen
         .getByRole("heading", { level: 3, name: title })
         .closest("li")!;
       expect(within(card).getByText(status, { exact: true })).toBeVisible();
-      expect(within(card).queryByText("Shipped", { exact: true })).toBeNull();
+      expect(
+        within(card).getAllByText(/^(Now|Next|Later|Shipped)$/),
+      ).toHaveLength(1);
     }
+    const hostedDemo = within(screen.getByRole("list", { name: "June 2026" }))
+      .getByRole("heading", { level: 3, name: "Starter Pro hosted demo" })
+      .closest("li")!;
+    expect(
+      within(hostedDemo).getByText("Shipped", { exact: true }),
+    ).toBeVisible();
     expect(
       screen.getByText(/Package-based distribution remains planned/),
     ).toBeVisible();
@@ -429,12 +437,16 @@ describe("company and trust pages", () => {
 
 // Public data frozen before the #631 composition migration. Update only with an intentional content change.
 const roadmapTitles = [
+  "PyColors Marketing v1.35.0",
+  "Sandbox purchase and download checks",
+  "Versioned archive preparation",
+  "Engineering articles in English and French",
   "PyColors Marketing v1.34.0",
   "PyColors Marketing v1.33.0",
   "PyColors Marketing v1.32.0",
   "PyColors Marketing v1.31.0",
   "PyColors Marketing v1.30.0",
-  "Starter Pro persistent workspace and isolated demo",
+  "Verify the Starter Pro download",
   "Ship v1.0 — UI Core",
   "Docs quality pass",
   "Release hygiene",
@@ -473,7 +485,7 @@ const roadmapTitles = [
   "Scalable token foundation",
   "Trusted Publishing infrastructure",
   "Commercial upgrade clarity",
-  "Starter Pro sales proof and trust content",
+  "Starter Pro buyer FAQ and launch responsibilities",
   "Starter Pro PWA foundation",
   "Public shell and safe-area layout system",
   "Local validation and billing testing docs",
@@ -483,7 +495,7 @@ const roadmapTitles = [
   "Starter Pro conversion instrumentation",
   "Starter Pro buyer trust and purchase-flow clarity",
   "Starter Pro hosted demo",
-  "Starter Pro video walkthrough",
+  "Purchase-to-first-run video tutorial",
   "Traffic-readiness trust cleanup",
   "Starter Pro demo visibility and conversion proof",
   "@pycolors/ui v1.1.2 accessibility hardening",
@@ -527,22 +539,27 @@ const roadmapTitles = [
   "Upgrade Gate monetization patterns",
   "Starter Pro product-surface refinement",
   "Documentation modularity and decision systems",
-  "Authority engineering content engine",
+  "Review the engineering blog pilot",
   "Template #2",
   "@pycolors/blocks",
-  "Documentation-to-product conversion loop",
+  "Measure the path from docs to purchase",
 ] as const;
-const pendingRoadmap = [
-  ["Starter Pro persistent workspace and isolated demo", "Now"],
-  ["Authority engineering content engine", "Now"],
-  ["Starter Pro hosted demo", "Next"],
-  ["Starter Pro video walkthrough", "Next"],
+const reviewedRoadmap = [
+  ["Verify the Starter Pro download", "Now"],
+  ["Review the engineering blog pilot", "Now"],
+  ["Purchase-to-first-run video tutorial", "Next"],
   ["Template #2", "Next"],
   ["@pycolors/blocks", "Next"],
-  ["Starter Pro sales proof and trust content", "Now"],
-  ["Documentation-to-product conversion loop", "Now"],
+  ["Starter Pro buyer FAQ and launch responsibilities", "Shipped"],
+  ["Measure the path from docs to purchase", "Now"],
 ] as const;
 const releases = [
+  [
+    "v1.35.0",
+    "2026-11-27",
+    "Choose a Starter Pro edition and follow its setup guide",
+    "/starters/pro",
+  ],
   [
     "v1.34.0",
     "2026-11-20",

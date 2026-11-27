@@ -1,7 +1,7 @@
 ---
 title: Starter Pro Mobile
-description: Installer le code natif acheté et son backend compatible inclus, sans achat Web distinct.
-lastUpdated: "2026-11-20"
+description: Installez Starter Pro Mobile, son code Expo React Native pour iOS et Android et son backend inclus, puis suivez les contrôles natifs et les guides de mise à jour.
+lastUpdated: "2026-11-22"
 appliesTo: Acheteurs Starter Pro Mobile
 ---
 
@@ -26,6 +26,17 @@ La racine est `pycolors-starter-pro-mobile/` :
 - `backend/` : backend HTTP Next.js compatible, configuration, schéma, migrations et guides. Il inclut l’inscription, la récupération de compte et la configuration d’espace nécessaires au Mobile ; ce n’est pas le dashboard ou l’interface métier Web complète.
 
 Lisez d’abord le manifeste et le README reçus. Conservez les révisions, empreintes et preuves de qualification avec votre copie. Le storefront commerce PyColors, les comptes de services hébergés et leur exploitation ne font pas partie de votre application livrée.
+
+## Fonctionnalités de l’application native [#native-application-capabilities]
+
+Le code natif utilise Expo Router et les contrôles React Native, avec anglais/français et préférences de présentation de l’appareil. Il est distinct des [fondations PWA Web](/docs/starter-pro/pwa).
+
+- Connectez-vous avec un compte e-mail/mot de passe vérifié, restaurez sa session et déconnectez-vous via l’intégration Better Auth Expo incluse.
+- Ouvrez l’inscription et la récupération de mot de passe dans le navigateur sur votre backend configuré. La connexion sociale et l’inscription natives ne sont pas incluses.
+- Sélectionnez un espace autorisé, consultez sa vue d’ensemble et ses projets, et créez explicitement un projet avec les permissions contrôlées par le serveur.
+- Consultez les détails de projets, les tâches paginées et les informations de compte. La modification des tâches et le rejeu hors ligne ne font pas partie de ces parcours natifs.
+
+Mobile inclut le backend nécessaire à ces parcours. Pour ajouter l’interface Web complète avec les mêmes comptes et données, comparez [Fullstack](/starters/fullstack) et son [guide d’installation](/docs/starter-pro/fullstack).
 
 ## Lancer le backend
 
@@ -69,6 +80,8 @@ pnpm bundle:android
 
 Le code inclut navigation native, anglais/français, parcours de compte et de projets, et préférences de présentation de l’appareil. Configurez votre modèle métier et vos services avant lancement.
 
+<span id="native-validation-and-distribution" />
+
 ## Validation native et distribution
 
 Lisez les preuves exactes de la version reçue. Un test source, un pont natif contrôlé ou un export Metro/Hermes ne prouve ni une application signée installée, ni le comportement sur appareil, ni l’acceptation par un store. L’archive n’est pas un `.ipa` ou `.apk`.
@@ -86,3 +99,9 @@ Après vérification du paiement de l’upgrade, réclamez Fullstack depuis son 
 La révision actuelle de licence est **2026-11-20**. Un particulier ou une personne morale peut créer des produits finaux illimités. Un client doit posséder sa propre licence pour accéder au code source. Redistribution, revente et reconditionnement en kit concurrent sont interdits ; les licences tierces restent applicables.
 
 Mises à jour et assistance raisonnable pour achat/installation concernent les produits inclus dans l’achat, sous réserve de disponibilité et des conditions applicables. Les achats antérieurs conservent leurs droits plus favorables. Consultez le `LICENSE` reçu, la [licence](/license) et les [conditions](/terms). Aucun SLA, déploiement ou service d’exploitation n’est inclus.
+
+## Poursuivre votre projet [#continue-with-your-project]
+
+- Consultez le [modèle backend](/docs/starter-pro/backend) et les [variables serveur](/docs/starter-pro/environment-variables) pour comprendre les concepts, en suivant le README du backend inclus pour les commandes exactes. Ne placez aucun secret de fournisseur ou de base de données dans les valeurs `EXPO_PUBLIC_*`.
+- Comparez les [versions documentées des produits](/product-releases) à votre manifeste reçu. Appliquez les étapes de [mise à jour et de migration](/docs/starter-pro/customization-and-upgrades) pertinentes pour le backend, puis revérifiez la compatibilité du client API Mobile conservé. Vous appliquez les mises à jour à votre code ; les préférences de l’appareil se règlent dans l’app native.
+- Pour votre configuration ou une adaptation, consultez le [périmètre d’intégration et d’assistance](/docs/starter-pro/implementation-support) et les [prestations](/services). La licence source et toute prestation définie sont distinctes.

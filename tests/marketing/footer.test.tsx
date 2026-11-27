@@ -100,12 +100,14 @@ describe("marketing footer", () => {
       "/templates",
       "/templates/na-ai-landing",
       "/starters/mobile",
+      "/starters/fullstack",
       "/docs",
       "/demo",
       "/guides",
       "/ui/examples",
       "/ui/patterns",
       "/blog",
+      "/product-releases",
       "/changelog",
       "/roadmap",
       "/pricing",
@@ -140,6 +142,23 @@ describe("marketing footer", () => {
         name: "Starter Pro Mobile",
       }),
     ).toHaveAttribute("href", "/starters/mobile");
+    const templates = within(footer).getByRole("navigation", {
+      name: "Footer Templates",
+    });
+    expect(
+      within(templates).getByRole("link", {
+        name: "NA-AI Landing",
+      }),
+    ).toHaveAttribute("href", "/templates/na-ai-landing");
+    const designSystem = within(footer).getByRole("navigation", {
+      name: "Footer Design System",
+    });
+    expect(
+      within(designSystem).getByRole("link", { name: "UI examples" }),
+    ).toHaveAttribute("href", "/ui/examples");
+    expect(
+      within(designSystem).getByRole("link", { name: "Patterns" }),
+    ).toHaveAttribute("href", "/ui/patterns");
     const links = within(footer).getAllByRole("link");
     const explorer = within(footer).getByRole("link", { name: "UI Explorer" });
     expect(explorer).toHaveAttribute("href", "https://ui.pycolors.io/");

@@ -13,6 +13,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+import { MoneyPathPageEvent } from "@/components/analytics/money-path-event";
 import { Container } from "@/components/container";
 import { MarketingLinkButton } from "@/components/marketing/cta-panel";
 import { PageHero } from "@/components/marketing/page-hero";
@@ -29,6 +30,10 @@ export default function CheckoutCancelPage() {
 
   return (
     <main id="content" tabIndex={-1} className={styles.page}>
+      <MoneyPathPageEvent
+        event="checkout_cancel_viewed"
+        page="/checkout/cancel"
+      />
       <Container className="pb-16 pt-28 sm:pb-24 sm:pt-32">
         <PageHero
           variant="compact"

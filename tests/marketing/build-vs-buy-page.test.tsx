@@ -86,6 +86,10 @@ describe("Build versus buy decision page", () => {
     expect(table).toHaveAccessibleDescription(
       /Both paths require product development, testing, deployment and maintenance/,
     );
+    expect(
+      within(table).getByRole("row", { name: /Authentication/ }),
+    ).toHaveTextContent("Better Auth");
+    expect(screen.getByRole("main")).not.toHaveTextContent("Auth.js");
     expect(table).toHaveTextContent("Configure and test your Stripe account");
     expect(table).toHaveTextContent(
       `${PRODUCT_DISPLAY["starter-pro"].priceLabel} + adaptation + services.`,

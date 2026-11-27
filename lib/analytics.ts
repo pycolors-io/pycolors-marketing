@@ -1,18 +1,21 @@
-import { PRIVACY_CONSENT_KEY } from '@/components/privacy/consent-gated-gtm';
+import { PRIVACY_CONSENT_KEY } from "@/components/privacy/consent-gated-gtm";
 
 type MoneyPathEventName =
-  | 'buy_clicked'
-  | 'checkout_redirect_started'
-  | 'checkout_redirect_failed'
-  | 'checkout_success_viewed'
-  | 'claim_page_viewed'
-  | 'recovery_page_viewed';
+  | "docs_commercial_link_clicked"
+  | "checkout_cancel_viewed"
+  | "buy_clicked"
+  | "checkout_redirect_started"
+  | "checkout_redirect_failed"
+  | "checkout_success_viewed"
+  | "claim_page_viewed"
+  | "recovery_page_viewed";
 
 type MoneyPathEvent = {
   readonly event: MoneyPathEventName;
   readonly productSlug?: string | null;
   readonly productName?: string | null;
   readonly page?: string;
+  readonly destination?: string;
   readonly status?: string | null;
 };
 
@@ -21,14 +24,12 @@ type DataLayerWindow = Window & {
 };
 
 export function hasAnalyticsConsent() {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return false;
   }
 
   try {
-    return (
-      window.localStorage.getItem(PRIVACY_CONSENT_KEY) === 'accepted'
-    );
+    return window.localStorage.getItem(PRIVACY_CONSENT_KEY) === "accepted";
   } catch {
     return false;
   }

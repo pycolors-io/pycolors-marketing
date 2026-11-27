@@ -1,14 +1,12 @@
 ---
 title: Delivery (PRO)
 description: Follow your Starter Pro purchase from payment confirmation to claim email and ZIP download, with recovery steps when access is missing.
-lastUpdated: "2026-11-20"
+lastUpdated: "2026-11-26"
 appliesTo: Starter Pro buyers
 ---
 
-For Mobile or Fullstack, select the product named in your order and follow its [Mobile](/docs/starter-pro/mobile) or [Fullstack](/docs/starter-pro/fullstack) archive guide. An upgrade has its own verified payment, order and access email; existing purchase access remains available.
-
 import { Callout } from "fumadocs-ui/components/callout";
-import { Download, FileText, RefreshCcw } from "lucide-react";
+import { FileText, RefreshCcw } from "lucide-react";
 import { DocsLinks } from "@/components/docs/docs-links";
 
 This guide explains how you receive the **Starter Pro ZIP bought from PyColors**.
@@ -49,8 +47,9 @@ build with Starter Pro. For that app's subscription foundation, see the
 
    Use the link in the claim email rather than opening the claim route manually.
    The link contains the private access token needed to verify your purchase
-   access. On **Your access is ready.**, check that the product is **Starter Pro**
-   and keep the order reference for support.
+   access. Check that the displayed product matches the offer on your order.
+   A paid Fullstack upgrade has its own access email. The original Web or
+   Mobile link still opens the original purchase.
 
    Access links currently expire 24 hours after they are issued. If yours has
    expired, request a fresh link through [purchase recovery](/orders/recover).
@@ -59,16 +58,27 @@ build with Starter Pro. For that app's subscription foundation, see the
 
 4. **Download, save, and start setup.**
 
-   Select **Download package** on the claim page. PyColors validates the link
+   Select **Download [product name]** on the claim page. PyColors validates the link
    and active purchase access on the server before serving the private ZIP.
    An access-ready page does not prove that the file finished downloading.
    Check that the download completed, save the archive safely, and unzip it.
 
-   Continue with [Getting started](/docs/starter-pro/getting-started), including
-   its first-session checkpoints. Downloading the source code does not provision
-   or deploy your SaaS. Configure and validate your own environment and
-   integrations before following the
-   [production checklist](/docs/starter-pro/production-checklist).
+   Read the root `README.md`, then use the [setup guide for your archive](#match-your-archive).
+   Downloading the source code does not provision or deploy your SaaS.
+
+## Match your archive to your order [#match-your-archive]
+
+Use the name on the order to choose the same product in the recovery form. After download, open `PYCOLORS_RELEASE.json` in the extracted folder. The current archive format records the offer in `productSlug` and the source revision in `sourceCommit`.
+
+| Product on your order and recovery form | Expected `productSlug`  | Where to start                                                           |
+| --------------------------------------- | ----------------------- | ------------------------------------------------------------------------ |
+| PyColors Starter Pro                    | `starter-pro`           | [Web setup](/docs/starter-pro/getting-started) from the archive root     |
+| PyColors Starter Pro Mobile             | `starter-pro-mobile`    | [Mobile setup](/docs/starter-pro/mobile) with `backend/` and `mobile/`   |
+| PyColors Starter Pro Fullstack          | `starter-pro-fullstack` | [Fullstack setup](/docs/starter-pro/fullstack) with `web/` and `mobile/` |
+
+Earlier Web archives may record a version and source revision without an offer field. Follow the README supplied with that release. If the files or product name disagree with your order, keep the ZIP and ask [purchase support](/orders/support) to check before installing. The [version history](/product-releases) provides context for updates. Your downloaded files identify the copy you received.
+
+For usage rights, read the supplied `LICENSE` and the [licence terms](/license). Before going live with Web or Fullstack, validate your providers with the [production checklist](/docs/starter-pro/production-checklist). For native distribution, follow the device and signing checks in your Mobile or Fullstack guide.
 
 ## When a delivery step fails
 
@@ -85,8 +95,8 @@ between retrying an unpaid checkout and recovering an existing purchase.
 ### No claim email arrives
 
 Check the checkout email and spam folder, then open
-[purchase recovery](/orders/recover) and select **Resend access link** with that
-same email. Eligible active purchase access can receive a new claim email.
+[purchase recovery](/orders/recover), enter that same email and choose the product
+on your order. Select **Resend access link** to request a new email for eligible access.
 
 A recovery confirmation does not prove that a purchase exists or that an email
 reached your inbox. Repeated requests may be temporarily limited. Follow the
@@ -115,7 +125,7 @@ and successful file delivery are separate checks; do not pay again to retry.
 
 ### The link is for another product or the checkout email is inaccessible
 
-Choose **PyColors Starter Pro** on the recovery form. Recovery targets the
+Match the recovery selection to your order using the [product table](#match-your-archive). Recovery targets the
 selected product only. If the new email still points to another product or you
 cannot access the checkout inbox, contact purchase support before paying again.
 Recovery cannot change the checkout email and cannot restore inactive purchase access.
@@ -126,13 +136,14 @@ limits and the support handoff.
 
 Open [purchase support](/orders/support) for the email contact and fallback
 instructions if your email app does not open. Include the checkout email,
-**Starter Pro**, approximate purchase date, order reference if available, the
+the full product name, approximate purchase date, order reference if available, the
 failed step, and what you already tried.
 
 Do not send passwords, payment card details, API keys, or claim/download links.
 Remove those details from screenshots too. Support can review the purchase or
 access issue; no response-time or resolution-time guarantee is promised.
 Requesting a new access link does not resend receipts or invoices.
+For a withdrawal or refund request, use the [withdrawal and refund guidance](/orders/support#refunds).
 
 ## Continue
 
@@ -150,13 +161,6 @@ Requesting a new access link does not resend receipts or invoices.
       href: "/docs/starter-pro/purchase-documents",
       description: "Find payment-document guidance separately from ZIP access.",
       icon: FileText,
-    },
-    {
-      title: "Getting started",
-      href: "/docs/starter-pro/getting-started",
-      description:
-        "Set up the downloaded source and check your first local run.",
-      icon: Download,
     },
   ]}
 />

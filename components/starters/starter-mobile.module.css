@@ -1,6 +1,56 @@
 .page {
   background: var(--background);
 }
+.page[data-starter-product="starter-pro-mobile"] {
+  --starter-feature-surface: #e1eeff;
+  --starter-feature-depth: #c5dcff;
+  --starter-feature-ink: #172c50;
+  --starter-feature-muted: #344d70;
+}
+.page[data-starter-product="starter-pro-fullstack"] {
+  --starter-feature-surface: #eee5ff;
+  --starter-feature-depth: #dac8fa;
+  --starter-feature-ink: #2f214a;
+  --starter-feature-muted: #514269;
+}
+:global(html[data-site-palette="monochrome"]) .page {
+  --starter-feature-surface: var(--surface-muted);
+  --starter-feature-depth: var(--background);
+  --starter-feature-ink: var(--foreground);
+  --starter-feature-muted: var(--muted-foreground);
+}
+.page .bodyHeader {
+  display: block;
+  max-width: none;
+  margin-inline: 0;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  text-align: left;
+}
+.bodyHeader > div:first-child {
+  display: grid;
+  align-items: end;
+  gap: 1.25rem;
+}
+.bodyHeader > div:first-child > * {
+  margin-block: 0;
+}
+.bodyHeader :global([data-slot="badge"]) {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+.bodyHeader h2 {
+  max-width: 20ch;
+  font-size: clamp(2.125rem, 4.4vw, 3.75rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+}
+.bodyHeader p {
+  max-width: 52ch;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
 .heroContainer {
   padding-top: calc(var(--site-header-height, 3.5rem) + clamp(2rem, 4vw, 4rem));
   padding-bottom: clamp(3.5rem, 6vw, 6rem);
@@ -26,31 +76,82 @@
   font-size: 0.8125rem;
   line-height: 1.7;
 }
+.heroActions {
+  align-items: flex-start;
+}
+.heroActions > div {
+  max-width: 100%;
+}
 .heroActions :global([data-slot="button"]),
-.webAction,
-.enquiryAction {
+.guideAction {
   min-height: 2.75rem;
   height: auto;
-  padding: 0.75rem 1.25rem;
+  padding: 0.375rem 1rem;
   border-radius: 100px;
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
   white-space: normal;
   text-align: center;
 }
-.heroActions :global([data-slot="button"]):focus-visible {
+.heroActions :global([data-slot="button"]):focus-visible,
+.guideAction:focus-visible,
+.contextLinks a:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 4px;
 }
 .heroActions :global(.site-primary-action) {
-  border: 1px solid var(--marketing-cobalt);
-  background: var(--marketing-cobalt);
-  color: var(--marketing-cobalt-ink);
+  border: 1px solid var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
 }
 .heroActions :global(.site-primary-action):hover {
-  background: color-mix(
-    in srgb,
-    var(--marketing-cobalt) 88%,
-    var(--background)
-  );
+  background: color-mix(in srgb, var(--foreground) 88%, var(--background));
+}
+.guideAction {
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+}
+.guideAction:hover {
+  border-color: var(--foreground);
+  background: var(--surface-muted);
+}
+.heroDetails {
+  display: grid;
+  gap: 0.75rem;
+}
+.contextLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+.contextLinks a {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-underline-offset: 4px;
+}
+.contextLinks a:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+.guideLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+}
+.heroContainer :is(a, button),
+.contextLinks a,
+.guideLinks a {
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
 }
 .visual {
   min-width: 0;
@@ -63,10 +164,11 @@
   overflow: hidden;
   border: 1px solid var(--border-subtle);
   border-radius: clamp(1.5rem, 3vw, 2.5rem);
-  background: var(--marketing-graphite);
+  background: var(--marketing-canvas);
 }
 .artwork img {
-  object-fit: cover;
+  object-fit: contain;
+  padding: clamp(1.5rem, 4vw, 3rem);
 }
 .stack {
   position: absolute;
@@ -95,207 +197,691 @@
   line-height: 1.5;
   text-align: right;
 }
-.options {
+.scopeGrid {
   display: grid;
   gap: 1.25rem;
 }
-.option {
-  display: flex;
+.scopeCard,
+.archivePanel,
+.purchasePanel {
+  position: relative;
   min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--foreground) 14%, var(--background));
+  border-radius: clamp(1.75rem, 3vw, 2.5rem);
+  background: linear-gradient(
+    150deg,
+    var(--background) 15%,
+    color-mix(in srgb, var(--foreground) 3%, var(--background))
+  );
+  box-shadow:
+    0 2px 4px -2px color-mix(in srgb, var(--foreground) 6%, transparent),
+    0 24px 50px -42px color-mix(in srgb, var(--foreground) 24%, transparent);
+}
+.archivePanel::after,
+.purchasePanel::after {
+  position: absolute;
+  inset: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
+  border-radius: calc(clamp(1.75rem, 3vw, 2.5rem) - 0.5rem);
+  content: "";
+  pointer-events: none;
+}
+.scopeCard {
+  display: flex;
   flex-direction: column;
-  align-items: start;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
+  gap: 1.25rem;
+  padding: clamp(1.75rem, 3.5vw, 3rem);
+  border-color: color-mix(in srgb, var(--foreground) 8%, var(--background));
+  box-shadow: none;
+}
+.scopeCard[data-editorial-accent] {
+  --background: var(--starter-feature-surface);
+  --foreground: var(--starter-feature-ink);
+  --muted-foreground: var(--starter-feature-muted);
+  --border-subtle: color-mix(
+    in srgb,
+    var(--starter-feature-ink) 15%,
+    transparent
+  );
+  border-color: transparent;
+  background: linear-gradient(
+    145deg,
+    var(--starter-feature-surface),
+    var(--starter-feature-depth)
+  );
+  color: var(--foreground);
+}
+.scopeCardHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: clamp(1rem, 2.5vw, 2.5rem);
+}
+.scopeIcon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  place-items: center;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--marketing-panel-radius);
+  border-radius: 0.875rem;
   background: var(--background);
   color: var(--foreground);
+  box-shadow: 0 4px 12px -8px
+    color-mix(in srgb, var(--foreground) 18%, transparent);
 }
-.webOption {
-  --background: var(--marketing-graphite);
-  --foreground: var(--marketing-graphite-ink);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
-  --ring: var(--foreground);
+.scopeIcon svg {
+  width: 1.125rem;
+  height: 1.125rem;
 }
-.mobileOption {
-  --background: var(--marketing-lilac);
-  --foreground: var(--marketing-lilac-ink);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
-}
-.bundleOption {
-  --background: var(--marketing-peach);
-  --foreground: var(--marketing-peach-ink);
-  --muted-foreground: color-mix(
-    in srgb,
-    var(--foreground) 86%,
-    var(--background)
-  );
-  --border-subtle: color-mix(in srgb, var(--foreground) 18%, var(--background));
-}
-.optionTop {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-}
-.optionTop > svg {
-  flex-shrink: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-.optionTop :global([data-slot="badge"]) {
+.scopeCard[data-editorial-accent] .scopeIcon {
   border-color: var(--border-subtle);
-  color: var(--foreground);
-  background: transparent;
-  text-align: center;
-  white-space: normal;
+  background: color-mix(in srgb, white 60%, var(--background));
+  box-shadow: none;
 }
-.option h3 {
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
-  font-weight: 650;
-  line-height: 1.1;
-  letter-spacing: -0.035em;
+.cardEyebrow {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
-.option > p {
-  margin-top: 1.25rem;
+.scopeCard h3 {
+  max-width: 20ch;
+  font-size: clamp(1.625rem, 2.6vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+.cardDescription {
+  max-width: 54ch;
   color: var(--muted-foreground);
   font-size: 0.9375rem;
+  line-height: 1.8;
+}
+.scopeFeatures {
+  display: grid;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  list-style: none;
+}
+.scopeFeatures li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  color: var(--foreground);
+  font-size: 0.875rem;
   line-height: 1.7;
 }
-.option .price {
+.scopeFeatures svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.1875rem;
+  color: var(--muted-foreground);
+}
+.scopeNote,
+.alternativesNote {
+  margin-top: 1.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+.scopeNote {
+  text-align: center;
+}
+.setupLayout {
+  display: grid;
+  align-items: start;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.archivePanel {
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+}
+.archiveHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.archiveHeading svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+.archiveHeading h3,
+.setupSteps h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+}
+.archiveRoot {
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--background);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.archiveFiles {
+  margin-top: 0.75rem;
+}
+.archiveFiles > div {
+  display: grid;
+  gap: 0.375rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.archiveFiles dt {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.archiveFiles dd,
+.archiveNote {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.archiveNote {
+  margin-top: 1.25rem;
+}
+.contentLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
   color: var(--foreground);
-  font-size: 3rem;
-  font-weight: 650;
-  line-height: 1.05;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.7;
+  text-underline-offset: 0.25rem;
+}
+.contentLink svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+.contentLink:hover {
+  text-decoration: underline;
+}
+.contentLink:focus-visible,
+.alternative:focus-visible,
+.purchaseActions :global([data-slot="button"]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.contentLink,
+.alternative,
+.purchaseActions :is(a, button) {
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
+}
+.setupSteps {
+  display: grid;
+  gap: 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.setupSteps li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.25rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.setupSteps li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.setupStepNumber {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--background), var(--surface-muted));
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+.setupSteps p {
+  max-width: 50ch;
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.setupSteps .contentLink {
+  margin-top: 0.25rem;
+}
+.purchasePanel {
+  display: grid;
+  align-items: center;
+  gap: 2.5rem;
+  padding: clamp(1.75rem, 4vw, 4rem);
+}
+.purchaseCopy h2 {
+  max-width: 20ch;
+  margin-top: 1rem;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+.purchaseCopy .cardDescription {
+  margin-top: 1.25rem;
+}
+.purchaseCopy .contextLinks {
+  margin-top: 1rem;
+}
+.purchaseActions {
+  display: grid;
+  min-width: 0;
+  gap: 0.75rem;
+}
+.purchasePrice {
+  font-size: clamp(2.75rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1;
   letter-spacing: -0.05em;
   font-variant-numeric: tabular-nums;
 }
-.option .priceNote {
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-}
-.option .bundleScope {
-  color: var(--foreground);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-.optionDetails {
-  width: 100%;
-  margin: 1.5rem 0 2rem;
-  font-size: 0.8125rem;
-  line-height: 1.6;
-}
-.optionDetails > div {
-  padding-top: 0.875rem;
-  border-top: 1px solid var(--border-subtle);
-}
-.optionDetails > div + div {
-  margin-top: 0.875rem;
-}
-.optionDetails dt {
-  font-weight: 600;
-}
-.optionDetails dd {
-  margin-top: 0.25rem;
+.purchaseQualifier,
+.purchaseNote {
   color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.7;
 }
-.option .webAction {
-  --primary: var(--foreground);
-  --primary-foreground: var(--background);
-  margin-top: auto;
+.purchaseActions > div {
+  margin-top: 0.75rem;
+}
+.purchaseActions :global([data-slot="button"]) {
+  min-height: 2.75rem;
+  height: auto;
+  border-radius: 100px;
+  white-space: normal;
+}
+.purchaseActions :global(.site-primary-action) {
   border: 1px solid var(--foreground);
   background: var(--foreground);
   color: var(--background);
 }
-.option .webAction:hover {
+.purchaseActions :global(.site-primary-action):hover {
   background: color-mix(in srgb, var(--foreground) 88%, var(--background));
 }
-.option .webAction:focus-visible,
-.option .enquiryAction:focus-visible {
+.alternativesPanel {
+  padding: clamp(1.5rem, 3.5vw, 3.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: clamp(1.75rem, 3vw, 2.5rem);
+  background: color-mix(in srgb, var(--foreground) 2%, var(--background));
+}
+.page .alternativesHeader {
+  gap: 1.5rem 3rem;
+  margin-bottom: clamp(2rem, 3vw, 3rem);
+}
+.alternativesHeader h2 {
+  max-width: 19ch;
+  font-size: clamp(1.875rem, 3.5vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+.alternativesHeader p {
+  max-width: 52ch;
+  font-size: 0.875rem;
+}
+.alternatives {
+  display: grid;
+  gap: 1rem 2rem;
+  padding: 0;
+  list-style: none;
+}
+.alternatives li {
+  min-width: 0;
+}
+.alternative {
+  display: grid;
+  grid-template-columns: clamp(4rem, 8vw, 8rem) minmax(0, 1fr);
+  min-width: 0;
+  align-items: center;
+  gap: 1.25rem 1.5rem;
+  padding-block: 1.75rem;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0.25rem;
+  color: var(--foreground);
+  text-underline-offset: 0.25rem;
+}
+.alternativeArtwork {
+  position: relative;
+  grid-row: span 2;
+  align-self: start;
+  aspect-ratio: 1;
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--foreground) 3%, var(--background));
+}
+.alternativeArtwork img {
+  object-fit: contain;
+  padding: 0.5rem;
+}
+.alternativeCopy {
+  min-width: 0;
+}
+.alternativeLabel {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+}
+.alternative h3 {
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+.alternative p {
+  margin-top: 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.alternativePrice {
+  display: flex;
+  grid-column: 2;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.alternativePrice svg {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--background);
+}
+.alternative:hover h3 {
+  text-decoration: underline;
+}
+.alternativesNote {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-top: 0.5rem;
+}
+.technologyGrid {
+  display: grid;
+  gap: 0;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  border: 1px solid var(--border-subtle);
+  border-bottom: 0;
+  border-radius: 1.75rem 1.75rem 0 0;
+  background: var(--background);
+}
+.technologyCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.technologyCard:first-child {
+  padding-top: 0;
+}
+.technologyCard:last-child {
+  padding-bottom: 0;
+}
+.technologyCard + .technologyCard {
+  border-top: 1px solid var(--border-subtle);
+}
+.technologyCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.technologyIcon {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--foreground);
+}
+.technologyIcon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.technologyIndex {
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+}
+.technologyLabel {
+  margin-bottom: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+.technologyCard h3 {
+  max-width: 18ch;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+.technologyDescription {
+  flex: 1;
+  max-width: 52ch;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+.technologyNames {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+.technologyNames li {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.technologyNames li + li {
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--border-subtle);
+}
+.technologyLink {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0.25rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-underline-offset: 0.25rem;
+}
+.technologyLink svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+.technologyServices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: 0;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0 0 1.75rem 1.75rem;
+  background: var(--surface-muted);
+}
+.technologyServices h3 {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.technologyServices p {
+  max-width: 68ch;
+  margin-top: 0.375rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.technologyServiceLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+.technologyServiceLinks a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-underline-offset: 0.25rem;
+}
+.technologyLink:hover,
+.technologyServiceLinks a:hover {
+  text-decoration: underline;
+}
+.technologyLink:focus-visible,
+.technologyServiceLinks a:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 4px;
 }
-.option .enquiryAction {
-  margin-top: auto;
-  border: 1px solid var(--foreground);
-  background: transparent;
-  color: var(--foreground);
-}
-.option .enquiryAction:hover {
-  background: color-mix(in srgb, var(--foreground) 8%, var(--background));
-}
-.option .enquiryAction:focus-visible {
-  outline-color: var(--foreground);
-}
-.scopeNote {
-  max-width: 70ch;
-  margin: 1.5rem auto 0;
-  color: var(--muted-foreground);
-  font-size: 0.875rem;
-  line-height: 1.8;
-  text-align: center;
-}
-.foundations {
-  display: grid;
-  gap: 1.25rem;
-}
-.foundations article {
-  min-width: 0;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--marketing-panel-radius);
-  background: var(--marketing-canvas);
-}
-.foundations svg {
-  width: 1.75rem;
-  height: 1.75rem;
-  margin-bottom: 1.5rem;
-  color: var(--primary);
-}
-.foundations h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.35;
-}
-.foundations p {
-  margin-top: 0.75rem;
-  color: var(--muted-foreground);
-  font-size: 0.9375rem;
-  line-height: 1.7;
+.technologyLink,
+.technologyServiceLinks a {
+  scroll-margin-block-start: calc(var(--site-header-height, 3.5rem) + 1rem);
+  scroll-margin-block-end: 1rem;
 }
 .page :global([id]) {
   scroll-margin-top: calc(var(--site-header-height, 3.5rem) + 1.5rem);
 }
 @media (min-width: 48rem) {
-  .foundations {
+  .scopeGrid,
+  .alternatives {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .technologyGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .technologyCard {
+    padding: 0 clamp(1.5rem, 3vw, 3rem);
+  }
+  .technologyCard:first-child {
+    padding-left: 0;
+  }
+  .technologyCard:last-child {
+    padding-right: 0;
+  }
+  .technologyCard + .technologyCard {
+    border-top: 0;
+    border-left: 1px solid var(--border-subtle);
+  }
+  @supports (grid-template-rows: subgrid) {
+    .technologyCard {
+      display: grid;
+      grid-row: span 5;
+      grid-template-rows: subgrid;
+      align-items: start;
+    }
+    .technologyDescription {
+      align-self: start;
+    }
+    .technologyNames {
+      align-self: end;
+    }
+  }
+}
+@media (min-width: 48rem) and (max-width: 63.999rem) {
+  .scopeGrid[data-layers="3"] .scopeCard:last-child {
+    grid-column: 1 / -1;
+  }
+  .technologyGrid[data-layers="3"] .technologyCard:last-child {
+    grid-column: 1 / -1;
+    margin-top: 1.75rem;
+    padding-top: 1.75rem;
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--border-subtle);
   }
 }
 @media (min-width: 64rem) {
-  .heroLayout {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  .bodyHeader > div:first-child {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: clamp(3rem, 5vw, 5rem);
   }
-  .options {
+  .scopeGrid[data-layers="3"] {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .option h3 {
-    min-height: 2.2em;
+  .setupLayout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .purchasePanel {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+  .technologyGrid[data-layers="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .heroLayout {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   }
 }
 @media (max-width: 39.999rem) {
   .hero h1 {
     font-size: clamp(2rem, 8.5vw, 2.875rem);
+  }
+}
+@media (max-width: 39.999rem), (pointer: coarse) {
+  .heroActions > div > :global([data-slot="button"]),
+  .guideAction,
+  .contextLinks a {
+    min-height: 2.75rem;
   }
 }
 @media (forced-colors: active) {
@@ -309,7 +895,13 @@
   .webOption,
   .mobileOption,
   .bundleOption,
-  .foundations article {
+  .scopeCard,
+  .scopeCard[data-editorial-accent],
+  .archivePanel,
+  .purchasePanel,
+  .technologyGrid,
+  .technologyCard,
+  .technologyServices {
     --background: Canvas;
     --foreground: CanvasText;
     --muted-foreground: CanvasText;
@@ -318,18 +910,49 @@
     border-color: CanvasText;
     background: Canvas;
     color: CanvasText;
+    box-shadow: none;
   }
   .heroActions :global([data-slot="button"]):focus-visible,
+  .guideAction:focus-visible,
+  .contextLinks a:focus-visible,
   .option .webAction:focus-visible,
   .option .enquiryAction:focus-visible {
     outline-color: Highlight;
   }
   .heroActions :global(.site-primary-action),
   .heroActions :global(.site-primary-action):hover,
+  .guideAction,
+  .guideAction:hover,
   .option .webAction,
   .option .webAction:hover,
   .option .enquiryAction,
   .option .enquiryAction:hover {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .contextLinks a {
+    color: LinkText;
+  }
+  .archivePanel::after,
+  .purchasePanel::after {
+    border-color: CanvasText;
+  }
+  .scopeCard[data-editorial-accent] .scopeIcon {
+    border-color: CanvasText;
+    background: Canvas;
+  }
+  .contentLink,
+  .alternative {
+    color: LinkText;
+  }
+  .contentLink:focus-visible,
+  .alternative:focus-visible,
+  .purchaseActions :global([data-slot="button"]):focus-visible {
+    outline-color: Highlight;
+  }
+  .purchaseActions :global(.site-primary-action),
+  .purchaseActions :global(.site-primary-action):hover {
     border-color: ButtonText;
     background: ButtonFace;
     color: ButtonText;

@@ -64,6 +64,7 @@ describe("Starter Pro FAQ discovery contracts", () => {
     const explorer = read("components/starters/starter-pro-faq-explorer.tsx");
     const search = read("lib/products/starter-pro-faq-search.ts");
 
+    expect(page).toMatch(/<main\s+id="content"\s+tabIndex=\{-1\}/u);
     expect(page).not.toMatch(/^\s*["']use client["']/u);
     expect(explorer).toMatch(/^"use client";/u);
     expect(explorer).toContain("<MarketingFaq");

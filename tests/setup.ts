@@ -1,7 +1,11 @@
-import "@testing-library/jest-dom/vitest";
-import "vitest-axe/extend-expect";
+import * as domMatchers from "@testing-library/jest-dom/matchers";
+import * as axeMatchers from "vitest-axe/matchers";
 import { cleanup } from "@testing-library/react";
-import { afterEach, vi } from "vitest";
+import { afterEach, expect, vi } from "vitest";
+
+// Vitest 5 bundles expect. Register against this workspace's instance rather
+// than loading another instance through a plugin's pnpm peer context.
+expect.extend({ ...domMatchers, ...axeMatchers });
 
 // jsdom has no media-query API; individual tests can override the preference.
 if (typeof window !== "undefined") {

@@ -56,7 +56,9 @@ describe("Starter Free and Pro comparison", () => {
     const [freeAccess, proAccess] = cellsFor("Session and access checks");
 
     expect(freeAuth).toHaveTextContent("no real account or session is created");
-    expect(proAuth).toHaveTextContent("Auth.js credentials");
+    expect(proAuth).toHaveTextContent(
+      "Better Auth email/password and Google/GitHub OAuth",
+    );
     expect(proAuth).toHaveTextContent("configure your providers");
     expect(freeAccess).toHaveTextContent("add real session checks");
     expect(proAccess).toHaveTextContent("extend permissions for your product");

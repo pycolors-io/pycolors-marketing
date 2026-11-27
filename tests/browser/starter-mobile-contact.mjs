@@ -3,16 +3,23 @@ import { Buffer } from "node:buffer";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const cardControls =
-  '#platforms article[aria-labelledby="mobile-option-title"] button, #platforms article[aria-labelledby="bundle-option-title"] button';
+const purchaseControls = "#purchase :is(a, button)";
+const alternativeControls = "#platforms a";
+const purchaseSummary = '#purchase div:has(> div > button[aria-live="polite"])';
 const contactRegion = 'section[aria-labelledby="general-contact-heading"]';
 const contactControl = `${contactRegion} a[href^="mailto:contact@pycolors.com?subject="]`;
 const products = [
   {
     id: "mobile",
-    name: "PyColors Starter Pro Mobile",
+    name: "Starter Pro Mobile",
     price: "249 €",
     qualifier: "One-time payment · VAT included",
+    purchase: "Buy {value0} — {value1}",
+    purchaseName: "PyColors Starter Pro Mobile",
+    action: "Explore Starter Pro Mobile",
+    href: "/starters/mobile",
+    guide: "Mobile setup guide",
+    docsHref: "/docs/starter-pro/mobile",
     en: {
       action: "Discuss your Mobile project",
       heading: "Let's discuss your Mobile project.",
@@ -26,9 +33,15 @@ const products = [
   },
   {
     id: "fullstack",
-    name: "PyColors Starter Pro Fullstack",
+    name: "Starter Pro Fullstack",
     price: "499 €",
     qualifier: "One-time payment · VAT included",
+    purchase: "Buy {value0} — {value1}",
+    purchaseName: "PyColors Starter Pro Fullstack",
+    action: "Explore Starter Pro Fullstack",
+    href: "/starters/fullstack",
+    guide: "Fullstack setup guide",
+    docsHref: "/docs/starter-pro/fullstack",
     en: {
       action: "Discuss your Web and Mobile project",
       heading: "Let's discuss your Web and Mobile project.",
@@ -41,6 +54,12 @@ const products = [
     },
   },
 ];
+const webAlternative = {
+  name: "PyColors Starter Pro",
+  price: "299 €",
+  href: "/starters/pro",
+  description: "The complete Web application and its backend.",
+};
 
 function safeErrorName(value) {
   return typeof value === "string" && /^\w{1,64}$/u.test(value)
@@ -64,7 +83,7 @@ async function measureFocus(page, selector) {
     });
     const rect = rectangle(element.getBoundingClientRect());
     const scroll = { x: globalThis.scrollX, y: globalThis.scrollY };
-    // Leaving the cards can focus the distant FAQ. Observe that native scroll
+    // Leaving a region can focus the FAQ or footer. Observe that native scroll
     // too, before reversing direction; never cancel or reposition it in a test.
     if (index === -1)
       return { index, tag: element.tagName.toLowerCase(), rect, scroll };
@@ -426,83 +445,206 @@ export async function verifyStarterMobileContact({
             })
             .click();
           await page.goto("about:blank");
-          assert.equal((await page.goto(mobileUrl)).status(), 200);
-          record.phase = "mobile.offers";
-          await verifyView(page, locale, theme, "mobile", record);
-          const web = page.getByRole("article", {
-            name: "Starter Pro Web",
-            exact: true,
-          });
-          assert.equal(
-            await web.getByText("299 €", { exact: true }).count(),
-            1,
-          );
           for (const product of products) {
-            const card = page.getByRole("article", {
-              name: product.name,
-              exact: true,
-            });
+            record.phase = `${product.id}.source`;
             assert.equal(
-              await card.getByText(product.price, { exact: true }).count(),
-              1,
+              (
+                await page.goto(`${origin.origin}${prefix}${product.href}`)
+              ).status(),
+              200,
+            );
+            await verifyView(page, locale, theme, product.id, record);
+            assert.deepEqual(
+              await page
+                .locator(
+                  "main #included, main #technology, main #source-guides, main #purchase, main #platforms",
+                )
+                .evaluateAll((sections) =>
+                  sections.map((section) => section.id),
+                ),
+              [
+                "included",
+                "technology",
+                "source-guides",
+                "purchase",
+                "platforms",
+              ],
             );
             assert.equal(
-              await card
-                .getByText(copy(product.qualifier, locale), { exact: true })
+              await page.locator("main [data-source-offer]").count(),
+              0,
+            );
+            assert.equal(await page.locator("main form").count(), 0);
+
+            const purchaseLabel = copy(product.purchase, locale)
+              .replace("{value0}", copy(product.purchaseName, locale))
+              .replace("{value1}", product.price);
+            const hero = page.locator("main [data-marketing-hero]");
+            const purchase = page.locator("#purchase");
+            const ownButtons = page.locator(
+              'main button[aria-live="polite"][aria-busy]',
+            );
+            assert.equal(await ownButtons.count(), 2);
+            assert.equal(
+              await page
+                .getByRole("button", { name: purchaseLabel, exact: true })
                 .count(),
-              1,
+              2,
             );
+            for (const region of [hero, purchase]) {
+              assert.equal(
+                await region
+                  .getByRole("button", { name: purchaseLabel, exact: true })
+                  .count(),
+                1,
+              );
+            }
             assert.equal(
-              await card
+              await hero
                 .getByText(copy("Source licence", locale), { exact: true })
                 .count(),
               1,
             );
-            assert.equal(await card.getByRole("button").count(), 1);
-            assert.equal(await card.getByRole("link").count(), 0);
-          }
-          assert.equal(
-            await page
-              .getByText(
-                copy(
-                  "Mobile includes a backend without the Web interface. Fullstack includes Web, Mobile and the shared API. These are source licences; implementation services and provider costs are separate.",
-                  locale,
+            assert.equal(
+              await purchase.getByText(product.price, { exact: true }).count(),
+              1,
+            );
+            assert.equal(
+              await purchase
+                .getByText(copy(product.qualifier, locale), { exact: true })
+                .count(),
+              1,
+            );
+            assert.equal(await purchase.getByRole("link").count(), 3);
+            for (const [label, href] of [
+              [product.guide, `${prefix}${product.docsHref}`],
+              [
+                "Review the license",
+                locale === "fr" ? "/fr/licence" : "/license",
+              ],
+              ["Purchase support", `${prefix}/orders/support`],
+            ]) {
+              assert.equal(
+                await purchase
+                  .getByRole("link", { name: copy(label, locale), exact: true })
+                  .getAttribute("href"),
+                href,
+              );
+            }
+            await page.waitForFunction(() => {
+              const buttons = [
+                ...globalThis.document.querySelectorAll(
+                  'main button[aria-live="polite"][aria-busy]',
                 ),
-                { exact: true },
-              )
-              .count(),
-            1,
-          );
-          assert.equal(await page.locator("main form").count(), 0);
-          await page.waitForFunction(() =>
-            [
-              ...globalThis.document.querySelectorAll(
-                "#platforms article button",
-              ),
-            ].every((button) => !button.disabled),
-          );
-          record.phase = "mobile.keyboard";
-          await page.keyboard.press("Tab");
-          assert.equal(
-            await page.locator(":focus").getAttribute("href"),
-            "#content",
-          );
-          await page.keyboard.press("Enter");
-          assert.equal(
-            await page.locator(":focus").getAttribute("id"),
-            "content",
-          );
-          await verifyKeyboard(page, cardControls, 2, "mobile", record);
-          record.phase = "mobile.capture";
-          for (const [id, label] of [
-            ["web-option-title", "option-web"],
-            ["mobile-option-title", "option-mobile"],
-            ["bundle-option-title", "option-fullstack"],
-          ]) {
-            await capture(`#platforms article[aria-labelledby="${id}"]`, label);
+              ];
+              return (
+                buttons.length === 2 &&
+                buttons.every((button) => !button.disabled)
+              );
+            });
+
+            const alternatives = page.locator("#platforms");
+            const choices = alternatives.getByRole("navigation", {
+              name: copy("Explore other source licences", locale),
+              exact: true,
+            });
+            const other = products.find((entry) => entry.id !== product.id);
+            const expectedAlternatives = [
+              webAlternative,
+              {
+                name: other.purchaseName,
+                price: other.price,
+                href: other.href,
+                description:
+                  product.id === "mobile"
+                    ? "Web and native Mobile with one shared backend."
+                    : "Native iOS and Android source with its backend.",
+              },
+            ];
+            assert.equal(await alternatives.getByRole("button").count(), 0);
+            assert.equal(await alternatives.getByRole("link").count(), 3);
+            assert.equal(await choices.getByRole("link").count(), 2);
+            assert.equal(
+              await alternatives
+                .getByRole("link", {
+                  name: copy("Compare all starters", locale),
+                  exact: true,
+                })
+                .getAttribute("href"),
+              `${prefix}/starters#source-licences`,
+            );
+            for (const alternative of expectedAlternatives) {
+              const heading = choices.getByRole("heading", {
+                name: copy(alternative.name, locale),
+                level: 3,
+                exact: true,
+              });
+              const link = heading.locator("xpath=ancestor::a");
+              assert.equal(
+                await link.getAttribute("href"),
+                `${prefix}${alternative.href}`,
+              );
+              assert.equal(
+                await link
+                  .getByText(alternative.price, { exact: true })
+                  .count(),
+                1,
+              );
+              assert.equal(
+                await link
+                  .getByText(copy(alternative.description, locale), {
+                    exact: true,
+                  })
+                  .count(),
+                1,
+              );
+            }
+
+            record.phase = `${product.id}.keyboard`;
+            await page.keyboard.press("Tab");
+            assert.equal(
+              await page.locator(":focus").getAttribute("href"),
+              "#content",
+            );
+            await page.keyboard.press("Enter");
+            assert.equal(
+              await page.locator(":focus").getAttribute("id"),
+              "content",
+            );
+            await verifyKeyboard(
+              page,
+              purchaseControls,
+              4,
+              `${product.id}.purchase`,
+              record,
+            );
+            await verifyKeyboard(
+              page,
+              alternativeControls,
+              3,
+              `${product.id}.alternatives`,
+              record,
+            );
+            record.phase = `${product.id}.capture`;
+            assert.equal(await page.locator(purchaseSummary).count(), 1);
+            await capture(purchaseSummary, `${product.id}-purchase`);
+            await capture("#platforms nav", `${product.id}-alternatives`);
+            record.phase = `${product.id}.axe`;
+            await verifyAxe(
+              page,
+              "#purchase",
+              `${product.id}.purchase`,
+              axeScriptPath,
+              record,
+            );
+            await verifyAxe(
+              page,
+              "#platforms",
+              `${product.id}.alternatives`,
+              axeScriptPath,
+              record,
+            );
           }
-          record.phase = "mobile.axe";
-          await verifyAxe(page, "#platforms", "mobile", axeScriptPath, record);
 
           for (const product of products) {
             record.phase = `contact.${product.id}.navigation`;

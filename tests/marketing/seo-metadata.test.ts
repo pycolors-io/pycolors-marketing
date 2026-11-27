@@ -118,6 +118,20 @@ describe("sitemap date integrity", () => {
     ]);
     const urls = sitemap().map((entry) => entry.url);
     expect(urls).toContain("https://pycolors.io/demo");
+    expect(urls).toContain("https://pycolors.io/product-releases");
+    expect(urls).toContain("https://pycolors.io/fr/versions-produits");
+    expect(
+      sitemap().find(
+        (entry) => entry.url === "https://pycolors.io/fr/versions-produits",
+      ),
+    ).toMatchObject({
+      alternates: {
+        languages: {
+          en: "https://pycolors.io/product-releases",
+          fr: "https://pycolors.io/fr/versions-produits",
+        },
+      },
+    });
     expect(new Set(urls).size).toBe(urls.length);
     for (const excluded of [
       "https://pycolors.io/docs/draft",

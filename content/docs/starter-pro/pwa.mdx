@@ -1,8 +1,8 @@
 ---
 title: Progressive Web App
-description: "Understand the PWA-ready foundations included in Starter Pro: manifest, installability, standalone mode, mobile app-like UX, screenshots, and offline-ready routing."
-lastUpdated: "2026-06-06"
-appliesTo: Starter Pro
+description: Understand the Web PWA foundations in Starter Pro and when to choose native iOS and Android source with Mobile or Fullstack.
+lastUpdated: "2026-11-22"
+appliesTo: Starter Pro Web and the Web component of Fullstack
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
@@ -34,6 +34,16 @@ import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
   <Badge>PWA-ready</Badge>
 </div>
 
+## Choose browser installation or native source
+
+This guide covers the PWA supplied with **Starter Pro Web** and the Web component of **Fullstack**. It uses the Web application through a supported browser and its installation features. Native Mobile is a separate Expo / React Native application; a PWA installation does not supply native source or a signed iOS/Android binary.
+
+- Choose [Starter Pro Web](/starters/pro) for the Web application and follow [Web setup](/docs/starter-pro/getting-started) before the PWA steps below.
+- Choose [Starter Pro Mobile](/starters/mobile) for native iOS/Android source and its included compatible backend. Follow the [Mobile guide](/docs/starter-pro/mobile) for native identity, toolchains and validation.
+- Choose [Starter Pro Fullstack](/starters/fullstack) for both interfaces. The [Fullstack guide](/docs/starter-pro/fullstack) explains how to configure them around the same backend, accounts and data.
+
+Compare the [source licences](/pricing#source-licences) before choosing. Native builds, device validation, signing and store distribution remain separate from browser PWA checks.
+
 ## Installable SaaS foundations
 
 Starter Pro includes **Progressive Web App foundations** designed to make your SaaS feel more mature, more mobile-ready, and closer to a real application.
@@ -60,7 +70,9 @@ It is a product-quality layer that improves:
 />
 
 <Callout title="Core idea">
-  PWA support should make the product feel more credible without introducing unsafe offline behavior for authentication, billing, admin, or subscription state.
+  PWA support should make the product feel more credible without introducing
+  unsafe offline behavior for authentication, billing, admin, or subscription
+  state.
 </Callout>
 
 ## What Starter Pro includes
@@ -113,8 +125,8 @@ Starter Pro goes further by adding the foundations that make the product feel li
 - mobile-safe viewport behavior
 
 <Callout type="info" title="Product perception">
-  Installability and standalone mode are not only technical details.
-  They help the product feel more mature, more complete, and more trustworthy.
+  Installability and standalone mode are not only technical details. They help
+  the product feel more mature, more complete, and more trustworthy.
 </Callout>
 
 ## PWA architecture
@@ -128,17 +140,17 @@ Starter Pro goes further by adding the foundations that make the product feel li
     </Folder>
   </Folder>
 
-  <Folder name="components" defaultOpen>
-    <Folder name="pwa">
-      <File name="pwa-register.tsx" />
-    </Folder>
+<Folder name="components" defaultOpen>
+  <Folder name="pwa">
+    <File name="pwa-register.tsx" />
   </Folder>
+</Folder>
 
-  <Folder name="lib" defaultOpen>
-    <Folder name="pwa">
-      <File name="pwa-config.ts" />
-    </Folder>
+<Folder name="lib" defaultOpen>
+  <Folder name="pwa">
+    <File name="pwa-config.ts" />
   </Folder>
+</Folder>
 
   <Folder name="public" defaultOpen>
     <File name="favicon.ico" />
@@ -153,6 +165,7 @@ Starter Pro goes further by adding the foundations that make the product feel li
       <File name="dashboard-desktop.png" />
       <File name="dashboard-mobile.png" />
     </Folder>
+
   </Folder>
 </Files>
 <br />
@@ -167,7 +180,8 @@ Starter Pro goes further by adding the foundations that make the product feel li
 | `public/pwa/*` | icons and screenshots |
 
 <Callout title="Architecture rule">
-  Keep the PWA layer explicit and easy to audit. A starter product should teach the buyer how the system works, not hide it behind unnecessary magic.
+  Keep the PWA layer explicit and easy to audit. A starter product should teach
+  the buyer how the system works, not hide it behind unnecessary magic.
 </Callout>
 
 ## System model
@@ -232,7 +246,8 @@ Starter Pro goes further by adding the foundations that make the product feel li
         </>
       ),
     },
-  ]}
+
+]}
 />
 
 ## Recommended strategy
@@ -275,18 +290,18 @@ Starter Pro goes further by adding the foundations that make the product feel li
 
 ## Online-first boundaries
 
-| Area | Recommended approach |
-| --- | --- |
-| Authentication | Online-first |
-| Billing | Online-first |
-| Admin actions | Server-validated |
-| Account settings | Server-validated |
+| Area               | Recommended approach    |
+| ------------------ | ----------------------- |
+| Authentication     | Online-first            |
+| Billing            | Online-first            |
+| Admin actions      | Server-validated        |
+| Account settings   | Server-validated        |
 | Subscription state | Backend source of truth |
-| Offline support | Fallback-only baseline |
+| Offline support    | Fallback-only baseline  |
 
 <Callout title="Production rule">
-  Redirects, cached UI, and offline pages are UX.
-  Server state remains the source of truth for authentication, billing, permissions, and subscriptions.
+  Redirects, cached UI, and offline pages are UX. Server state remains the
+  source of truth for authentication, billing, permissions, and subscriptions.
 </Callout>
 
 ## PWA surfaces in Starter Pro
@@ -345,15 +360,17 @@ Starter Pro goes further by adding the foundations that make the product feel li
     It does not pretend that billing, authentication, permissions, or admin data can safely work offline without a dedicated synchronization system.
   </Accordion>
 
-  <Accordion title="Why not cache the dashboard aggressively?">
-    Dashboards often contain user-specific, billing-aware, or permission-sensitive data.
-    Caching those surfaces without a clear invalidation strategy can show stale or incorrect information.
-  </Accordion>
+<Accordion title="Why not cache the dashboard aggressively?">
+  Dashboards often contain user-specific, billing-aware, or permission-sensitive
+  data. Caching those surfaces without a clear invalidation strategy can show
+  stale or incorrect information.
+</Accordion>
 
-  <Accordion title="Should I use next-pwa or Workbox?">
-    You can add a more advanced PWA library later.
-    Starter Pro starts with an explicit lightweight baseline because it is safer, easier to learn, and better suited to auth and billing-heavy SaaS products.
-  </Accordion>
+<Accordion title="Should I use next-pwa or Workbox?">
+  You can add a more advanced PWA library later. Starter Pro starts with an
+  explicit lightweight baseline because it is safer, easier to learn, and better
+  suited to auth and billing-heavy SaaS products.
+</Accordion>
 
   <Accordion title="Is the PWA layer required for the app to work?">
     No. The app should work normally without service worker support.

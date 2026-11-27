@@ -35,6 +35,7 @@ export function PurchaseRecoveryForm() {
   );
   const submitting = React.useRef(false);
   const confirmationRef = React.useRef<HTMLDivElement>(null);
+  const [orderReference, setOrderReference] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [done, setDone] = React.useState(false);
@@ -60,7 +61,11 @@ export function PurchaseRecoveryForm() {
     try {
       setIsLoading(true);
       setError(null);
-      await recoverCommerceAccess({ email, productSlug });
+      await recoverCommerceAccess({
+        email,
+        productSlug,
+        ...(orderReference.trim() && { orderReference: orderReference.trim() }),
+      });
       setDone(true);
     } catch {
       setError(RECOVERY_FAILURE_MESSAGE);
@@ -172,6 +177,19 @@ export function PurchaseRecoveryForm() {
                     )}
                   </p>
                 </div>
+
+                <Input
+                  id="recovery-order"
+                  name="orderReference"
+                  value={orderReference}
+                  onChange={(event) => setOrderReference(event.target.value)}
+                  maxLength={128}
+                  disabled={isLoading}
+                  label={tSite("Order reference (optional)")}
+                  helperText={tSite(
+                    "For a specific invoice, enter the order reference from your purchase email.",
+                  )}
+                />
 
                 <Button
                   type="submit"

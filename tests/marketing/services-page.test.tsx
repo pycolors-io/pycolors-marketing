@@ -7,6 +7,7 @@ import ServicesPage, {
 } from "@/app/[locale]/(site)/services/page";
 import { CUSTOM_SOFTWARE_SERVICE } from "@/lib/products/project-services";
 import { STARTER_PRO_SERVICES } from "@/lib/products/starter-pro-services";
+import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
 import { productStudio } from "@/lib/showcase/product-studio";
 import {
   PRIMARY_NAV_ITEMS,
@@ -38,6 +39,53 @@ function preview(locale: "en" | "fr" = "en") {
 }
 
 describe("custom project services", () => {
+  it("connects each source foundation to its product and setup guide separately from quoted services", () => {
+    const view = preview();
+    const foundations = screen.getByRole("region", {
+      name: "Choose the source for your project.",
+    });
+    expect(within(foundations).getAllByRole("article")).toHaveLength(3);
+    expect(
+      within(foundations).getAllByRole("heading", { level: 3 }),
+    ).toHaveLength(3);
+    for (const slug of [
+      "starter-pro",
+      "starter-pro-mobile",
+      "starter-pro-fullstack",
+    ] as const) {
+      const product = PRODUCT_DISPLAY[slug];
+      expect(
+        foundations.querySelector(`a[href="${product.href}"]`),
+      ).toBeTruthy();
+      expect(
+        foundations.querySelector(`a[href="${product.docsHref}"]`),
+      ).toBeTruthy();
+    }
+    expect(foundations).toHaveTextContent(
+      "implementation services and provider costs are separate",
+    );
+    expect(
+      within(foundations).getByRole("link", {
+        name: "Review scope and support",
+      }),
+    ).toHaveAttribute("href", "/docs/starter-pro/implementation-support");
+    expect(within(foundations).queryByRole("button")).toBeNull();
+    expect(foundations.textContent).not.toMatch(/€|\bBuy\b|\/api\//);
+    for (const service of Object.values(STARTER_PRO_SERVICES)) {
+      expect(within(foundations).queryByText(service.priceLabel)).toBeNull();
+      expect(screen.getByText(service.priceLabel)).toBeVisible();
+    }
+    const approach = view.container.querySelector("#approach")!;
+    const delivery = view.container.querySelector("#delivery")!;
+    expect(
+      approach.compareDocumentPosition(foundations) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      foundations.compareDocumentPosition(delivery) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
   it("presents scoped use cases, an owned reference and the existing engagement prices", async () => {
     const view = preview();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
@@ -111,6 +159,22 @@ describe("custom project services", () => {
     expect(view.container).toHaveTextContent(
       "Un périmètre clair. Une livraison concrète.",
     );
+    const foundations = screen.getByRole("region", {
+      name: "Choisissez la base source de votre projet.",
+    });
+    expect(within(foundations).getAllByRole("article")).toHaveLength(3);
+    expect(foundations).toHaveTextContent(
+      "Découvrez les sources Web, Mobile et Fullstack",
+    );
+    expect(foundations).not.toHaveTextContent(
+      "Explore Web, Mobile and Fullstack source",
+    );
+    for (const href of [
+      "/docs/starter-pro/mobile",
+      "/docs/starter-pro/fullstack",
+      "/docs/starter-pro/implementation-support",
+    ])
+      expect(foundations.querySelector(`a[href="${href}"]`)).toBeTruthy();
     expect(screen.getByText("Prix défini après cadrage")).toBeVisible();
     expect(view.container.textContent).not.toMatch(/\b(?:nous|nos|notre)\b/i);
     // The native Next link mock preserves href; actual locale routing is exercised in browser QA.

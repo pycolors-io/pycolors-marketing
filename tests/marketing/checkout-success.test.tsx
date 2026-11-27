@@ -145,9 +145,47 @@ describe("Checkout success", () => {
     await renderPage();
     expect(screen.getByRole("link", { name: /Start setup/ })).toHaveAttribute(
       "href",
-      "/templates/na-ai-landing",
+      "/docs/templates/na-ai-landing/setup",
     );
+    expect(
+      screen.getByRole("link", { name: "Open the NA-AI setup guide" }),
+    ).toHaveAttribute("href", "/docs/templates/na-ai-landing/setup");
+    expect(
+      screen.queryByRole("link", { name: "Explore Starter Pro" }),
+    ).toBeNull();
   });
+
+  it.each([
+    ["starter-pro-mobile", "PyColors Starter Pro Mobile", 24900, "mobile"],
+    [
+      "starter-pro-fullstack",
+      "PyColors Starter Pro Fullstack",
+      49900,
+      "fullstack",
+    ],
+  ])(
+    "keeps receipt and setup guidance aligned with the purchased %s product",
+    async (productSlug, productName, amountTotal, guide) => {
+      respond({
+        ok: true,
+        session: { ...paidSession, productSlug, productName, amountTotal },
+      });
+      const { container } = await renderPage();
+      expect(screen.getByText(productName)).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: "Start setup" })).toHaveAttribute(
+        "href",
+        `/docs/starter-pro/${guide}`,
+      );
+      expect(
+        screen.getByRole("link", {
+          name: `Open the ${guide === "mobile" ? "Mobile" : "Fullstack"} setup guide`,
+        }),
+      ).toHaveAttribute("href", `/docs/starter-pro/${guide}`);
+      expect(screen.queryByRole("link", { name: /download/i })).toBeNull();
+      expect(container.innerHTML).not.toContain("buyer@example.com");
+      await expect(axe(container)).resolves.toHaveNoViolations();
+    },
+  );
 
   it.each([null, undefined, "synthetic-private-summary@example.invalid"])(
     "discards nullable, absent and legacy email before rendering or forwarding (%s)",

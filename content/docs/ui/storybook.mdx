@@ -1,7 +1,7 @@
 ---
 title: Storybook
 description: Render PyColors in your own React/Vite Storybook with tokens, Tailwind CSS, a theme toolbar, and a first interactive story.
-lastUpdated: "2026-09-24"
+lastUpdated: "2026-11-23"
 publishedAt: "2026-09-25"
 appliesTo: UI
 ---
@@ -12,9 +12,77 @@ import { Callout } from "fumadocs-ui/components/callout";
 
 [PyColors UI Explorer](https://ui.pycolors.io) is the public interactive catalog.
 Use its controls, themes, and component states without installing anything.
-The **UI Explorer** resource menu links back to the matching component guide,
-installation, and the UI product page. These Fumadocs pages remain the canonical
-usage and accessibility documentation.
+Start with the editorial overview to browse six component families, find
+installation and token guidance, or try the workspace form. Its field values,
+save feedback and reset stay local to the preview; no backend is connected.
+
+The compact **PyColors UI / Component explorer** masthead identifies the MIT
+component package. Choose [Components](https://ui.pycolors.io/?path=/story/components-button--default),
+**Appearance** (`foundations-tokens--appearance`)
+or [Compositions](https://ui.pycolors.io/?path=/story/compositions-settings-form--default)
+to inspect individual primitives, shared palettes and radii, or a composed form.
+
+Appearance, the new compositions and Release information described below are
+available in the local Storybook build until they are published to the public
+Explorer.
+
+The overview highlights React/TypeScript components, Radix-backed interactions
+and shared light/dark tokens. Keep trying the local workspace form, then follow
+the [validation states](https://ui.pycolors.io/?path=/story/compositions-settings-form--validation-error)
+link to inspect error feedback.
+
+The overview uses one continuous page background with a progressive gradient
+fade, inspired by the public marketing home. The hero shares this background
+without a separate local gradient.
+The local form keeps its **UI preview** frame and a short diagonal divider marks
+the three starting paths. This presentation adapts to accessibility preferences;
+component previews keep their token styling.
+
+Other stories use a lighter background around a plain preview surface. The
+context header identifies the category, component family and selected state;
+the preview bar shows the active theme. This framing leaves component styles
+and interactions unchanged.
+
+Dialog and Sheet examples start closed. Activate their visible buttons to open
+them and try their interactions at your own pace.
+
+Public visits leave the examples under your control: scripted typing, clicks and
+focus changes run only in the test setup. Named states such as validation errors
+or saved preferences are available directly, without replaying a script.
+
+Open **Code example** below a component or composition to inspect a complete
+React/TypeScript example using public package imports. Examples cover the 22
+public component families and the compositions. Use **Copy example**, or copy the
+selected code manually when clipboard access is unavailable. The linked usage
+guide remains the canonical Fumadocs documentation.
+
+Three local compositions add eight states alongside the Settings form:
+
+- **Team invitation** (`compositions-team-invitation--default`), with validation feedback (`compositions-team-invitation--validation-error`) and local confirmation (`compositions-team-invitation--local-success`). No email is sent.
+- **Filtered list** (`compositions-filtered-list--default`), with empty results (`compositions-filtered-list--empty-results`) and a second page (`compositions-filtered-list--second-page`), using synthetic local data.
+- **Notification preferences** (`compositions-notification-preferences--default`) and their saved state (`compositions-notification-preferences--saved`), with save and reset held in memory only.
+
+**Release information** (`foundations-maintenance--default`)
+shows the package version, declared React/React DOM peer ranges and license from
+the package manifest, plus its own changelog. These build-time details identify
+the package used by the Explorer; a declared peer range does not mean every
+matching setup has been tested. The standalone setup below records the specific
+versions verified together.
+
+The **UI Explorer** resource disclosure presents Docs, Install, PyColors UI and
+Starter Free with short descriptions. Docs opens the selected component's guide.
+At widths of 360px or less, the visible label is **UI**, while its accessible
+name remains **UI Explorer**. Resources open in a new tab. These Fumadocs pages
+remain the canonical usage and accessibility documentation.
+
+Reach the toolbar with **Tab**, then use its arrow keys to select **UI Explorer**.
+**Enter** or **Space** opens the resources with focus on Docs. Use **Tab** and
+**Shift+Tab** between links; **Escape** closes the disclosure and returns focus
+to its trigger.
+
+The outer Storybook interface follows your system's light/dark preference. The
+preview's **Light / Dark** toolbar controls the components independently, so a
+dark manager can display a light preview, and vice versa.
 
 This guide puts **published PyColors packages in your own Storybook**. It does not
 require cloning the monorepo, a PyColors provider, or private package aliases.

@@ -1,8 +1,7 @@
 ---
-title: Mise à niveau vers Starter Pro
-description: Comparez les workflows gratuits avec les fondations configurables
-  Starter Pro, et planifiez un mouvement délibéré sans migration automatique.
-lastUpdated: "2026-10-15"
+title: Passer de Starter Free à Starter Pro
+description: Découvrez quand choisir Starter Pro Web, Mobile ou Fullstack et comment reprendre votre travail sur Starter Free dans une installation séparée.
+lastUpdated: "2026-11-26"
 appliesTo: Starter Free
 ---
 
@@ -32,332 +31,238 @@ import { DocsUpgradeCTA } from "@/components/docs/docs-upgrade-cta";
 
 ## Vue d’ensemble [#overview]
 
-Starter Free vous aide **Valider la surface du produit**.
+Avec **Starter Free**, vous pouvez créer, consulter, renommer et supprimer un projet pour tester votre interface avec des données d’exemple. Les projets sont enregistrés dans le `localStorage` du navigateur. Effacer ce stockage supprime les modifications. Si le stockage est indisponible, l’application vous en avertit et conserve vos changements pour la visite en cours. La commande de réinitialisation restaure les exemples après confirmation.
 
-Starter Pro fournit **Authentification, facturation et bases de données configurables**.
+Le statut des projets, les effectifs et les indicateurs du tableau de bord servent à illustrer l’interface. Le [guide de démarrage de Starter Free](/docs/starter/getting-started) vous permet d’essayer le parcours avant d’y ajouter des comptes ou des paiements. Utilisez uniquement des données d’exemple.
 
-Free vous permet déjà de créer un projet, d'en afficher les détails, de le renommer et de le supprimer. Les projets persistent dans ce navigateur `localStorage` lorsque le stockage est disponible. Utilisation **Réinitialiser démo** pour restaurer les exemples de projets après confirmation. Il s'agit d'un flux de travail de projet local, et non d'une application multi-utilisateur connectée : il n'y a pas de compte réel, de base de données partagée, d'autorisation ou de synchronisation inter-appareils.
+<Callout type="info" title="Une archive à installer séparément">
 
-Utilisez des exemples de données, pas des informations sensibles. Effacer le stockage du navigateur supprime vos modifications. Si le stockage n'est pas disponible, les modifications ne durent que pour la visite en cours et l'application affiche un avis. L'état du projet, le nombre de membres, les étiquettes de mise à jour et les mesures du tableau de bord restent illustratifs. Essayez le [Starter Guide de Starter Free](/docs/starter/getting-started) avant de décider si vous avez besoin de fondations basées sur le serveur.
-
-Mise à niveau lorsque le bloqueur n'est plus l'interface utilisateur, mais le câblage de production derrière :
-
-- Authentification réelle
-- Routes protégées
-- Stripe Checkout
-- portail de facturation
-- État de facturation piloté par webhook
-- structure de produit backend-ready
-
-<Callout type="info" title="Source séparée, pas un déblocage de démo">
-  Starter Pro est un code source séparé à télécharger, configurer et adapter.
-  Acheter Pro ne déverrouille pas la démo gratuite en cours d'exécution et ne
-  migre pas automatiquement votre application ou vos projets locaux. Il ne
-  fournit pas vos services ni ne déploie votre application. Vous implémentez
-  toujours votre propre modèle de données de domaine, vos autorisations et vos
-  workflows.
+**Starter Pro Web** fournit le code source d’une application web avec Better Auth, Stripe et Prisma/PostgreSQL. Vous téléchargez l’archive dans un dossier distinct, configurez vos services et adaptez le produit. Votre application Free et ses projets locaux restent indépendants. Vous prenez en charge le transfert des données, les autorisations métier et le déploiement.
 
 </Callout>
+
+Les deux boutons d’achat de ce guide correspondent à **Starter Pro Web**. Pour une application Expo, consultez [Starter Pro Mobile](/starters/mobile). Pour proposer le Web et le mobile, consultez [Starter Pro Fullstack](/starters/fullstack). Vous pouvez aussi [comparer les éditions et leurs licences](/pricing#source-licences).
 
 <DocsUpgradeCTA
-  title="Gardez votre direction d'UI. Construire sur des fondations connectées."
-  description="Choisissez Starter Pro lorsque vous avez besoin d'authentification, de facturation et de bases de données pour configurer et valider votre propre produit."
+  title="Démarrer un projet web avec des comptes et une facturation"
+  description="Vérifiez le contenu de l’archive Web et les services à configurer pour votre projet."
   productSlug="starter-pro"
-  buyLabel="Get Starter Pro"
+  buyLabel="Acheter Starter Pro Web"
   secondaryHref="/docs/starter-pro/what-is-included"
-  secondaryLabel="See what’s included"
+  secondaryLabel="Voir le contenu de l’édition Web"
 />
 
-<Callout title="Règle simple">
-  Gardez libre pour la validation du produit local. Choisissez Pro lorsque les
-  fondations configurables basées sur le serveur sont la prochaine étape utile.
-
+<Callout title="Choisir le prochain essai">
+  Identifiez la première fonctionnalité qui nécessite un service connecté. Elle
+  vous donnera un critère concret pour choisir une édition.
 </Callout>
 
-### Le moment de mise à niveau [#the-upgrade-moment]
+### À quel moment passer à Pro ? [#the-upgrade-moment]
 
-Starter Free est le bon choix lorsque votre question est:
+Restez sur [Starter Free](/starters/free) tant que vous essayez des écrans ou que vous faites tester un parcours. Examinez [Starter Pro Web](/starters/pro) quand votre prochain essai exige un compte connecté, des données partagées entre plusieurs utilisateurs ou un paiement en mode test.
 
-> Comment le produit devrait-il se sentir?
-
-Starter Pro devient pertinent lorsque votre question devient:
-
-> Comment puis-je m'appuyer sur les bases d'authentification, de facturation et de base de données existantes ?
-
-La décision porte sur la profondeur d'intégration, et non sur le fait de savoir si Free peut sauvegarder un projet local. Comparez les [Portée incluse](/docs/starter-pro/what-is-included) avec ce dont votre produit a besoin; la configuration et la validation vous appartiennent toujours.
-
-### Ce qui change avec Pro [#what-changes-with-pro]
+### Ce que l’édition Web apporte [#what-changes-with-pro]
 
 <DocsFeatureGrid
   columns={3}
   tone="platform"
   items={[
     {
-      title: "Réel auth",
+      title: "Connexion",
       description:
-        "Les identifiants, OAuth, la vérification, la réinitialisation des flux et des sessions ; configurez et validez vos fournisseurs.",
+        "Better Auth gère les sessions et les parcours de connexion. Configurez vos fournisseurs et testez la récupération du compte.",
       icon: LockKeyhole,
     },
     {
-      title: "Facturation réelle",
+      title: "Facturation",
       description:
-        "Stripe Checkout, portail client, abonnements et webhooks ; configurez et testez votre compte Stripe.",
+        "Configurez Stripe Checkout, le portail client et les webhooks dans votre compte de test.",
       icon: CreditCard,
     },
     {
-      title: "Fondation protégée",
+      title: "Données et accès",
       description:
-        "Protections côté serveur et fondations Prisma/PostgreSQL ; implémentez vos autorisations produit et vos données de domaine.",
+        "Adaptez le modèle Prisma et les contrôles côté serveur aux données que chaque utilisateur pourra consulter ou modifier.",
       icon: ShieldCheck,
     },
   ]}
 />
 
-## Gratuit vs Pro [#free-vs-pro]
+## Comparer Starter Free et Starter Pro Web [#free-vs-pro]
 
-| Capacité                                            | Starter Free                                                       | Starter Pro                                                          |
-| --------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| Surfaces d'interface utilisateur adaptée au produit | Inclus, avec un workflow de projet local                           | Inclus, avec des fondations d'intégration                            |
-| Écrans et états UX                                  | Faux                                                               | Inclus; configurer et valider auth                                   |
-| Email et mot de passe auth                          | Faux                                                               | Inclus; configurer et valider                                        |
-| Google et Github OAuth                              | Non inclus                                                         | Inclus ; configurez les applications du fournisseur                  |
-| Vérification par e-mail                             | Non inclus                                                         | Inclus ; configurer la livraison des e-mails                         |
-| Réinitialisation et modification du mot de passe    | Faux                                                               | Inclus; configurer et valider                                        |
-| Stripe Checkout                                     | UI uniquement                                                      | Inclus; configurer et tester Stripe                                  |
-| Portail de facturation                              | UI uniquement                                                      | Inclus; configurer et tester Stripe                                  |
-| Webhook sync                                        | Non inclus                                                         | Inclus ; configurez et testez les points de terminaison              |
-| Factures et abonnements                             | Faux                                                               | Fondations Stripe-backed à configurer                                |
-| Fondements d'applications protégés                  | Pas d'autorisation réelle                                          | Gardes côté serveur pour configurer et étendre                       |
-| Couche de données                                   | Projets locaux dans localStorage ; pas de base de données partagée | Fondations Prisma + PostgreSQL ; implémentez votre modèle de domaine |
-| Meilleur cas d'utilisation                          | Valider l'interface utilisateur et les workflows locaux            | Construire sur des fondations SaaS configurables                     |
+| Besoin                             | Starter Free                                | Starter Pro Web                                                                                            |
+| ---------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Tester la navigation et les écrans | Parcours de démonstration et projets locaux | Interface reliée aux services que vous configurez                                                          |
+| Connecter un utilisateur           | Écrans de démonstration                     | Connexion par e-mail et mot de passe, vérification et réinitialisation à tester avec votre service d’envoi |
+| Proposer Google ou GitHub          | Aucune connexion au fournisseur             | Applications OAuth à créer et à configurer                                                                 |
+| Facturer un client                 | Interface de démonstration                  | Stripe Checkout, portail, abonnements et webhooks à tester sur votre compte                                |
+| Partager des données               | Projets conservés dans un seul navigateur   | Base PostgreSQL et modèle Prisma à adapter                                                                 |
+| Restreindre les accès              | Aucun contrôle d’accès côté serveur         | Contrôles côté serveur à compléter avec les autorisations propres à votre produit                          |
 
-<Callout title="Libre de valider. Pro pour les fondations connectées.">
-  La persistance locale est utile pour une démo. Les comptes, les données
-  partagées, les autorisations et les paiements nécessitent un comportement
-  soutenu par le serveur. Pro fournit des fondations, pas une mise en œuvre
-  finie de votre produit.
-
+<Callout title="Tester une action partagée">
+  Pour montrer comment renommer un projet, Free suffit. Pour autoriser un membre
+  à le renommer et refuser cette action à un autre, il faut des comptes, une
+  base partagée et une règle métier.
 </Callout>
 
-## Quand mettre à niveau [#when-to-upgrade]
+## Quand passer à Pro [#when-to-upgrade]
 
 <DocsDecisionGrid
   columns={2}
   items={[
     {
       eyebrow: "Starter Free",
-      title: "Restez en Free pendant la validation",
+      title: "Faire essayer le produit",
       icon: Sparkles,
-      description:
-        "Starter Free est toujours la bonne couche alors que la direction du produit, l'UX et le positionnement changent.",
-      items: [
-        "Vous êtes en train de façonner le produit",
-        "vous êtes validé UX",
-        "vous changez le modèle de domaine",
-        "vous préparez une démo",
-        "tu explores",
-      ],
-      cta: "Explore Starter Free →",
+      description: "Travaillez dans le navigateur avec des données d’exemple.",
+      items: ["Tester la navigation", "Présenter une maquette interactive"],
+      cta: "Découvrir Starter Free",
       href: "/starters/free",
     },
     {
-      eyebrow: "Starter Pro",
-      title: "Passer à Pro lorsque le câblage de lancement devient le bloqueur",
+      eyebrow: "Starter Pro Web",
+      title: "Relier l’interface aux services",
       icon: Rocket,
       tone: "pro",
       description:
-        "Starter Pro devient pertinent lorsque les utilisateurs réels, les paiements, la protection et l'état du backend sont nécessaires.",
+        "Vérifiez le périmètre du code livré avant de choisir vos intégrations.",
       items: [
-        "Les vrais utilisateurs",
-        "De vraies sessions",
-        "Paiements réels",
-        "Routes protégées",
-        "Comportement du produit selon l’offre",
-        "données backend",
-        "validation de la production",
+        "Ouvrir une session",
+        "Partager des données",
+        "Tester un abonnement",
       ],
-      cta: "Explore Starter Pro →",
+      cta: "Découvrir Starter Pro Web",
       href: "/starters/pro",
     },
   ]}
 />
 
-### Ce que vous gardez [#what-you-keep]
+### Ce que vous pouvez reprendre [#what-you-keep]
 
-Vous pouvez réutiliser votre direction de produit et le travail sélectionné d'UI, mais il y a **pas de mise à niveau automatique sur place**. Gardez votre source gratuite sous contrôle de version avant de commencer et travaillez avec la source Pro dans un répertoire ou un référentiel séparé.
+Conservez votre dépôt Free comme référence. Sélectionnez les pages, composants, textes et choix de navigation déjà validés. Comparez leurs imports et leurs versions avec ceux de votre archive Pro, puis reprenez-les un par un.
 
-Revoyez ce qui est utile à faire passer:
-
-- Itinéraires et pages
-- composants et mises en page
-- personnalisations du système de conception
-- Copie du produit et décisions d'interaction
-
-Portez une petite tranche d'interface utilisateur à la fois. Comparez les importations, les mises en page, les API publiques et les versions réelles de votre version téléchargée plutôt que d'écraser les fondations d'authentification ou de facturation configurées par Pro avec le code de démonstration.
-
-Remplacer ou mettre en œuvre délibérément :
-
-- mock auth pour une authentification réelle configurée
-- Facturation simulée de l'intégration Stripe configurée et testée
-- accès simulé aux vérifications côté serveur et aux autorisations spécifiques au produit
-- données de projet local du navigateur vers votre propre modèle de domaine et workflows sauvegardés par le serveur
-
-<Callout type="info" title="Préservez votre travail libre">
-  Votre source libre originale reste votre référence. Les enregistrements de
-  démonstration locaux ne sont pas importés automatiquement dans Pro. Tout
-  transfert de données nécessite une conception de mappage, de validation et
-  d'autorisation explicite que vous implémentez ; aucune commande de migration
-  ou transfert automatique n'est fourni par ce guide.
-
+<Callout type="info" title="Reprendre les données de démonstration">
+  Si vous souhaitez transférer des projets du navigateur, prévoyez une
+  correspondance des champs, une validation des entrées et un contrôle des
+  droits.
 </Callout>
 
-## Flux de mise à niveau [#upgrade-flow]
+## Installer et adapter Starter Pro Web [#upgrade-flow]
 
 <Steps>
   <Step>
-    ### Conserver gratuitement et inspecter la source Pro [#preserve-free-and-inspect-the-pro-source]
+    ### Conserver Starter Free et examiner l’archive Pro [#preserve-free-and-inspect-the-pro-source]
 
-    Enregistrez votre travail gratuit sous contrôle de version. Après l'achat, utilisez l'email d’accès pour télécharger et décompresser Starter Pro dans un répertoire séparé. Lisez son README et comparez les versions livrées avant d'adapter votre interface utilisateur. Suivre [livraison](/docs/starter-pro/delivery) et [Premiers pas](/docs/starter-pro/getting-started) pour l'accès et la configuration.
+    Enregistrez votre travail dans Git. Utilisez l’e-mail d’accès pour télécharger l’archive, puis décompressez-la dans un autre dossier. Vérifiez l’édition et la version du manifeste. Ouvrez le README livré et suivez le [guide de livraison](/docs/starter-pro/delivery) et le [guide de démarrage](/docs/starter-pro/getting-started).
 
-</Step>
-
+  </Step>
   <Step>
-    ### Configurer et valider localement [#configure-and-validate-locally]
+    ### Configurer et vérifier l’installation locale [#configure-and-validate-locally]
 
-    Suivez les instructions de publication téléchargées pour Node.js, pnpm, les dépendances, une base de données PostgreSQL locale et les variables d'environnement. Configurez les fournisseurs que vous avez l'intention d'exercer [guide environnement](/docs/starter-pro/environment-variables). Gardez les secrets privés et utilisez les services de développement local ou de test, pas les données de production. Confirmez les exécutions de base avant de porter une tranche d'interface utilisateur spécifique au produit.
+    Utilisez les versions de Node.js et pnpm indiquées dans le README. Installez les dépendances, préparez une base PostgreSQL locale et renseignez les [variables d’environnement](/docs/starter-pro/environment-variables). Démarrez l’application avant de reprendre vos composants.
 
-</Step>
-
+  </Step>
   <Step>
-    ### Ajouter une authentification [#add-authentication]
+    ### Vérifier l’authentification [#add-authentication]
 
-    Utilisez la fondation auth incluse de Pro au lieu de copier le comportement simulé de Free. Configurez les informations d'identification, le courrier électronique et les fournisseurs OAuth dont vous avez besoin, puis vérifiez le comportement de connexion et de session avec le [guide d’authentification](/docs/starter-pro/auth). Un écran de connexion rendu n'est pas la preuve que l'authentification fonctionne.
+    Configurez les méthodes de connexion et le service d’e-mail que vous utiliserez. Suivez le [guide d’authentification](/docs/starter-pro/auth) pour vérifier la connexion, la session et la déconnexion avec un compte de test.
 
-</Step>
-
+  </Step>
   <Step>
-    ### Protéger les routes des produits [#protect-product-routes]
+    ### Protéger les routes de votre application [#protect-product-routes]
 
-    Apportez une page ou un composant révisé à la fois. Conservez les protections existantes de Pro et ajoutez les autorisations côté serveur appropriées à votre domaine. Valider les accès autorisés et refusés ; cacher un lien dans l'interface utilisateur n'est pas une autorisation.
+    Ajoutez vos règles métier côté serveur. Testez la même action avec un compte autorisé puis avec un compte auquel l’accès doit être refusé, y compris par accès direct à la route.
 
-</Step>
-
+  </Step>
   <Step>
     ### Connecter la facturation [#connect-billing]
 
-    Configurez les fondations Stripe Checkout, portal et webhook incluses. Suivez les [tests de facturation](/docs/starter-pro/billing-testing) en mode test et vérifier l'état de facturation résultant, pas seulement si la page de facturation s'affiche. L'achat de Starter Pro ne configure pas votre propre compte Stripe.
+    Configurez votre compte Stripe en mode test. Suivez les [tests de facturation](/docs/starter-pro/billing-testing) pour vérifier le paiement, le portail client et la mise à jour des droits après réception d’un webhook.
 
-</Step>
-
+  </Step>
   <Step>
-    ### Remplacer les données simulées [#replace-mock-data]
+    ### Remplacer les données de démonstration [#replace-mock-data]
 
-    Définissez votre propre modèle de projet ou de domaine, la persistance, la validation, les autorisations et les workflows. Les fondations Prisma/PostgreSQL Pro ne transforment pas automatiquement les projets locaux de Free en enregistrements partagés. Traitez tout transfert de données comme une implémentation distincte et explicitement conçue ; ne pointez pas de code de démonstration sur une base de données de production ou supposez que les données du navigateur sont fiables.
+    Définissez le modèle de données et les autorisations de votre produit. Vérifiez la création, la lecture et les modifications avec des données de test. Tout import depuis Starter Free nécessite une procédure que vous définissez.
 
-</Step>
-
+  </Step>
 </Steps>
 
-Après chaque tranche portée, exécutez les vérifications applicables de la version et conservez la dernière version de travail disponible pour la restauration. Enregistrez les intégrations non configurées comme non vérifiées. Complétez le [Liste de contrôle de production](/docs/starter-pro/production-checklist) avant le déploiement ; une exécution locale réussie n'est pas l'approbation de production.
+Validez chaque étape avant de poursuivre et conservez une version à laquelle revenir. Avant le déploiement, passez en revue la [checklist de production](/docs/starter-pro/production-checklist) sur votre propre installation.
 
-### Pourquoi ne pas le construire vous-même ? [#why-not-build-it-yourself]
+### Faut-il développer ces intégrations vous-même ? [#why-not-build-it-yourself]
 
-Vous pouvez garder Free et mettre en œuvre les intégrations vous-même.
+Si votre équipe possède déjà une authentification ou une facturation adaptée, commencez par chiffrer ce qu’il vous reste à intégrer.
 
-Comparez ce travail avec l'adoption et la configuration des fondations incluses de Pro:
-
-- Authentification
-- Stripe facturation
-- webhook manipulation
-- protection de route
-- Synchronisation facturation-état
-- base de données et installation de production
-
-Ni l'un ni l'autre de ces choix ne vous ôte la responsabilité de la logique, de la validation, du déploiement ou de l'exploitation du produit. Choisissez le chemin qui correspond à vos besoins réels; ce guide n'établit pas une économie de temps ou de revenus mesurée.
-
-<Callout title="Une décision en profondeur sur l’intégration">
-  Pro est utile lorsque ses fondations incluses correspondent au travail que
-  vous mettriez autrement en œuvre. Vérifiez quels navires et ce qui a encore
-  besoin de configuration avant d'acheter.
-
+<Callout title="Évaluer le travail restant">
+  Comparez ce travail avec la configuration et la maintenance du [code fourni
+  dans Starter Pro](/docs/starter-pro/what-is-included).
 </Callout>
 
-## Guide de décision [#decision-guide]
+## Choisir une édition [#decision-guide]
 
 <DocsDecisionGrid
   columns={2}
   items={[
     {
-      eyebrow: "Restez sur Free",
-      title: "Continuez à valider la surface du produit",
+      eyebrow: "Starter Free",
+      title: "Valider une idée",
       icon: CheckCircle,
       description:
-        "Restez sur Starter Free pendant que la surface de votre produit, la navigation et l'UX sont toujours la boucle d'apprentissage principale.",
-      items: [
-        "vous êtes toujours en train de façonner le produit",
-        "Vous avez besoin d'une démo crédible",
-        "vous validez l'UX et la navigation",
-        "Le travail en backend ralentirait l’apprentissage",
-        "Les paiements ne sont pas encore requis",
-      ],
+        "Restez sur Free tant que vos prochaines décisions portent sur l’interface.",
+      items: ["Faire tester les écrans", "Affiner la navigation"],
     },
     {
-      eyebrow: "Déplacer vers Pro",
-      title: "Construire sur des fondations connectées",
-      icon: Rocket,
+      eyebrow: "Éditions Pro",
+      title: "Choisir le code source adapté",
       tone: "pro",
+      icon: Rocket,
       description:
-        "Déplacez-vous vers Starter Pro lorsque ses fondations incluses correspondent aux intégrations que vous devez configurer ensuite.",
+        "Sélectionnez l’édition qui couvre les plateformes de votre produit.",
       items: [
-        "vous préparez un produit connecté",
-        "Auth devient un bloqueur",
-        "Stripe doit facturer les clients",
-        "Les routes ont besoin de protection",
-        "L'état de facturation doit contrôler l'accès",
+        "Web pour l’application web",
+        "Mobile pour Expo",
+        "Fullstack pour les deux",
       ],
+      cta: "Comparer les tarifs",
       href: "/pricing",
-      cta: "View pricing →",
     },
   ]}
 />
 
-## Préoccupations communes [#common-concerns]
+## Questions fréquentes [#common-concerns]
 
 <Accordions type="single">
-  <Accordion title="Vais-je perdre mon travail Starter Free?">
-    Gardez votre source libre d'origine sous contrôle de version et configurez Pro séparément. Réutilisez délibérément l'interface utilisateur sélectionnée après avoir vérifié la compatibilité; l'achat de Pro ne modifie ni ne migre automatiquement votre application ou vos données gratuites.
+  <Accordion title="Que devient mon projet Starter Free après l’achat ?">
+    Vous gardez votre dépôt et vos projets locaux. L’achat donne accès à une
+    archive distincte. Vous choisissez les éléments à reprendre.
   </Accordion>
-
-<Accordion title="Puis-je mettre à niveau plus tard?">
-  Oui. Free prend déjà en charge les workflows de projets locaux du navigateur.
-  Pro est une base de code source distincte à configurer lorsque votre produit a
-  besoin de comptes connectés, de paiements et de données sauvegardées par le
-  serveur.
-</Accordion>
-
-<Accordion title="Dois-je tout migrer en même temps ?">
-  Non. Validez d'abord la base de référence Pro configurée, puis portez une
-  tranche d'interface utilisateur à la fois. Mettez en œuvre votre propre plan
-  de persistance de domaine et de transfert de données ; les projets locaux ne
-  sont pas transférés automatiquement.
-</Accordion>
-
-  <Accordion title="Pourquoi ne pas rester sur Starter Free ?">
-    Restez sur Free pour la validation locale, ou conservez-la et construisez vos propres intégrations. Choisissez Pro lorsque ses fondations configurables d'auth, de facturation et de base de données correspondent à vos besoins. L'un ou l'autre chemin a encore besoin de la mise en œuvre du produit et des vérifications avant le lancement.
+  <Accordion title="Puis-je choisir l’édition plus tard ?">
+    Oui. Vous pouvez continuer à tester l’interface dans Free jusqu’à ce que
+    votre projet ait besoin de services connectés.
+  </Accordion>
+  <Accordion title="Dois-je tout migrer en même temps ?">
+    Commencez par faire fonctionner l’archive telle qu’elle est livrée. Reprenez
+    ensuite un premier écran et vérifiez son comportement avant de passer au
+    suivant.
+  </Accordion>
+  <Accordion title="Où vérifier la licence et les conditions d’assistance ?">
+    La [FAQ acheteur](/starters/pro/faq) renvoie aux conditions de licence,
+    d’assistance et de remboursement applicables.
   </Accordion>
 </Accordions>
 
-### Prêt à aller plus vite ? [#ready-to-move-faster]
+### Avant d’acheter [#ready-to-move-faster]
 
-Si vous êtes toujours en train d'explorer, restez sur Starter Free. Si les fondations connectées sont votre prochain besoin, examinez la portée Pro et les responsabilités de configuration avant d'acheter.
+Vérifiez l’édition choisie, le contenu de l’archive et les services que votre équipe devra configurer.
 
 <DocsUpgradeCTA
-  title="Choisissez les fondations dont votre produit a besoin."
-  description="Starter Free supporte la validation locale. Starter Pro fournit des fondations d'authentification, de facturation et de base de données que vous configurez, validez et étendez."
+  title="Choisir Starter Pro Web"
+  description="Le bouton d’achat ouvre le paiement de l’édition Web. Les tarifs permettent de comparer les autres éditions."
   productSlug="starter-pro"
-  buyLabel="Get Starter Pro"
+  buyLabel="Acheter Starter Pro Web"
   secondaryHref="/pricing"
-  secondaryLabel="View pricing"
+  secondaryLabel="Comparer les tarifs"
 />
 
 ## Prochaines étapes [#next-steps]
@@ -369,15 +274,15 @@ Si vous êtes toujours en train d'explorer, restez sur Starter Free. Si les fond
       title: "Présentation de Starter Pro",
       href: "/docs/starter-pro",
       description:
-        "Examiner les fondations incluses et leurs responsabilités de configuration.",
+        "Examinez les intégrations fournies et le travail de configuration.",
       icon: Layers3,
       tone: "platform",
     },
     {
-      title: "Voir les tarifs",
+      title: "Tarifs",
       href: "/pricing",
       description:
-        "Passez en revue l'offre Starter Pro existante par rapport aux exigences de votre produit.",
+        "Vérifiez le prix, l’édition et la licence avant de commander.",
       icon: CreditCard,
       tone: "primary",
     },

@@ -59,7 +59,8 @@ Use it for:
 Textarea follows the same field model as `Input`: label, helper text, error state, generated id, and accessible descriptions.
 
 <Callout title="Core idea">
-  Use Textarea when the user needs space to express intent, context, or explanation.
+  Use Textarea when the user needs space to express intent, context, or
+  explanation.
 </Callout>
 
 ### Import
@@ -91,10 +92,7 @@ import { Textarea } from "@pycolors/ui";
 
 export function BasicTextarea() {
   return (
-    <Textarea
-      label="Message"
-      placeholder="Tell us what you are building..."
-    />
+    <Textarea label="Message" placeholder="Tell us what you are building..." />
   );
 }
 ```
@@ -103,7 +101,8 @@ export function BasicTextarea() {
 </Tabs>
 
 <Callout type="info" title="Label rule">
-  Prefer a visible label. Use placeholder text for examples, not as the only field description.
+  Prefer a visible label. Use placeholder text for examples, not as the only
+  field description.
 </Callout>
 
 ## When to use Textarea
@@ -115,21 +114,21 @@ Use Textarea when one line is not enough for the task.
   tone="platform"
   items={[
     {
-      title: 'Feedback',
+      title: "Feedback",
       description:
-        'Capture user feedback, support details, and product requests.',
+        "Capture user feedback, support details, and product requests.",
       icon: MessageSquareText,
     },
     {
-      title: 'Descriptions',
+      title: "Descriptions",
       description:
-        'Let users describe projects, products, workspaces, or templates.',
+        "Let users describe projects, products, workspaces, or templates.",
       icon: FileText,
     },
     {
-      title: 'Notes',
+      title: "Notes",
       description:
-        'Store internal notes, onboarding context, or review comments.',
+        "Store internal notes, onboarding context, or review comments.",
       icon: PencilLine,
     },
   ]}
@@ -172,7 +171,8 @@ export function TextareaHelperText() {
 </Tabs>
 
 <Callout title="Helper text rule">
-  Helper text should reduce uncertainty. Keep it short, concrete, and connected to the task.
+  Helper text should reduce uncertainty. Keep it short, concrete, and connected
+  to the task.
 </Callout>
 
 ### Error state
@@ -212,7 +212,8 @@ export function TextareaError() {
 </Tabs>
 
 <Callout type="info" title="Validation rule">
-  Error text should explain what failed and how to fix it. Avoid vague messages like “Invalid value”.
+  Error text should explain what failed and how to fix it. Avoid vague messages
+  like “Invalid value”.
 </Callout>
 
 ### Required fields
@@ -280,6 +281,7 @@ Textarea supports three design-system sizes: `sm`, `md`, and `lg`.
         />
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -290,17 +292,9 @@ import { Textarea } from "@pycolors/ui";
 export function TextareaSizes() {
   return (
     <div className="grid gap-4">
-      <Textarea
-        size="sm"
-        label="Small"
-        placeholder="Compact notes..."
-      />
+      <Textarea size="sm" label="Small" placeholder="Compact notes..." />
 
-      <Textarea
-        size="md"
-        label="Medium"
-        placeholder="Default textarea..."
-      />
+      <Textarea size="md" label="Medium" placeholder="Default textarea..." />
 
       <Textarea
         size="lg"
@@ -317,10 +311,10 @@ export function TextareaSizes() {
 
 ### Size guidance
 
-| Size | Best for |
-| --- | --- |
-| `sm` | Compact notes, admin tables, dense forms |
-| `md` | Default forms and settings pages |
+| Size | Best for                                     |
+| ---- | -------------------------------------------- |
+| `sm` | Compact notes, admin tables, dense forms     |
+| `md` | Default forms and settings pages             |
 | `lg` | Long descriptions, prompts, support messages |
 
 ### Resize behavior
@@ -344,6 +338,7 @@ The `resize` prop controls how users can resize the field.
         />
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -375,15 +370,16 @@ export function TextareaResize() {
 
 ### Available resize options
 
-| Resize | Behavior |
-| --- | --- |
-| `vertical` | User can resize height |
-| `none` | Fixed size |
-| `horizontal` | User can resize width |
-| `both` | User can resize width and height |
+| Resize       | Behavior                         |
+| ------------ | -------------------------------- |
+| `vertical`   | User can resize height           |
+| `none`       | Fixed size                       |
+| `horizontal` | User can resize width            |
+| `both`       | User can resize width and height |
 
 <Callout title="Resize rule">
-  Prefer `vertical` for most product forms. Avoid horizontal resize in constrained layouts.
+  Prefer `vertical` for most product forms. Avoid horizontal resize in
+  constrained layouts.
 </Callout>
 
 ### Feedback form
@@ -412,6 +408,7 @@ export function TextareaResize() {
         </div>
       </div>
     </Preview>
+
   </Tab>
 
   <Tab value="Code">
@@ -423,9 +420,7 @@ export function FeedbackForm() {
   return (
     <div className="rounded-2xl border border-border/60 bg-card p-5">
       <div className="mb-4">
-        <div className="text-sm font-medium text-foreground">
-          Send feedback
-        </div>
+        <div className="text-sm font-medium text-foreground">Send feedback</div>
         <div className="mt-1 text-sm text-muted-foreground">
           Tell us what would make PyColors more useful.
         </div>
@@ -495,60 +490,66 @@ export function PromptTextarea() {
     #### Use Textarea for longer answers
 
     Use Input for short values. Use Textarea when the user needs to provide context, explanation, or multi-line content.
+
   </Step>
 
   <Step>
     #### Keep labels explicit
 
     The label should describe the content expected from the user, not the UI element itself.
+
   </Step>
 
   <Step>
     #### Add helper text for complex fields
 
     Use helper text when the field needs examples, constraints, or formatting guidance.
+
   </Step>
 
   <Step>
     #### Validate with actionable errors
 
     Error messages should explain what to change, not just that the value is invalid.
+
   </Step>
 
   <Step>
     #### Choose resize intentionally
 
     Use vertical resize for flexible content. Use no resize for controlled surfaces like sheets and compact cards.
+
   </Step>
 </Steps>
 
 ## Textarea vs Input
 
-| Situation | Use |
-| --- | --- |
-| Name, email, URL, slug | Input |
-| Search query | Input |
-| Short title | Input |
-| Feedback message | Textarea |
-| Product description | Textarea |
-| Notes or comments | Textarea |
-| AI prompt | Textarea |
+| Situation              | Use      |
+| ---------------------- | -------- |
+| Name, email, URL, slug | Input    |
+| Search query           | Input    |
+| Short title            | Input    |
+| Feedback message       | Textarea |
+| Product description    | Textarea |
+| Notes or comments      | Textarea |
+| AI prompt              | Textarea |
 
 <Callout title="Decision rule">
-  If the expected answer can fit naturally on one line, use Input. If the user needs to explain something, use Textarea.
+  If the expected answer can fit naturally on one line, use Input. If the user
+  needs to explain something, use Textarea.
 </Callout>
 
 ## API
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `string` | — | Accessible label displayed above the textarea |
-| `helperText` | `string` | — | Supporting text shown when there is no error |
-| `error` | `string` | — | Error text and validation styling |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Design-system size |
-| `resize` | `"none" \| "vertical" \| horizontal" \| "both"` | `"vertical"` | Native resize behavior |
-| `className` | `string` | — | Additional Tailwind classes |
-| `...props` | `React.TextareaHTMLAttributes<HTMLTextAreaElement>` | — | Native textarea attributes |
+| Prop         | Type                                                | Default      | Description                                   |
+| ------------ | --------------------------------------------------- | ------------ | --------------------------------------------- |
+| `label`      | `string`                                            | —            | Accessible label displayed above the textarea |
+| `helperText` | `string`                                            | —            | Supporting text shown when there is no error  |
+| `error`      | `string`                                            | —            | Error text and validation styling             |
+| `size`       | `"sm" \| "md" \| "lg"`                              | `"md"`       | Design-system size                            |
+| `resize`     | `"none" \| "vertical" \| horizontal" \| "both"`     | `"vertical"` | Native resize behavior                        |
+| `className`  | `string`                                            | —            | Additional Tailwind classes                   |
+| `...props`   | `React.TextareaHTMLAttributes<HTMLTextAreaElement>` | —            | Native textarea attributes                    |
 
 ### TypeScript types
 
@@ -557,10 +558,8 @@ export type TextareaSize = "sm" | "md" | "lg";
 export type TextareaResize = "none" | "vertical" | "horizontal" | "both";
 
 export interface TextareaProps
-  extends Omit<
-      React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-      "size"
-    >,
+  extends
+    Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "size">,
     VariantProps<typeof textareaVariants> {
   label?: string;
   helperText?: string;
@@ -582,25 +581,26 @@ export interface TextareaProps
 - Do not rely on placeholder text as the only accessible description.
 
 <Callout title="Accessibility rule">
-  Every textarea should have a clear label. Helper text and error text should clarify the task, not replace the label.
+  Every textarea should have a clear label. Helper text and error text should
+  clarify the task, not replace the label.
 </Callout>
 
 ## Prefer / avoid
 
 <PreferAvoid
   prefer={[
-    'visible labels',
-    'clear helper text for complex inputs',
-    'specific and actionable errors',
-    'vertical resize for longer content',
-    'textarea for explanation-heavy fields',
+    "visible labels",
+    "clear helper text for complex inputs",
+    "specific and actionable errors",
+    "vertical resize for longer content",
+    "textarea for explanation-heavy fields",
   ]}
   avoid={[
-    'placeholder-only labels',
-    'vague errors like “Invalid value”',
-    'horizontal resize in responsive layouts',
-    'using textarea for short one-line values',
-    'asking for too much text without guidance',
+    "placeholder-only labels",
+    "vague errors like “Invalid value”",
+    "horizontal resize in responsive layouts",
+    "using textarea for short one-line values",
+    "asking for too much text without guidance",
   ]}
 />
 
@@ -611,13 +611,14 @@ export interface TextareaProps
     Yes. A visible label improves usability and accessibility. Placeholder text should only provide examples or hints.
   </Accordion>
 
-  <Accordion title="Should I use Textarea for titles?">
-    Usually no. Use Input for short titles, names, slugs, emails, and URLs.
-  </Accordion>
+<Accordion title="Should I use Textarea for titles?">
+  Usually no. Use Input for short titles, names, slugs, emails, and URLs.
+</Accordion>
 
-  <Accordion title="Can Textarea be used inside Sheet or Dialog?">
-    Yes. It works well for comments, notes, and feedback forms. Use `resize="none"` if resizing would break the overlay layout.
-  </Accordion>
+<Accordion title="Can Textarea be used inside Sheet or Dialog?">
+  Yes. It works well for comments, notes, and feedback forms. Use
+  `resize="none"` if resizing would break the overlay layout.
+</Accordion>
 
   <Accordion title="Should helper text remain visible when there is an error?">
     In this component, error text replaces helper text to keep the field feedback focused. Put permanent requirements in the label or surrounding copy if they must remain visible.
@@ -631,31 +632,31 @@ export interface TextareaProps
   tone="platform"
   items={[
     {
-      title: 'Input',
-      href: '/docs/ui/input',
+      title: "Input",
+      href: "/docs/ui/input",
       description:
-        'Use Input for short one-line values such as names, URLs, and search queries.',
+        "Use Input for short one-line values such as names, URLs, and search queries.",
       icon: FormInput,
     },
     {
-      title: 'Button',
-      href: '/docs/ui/button',
+      title: "Button",
+      href: "/docs/ui/button",
       description:
-        'Pair Textarea with clear submit, save, or feedback actions.',
+        "Pair Textarea with clear submit, save, or feedback actions.",
       icon: MousePointerClick,
     },
     {
-      title: 'Sheet',
-      href: '/docs/ui/sheet',
+      title: "Sheet",
+      href: "/docs/ui/sheet",
       description:
-        'Use Textarea inside side panels for notes, filters, and contextual editing.',
+        "Use Textarea inside side panels for notes, filters, and contextual editing.",
       icon: PanelsTopLeft,
     },
     {
-      title: 'Forms guide',
-      href: '/docs/guides/forms',
+      title: "Forms guide",
+      href: "/docs/guides/forms-with-validation",
       description:
-        'Learn how to compose labels, helper text, validation, and actions.',
+        "Learn how to compose labels, helper text, validation, and actions.",
       icon: ClipboardCheck,
     },
   ]}

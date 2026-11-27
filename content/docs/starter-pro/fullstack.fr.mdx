@@ -1,7 +1,7 @@
 ---
 title: Starter Pro Fullstack
-description: Utiliser le code Web et Mobile natif acheté avec un backend, des comptes et des données communs.
-lastUpdated: "2026-11-20"
+description: Configurez Starter Pro Fullstack, son code Web et natif iOS et Android autour d’un backend commun, puis suivez les guides d’installation et de mise à jour.
+lastUpdated: "2026-11-22"
 appliesTo: Acheteurs Starter Pro Fullstack
 ---
 
@@ -25,6 +25,13 @@ La racine de l’archive est `pycolors-starter-pro-fullstack/` :
 - `mobile/` contient Expo autonome, le client API conservé et les tokens natifs.
 
 Aucun deuxième fork backend n’est à synchroniser. Les deux interfaces utilisent un backend Web configuré. Le storefront commerce PyColors et les comptes de fournisseurs hébergés ne sont pas des modules livrés dans cette archive.
+
+## Suivre un parcours de configuration commun [#follow-one-setup-path]
+
+1. Examinez le manifeste reçu et lisez le README de l’archive. Configurez l’application Web depuis `web/` avec le [guide de démarrage Web](/docs/starter-pro/getting-started).
+2. Consultez l’[architecture Web](/docs/starter-pro/architecture), les [limites du backend](/docs/starter-pro/backend) et les [variables serveur](/docs/starter-pro/environment-variables). Conservez une base de données et une API compatible pour les deux interfaces.
+3. Installez le code autonome `mobile/` avec le [guide Mobile](/docs/starter-pro/mobile#native-source), en le reliant à ce même backend. La [PWA Web](/docs/starter-pro/pwa) est une capacité distincte du navigateur ; elle ne remplace pas la configuration native.
+4. Configurez votre identité native et les origines autorisées du backend, puis validez les deux interfaces sur votre environnement de test. Posséder les deux codes source ne configure pas les comptes fournisseurs et ne déploie pas automatiquement les applications.
 
 ## Configurer Web et le backend commun
 
@@ -65,3 +72,9 @@ Les exports Hermes sont du JavaScript/bytecode, pas des binaires signés de stor
 La révision actuelle est **2026-11-20**. Un particulier ou une personne morale peut créer des produits finaux illimités avec le code Web, Mobile et API inclus. Un client doit posséder sa propre licence pour accéder à ces sources. La redistribution en kit concurrent est interdite et les licences tierces restent applicables.
 
 Mises à jour et assistance raisonnable pour achat/installation concernent les produits inclus dans la commande, sous réserve de disponibilité et des conditions applicables. Les achats antérieurs conservent leurs droits plus favorables. Consultez le `LICENSE` reçu, la [licence](/license) et les [conditions](/terms). Déploiement, intégration sur mesure et exploitation font l’objet de prestations séparées.
+
+## Garder Web et Mobile compatibles [#keep-web-and-mobile-compatible]
+
+Comparez les [versions documentées des produits](/product-releases) au manifeste de votre archive téléchargée. Suivez [personnalisation et mises à jour](/docs/starter-pro/customization-and-upgrades) pour la base Web et les migrations backend, puis consultez le README Mobile inclus avant d’actualiser son client API conservé. Revérifiez l’authentification, les permissions d’espace et les parcours de projets concernés depuis les deux interfaces après une mise à jour. Votre application personnalisée ne se met pas à jour automatiquement.
+
+Pour définir une adaptation Web/Mobile ou un périmètre de déploiement, consultez le [périmètre d’intégration et d’assistance](/docs/starter-pro/implementation-support) et les [prestations](/services). Retrouvez la [page produit Fullstack](/starters/fullstack) ou [comparez les licences source](/pricing#source-licences) pour choisir votre offre.

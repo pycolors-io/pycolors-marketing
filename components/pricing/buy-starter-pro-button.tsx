@@ -77,7 +77,7 @@ export function BuyStarterProButton({
           ],
           className,
         )}
-        aria-busy={isLoading}
+        aria-busy={isLoading || availability === "checking"}
         aria-live="polite"
       >
         {isLoading ? (
@@ -89,10 +89,18 @@ export function BuyStarterProButton({
             {tSite(loadingLabel)}
           </>
         ) : (
-          (label ??
-          tSite("Buy Starter Pro — {value0}", {
-            value0: STARTER_PRO.priceLabel,
-          }))
+          <>
+            {availability === "checking" ? (
+              <LoaderCircle
+                className="mr-2 h-4 w-4 animate-spin motion-reduce:animate-none"
+                aria-hidden="true"
+              />
+            ) : null}
+            {label ??
+              tSite("Buy Starter Pro — {value0}", {
+                value0: STARTER_PRO.priceLabel,
+              })}
+          </>
         )}
       </Button>
 

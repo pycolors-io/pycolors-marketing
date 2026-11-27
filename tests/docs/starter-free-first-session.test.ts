@@ -59,7 +59,7 @@ describe("Starter Free first-session documentation", () => {
 
   it("distinguishes Pro foundations from automatic migration", () => {
     for (const capability of [
-      "Auth.js",
+      "Better Auth",
       "protected routes",
       "Prisma/PostgreSQL",
       "Stripe",

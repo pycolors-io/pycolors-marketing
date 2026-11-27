@@ -1,5 +1,44 @@
 # Changelog
 
+## 1.35.0
+
+Release notes for 27 November 2026 (2026-11-27).
+
+Compare Web, Mobile and Fullstack, then follow the guide for the edition you buy. The UI Explorer also lets you try components before copying an example.
+
+### Applications updated
+
+- The Mobile guide starts with the mobile client and its backend. The Fullstack guide connects the web and mobile clients to the same backend.
+- The mobile comparison explains why PyColors chose React Native and when Capacitor is a better fit for an existing web app.
+
+### Platform and shared capabilities
+
+- In the PyColors UI Explorer, try component states at your own pace and copy examples that use the public package.
+
+### Reliability and maintenance
+
+- Sandbox buyers could download their product and open a separate French PDF invoice from the confirmation page. Commercial invoicing still requires approval before activation.
+
+### For developers and candidates
+
+- Use the edition guide to find the first command for your project and check which client should connect to which backend.
+
+### For companies and recruiters
+
+- Use the buyer FAQ to agree on the support, licence and production checks your team will need before launch.
+
+[Compare Starter Pro editions](https://pycolors.io/starters/pro).
+
+### Notes en français
+
+Les guides de Starter Pro orientent chaque acheteur vers son premier démarrage. Le guide Mobile présente l’application et son backend. Le guide Fullstack explique comment connecter les applications web et mobile au même backend.
+
+- **Pour les développeurs.** Le comparatif mobile explique le choix de React Native par PyColors et les cas où Capacitor convient mieux à une application web existante. L’explorateur PyColors UI permet d’essayer les états d’un composant avant de copier son exemple.
+- **Pour les équipes.** La FAQ acheteur précise les conditions d’assistance et de licence ainsi que les vérifications à effectuer sur sa propre installation.
+- **Après l’achat.** En environnement de test, les acheteurs ont pu télécharger leur produit et ouvrir séparément leur facture PDF en français. La facturation commerciale reste soumise à approbation avant son activation.
+
+[Comparer les éditions de Starter Pro](https://pycolors.io/fr/starters/pro).
+
 ## 1.34.0
 
 Release notes for 20 November 2026 (2026-11-20).

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getPublicProduct } from "@/lib/products/public-catalog";
 import { getCopy } from "@/lib/i18n/server-copy";
 import { Link } from "@/lib/i18n/navigation";
@@ -5,16 +6,18 @@ import { containerClassName } from "@/components/container";
 import { z } from "zod";
 import {
   BadgeCheck,
-  CreditCard,
+  BookOpen,
+  Check,
+  CircleHelp,
   FileText,
   LifeBuoy,
   Mail,
-  Shield,
 } from "lucide-react";
 
 import { Badge, Card, CardContent, CardHeader } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import { MoneyPathPageEvent } from "@/components/analytics/money-path-event";
+import styles from "@/components/orders/checkout-success.module.css";
 
 type CheckoutSuccessPageProps = {
   searchParams: Promise<{
@@ -78,14 +81,16 @@ function formatSessionReference(sessionId?: string) {
   return `${sessionId.slice(0, 14)}...${sessionId.slice(-10)}`;
 }
 
-function formatAmount(amountTotal: number, currency: string) {
-  return new Intl.NumberFormat("en", {
+function formatAmount(amountTotal: number, currency: string, locale = "en") {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: currency.toUpperCase(),
   }).format(amountTotal / 100);
 }
 
 function getProductDocsHref(productSlug: string | null) {
+  if (productSlug === "na-ai-landing")
+    return "/docs/templates/na-ai-landing/setup";
   return getPublicProduct(productSlug)?.docsHref ?? "/docs";
 }
 
@@ -109,11 +114,11 @@ function getProductGuidance(productSlug: string | null) {
       };
     case "na-ai-landing":
       return {
-        title: "A natural next step",
+        title: "Set up NA-AI Landing",
         description:
-          "NA-AI Landing gives you the public launch surface. When you are ready to wire authentication, billing, protected routes, and app foundations, Starter Pro is the next layer.",
-        href: "/starters/pro",
-        cta: "Explore Starter Pro",
+          "Follow the NA-AI guide to customize your purchased landing page and prepare your deployment.",
+        href: "/docs/templates/na-ai-landing/setup",
+        cta: "Open the NA-AI setup guide",
       };
     case "starter-pro":
       return {
@@ -131,6 +136,21 @@ function getProductGuidance(productSlug: string | null) {
         href: "/docs",
         cta: "Open documentation",
       };
+  }
+}
+
+function getProductArtwork(productSlug: string | null) {
+  switch (productSlug) {
+    case "starter-pro":
+      return "/images/starters/pro/concepts/delivery-case-test-v1.png";
+    case "starter-pro-mobile":
+      return "/images/starters/pro/concepts/connected-workspace-test-v1.png";
+    case "starter-pro-fullstack":
+      return "/images/starters/pro/concepts/source-stack-test-v1.png";
+    case "na-ai-landing":
+      return "/images/starters/pro/concepts/workflow-path-test-v1.png";
+    default:
+      return null;
   }
 }
 
@@ -210,9 +230,14 @@ export default async function CheckoutSuccessPage({
     const message = getUnconfirmedMessage(result?.session);
 
     return (
-      <main className={`${containerClassName} mt-10 py-16 sm:py-20`}>
+      <main
+        id="content"
+        tabIndex={-1}
+        className={`${containerClassName} ${styles.page}`}
+      >
         {tSite(pageEvent)}
-        <Card className="rounded-[28px]">
+        <Card className={styles.unconfirmed}>
+          <CircleHelp className={styles.unconfirmedIcon} aria-hidden="true" />
           <CardHeader className="space-y-4 p-6 sm:p-8">
             <Badge variant="outline" className="w-fit">
               {tSite("Payment not confirmed")}
@@ -263,301 +288,172 @@ export default async function CheckoutSuccessPage({
 
   const shortReference = formatSessionReference(result.session.id);
   const { productName, productSlug, amountTotal, currency } = result.session;
-  const amountLabel = formatAmount(amountTotal, currency);
+  const amountLabel = formatAmount(amountTotal, currency, tSite.locale);
+  const artwork = getProductArtwork(productSlug);
 
   const docsHref = getProductDocsHref(productSlug);
   const guidance = getProductGuidance(productSlug);
   const supportSubject = encodeURIComponent(`${productName} order help`);
 
   return (
-    <main className={`${containerClassName} mt-10 py-16 sm:py-20`}>
+    <main
+      id="content"
+      tabIndex={-1}
+      className={`${containerClassName} ${styles.page}`}
+    >
       {tSite(pageEvent)}
-      <div className="overflow-hidden rounded-[28px] border bg-card shadow-xl shadow-black/5">
-        <div className="border-b bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.10),transparent_35%)] px-6 py-10 sm:px-8 sm:py-12">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge className="rounded-full px-3 py-1 text-xs font-medium">
-              {tSite("Payment received")}
-            </Badge>
-
-            <Badge
-              variant="outline"
-              className="rounded-full px-3 py-1 text-xs font-medium"
-            >
-              {tSite("Checkout complete")}
-            </Badge>
-          </div>
-
-          <h1 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-            {tSite("Your payment is confirmed.")}
-          </h1>
-
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
-            {tSite("Your payment for ")}
-            {tSite(productName)}{" "}
+      <div className={styles.hero}>
+        <header className={styles.intro}>
+          <span className={styles.confirmationMark}>
+            <Check aria-hidden="true" />
+          </span>
+          <p className={styles.eyebrow}>{tSite("Checkout complete")}</p>
+          <h1>{tSite("Your payment is confirmed.")}</h1>
+          <p className={styles.thankYou}>
+            {tSite("Thank you for choosing PyColors.")}
+          </p>
+          <p className={styles.description}>
             {tSite(
-              " was completed successfully. Your access link is sent by email after delivery is processed. Payment confirmation does not confirm that the email has arrived.",
+              "Open the secure link in your purchase email to download your product and access its invoice.",
             )}
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 px-4 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
-          <Card className="rounded-[28px] border-2 shadow-sm shadow-black/5">
-            <CardHeader className="space-y-4">
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border bg-muted/30">
-                <BadgeCheck className="h-5 w-5" aria-hidden="true" />
-              </div>
-
-              <h2 className="text-2xl font-semibold">
-                {tSite("Payment received")}
-              </h2>
-            </CardHeader>
-
-            <CardContent className="space-y-6">
-              <div className="rounded-2xl border bg-muted/20 p-4">
-                <div className="flex items-start gap-3">
-                  <CreditCard
-                    className="mt-0.5 h-5 w-5 text-muted-foreground"
-                    aria-hidden="true"
-                  />
-                  <div>
-                    <p className="text-sm font-medium">
-                      {tSite("Payment status")}
-                    </p>
-                    <p className="mt-1 text-sm leading-7 text-muted-foreground">
-                      {tSite(
-                        "Stripe reports this checkout as complete and paid.",
-                      )}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border bg-muted/20 p-4">
-                <div className="flex items-start gap-3">
-                  <Mail
-                    className="mt-0.5 h-5 w-5 text-muted-foreground"
-                    aria-hidden="true"
-                  />
-                  <div>
-                    <p className="text-sm font-medium">
-                      {tSite("Claim email")}
-                    </p>
-                    <p className="mt-1 text-sm leading-7 text-muted-foreground">
-                      {tSite(
-                        "After delivery is processed, your claim email contains your access link. Check your inbox and spam folder.",
-                      )}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border bg-muted/20 p-4">
-                <div className="flex items-start gap-3">
-                  <FileText
-                    className="mt-0.5 h-5 w-5 text-muted-foreground"
-                    aria-hidden="true"
-                  />
-                  <div>
-                    <p className="text-sm font-medium">
-                      {tSite("What you receive")}
-                    </p>
-                    <p className="mt-1 text-sm leading-7 text-muted-foreground">
-                      {tSite(
-                        "Your claim email contains your access link and download instructions.",
-                      )}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                <div
-                  className="inline-flex min-h-11 min-w-0 max-w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-medium text-primary-foreground"
-                  role="status"
-                >
-                  <Mail className="mr-2 h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span className="min-w-0 break-words">
-                    {tSite("Check your inbox")}
-                  </span>
-                </div>
-
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-auto whitespace-normal rounded-xl font-medium"
-                >
-                  <Link href="/orders/recover">
-                    {tSite("Resend access link")}
-                  </Link>
-                </Button>
-
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-auto whitespace-normal rounded-xl font-medium"
-                >
-                  <Link href={docsHref}>{tSite("Start setup")}</Link>
-                </Button>
-              </div>
-
-              <p className="text-xs leading-6 text-muted-foreground">
+          <div className={styles.actions}>
+            <Button asChild size="lg" className={styles.primaryAction}>
+              <Link href={docsHref}>
+                <BookOpen className="size-4" aria-hidden="true" />
+                {tSite("Start setup")}
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className={styles.secondaryAction}
+            >
+              <Link href="/orders/recover">{tSite("Resend access link")}</Link>
+            </Button>
+          </div>
+          <div className={styles.inboxNote}>
+            <Mail className="size-4 shrink-0" aria-hidden="true" />
+            <div>
+              <p role="status">{tSite("Check your inbox")}</p>
+              <p>
                 {tSite(
-                  "If your claim email does not arrive after a reasonable delay, email",
-                )}
-                {tSite(" ")}
-                <Link
-                  href={`mailto:support@pycolors.com?subject=${supportSubject}`}
-                  className="font-medium text-foreground underline underline-offset-4"
-                >
-                  {tSite("support@pycolors.com")}
-                </Link>
-                {tSite(" ")}
-                {tSite(
-                  "and include your checkout reference so we can help faster.",
+                  "Payment confirmation does not confirm that the email has arrived.",
                 )}
               </p>
-            </CardContent>
-          </Card>
-
-          <div className="space-y-6">
-            <Card className="rounded-[28px] border">
-              <CardHeader>
-                <h2 className="text-lg font-semibold">
-                  {tSite("Checkout details")}
-                </h2>
-              </CardHeader>
-
-              <CardContent className="space-y-4 text-sm text-muted-foreground">
-                <div className="flex items-start justify-between gap-4">
-                  <span>{tSite("Status")}</span>
-
-                  <span className="inline-flex items-center gap-2 font-medium text-foreground">
-                    <BadgeCheck className="h-4 w-4" aria-hidden="true" />
-                    {tSite("Payment received")}
-                  </span>
-                </div>
-
-                <div className="flex items-start justify-between gap-4">
-                  <span>{tSite("Product")}</span>
-
-                  <span className="min-w-0 break-words text-right text-foreground [overflow-wrap:anywhere]">
-                    {tSite(productName)}
-                  </span>
-                </div>
-
-                {amountLabel ? (
-                  <div className="flex items-start justify-between gap-4">
-                    <span>{tSite("Amount")}</span>
-
-                    <span className="min-w-0 break-words text-right text-foreground [overflow-wrap:anywhere]">
-                      {tSite(amountLabel)}
-                    </span>
-                  </div>
-                ) : null}
-
-                {shortReference ? (
-                  <div className="flex items-start justify-between gap-4">
-                    <span>{tSite("Checkout reference")}</span>
-
-                    <span
-                      className="max-w-[220px] break-all text-right font-mono text-foreground"
-                      title={tSite(result.session.id)}
-                    >
-                      {tSite(shortReference)}
-                    </span>
-                  </div>
-                ) : null}
-              </CardContent>
-            </Card>
-
-            <Card className="rounded-[28px] border">
-              <CardHeader>
-                <h2 className="text-lg font-semibold">
-                  {tSite("What happens next")}
-                </h2>
-              </CardHeader>
-
-              <CardContent className="space-y-4 text-sm leading-7 text-muted-foreground">
-                <div className="flex items-start gap-3">
-                  <Shield
-                    className="mt-0.5 h-5 w-5 shrink-0"
-                    aria-hidden="true"
-                  />
-
-                  <p>
-                    {tSite(
-                      "Payment is confirmed by Stripe. Download access becomes available after your order is processed.",
-                    )}
-                  </p>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Mail
-                    className="mt-0.5 h-5 w-5 shrink-0"
-                    aria-hidden="true"
-                  />
-
-                  <p>
-                    {tSite(
-                      "Open the access link in your claim email to download your product, then follow its setup instructions.",
-                    )}
-                  </p>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <LifeBuoy
-                    className="mt-0.5 h-5 w-5 shrink-0"
-                    aria-hidden="true"
-                  />
-
-                  <p>
-                    {tSite("If anything looks wrong, email")}
-                    {tSite(" ")}
-                    <Link
-                      href={`mailto:support@pycolors.com?subject=${supportSubject}`}
-                      className="break-all font-medium text-foreground underline underline-offset-4"
-                    >
-                      {tSite("support@pycolors.com")}
-                    </Link>
-                    {tSite(" ")}
-                    {tSite("with your checkout reference for faster help.")}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="rounded-[28px] border">
-              <CardHeader>
-                <h2 className="text-lg font-semibold">
-                  {tSite(guidance.title)}
-                </h2>
-              </CardHeader>
-
-              <CardContent className="space-y-4 text-sm leading-7 text-muted-foreground">
-                <p>{tSite(guidance.description)}</p>
-
-                <Button
-                  asChild
-                  variant="outline"
-                  className="h-auto whitespace-normal rounded-xl"
-                >
-                  <Link href={guidance.href}>{tSite(guidance.cta)}</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <div className="flex flex-wrap gap-3">
-              <Button asChild variant="outline" className="rounded-xl">
-                <Link href="/orders/support">{tSite("Contact support")}</Link>
-              </Button>
-
-              <Button asChild variant="ghost" className="rounded-xl">
-                <Link href="/pricing">{tSite("Back to pricing")}</Link>
-              </Button>
             </div>
           </div>
+        </header>
+
+        <section
+          className={styles.receipt}
+          aria-labelledby="checkout-details-heading"
+        >
+          <div className={styles.receiptHeader}>
+            <h2 id="checkout-details-heading">{tSite("Checkout details")}</h2>
+            <span className={styles.paidLabel}>
+              <BadgeCheck className="size-4" aria-hidden="true" />
+              {tSite("Payment received")}
+            </span>
+          </div>
+          {artwork ? (
+            <div className={styles.artwork}>
+              <Image
+                src={artwork}
+                alt=""
+                width={320}
+                height={320}
+                sizes="(max-width: 639px) 200px, 240px"
+              />
+            </div>
+          ) : null}
+          <p className={styles.productLabel}>{tSite("Product")}</p>
+          <p className={styles.productName}>{tSite(productName)}</p>
+          <dl className={styles.receiptDetails}>
+            <div className={styles.amountRow}>
+              <dt>{tSite("Amount")}</dt>
+              <dd>{amountLabel}</dd>
+            </div>
+            {shortReference ? (
+              <div>
+                <dt>{tSite("Checkout reference")}</dt>
+                <dd className={styles.reference} title={result.session.id}>
+                  {shortReference}
+                </dd>
+              </div>
+            ) : null}
+          </dl>
+        </section>
+      </div>
+
+      <section
+        className={styles.nextSteps}
+        aria-labelledby="checkout-next-heading"
+      >
+        <div className={styles.sectionHeading}>
+          <p className={styles.eyebrow}>{tSite("What happens next")}</p>
+          <h2 id="checkout-next-heading">
+            {tSite("Your next step is in your inbox.")}
+          </h2>
+        </div>
+        <div className={styles.steps}>
+          <div className={styles.step}>
+            <span className={styles.stepIcon}>
+              <Mail aria-hidden="true" />
+            </span>
+            <h3>{tSite("Claim email")}</h3>
+            <p>
+              {tSite(
+                "After delivery is processed, your claim email contains your access link. Check your inbox and spam folder.",
+              )}
+            </p>
+          </div>
+          <div className={styles.step}>
+            <span className={styles.stepIcon}>
+              <FileText aria-hidden="true" />
+            </span>
+            <h3>{tSite("What you receive")}</h3>
+            <p>
+              {tSite(
+                "Your claim email contains your access link and download instructions.",
+              )}
+            </p>
+          </div>
+          <div className={styles.step}>
+            <span className={styles.stepIcon}>
+              <BookOpen aria-hidden="true" />
+            </span>
+            <h3>{tSite(guidance.title)}</h3>
+            <p>{tSite(guidance.description)}</p>
+            <Link href={guidance.href} className={styles.textLink}>
+              {tSite(guidance.cta)}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className={styles.support}>
+        <div>
+          <LifeBuoy className="size-5 shrink-0" aria-hidden="true" />
+          <p>
+            {tSite("If anything looks wrong, email")}{" "}
+            <a
+              href={`mailto:support@pycolors.com?subject=${supportSubject}`}
+              className={styles.textLink}
+            >
+              {tSite("support@pycolors.com")}
+            </a>{" "}
+            {tSite("with your checkout reference for faster help.")}
+          </p>
+        </div>
+        <div className={styles.supportLinks}>
+          <Link href="/orders/support" className={styles.textLink}>
+            {tSite("Contact support")}
+          </Link>
+          <Link href="/pricing" className={styles.textLink}>
+            {tSite("Back to pricing")}
+          </Link>
         </div>
       </div>
     </main>

@@ -20,6 +20,7 @@ import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Badge, cn } from "@pycolors/ui";
 import { SiteButton as Button } from "@/components/site-button";
 import { PRODUCT_DISPLAY } from "@/lib/products/public-catalog";
+import { getUiExplorerUrl } from "@/lib/docs/ui-explorer";
 import { Container } from "@/components/container";
 import { ProductPreviewWindow } from "@/components/marketing/product-preview-window";
 import { UiSectionNav } from "@/components/marketing/ui-section-nav";
@@ -468,50 +469,71 @@ export default function ExamplesPage() {
             }
           />
           <div className="grid gap-4 lg:grid-cols-3">
-            {buildingBlocks.map((block) => (
-              <MarketingFeatureCard
-                key={block.title}
-                title={tSite(block.title)}
-                description={tSite(block.description)}
-                icon={<block.icon className="size-4" />}
-                className={cn("shadow-none", styles.componentCard)}
-                meta={
-                  <div>
-                    <p className="mb-3 font-mono text-[10px] text-muted-foreground">
-                      {tSite(block.label)}
-                    </p>
-                    <ul
-                      className="flex flex-wrap gap-x-4 gap-y-1"
-                      aria-label={tSite("{value0} components", {
-                        value0: block.title,
-                      })}
-                    >
-                      {block.components.map(([label, slug]) => (
-                        <li key={slug}>
-                          <Link
-                            href={`/docs/ui/${slug}`}
-                            className={styles.textLink}
-                          >
-                            {tSite(label)}
-                            {tSite("  ")}
-                            <ArrowUpRight
-                              className="size-3"
-                              aria-hidden="true"
-                            />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                }
-                action={
-                  <Link href={block.href} className={styles.textLink}>
-                    {block.link}{" "}
-                    <ArrowRight className="size-3.5" aria-hidden="true" />
-                  </Link>
-                }
-              />
-            ))}
+            {buildingBlocks.map((block) => {
+              const [componentLabel, componentSlug] = block.components[0];
+              const explorerHref = getUiExplorerUrl(["ui", componentSlug]);
+              return (
+                <MarketingFeatureCard
+                  key={block.title}
+                  title={tSite(block.title)}
+                  description={tSite(block.description)}
+                  icon={<block.icon className="size-4" />}
+                  className={cn("shadow-none", styles.componentCard)}
+                  meta={
+                    <div>
+                      <p className="mb-3 font-mono text-[10px] text-muted-foreground">
+                        {tSite(block.label)}
+                      </p>
+                      <ul
+                        className="flex flex-wrap gap-x-4 gap-y-1"
+                        aria-label={tSite("{value0} components", {
+                          value0: block.title,
+                        })}
+                      >
+                        {block.components.map(([label, slug]) => (
+                          <li key={slug}>
+                            <Link
+                              href={`/docs/ui/${slug}`}
+                              className={styles.textLink}
+                            >
+                              {tSite(label)}
+                              {tSite("  ")}
+                              <ArrowUpRight
+                                className="size-3"
+                                aria-hidden="true"
+                              />
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                      {explorerHref ? (
+                        <a
+                          href={explorerHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-description={tSite("Opens in a new tab")}
+                          className={cn(styles.textLink, "mt-3")}
+                        >
+                          {tSite("Try {value0} in UI Explorer", {
+                            value0: tSite(componentLabel),
+                          })}
+                          <ArrowUpRight
+                            className="size-3.5 shrink-0"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      ) : null}
+                    </div>
+                  }
+                  action={
+                    <Link href={block.href} className={styles.textLink}>
+                      {block.link}{" "}
+                      <ArrowRight className="size-3.5" aria-hidden="true" />
+                    </Link>
+                  }
+                />
+              );
+            })}
           </div>
         </MarketingSectionShell>
         <MarketingSectionShell

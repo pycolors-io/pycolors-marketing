@@ -124,7 +124,7 @@ const products = [
     icon: Layers3,
     purpose: "Build on real integrations.",
     description:
-      "Auth.js, Stripe and Prisma/PostgreSQL foundations. Configure your services, add product logic and validate before launch.",
+      "Better Auth, Stripe and Prisma/PostgreSQL foundations. Configure your services, add product logic and validate before launch.",
     href: "/starters/pro",
     link: "Explore Starter Pro",
   },

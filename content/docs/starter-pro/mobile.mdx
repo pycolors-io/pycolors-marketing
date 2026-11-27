@@ -1,7 +1,7 @@
 ---
 title: Starter Pro Mobile
-description: Install the purchased native source and its included compatible backend without a separate Web purchase.
-lastUpdated: "2026-11-20"
+description: Install Starter Pro Mobile, its Expo React Native iOS and Android source and included backend, then follow the native checks and update guides.
+lastUpdated: "2026-11-22"
 appliesTo: Starter Pro Mobile buyers
 ---
 
@@ -26,6 +26,17 @@ The archive root is `pycolors-starter-pro-mobile/`:
 - `backend/`: compatible Next.js HTTP backend, configuration, database schema, migrations and guides. It includes the account registration/recovery and workspace setup required for the native application; it is not the complete Web dashboard or business interface.
 
 Read the received manifest and README first. Keep the source revision, hashes and qualification evidence with your copy. The PyColors commerce storefront, hosted provider accounts and managed operation are not supplied as part of your application.
+
+## Native application capabilities
+
+The native source uses Expo Router and React Native controls, with English/French and device presentation preferences. It is separate from the [Web PWA foundation](/docs/starter-pro/pwa).
+
+- Sign in with a verified email/password account, restore its session and sign out through the included Better Auth Expo integration.
+- Open registration and password recovery in the browser on your configured backend. Native social login and native signup are not included.
+- Select an authorized workspace, read its overview and projects, and explicitly create a project with server-enforced permissions.
+- Read project details, paginated tasks and account information. Task editing and offline replay are not included in these native journeys.
+
+Mobile includes the backend required for these flows. To add the complete Web interface for the same accounts and data, compare [Fullstack](/starters/fullstack) and its [setup guide](/docs/starter-pro/fullstack).
 
 ## Run the backend
 
@@ -86,3 +97,9 @@ After the upgrade's payment is verified, claim the Fullstack product from its ow
 The current licence revision is **2026-11-20**. One individual or legal entity may build unlimited end products. Clients need their own licence to access the source code. Redistribution, resale or repackaging as a competing kit is prohibited, and third-party licences remain applicable.
 
 Updates and reasonable-effort purchase/setup support apply to the products included in your purchase, subject to continued availability and the applicable terms. Earlier purchases retain more favourable rights from their original terms. Consult the received `LICENSE`, [licence page](/license) and [terms](/terms); no support SLA, deployment or operation service is included.
+
+## Continue with your project
+
+- Review the [backend model](/docs/starter-pro/backend) and [server environment variables](/docs/starter-pro/environment-variables) for context, using your included backend README for its exact setup commands. Keep provider and database secrets out of `EXPO_PUBLIC_*` values.
+- Check [documented product versions](/product-releases) against your received manifest. Use the backend-relevant [update and migration workflow](/docs/starter-pro/customization-and-upgrades), then recheck the retained Mobile API client against the updated backend. Updates are applied to your own source; device preferences are configured in the native app.
+- For help with your own configuration or adaptation, review [implementation and support](/docs/starter-pro/implementation-support) and the [service options](/services). The source licence and any scoped service engagement are separate.

@@ -1,68 +1,70 @@
 // @ts-nocheck
-import * as __fd_glob_315 from "../content/docs/ui/why-pycolors-ui.mdx?collection=docs";
-import * as __fd_glob_314 from "../content/docs/ui/why-pycolors-ui.fr.mdx?collection=docs";
-import * as __fd_glob_313 from "../content/docs/ui/usage-patterns.mdx?collection=docs";
-import * as __fd_glob_312 from "../content/docs/ui/usage-patterns.fr.mdx?collection=docs";
-import * as __fd_glob_311 from "../content/docs/ui/toast.mdx?collection=docs";
-import * as __fd_glob_310 from "../content/docs/ui/toast.fr.mdx?collection=docs";
-import * as __fd_glob_309 from "../content/docs/ui/theming.mdx?collection=docs";
-import * as __fd_glob_308 from "../content/docs/ui/theming.fr.mdx?collection=docs";
-import * as __fd_glob_307 from "../content/docs/ui/textarea.mdx?collection=docs";
-import * as __fd_glob_306 from "../content/docs/ui/textarea.fr.mdx?collection=docs";
-import * as __fd_glob_305 from "../content/docs/ui/tabs.mdx?collection=docs";
-import * as __fd_glob_304 from "../content/docs/ui/tabs.fr.mdx?collection=docs";
-import * as __fd_glob_303 from "../content/docs/ui/table.mdx?collection=docs";
-import * as __fd_glob_302 from "../content/docs/ui/table.fr.mdx?collection=docs";
-import * as __fd_glob_301 from "../content/docs/ui/storybook.mdx?collection=docs";
-import * as __fd_glob_300 from "../content/docs/ui/storybook.fr.mdx?collection=docs";
-import * as __fd_glob_299 from "../content/docs/ui/skeleton.mdx?collection=docs";
-import * as __fd_glob_298 from "../content/docs/ui/skeleton.fr.mdx?collection=docs";
-import * as __fd_glob_297 from "../content/docs/ui/sheet.mdx?collection=docs";
-import * as __fd_glob_296 from "../content/docs/ui/sheet.fr.mdx?collection=docs";
-import * as __fd_glob_295 from "../content/docs/ui/separator.mdx?collection=docs";
-import * as __fd_glob_294 from "../content/docs/ui/separator.fr.mdx?collection=docs";
-import * as __fd_glob_293 from "../content/docs/ui/password-input.mdx?collection=docs";
-import * as __fd_glob_292 from "../content/docs/ui/password-input.fr.mdx?collection=docs";
-import * as __fd_glob_291 from "../content/docs/ui/pagination.mdx?collection=docs";
-import * as __fd_glob_290 from "../content/docs/ui/pagination.fr.mdx?collection=docs";
-import * as __fd_glob_289 from "../content/docs/ui/migration-guidance.mdx?collection=docs";
-import * as __fd_glob_288 from "../content/docs/ui/migration-guidance.fr.mdx?collection=docs";
-import * as __fd_glob_287 from "../content/docs/ui/installation.mdx?collection=docs";
-import * as __fd_glob_286 from "../content/docs/ui/installation.fr.mdx?collection=docs";
-import * as __fd_glob_285 from "../content/docs/ui/input.mdx?collection=docs";
-import * as __fd_glob_284 from "../content/docs/ui/input.fr.mdx?collection=docs";
-import * as __fd_glob_283 from "../content/docs/ui/index.mdx?collection=docs";
-import * as __fd_glob_282 from "../content/docs/ui/index.fr.mdx?collection=docs";
-import * as __fd_glob_281 from "../content/docs/ui/empty-state.mdx?collection=docs";
-import * as __fd_glob_280 from "../content/docs/ui/empty-state.fr.mdx?collection=docs";
-import * as __fd_glob_279 from "../content/docs/ui/dropdown-menu.mdx?collection=docs";
-import * as __fd_glob_278 from "../content/docs/ui/dropdown-menu.fr.mdx?collection=docs";
-import * as __fd_glob_277 from "../content/docs/ui/dialog.mdx?collection=docs";
-import * as __fd_glob_276 from "../content/docs/ui/dialog.fr.mdx?collection=docs";
-import * as __fd_glob_275 from "../content/docs/ui/composition.mdx?collection=docs";
-import * as __fd_glob_274 from "../content/docs/ui/composition.fr.mdx?collection=docs";
-import * as __fd_glob_273 from "../content/docs/ui/checkbox.mdx?collection=docs";
-import * as __fd_glob_272 from "../content/docs/ui/checkbox.fr.mdx?collection=docs";
-import * as __fd_glob_271 from "../content/docs/ui/card.mdx?collection=docs";
-import * as __fd_glob_270 from "../content/docs/ui/card.fr.mdx?collection=docs";
-import * as __fd_glob_269 from "../content/docs/ui/button.mdx?collection=docs";
-import * as __fd_glob_268 from "../content/docs/ui/button.fr.mdx?collection=docs";
-import * as __fd_glob_267 from "../content/docs/ui/badge.mdx?collection=docs";
-import * as __fd_glob_266 from "../content/docs/ui/badge.fr.mdx?collection=docs";
-import * as __fd_glob_265 from "../content/docs/ui/alert.mdx?collection=docs";
-import * as __fd_glob_264 from "../content/docs/ui/alert.fr.mdx?collection=docs";
-import * as __fd_glob_263 from "../content/docs/ui/ai-message.mdx?collection=docs";
-import * as __fd_glob_262 from "../content/docs/ui/ai-message.fr.mdx?collection=docs";
-import * as __fd_glob_261 from "../content/docs/ui/ai-message-actions.mdx?collection=docs";
-import * as __fd_glob_260 from "../content/docs/ui/ai-message-actions.fr.mdx?collection=docs";
-import * as __fd_glob_259 from "../content/docs/ui/ai-conversation.mdx?collection=docs";
-import * as __fd_glob_258 from "../content/docs/ui/ai-conversation.fr.mdx?collection=docs";
-import * as __fd_glob_257 from "../content/docs/ui/ai-composer.mdx?collection=docs";
-import * as __fd_glob_256 from "../content/docs/ui/ai-composer.fr.mdx?collection=docs";
-import * as __fd_glob_255 from "../content/docs/ui/accessibility.mdx?collection=docs";
-import * as __fd_glob_254 from "../content/docs/ui/accessibility.fr.mdx?collection=docs";
-import * as __fd_glob_253 from "../content/docs/templates/na-ai-landing/setup.mdx?collection=docs";
-import * as __fd_glob_252 from "../content/docs/templates/na-ai-landing/setup.fr.mdx?collection=docs";
+import * as __fd_glob_317 from "../content/docs/ui/why-pycolors-ui.mdx?collection=docs";
+import * as __fd_glob_316 from "../content/docs/ui/why-pycolors-ui.fr.mdx?collection=docs";
+import * as __fd_glob_315 from "../content/docs/ui/usage-patterns.mdx?collection=docs";
+import * as __fd_glob_314 from "../content/docs/ui/usage-patterns.fr.mdx?collection=docs";
+import * as __fd_glob_313 from "../content/docs/ui/toast.mdx?collection=docs";
+import * as __fd_glob_312 from "../content/docs/ui/toast.fr.mdx?collection=docs";
+import * as __fd_glob_311 from "../content/docs/ui/theming.mdx?collection=docs";
+import * as __fd_glob_310 from "../content/docs/ui/theming.fr.mdx?collection=docs";
+import * as __fd_glob_309 from "../content/docs/ui/textarea.mdx?collection=docs";
+import * as __fd_glob_308 from "../content/docs/ui/textarea.fr.mdx?collection=docs";
+import * as __fd_glob_307 from "../content/docs/ui/tabs.mdx?collection=docs";
+import * as __fd_glob_306 from "../content/docs/ui/tabs.fr.mdx?collection=docs";
+import * as __fd_glob_305 from "../content/docs/ui/table.mdx?collection=docs";
+import * as __fd_glob_304 from "../content/docs/ui/table.fr.mdx?collection=docs";
+import * as __fd_glob_303 from "../content/docs/ui/storybook.mdx?collection=docs";
+import * as __fd_glob_302 from "../content/docs/ui/storybook.fr.mdx?collection=docs";
+import * as __fd_glob_301 from "../content/docs/ui/skeleton.mdx?collection=docs";
+import * as __fd_glob_300 from "../content/docs/ui/skeleton.fr.mdx?collection=docs";
+import * as __fd_glob_299 from "../content/docs/ui/sheet.mdx?collection=docs";
+import * as __fd_glob_298 from "../content/docs/ui/sheet.fr.mdx?collection=docs";
+import * as __fd_glob_297 from "../content/docs/ui/separator.mdx?collection=docs";
+import * as __fd_glob_296 from "../content/docs/ui/separator.fr.mdx?collection=docs";
+import * as __fd_glob_295 from "../content/docs/ui/password-input.mdx?collection=docs";
+import * as __fd_glob_294 from "../content/docs/ui/password-input.fr.mdx?collection=docs";
+import * as __fd_glob_293 from "../content/docs/ui/pagination.mdx?collection=docs";
+import * as __fd_glob_292 from "../content/docs/ui/pagination.fr.mdx?collection=docs";
+import * as __fd_glob_291 from "../content/docs/ui/migration-guidance.mdx?collection=docs";
+import * as __fd_glob_290 from "../content/docs/ui/migration-guidance.fr.mdx?collection=docs";
+import * as __fd_glob_289 from "../content/docs/ui/installation.mdx?collection=docs";
+import * as __fd_glob_288 from "../content/docs/ui/installation.fr.mdx?collection=docs";
+import * as __fd_glob_287 from "../content/docs/ui/input.mdx?collection=docs";
+import * as __fd_glob_286 from "../content/docs/ui/input.fr.mdx?collection=docs";
+import * as __fd_glob_285 from "../content/docs/ui/index.mdx?collection=docs";
+import * as __fd_glob_284 from "../content/docs/ui/index.fr.mdx?collection=docs";
+import * as __fd_glob_283 from "../content/docs/ui/empty-state.mdx?collection=docs";
+import * as __fd_glob_282 from "../content/docs/ui/empty-state.fr.mdx?collection=docs";
+import * as __fd_glob_281 from "../content/docs/ui/dropdown-menu.mdx?collection=docs";
+import * as __fd_glob_280 from "../content/docs/ui/dropdown-menu.fr.mdx?collection=docs";
+import * as __fd_glob_279 from "../content/docs/ui/dialog.mdx?collection=docs";
+import * as __fd_glob_278 from "../content/docs/ui/dialog.fr.mdx?collection=docs";
+import * as __fd_glob_277 from "../content/docs/ui/composition.mdx?collection=docs";
+import * as __fd_glob_276 from "../content/docs/ui/composition.fr.mdx?collection=docs";
+import * as __fd_glob_275 from "../content/docs/ui/checkbox.mdx?collection=docs";
+import * as __fd_glob_274 from "../content/docs/ui/checkbox.fr.mdx?collection=docs";
+import * as __fd_glob_273 from "../content/docs/ui/card.mdx?collection=docs";
+import * as __fd_glob_272 from "../content/docs/ui/card.fr.mdx?collection=docs";
+import * as __fd_glob_271 from "../content/docs/ui/button.mdx?collection=docs";
+import * as __fd_glob_270 from "../content/docs/ui/button.fr.mdx?collection=docs";
+import * as __fd_glob_269 from "../content/docs/ui/badge.mdx?collection=docs";
+import * as __fd_glob_268 from "../content/docs/ui/badge.fr.mdx?collection=docs";
+import * as __fd_glob_267 from "../content/docs/ui/alert.mdx?collection=docs";
+import * as __fd_glob_266 from "../content/docs/ui/alert.fr.mdx?collection=docs";
+import * as __fd_glob_265 from "../content/docs/ui/ai-message.mdx?collection=docs";
+import * as __fd_glob_264 from "../content/docs/ui/ai-message.fr.mdx?collection=docs";
+import * as __fd_glob_263 from "../content/docs/ui/ai-message-actions.mdx?collection=docs";
+import * as __fd_glob_262 from "../content/docs/ui/ai-message-actions.fr.mdx?collection=docs";
+import * as __fd_glob_261 from "../content/docs/ui/ai-conversation.mdx?collection=docs";
+import * as __fd_glob_260 from "../content/docs/ui/ai-conversation.fr.mdx?collection=docs";
+import * as __fd_glob_259 from "../content/docs/ui/ai-composer.mdx?collection=docs";
+import * as __fd_glob_258 from "../content/docs/ui/ai-composer.fr.mdx?collection=docs";
+import * as __fd_glob_257 from "../content/docs/ui/accessibility.mdx?collection=docs";
+import * as __fd_glob_256 from "../content/docs/ui/accessibility.fr.mdx?collection=docs";
+import * as __fd_glob_255 from "../content/docs/templates/na-ai-landing/setup.mdx?collection=docs";
+import * as __fd_glob_254 from "../content/docs/templates/na-ai-landing/setup.fr.mdx?collection=docs";
+import * as __fd_glob_253 from "../content/docs/templates/na-ai-landing/releases-history.mdx?collection=docs";
+import * as __fd_glob_252 from "../content/docs/templates/na-ai-landing/releases-history.fr.mdx?collection=docs";
 import * as __fd_glob_251 from "../content/docs/templates/na-ai-landing/project-structure.mdx?collection=docs";
 import * as __fd_glob_250 from "../content/docs/templates/na-ai-landing/project-structure.fr.mdx?collection=docs";
 import * as __fd_glob_249 from "../content/docs/templates/na-ai-landing/license.mdx?collection=docs";
@@ -581,69 +583,71 @@ export const docs = await create.docs(
     "templates/na-ai-landing/license.mdx": __fd_glob_249,
     "templates/na-ai-landing/project-structure.fr.mdx": __fd_glob_250,
     "templates/na-ai-landing/project-structure.mdx": __fd_glob_251,
-    "templates/na-ai-landing/setup.fr.mdx": __fd_glob_252,
-    "templates/na-ai-landing/setup.mdx": __fd_glob_253,
-    "ui/accessibility.fr.mdx": __fd_glob_254,
-    "ui/accessibility.mdx": __fd_glob_255,
-    "ui/ai-composer.fr.mdx": __fd_glob_256,
-    "ui/ai-composer.mdx": __fd_glob_257,
-    "ui/ai-conversation.fr.mdx": __fd_glob_258,
-    "ui/ai-conversation.mdx": __fd_glob_259,
-    "ui/ai-message-actions.fr.mdx": __fd_glob_260,
-    "ui/ai-message-actions.mdx": __fd_glob_261,
-    "ui/ai-message.fr.mdx": __fd_glob_262,
-    "ui/ai-message.mdx": __fd_glob_263,
-    "ui/alert.fr.mdx": __fd_glob_264,
-    "ui/alert.mdx": __fd_glob_265,
-    "ui/badge.fr.mdx": __fd_glob_266,
-    "ui/badge.mdx": __fd_glob_267,
-    "ui/button.fr.mdx": __fd_glob_268,
-    "ui/button.mdx": __fd_glob_269,
-    "ui/card.fr.mdx": __fd_glob_270,
-    "ui/card.mdx": __fd_glob_271,
-    "ui/checkbox.fr.mdx": __fd_glob_272,
-    "ui/checkbox.mdx": __fd_glob_273,
-    "ui/composition.fr.mdx": __fd_glob_274,
-    "ui/composition.mdx": __fd_glob_275,
-    "ui/dialog.fr.mdx": __fd_glob_276,
-    "ui/dialog.mdx": __fd_glob_277,
-    "ui/dropdown-menu.fr.mdx": __fd_glob_278,
-    "ui/dropdown-menu.mdx": __fd_glob_279,
-    "ui/empty-state.fr.mdx": __fd_glob_280,
-    "ui/empty-state.mdx": __fd_glob_281,
-    "ui/index.fr.mdx": __fd_glob_282,
-    "ui/index.mdx": __fd_glob_283,
-    "ui/input.fr.mdx": __fd_glob_284,
-    "ui/input.mdx": __fd_glob_285,
-    "ui/installation.fr.mdx": __fd_glob_286,
-    "ui/installation.mdx": __fd_glob_287,
-    "ui/migration-guidance.fr.mdx": __fd_glob_288,
-    "ui/migration-guidance.mdx": __fd_glob_289,
-    "ui/pagination.fr.mdx": __fd_glob_290,
-    "ui/pagination.mdx": __fd_glob_291,
-    "ui/password-input.fr.mdx": __fd_glob_292,
-    "ui/password-input.mdx": __fd_glob_293,
-    "ui/separator.fr.mdx": __fd_glob_294,
-    "ui/separator.mdx": __fd_glob_295,
-    "ui/sheet.fr.mdx": __fd_glob_296,
-    "ui/sheet.mdx": __fd_glob_297,
-    "ui/skeleton.fr.mdx": __fd_glob_298,
-    "ui/skeleton.mdx": __fd_glob_299,
-    "ui/storybook.fr.mdx": __fd_glob_300,
-    "ui/storybook.mdx": __fd_glob_301,
-    "ui/table.fr.mdx": __fd_glob_302,
-    "ui/table.mdx": __fd_glob_303,
-    "ui/tabs.fr.mdx": __fd_glob_304,
-    "ui/tabs.mdx": __fd_glob_305,
-    "ui/textarea.fr.mdx": __fd_glob_306,
-    "ui/textarea.mdx": __fd_glob_307,
-    "ui/theming.fr.mdx": __fd_glob_308,
-    "ui/theming.mdx": __fd_glob_309,
-    "ui/toast.fr.mdx": __fd_glob_310,
-    "ui/toast.mdx": __fd_glob_311,
-    "ui/usage-patterns.fr.mdx": __fd_glob_312,
-    "ui/usage-patterns.mdx": __fd_glob_313,
-    "ui/why-pycolors-ui.fr.mdx": __fd_glob_314,
-    "ui/why-pycolors-ui.mdx": __fd_glob_315,
+    "templates/na-ai-landing/releases-history.fr.mdx": __fd_glob_252,
+    "templates/na-ai-landing/releases-history.mdx": __fd_glob_253,
+    "templates/na-ai-landing/setup.fr.mdx": __fd_glob_254,
+    "templates/na-ai-landing/setup.mdx": __fd_glob_255,
+    "ui/accessibility.fr.mdx": __fd_glob_256,
+    "ui/accessibility.mdx": __fd_glob_257,
+    "ui/ai-composer.fr.mdx": __fd_glob_258,
+    "ui/ai-composer.mdx": __fd_glob_259,
+    "ui/ai-conversation.fr.mdx": __fd_glob_260,
+    "ui/ai-conversation.mdx": __fd_glob_261,
+    "ui/ai-message-actions.fr.mdx": __fd_glob_262,
+    "ui/ai-message-actions.mdx": __fd_glob_263,
+    "ui/ai-message.fr.mdx": __fd_glob_264,
+    "ui/ai-message.mdx": __fd_glob_265,
+    "ui/alert.fr.mdx": __fd_glob_266,
+    "ui/alert.mdx": __fd_glob_267,
+    "ui/badge.fr.mdx": __fd_glob_268,
+    "ui/badge.mdx": __fd_glob_269,
+    "ui/button.fr.mdx": __fd_glob_270,
+    "ui/button.mdx": __fd_glob_271,
+    "ui/card.fr.mdx": __fd_glob_272,
+    "ui/card.mdx": __fd_glob_273,
+    "ui/checkbox.fr.mdx": __fd_glob_274,
+    "ui/checkbox.mdx": __fd_glob_275,
+    "ui/composition.fr.mdx": __fd_glob_276,
+    "ui/composition.mdx": __fd_glob_277,
+    "ui/dialog.fr.mdx": __fd_glob_278,
+    "ui/dialog.mdx": __fd_glob_279,
+    "ui/dropdown-menu.fr.mdx": __fd_glob_280,
+    "ui/dropdown-menu.mdx": __fd_glob_281,
+    "ui/empty-state.fr.mdx": __fd_glob_282,
+    "ui/empty-state.mdx": __fd_glob_283,
+    "ui/index.fr.mdx": __fd_glob_284,
+    "ui/index.mdx": __fd_glob_285,
+    "ui/input.fr.mdx": __fd_glob_286,
+    "ui/input.mdx": __fd_glob_287,
+    "ui/installation.fr.mdx": __fd_glob_288,
+    "ui/installation.mdx": __fd_glob_289,
+    "ui/migration-guidance.fr.mdx": __fd_glob_290,
+    "ui/migration-guidance.mdx": __fd_glob_291,
+    "ui/pagination.fr.mdx": __fd_glob_292,
+    "ui/pagination.mdx": __fd_glob_293,
+    "ui/password-input.fr.mdx": __fd_glob_294,
+    "ui/password-input.mdx": __fd_glob_295,
+    "ui/separator.fr.mdx": __fd_glob_296,
+    "ui/separator.mdx": __fd_glob_297,
+    "ui/sheet.fr.mdx": __fd_glob_298,
+    "ui/sheet.mdx": __fd_glob_299,
+    "ui/skeleton.fr.mdx": __fd_glob_300,
+    "ui/skeleton.mdx": __fd_glob_301,
+    "ui/storybook.fr.mdx": __fd_glob_302,
+    "ui/storybook.mdx": __fd_glob_303,
+    "ui/table.fr.mdx": __fd_glob_304,
+    "ui/table.mdx": __fd_glob_305,
+    "ui/tabs.fr.mdx": __fd_glob_306,
+    "ui/tabs.mdx": __fd_glob_307,
+    "ui/textarea.fr.mdx": __fd_glob_308,
+    "ui/textarea.mdx": __fd_glob_309,
+    "ui/theming.fr.mdx": __fd_glob_310,
+    "ui/theming.mdx": __fd_glob_311,
+    "ui/toast.fr.mdx": __fd_glob_312,
+    "ui/toast.mdx": __fd_glob_313,
+    "ui/usage-patterns.fr.mdx": __fd_glob_314,
+    "ui/usage-patterns.mdx": __fd_glob_315,
+    "ui/why-pycolors-ui.fr.mdx": __fd_glob_316,
+    "ui/why-pycolors-ui.mdx": __fd_glob_317,
   },
 );

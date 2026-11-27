@@ -192,7 +192,7 @@ describe("Shared navigation in documentation", () => {
     ).toHaveLength(2);
     expect(screen.getByRole("link", { name: "Explore Pro" })).toHaveAttribute(
       "href",
-      "/starters/pro",
+      "/starters",
     );
   });
 

@@ -167,21 +167,23 @@ const products = PRODUCT_FAMILIES.flatMap((group) => group.items);
 
 export const PRODUCT_MENU_GROUPS: ProductMenuGroup[] = [
   {
+    title: "Starter Pro",
+    items: products.filter((item) =>
+      ["/starters/pro", "/starters/mobile", "/starters/fullstack"].includes(
+        item.href,
+      ),
+    ),
+  },
+  {
     title: "Build your interface",
     items: products.filter((item) =>
       ["/ui", "/blocks", "/tools/theme-builder"].includes(item.href),
     ),
   },
   {
-    title: "Launch your product",
+    title: "Other starting points",
     items: products.filter((item) =>
-      [
-        "/starters/free",
-        "/starters/pro",
-        "/starters/mobile",
-        "/starters/fullstack",
-        "/templates/na-ai-landing",
-      ].includes(item.href),
+      ["/starters/free", "/templates/na-ai-landing"].includes(item.href),
     ),
   },
 ];
@@ -219,9 +221,15 @@ export const RESOURCE_MENU_ITEMS = [
     icon: Newspaper,
   },
   {
+    label: "Product releases",
+    href: "/product-releases",
+    description: "Versions and update guides for your purchased source.",
+    icon: History,
+  },
+  {
     label: "Changelog",
     href: "/changelog",
-    description: "Follow the latest product updates.",
+    description: "Follow updates across the PyColors ecosystem.",
     icon: History,
   },
   {

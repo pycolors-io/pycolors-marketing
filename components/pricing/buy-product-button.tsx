@@ -97,7 +97,7 @@ export function BuyProductButton({
           ],
           className,
         )}
-        aria-busy={isLoading}
+        aria-busy={isLoading || availability === "checking"}
         aria-live="polite"
       >
         {isLoading ? (
@@ -110,7 +110,15 @@ export function BuyProductButton({
             {tSite(loadingLabel)}
           </>
         ) : (
-          label
+          <>
+            {availability === "checking" ? (
+              <LoaderCircle
+                className="mr-2 h-4 w-4 animate-spin motion-reduce:animate-none"
+                aria-hidden="true"
+              />
+            ) : null}
+            {label}
+          </>
         )}
       </Button>
 

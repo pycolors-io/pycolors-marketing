@@ -45,6 +45,7 @@ import { ProductPreviewMedia } from "@/components/marketing/product-preview-medi
 import { PRODUCT_PREVIEW_MEDIA } from "@/lib/products/product-preview-media";
 import { ProductStudioReference } from "@/components/marketing/product-studio-reference";
 import { HomeProductJourney } from "@/components/marketing/home-product-journey";
+import { StarterSourceDocs } from "@/components/starters/starter-source-docs";
 import { FibonacciBackground } from "@/components/marketing/fibonacci-background";
 
 const metadata: Metadata = {
@@ -107,6 +108,35 @@ const sectionHeaderClass = cn(
 
 const starterPro = PRODUCT_DISPLAY["starter-pro"];
 const starterDemo = "https://starter-demo.pycolors.io";
+
+const connectedProducts = [
+  {
+    product: mobile,
+    titleId: "home-mobile-product-title",
+    icon: Smartphone,
+    concept: "connected-workspace",
+    description: "Native iOS and Android, with a compatible backend.",
+    guide: "Mobile setup guide",
+    details: [
+      "Native iOS and Android interface",
+      "Compatible backend included",
+      "Setup guides included",
+    ],
+  },
+  {
+    product: mobile.bundle,
+    titleId: "home-fullstack-product-title",
+    icon: Layers3,
+    concept: "source-stack",
+    description: "Web and Mobile, built around the same accounts and data.",
+    guide: "Fullstack setup guide",
+    details: [
+      "Web and native iOS/Android",
+      "Same accounts and data",
+      "Setup guides included",
+    ],
+  },
+] as const;
 
 const startingPoints = [
   {
@@ -489,6 +519,117 @@ export default function HomePage() {
           </MarketingSectionShell>
 
           <MarketingSectionShell
+            id="starter-pro-mobile"
+            width="full"
+            aria-labelledby="home-mobile-heading"
+            className={cn(styles.section, styles.connectedChapter)}
+          >
+            <MarketingSectionHeader
+              titleId="home-mobile-heading"
+              eyebrow={tSite("Starter Pro source licences")}
+              title={tSite("Your next application. Web, Mobile, or both.")}
+              description={tSite(
+                "Choose native iOS and Android source with its backend, or bring Web and Mobile together around the same accounts and data.",
+              )}
+              align="left"
+              className={sectionHeaderClass}
+            />
+            <div className={styles.connectedProducts}>
+              {connectedProducts.map(
+                ({
+                  product,
+                  titleId,
+                  icon: Icon,
+                  concept,
+                  description,
+                  guide,
+                  details,
+                }) => (
+                  <article
+                    key={product.slug}
+                    aria-labelledby={titleId}
+                    data-native-product={product.slug}
+                    className={styles.connectedProduct}
+                  >
+                    <header className={styles.connectedSummary}>
+                      <div className={styles.connectedMeta}>
+                        <span>
+                          <Icon className="size-4" aria-hidden="true" />
+                          {tSite(product.stack)}
+                        </span>
+                        <span>{tSite(product.status)}</span>
+                      </div>
+                      <h3 id={titleId}>{tSite(product.name)}</h3>
+                      <p>{tSite(description)}</p>
+                    </header>
+                    <figure className={styles.connectedVisual}>
+                      <div>
+                        <Image
+                          src={`/images/starters/pro/concepts/${concept}-test-v1.png`}
+                          alt=""
+                          aria-hidden="true"
+                          fill
+                          sizes="(min-width: 1024px) 560px, 85vw"
+                          className={styles.connectedArtwork}
+                        />
+                      </div>
+                      <figcaption>{tSite("Concept illustration")}</figcaption>
+                    </figure>
+                    <ul className={styles.connectedDetails}>
+                      {details.map((detail) => (
+                        <li key={detail}>
+                          <Check
+                            className="size-3.5 shrink-0"
+                            aria-hidden="true"
+                          />
+                          {tSite(detail)}
+                        </li>
+                      ))}
+                    </ul>
+                    <footer className={styles.connectedFooter}>
+                      <p className={styles.connectedPrice}>
+                        <strong>{product.priceLabel}</strong>
+                        <span>{tSite(product.priceQualifier)}</span>
+                      </p>
+                      <div className={styles.connectedActions}>
+                        <Link
+                          href={product.href}
+                          className={styles.connectedPrimary}
+                        >
+                          {tSite(product.action)}
+                          <ArrowUpRight
+                            className="size-3.5 shrink-0"
+                            aria-hidden="true"
+                          />
+                        </Link>
+                        <Link
+                          href={product.docsHref}
+                          className={styles.connectedGuide}
+                        >
+                          {tSite(guide)}
+                          <ArrowRight
+                            className="size-3.5 shrink-0"
+                            aria-hidden="true"
+                          />
+                        </Link>
+                      </div>
+                    </footer>
+                  </article>
+                ),
+              )}
+            </div>
+            <p className={styles.connectedScope}>
+              {tSite(
+                "Mobile includes a compatible backend. Fullstack adds the Web interface with the same accounts and data.",
+              )}
+              <Link href="/pricing#source-licences" className={linkClass}>
+                {tSite("Compare source licences")}
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </Link>
+            </p>
+          </MarketingSectionShell>
+
+          <MarketingSectionShell
             id="what-you-get"
             spacing="default"
             width="full"
@@ -764,6 +905,25 @@ export default function HomePage() {
                 </div>
               </article>
             </div>
+            <section
+              aria-labelledby="home-source-docs-title"
+              className="mt-12 space-y-6 sm:mt-16"
+            >
+              <div className="max-w-2xl">
+                <h3
+                  id="home-source-docs-title"
+                  className="text-xl font-semibold tracking-subheading sm:text-2xl"
+                >
+                  {tSite("Choose your Starter Pro documentation.")}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                  {tSite(
+                    "Review the source, setup requirements and shared backend before choosing Web, native Mobile or Fullstack.",
+                  )}
+                </p>
+              </div>
+              <StarterSourceDocs headingLevel={4} />
+            </section>
             <aside
               aria-labelledby="home-implementation-heading"
               className={styles.implementation}
@@ -969,85 +1129,6 @@ export default function HomePage() {
                   <code>--foreground</code>
                 </div>
               </div>
-            </div>
-          </MarketingSectionShell>
-
-          <MarketingSectionShell
-            id="starter-pro-mobile"
-            width="full"
-            aria-labelledby="home-mobile-heading"
-            className={styles.section}
-          >
-            <div className={cn(styles.mobileTeaser, styles.mobileScroll)}>
-              <div className={styles.mobileCopy}>
-                <div className={styles.mobileEyebrow}>
-                  <span>
-                    <Smartphone className="size-4" aria-hidden="true" />
-                    {tSite("Starter Pro Mobile")}
-                  </span>
-                  <Badge variant="outline">{tSite(mobile.status)}</Badge>
-                </div>
-                <h2 id="home-mobile-heading">
-                  {tSite("React Native Mobile App")}
-                </h2>
-                <p className={styles.mobileDescription}>
-                  {tSite(mobile.description)}
-                </p>
-                <p className={styles.mobileStack}>
-                  {tSite("React Native · Expo")}
-                  <span aria-hidden="true"> / </span>
-                  {tSite("iOS · Android")}
-                </p>
-                <Link href="/starters/mobile" className={linkClass}>
-                  {tSite("Explore Starter Pro Mobile")}
-                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                </Link>
-                <Link href={mobile.bundle.href} className={linkClass}>
-                  {tSite(mobile.bundle.action)}
-                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                </Link>
-                <p className={styles.mobileAvailability}>
-                  {tSite(
-                    "Mobile includes a compatible backend. Fullstack adds the Web interface with the same accounts and data.",
-                  )}
-                </p>
-              </div>
-              <figure className={styles.mobileVisual}>
-                <div className={styles.mobilePhones} aria-hidden="true">
-                  {[0, 1].map((phone) => (
-                    <div className={styles.mobilePhone} key={phone}>
-                      <div className={styles.mobileIsland} />
-                      <div className={styles.mobilePhoneHeader}>
-                        <span />
-                        <span />
-                      </div>
-                      <div className={styles.mobilePhoneCards}>
-                        <span />
-                        <span />
-                      </div>
-                      <div className={styles.mobilePhoneChart}>
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                      </div>
-                      <div className={styles.mobilePhoneRows}>
-                        <span />
-                        <span />
-                        <span />
-                      </div>
-                      <div className={styles.mobilePhoneNav}>
-                        <span />
-                        <span />
-                        <span />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <figcaption>{tSite("Concept illustration")}</figcaption>
-              </figure>
             </div>
           </MarketingSectionShell>
 

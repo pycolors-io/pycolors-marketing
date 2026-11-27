@@ -286,22 +286,23 @@ describe("Desktop navigation hover", () => {
 });
 
 describe("Marketing product discovery navigation", () => {
-  it("groups the eight products by starting point and keeps two desktop shortcuts", () => {
+  it("separates three source licences from interface foundations and lighter starting points", () => {
     render(<Fixture />);
     const products = openProducts();
     expect(PRODUCT_MENU_GROUPS.map((group) => group.title)).toEqual([
+      "Starter Pro",
       "Build your interface",
-      "Launch your product",
+      "Other starting points",
     ]);
     const items = PRODUCT_MENU_GROUPS.flatMap((group) => group.items);
     expect(items.map((item) => item.href)).toEqual([
+      "/starters/pro",
+      "/starters/mobile",
+      "/starters/fullstack",
       "/ui",
       "/blocks",
       "/tools/theme-builder",
       "/starters/free",
-      "/starters/pro",
-      "/starters/mobile",
-      "/starters/fullstack",
       "/templates/na-ai-landing",
     ]);
     for (const item of [...items, ...PRODUCT_MENU_SECONDARY_ITEMS]) {
@@ -501,6 +502,7 @@ describe("Marketing product discovery navigation", () => {
       "UI Explorer",
       "Guides",
       "Blog",
+      "Product releases",
       "Changelog",
       "Roadmap",
     ]);
@@ -551,6 +553,7 @@ describe("Marketing product discovery navigation", () => {
     ["/guides/getting-started", "/guides"],
     ["/blog/product-update", "/blog"],
     ["/changelog", "/changelog"],
+    ["/product-releases", "/product-releases"],
     ["/roadmap", "/roadmap"],
   ])(
     "marks the Resources destination at %s without highlighting Products",

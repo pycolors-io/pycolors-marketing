@@ -119,6 +119,28 @@ describe("Starter comparison source contracts", () => {
     expect(upgradeGuide).toContain('secondaryHref="/pricing"');
   });
 
+  it.each([
+    ["upgrade.mdx", "Buy Starter Pro Web"],
+    ["upgrade.fr.mdx", "Acheter Starter Pro Web"],
+  ])("identifies the checkout edition in %s", (filename, label) => {
+    const page = readFileSync(
+      resolve(marketingRoot, "content/docs/starter", filename),
+      "utf8",
+    );
+    const buttons = [...page.matchAll(/<DocsUpgradeCTA\s[^>]*?\/>/gu)];
+    expect(buttons).toHaveLength(2);
+    for (const [button] of buttons) {
+      expect(button).toContain('productSlug="starter-pro"');
+      expect(button).toContain(`buyLabel="${label}"`);
+    }
+    for (const path of [
+      "/starters/mobile",
+      "/starters/fullstack",
+      "/pricing#source-licences",
+    ])
+      expect(page).toContain(`](${path})`);
+  });
+
   it("keeps existing guide anchors and orders the manual upgrade checkpoints", () => {
     const headings = [...upgradeGuide.matchAll(/^## (.+)$/gmu)].map(
       (match) => match[1],
@@ -181,7 +203,8 @@ describe("Starter comparison source contracts", () => {
         "/pricing",
       ]),
     );
-    for (const href of new Set(destinations)) {
+    for (const destination of new Set(destinations)) {
+      const href = destination?.split("#")[0];
       if (!href) {
         throw new Error("Upgrade guide link is missing its destination");
       }
